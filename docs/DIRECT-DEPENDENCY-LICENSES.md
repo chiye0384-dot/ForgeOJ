@@ -71,6 +71,7 @@ H2 的测试作用域不能作为 MySQL 语义证据，也不能因为不进入�
 | MySQL Community Server | `container-registry.oracle.com/mysql/community-server:8.4.12@sha256:7dcc4add9183664de3a214daf85a50c3ba6cccfd7534f700b6561bf5b41885be` | MySQL Community Server 为 GPLv2；镜像内第三方组件各自适用原许可证 | 只从 Oracle Registry 拉取作 disposable 运行时，不提交镜像层或派生镜像 |
 | RabbitMQ Management | `rabbitmq:4.3.6-management@sha256:cdf40d8cb363d145e377ed88d59696a42386ffe54b30125f10eb128b862eea95` | RabbitMQ Server/核心插件主要为 MPL-2.0；基础系统、Erlang 等组件各自适用原许可证 | 只从官方 registry 拉取作 disposable 运行时，不提交镜像层或派生镜像 |
 | Testcontainers Ryuk | `testcontainers/ryuk:0.14.0` | MIT | Testcontainers 测试清理辅助镜像；不进入 ForgeOJ 生产运行包 |
+| Eclipse Temurin Java 21 | `eclipse-temurin:21.0.12_8-jdk-jammy@sha256:c7d5863b5dd8f26b90c64f1d80cc2b0e5a5e4642f8db9955a370d348edd8f438` | Temurin 二进制为 GPLv2 with Classpath Exception；容器 Dockerfile 仓库为 Apache-2.0；Ubuntu 与镜像内其他组件各自适用原许可证 | M0 判题容器的外部固定运行时；当前不提交镜像层、归档或 ForgeOJ 派生镜像 |
 
 镜像许可证不会自动改变 ForgeOJ 自有源码的 Apache-2.0，但若以后分发镜像归档、复制镜像层或制作派生镜像，必须重新审核对应源码提供、NOTICE 和内部组件义务。
 
@@ -78,7 +79,7 @@ H2 的测试作用域不能作为 MySQL 语义证据，也不能因为不进入�
 
 - Spring Boot、Spring Security、Spring AMQP、Flyway、Testcontainers、MyBatis、Vue 和构建工具的直接许可证已登记；
 - M0 新增直接依赖的 Apache-2.0/MIT 许可证与根 Apache-2.0 不冲突，不需要重新选择根许可证；
-- Testcontainers 库的 MIT 许可证不覆盖它启动的 MySQL、RabbitMQ、Ryuk 等容器镜像；当前使用的精确运行时已在第 5 节登记，升级时必须同步更新；
+- Testcontainers 库的 MIT 许可证不覆盖它启动的 MySQL、RabbitMQ、Ryuk 等容器镜像；判题使用的 Eclipse Temurin 也有独立许可证边界。当前使用的精确运行时已在第 5 节登记，升级时必须同步更新；
 - H2 被限制为测试作用域；
 - Apache-2.0 已解决 MySQL Connector/J Universal FOSS Exception 的根许可证类别前提，但实际发布组合的履约审计仍未完成；
 - GitHub Actions 的三个直接 Action 已在工作流中固定完整 commit，许可证记录见 `THIRD_PARTY_NOTICES.md`；

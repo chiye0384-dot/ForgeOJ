@@ -27,6 +27,30 @@ accounts have separate purposes:
 Flyway creates tables and applies the final table grants. The init script only
 creates accounts and grants the migrator enough rights to run those migrations.
 
+## Run the M0 API slice
+
+Set `SPRING_PROFILES_ACTIVE=dev` plus the database and RabbitMQ passwords from
+your ignored `.env` file in the API process environment. At minimum the API
+needs `FORGEOJ_API_DB_PASSWORD`, `FORGEOJ_MIGRATOR_PASSWORD`, and
+`RABBITMQ_DEFAULT_PASS`; do not commit their real values. Then run from the
+repository root:
+
+```powershell
+.\mvnw.cmd --batch-mode -pl forgeoj-api spring-boot:run
+```
+
+The `dev` profile adds the repeatable development seed after the production
+migration. It creates only the M0 user `learner` (password
+`forgeoj-dev-only`) and the original `sum-two-integers` problem. The default
+profile creates neither. The currently available HTTP slice is:
+
+- `GET /api/v1/auth/session` for authentication state and a CSRF token;
+- `POST /api/v1/auth/login` and `POST /api/v1/auth/logout` using that token;
+- `GET /api/v1/problems/sum-two-integers` for the public-field whitelist.
+
+The frontend is not wired to these endpoints yet, and submission/judging is
+not implemented. Never enable the `dev` profile in production.
+
 ## Stop and reset
 
 ```powershell

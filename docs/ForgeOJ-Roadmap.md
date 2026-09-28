@@ -73,8 +73,10 @@ V2.0 综合学习内容：BACKLOG，需另行确认是否立项
 - 用户已明确确认启动 M0；开发分支为 `feat/m0-vertical-slice`；
 - 已完成 M0 直接依赖与许可证登记、纵向切片设计、四字段消息 JSON Schema、7 张业务表的 V1 Flyway migration，以及固定 digest 的 MySQL/RabbitMQ disposable Compose；
 - 已在真实 MySQL 8.4.12 Testcontainer 中验证 migration，证明 API 账号不能读取隐藏测试、Worker 能读取隐藏测试但不能读取用户密码；Compose 两个服务的健康检查也已在隔离临时栈通过；
-- 当前下一步是实现预置开发数据、最小会话认证和公开题目读取；
-- 尚未将任何登录、题目、提交、消息、Worker 或 Docker 判题能力标记为 `IMPLEMENTED`。
+- 已加入仅由 `dev`/集成测试显式加载的原创开发题目和 BCrypt 预置账号；默认生产 migration 不创建公开默认密码；
+- 已在真实 MySQL 8.4.12 Testcontainer 中验证服务端 Session 登录/注销、会话固定攻击防护、CSRF 拒绝、错误密码拒绝，以及公开题目 DTO 不暴露隐藏数据集和判题镜像字段；
+- 当前下一步是实现 Submission、JudgeTask 与 Outbox 的同事务写入、唯一约束和回滚测试；
+- 登录和公开题目读取是已验证的局部切片；提交、消息、Worker、Docker 判题和端到端闭环仍未完成，因此 M0 整体保持 `IN_PROGRESS`。
 
 最短流程：
 

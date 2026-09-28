@@ -93,6 +93,7 @@ class MySqlMigrationIntegrationTests {
                         "user_account");
 
         assertThat(api.queryForObject("SELECT COUNT(*) FROM problem", Integer.class)).isZero();
+        assertThat(api.queryForObject("SELECT COUNT(*) FROM user_account", Integer.class)).isZero();
         assertThatThrownBy(
                         () ->
                                 api.queryForObject(

@@ -3,3 +3,4 @@
 /NOTICE text eol=lf
 /licenses/*.txt text eol=lf
 *.cmd text eol=crlf
+*.sh text eol=lf

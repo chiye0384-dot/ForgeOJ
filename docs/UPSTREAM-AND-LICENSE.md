@@ -1,6 +1,6 @@
 # ForgeOJ 上游与许可证策略
 
-> 当前状态：最小官方骨架选型已确认并生成，上游和产物哈希已登记；ForgeOJ 自有代码已确认采用 Apache-2.0，版权人为池也。  
+> 当前状态：M-1 最小官方骨架已验证；M0 直接依赖、消息契约与 Docker 客户端边界已登记，M0 业务能力仍在实现中；ForgeOJ 自有代码采用 Apache-2.0，版权人为池也。
 > 本文定义代码进入仓库之前必须完成的检查，不能被理解为已经获得某个项目的授权。
 
 ## 1. 核心原则
@@ -64,6 +64,14 @@
 |---|---|---|---|---|---|---|---|
 | Spring Initializr 在线生成服务 | [start.spring.io](https://github.com/spring-io/start.spring.io) / [initializr](https://github.com/spring-io/initializr) | 核验日仓库快照：`start.spring.io@29903a3fd5ccdb6f8623111871ab2a9b804cb160`；`initializr@d445a056ced904ba5098df1e75b75bebf9840687` | Apache-2.0 | 生成两个最小 Maven 工程；由 ForgeOJ 重组为根聚合工程 | `ADOPTED` | 2026-09-27 | 在线服务未暴露部署 commit；生成请求和 ZIP SHA-256 见 U-001 |
 | Spring Boot | [spring-projects/spring-boot](https://github.com/spring-projects/spring-boot) | `v4.1.1` → `6fdf67ea1552691e932604d4bf67a5e08ff0b0ea` | Apache-2.0 | 后端框架与 BOM | `ADOPTED` | 2026-09-27 | [4.1.1 发布说明](https://spring.io/blog/2026/08/20/spring-boot-4-1-1-available-now/) |
+| Spring Security | [spring-projects/spring-security](https://github.com/spring-projects/spring-security) | `7.1.1` → `a825937b8175ee85872c49d9c7fc25eea8cff991` | Apache-2.0 | API 最小会话认证与安全测试 | `ADOPTED` | 2026-09-28 | [7.1.1 release](https://github.com/spring-projects/spring-security/releases/tag/7.1.1) |
+| Spring AMQP | [spring-projects/spring-amqp](https://github.com/spring-projects/spring-amqp) | `v4.1.1` → `cc1c35f30c3e2f06af1c9f258d71b0255e9e5ddc` | Apache-2.0 | API/Worker RabbitMQ 传输 | `ADOPTED` | 2026-09-28 | [4.1.1 release](https://github.com/spring-projects/spring-amqp/releases/tag/v4.1.1) |
+| Flyway | [flyway/flyway](https://github.com/flyway/flyway) | `flyway-12.4.0` → `be256634108dba6f760dbb0604e3421f12f2c431` | Apache-2.0 | API 唯一生产迁移执行者与 MySQL 模块 | `ADOPTED` | 2026-09-28 | [12.4.0 release](https://github.com/flyway/flyway/releases/tag/flyway-12.4.0) |
+| Testcontainers Java | [testcontainers/testcontainers-java](https://github.com/testcontainers/testcontainers-java) | `2.0.5` → `5c448202ac69d073f746433d3e79f6a2bf0ec585` | MIT | MySQL、RabbitMQ 与 JUnit 集成测试；test scope only | `ADOPTED_TEST_ONLY` | 2026-09-28 | [2.0.5 release](https://github.com/testcontainers/testcontainers-java/releases/tag/2.0.5) |
+| Docker CLI | [docker/cli](https://github.com/docker/cli) | 本机验证版本 `29.8.0`；源码 release line `v29.8.0` | Apache-2.0 + NOTICE | Worker 通过外部 CLI 控制 M0 一次性容器；不复制或分发 CLI | `ADOPTED_EXTERNAL_RUNTIME` | 2026-09-28 | [官方仓库与许可证](https://github.com/docker/cli) / [Engine 29.8.0 release](https://github.com/moby/moby/releases/tag/docker-v29.8.0) |
+| MySQL Community Server image | [Oracle Container Registry](https://container-registry.oracle.com/) | `8.4.12@sha256:7dcc4add9183664de3a214daf85a50c3ba6cccfd7534f700b6561bf5b41885be`（linux/amd64） | GPLv2；镜像内第三方组件许可证独立 | M0 disposable 数据库，不复制或再分发镜像 | `ADOPTED_EXTERNAL_RUNTIME` | 2026-09-28 | [8.4.12 release notes](https://dev.mysql.com/doc/relnotes/mysql/8.4/en/news-8-4-12.html) / [官方 Docker 指南](https://dev.mysql.com/doc/refman/8.4/en/docker-mysql-getting-started.html) |
+| RabbitMQ management image | [Docker Official Image](https://hub.docker.com/_/rabbitmq/) | `4.3.6-management@sha256:cdf40d8cb363d145e377ed88d59696a42386ffe54b30125f10eb128b862eea95`（linux/amd64） | RabbitMQ Server/核心插件主要为 MPL-2.0；镜像内组件许可证独立 | M0 disposable broker，不复制或再分发镜像 | `ADOPTED_EXTERNAL_RUNTIME` | 2026-09-28 | [RabbitMQ 下载](https://www.rabbitmq.com/docs/download) / [上游 LICENSE](https://github.com/rabbitmq/rabbitmq-server/blob/main/LICENSE) |
+| Testcontainers Ryuk | [testcontainers/moby-ryuk](https://github.com/testcontainers/moby-ryuk) | `0.14.0` → `b3726af` | MIT | Testcontainers 自动启动的 test-only 清理辅助镜像 | `ADOPTED_TRANSITIVE_TEST_RUNTIME` | 2026-09-28 | [0.14.0 release](https://github.com/testcontainers/moby-ryuk/releases/tag/0.14.0) |
 | Maven Wrapper | [apache/maven-wrapper](https://github.com/apache/maven-wrapper) | `maven-wrapper-3.3.4` → `524486aff97d0748926a977665d5befb3251ff17` | Apache-2.0 + NOTICE | 保留 `mvnw`、`mvnw.cmd` 和 wrapper 配置，固定 Maven 3.9.14；Windows 脚本带一处空值保护 | `ADOPTED_WITH_PATCH` | 2026-09-27 | 许可证与 NOTICE 已保存到 `licenses/`；补丁依据 [issue #395](https://github.com/apache/maven-wrapper/issues/395) / [draft PR #416](https://github.com/apache/maven-wrapper/pull/416) |
 | MyBatis Spring Boot Starter | [mybatis/spring-boot-starter](https://github.com/mybatis/spring-boot-starter) | `mybatis-spring-boot-4.1.0` → `5f1d7e3e01054a663cd1ae8b37141fe88c015f58` | Apache-2.0 | Maven 直接依赖；原生 MyBatis 集成 | `ADOPTED` | 2026-09-27 | [4.1.0 发布](https://github.com/mybatis/spring-boot-starter/releases/tag/mybatis-spring-boot-4.1.0) / [Maven Central](https://central.sonatype.com/artifact/org.mybatis.spring.boot/mybatis-spring-boot-starter/4.1.0) |
 | create-vue | [vuejs/create-vue](https://github.com/vuejs/create-vue) | `v3.22.3` → `10d767adf0fad58b500e0f2e2149266ef827100e` | 生成器 MIT；模板/生成文件 CC0-1.0 | Vue 3 + TypeScript + Router + Vitest + ESLint + Prettier 最小前端 | `ADOPTED` | 2026-09-27 | 精确许可证已保存到 `licenses/`；生成命令见 U-002 |
@@ -105,6 +113,33 @@
 - 直接依赖仅为官方 MyBatis Spring Boot Starter 4.1.0，根 POM 显式锁定版本；Spring Boot BOM 不代替这一锁定。
 - MyBatis-Plus 没有引入，也不会从被拒绝的后台脚手架中间接复用。
 - PageHelper 是 `DEFERRED`：当前 `pom.xml` 不含它；M2 重新评估时必须记录当时的精确版本、commit/tag、许可证与 Boot 4.1 兼容测试。
+
+### U-004：M0 后端直接依赖门禁
+
+- API 运行依赖新增 Spring Security、Spring AMQP、Spring Boot Flyway Starter 与 `flyway-mysql`；Worker 运行依赖只新增 Spring AMQP。
+- API 测试依赖新增 `spring-security-test`；API 与 Worker 测试依赖新增 Spring Boot Testcontainers 以及 Testcontainers JUnit Jupiter、MySQL、RabbitMQ 模块。
+- 解析版本为 Spring Security 7.1.1、Spring AMQP 4.1.1、Flyway 12.4.0、Testcontainers 2.0.5，均由 Spring Boot 4.1.1 BOM 管理，子 POM 不重复写版本。
+- 上述项目源码没有复制进 ForgeOJ；它们提供第三方框架或测试能力，不能被表述为 ForgeOJ 自行实现了认证、消息可靠性、迁移或集成测试。
+- M0 不引入 OAuth/JWT、Spring Session/Redis、Spring Cloud Stream、Spring Retry、PageHelper 或 MyBatis-Plus。
+- M0 不把 `docker-java` 作为生产沙箱客户端；Testcontainers 2.0.5 在 test scope 传递使用的 `docker-java` 只服务 disposable 集成测试，仍属于第三方传递依赖。
+- 依赖声明后的 Windows/JDK 21 构建验证：`./mvnw --batch-mode clean verify` 的两个模块上下文测试均通过；这只关闭依赖装配门禁，不代表 M0 业务链路完成。
+
+### U-005：Docker CLI 外部运行时边界
+
+- M0 Worker 通过 ForgeOJ 自有 `SandboxRuntime`/`DockerCommandExecutor` 适配器调用宿主机 Docker CLI，不复制、修改或随 ForgeOJ 分发 Docker CLI 或 Docker Desktop。
+- 生产适配器使用 `ProcessBuilder(List<String>)`，不经过 shell、不拼接用户文本；Docker 可执行文件、固定镜像 digest 和资源限制来自可信配置。
+- 本机已验证 Docker CLI/Engine 29.8.0、Linux containers 和 Docker Desktop 4.92.0。Docker Desktop 是开发机外部工具，适用其单独订阅条款，不能因为 `docker/cli` 源码采用 Apache-2.0 就把 Desktop 写成同一许可证。
+- 最终 M0 功能与安全证据仍必须在固定 Linux 环境复现，并记录 CLI、Engine、API 版本与镜像 digest。
+
+### U-006：M0 disposable 基础设施镜像
+
+- MySQL 使用 Oracle 厂商官方 Community Server `8.4.12`，固定 `linux/amd64` digest `sha256:7dcc4add9183664de3a214daf85a50c3ba6cccfd7534f700b6561bf5b41885be`。8.4.12 是针对 MySQL Server Docker 镜像的安全更新，因此不退回当时 Docker Hub Official Image 仍停留的 8.4.11。
+- RabbitMQ 使用 Docker Official Image `4.3.6-management`，固定 OCI index digest `sha256:cdf40d8cb363d145e377ed88d59696a42386ffe54b30125f10eb128b862eea95` 并显式指定 `linux/amd64`。
+- Testcontainers 2.0.5 自动使用 `testcontainers/ryuk:0.14.0` 清理 disposable 资源；Ryuk 是 MIT 许可的 test-only 辅助镜像，不是 ForgeOJ 生产服务。
+- Compose 和 integration test 只从 registry 拉取镜像，不向仓库提交镜像 tar、镜像层，也不通过 `FROM` 创建 MySQL/RabbitMQ 派生镜像。
+- MySQL Community Server 的 GPLv2、RabbitMQ 的 MPL-2.0 以及镜像内基础系统/第三方组件许可证不会重新许可 ForgeOJ 自有源码；若未来分发镜像归档或派生镜像，必须重新审计完整分发义务。
+- digest 固定保证重拉内容一致，也意味着安全更新不会自动进入；升级必须通过显式依赖变更，同步更新本表、Compose、测试与验证证据。
+- Windows/Docker Desktop 实测：MySQL 8.4.12 Flyway migration 和账号读取边界测试通过；独立 Compose 项目中 MySQL 与 RabbitMQ 均达到 healthy，MySQL 三账号初始化和 RabbitMQ `/forgeoj` vhost 已核对，随后 disposable 容器、网络与卷已清理。
 
 ## 5. 引入记录模板
 
@@ -162,7 +197,7 @@
 
 Maven、npm、Docker 镜像和操作系统包都属于第三方组成。Release 前至少完成：
 
-当前 M-1 直接 Maven/npm 项的实际解析版本、许可证和条件判断见 `docs/DIRECT-DEPENDENCY-LICENSES.md`。Apache-2.0 已满足 MySQL Connector/J Universal FOSS Exception 的根许可证类别前提，但 Connector/J 仍保持 GPL-2.0 + UFE；首次发布前必须按 fat JAR、镜像或安装包的实际组合复核完整源码可获得性、许可证和告知义务。
+当前直接 Maven/npm 项（含 M0 已声明依赖）的实际解析版本、许可证和条件判断见 `docs/DIRECT-DEPENDENCY-LICENSES.md`。Apache-2.0 已满足 MySQL Connector/J Universal FOSS Exception 的根许可证类别前提，但 Connector/J 仍保持 GPL-2.0 + UFE；首次发布前必须按 fat JAR、镜像或安装包的实际组合复核完整源码可获得性、许可证和告知义务。
 
 - 固定直接依赖版本；
 - 生成依赖与许可证清单；

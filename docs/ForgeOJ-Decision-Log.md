@@ -241,7 +241,7 @@
 - 状态：`ACCEPTED`
 - 结论：`main` 是唯一长期集成分支并保持可构建；日常改动使用短期 `feat/*`、`fix/*` 或 `docs/*` 分支，通过审阅和 CI 后合入，不设置长期 `develop` 分支。里程碑只有在门禁通过后才打 tag。
 - 原因：当前由个人学习和小规模协作推进，双长期分支会增加同步成本；短期分支仍能保留审阅、回滚和 CI 证据。
-- 代价：远程仓库建立后必须保护 `main` 并要求 CI；用户已于 2026-09-28 确认 M-1 工程结构，首个 commit 与远程仓库仍需按用户后续指令创建。
+- 代价：远程 `main` 已启用分支保护并要求 `backend`、`frontend` CI；M0 起日常改动必须在短期主题分支完成并经 PR/CI 合入。
 
 ### D-034：ForgeOJ 自有代码采用 Apache-2.0
 
@@ -249,6 +249,13 @@
 - 结论：池也拥有版权并有权许可的 ForgeOJ 自有源代码采用 Apache License 2.0，版权声明为 `Copyright 2026 池也`。根 `LICENSE` 使用未修改的官方许可证全文，根 `NOTICE` 记录项目版权与需保留的第三方归属。
 - 原因：Apache-2.0 是许可证边界清楚、允许宽松复用且包含明确专利授权的 OSI 批准许可证；它适合公开、可解释的学习项目，也满足 MySQL Universal FOSS Exception 对 “Other FOSS” 许可证类别的前提。
 - 代价：他人可在遵守许可证的前提下商用、修改和形成闭源衍生版本；分发时必须提供许可证、标明修改并保留适用的版权、归属和 NOTICE。该决定只覆盖池也有权许可的部分，不会重新许可生成文件、保留的上游代码、依赖、题目内容或用户提交；正式发布物仍需完成第三方许可证审计。
+
+### D-035：M0 使用 Docker CLI 沙箱适配器
+
+- 状态：`ACCEPTED`
+- 结论：M0 的 Judge Worker 通过 ForgeOJ 自有接口封装 `ProcessBuilder(List<String>)`，调用宿主机官方 Docker CLI 控制一次性判题容器；不把 `docker-java` 作为生产沙箱客户端。调用不经过 shell，不拼接含用户输入的命令，CLI 路径可配置且 Worker 启动时 fail fast 验证；API 进程不获得 Docker 权限。Testcontainers 仍会在 test scope 传递使用 `docker-java`，这不属于生产沙箱实现。
+- 原因：已验证的 Docker CLI/Engine 具备 M0 所需的创建、限制、检查和强制清理能力，可避免在最小纵向切片中额外承担生产客户端 transport、Jackson、JNA 与 HttpClient 的兼容面；命令也能在开发和固定 Linux 环境独立复现。
+- 代价：Worker 依赖宿主 Docker 可执行文件、当前 context 和 daemon；ForgeOJ 必须自行正确处理子进程并发输出、超时、输出上限、容器强制删除、临时目录清理与残留扫描。若后续证据显示 CLI 生命周期代码不可维护，再通过新决策评估类型化 Engine 客户端。
 
 ## 3. 变更流程
 

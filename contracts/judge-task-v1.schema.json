@@ -1,0 +1,25 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://forgeoj.example/contracts/judge-task-v1.schema.json",
+  "title": "ForgeOJ judge task v1",
+  "description": "Minimal identifier-only contract published by the API and consumed by the Judge Worker.",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["taskId", "submissionId", "taskType", "contractVersion"],
+  "properties": {
+    "taskId": {
+      "type": "string",
+      "format": "uuid"
+    },
+    "submissionId": {
+      "type": "string",
+      "format": "uuid"
+    },
+    "taskType": {
+      "const": "JUDGE_SUBMISSION"
+    },
+    "contractVersion": {
+      "const": 1
+    }
+  }
+}

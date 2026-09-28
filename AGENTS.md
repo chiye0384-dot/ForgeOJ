@@ -2,13 +2,14 @@
 
 ## Repository status
 
-ForgeOJ has an approved requirements baseline and an M-1 minimal project scaffold. Business implementation has not started. Planning documents describe targets, not completed functionality.
+ForgeOJ has an approved requirements baseline and a verified M-1 minimal project scaffold. M0 business implementation started on 2026-09-28 and remains `IN_PROGRESS`; planning documents still describe targets, not completed functionality.
 
 Use these documents as authoritative sources:
 
 - `docs/ForgeOJ-Requirements.md` for behavior and scope;
 - `docs/ForgeOJ-Decision-Log.md` for accepted tradeoffs;
 - `docs/ForgeOJ-Roadmap.md` for version and milestone boundaries;
+- `docs/M0-VERTICAL-SLICE-DESIGN.md` for the current M0 API, data, message, worker, and Docker implementation contract;
 - `docs/KNOWN_LIMITATIONS.md` for accepted limitations;
 - `docs/UPSTREAM-AND-LICENSE.md` before importing or changing a scaffold or material dependency;
 - `docs/DIRECT-DEPENDENCY-LICENSES.md` for the current direct dependency license inventory and unresolved distribution conditions;
@@ -67,7 +68,7 @@ Use the repository-pinned commands for the M-1 baseline:
 
 Linux/macOS environments running the script-only Maven Wrapper must provide `bash` and `unzip`. Without `unzip`, Wrapper 3.3.4 falls back from the configured ZIP URL to a tarball, which cannot match the recorded ZIP SHA-256.
 
-The current H2 dependency is test-scoped and only proves that the empty application contexts can start. It is not evidence for MySQL locking, Outbox, idempotency, or migration behavior. Those require disposable MySQL integration tests beginning in M0.
+The current H2 dependency is test-scoped and only proves that the empty application contexts can start. M0 now also has a disposable MySQL 8.4.12 test for the V1 Flyway migration and API/Worker read boundaries. That test is not yet evidence for Outbox atomicity, idempotent task claiming, or locking; each of those still requires its own disposable MySQL integration test.
 
 ## Completion and evidence
 

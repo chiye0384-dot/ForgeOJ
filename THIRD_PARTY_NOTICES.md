@@ -99,6 +99,12 @@ and digest when available.
   Erlang, and other image components retain their own licenses.
 - Testcontainers Ryuk `0.14.0` — MIT. Testcontainers starts this helper image
   to remove disposable test resources.
+- Eclipse Temurin Java 21, pinned as
+  `eclipse-temurin:21.0.12_8-jdk-jammy@sha256:c7d5863b5dd8f26b90c64f1d80cc2b0e5a5e4642f8db9955a370d348edd8f438`.
+  The Temurin binary is GPLv2 with the Classpath Exception; the official
+  container Dockerfiles are Apache-2.0, while Ubuntu and other image
+  components retain their own licenses. ForgeOJ records it as an external
+  M0 judge runtime, not as ForgeOJ-authored or redistributed source.
 
 These images are fetched from their registries for development or tests. They
 are not copied into this repository, redistributed as archives, or used as the

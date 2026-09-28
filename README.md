@@ -1,22 +1,22 @@
 # ForgeOJ
 
-> 当前状态：`M-1：项目准备` 已验证通过；`M0：最小判题纵向切片` 为 `IN_PROGRESS`，尚无已验证业务能力。
+> 当前状态：`M-1：项目准备` 已验证通过；`M0：最小判题纵向切片` 为 `IN_PROGRESS`。数据/基础设施基线、开发账号会话登录与公开题目读取已通过局部自动化验证，完整判题闭环尚未实现。
 >
 > 需求基线：2026-09-24；工程基线：2026-09-28
 
 ForgeOJ 是一个面向 Java 学习者和小型教学班级的在线判题平台。它以“安全、可靠、可解释的异步判题”为核心，而不是以堆叠微服务或复制现有 OJ 页面为目标。
 
-仓库已包含可构建的 M-1 工程起点和需求文档，但还没有 Controller、数据表、消息链路、判题器或任何已实现的业务功能。任何规划中的功能，在进入正式 release 并完成测试前，都不能写成已实现能力。
+仓库已包含可构建的工程起点、M0 的 7 张核心业务表、开发/测试种子、最小会话认证和公开题目详情接口。Submission/Outbox 事务、RabbitMQ 发布、Worker、Docker 判题和结果轮询仍未实现；任何规划中的完整能力，在进入正式 release 并完成相应门禁前，都不能写成已完成能力。
 
 ## 当前工程基线
 
 - JDK 21 + Spring Boot 4.1.1 + Maven Wrapper 3.3.4 / Maven 3.9.14；
 - Maven 根聚合工程，包含独立的 `forgeoj-api` 和 `forgeoj-judge-worker` 可执行模块；
 - 持久层使用官方 `mybatis-spring-boot-starter:4.1.0`，不使用 MyBatis-Plus；
-- M0 已声明 Spring Security、Spring AMQP 与 Flyway 运行依赖，以及仅用于测试的 Testcontainers；版本由 Spring Boot 4.1.1 BOM 管理，但相应业务能力仍在实现中；
+- M0 已声明 Spring Security、Spring AMQP 与 Flyway 运行依赖，以及仅用于测试的 Testcontainers；最小会话认证和 Flyway migration 已有局部实现与测试，异步判题能力仍在实现中；
 - PageHelper 暂不引入，到 M2 出现真实列表查询和分页语义时再评估；
 - 前端为 create-vue 3.22.3 生成的 Vue 3 + TypeScript + Router + Vitest + ESLint + Prettier 最小骨架；
-- H2 仅在测试作用域内用于空上下文启动检查，不代替以后的 MySQL 集成验证。
+- H2 仅在测试作用域内用于空上下文启动检查；M0 的 migration、数据库权限、认证和题目读取使用固定 digest 的真实 MySQL 8.4.12 Testcontainer 验证。
 
 ## 项目结构
 
@@ -55,6 +55,16 @@ npm run verify
 
 从 M0 起，后端 `clean verify` 会通过 Testcontainers 启动固定 digest 的 MySQL 8.4.12，验证真实 Flyway migration 和数据库读取边界，因此需要可用的 Linux Docker Engine。开发用 MySQL/RabbitMQ Compose 的启动和重置方法见 [deploy/README.md](deploy/README.md)。
 
+## M0 本地开发账号
+
+启用 Spring `dev` profile 时，Flyway 才会额外加载 `db/devdata` 中的开发种子：
+
+- 用户名：`learner`
+- 密码：`forgeoj-dev-only`
+- 内置题目：`sum-two-integers`
+
+该固定密码只存在于 dev/test 种子中；默认 migration 不创建用户或题目，生产环境不得启用 `dev` profile。当前 Session 存于单个 API 进程内存，只服务 M0 最短链路验证，不是 V1.0 的 JWT、Redis 或多会话方案。
+
 ## V1.0 已确认目标范围
 
 - 计划仅支持 Java 21、单文件 Main.java 和标准输入输出题。
@@ -91,4 +101,4 @@ npm run verify
 
 用户已经完成人工结构审阅并确认 Apache-2.0 根许可证；后端和前端已在只读源码、全新依赖缓存的 Linux 容器中复现通过。首个公开提交的 [GitHub Actions 运行](https://github.com/chiye0384-dot/ForgeOJ/actions/runs/36386617957) 中，`backend` 与 `frontend` 两个 job 也均为 `success`，因此 M-1 标记为 `VERIFIED`。
 
-这只证明工程起点、许可证边界和构建链路可复现，不代表任何 OJ 业务能力已经实现。M0 已在短期功能分支启动，当前按“预置账号登录 → 查看内置题 → 提交 → Outbox/RabbitMQ → Worker/Docker → 轮询结果”的最小纵向切片推进；在 M0 门禁全部通过前仍不能声称判题能力已完成。
+M-1 的证据只证明工程起点、许可证边界和构建链路可复现。M0 已在短期功能分支完成“预置账号登录 → 查看内置题”的局部验证，下一步是“创建 Submission/JudgeTask/Outbox 的单事务写入与幂等约束”；RabbitMQ、Worker/Docker 判题和结果轮询仍在后续。在 M0 门禁全部通过前不能声称在线判题能力已完成。

@@ -2,7 +2,7 @@
 
 ## Repository status
 
-ForgeOJ has an approved requirements baseline and a verified M-1 minimal project scaffold. M0 business implementation started on 2026-09-28 and remains `IN_PROGRESS`; planning documents still describe targets, not completed functionality.
+ForgeOJ has an approved requirements baseline and a verified M-1 minimal project scaffold. M0 business implementation started on 2026-09-28 and remains `IN_PROGRESS`. The data/infrastructure foundation plus the development-session login and public-problem read slices have local automated evidence; submission, messaging, worker, sandbox, and end-to-end judging remain incomplete.
 
 Use these documents as authoritative sources:
 
@@ -68,7 +68,7 @@ Use the repository-pinned commands for the M-1 baseline:
 
 Linux/macOS environments running the script-only Maven Wrapper must provide `bash` and `unzip`. Without `unzip`, Wrapper 3.3.4 falls back from the configured ZIP URL to a tarball, which cannot match the recorded ZIP SHA-256.
 
-The current H2 dependency is test-scoped and only proves that the empty application contexts can start. M0 now also has a disposable MySQL 8.4.12 test for the V1 Flyway migration and API/Worker read boundaries. That test is not yet evidence for Outbox atomicity, idempotent task claiming, or locking; each of those still requires its own disposable MySQL integration test.
+The current H2 dependency is test-scoped and only proves that the empty application contexts can start. M0 also has disposable MySQL 8.4.12 tests for the V1 Flyway migration, API/Worker database boundaries, dev seed, server-side session login/logout, CSRF enforcement, and the public-problem response whitelist. Those tests are not evidence for Outbox atomicity, idempotent task claiming, or locking; each of those still requires its own disposable MySQL integration test.
 
 ## Completion and evidence
 

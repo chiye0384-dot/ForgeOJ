@@ -119,7 +119,7 @@ M0 使用单 API 实例的服务端内存 Session。它只用于验证受保护�
 - 必须登录；
 - Header `Idempotency-Key` 必须是 UUID；
 - `language` 在 M0 只接受 `JAVA_21`；
-- `sourceCode` 必须是无 `package` 的单文件 `Main.java`，并受固定字节数上限约束；
+- `sourceCode` 必须是无 `package` 的单文件 `Main.java`，包含真实的 `public class Main` 声明；M0 上限为 65,536 UTF-8 字节；
 - 相同用户与相同 key 的网络重发返回第一次创建的 submission；用户主动再次提交必须生成新 key。
 
 成功返回 HTTP `202 Accepted`：
@@ -207,6 +207,8 @@ API 数据库账号不得对该表拥有 `SELECT` 权限。
 - `created_at`、可空 `published_at`；
 - `(event_type, aggregate_id)` 唯一；
 - `(published_at, created_at)` 索引。
+
+M0 判题任务事件使用 `aggregate_type=JUDGE_TASK`、`event_type=JUDGE_TASK_QUEUED`，`aggregate_id` 为 task ID。payload 严格遵循 `contracts/judge-task-v1.schema.json`，只包含 `taskId`、`submissionId`、`taskType`、`contractVersion` 四个字段。
 
 ## 7. 状态机与不变量
 

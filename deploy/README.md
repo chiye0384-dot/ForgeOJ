@@ -47,9 +47,12 @@ profile creates neither. The currently available HTTP slice is:
 - `GET /api/v1/auth/session` for authentication state and a CSRF token;
 - `POST /api/v1/auth/login` and `POST /api/v1/auth/logout` using that token;
 - `GET /api/v1/problems/sum-two-integers` for the public-field whitelist.
+- authenticated `POST /api/v1/problems/sum-two-integers/submissions` with a
+  UUID `Idempotency-Key` header to atomically create the queued submission,
+  judge task, and four-field Outbox event.
 
-The frontend is not wired to these endpoints yet, and submission/judging is
-not implemented. Never enable the `dev` profile in production.
+The frontend is not wired to these endpoints yet. Outbox publishing and actual
+judging are not implemented. Never enable the `dev` profile in production.
 
 ## Stop and reset
 

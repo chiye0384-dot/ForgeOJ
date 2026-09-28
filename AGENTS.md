@@ -2,7 +2,7 @@
 
 ## Repository status
 
-ForgeOJ has an approved requirements baseline and a verified M-1 minimal project scaffold. M0 business implementation started on 2026-09-28 and remains `IN_PROGRESS`. The data/infrastructure foundation plus the development-session login and public-problem read slices have local automated evidence; submission, messaging, worker, sandbox, and end-to-end judging remain incomplete.
+ForgeOJ has an approved requirements baseline and a verified M-1 minimal project scaffold. M0 business implementation started on 2026-09-28 and remains `IN_PROGRESS`. The data/infrastructure foundation, development-session login, public-problem read, and atomic Submission/JudgeTask/Outbox creation slices have local automated evidence; RabbitMQ publishing, worker, sandbox, and end-to-end judging remain incomplete.
 
 Use these documents as authoritative sources:
 
@@ -68,7 +68,7 @@ Use the repository-pinned commands for the M-1 baseline:
 
 Linux/macOS environments running the script-only Maven Wrapper must provide `bash` and `unzip`. Without `unzip`, Wrapper 3.3.4 falls back from the configured ZIP URL to a tarball, which cannot match the recorded ZIP SHA-256.
 
-The current H2 dependency is test-scoped and only proves that the empty application contexts can start. M0 also has disposable MySQL 8.4.12 tests for the V1 Flyway migration, API/Worker database boundaries, dev seed, server-side session login/logout, CSRF enforcement, and the public-problem response whitelist. Those tests are not evidence for Outbox atomicity, idempotent task claiming, or locking; each of those still requires its own disposable MySQL integration test.
+The current H2 dependency is test-scoped and only proves that the empty application contexts can start. M0 also has disposable MySQL 8.4.12 tests for the V1 Flyway migration, API/Worker database boundaries, dev seed, server-side session login/logout, CSRF enforcement, the public-problem response whitelist, atomic Submission/JudgeTask/Outbox creation, rollback, and sequential/concurrent request replay. These tests do not yet prove RabbitMQ publishing, idempotent Worker task claiming, or locking; each still requires its own integration test.
 
 ## Completion and evidence
 

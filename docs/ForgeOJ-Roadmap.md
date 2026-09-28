@@ -75,8 +75,10 @@ V2.0 综合学习内容：BACKLOG，需另行确认是否立项
 - 已在真实 MySQL 8.4.12 Testcontainer 中验证 migration，证明 API 账号不能读取隐藏测试、Worker 能读取隐藏测试但不能读取用户密码；Compose 两个服务的健康检查也已在隔离临时栈通过；
 - 已加入仅由 `dev`/集成测试显式加载的原创开发题目和 BCrypt 预置账号；默认生产 migration 不创建公开默认密码；
 - 已在真实 MySQL 8.4.12 Testcontainer 中验证服务端 Session 登录/注销、会话固定攻击防护、CSRF 拒绝、错误密码拒绝，以及公开题目 DTO 不暴露隐藏数据集和判题镜像字段；
-- 当前下一步是实现 Submission、JudgeTask 与 Outbox 的同事务写入、唯一约束和回滚测试；
-- 登录和公开题目读取是已验证的局部切片；提交、消息、Worker、Docker 判题和端到端闭环仍未完成，因此 M0 整体保持 `IN_PROGRESS`。
+- 已在真实 MySQL 8.4.12 Testcontainer 中验证 Submission、JudgeTask 与 Outbox 同事务创建；Outbox 无写权限时三表全部回滚，相同 Idempotency-Key 的顺序和 8 路并发重放只产生一组记录，不同 key 产生独立提交；
+- 提交接口只接受规范 UUID、`JAVA_21` 和不超过 65,536 UTF-8 字节的无 package 单文件 `public class Main`；判题快照完整固化，四字段 Outbox payload 不含源码或隐藏数据；
+- 当前下一步是实现 Outbox 到 RabbitMQ 的最小可靠发布循环，并且只在 publisher confirm 成功后设置 `published_at`；
+- 登录、公开题目读取和提交事务是已验证的局部切片；RabbitMQ、Worker、Docker 判题和端到端闭环仍未完成，因此 M0 整体保持 `IN_PROGRESS`。
 
 最短流程：
 

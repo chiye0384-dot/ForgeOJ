@@ -2,7 +2,7 @@
 
 > 执行日期：2026-09-27；许可证决策更新：2026-09-28  
 > 执行环境：Windows 11 / JDK 21.0.12.1 / Node 24.14.1 / npm 11.11.0  
-> 结论：当前本机工程基线通过；M-1 仍为 `IN_PROGRESS`，未进入 M0。
+> 结论：本机、干净 Linux 容器与真实 GitHub Actions 工程基线均通过；M-1 为 `VERIFIED`，M0 仍为 `PLANNED`。
 
 ## 1. 生成输入与产物
 
@@ -142,11 +142,11 @@ npm run verify
 
 ## 6. 未验证和不得外推的内容
 
-- GitHub Actions 工作流已创建，但尚无远程仓库，因此没有真实托管 CI 运行记录；
+- GitHub Actions 已在首个公开提交上真实运行并通过；后续提交仍需持续通过同一工作流；
 - M-1 已在全新缓存的 Linux 容器中复现；这不是 M5 所要求的固定 Linux 主机功能、安全和性能验收；
 - H2 不是 MySQL 替代证据，尚未验证任何 Mapper、迁移、事务、锁、Outbox 或幂等 SQL；
 - RabbitMQ、Docker 沙箱、Security、认证、题库和提交链路都没有实现；
-- 不得因为工程可构建就将 M-1 标为 `VERIFIED`，也不得将任何业务能力写入简历。
+- M-1 的 `VERIFIED` 只代表项目准备门禁闭环，不得据此将任何 OJ 业务能力写成已实现或写入简历。
 
 ## 7. 2026-09-28 根许可证落地复验
 
@@ -174,4 +174,14 @@ npm run verify
 
 第一次隔离命令曾把 npm 可执行入口放在不可执行的 tmpfs，并在复制前端文件时遗漏 `.gitignore`，分别导致 `run-s: Permission denied` 和 OxcLint 扫描 `node_modules`。改为容器普通临时工作目录并完整保留 `.gitignore` 后通过；这两个失败来自复现装置，不是源码修复。Maven 第一次尝试未安装 `unzip`，Wrapper 因改下 tarball 而无法匹配 ZIP 哈希；直接下载 ZIP 得到的 SHA-256 与仓库记录一致，补齐 `unzip` 后 Wrapper 校验通过。
 
-该结果满足 M-1 的独立全新环境复现门禁，但不冒充 GitHub 托管 CI 或 M5 固定 Linux 主机验收。首次推送后仍需记录 GitHub Actions 的 backend/frontend 结果。
+该结果满足 M-1 的独立全新环境复现门禁，但不冒充 M5 固定 Linux 主机验收；GitHub 托管 CI 证据见下一节。
+
+## 9. 2026-09-28 真实 GitHub Actions 复现
+
+- 公共仓库：[`chiye0384-dot/ForgeOJ`](https://github.com/chiye0384-dot/ForgeOJ)；
+- 触发提交：`c2906b48e329eb5d6e676bf5e74f8fd96c47d5e7`（`chore: establish ForgeOJ M-1 scaffold`）；
+- 工作流：[CI run 36386617957](https://github.com/chiye0384-dot/ForgeOJ/actions/runs/36386617957)，由 `main` 分支首次 `push` 触发，结论为 `success`；
+- [`frontend` job](https://github.com/chiye0384-dot/ForgeOJ/actions/runs/36386617957/job/108813214922)：`success`，执行 Node 24.14.1、`npm ci` 与 `npm run verify`；
+- [`backend` job](https://github.com/chiye0384-dot/ForgeOJ/actions/runs/36386617957/job/108813215193)：`success`，执行 Temurin JDK 21 与 `bash ./mvnw --batch-mode clean verify`。
+
+结合人工结构确认、Apache-2.0 与第三方许可证边界、Windows 本机验证、干净 Linux 容器复现和上述托管 CI，M-1 于 2026-09-28 标记为 `VERIFIED`。这不等于 M0 或任何判题业务已经实现，也不替代 M5 的固定 Linux 主机功能、安全和性能验收。

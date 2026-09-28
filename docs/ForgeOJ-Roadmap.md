@@ -1,6 +1,6 @@
 # ForgeOJ 版本路线图
 
-> 当前阶段：M-1 项目准备进行中，尚未进入业务开发。  
+> 当前阶段：M-1 项目准备已验证通过；M0 尚未开始。  
 > 路线图描述先后顺序，不代表完成状态。
 
 ## 1. 状态规则
@@ -13,7 +13,7 @@
 - `DEFERRED`：明确推迟到以后。
 - `BACKLOG`：只有候选想法，尚未承诺进入版本。
 
-当前 M-1 为 `IN_PROGRESS`；M0 至 V1.1 仍为 `PLANNED`；V2.0 仅为 `BACKLOG` 候选，不是承诺的里程碑。
+当前 M-1 为 `VERIFIED`；M0 至 V1.1 仍为 `PLANNED`；V2.0 仅为 `BACKLOG` 候选，不是承诺的里程碑。
 
 ## 2. 总体顺序
 
@@ -38,7 +38,7 @@ V2.0 综合学习内容：BACKLOG，需另行确认是否立项
 
 目标：建立可追溯的工程起点。
 
-当前进展（`IN_PROGRESS`，2026-09-28）：
+验证结果（`VERIFIED`，2026-09-28）：
 
 - 已确认并登记 Spring Initializr + create-vue 最小官方骨架，不引入大型业务脚手架；
 - 已固定 JDK 21、Spring Boot 4.1.1、Maven 3.9.14、MyBatis Starter 4.1.0；PageHelper 为 `DEFERRED`；
@@ -46,7 +46,7 @@ V2.0 综合学习内容：BACKLOG，需另行确认是否立项
 - 已在当前 Windows 环境通过后端 `clean verify` 与前端类型/静态/格式/测试/构建检查；
 - 用户已人工确认当前工程结构；ForgeOJ 自有代码已选择 Apache-2.0，版权人为池也，根许可证和直接依赖许可证记录已落地；
 - 已在只读挂载源码、全新 Maven/npm 缓存的固定 Linux/amd64 容器中完成后端和前端复现；
-- 尚待首次推送后的真实 GitHub Actions 通过并记录运行证据，因此 M-1 暂不标记为 `VERIFIED`。
+- 首个公开提交已推送至 [ForgeOJ](https://github.com/chiye0384-dot/ForgeOJ)；真实 [GitHub Actions 运行 36386617957](https://github.com/chiye0384-dot/ForgeOJ/actions/runs/36386617957) 的 `backend` 与 `frontend` 两个 job 均为 `success`，M-1 门禁闭环。
 
 交付物：
 

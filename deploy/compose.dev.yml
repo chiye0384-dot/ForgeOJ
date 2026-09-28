@@ -1,0 +1,57 @@
+name: forgeoj-dev
+
+services:
+  mysql:
+    image: container-registry.oracle.com/mysql/community-server:8.4.12@sha256:7dcc4add9183664de3a214daf85a50c3ba6cccfd7534f700b6561bf5b41885be
+    platform: linux/amd64
+    environment:
+      MYSQL_ROOT_PASSWORD: ${MYSQL_ROOT_PASSWORD:?set MYSQL_ROOT_PASSWORD in the root .env file}
+      MYSQL_DATABASE: forgeoj
+      FORGEOJ_MIGRATOR_PASSWORD: ${FORGEOJ_MIGRATOR_PASSWORD:?set FORGEOJ_MIGRATOR_PASSWORD in the root .env file}
+      FORGEOJ_API_DB_PASSWORD: ${FORGEOJ_API_DB_PASSWORD:?set FORGEOJ_API_DB_PASSWORD in the root .env file}
+      FORGEOJ_WORKER_DB_PASSWORD: ${FORGEOJ_WORKER_DB_PASSWORD:?set FORGEOJ_WORKER_DB_PASSWORD in the root .env file}
+    command:
+      - --character-set-server=utf8mb4
+      - --collation-server=utf8mb4_0900_ai_ci
+      - --default-time-zone=+00:00
+    ports:
+      - 127.0.0.1:${MYSQL_PORT:-3306}:3306
+    volumes:
+      - forgeoj-mysql-data:/var/lib/mysql
+      - ./mysql/init/01-create-users.sh:/docker-entrypoint-initdb.d/01-create-users.sh:ro
+    healthcheck:
+      test:
+        [
+          "CMD-SHELL",
+          'mysqladmin ping --host=127.0.0.1 --user=root --password="$${MYSQL_ROOT_PASSWORD}" --silent',
+        ]
+      interval: 5s
+      timeout: 5s
+      retries: 30
+      start_period: 30s
+    restart: unless-stopped
+
+  rabbitmq:
+    image: rabbitmq:4.3.6-management@sha256:cdf40d8cb363d145e377ed88d59696a42386ffe54b30125f10eb128b862eea95
+    platform: linux/amd64
+    hostname: forgeoj-rabbitmq
+    environment:
+      RABBITMQ_DEFAULT_USER: ${RABBITMQ_DEFAULT_USER:-forgeoj}
+      RABBITMQ_DEFAULT_PASS: ${RABBITMQ_DEFAULT_PASS:?set RABBITMQ_DEFAULT_PASS in the root .env file}
+      RABBITMQ_DEFAULT_VHOST: /forgeoj
+    ports:
+      - 127.0.0.1:${RABBITMQ_AMQP_PORT:-5672}:5672
+      - 127.0.0.1:${RABBITMQ_MANAGEMENT_PORT:-15672}:15672
+    volumes:
+      - forgeoj-rabbitmq-data:/var/lib/rabbitmq
+    healthcheck:
+      test: ["CMD", "rabbitmq-diagnostics", "-q", "ping"]
+      interval: 5s
+      timeout: 5s
+      retries: 30
+      start_period: 20s
+    restart: unless-stopped
+
+volumes:
+  forgeoj-mysql-data:
+  forgeoj-rabbitmq-data:

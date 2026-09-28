@@ -1,6 +1,6 @@
 # ForgeOJ 版本路线图
 
-> 当前阶段：M-1 项目准备已验证通过；M0 尚未开始。  
+> 当前阶段：M-1 项目准备已验证通过；M0 最小判题纵向切片进行中。
 > 路线图描述先后顺序，不代表完成状态。
 
 ## 1. 状态规则
@@ -13,7 +13,7 @@
 - `DEFERRED`：明确推迟到以后。
 - `BACKLOG`：只有候选想法，尚未承诺进入版本。
 
-当前 M-1 为 `VERIFIED`；M0 至 V1.1 仍为 `PLANNED`；V2.0 仅为 `BACKLOG` 候选，不是承诺的里程碑。
+当前 M-1 为 `VERIFIED`；M0 为 `IN_PROGRESS`；M1 至 V1.1 仍为 `PLANNED`；V2.0 仅为 `BACKLOG` 候选，不是承诺的里程碑。
 
 ## 2. 总体顺序
 
@@ -67,6 +67,14 @@ V2.0 综合学习内容：BACKLOG，需另行确认是否立项
 ## 4. M0：最小判题纵向切片
 
 目标：尽早验证最难的技术风险，不先做完整页面。
+
+当前进展（`IN_PROGRESS`，2026-09-28）：
+
+- 用户已明确确认启动 M0；开发分支为 `feat/m0-vertical-slice`；
+- 已完成 M0 直接依赖与许可证登记、纵向切片设计、四字段消息 JSON Schema、7 张业务表的 V1 Flyway migration，以及固定 digest 的 MySQL/RabbitMQ disposable Compose；
+- 已在真实 MySQL 8.4.12 Testcontainer 中验证 migration，证明 API 账号不能读取隐藏测试、Worker 能读取隐藏测试但不能读取用户密码；Compose 两个服务的健康检查也已在隔离临时栈通过；
+- 当前下一步是实现预置开发数据、最小会话认证和公开题目读取；
+- 尚未将任何登录、题目、提交、消息、Worker 或 Docker 判题能力标记为 `IMPLEMENTED`。
 
 最短流程：
 

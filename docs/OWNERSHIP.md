@@ -1,14 +1,14 @@
 # ForgeOJ 代码归属与复用边界
 
 > 更新日期：2026-09-28  
-> 当前范围：M-1 最小工程骨架；业务实现尚未开始。
+> 当前范围：M-1 已验证；M0 为 `IN_PROGRESS`，已进入依赖、契约与数据模型准备，业务纵向链路尚未通过验证。
 
 ## 1. 生成与第三方部分
 
 - `mvnw`、`mvnw.cmd`、`.mvn/wrapper/`：由 Spring Initializr 生成，其中 Maven Wrapper 来自 Apache Maven Wrapper 3.3.4；`mvnw.cmd` 另含 ForgeOJ 记录的一处 Windows 空值保护补丁。
 - 两个 Spring Boot 启动类与最初的空上下文测试：来自 2026-09-27 的 Spring Initializr 生成产物。
 - `frontend/` 的基础构建、TypeScript、Router、Vitest、ESLint、OxcLint 和 Prettier 配置：由 create-vue 3.22.3 模板生成后修改。
-- Spring Boot、MyBatis、Vue、Vite 及其他 Maven/npm 包是第三方依赖，不是 ForgeOJ 自行实现的能力。
+- Spring Boot、Spring Security、Spring AMQP、Flyway、Testcontainers、MyBatis、Vue、Vite 及其他 Maven/npm 包是第三方依赖，不是 ForgeOJ 自行实现的能力。加入依赖不能被表述为已经自行实现认证、消息可靠性、迁移或集成测试。
 
 精确版本、commit、许可证和生成产物哈希见 `docs/UPSTREAM-AND-LICENSE.md` 与 `THIRD_PARTY_NOTICES.md`。
 
@@ -33,12 +33,14 @@
 - Redis/Elasticsearch 的一致性、降级与重建；
 - 性能、安全和 Linux 故障演练证据。
 
+M0 当前自行设计和实现的边界包括：预置账号的登录会话与权限规则、Flyway migration、Submission/JudgeTask/Outbox SQL 与状态机、四字段任务消息契约、Worker 幂等领取、Docker CLI 沙箱适配与清理，以及相应验收测试。在门禁通过前，这些内容仍只能描述为“正在实现”。
+
 ## 4. 明确排除
 
 - 没有引入 RuoYi-Vue-Plus、ruoyi-vue-pro 或 JHipster 代码；
 - 没有引入 CodeJudge 或其他 OJ 的代码、页面、题面、测试数据或性能数字；
 - 没有引入 MyBatis-Plus 或 PageHelper；
-- 没有创建泛化 `common` 模块。只有稳定的跨进程消息契约真实出现后，才能评估狭窄的 contracts 模块。
+- 没有创建泛化 `common` 模块。M0 的稳定跨进程消息已经以根目录中立 JSON Schema 表达；API 与 Worker 各自维护 DTO，不通过共享 Maven 代码模块形成耦合。
 
 ## 5. 许可证状态
 

@@ -1,6 +1,6 @@
 # ForgeOJ
 
-> 当前状态：`M-1：项目准备` 已验证通过；`M0` 仍为 `PLANNED`，业务实现尚未开始。
+> 当前状态：`M-1：项目准备` 已验证通过；`M0：最小判题纵向切片` 为 `IN_PROGRESS`，尚无已验证业务能力。
 >
 > 需求基线：2026-09-24；工程基线：2026-09-28
 
@@ -13,6 +13,7 @@ ForgeOJ 是一个面向 Java 学习者和小型教学班级的在线判题平台
 - JDK 21 + Spring Boot 4.1.1 + Maven Wrapper 3.3.4 / Maven 3.9.14；
 - Maven 根聚合工程，包含独立的 `forgeoj-api` 和 `forgeoj-judge-worker` 可执行模块；
 - 持久层使用官方 `mybatis-spring-boot-starter:4.1.0`，不使用 MyBatis-Plus；
+- M0 已声明 Spring Security、Spring AMQP 与 Flyway 运行依赖，以及仅用于测试的 Testcontainers；版本由 Spring Boot 4.1.1 BOM 管理，但相应业务能力仍在实现中；
 - PageHelper 暂不引入，到 M2 出现真实列表查询和分页语义时再评估；
 - 前端为 create-vue 3.22.3 生成的 Vue 3 + TypeScript + Router + Vitest + ESLint + Prettier 最小骨架；
 - H2 仅在测试作用域内用于空上下文启动检查，不代替以后的 MySQL 集成验证。
@@ -22,7 +23,8 @@ ForgeOJ 是一个面向 Java 学习者和小型教学班级的在线判题平台
 - `forgeoj-api/`：对外 HTTP API 进程，不得获得 Docker 控制权限；
 - `forgeoj-judge-worker/`：未来的独立判题 Worker，当前只有启动类；
 - `frontend/`：前端工程骨架；
-- `deploy/`：后续存放 Compose 和 Linux 部署资产，当前没有可用部署栈；
+- `deploy/`：已包含 M0 的 MySQL/RabbitMQ disposable 开发 Compose；它尚不是生产部署栈；
+- `contracts/`：API 与 Worker 之间的中立消息 JSON Schema 和合法样例，不形成 Maven 模块耦合；
 - `docs/`：需求、决策、路线、归属和证据文档。
 
 ## 构建与验证
@@ -51,6 +53,8 @@ npm run verify
 
 `npm run verify` 会依次执行类型检查、静态检查、格式检查、单元测试和生产构建。
 
+从 M0 起，后端 `clean verify` 会通过 Testcontainers 启动固定 digest 的 MySQL 8.4.12，验证真实 Flyway migration 和数据库读取边界，因此需要可用的 Linux Docker Engine。开发用 MySQL/RabbitMQ Compose 的启动和重置方法见 [deploy/README.md](deploy/README.md)。
+
 ## V1.0 已确认目标范围
 
 - 计划仅支持 Java 21、单文件 Main.java 和标准输入输出题。
@@ -68,13 +72,14 @@ npm run verify
 - [需求基线](docs/ForgeOJ-Requirements.md)
 - [决策日志](docs/ForgeOJ-Decision-Log.md)
 - [版本路线图](docs/ForgeOJ-Roadmap.md)
+- [M0 最小判题纵向切片设计](docs/M0-VERTICAL-SLICE-DESIGN.md)
 - [已知限制](docs/KNOWN_LIMITATIONS.md)
 - [简历证据矩阵](docs/Resume-Evidence-Matrix.md)
 - [性能测试计划](docs/Performance-Test-Plan.md)
 - [上游与许可证策略](docs/UPSTREAM-AND-LICENSE.md)
 - [代码归属与复用边界](docs/OWNERSHIP.md)
 - [M-1 脚手架生成与验证记录](docs/M1-SCAFFOLD-VALIDATION.md)
-- [M-1 直接依赖许可证清单](docs/DIRECT-DEPENDENCY-LICENSES.md)
+- [直接依赖许可证清单](docs/DIRECT-DEPENDENCY-LICENSES.md)
 - [第三方声明](THIRD_PARTY_NOTICES.md)
 - [面试问答骨架](docs/ForgeOJ-Interview-QA.md)
 
@@ -86,4 +91,4 @@ npm run verify
 
 用户已经完成人工结构审阅并确认 Apache-2.0 根许可证；后端和前端已在只读源码、全新依赖缓存的 Linux 容器中复现通过。首个公开提交的 [GitHub Actions 运行](https://github.com/chiye0384-dot/ForgeOJ/actions/runs/36386617957) 中，`backend` 与 `frontend` 两个 job 也均为 `success`，因此 M-1 标记为 `VERIFIED`。
 
-这只证明工程起点、许可证边界和构建链路可复现，不代表任何 OJ 业务能力已经实现。进入 M0 仍需单独开始，并按最小判题纵向切片推进。
+这只证明工程起点、许可证边界和构建链路可复现，不代表任何 OJ 业务能力已经实现。M0 已在短期功能分支启动，当前按“预置账号登录 → 查看内置题 → 提交 → Outbox/RabbitMQ → Worker/Docker → 轮询结果”的最小纵向切片推进；在 M0 门禁全部通过前仍不能声称判题能力已完成。

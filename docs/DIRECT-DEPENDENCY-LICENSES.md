@@ -1,7 +1,7 @@
-# M-1 直接依赖许可证清单
+# ForgeOJ 直接依赖许可证清单
 
 > 核验日期：2026-09-28  
-> 范围：当前最小脚手架的直接 Maven/npm 依赖和构建工具。此清单不是法律意见，也不替代发布前的完整传递依赖报告。
+> 范围：已验证的 M-1 工程基线，以及 M0 当前已声明的直接 Maven/npm 依赖和构建工具；M0 仍为 `IN_PROGRESS`。此清单不是法律意见，也不替代发布前的完整传递依赖报告。
 
 ## 1. 核验方法
 
@@ -12,12 +12,19 @@
 
 ## 2. 后端直接项
 
-| 直接项 | 解析版本 | 作用域/用途 | 上游声明许可证 | M-1 判断 |
+| 直接项 | 解析版本 | 作用域/用途 | 上游声明许可证 | 当前判断 |
 |---|---:|---|---|---|
 | Spring Boot parent/BOM、`spring-boot-starter-webmvc`、测试 starter、Maven Plugin | 4.1.1 | 编译、API 运行、测试和打包 | Apache-2.0 | 可采用；保留上游版权与 NOTICE 义务 |
+| `org.springframework.boot:spring-boot-starter-security` | 4.1.1（Security 7.1.1） | API 运行 | Apache-2.0 | 可采用；依赖存在不等于认证功能已经实现 |
+| `org.springframework.boot:spring-boot-starter-amqp` | 4.1.1（Spring AMQP 4.1.1） | API/Worker 运行 | Apache-2.0 | 可采用；M0 只实现最小 RabbitMQ 链路 |
+| `org.springframework.boot:spring-boot-starter-flyway` | 4.1.1（Flyway Core 12.4.0） | API 运行；唯一生产迁移执行者 | Apache-2.0 | 可采用；Worker 不引入生产 Flyway |
+| `org.flywaydb:flyway-mysql` | 12.4.0 | API runtime；MySQL 数据库支持 | Apache-2.0 | 可采用；由 Boot 4.1.1 BOM 管理版本 |
 | `org.mybatis.spring.boot:mybatis-spring-boot-starter` | 4.1.0 | API/Worker 运行 | Apache-2.0 | 可采用；不等于引入 MyBatis-Plus |
 | `com.mysql:mysql-connector-j` | 9.7.0 | runtime | GPL-2.0 with Universal FOSS Exception 1.0 | 可在 Apache-2.0 开源源码组合中采用；发布物仍需专项审计 |
 | `com.h2database:h2` | 2.4.240 | test only | MPL-2.0 或 EPL-1.0 双许可证 | 仅用于空上下文测试；不进入生产运行依赖，发布前仍需保留相应许可证信息 |
+| `org.springframework.security:spring-security-test` | 7.1.1 | API test only | Apache-2.0 | 可采用；只用于安全边界自动化测试 |
+| `org.springframework.boot:spring-boot-testcontainers` | 4.1.1 | API/Worker test only | Apache-2.0 | 可采用；只提供 Spring Boot 测试集成 |
+| `org.testcontainers:testcontainers-junit-jupiter`、`testcontainers-mysql`、`testcontainers-rabbitmq` | 2.0.5 | API/Worker test only | MIT | 可采用；用于 disposable MySQL/RabbitMQ 集成测试 |
 
 MySQL Connector/J 的 POM 明确写明 “GPL v2 with Universal FOSS Exception 1.0”。[Oracle 的例外文本](https://oss.oracle.com/licenses/universal-foss-exception/)把额外许可限定在与完整源码、采用 OSI 批准或 FSF 自由许可证的 “Other FOSS” 一起使用/分发。Apache-2.0 是 OSI 批准许可证，因此根许可证类别这一前提已满足；Connector/J 本身仍保持 GPL-2.0 + UFE，不能被 ForgeOJ 根许可证重新许可。首次发布 fat JAR、镜像或安装包前，仍须按实际组合复核完整对应源码可获得性、许可证和告知方式；若发布方式不能满足条件，必须更换驱动方案或取得合适许可。
 
@@ -57,9 +64,21 @@ H2 的测试作用域不能作为 MySQL 语义证据，也不能因为不进入�
 
 这些开发工具不等于 ForgeOJ 自研能力，也通常不进入 Vite 生产静态文件；仍需保留锁文件和来源记录。
 
-## 5. 当前结论与剩余门禁
+## 5. M0 外部开发/测试运行时
 
-- Spring Boot、MyBatis、Vue 和构建工具的直接许可证已登记；
+| 运行时镜像 | 固定引用 | 主要许可证边界 | 当前判断 |
+|---|---|---|---|
+| MySQL Community Server | `container-registry.oracle.com/mysql/community-server:8.4.12@sha256:7dcc4add9183664de3a214daf85a50c3ba6cccfd7534f700b6561bf5b41885be` | MySQL Community Server 为 GPLv2；镜像内第三方组件各自适用原许可证 | 只从 Oracle Registry 拉取作 disposable 运行时，不提交镜像层或派生镜像 |
+| RabbitMQ Management | `rabbitmq:4.3.6-management@sha256:cdf40d8cb363d145e377ed88d59696a42386ffe54b30125f10eb128b862eea95` | RabbitMQ Server/核心插件主要为 MPL-2.0；基础系统、Erlang 等组件各自适用原许可证 | 只从官方 registry 拉取作 disposable 运行时，不提交镜像层或派生镜像 |
+| Testcontainers Ryuk | `testcontainers/ryuk:0.14.0` | MIT | Testcontainers 测试清理辅助镜像；不进入 ForgeOJ 生产运行包 |
+
+镜像许可证不会自动改变 ForgeOJ 自有源码的 Apache-2.0，但若以后分发镜像归档、复制镜像层或制作派生镜像，必须重新审核对应源码提供、NOTICE 和内部组件义务。
+
+## 6. 当前结论与剩余门禁
+
+- Spring Boot、Spring Security、Spring AMQP、Flyway、Testcontainers、MyBatis、Vue 和构建工具的直接许可证已登记；
+- M0 新增直接依赖的 Apache-2.0/MIT 许可证与根 Apache-2.0 不冲突，不需要重新选择根许可证；
+- Testcontainers 库的 MIT 许可证不覆盖它启动的 MySQL、RabbitMQ、Ryuk 等容器镜像；当前使用的精确运行时已在第 5 节登记，升级时必须同步更新；
 - H2 被限制为测试作用域；
 - Apache-2.0 已解决 MySQL Connector/J Universal FOSS Exception 的根许可证类别前提，但实际发布组合的履约审计仍未完成；
 - GitHub Actions 的三个直接 Action 已在工作流中固定完整 commit，许可证记录见 `THIRD_PARTY_NOTICES.md`；

@@ -51,8 +51,11 @@ profile creates neither. The currently available HTTP slice is:
   UUID `Idempotency-Key` header to atomically create the queued submission,
   judge task, and four-field Outbox event.
 
-The frontend is not wired to these endpoints yet. Outbox publishing and actual
-judging are not implemented. Never enable the `dev` profile in production.
+With the `dev` profile, the API polls unpublished M0 Outbox rows in small
+batches, publishes persistent JSON to the durable RabbitMQ topology, and only
+sets `published_at` after a positive publisher confirm with no returned
+message. The frontend, Worker consumption, and actual judging are not yet
+implemented. Never enable the `dev` profile in production.
 
 ## Stop and reset
 

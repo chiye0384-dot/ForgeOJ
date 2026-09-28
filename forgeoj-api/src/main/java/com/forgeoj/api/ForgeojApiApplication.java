@@ -1,0 +1,13 @@
+package com.forgeoj.api;
+
+import org.springframework.boot.SpringApplication;
+import org.springframework.boot.autoconfigure.SpringBootApplication;
+
+@SpringBootApplication
+public class ForgeojApiApplication {
+
+	public static void main(String[] args) {
+		SpringApplication.run(ForgeojApiApplication.class, args);
+	}
+
+}

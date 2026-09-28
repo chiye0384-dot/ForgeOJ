@@ -1,0 +1,47 @@
+# ForgeOJ 代码归属与复用边界
+
+> 更新日期：2026-09-28  
+> 当前范围：M-1 最小工程骨架；业务实现尚未开始。
+
+## 1. 生成与第三方部分
+
+- `mvnw`、`mvnw.cmd`、`.mvn/wrapper/`：由 Spring Initializr 生成，其中 Maven Wrapper 来自 Apache Maven Wrapper 3.3.4；`mvnw.cmd` 另含 ForgeOJ 记录的一处 Windows 空值保护补丁。
+- 两个 Spring Boot 启动类与最初的空上下文测试：来自 2026-09-27 的 Spring Initializr 生成产物。
+- `frontend/` 的基础构建、TypeScript、Router、Vitest、ESLint、OxcLint 和 Prettier 配置：由 create-vue 3.22.3 模板生成后修改。
+- Spring Boot、MyBatis、Vue、Vite 及其他 Maven/npm 包是第三方依赖，不是 ForgeOJ 自行实现的能力。
+
+精确版本、commit、许可证和生成产物哈希见 `docs/UPSTREAM-AND-LICENSE.md` 与 `THIRD_PARTY_NOTICES.md`。
+
+## 2. ForgeOJ 在 M-1 完成的改造
+
+- 新建 Maven 根聚合/父 POM，将 API 与 Judge Worker 组织为两个互不依赖的可执行模块。
+- 锁定 JDK 21、Spring Boot 4.1.1、Maven 3.9.14 和官方 MyBatis Starter 4.1.0。
+- 将 H2 限定在测试作用域，Worker 明确设为 non-web；未引入任何虚构 Mapper 或业务实体。
+- 修补 Maven Wrapper 3.3.4 在 Windows 上对空 `Target[0]` 直接索引而无法启动的问题；补丁依据与退役条件记录在 `docs/UPSTREAM-AND-LICENSE.md`。
+- 从前端生成结果移除 Vue DevTools 及演示页文案，增加可重复的 `npm run verify` 检查链。
+- 新建项目级 CI、`.env.example`、`deploy/` 边界说明、决策和归属文档。
+
+## 3. ForgeOJ 必须自行设计和验证的业务
+
+以下内容不来自当前脚手架，也不会从现有 OJ 或大型后台项目复制：
+
+- 题目、测试数据、参考程序和判题版本模型；
+- Submission、JudgeTask、Outbox 状态与转移；
+- RabbitMQ 契约、幂等、重试、死信和故障恢复；
+- Judge Worker 与 Docker 沙箱适配器；
+- 隐藏测试、私有参考程序、班级作业和管理后台的权限边界；
+- Redis/Elasticsearch 的一致性、降级与重建；
+- 性能、安全和 Linux 故障演练证据。
+
+## 4. 明确排除
+
+- 没有引入 RuoYi-Vue-Plus、ruoyi-vue-pro 或 JHipster 代码；
+- 没有引入 CodeJudge 或其他 OJ 的代码、页面、题面、测试数据或性能数字；
+- 没有引入 MyBatis-Plus 或 PageHelper；
+- 没有创建泛化 `common` 模块。只有稳定的跨进程消息契约真实出现后，才能评估狭窄的 contracts 模块。
+
+## 5. 许可证状态
+
+池也拥有版权并有权许可的 ForgeOJ 自有源代码采用 Apache License 2.0，版权声明为 `Copyright 2026 池也`，见根 `LICENSE` 与 `NOTICE`。
+
+这个根许可证不改变归属边界：Spring Initializr/create-vue 生成文件、Maven Wrapper、本仓库保留的其他上游代码以及 Maven/npm 依赖继续遵循各自许可证；题目、题解、测试数据和用户提交内容也不会自动改用 Apache-2.0。来源、修改点和发布义务继续记录在 `THIRD_PARTY_NOTICES.md`、`licenses/` 与直接依赖清单中。

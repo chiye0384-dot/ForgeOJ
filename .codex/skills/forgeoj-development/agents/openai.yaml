@@ -1,0 +1,6 @@
+interface:
+  display_name: "ForgeOJ Development"
+  short_description: "Guide evidence-based ForgeOJ engineering"
+  default_prompt: "Use $forgeoj-development to plan and implement the next ForgeOJ milestone safely."
+policy:
+  allow_implicit_invocation: true

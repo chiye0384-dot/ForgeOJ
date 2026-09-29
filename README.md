@@ -1,12 +1,12 @@
 # ForgeOJ
 
-> 当前状态：`M-1：项目准备` 已验证通过；`M0：最小判题纵向切片` 为 `IN_PROGRESS`。数据/基础设施基线、开发账号会话登录、公开题目读取、提交事务、Outbox 可靠发布、Worker 幂等领取、不可变快照读取、受限 Docker 执行及终态事务写回已通过局部自动化验证；结果查询、前端轮询和完整 API 到结果闭环尚未实现。
+> 当前状态：`M-1：项目准备` 已验证通过；`M0：最小判题纵向切片` 为 `IN_PROGRESS`。数据/基础设施基线、开发账号会话登录、公开题目读取、提交事务、Outbox 可靠发布、Worker 幂等领取、不可变快照读取、受限 Docker 执行、终态事务写回及仅所有者可读的结果查询已通过局部自动化验证；前端轮询和完整 API 到结果闭环尚未实现。
 >
 > 需求基线：2026-09-24；工程基线：2026-09-28
 
 ForgeOJ 是一个面向 Java 学习者和小型教学班级的在线判题平台。它以“安全、可靠、可解释的异步判题”为核心，而不是以堆叠微服务或复制现有 OJ 页面为目标。
 
-仓库已包含可构建的工程起点、M0 的 7 张核心业务表、开发/测试种子、最小会话认证、公开题目详情接口、Submission/JudgeTask/Outbox 的原子创建和并发幂等处理、基于 publisher confirm 的 RabbitMQ 发布，以及 Worker 对四字段消息的严格校验、手动 ACK、幂等领取、快照完整性校验、受限 Docker 执行和终态事务写回。Worker 会在结果提交到 MySQL 后 ACK；平台故障写 `SYSTEM_ERROR` 且不伪装成用户 verdict。结果查询和前端轮询仍未实现。
+仓库已包含可构建的工程起点、M0 的 7 张核心业务表、开发/测试种子、最小会话认证、公开题目详情接口、Submission/JudgeTask/Outbox 的原子创建和并发幂等处理、基于 publisher confirm 的 RabbitMQ 发布，以及 Worker 对四字段消息的严格校验、手动 ACK、幂等领取、快照完整性校验、受限 Docker 执行和终态事务写回。Worker 会在结果提交到 MySQL 后 ACK；平台故障写 `SYSTEM_ERROR` 且不伪装成用户 verdict。结果查询只允许提交所有者读取，并对不存在、格式错误和他人提交统一返回 404；前端轮询仍未实现。
 
 ## 当前工程基线
 
@@ -101,4 +101,4 @@ npm run verify
 
 用户已经完成人工结构审阅并确认 Apache-2.0 根许可证；后端和前端已在只读源码、全新依赖缓存的 Linux 容器中复现通过。首个公开提交的 [GitHub Actions 运行](https://github.com/chiye0384-dot/ForgeOJ/actions/runs/36386617957) 中，`backend` 与 `frontend` 两个 job 也均为 `success`，因此 M-1 标记为 `VERIFIED`。
 
-M-1 的证据只证明工程起点、许可证边界和构建链路可复现。M0 已在短期功能分支完成“预置账号登录 → 查看内置题 → 原子创建 Submission/JudgeTask/Outbox → RabbitMQ confirm 后标记已发布 → Worker 原子幂等领取 → 校验快照与隐藏测试 → 受限 Docker 执行 → Submission/JudgeTask 同事务写入终态 → ACK”的局部验证。下一步是实现仅提交所有者可读的结果查询接口，再接前端轮询并组合验证完整 API 到结果链路。在 M0 门禁全部通过前不能声称在线判题能力已完成。
+M-1 的证据只证明工程起点、许可证边界和构建链路可复现。M0 已在短期功能分支完成“预置账号登录 → 查看内置题 → 原子创建 Submission/JudgeTask/Outbox → RabbitMQ confirm 后标记已发布 → Worker 原子幂等领取 → 校验快照与隐藏测试 → 受限 Docker 执行 → Submission/JudgeTask 同事务写入终态 → ACK”，并完成仅提交所有者可读、字段受限和诊断脱敏的结果查询。下一步是接入前端轮询，再组合验证完整 API 到结果链路。在 M0 门禁全部通过前不能声称在线判题能力已完成。

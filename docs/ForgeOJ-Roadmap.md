@@ -86,8 +86,9 @@ V2.0 综合学习内容：BACKLOG，需另行确认是否立项
 - 已通过 V2 Flyway migration 在不修改 V1 的前提下加入 OLE；JudgeTask 与 Submission 终态以短事务、行锁和版本条件同时写入，任一更新失败时整体回滚；
 - 已在真实 RabbitMQ、MySQL 和 Docker 组合中验证“manual ACK → 幂等领取 → 快照读取 → 沙箱执行 → 终态提交 → ACK”；平台执行故障写 `SYSTEM_ERROR` 且 verdict 为空，重复消息不再次改变终态；
 - Worker 消费与沙箱开关仍默认关闭，只在具备受控 Docker 环境时显式启用；
-- 当前下一步是实现仅提交所有者可读的 Submission 结果查询接口，再接入前端轮询并组合验证 API 提交到最终结果的完整链路；
-- 登录、公开题目读取、提交事务、RabbitMQ 发布及 Worker 到终态是已验证的局部切片；查询/轮询、完整 API 到结果闭环和固定 Linux 复现仍未完成，因此 M0 整体保持 `IN_PROGRESS`。
+- 已实现仅提交所有者可读的 Submission 结果查询；查询以 `(submission_id, user_id)` 同时过滤，他人、不存在和格式错误的 ID 统一返回 404，响应只包含状态版本、处理状态、verdict 和脱敏诊断等白名单字段；
+- 当前下一步是接入前端轮询，再组合验证 API 提交到最终结果的完整链路；
+- 登录、公开题目读取、提交事务、RabbitMQ 发布、Worker 到终态及所有者结果查询是已验证的局部切片；前端轮询、完整 API 到结果闭环和固定 Linux 复现仍未完成，因此 M0 整体保持 `IN_PROGRESS`。
 
 最短流程：
 

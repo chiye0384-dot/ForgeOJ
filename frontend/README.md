@@ -1,7 +1,7 @@
 # ForgeOJ frontend
 
-This is the M-1 Vue 3 and TypeScript scaffold. It does not contain ForgeOJ
-business pages yet.
+This Vue 3 and TypeScript application contains the M0 minimum judge workspace:
+session login, the built-in problem, Java 21 submission, and result polling.
 
 ## Install
 
@@ -29,5 +29,7 @@ check mode, Vitest once, and the production build.
 npm run dev
 ```
 
-The initial router intentionally has no business routes. Add pages only within
-the active Roadmap milestone.
+The Vite development server proxies `/api` to `http://localhost:8080`. Start the
+ForgeOJ API separately with the `dev` profile when exercising the real flow.
+The current automated frontend flow uses mocked API responses; it does not by
+itself prove the browser/API/Worker end-to-end path.

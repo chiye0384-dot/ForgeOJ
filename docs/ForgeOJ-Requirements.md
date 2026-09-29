@@ -7,7 +7,7 @@
 | 文档版本 | 1.0（需求基线） |
 | 基线日期 | 2026-09-24 |
 | 需求状态 | 已确认 |
-| 实现状态 | M0 `IN_PROGRESS`；数据基线、开发会话登录、公开题目读取、Submission/JudgeTask/Outbox 原子创建、RabbitMQ confirm 发布、Worker 幂等领取、不可变快照、受限 Docker 执行、终态事务写回、所有者结果查询及模拟 API 驱动的前端轮询已有局部自动化证据，真实浏览器/API/Worker 到结果的组合闭环尚未验证 |
+| 实现状态 | M0 `IN_PROGRESS`；局部自动化及 Windows + Docker Desktop 上的真实浏览器/API/RabbitMQ/Worker/Docker/MySQL AC 闭环已通过，固定 Linux 完整重放与最终 20 项门禁审计尚未完成 |
 | 目标版本 | M0、V1.0、V1.1；V2.0 仅保留路线 |
 
 本文使用“必须、应当、可以”表达约束。本文描述的是目标需求，不代表功能已经实现。实际完成状态以 Git release、自动化测试和证据矩阵为准。

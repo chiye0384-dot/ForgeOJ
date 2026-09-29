@@ -1,7 +1,7 @@
 # ForgeOJ 已知限制
 
 > 本文记录真实、可解释的范围限制，不记录故意制造的 Bug。  
-> 当前项目处于 M0 实现阶段，数据基线、开发会话登录、公开题目读取、Submission/JudgeTask/Outbox 原子创建、RabbitMQ confirm 发布、Worker 幂等领取、不可变快照、受限 Docker 执行、终态事务写回、所有者结果查询及模拟 API 驱动的前端轮询具备局部自动化证据；真实浏览器/API/Worker 到结果的组合闭环尚未验证。下列内容是已接受的设计边界，开发中发现的新限制必须继续追加。
+> 当前项目处于 M0 实现阶段，局部自动化及 Windows + Docker Desktop 上的真实浏览器/API/RabbitMQ/Worker/Docker/MySQL AC 闭环已通过；固定 Linux 完整重放和最终 20 项门禁审计尚未完成。下列内容是已接受的设计边界，开发中发现的新限制必须继续追加。
 
 ## 1. 为什么保留这份文档
 

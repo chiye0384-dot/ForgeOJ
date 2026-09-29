@@ -1,7 +1,7 @@
 # ForgeOJ 代码归属与复用边界
 
 > 更新日期：2026-09-29
-> 当前范围：M-1 已验证；M0 为 `IN_PROGRESS`。数据/基础设施基线、开发会话登录、公开题目读取、提交事务、RabbitMQ Outbox 发布、Worker 幂等领取、快照完整性校验及受限 Docker 编译/逐例执行已有局部验证，完整判题纵向链路尚未通过。
+> 当前范围：M-1 已验证；M0 为 `IN_PROGRESS`。数据/基础设施基线、开发会话登录、公开题目读取、提交事务、RabbitMQ Outbox 发布、Worker 幂等领取、快照完整性校验、受限 Docker 执行及终态事务写回已有局部验证，完整判题纵向链路尚未通过。
 
 ## 1. 生成与第三方部分
 
@@ -33,7 +33,7 @@
 - Redis/Elasticsearch 的一致性、降级与重建；
 - 性能、安全和 Linux 故障演练证据。
 
-M0 当前自行设计和实现的边界包括：预置账号的登录会话与权限规则、Flyway migration、Submission/JudgeTask/Outbox SQL 与状态机、四字段任务消息契约、Worker 幂等领取、不可变快照与隐藏测试完整性校验、Docker CLI 沙箱适配与清理，以及相应验收测试。其中 ForgeOJ 已自行实现并局部验证 V1 migration、dev/test seed、数据库账号权限、服务端 Session/CSRF 登录边界、公开题目字段白名单、Submission/JudgeTask/Outbox 原子写入与请求幂等、publisher confirm 后才标记已发布的 RabbitMQ Outbox 循环、Worker 严格消息校验和双表原子幂等领取，以及真实 Docker Engine 上的受限容器、源码/输入 stdin 传输、一次编译、逐测试点独立 JVM、结果比较、执行预算和清理；终态写回、结果查询及完整消费链路仍只能描述为“正在实现”。
+M0 当前自行设计和实现的边界包括：预置账号的登录会话与权限规则、Flyway migration、Submission/JudgeTask/Outbox SQL 与状态机、四字段任务消息契约、Worker 幂等领取、不可变快照与隐藏测试完整性校验、Docker CLI 沙箱适配与清理，以及相应验收测试。其中 ForgeOJ 已自行实现并局部验证 V1/V2 migration、dev/test seed、数据库账号权限、服务端 Session/CSRF 登录边界、公开题目字段白名单、Submission/JudgeTask/Outbox 原子写入与请求幂等、publisher confirm 后才标记已发布的 RabbitMQ Outbox 循环、Worker 严格消息校验、双表原子幂等领取、真实 Docker 执行、六种 M0 verdict 映射、双表终态事务写回和写回后 ACK；结果查询、前端轮询及完整 API 到结果链路仍只能描述为“正在实现”。
 
 `db/devdata/R__seed_m0_development_data.sql` 中的“两数之和”题面、样例和隐藏测试数据是为 ForgeOJ M0 编写的最小原创开发数据，不来自第三方题库。它只在 `dev` profile 或显式集成测试位置中加载，不属于默认生产 migration。Spring Security、BCrypt、MyBatis 和 Flyway 仍是第三方框架能力；ForgeOJ 自有部分是配置、数据模型、Mapper/DTO、接口边界和相应测试，不能把框架本身表述为自行实现。
 

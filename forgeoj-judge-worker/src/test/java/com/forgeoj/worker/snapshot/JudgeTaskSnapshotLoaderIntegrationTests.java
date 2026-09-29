@@ -78,6 +78,12 @@ class JudgeTaskSnapshotLoaderIntegrationTests {
                     connection,
                     new FileSystemResource(
                             repositoryFile(
+                                    "forgeoj-api/src/main/resources/db/migration/"
+                                            + "V2__allow_ole_verdict.sql")));
+            ScriptUtils.executeSqlScript(
+                    connection,
+                    new FileSystemResource(
+                            repositoryFile(
                                     "forgeoj-api/src/main/resources/db/devdata/"
                                             + "R__seed_m0_development_data.sql")));
         }

@@ -21,7 +21,7 @@ M0 只实现并验证一条最短闭环：
   -> 前端轮询并显示终态
 ```
 
-M0 必须以自动化证据覆盖 `AC`、`WA`、`CE`、`RE`、`TLE`，证明重复消息不会重复执行同一任务，并证明 API 进程没有 Docker 控制权限、超时后容器与临时目录被清理。
+M0 必须以自动化证据覆盖 `AC`、`WA`、`CE`、`RE`、`TLE`、`OLE`，证明重复消息不会重复执行同一任务，并证明 API 进程没有 Docker 控制权限、超时后容器与临时目录被清理。
 
 ## 2. 明确不在 M0 完成的内容
 
@@ -222,7 +222,7 @@ QUEUED -> RUNNING -> FINISHED
                   -> SYSTEM_ERROR
 ```
 
-M0 verdict 只包含 `AC`、`WA`、`CE`、`RE`、`TLE`。
+M0 verdict 只包含 `AC`、`WA`、`CE`、`RE`、`TLE`、`OLE`。V1 migration 初始约束中的五种结果由 V2 migration 以新增 `OLE` 的方式向前升级；不得修改已执行的 V1 migration。
 
 - `FINISHED` 必须有 verdict；
 - `SYSTEM_ERROR` 的 verdict 必须为空；
@@ -304,7 +304,7 @@ M0 使用系统已安装的官方 Docker CLI，由 `ProcessBuilder(List<String>)
 6. Docker CLI 超时、容器意外停止和控制命令失败属于平台故障；所有分支在 `finally` 中强制删除容器及匿名卷；
 7. Worker 启动时按管理标签清理可确认属于 ForgeOJ 的残留容器。
 
-当前沙箱执行器能在内存中区分输出超限，但 M0 数据库 verdict 仍只包含 `AC`、`WA`、`CE`、`RE`、`TLE`。终态写回切片必须先明确该内部结果的 M0 映射，不得直接写入未被 V1 migration 接受的 `OLE`。
+输出超过提交快照中的 `output_limit_bytes` 时，Worker 终止当前程序并写入 `OLE`。它是用户程序的明确判题结果，不得伪装成 `RE`，也不得写成平台 `SYSTEM_ERROR`。
 
 开发机使用 Docker Desktop 作为外部运行环境，不把 Docker Desktop 分发进 ForgeOJ，也不把它当作 Apache-2.0 项目组件。最终判题证据仍需在固定 Linux 环境复现。
 
@@ -320,7 +320,7 @@ M0 使用系统已安装的官方 Docker CLI，由 `ProcessBuilder(List<String>)
 8. 不同 Idempotency-Key 产生两次主动提交；
 9. MQ 契约测试证明只有四个字段，哨兵源码与隐藏测试不在消息中；
 10. 同一消息投递两次，沙箱调用计数仍为 1；
-11. 原创 Java fixture 通过完整链路分别得到 AC、WA、CE、RE、TLE；
+11. 原创 Java fixture 通过完整链路分别得到 AC、WA、CE、RE、TLE、OLE；
 12. Docker 不可用时写入 `SYSTEM_ERROR` 且 verdict 为空；
 13. TLE 后不存在相应容器和任务临时目录；
 14. API 运行环境无 Docker Socket/控制配置；

@@ -94,6 +94,16 @@ class MySqlMigrationIntegrationTests {
 
         assertThat(api.queryForObject("SELECT COUNT(*) FROM problem", Integer.class)).isZero();
         assertThat(api.queryForObject("SELECT COUNT(*) FROM user_account", Integer.class)).isZero();
+        String verdictConstraint =
+                migrator.queryForObject(
+                        """
+                        SELECT check_clause
+                        FROM information_schema.check_constraints
+                        WHERE constraint_schema = 'forgeoj'
+                          AND constraint_name = 'chk_submission_verdict'
+                        """,
+                        String.class);
+        assertThat(verdictConstraint).contains("OLE");
         assertThatThrownBy(
                         () ->
                                 api.queryForObject(

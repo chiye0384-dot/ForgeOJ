@@ -1,6 +1,6 @@
 # ForgeOJ third-party notices
 
-> Updated: 2026-09-28. This inventory covers the M-1 scaffold and the direct
+> Updated: 2026-09-29. This inventory covers the M-1 scaffold and the direct
 > dependencies declared for the M0 work in progress. It is not a substitute
 > for the full release dependency/license report.
 
@@ -56,6 +56,9 @@ relicensed by the ForgeOJ root license.
   License 2.0; Spring Boot resolves Spring Security 7.1.1
 - `org.springframework.boot:spring-boot-starter-amqp:4.1.1` — Apache License
   2.0; Spring Boot resolves Spring AMQP 4.1.1
+- `org.springframework.boot:spring-boot-starter-jackson:4.1.1` — Apache
+  License 2.0; Spring Boot resolves Jackson Databind 3.1.5 for strict Worker
+  task-message parsing
 - `org.springframework.boot:spring-boot-starter-flyway:4.1.1` and
   `org.flywaydb:flyway-mysql:12.4.0` — Apache License 2.0; the API is the only
   production migration owner

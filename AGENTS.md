@@ -2,7 +2,7 @@
 
 ## Repository status
 
-ForgeOJ has an approved requirements baseline and a verified M-1 minimal project scaffold. M0 business implementation started on 2026-09-28 and remains `IN_PROGRESS`. The data/infrastructure foundation, development-session login, public-problem read, atomic Submission/JudgeTask/Outbox creation, and confirmed RabbitMQ Outbox publishing slices have local automated evidence; worker, sandbox, and end-to-end judging remain incomplete.
+ForgeOJ has an approved requirements baseline and a verified M-1 minimal project scaffold. M0 business implementation started on 2026-09-28 and remains `IN_PROGRESS`. The data/infrastructure foundation, development-session login, public-problem read, atomic Submission/JudgeTask/Outbox creation, confirmed RabbitMQ Outbox publishing, and idempotent Worker task-claim slices have local automated evidence; the real task runner, sandbox, and end-to-end judging remain incomplete.
 
 Use these documents as authoritative sources:
 
@@ -68,7 +68,7 @@ Use the repository-pinned commands for the M-1 baseline:
 
 Linux/macOS environments running the script-only Maven Wrapper must provide `bash` and `unzip`. Without `unzip`, Wrapper 3.3.4 falls back from the configured ZIP URL to a tarball, which cannot match the recorded ZIP SHA-256.
 
-The current H2 dependency is test-scoped and only proves that the empty application contexts can start. M0 also has disposable MySQL 8.4.12 tests for the V1 Flyway migration, API/Worker database boundaries, dev seed, server-side session login/logout, CSRF enforcement, the public-problem response whitelist, atomic Submission/JudgeTask/Outbox creation, rollback, and sequential/concurrent request replay. A fixed RabbitMQ 4.3.6 Testcontainer verifies durable routing, persistent four-field JSON, publisher confirm, and leaving unroutable events unpublished. These tests do not yet prove idempotent Worker task claiming or locking.
+The current H2 dependency is test-scoped and only proves that the empty application contexts can start. M0 also has disposable MySQL 8.4.12 tests for the V1 Flyway migration, API/Worker database boundaries, dev seed, server-side session login/logout, CSRF enforcement, the public-problem response whitelist, atomic Submission/JudgeTask/Outbox creation, rollback, and sequential/concurrent request replay. Fixed MySQL 8.4.12 and RabbitMQ 4.3.6 Testcontainers verify durable routing, persistent four-field JSON, publisher confirm, leaving unroutable events unpublished, strict Worker contract parsing, manual ACK, task/submission cross-checking, atomic state transition, rollback, and single-winner duplicate/concurrent claims. These tests do not yet prove task snapshot loading, Docker execution, terminal result writes, or crash recovery.
 
 ## Completion and evidence
 

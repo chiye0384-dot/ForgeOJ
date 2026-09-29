@@ -177,6 +177,9 @@ M0 建立 7 张表；时间统一为 UTC `DATETIME(6)`，数据库字符集为 `
 - 解压后大小和各自 SHA-256；
 - `created_at`。
 
+M0 的 `test_dataset_sha256` 使用按 `ordinal` 排序的 ASCII 清单计算。每个用例贡献一行
+`ordinal:input_sha256:output_sha256\n`，再对完整清单取 SHA-256。Worker 在有界解压并校验每个文件后重新计算该值，避免只相信数据库中彼此独立的哈希字段。
+
 API 数据库账号不得对该表拥有 `SELECT` 权限。
 
 ### 6.5 `submission`

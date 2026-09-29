@@ -54,11 +54,14 @@ profile creates neither. The currently available HTTP slice is:
 With the `dev` profile, the API polls unpublished M0 Outbox rows in small
 batches, publishes persistent JSON to the durable RabbitMQ topology, and only
 sets `published_at` after a positive publisher confirm with no returned
-message. The Worker now has a strict four-field consumer and an atomic,
-idempotent `QUEUED -> RUNNING` claim boundary, but its consumer switch remains
-off by default until a real task runner can load snapshots, execute Docker, and
-write terminal results. The frontend and actual judging are not yet
-implemented. Never enable the `dev` profile in production.
+message. The Worker now has a strict four-field consumer, an atomic idempotent
+`QUEUED -> RUNNING` claim boundary, running-task-only snapshot loading, and a
+Docker CLI adapter that can verify a Linux Engine and create/remove a restricted
+container. Both `forgeoj.worker.consumer.enabled` and
+`forgeoj.worker.sandbox.enabled` remain off by default until compilation,
+per-case execution, cleanup of running containers, and terminal result writes
+are connected. The frontend and actual judging are not yet implemented. Never
+enable the `dev` profile in production.
 
 ## Stop and reset
 

@@ -159,7 +159,7 @@ class AuthAndProblemIntegrationTests {
         String responseBody = result.getResponse().getContentAsString();
         assertThat(responseBody)
                 .doesNotContain("2147483647")
-                .doesNotContain("75929bbad91d8af5571333e501c7f5067b169e1569fd8f8d79452005ff596667");
+                .doesNotContain("37881a92ca996970e09475fdb29435b9bc13ae1501fa118e5fd9afd47e561adf");
     }
 
     private AnonymousSession openAnonymousSession() throws Exception {

@@ -87,8 +87,9 @@ V2.0 综合学习内容：BACKLOG，需另行确认是否立项
 - 已在真实 RabbitMQ、MySQL 和 Docker 组合中验证“manual ACK → 幂等领取 → 快照读取 → 沙箱执行 → 终态提交 → ACK”；平台执行故障写 `SYSTEM_ERROR` 且 verdict 为空，重复消息不再次改变终态；
 - Worker 消费与沙箱开关仍默认关闭，只在具备受控 Docker 环境时显式启用；
 - 已实现仅提交所有者可读的 Submission 结果查询；查询以 `(submission_id, user_id)` 同时过滤，他人、不存在和格式错误的 ID 统一返回 404，响应只包含状态版本、处理状态、verdict 和脱敏诊断等白名单字段；
-- 当前下一步是接入前端轮询，再组合验证 API 提交到最终结果的完整链路；
-- 登录、公开题目读取、提交事务、RabbitMQ 发布、Worker 到终态及所有者结果查询是已验证的局部切片；前端轮询、完整 API 到结果闭环和固定 Linux 复现仍未完成，因此 M0 整体保持 `IN_PROGRESS`。
+- 已实现 M0 前端工作台和 `/api` 开发代理；Vitest 以模拟 API 响应覆盖匿名会话、CSRF 登录、公开题目、带 Idempotency-Key 的 Java 21 提交、轮询至终态并停止，以及不显示未声明隐藏字段；
+- 当前下一步是组合验证真实浏览器/API/RabbitMQ/Worker/Docker/MySQL 从提交到最终结果的完整链路；
+- 登录、公开题目读取、提交事务、RabbitMQ 发布、Worker 到终态、所有者结果查询及模拟 API 驱动的前端轮询是已验证的局部切片；真实组合闭环和固定 Linux 复现仍未完成，因此 M0 整体保持 `IN_PROGRESS`。
 
 最短流程：
 

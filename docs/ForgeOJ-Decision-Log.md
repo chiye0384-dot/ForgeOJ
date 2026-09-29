@@ -257,6 +257,13 @@
 - 原因：已验证的 Docker CLI/Engine 具备 M0 所需的创建、限制、检查和强制清理能力，可避免在最小纵向切片中额外承担生产客户端 transport、Jackson、JNA 与 HttpClient 的兼容面；命令也能在开发和固定 Linux 环境独立复现。
 - 代价：Worker 依赖宿主 Docker 可执行文件、当前 context 和 daemon；ForgeOJ 必须自行正确处理子进程并发输出、超时、输出上限、容器强制删除、临时目录清理与残留扫描。若后续证据显示 CLI 生命周期代码不可维护，再通过新决策评估类型化 Engine 客户端。
 
+### D-036：M0 将输出超限持久化为 OLE
+
+- 状态：`ACCEPTED`
+- 结论：程序 stdout/stderr 合计超过提交快照中的输出上限时，Worker 终止执行并把结果持久化为 `OLE`。通过新增 Flyway V2 migration 扩展 verdict 约束，不修改已经执行过的 V1 migration；不得把 OLE 伪装成 `RE` 或平台 `SYSTEM_ERROR`。
+- 原因：输出超限是用户程序触发的明确、可解释结果，且 V1.0 需求已经把 OLE 列为正式 verdict。独立结果能保持用户错误与平台故障的边界。
+- 代价：M0 比原五种最小 verdict 多维护一种数据库枚举和自动化分支；未来若迁移到字典表或类型化状态模型，仍需保留历史 OLE 的兼容读取。
+
 ## 3. 变更流程
 
 1. 新想法先进入 Roadmap 的 Backlog，不直接加入当前版本。

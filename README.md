@@ -1,12 +1,12 @@
 # ForgeOJ
 
-> 当前状态：`M-1：项目准备` 已验证通过；`M0：最小判题纵向切片` 为 `IN_PROGRESS`。数据/基础设施基线、开发账号会话登录、公开题目读取、提交事务、Outbox 可靠发布、Worker 幂等领取、不可变快照读取，以及受限 Docker 内的一次编译和逐用例独立 JVM 执行已通过局部自动化验证；终态写回、结果查询和完整判题闭环尚未实现。
+> 当前状态：`M-1：项目准备` 已验证通过；`M0：最小判题纵向切片` 为 `IN_PROGRESS`。数据/基础设施基线、开发账号会话登录、公开题目读取、提交事务、Outbox 可靠发布、Worker 幂等领取、不可变快照读取、受限 Docker 执行及终态事务写回已通过局部自动化验证；结果查询、前端轮询和完整 API 到结果闭环尚未实现。
 >
 > 需求基线：2026-09-24；工程基线：2026-09-28
 
 ForgeOJ 是一个面向 Java 学习者和小型教学班级的在线判题平台。它以“安全、可靠、可解释的异步判题”为核心，而不是以堆叠微服务或复制现有 OJ 页面为目标。
 
-仓库已包含可构建的工程起点、M0 的 7 张核心业务表、开发/测试种子、最小会话认证、公开题目详情接口、Submission/JudgeTask/Outbox 的原子创建和并发幂等处理、基于 publisher confirm 的 RabbitMQ 发布，以及 Worker 对四字段消息的严格校验、手动 ACK、幂等领取、快照完整性校验和受限 Docker 执行。Worker 已能经标准输入传入源码和隐藏输入、每次提交只编译一次、每个测试点启动独立 JVM，并在首个失败、超时或输出超限后清理；终态写回和结果轮询仍未实现。任何规划中的完整能力，在进入正式 release 并完成相应门禁前，都不能写成已完成能力。
+仓库已包含可构建的工程起点、M0 的 7 张核心业务表、开发/测试种子、最小会话认证、公开题目详情接口、Submission/JudgeTask/Outbox 的原子创建和并发幂等处理、基于 publisher confirm 的 RabbitMQ 发布，以及 Worker 对四字段消息的严格校验、手动 ACK、幂等领取、快照完整性校验、受限 Docker 执行和终态事务写回。Worker 会在结果提交到 MySQL 后 ACK；平台故障写 `SYSTEM_ERROR` 且不伪装成用户 verdict。结果查询和前端轮询仍未实现。
 
 ## 当前工程基线
 
@@ -21,7 +21,7 @@ ForgeOJ 是一个面向 Java 学习者和小型教学班级的在线判题平台
 ## 项目结构
 
 - `forgeoj-api/`：对外 HTTP API 进程，不得获得 Docker 控制权限；
-- `forgeoj-judge-worker/`：独立判题 Worker；已有消息校验、幂等领取、快照读取，以及 Docker CLI 编译和逐用例执行边界，尚未接入终态结果写回和完整消费链路；
+- `forgeoj-judge-worker/`：独立判题 Worker；已有消息校验、幂等领取、快照读取、Docker CLI 编译/逐例执行和终态事务写回；默认开关仍关闭，需在具备受控 Docker 环境时显式启用；
 - `frontend/`：前端工程骨架；
 - `deploy/`：已包含 M0 的 MySQL/RabbitMQ disposable 开发 Compose；它尚不是生产部署栈；
 - `contracts/`：API 与 Worker 之间的中立消息 JSON Schema 和合法样例，不形成 Maven 模块耦合；
@@ -101,4 +101,4 @@ npm run verify
 
 用户已经完成人工结构审阅并确认 Apache-2.0 根许可证；后端和前端已在只读源码、全新依赖缓存的 Linux 容器中复现通过。首个公开提交的 [GitHub Actions 运行](https://github.com/chiye0384-dot/ForgeOJ/actions/runs/36386617957) 中，`backend` 与 `frontend` 两个 job 也均为 `success`，因此 M-1 标记为 `VERIFIED`。
 
-M-1 的证据只证明工程起点、许可证边界和构建链路可复现。M0 已在短期功能分支完成“预置账号登录 → 查看内置题 → 原子创建 Submission/JudgeTask/Outbox → RabbitMQ confirm 后标记已发布 → Worker 原子幂等领取 → 校验并读取不可变快照与隐藏测试 → 在受限 Docker 容器内一次编译并以独立 JVM 逐例执行”的局部验证。下一步是条件式写入 Submission/JudgeTask 终态并把执行器接入真实消费流程；结果查询与页面轮询随后完成。在 M0 门禁全部通过前不能声称在线判题能力已完成。
+M-1 的证据只证明工程起点、许可证边界和构建链路可复现。M0 已在短期功能分支完成“预置账号登录 → 查看内置题 → 原子创建 Submission/JudgeTask/Outbox → RabbitMQ confirm 后标记已发布 → Worker 原子幂等领取 → 校验快照与隐藏测试 → 受限 Docker 执行 → Submission/JudgeTask 同事务写入终态 → ACK”的局部验证。下一步是实现仅提交所有者可读的结果查询接口，再接前端轮询并组合验证完整 API 到结果链路。在 M0 门禁全部通过前不能声称在线判题能力已完成。

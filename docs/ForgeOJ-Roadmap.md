@@ -82,10 +82,12 @@ V2.0 综合学习内容：BACKLOG，需另行确认是否立项
 - 已验证 Worker 仅为对应的 `RUNNING` task/submission 读取提交时快照和对应版本隐藏测试；读取过程有界展开 gzip，并复核源码、单文件和有序数据集 SHA-256，篡改或错配时 fail closed；
 - 已以 `ProcessBuilder(List<String>)` 实现不经过宿主 shell 的 Docker CLI 边界；真实 Docker Engine 测试证明未启动容器具有非 root、禁网、只读根、capabilities 删除、no-new-privileges、CPU/内存/PID 与受限 tmpfs 配置，并在测试后删除；
 - 已在真实 Docker Engine 中验证源码和隐藏输入只经 stdin 传输、不进入 CLI 参数；每次提交只编译一次，每个测试点以独立非 root JVM 执行，首个失败后停止；
-- 已覆盖 AC、WA、CE、RE、TLE 和内部输出超限分类，实施单用例时间、整次用户执行预算与 stdout/stderr 共享字节上限，并验证所有分支强制清理容器；M0 数据库终态仍只接受 AC/WA/CE/RE/TLE，输出超限的持久化映射留给下一切片一并收口；
-- Worker 真实消费与沙箱开关在完整任务执行器接入前默认关闭，避免把“已准备容器”冒充为“已判题”；
-- 当前下一步是条件式写入 JudgeTask/Submission 终态，明确内部输出超限在 M0 五种 verdict 中的映射，并把快照加载、沙箱执行与写回接入真实 Worker 消费事务边界；
-- 登录、公开题目读取、提交事务、RabbitMQ 发布、Worker 幂等领取、快照读取和 Docker 编译/逐例执行是已验证的局部切片；终态结果写回、查询/轮询和端到端闭环仍未完成，因此 M0 整体保持 `IN_PROGRESS`。
+- 已覆盖 AC、WA、CE、RE、TLE、OLE，实施单用例时间、整次用户执行预算与 stdout/stderr 共享字节上限，并验证所有运行分支强制清理容器；
+- 已通过 V2 Flyway migration 在不修改 V1 的前提下加入 OLE；JudgeTask 与 Submission 终态以短事务、行锁和版本条件同时写入，任一更新失败时整体回滚；
+- 已在真实 RabbitMQ、MySQL 和 Docker 组合中验证“manual ACK → 幂等领取 → 快照读取 → 沙箱执行 → 终态提交 → ACK”；平台执行故障写 `SYSTEM_ERROR` 且 verdict 为空，重复消息不再次改变终态；
+- Worker 消费与沙箱开关仍默认关闭，只在具备受控 Docker 环境时显式启用；
+- 当前下一步是实现仅提交所有者可读的 Submission 结果查询接口，再接入前端轮询并组合验证 API 提交到最终结果的完整链路；
+- 登录、公开题目读取、提交事务、RabbitMQ 发布及 Worker 到终态是已验证的局部切片；查询/轮询、完整 API 到结果闭环和固定 Linux 复现仍未完成，因此 M0 整体保持 `IN_PROGRESS`。
 
 最短流程：
 

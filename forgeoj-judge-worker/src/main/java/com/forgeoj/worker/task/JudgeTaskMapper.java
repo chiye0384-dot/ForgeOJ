@@ -56,4 +56,40 @@ interface JudgeTaskMapper {
     int markSubmissionRunning(
             @Param("submissionId") String submissionId,
             @Param("statusVersion") long statusVersion);
+
+    @Update(
+            """
+            UPDATE judge_task
+            SET task_status = #{terminalStatus},
+                status_version = status_version + 1,
+                finished_at = CURRENT_TIMESTAMP(6)
+            WHERE id = #{taskId}
+              AND submission_id = #{submissionId}
+              AND task_status = 'RUNNING'
+              AND status_version = #{statusVersion}
+            """)
+    int markTaskTerminal(
+            @Param("taskId") String taskId,
+            @Param("submissionId") String submissionId,
+            @Param("statusVersion") long statusVersion,
+            @Param("terminalStatus") String terminalStatus);
+
+    @Update(
+            """
+            UPDATE submission
+            SET processing_status = #{terminalStatus},
+                verdict = #{verdict},
+                diagnostic_message = #{diagnosticMessage},
+                status_version = status_version + 1,
+                finished_at = CURRENT_TIMESTAMP(6)
+            WHERE id = #{submissionId}
+              AND processing_status = 'RUNNING'
+              AND status_version = #{statusVersion}
+            """)
+    int markSubmissionTerminal(
+            @Param("submissionId") String submissionId,
+            @Param("statusVersion") long statusVersion,
+            @Param("terminalStatus") String terminalStatus,
+            @Param("verdict") String verdict,
+            @Param("diagnosticMessage") String diagnosticMessage);
 }

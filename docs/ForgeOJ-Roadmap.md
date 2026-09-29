@@ -81,9 +81,11 @@ V2.0 综合学习内容：BACKLOG，需另行确认是否立项
 - 已在真实 MySQL 8.4.12 与 RabbitMQ 4.3.6 Testcontainers 中验证 Worker 严格四字段契约解析、manual ACK/prefetch 1、task/submission 对应校验、`QUEUED -> RUNNING` 双表事务更新、权限失败回滚，以及重复投递/八路并发只有一个执行权；
 - 已验证 Worker 仅为对应的 `RUNNING` task/submission 读取提交时快照和对应版本隐藏测试；读取过程有界展开 gzip，并复核源码、单文件和有序数据集 SHA-256，篡改或错配时 fail closed；
 - 已以 `ProcessBuilder(List<String>)` 实现不经过宿主 shell 的 Docker CLI 边界；真实 Docker Engine 测试证明未启动容器具有非 root、禁网、只读根、capabilities 删除、no-new-privileges、CPU/内存/PID 与受限 tmpfs 配置，并在测试后删除；
+- 已在真实 Docker Engine 中验证源码和隐藏输入只经 stdin 传输、不进入 CLI 参数；每次提交只编译一次，每个测试点以独立非 root JVM 执行，首个失败后停止；
+- 已覆盖 AC、WA、CE、RE、TLE 和内部输出超限分类，实施单用例时间、整次用户执行预算与 stdout/stderr 共享字节上限，并验证所有分支强制清理容器；M0 数据库终态仍只接受 AC/WA/CE/RE/TLE，输出超限的持久化映射留给下一切片一并收口；
 - Worker 真实消费与沙箱开关在完整任务执行器接入前默认关闭，避免把“已准备容器”冒充为“已判题”；
-- 当前下一步是把源码安全送入容器，完成一次编译和逐用例独立 JVM 执行，并覆盖输出/总超时和所有运行分支清理；
-- 登录、公开题目读取、提交事务、RabbitMQ 发布、Worker 幂等领取、快照读取和 Docker 容器配置是已验证的局部切片；用户代码执行、终态结果写回和端到端闭环仍未完成，因此 M0 整体保持 `IN_PROGRESS`。
+- 当前下一步是条件式写入 JudgeTask/Submission 终态，明确内部输出超限在 M0 五种 verdict 中的映射，并把快照加载、沙箱执行与写回接入真实 Worker 消费事务边界；
+- 登录、公开题目读取、提交事务、RabbitMQ 发布、Worker 幂等领取、快照读取和 Docker 编译/逐例执行是已验证的局部切片；终态结果写回、查询/轮询和端到端闭环仍未完成，因此 M0 整体保持 `IN_PROGRESS`。
 
 最短流程：
 

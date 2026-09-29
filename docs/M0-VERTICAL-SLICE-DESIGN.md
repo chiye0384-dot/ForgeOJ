@@ -296,13 +296,15 @@ M0 使用系统已安装的官方 Docker CLI，由 `ProcessBuilder(List<String>)
 
 最小生命周期：
 
-1. 创建带 ForgeOJ 管理标签的容器；
-2. 应用非 root、禁网、只读根文件系统、删除 capabilities、`no-new-privileges`、CPU/内存/PID/输出与受限临时空间；
-3. attach 启动并并发读取 stdout/stderr，使用有界缓冲；
-4. Java 侧实施总超时；超时后执行强制删除容器及匿名卷；
-5. 正常退出后 inspect exit code、OOMKilled 和 daemon error；
-6. 所有分支在 `finally` 中清理容器和任务临时目录；
+1. 创建带 ForgeOJ 管理标签的容器，应用禁网、只读根文件系统、删除 capabilities、`no-new-privileges`、CPU/内存/PID 与受限 tmpfs；
+2. 容器以受限构建用户 `65534:65534` 启动；源码通过 `docker exec -i` 的 stdin 写入 `/workspace/Main.java`，不经过宿主临时文件、shell 或 CLI 参数；
+3. 在容器内只编译一次，成功后冻结工作目录；每个隐藏测试使用新的 `65532:65532` JVM 和独立 `/tmp/case-*` 目录，输入同样只经 stdin 传输；
+4. 并发读取 stdout/stderr，并对二者实施共享有界缓冲；每个测试点执行时间不超过题目限制，整次用户代码执行预算为“单例限制 × 用例数”且最多两分钟；
+5. 首个 WA/RE/TLE/输出超限后停止后续用例；每例结束后终止执行用户的残留进程并删除该例目录；
+6. Docker CLI 超时、容器意外停止和控制命令失败属于平台故障；所有分支在 `finally` 中强制删除容器及匿名卷；
 7. Worker 启动时按管理标签清理可确认属于 ForgeOJ 的残留容器。
+
+当前沙箱执行器能在内存中区分输出超限，但 M0 数据库 verdict 仍只包含 `AC`、`WA`、`CE`、`RE`、`TLE`。终态写回切片必须先明确该内部结果的 M0 映射，不得直接写入未被 V1 migration 接受的 `OLE`。
 
 开发机使用 Docker Desktop 作为外部运行环境，不把 Docker Desktop 分发进 ForgeOJ，也不把它当作 Apache-2.0 项目组件。最终判题证据仍需在固定 Linux 环境复现。
 

@@ -65,7 +65,7 @@ class DockerCliSandboxRuntimeIntegrationTests {
             assertThat(inspected.timedOut()).isFalse();
             assertThat(inspected.outputTruncated()).isFalse();
             assertThat(inspected.stdout())
-                    .contains("none|true|65532:65532|201326592|201326592|64")
+                    .contains("none|true|65534:65534|201326592|201326592|64")
                     .contains("[\"ALL\"]")
                     .contains("[\"no-new-privileges\"]")
                     .contains("/workspace")

@@ -1,12 +1,12 @@
 # ForgeOJ
 
-> 当前状态：`M-1：项目准备` 已验证通过；`M0：最小判题纵向切片` 为 `IN_PROGRESS`。数据/基础设施基线、开发账号会话登录、公开题目读取、提交事务、Outbox 可靠发布、Worker 幂等领取、不可变快照读取和受限 Docker 容器配置已通过局部自动化验证，完整判题闭环尚未实现。
+> 当前状态：`M-1：项目准备` 已验证通过；`M0：最小判题纵向切片` 为 `IN_PROGRESS`。数据/基础设施基线、开发账号会话登录、公开题目读取、提交事务、Outbox 可靠发布、Worker 幂等领取、不可变快照读取，以及受限 Docker 内的一次编译和逐用例独立 JVM 执行已通过局部自动化验证；终态写回、结果查询和完整判题闭环尚未实现。
 >
 > 需求基线：2026-09-24；工程基线：2026-09-28
 
 ForgeOJ 是一个面向 Java 学习者和小型教学班级的在线判题平台。它以“安全、可靠、可解释的异步判题”为核心，而不是以堆叠微服务或复制现有 OJ 页面为目标。
 
-仓库已包含可构建的工程起点、M0 的 7 张核心业务表、开发/测试种子、最小会话认证、公开题目详情接口、Submission/JudgeTask/Outbox 的原子创建和并发幂等处理、基于 publisher confirm 的 RabbitMQ 发布，以及 Worker 对四字段消息的严格校验、手动 ACK、幂等领取、快照完整性校验和受限 Docker 容器配置。源码编译、逐用例执行、终态写回和结果轮询仍未实现；任何规划中的完整能力，在进入正式 release 并完成相应门禁前，都不能写成已完成能力。
+仓库已包含可构建的工程起点、M0 的 7 张核心业务表、开发/测试种子、最小会话认证、公开题目详情接口、Submission/JudgeTask/Outbox 的原子创建和并发幂等处理、基于 publisher confirm 的 RabbitMQ 发布，以及 Worker 对四字段消息的严格校验、手动 ACK、幂等领取、快照完整性校验和受限 Docker 执行。Worker 已能经标准输入传入源码和隐藏输入、每次提交只编译一次、每个测试点启动独立 JVM，并在首个失败、超时或输出超限后清理；终态写回和结果轮询仍未实现。任何规划中的完整能力，在进入正式 release 并完成相应门禁前，都不能写成已完成能力。
 
 ## 当前工程基线
 
@@ -21,7 +21,7 @@ ForgeOJ 是一个面向 Java 学习者和小型教学班级的在线判题平台
 ## 项目结构
 
 - `forgeoj-api/`：对外 HTTP API 进程，不得获得 Docker 控制权限；
-- `forgeoj-judge-worker/`：独立判题 Worker；已有消息校验、幂等领取、快照读取和 Docker CLI 容器配置边界，尚未接入完整代码执行与结果写回；
+- `forgeoj-judge-worker/`：独立判题 Worker；已有消息校验、幂等领取、快照读取，以及 Docker CLI 编译和逐用例执行边界，尚未接入终态结果写回和完整消费链路；
 - `frontend/`：前端工程骨架；
 - `deploy/`：已包含 M0 的 MySQL/RabbitMQ disposable 开发 Compose；它尚不是生产部署栈；
 - `contracts/`：API 与 Worker 之间的中立消息 JSON Schema 和合法样例，不形成 Maven 模块耦合；
@@ -53,7 +53,7 @@ npm run verify
 
 `npm run verify` 会依次执行类型检查、静态检查、格式检查、单元测试和生产构建。
 
-从 M0 起，后端 `clean verify` 会通过 Testcontainers 启动固定 digest 的 MySQL 8.4.12，验证真实 Flyway migration 和数据库读取边界，并使用已登记的固定 Temurin Java 21 镜像创建后清理一个未启动的受限容器，因此需要可用的 Linux Docker Engine。缺少判题镜像时测试会按固定 digest 拉取。开发用 MySQL/RabbitMQ Compose 的启动和重置方法见 [deploy/README.md](deploy/README.md)。
+从 M0 起，后端 `clean verify` 会通过 Testcontainers 启动固定 digest 的 MySQL 8.4.12 和 RabbitMQ 4.3.6，并使用已登记的固定 Temurin Java 21 镜像真实编译和执行原创测试程序，因此需要可用的 Linux Docker Engine。缺少判题镜像时测试会按固定 digest 拉取。开发用 MySQL/RabbitMQ Compose 的启动和重置方法见 [deploy/README.md](deploy/README.md)。
 
 ## M0 本地开发账号
 
@@ -101,4 +101,4 @@ npm run verify
 
 用户已经完成人工结构审阅并确认 Apache-2.0 根许可证；后端和前端已在只读源码、全新依赖缓存的 Linux 容器中复现通过。首个公开提交的 [GitHub Actions 运行](https://github.com/chiye0384-dot/ForgeOJ/actions/runs/36386617957) 中，`backend` 与 `frontend` 两个 job 也均为 `success`，因此 M-1 标记为 `VERIFIED`。
 
-M-1 的证据只证明工程起点、许可证边界和构建链路可复现。M0 已在短期功能分支完成“预置账号登录 → 查看内置题 → 原子创建 Submission/JudgeTask/Outbox → RabbitMQ confirm 后标记已发布 → Worker 原子幂等领取 → 校验并读取不可变快照与隐藏测试 → 创建并清理受限但尚未启动的 Docker 容器”的局部验证。下一步是完成容器内一次编译和逐用例独立 JVM 执行；终态写回和页面轮询仍在后续。在 M0 门禁全部通过前不能声称在线判题能力已完成。
+M-1 的证据只证明工程起点、许可证边界和构建链路可复现。M0 已在短期功能分支完成“预置账号登录 → 查看内置题 → 原子创建 Submission/JudgeTask/Outbox → RabbitMQ confirm 后标记已发布 → Worker 原子幂等领取 → 校验并读取不可变快照与隐藏测试 → 在受限 Docker 容器内一次编译并以独立 JVM 逐例执行”的局部验证。下一步是条件式写入 Submission/JudgeTask 终态并把执行器接入真实消费流程；结果查询与页面轮询随后完成。在 M0 门禁全部通过前不能声称在线判题能力已完成。

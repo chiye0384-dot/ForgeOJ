@@ -10,5 +10,7 @@ public interface SandboxRuntime {
 
     SandboxContainer prepare(JudgeTaskSnapshot snapshot);
 
+    SandboxExecutionResult execute(JudgeTaskSnapshot snapshot);
+
     void cleanup(SandboxContainer container);
 }

@@ -42,11 +42,11 @@ class DockerCliSandboxRuntimeTests {
                 .contains("--read-only")
                 .contains("--cap-drop", "ALL")
                 .contains("--security-opt", "no-new-privileges")
-                .contains("--user", "65532:65532")
+                .contains("--user", "65534:65534")
                 .contains("--memory", "192m")
                 .contains("--memory-swap", "192m")
                 .contains("--pids-limit", "64")
-                .contains("--tmpfs", "/workspace:rw,noexec,nosuid,nodev,size=64m")
+                .contains("--tmpfs", "/workspace:rw,noexec,nosuid,nodev,size=64m,mode=1777")
                 .contains("--tmpfs", "/tmp:rw,noexec,nosuid,nodev,size=16m")
                 .contains("--workdir", "/workspace")
                 .contains(IMAGE)
@@ -66,6 +66,32 @@ class DockerCliSandboxRuntimeTests {
         assertThatThrownBy(() -> runtime.prepare(unsafe))
                 .isInstanceOf(SandboxException.class)
                 .hasMessageContaining("digest");
+        assertThat(executor.commands()).isEmpty();
+    }
+
+    @Test
+    void rejectsUnsupportedVersionedExecutionRulesBeforeCallingDocker() {
+        RecordingExecutor executor = new RecordingExecutor();
+        DockerCliSandboxRuntime runtime = new DockerCliSandboxRuntime(executor);
+
+        assertThatThrownBy(
+                        () ->
+                                runtime.prepare(
+                                        snapshot(
+                                                IMAGE,
+                                                "JAVA_21",
+                                                "unknown-comparison-rule")))
+                .isInstanceOf(SandboxException.class)
+                .hasMessageContaining("comparison");
+        assertThatThrownBy(
+                        () ->
+                                runtime.prepare(
+                                        snapshot(
+                                                IMAGE,
+                                                "JAVA_17",
+                                                "trim-trailing-whitespace-v1")))
+                .isInstanceOf(SandboxException.class)
+                .hasMessageContaining("language");
         assertThat(executor.commands()).isEmpty();
     }
 
@@ -93,17 +119,21 @@ class DockerCliSandboxRuntimeTests {
     }
 
     private JudgeTaskSnapshot snapshot(String image) {
+        return snapshot(image, "JAVA_21", "trim-trailing-whitespace-v1");
+    }
+
+    private JudgeTaskSnapshot snapshot(String image, String language, String comparisonRuleVersion) {
         return new JudgeTaskSnapshot(
                 TASK_ID,
                 SUBMISSION_ID,
                 1L,
-                "JAVA_21",
+                language,
                 "public class Main { String marker = \"" + SOURCE_SENTINEL + "\"; }",
                 "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
                 1500,
                 192,
                 65536,
-                "trim-trailing-whitespace-v1",
+                comparisonRuleVersion,
                 "m0-v1",
                 image,
                 "bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb",

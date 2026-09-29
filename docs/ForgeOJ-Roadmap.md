@@ -68,7 +68,7 @@ V2.0 综合学习内容：BACKLOG，需另行确认是否立项
 
 目标：尽早验证最难的技术风险，不先做完整页面。
 
-当前进展（`IN_PROGRESS`，2026-09-28）：
+当前进展（`IN_PROGRESS`，2026-09-29）：
 
 - 用户已明确确认启动 M0；开发分支为 `feat/m0-vertical-slice`；
 - 已完成 M0 直接依赖与许可证登记、纵向切片设计、四字段消息 JSON Schema、7 张业务表的 V1 Flyway migration，以及固定 digest 的 MySQL/RabbitMQ disposable Compose；
@@ -79,9 +79,11 @@ V2.0 综合学习内容：BACKLOG，需另行确认是否立项
 - 提交接口只接受规范 UUID、`JAVA_21` 和不超过 65,536 UTF-8 字节的无 package 单文件 `public class Main`；判题快照完整固化，四字段 Outbox payload 不含源码或隐藏数据；
 - 已在固定 digest 的 RabbitMQ 4.3.6 Testcontainer 中验证 durable exchange/queue/binding、persistent 四字段 JSON 和 publisher confirm；只有已确认且可路由的消息才设置 `published_at`，删除目标队列后的退回消息保持未发布且不泄露 payload 到业务日志；
 - 已在真实 MySQL 8.4.12 与 RabbitMQ 4.3.6 Testcontainers 中验证 Worker 严格四字段契约解析、manual ACK/prefetch 1、task/submission 对应校验、`QUEUED -> RUNNING` 双表事务更新、权限失败回滚，以及重复投递/八路并发只有一个执行权；
-- Worker 真实消费开关在任务执行器接入前默认关闭，避免把“已领取”冒充为“已判题”；
-- 当前下一步是 Worker 读取不可变判题快照和隐藏测试，并实现受限 Docker CLI 执行边界；
-- 登录、公开题目读取、提交事务、RabbitMQ 发布和 Worker 幂等领取是已验证的局部切片；Docker 判题、结果写回和端到端闭环仍未完成，因此 M0 整体保持 `IN_PROGRESS`。
+- 已验证 Worker 仅为对应的 `RUNNING` task/submission 读取提交时快照和对应版本隐藏测试；读取过程有界展开 gzip，并复核源码、单文件和有序数据集 SHA-256，篡改或错配时 fail closed；
+- 已以 `ProcessBuilder(List<String>)` 实现不经过宿主 shell 的 Docker CLI 边界；真实 Docker Engine 测试证明未启动容器具有非 root、禁网、只读根、capabilities 删除、no-new-privileges、CPU/内存/PID 与受限 tmpfs 配置，并在测试后删除；
+- Worker 真实消费与沙箱开关在完整任务执行器接入前默认关闭，避免把“已准备容器”冒充为“已判题”；
+- 当前下一步是把源码安全送入容器，完成一次编译和逐用例独立 JVM 执行，并覆盖输出/总超时和所有运行分支清理；
+- 登录、公开题目读取、提交事务、RabbitMQ 发布、Worker 幂等领取、快照读取和 Docker 容器配置是已验证的局部切片；用户代码执行、终态结果写回和端到端闭环仍未完成，因此 M0 整体保持 `IN_PROGRESS`。
 
 最短流程：
 

@@ -290,7 +290,7 @@ class SubmissionCreationIntegrationTests {
                         "eclipse-temurin:21.0.12_8-jdk-jammy@sha256:"
                                 + "c7d5863b5dd8f26b90c64f1d80cc2b0e5a5e4642f8db9955a370d348edd8f438");
         assertThat(submission.get("test_dataset_sha256"))
-                .isEqualTo("75929bbad91d8af5571333e501c7f5067b169e1569fd8f8d79452005ff596667");
+                .isEqualTo("37881a92ca996970e09475fdb29435b9bc13ae1501fa118e5fd9afd47e561adf");
 
         String taskId =
                 api.queryForObject(
@@ -327,7 +327,7 @@ class SubmissionCreationIntegrationTests {
         assertThat(event.get("payload_contract_version").toString()).isEqualTo("1");
         assertThat(event.get("payload_text").toString())
                 .doesNotContain("SOURCE_SENTINEL_MUST_NOT_ENTER_OUTBOX")
-                .doesNotContain("75929bbad91d8af5571333e501c7f5067b169e1569fd8f8d79452005ff596667");
+                .doesNotContain("37881a92ca996970e09475fdb29435b9bc13ae1501fa118e5fd9afd47e561adf");
     }
 
     private AuthenticatedSession login() throws Exception {

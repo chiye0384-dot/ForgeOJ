@@ -1,6 +1,6 @@
 # ForgeOJ 直接依赖许可证清单
 
-> 核验日期：2026-09-28  
+> 核验日期：2026-09-29
 > 范围：已验证的 M-1 工程基线，以及 M0 当前已声明的直接 Maven/npm 依赖和构建工具；M0 仍为 `IN_PROGRESS`。此清单不是法律意见，也不替代发布前的完整传递依赖报告。
 
 ## 1. 核验方法
@@ -17,6 +17,7 @@
 | Spring Boot parent/BOM、`spring-boot-starter-webmvc`、测试 starter、Maven Plugin | 4.1.1 | 编译、API 运行、测试和打包 | Apache-2.0 | 可采用；保留上游版权与 NOTICE 义务 |
 | `org.springframework.boot:spring-boot-starter-security` | 4.1.1（Security 7.1.1） | API 运行 | Apache-2.0 | 可采用；依赖存在不等于认证功能已经实现 |
 | `org.springframework.boot:spring-boot-starter-amqp` | 4.1.1（Spring AMQP 4.1.1） | API/Worker 运行 | Apache-2.0 | 可采用；M0 只实现最小 RabbitMQ 链路 |
+| `org.springframework.boot:spring-boot-starter-jackson` | 4.1.1（Jackson Databind 3.1.5） | Worker 运行；严格解析四字段任务 JSON | Apache-2.0 | 可采用；JSON 库为第三方能力，消息契约与校验规则为 ForgeOJ 自有实现 |
 | `org.springframework.boot:spring-boot-starter-flyway` | 4.1.1（Flyway Core 12.4.0） | API 运行；唯一生产迁移执行者 | Apache-2.0 | 可采用；Worker 不引入生产 Flyway |
 | `org.flywaydb:flyway-mysql` | 12.4.0 | API runtime；MySQL 数据库支持 | Apache-2.0 | 可采用；由 Boot 4.1.1 BOM 管理版本 |
 | `org.mybatis.spring.boot:mybatis-spring-boot-starter` | 4.1.0 | API/Worker 运行 | Apache-2.0 | 可采用；不等于引入 MyBatis-Plus |

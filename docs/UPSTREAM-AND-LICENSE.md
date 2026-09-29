@@ -66,6 +66,7 @@
 | Spring Boot | [spring-projects/spring-boot](https://github.com/spring-projects/spring-boot) | `v4.1.1` → `6fdf67ea1552691e932604d4bf67a5e08ff0b0ea` | Apache-2.0 | 后端框架与 BOM | `ADOPTED` | 2026-09-27 | [4.1.1 发布说明](https://spring.io/blog/2026/08/20/spring-boot-4-1-1-available-now/) |
 | Spring Security | [spring-projects/spring-security](https://github.com/spring-projects/spring-security) | `7.1.1` → `a825937b8175ee85872c49d9c7fc25eea8cff991` | Apache-2.0 | API 最小会话认证与安全测试 | `ADOPTED` | 2026-09-28 | [7.1.1 release](https://github.com/spring-projects/spring-security/releases/tag/7.1.1) |
 | Spring AMQP | [spring-projects/spring-amqp](https://github.com/spring-projects/spring-amqp) | `v4.1.1` → `cc1c35f30c3e2f06af1c9f258d71b0255e9e5ddc` | Apache-2.0 | API/Worker RabbitMQ 传输 | `ADOPTED` | 2026-09-28 | [4.1.1 release](https://github.com/spring-projects/spring-amqp/releases/tag/v4.1.1) |
+| Jackson Databind | [FasterXML/jackson-databind](https://github.com/FasterXML/jackson-databind) | `jackson-databind-3.1.5` | Apache-2.0 | Worker 严格解析四字段任务 JSON；通过 Boot Starter 引入 | `ADOPTED` | 2026-09-29 | [Maven Central POM](https://repo.maven.apache.org/maven2/tools/jackson/core/jackson-databind/3.1.5/jackson-databind-3.1.5.pom) |
 | Flyway | [flyway/flyway](https://github.com/flyway/flyway) | `flyway-12.4.0` → `be256634108dba6f760dbb0604e3421f12f2c431` | Apache-2.0 | API 唯一生产迁移执行者与 MySQL 模块 | `ADOPTED` | 2026-09-28 | [12.4.0 release](https://github.com/flyway/flyway/releases/tag/flyway-12.4.0) |
 | Testcontainers Java | [testcontainers/testcontainers-java](https://github.com/testcontainers/testcontainers-java) | `2.0.5` → `5c448202ac69d073f746433d3e79f6a2bf0ec585` | MIT | MySQL、RabbitMQ 与 JUnit 集成测试；test scope only | `ADOPTED_TEST_ONLY` | 2026-09-28 | [2.0.5 release](https://github.com/testcontainers/testcontainers-java/releases/tag/2.0.5) |
 | Docker CLI | [docker/cli](https://github.com/docker/cli) | 本机验证版本 `29.8.0`；源码 release line `v29.8.0` | Apache-2.0 + NOTICE | Worker 通过外部 CLI 控制 M0 一次性容器；不复制或分发 CLI | `ADOPTED_EXTERNAL_RUNTIME` | 2026-09-28 | [官方仓库与许可证](https://github.com/docker/cli) / [Engine 29.8.0 release](https://github.com/moby/moby/releases/tag/docker-v29.8.0) |
@@ -117,9 +118,9 @@
 
 ### U-004：M0 后端直接依赖门禁
 
-- API 运行依赖新增 Spring Security、Spring AMQP、Spring Boot Flyway Starter 与 `flyway-mysql`；Worker 运行依赖只新增 Spring AMQP。
+- API 运行依赖新增 Spring Security、Spring AMQP、Spring Boot Flyway Starter 与 `flyway-mysql`；Worker 运行依赖新增 Spring AMQP 与 Spring Boot Jackson Starter，后者只用于严格解析四字段任务 JSON。
 - API 测试依赖新增 `spring-security-test`；API 与 Worker 测试依赖新增 Spring Boot Testcontainers 以及 Testcontainers JUnit Jupiter、MySQL、RabbitMQ 模块。
-- 解析版本为 Spring Security 7.1.1、Spring AMQP 4.1.1、Flyway 12.4.0、Testcontainers 2.0.5，均由 Spring Boot 4.1.1 BOM 管理，子 POM 不重复写版本。
+- 解析版本为 Spring Security 7.1.1、Spring AMQP 4.1.1、Jackson Databind 3.1.5、Flyway 12.4.0、Testcontainers 2.0.5，均由 Spring Boot 4.1.1 BOM 管理，子 POM 不重复写版本。
 - 上述项目源码没有复制进 ForgeOJ；它们提供第三方框架或测试能力，不能被表述为 ForgeOJ 自行实现了认证、消息可靠性、迁移或集成测试。
 - M0 不引入 OAuth/JWT、Spring Session/Redis、Spring Cloud Stream、Spring Retry、PageHelper 或 MyBatis-Plus。
 - M0 不把 `docker-java` 作为生产沙箱客户端；Testcontainers 2.0.5 在 test scope 传递使用的 `docker-java` 只服务 disposable 集成测试，仍属于第三方传递依赖。

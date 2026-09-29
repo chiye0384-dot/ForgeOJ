@@ -78,8 +78,10 @@ V2.0 综合学习内容：BACKLOG，需另行确认是否立项
 - 已在真实 MySQL 8.4.12 Testcontainer 中验证 Submission、JudgeTask 与 Outbox 同事务创建；Outbox 无写权限时三表全部回滚，相同 Idempotency-Key 的顺序和 8 路并发重放只产生一组记录，不同 key 产生独立提交；
 - 提交接口只接受规范 UUID、`JAVA_21` 和不超过 65,536 UTF-8 字节的无 package 单文件 `public class Main`；判题快照完整固化，四字段 Outbox payload 不含源码或隐藏数据；
 - 已在固定 digest 的 RabbitMQ 4.3.6 Testcontainer 中验证 durable exchange/queue/binding、persistent 四字段 JSON 和 publisher confirm；只有已确认且可路由的消息才设置 `published_at`，删除目标队列后的退回消息保持未发布且不泄露 payload 到业务日志；
-- 当前下一步是实现 Worker 的手动 ACK、task/submission 对应校验和 `QUEUED -> RUNNING` 原子幂等领取；
-- 登录、公开题目读取、提交事务和 RabbitMQ 发布是已验证的局部切片；Worker、Docker 判题和端到端闭环仍未完成，因此 M0 整体保持 `IN_PROGRESS`。
+- 已在真实 MySQL 8.4.12 与 RabbitMQ 4.3.6 Testcontainers 中验证 Worker 严格四字段契约解析、manual ACK/prefetch 1、task/submission 对应校验、`QUEUED -> RUNNING` 双表事务更新、权限失败回滚，以及重复投递/八路并发只有一个执行权；
+- Worker 真实消费开关在任务执行器接入前默认关闭，避免把“已领取”冒充为“已判题”；
+- 当前下一步是 Worker 读取不可变判题快照和隐藏测试，并实现受限 Docker CLI 执行边界；
+- 登录、公开题目读取、提交事务、RabbitMQ 发布和 Worker 幂等领取是已验证的局部切片；Docker 判题、结果写回和端到端闭环仍未完成，因此 M0 整体保持 `IN_PROGRESS`。
 
 最短流程：
 

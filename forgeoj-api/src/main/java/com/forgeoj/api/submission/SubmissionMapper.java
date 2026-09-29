@@ -37,6 +37,22 @@ interface SubmissionMapper {
 
     @Select(
             """
+            SELECT id AS submissionId,
+                   processing_status AS processingStatus,
+                   status_version AS statusVersion,
+                   verdict,
+                   diagnostic_message AS diagnosticMessage
+            FROM submission
+            WHERE id = #{submissionId}
+              AND user_id = #{userId}
+            LIMIT 1
+            """)
+    Optional<SubmissionStatus> findStatusByOwner(
+            @Param("userId") long userId,
+            @Param("submissionId") String submissionId);
+
+    @Select(
+            """
             SELECT p.id AS problemId,
                    jv.id AS judgeVersionId,
                    jv.time_limit_ms AS timeLimitMs,

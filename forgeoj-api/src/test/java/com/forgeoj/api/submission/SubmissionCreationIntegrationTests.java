@@ -13,6 +13,7 @@ import java.nio.charset.StandardCharsets;
 import java.security.MessageDigest;
 import java.util.HashSet;
 import java.util.List;
+import java.util.Map;
 import java.util.UUID;
 import java.util.concurrent.CountDownLatch;
 import java.util.concurrent.Executors;
@@ -245,6 +246,115 @@ class SubmissionCreationIntegrationTests {
                 .andExpect(status().isBadRequest());
     }
 
+    @Test
+    void returnsOnlyWhitelistedSubmissionStatusFieldsToOwner() throws Exception {
+        AuthenticatedSession owner = login();
+        String submissionId = createSubmission(owner);
+
+        MvcResult queued =
+                getSubmission(owner, submissionId).andExpect(status().isOk()).andReturn();
+        Map<String, Object> queuedBody =
+                JsonPath.parse(queued.getResponse().getContentAsString()).read("$");
+        assertThat(queuedBody.keySet())
+                .containsExactlyInAnyOrder(
+                        "submissionId",
+                        "processingStatus",
+                        "statusVersion",
+                        "verdict",
+                        "diagnosticMessage");
+        assertThat(queuedBody)
+                .containsEntry("submissionId", submissionId)
+                .containsEntry("processingStatus", "QUEUED")
+                .containsEntry("statusVersion", 0)
+                .containsEntry("verdict", null)
+                .containsEntry("diagnosticMessage", null);
+
+        migratorJdbc()
+                .update(
+                        """
+                        UPDATE submission
+                        SET processing_status = 'FINISHED', verdict = 'OLE', status_version = 2,
+                            diagnostic_message = 'HIDDEN_DIAGNOSTIC_SENTINEL',
+                            finished_at = CURRENT_TIMESTAMP(6)
+                        WHERE id = ?
+                        """,
+                        submissionId);
+
+        MvcResult finished =
+                getSubmission(owner, submissionId).andExpect(status().isOk()).andReturn();
+        String finishedJson = finished.getResponse().getContentAsString();
+        Map<String, Object> finishedBody = JsonPath.parse(finishedJson).read("$");
+        assertThat(finishedBody)
+                .containsEntry("processingStatus", "FINISHED")
+                .containsEntry("statusVersion", 2)
+                .containsEntry("verdict", "OLE")
+                .containsEntry("diagnosticMessage", null);
+        assertThat(finishedJson)
+                .doesNotContain("HIDDEN_DIAGNOSTIC_SENTINEL")
+                .doesNotContain("SOURCE_SENTINEL_MUST_NOT_ENTER_OUTBOX")
+                .doesNotContain(
+                        "37881a92ca996970e09475fdb29435b9bc13ae1501fa118e5fd9afd47e561adf");
+    }
+
+    @Test
+    void returnsSameNotFoundForAnotherOwnerMissingAndMalformedIds() throws Exception {
+        AuthenticatedSession owner = login();
+        String submissionId = createSubmission(owner);
+        createSecondUser();
+        AuthenticatedSession anotherUser = login("another-learner");
+
+        getSubmission(anotherUser, submissionId).andExpect(status().isNotFound());
+        getSubmission(owner, UUID.randomUUID().toString()).andExpect(status().isNotFound());
+        getSubmission(owner, "not-a-uuid").andExpect(status().isNotFound());
+    }
+
+    @Test
+    void rejectsAnonymousSubmissionStatusReads() throws Exception {
+        AuthenticatedSession owner = login();
+        String submissionId = createSubmission(owner);
+
+        mockMvc.perform(get("/api/v1/submissions/{submissionId}", submissionId))
+                .andExpect(status().isUnauthorized());
+    }
+
+    @Test
+    void exposesCompileDiagnosticsButNormalizesPlatformFailureDetails() throws Exception {
+        AuthenticatedSession owner = login();
+        String compileErrorId = createSubmission(owner);
+        String systemErrorId = createSubmission(owner);
+        JdbcTemplate migrator = migratorJdbc();
+        migrator.update(
+                """
+                UPDATE submission
+                SET processing_status = 'FINISHED', verdict = 'CE', status_version = 2,
+                    diagnostic_message = 'Main.java:3: missing semicolon',
+                    finished_at = CURRENT_TIMESTAMP(6)
+                WHERE id = ?
+                """,
+                compileErrorId);
+        migrator.update(
+                """
+                UPDATE submission
+                SET processing_status = 'SYSTEM_ERROR', verdict = NULL, status_version = 2,
+                    diagnostic_message = 'jdbc:mysql://secret-host/forgeoj HIDDEN_SENTINEL',
+                    finished_at = CURRENT_TIMESTAMP(6)
+                WHERE id = ?
+                """,
+                systemErrorId);
+
+        getSubmission(owner, compileErrorId)
+                .andExpect(status().isOk())
+                .andExpect(jsonPath("$.diagnosticMessage").value("Main.java:3: missing semicolon"));
+        MvcResult systemError =
+                getSubmission(owner, systemErrorId).andExpect(status().isOk()).andReturn();
+        String systemErrorJson = systemError.getResponse().getContentAsString();
+        assertThat(JsonPath.read(systemErrorJson, "$.diagnosticMessage").toString())
+                .isEqualTo("Judging infrastructure failed");
+        assertThat(systemErrorJson)
+                .doesNotContain("secret-host")
+                .doesNotContain("HIDDEN_SENTINEL");
+    }
+
     private org.springframework.test.web.servlet.ResultActions submit(
             AuthenticatedSession session, UUID requestId, String sourceCode) throws Exception {
         return mockMvc.perform(
@@ -254,6 +364,21 @@ class SubmissionCreationIntegrationTests {
                         .header("Idempotency-Key", requestId.toString())
                         .contentType(MediaType.APPLICATION_JSON)
                         .content(requestJson("JAVA_21", sourceCode)));
+    }
+
+    private org.springframework.test.web.servlet.ResultActions getSubmission(
+            AuthenticatedSession session, String submissionId) throws Exception {
+        return mockMvc.perform(
+                get("/api/v1/submissions/{submissionId}", submissionId)
+                        .session(session.session()));
+    }
+
+    private String createSubmission(AuthenticatedSession session) throws Exception {
+        MvcResult result =
+                submit(session, UUID.randomUUID(), VALID_SOURCE)
+                        .andExpect(status().isAccepted())
+                        .andReturn();
+        return JsonPath.read(result.getResponse().getContentAsString(), "$.submissionId");
     }
 
     private void assertSingleRecordSet(UUID requestId, String submissionId) throws Exception {
@@ -331,6 +456,10 @@ class SubmissionCreationIntegrationTests {
     }
 
     private AuthenticatedSession login() throws Exception {
+        return login("learner");
+    }
+
+    private AuthenticatedSession login(String username) throws Exception {
         AnonymousSession anonymous = openAnonymousSession();
         MvcResult login =
                 mockMvc.perform(
@@ -340,8 +469,10 @@ class SubmissionCreationIntegrationTests {
                                         .contentType(MediaType.APPLICATION_JSON)
                                         .content(
                                                 """
-                                                {"username":"learner","password":"forgeoj-dev-only"}
-                                                """))
+                                                {"username":"%s","password":"forgeoj-dev-only"}
+                                                """
+                                                        .formatted(username)
+                                                        .strip()))
                         .andExpect(status().isOk())
                         .andExpect(jsonPath("$.authenticated").value(true))
                         .andReturn();
@@ -349,6 +480,20 @@ class SubmissionCreationIntegrationTests {
                 (MockHttpSession) login.getRequest().getSession(false),
                 anonymous.csrfHeader(),
                 anonymous.csrfToken());
+    }
+
+    private void createSecondUser() {
+        migratorJdbc()
+                .update(
+                        """
+                        INSERT INTO user_account (id, username, password_hash, status)
+                        VALUES (2, 'another-learner',
+                            '$2a$10$slWnrjf2WJd.j/4Fnc1m..7QjwDgtyAlJ4OrLRzEjhAN0g7zkuyCi',
+                            'ACTIVE') AS new
+                        ON DUPLICATE KEY UPDATE
+                            password_hash = new.password_hash,
+                            status = new.status
+                        """);
     }
 
     private AnonymousSession openAnonymousSession() throws Exception {

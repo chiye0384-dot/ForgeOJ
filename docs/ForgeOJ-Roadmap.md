@@ -88,8 +88,9 @@ V2.0 综合学习内容：BACKLOG，需另行确认是否立项
 - Worker 消费与沙箱开关仍默认关闭，只在具备受控 Docker 环境时显式启用；
 - 已实现仅提交所有者可读的 Submission 结果查询；查询以 `(submission_id, user_id)` 同时过滤，他人、不存在和格式错误的 ID 统一返回 404，响应只包含状态版本、处理状态、verdict 和脱敏诊断等白名单字段；
 - 已实现 M0 前端工作台和 `/api` 开发代理；Vitest 以模拟 API 响应覆盖匿名会话、CSRF 登录、公开题目、带 Idempotency-Key 的 Java 21 提交、轮询至终态并停止，以及不显示未声明隐藏字段；
-- 当前下一步是组合验证真实浏览器/API/RabbitMQ/Worker/Docker/MySQL 从提交到最终结果的完整链路；
-- 登录、公开题目读取、提交事务、RabbitMQ 发布、Worker 到终态、所有者结果查询及模拟 API 驱动的前端轮询是已验证的局部切片；真实组合闭环和固定 Linux 复现仍未完成，因此 M0 整体保持 `IN_PROGRESS`。
+- 已在 disposable Windows + Docker Desktop 开发栈真实验证浏览器登录、读题、AC 提交、Outbox 发布、RabbitMQ 消费、Worker 受限 Docker 执行、双表终态写回、所有者查询和页面轮询；联表状态为 `FINISHED/AC/version 2`，队列清空且无沙箱容器残留；
+- 当前下一步是在固定 Linux 环境重放完整链路，并逐项审计 M0 设计中的 20 项门禁；
+- 固定 Linux 复现和最终门禁审计仍未完成，因此 M0 整体保持 `IN_PROGRESS`。
 
 最短流程：
 

@@ -1,8 +1,9 @@
 # ForgeOJ development infrastructure
 
 `compose.dev.yml` supplies the disposable MySQL and RabbitMQ runtime used while
-building M0. It does not yet start the API, frontend, or Judge Worker and is not
-a production deployment definition.
+building M0. It intentionally does not start the API, frontend, or Judge Worker;
+run those as separate development processes. This is not a production deployment
+definition.
 
 ## Start
 
@@ -49,19 +50,37 @@ profile creates neither. The currently available HTTP slice is:
 - `GET /api/v1/problems/sum-two-integers` for the public-field whitelist.
 - authenticated `POST /api/v1/problems/sum-two-integers/submissions` with a
   UUID `Idempotency-Key` header to atomically create the queued submission,
-  judge task, and four-field Outbox event.
+  judge task, and four-field Outbox event;
+- authenticated `GET /api/v1/submissions/{submissionId}` for the owner-only,
+  field-limited status and terminal result.
 
 With the `dev` profile, the API polls unpublished M0 Outbox rows in small
 batches, publishes persistent JSON to the durable RabbitMQ topology, and only
 sets `published_at` after a positive publisher confirm with no returned
-message. The Worker now has a strict four-field consumer, an atomic idempotent
-`QUEUED -> RUNNING` claim boundary, running-task-only snapshot loading, and a
-Docker CLI adapter that can verify a Linux Engine and create/remove a restricted
-container. Both `forgeoj.worker.consumer.enabled` and
-`forgeoj.worker.sandbox.enabled` remain off by default until compilation,
-per-case execution, cleanup of running containers, and terminal result writes
-are connected. The frontend and actual judging are not yet implemented. Never
-enable the `dev` profile in production.
+message. Never enable the `dev` profile in production.
+
+## Run the M0 Judge Worker
+
+Run the Worker in a separate terminal. Supply `SPRING_DATASOURCE_URL`,
+`SPRING_DATASOURCE_USERNAME=forgeoj_worker`, `SPRING_DATASOURCE_PASSWORD`, the
+five `SPRING_RABBITMQ_*` connection values, and a Docker CLI path visible to the
+Worker. Then explicitly enable the two fail-closed M0 switches:
+
+```powershell
+$env:FORGEOJ_WORKER_CONSUMER_ENABLED = 'true'
+$env:FORGEOJ_WORKER_SANDBOX_ENABLED = 'true'
+.\mvnw.cmd --batch-mode -pl forgeoj-judge-worker spring-boot:run
+```
+
+The Worker verifies the Linux Docker Engine at startup, consumes the strict
+four-field message, claims the task idempotently, reloads the immutable snapshot
+and hidden tests from MySQL, executes Java 21 in a restricted container, writes
+the Submission and JudgeTask terminal states in one transaction, and only then
+ACKs. Keep both switches disabled when the Worker must not control Docker.
+
+Start the frontend separately with `npm run dev` inside `frontend`; Vite proxies
+`/api` to the API at `127.0.0.1:8080`. The recorded disposable full-flow check is
+in `../docs/M0-E2E-VALIDATION.md`.
 
 ## Stop and reset
 

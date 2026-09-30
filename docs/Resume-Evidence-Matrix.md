@@ -85,7 +85,7 @@
 
 建议证据文件：集成测试报告、故障注入记录、状态时序图、队列和数据库截图、相关 commit。
 
-当前局部证据（不足以把 E-01 提升为 `VERIFIED`）：2026-09-29 的真实 RabbitMQ/MySQL/Docker 自动化测试已覆盖领取后读取快照、沙箱执行、Submission/JudgeTask 原子终态写回、写回后 ACK、重复终态消息吸收，以及平台执行故障写 `SYSTEM_ERROR`。同日 disposable Windows 开发栈又真实跑通浏览器到 `FINISHED/AC/version 2`，并核对 Outbox 已发布、队列已清空。Worker 在写库前后崩溃恢复、ACK 丢失、有限重试/死信和 OPS_ADMIN 运维闭环属于 M1，尚未完成。
+当前局部证据（不足以把 E-01 提升为 `VERIFIED`）：M0 已验证 Submission/JudgeTask/Outbox 原子创建与回滚、四字段持久消息、publisher confirm、幂等领取、Submission/JudgeTask 原子终态写回、写回后 ACK、重复投递吸收和 `SYSTEM_ERROR`。2026-09-30 的固定 Linux/amd64 进程级重放又以 AC、WA、CE、RE、TLE、OLE 六种真实提交证明 Outbox/RabbitMQ/Worker/Docker/MySQL 链路，7 条 Outbox 全部发布且队列归零。Worker 在写库前后崩溃恢复、ACK 丢失、attempt/lease、有限重试/死信和 OPS_ADMIN 运维闭环属于 M1，尚未完成。
 
 ### E-02：Docker 代码沙箱
 
@@ -101,7 +101,7 @@
 
 建议证据文件：威胁模型、沙箱测试表、容器 inspect 脱敏输出、清理监控、相关 commit。
 
-当前局部证据（不足以把 E-02 提升为 `VERIFIED`）：2026-09-29 的 Windows + Docker Desktop 自动化测试已覆盖受限容器配置、stdin 传入源码/隐藏输入、一次编译、逐例独立 JVM、AC/WA/CE/RE/TLE/OLE、首错停止、终态写回和容器清理；真实浏览器 AC 闭环结束后再次确认无 ForgeOJ 管理的沙箱容器残留。进程爆炸、内存耗尽、写文件、联网尝试、凭证不可见性及固定 Linux 环境复现仍待完成。
+当前局部证据（不足以把 E-02 提升为 `VERIFIED`）：M0 已在固定 Linux/amd64 中验证 API 容器无 Docker Socket，Worker 独占 Docker 控制；真实 inspect 和执行测试覆盖非 root、禁网、只读根、capabilities 删除、no-new-privileges、CPU/内存/PID/tmpfs 限制、stdin 传入源码/隐藏输入、一次编译、逐例独立 JVM、AC/WA/CE/RE/TLE/OLE 和全分支容器清理。固定 Linux 六 verdict 进程级链路结束后管理沙箱数为 0，日志也未出现隐藏哨兵。更宽的进程爆炸、内存耗尽、写文件、联网尝试、凭证不可见性矩阵和 M5 固定 Linux 主机安全验收仍待完成。
 
 ### E-03：班级与作业权限模型
 

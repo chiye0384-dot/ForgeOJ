@@ -1,6 +1,6 @@
 # ForgeOJ 版本路线图
 
-> 当前阶段：M-1 项目准备已验证通过；M0 最小判题纵向切片进行中。
+> 当前阶段：M-1 项目准备与 M0 最小判题纵向切片已验证通过；下一个可开始里程碑为 M1 可靠异步判题。
 > 路线图描述先后顺序，不代表完成状态。
 
 ## 1. 状态规则
@@ -13,7 +13,7 @@
 - `DEFERRED`：明确推迟到以后。
 - `BACKLOG`：只有候选想法，尚未承诺进入版本。
 
-当前 M-1 为 `VERIFIED`；M0 为 `IN_PROGRESS`；M1 至 V1.1 仍为 `PLANNED`；V2.0 仅为 `BACKLOG` 候选，不是承诺的里程碑。
+当前 M-1 与 M0 均为 `VERIFIED`；M1 至 V1.1 仍为 `PLANNED`；V2.0 仅为 `BACKLOG` 候选，不是承诺的里程碑。
 
 ## 2. 总体顺序
 
@@ -68,7 +68,7 @@ V2.0 综合学习内容：BACKLOG，需另行确认是否立项
 
 目标：尽早验证最难的技术风险，不先做完整页面。
 
-当前进展（`IN_PROGRESS`，2026-09-29）：
+验证结果（`VERIFIED`，2026-09-30）：
 
 - 用户已明确确认启动 M0；开发分支为 `feat/m0-vertical-slice`；
 - 已完成 M0 直接依赖与许可证登记、纵向切片设计、四字段消息 JSON Schema、7 张业务表的 V1 Flyway migration，以及固定 digest 的 MySQL/RabbitMQ disposable Compose；
@@ -89,8 +89,10 @@ V2.0 综合学习内容：BACKLOG，需另行确认是否立项
 - 已实现仅提交所有者可读的 Submission 结果查询；查询以 `(submission_id, user_id)` 同时过滤，他人、不存在和格式错误的 ID 统一返回 404，响应只包含状态版本、处理状态、verdict 和脱敏诊断等白名单字段；
 - 已实现 M0 前端工作台和 `/api` 开发代理；Vitest 以模拟 API 响应覆盖匿名会话、CSRF 登录、公开题目、带 Idempotency-Key 的 Java 21 提交、轮询至终态并停止，以及不显示未声明隐藏字段；
 - 已在 disposable Windows + Docker Desktop 开发栈真实验证浏览器登录、读题、AC 提交、Outbox 发布、RabbitMQ 消费、Worker 受限 Docker 执行、双表终态写回、所有者查询和页面轮询；联表状态为 `FINISHED/AC/version 2`，队列清空且无沙箱容器残留；
-- 当前下一步是在固定 Linux 环境重放完整链路，并逐项审计 M0 设计中的 20 项门禁；
-- 固定 Linux 复现和最终门禁审计仍未完成，因此 M0 整体保持 `IN_PROGRESS`。
+- 提交 `39e91145` 在固定 Linux/amd64 Maven 镜像中通过 API 14 项、Worker 35 项测试，前端在固定 Node 镜像中通过类型、lint、格式、Vitest 和生产构建；
+- 真实 Linux 进程级重放证明 Vite 代理、无 Docker 权限 API、MySQL/Outbox/RabbitMQ、独占 Docker 权限 Worker 和判题容器能够闭环，AC、WA、CE、RE、TLE、OLE 全部到达 `FINISHED/version 2`；
+- `docs/M0-E2E-VALIDATION.md` 已对照设计第 12 节记录 20/20 门禁 `PASS`，因此 M0 标记为 `VERIFIED`；
+- 当前下一个候选工作是 M1：attempt/lease、崩溃恢复、有限重试、死信与运维闭环；M1 仍为 `PLANNED`。
 
 最短流程：
 

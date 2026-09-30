@@ -18,9 +18,11 @@ import java.util.UUID;
 import java.util.concurrent.CountDownLatch;
 import java.util.concurrent.Executors;
 import java.util.concurrent.Future;
+import java.util.concurrent.atomic.AtomicInteger;
 
 import javax.sql.DataSource;
 
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -40,7 +42,7 @@ import org.testcontainers.utility.DockerImageName;
 import org.testcontainers.utility.MountableFile;
 
 @Testcontainers
-@AutoConfigureMockMvc
+@AutoConfigureMockMvc(print = org.springframework.boot.webmvc.test.autoconfigure.MockMvcPrint.NONE)
 @SpringBootTest(
         properties = {
             "spring.flyway.locations=classpath:db/migration,classpath:db/devdata",
@@ -75,6 +77,8 @@ class SubmissionCreationIntegrationTests {
                     .withDatabaseName("forgeoj")
                     .withUsername("bootstrap")
                     .withPassword("bootstrap-test-secret")
+                    // Disposable failure injection only; production does not need this setting.
+                    .withCommand("--log-bin-trust-function-creators=1")
                     .withCopyFileToContainer(
                             MountableFile.forClasspathResource("mysql/init-test-users.sql"),
                             "/docker-entrypoint-initdb.d/01-init-test-users.sql");
@@ -97,6 +101,18 @@ class SubmissionCreationIntegrationTests {
 
     @Autowired
     private SubmissionService submissionService;
+
+    @Autowired
+    private SubmissionTransactionService transactionService;
+
+    @BeforeEach
+    void resetSubmissionState() {
+        JdbcTemplate migrator = migratorJdbc();
+        migrator.update("DELETE FROM outbox_event");
+        migrator.update("DELETE FROM judge_task_attempt");
+        migrator.update("DELETE FROM judge_task");
+        migrator.update("DELETE FROM submission");
+    }
 
     @Test
     void createsExactlyOneRecordSetAndReplaysSequentially() throws Exception {
@@ -162,6 +178,360 @@ class SubmissionCreationIntegrationTests {
             assertThat(submissionIds).hasSize(1);
             assertSingleRecordSet(requestId, submissionIds.iterator().next());
         }
+    }
+
+    @Test
+    void limitsQueuedAndRetryingSubmissionsToThreePerUser() throws Exception {
+        AuthenticatedSession session = login();
+        UUID firstKey = UUID.randomUUID();
+
+        submit(session, firstKey, VALID_SOURCE).andExpect(status().isAccepted());
+        submit(session, UUID.randomUUID(), VALID_SOURCE).andExpect(status().isAccepted());
+        submit(session, UUID.randomUUID(), VALID_SOURCE).andExpect(status().isAccepted());
+
+        submit(session, UUID.randomUUID(), VALID_SOURCE)
+                .andExpect(status().isTooManyRequests());
+        submit(session, firstKey, VALID_SOURCE).andExpect(status().isAccepted());
+
+        JdbcTemplate api = new JdbcTemplate(apiDataSource);
+        assertThat(
+                        api.queryForObject(
+                                """
+                                SELECT COUNT(*)
+                                FROM submission
+                                WHERE user_id = 1
+                                  AND processing_status IN ('QUEUED', 'RETRYING')
+                                """,
+                                Integer.class))
+                .isEqualTo(3);
+    }
+
+    @Test
+    void concurrentDistinctSubmissionsCannotExceedQueuedQuota() throws Exception {
+        int callers = 8;
+        CountDownLatch ready = new CountDownLatch(callers);
+        CountDownLatch start = new CountDownLatch(1);
+        AtomicInteger accepted = new AtomicInteger();
+        AtomicInteger rejected = new AtomicInteger();
+
+        try (var executor = Executors.newFixedThreadPool(callers)) {
+            List<Future<Object>> futures =
+                    java.util.stream.IntStream.range(0, callers)
+                            .mapToObj(
+                                    ignored ->
+                                            executor.submit(
+                                                    () -> {
+                                                        ready.countDown();
+                                                        start.await();
+                                                        try {
+                                                            submissionService.create(
+                                                                    1L,
+                                                                    "sum-two-integers",
+                                                                    UUID.randomUUID().toString(),
+                                                                    "JAVA_21",
+                                                                    VALID_SOURCE);
+                                                            accepted.incrementAndGet();
+                                                        } catch (org.springframework.web.server.ResponseStatusException quota) {
+                                                            assertThat(quota.getStatusCode().value())
+                                                                    .isEqualTo(429);
+                                                            rejected.incrementAndGet();
+                                                        }
+                                                        return null;
+                                                    }))
+                            .toList();
+
+            ready.await();
+            start.countDown();
+            for (Future<Object> future : futures) {
+                future.get();
+            }
+        }
+
+        assertThat(accepted).hasValue(3);
+        assertThat(rejected).hasValue(callers - 3);
+        assertThat(
+                        new JdbcTemplate(apiDataSource)
+                                .queryForObject(
+                                        """
+                                        SELECT COUNT(*)
+                                        FROM submission
+                                        WHERE user_id = 1
+                                          AND processing_status IN ('QUEUED', 'RETRYING')
+                                        """,
+                                        Integer.class))
+                .isEqualTo(3);
+    }
+
+    @Test
+    void allowsThreeQueuedTasksAlongsideARunningTaskThatCanRetry() throws Exception {
+        AuthenticatedSession session = login();
+        String runningSubmission = createSubmission(session);
+        createSubmission(session);
+        migratorJdbc()
+                .update(
+                        """
+                        UPDATE judge_task jt
+                        JOIN submission s ON s.id = jt.submission_id
+                        SET jt.task_status = 'RUNNING', jt.status_version = 1,
+                            jt.attempt_count = 1,
+                            s.processing_status = 'RUNNING', s.status_version = 1
+                        WHERE s.id = ?
+                        """,
+                        runningSubmission);
+
+        submit(session, UUID.randomUUID(), VALID_SOURCE).andExpect(status().isAccepted());
+        submit(session, UUID.randomUUID(), VALID_SOURCE).andExpect(status().isAccepted());
+        submit(session, UUID.randomUUID(), VALID_SOURCE)
+                .andExpect(status().isTooManyRequests());
+
+        JdbcTemplate api = new JdbcTemplate(apiDataSource);
+        assertThat(
+                        api.queryForObject(
+                                """
+                                SELECT COUNT(*) FROM submission
+                                WHERE user_id = 1 AND processing_status = 'RUNNING'
+                                """,
+                                Integer.class))
+                .isEqualTo(1);
+        assertThat(
+                        api.queryForObject(
+                                """
+                                SELECT COUNT(*) FROM submission
+                                WHERE user_id = 1
+                                  AND processing_status IN ('QUEUED', 'RETRYING')
+                                """,
+                                Integer.class))
+                .isEqualTo(3);
+    }
+
+    @Test
+    void concurrentReplayOfLastAvailableSlotSucceedsAfterQuotaLock() throws Exception {
+        AuthenticatedSession owner = login();
+        createSubmission(owner);
+        createSubmission(owner);
+        UUID key = UUID.randomUUID();
+        String sourceHash = sha256(VALID_SOURCE);
+        CountDownLatch start = new CountDownLatch(1);
+        try (var executor = Executors.newFixedThreadPool(8)) {
+            List<Future<SubmissionResult>> results = java.util.stream.IntStream.range(0, 8)
+                    .mapToObj(ignored -> executor.submit(() -> {
+                        start.await();
+                        return transactionService.createNew(1L, "sum-two-integers", key,
+                                "JAVA_21", VALID_SOURCE, sourceHash);
+                    })).toList();
+            start.countDown();
+            HashSet<String> ids = new HashSet<>();
+            for (Future<SubmissionResult> result : results) {
+                ids.add(result.get(10, java.util.concurrent.TimeUnit.SECONDS).submissionId());
+            }
+            assertThat(ids).hasSize(1);
+            assertSingleRecordSet(key, ids.iterator().next());
+        }
+    }
+
+    @Test
+    void cancellationIsAtomicIdempotentAndReleasesQueuedQuota() throws Exception {
+        AuthenticatedSession owner = login();
+        String submissionId = createSubmission(owner);
+        createSubmission(owner);
+        createSubmission(owner);
+        MvcResult response = cancelSubmission(owner, submissionId)
+                .andExpect(status().isOk())
+                .andExpect(jsonPath("$.processingStatus").value("CANCELLED"))
+                .andExpect(jsonPath("$.statusVersion").value(1)).andReturn();
+        Map<String, Object> publicResponse = JsonPath.read(response.getResponse().getContentAsString(), "$");
+        assertThat(publicResponse.keySet())
+                .containsExactlyInAnyOrder("submissionId", "processingStatus", "statusVersion");
+        Map<String, Object> afterFirstCancellation = cancellationState(submissionId);
+        cancelSubmission(owner, submissionId)
+                .andExpect(status().isOk())
+                .andExpect(jsonPath("$.statusVersion").value(1));
+        assertThat(cancellationState(submissionId)).isEqualTo(afterFirstCancellation);
+        Map<String, Object> cancelled = cancellationState(submissionId);
+        assertThat(cancelled)
+                .containsEntry("task_status", "CANCELLED")
+                .containsEntry("processing_status", "CANCELLED")
+                .containsEntry("attempt_count", 0L)
+                .containsEntry("verdict", null);
+        assertThat(((Number) cancelled.get("task_version")).longValue()).isEqualTo(1);
+        assertThat(((Number) cancelled.get("submission_version")).longValue()).isEqualTo(1);
+        assertThat(cancelled.get("task_finished_at")).isNotNull();
+        assertThat(cancelled.get("submission_finished_at")).isNotNull();
+        assertThat(migratorJdbc().queryForObject("SELECT COUNT(*) FROM outbox_event", Integer.class))
+                .isEqualTo(3);
+        assertThat(migratorJdbc().queryForObject("SELECT COUNT(*) FROM judge_task_attempt", Integer.class))
+                .isZero();
+        submit(owner, UUID.randomUUID(), VALID_SOURCE).andExpect(status().isAccepted());
+    }
+
+    @Test
+    void concurrentCancellationOnlyIncrementsVersionsOnce() throws Exception {
+        AuthenticatedSession owner = login();
+        String submissionId = createSubmission(owner);
+        CountDownLatch start = new CountDownLatch(1);
+        try (var executor = Executors.newFixedThreadPool(8)) {
+            List<Future<Integer>> results = java.util.stream.IntStream.range(0, 8)
+                    .mapToObj(ignored -> executor.submit(() -> {
+                        start.await();
+                        return cancelSubmission(owner, submissionId).andReturn().getResponse().getStatus();
+                    })).toList();
+            start.countDown();
+            for (Future<Integer> result : results) {
+                assertThat(result.get(10, java.util.concurrent.TimeUnit.SECONDS)).isEqualTo(200);
+            }
+        }
+        Map<String, Object> cancelled = cancellationState(submissionId);
+        assertThat(((Number) cancelled.get("task_version")).longValue()).isEqualTo(1);
+        assertThat(((Number) cancelled.get("submission_version")).longValue()).isEqualTo(1);
+    }
+
+    @Test
+    void cancellationWaitsForConcurrentRunningTransitionAndThenRejects() throws Exception {
+        AuthenticatedSession owner = login();
+        String submissionId = createSubmission(owner);
+        String taskId = migratorJdbc().queryForObject(
+                "SELECT id FROM judge_task WHERE submission_id = ?", String.class, submissionId);
+        try (var connection = java.sql.DriverManager.getConnection(
+                MYSQL.getJdbcUrl(), "forgeoj_worker", "m0-worker-test-secret");
+                var executor = Executors.newSingleThreadExecutor()) {
+            connection.setAutoCommit(false);
+            try (var lock = connection.prepareStatement("""
+                    SELECT jt.id FROM judge_task jt JOIN submission s ON s.id = jt.submission_id
+                    WHERE jt.id = ? FOR UPDATE
+                    """)) {
+                lock.setString(1, taskId);
+                try (var row = lock.executeQuery()) {
+                    assertThat(row.next()).isTrue();
+                }
+            }
+            CountDownLatch ready = new CountDownLatch(1);
+            Future<Integer> cancellation = executor.submit(() -> {
+                ready.countDown();
+                return cancelSubmission(owner, submissionId).andReturn().getResponse().getStatus();
+            });
+            assertThat(ready.await(5, java.util.concurrent.TimeUnit.SECONDS)).isTrue();
+            try (var transition = connection.prepareStatement("""
+                    UPDATE judge_task jt JOIN submission s ON s.id = jt.submission_id
+                    SET jt.task_status = 'RUNNING', jt.status_version = 1,
+                        s.processing_status = 'RUNNING', s.status_version = 1
+                    WHERE jt.id = ?
+                    """)) {
+                transition.setString(1, taskId);
+                assertThat(transition.executeUpdate()).isEqualTo(2);
+            }
+            connection.commit();
+            assertThat(cancellation.get(10, java.util.concurrent.TimeUnit.SECONDS)).isEqualTo(409);
+        }
+        assertThat(cancellationState(submissionId))
+                .containsEntry("task_status", "RUNNING")
+                .containsEntry("processing_status", "RUNNING");
+    }
+
+    @Test
+    void queuedQuotaIsIndependentForDifferentUsersAndCountsRetrying() throws Exception {
+        AuthenticatedSession owner = login();
+        String retrying = createSubmission(owner);
+        migratorJdbc().update("""
+                UPDATE judge_task jt JOIN submission s ON s.id = jt.submission_id
+                SET jt.task_status = 'RETRYING', s.processing_status = 'RETRYING' WHERE s.id = ?
+                """, retrying);
+        createSubmission(owner);
+        createSubmission(owner);
+        submit(owner, UUID.randomUUID(), VALID_SOURCE).andExpect(status().isTooManyRequests());
+        createSecondUser();
+        AuthenticatedSession other = login("another-learner");
+        createSubmission(other);
+        createSubmission(other);
+        createSubmission(other);
+        submit(other, UUID.randomUUID(), VALID_SOURCE).andExpect(status().isTooManyRequests());
+    }
+
+    @Test
+    void cancellationRejectsNonQueuedStatesWithoutChangingEitherTable() throws Exception {
+        AuthenticatedSession owner = login();
+        for (String state : List.of("RUNNING", "RETRYING", "FINISHED", "SYSTEM_ERROR")) {
+            String submissionId = createSubmission(owner);
+            migratorJdbc().update("""
+                    UPDATE judge_task jt JOIN submission s ON s.id = jt.submission_id
+                    SET jt.task_status = ?, s.processing_status = ?,
+                        s.verdict = CASE WHEN ? = 'FINISHED' THEN 'AC' ELSE NULL END
+                    WHERE s.id = ?
+                    """, state, state, state, submissionId);
+            Map<String, Object> before = cancellationState(submissionId);
+            cancelSubmission(owner, submissionId).andExpect(status().isConflict());
+            assertThat(cancellationState(submissionId)).isEqualTo(before);
+            // Release the disposable fixture so each state starts with a fresh quota.
+            resetSubmissionState();
+        }
+    }
+
+    @Test
+    void cancellationHidesOtherOwnerMissingAndMalformedResourcesAndRequiresCsrf() throws Exception {
+        AuthenticatedSession owner = login();
+        String submissionId = createSubmission(owner);
+        createSecondUser();
+        AuthenticatedSession other = login("another-learner");
+        Map<String, Object> before = cancellationState(submissionId);
+        MvcResult otherOwner = cancelSubmission(other, submissionId)
+                .andExpect(status().isNotFound()).andReturn();
+        MvcResult missing = cancelSubmission(owner, UUID.randomUUID().toString())
+                .andExpect(status().isNotFound()).andReturn();
+        MvcResult malformed = cancelSubmission(owner, "not-a-uuid")
+                .andExpect(status().isNotFound()).andReturn();
+        assertThat(otherOwner.getResponse().getErrorMessage())
+                .isEqualTo(missing.getResponse().getErrorMessage())
+                .isEqualTo(malformed.getResponse().getErrorMessage());
+        assertThat(otherOwner.getResponse().getContentAsString())
+                .isEqualTo(missing.getResponse().getContentAsString())
+                .isEqualTo(malformed.getResponse().getContentAsString());
+        mockMvc.perform(post("/api/v1/submissions/{submissionId}/cancel", submissionId)
+                        .session(owner.session())).andExpect(status().isForbidden());
+        AnonymousSession anonymous = openAnonymousSession();
+        mockMvc.perform(post("/api/v1/submissions/{submissionId}/cancel", submissionId)
+                        .session(anonymous.session())
+                        .header(anonymous.csrfHeader(), anonymous.csrfToken()))
+                .andExpect(status().isUnauthorized());
+        assertThat(cancellationState(submissionId)).isEqualTo(before);
+    }
+
+    @Test
+    void cancellationRollsBackTaskWhenSubmissionUpdateFails() throws Exception {
+        AuthenticatedSession owner = login();
+        String submissionId = createSubmission(owner);
+        Map<String, Object> before = cancellationState(submissionId);
+        JdbcTemplate migrator = migratorJdbc();
+        migrator.execute("""
+                CREATE TRIGGER fail_cancellation BEFORE UPDATE ON submission FOR EACH ROW
+                BEGIN
+                    IF NEW.processing_status = 'CANCELLED' THEN
+                        SIGNAL SQLSTATE '45000' SET MESSAGE_TEXT = 'Injected cancellation failure';
+                    END IF;
+                END
+                """);
+        try {
+            assertThatThrownBy(() -> cancelSubmission(owner, submissionId))
+                    .isInstanceOf(Exception.class);
+        } finally {
+            migrator.execute("DROP TRIGGER fail_cancellation");
+        }
+        assertThat(cancellationState(submissionId)).isEqualTo(before);
+    }
+
+    private org.springframework.test.web.servlet.ResultActions cancelSubmission(
+            AuthenticatedSession session, String submissionId) throws Exception {
+        return mockMvc.perform(post("/api/v1/submissions/{submissionId}/cancel", submissionId)
+                .session(session.session()).header(session.csrfHeader(), session.csrfToken()));
+    }
+
+    private Map<String, Object> cancellationState(String submissionId) {
+        return migratorJdbc().queryForMap("""
+                SELECT jt.task_status, s.processing_status,
+                       jt.status_version AS task_version, s.status_version AS submission_version,
+                       jt.attempt_count, s.verdict, jt.finished_at AS task_finished_at,
+                       s.finished_at AS submission_finished_at
+                FROM judge_task jt JOIN submission s ON s.id = jt.submission_id
+                WHERE s.id = ?
+                """, submissionId);
     }
 
     @Test
@@ -494,6 +864,7 @@ class SubmissionCreationIntegrationTests {
                             password_hash = new.password_hash,
                             status = new.status
                         """);
+        migratorJdbc().update("INSERT IGNORE INTO user_judge_quota_lock (user_id) VALUES (2)");
     }
 
     private AnonymousSession openAnonymousSession() throws Exception {

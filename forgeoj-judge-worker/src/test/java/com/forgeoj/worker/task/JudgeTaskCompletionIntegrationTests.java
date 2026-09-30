@@ -75,6 +75,7 @@ class JudgeTaskCompletionIntegrationTests {
             executeScript(connection, "db/migration/V1__create_m0_core_schema.sql");
             executeScript(connection, "db/migration/V2__allow_ole_verdict.sql");
             executeScript(connection, "db/migration/V3__add_m1_attempt_lease_and_retry.sql");
+            executeScript(connection, "db/migration/V4__add_user_judge_quota_lock.sql");
             executeScript(connection, "db/devdata/R__seed_m0_development_data.sql");
         }
     }

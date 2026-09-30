@@ -4,6 +4,9 @@ ON DUPLICATE KEY UPDATE
     password_hash = new.password_hash,
     status = new.status;
 
+INSERT IGNORE INTO user_judge_quota_lock (user_id)
+VALUES (1);
+
 INSERT INTO problem (
     id,
     slug,

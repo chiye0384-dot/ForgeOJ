@@ -6,9 +6,52 @@ import org.apache.ibatis.annotations.Insert;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
 import org.apache.ibatis.annotations.Select;
+import org.apache.ibatis.annotations.Update;
 
 @Mapper
 interface SubmissionMapper {
+
+    @Select(
+            """
+            SELECT jt.id FROM judge_task jt
+            JOIN submission s ON s.id = jt.submission_id
+            WHERE s.id = #{submissionId} AND s.user_id = #{userId}
+            """)
+    Optional<String> findTaskIdByOwner(
+            @Param("userId") long userId, @Param("submissionId") String submissionId);
+
+    @Select(
+            """
+            SELECT jt.id AS taskId, s.id AS submissionId,
+                   jt.task_status AS taskStatus, s.processing_status AS processingStatus,
+                   jt.status_version AS taskVersion, s.status_version AS submissionVersion
+            FROM judge_task jt
+            JOIN submission s ON s.id = jt.submission_id
+            WHERE jt.id = #{taskId} AND s.user_id = #{userId}
+            FOR UPDATE
+            """)
+    Optional<SubmissionCancellationRow> findCancellationForOwnerForUpdate(
+            @Param("userId") long userId, @Param("taskId") String taskId);
+
+    @Update(
+            """
+            UPDATE judge_task
+            SET task_status = 'CANCELLED', status_version = status_version + 1,
+                finished_at = CURRENT_TIMESTAMP(6), next_attempt_at = NULL
+            WHERE id = #{taskId} AND task_status = 'QUEUED' AND status_version = #{version}
+            """)
+    int cancelQueuedTask(@Param("taskId") String taskId, @Param("version") long version);
+
+    @Update(
+            """
+            UPDATE submission
+            SET processing_status = 'CANCELLED', status_version = status_version + 1,
+                finished_at = CURRENT_TIMESTAMP(6)
+            WHERE id = #{submissionId} AND processing_status = 'QUEUED'
+              AND status_version = #{version}
+            """)
+    int cancelQueuedSubmission(
+            @Param("submissionId") String submissionId, @Param("version") long version);
 
     @Select(
             """
@@ -20,6 +63,24 @@ interface SubmissionMapper {
             )
             """)
     boolean isActiveUser(@Param("userId") long userId);
+
+    @Select(
+            """
+            SELECT user_id
+            FROM user_judge_quota_lock
+            WHERE user_id = #{userId}
+            FOR UPDATE
+            """)
+    Optional<Long> lockQuota(@Param("userId") long userId);
+
+    @Select(
+            """
+            SELECT COUNT(*)
+            FROM submission s
+            WHERE s.user_id = #{userId}
+              AND s.processing_status IN ('QUEUED', 'RETRYING')
+            """)
+    int countQueuedOrRetrying(@Param("userId") long userId);
 
     @Select(
             """

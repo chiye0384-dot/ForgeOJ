@@ -79,6 +79,10 @@ final class JudgeTaskListener {
             channel.basicAck(deliveryTag, false);
             return;
         }
+        if (claim.outcome() == TaskClaimOutcome.DEFERRED) {
+            channel.basicAck(deliveryTag, false);
+            return;
+        }
         if (claim.outcome() == TaskClaimOutcome.DUPLICATE) {
             channel.basicAck(deliveryTag, false);
             return;

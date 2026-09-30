@@ -43,6 +43,7 @@ import org.springframework.jdbc.datasource.init.ScriptUtils;
 import org.springframework.test.context.DynamicPropertyRegistry;
 import org.springframework.test.context.DynamicPropertySource;
 import org.springframework.test.annotation.DirtiesContext;
+import org.springframework.test.context.bean.override.mockito.MockitoSpyBean;
 import org.testcontainers.junit.jupiter.Container;
 import org.testcontainers.junit.jupiter.Testcontainers;
 import org.testcontainers.mysql.MySQLContainer;
@@ -113,11 +114,14 @@ class JudgeTaskClaimIntegrationTests {
         registry.add("spring.rabbitmq.virtual-host", () -> "/forgeoj");
     }
 
-    @Autowired
+    @MockitoSpyBean
     private JudgeTaskClaimService claimService;
 
     @Autowired
     private JudgeTaskLeaseService leaseService;
+
+    @Autowired
+    private JudgeTaskCompletionService completionService;
 
     @Autowired
     private JudgeTaskRecoveryMapper recoveryMapper;
@@ -284,6 +288,226 @@ class JudgeTaskClaimIntegrationTests {
                 .containsEntry("attempt_rows", 0L);
         assertThat(((Number) state.get("task_version")).longValue()).isZero();
         assertThat(((Number) state.get("submission_version")).longValue()).isZero();
+    }
+
+    @Test
+    void concurrentTasksForOneUserCannotBothBecomeRunning() throws Exception {
+        TaskIds first = insertQueuedTask();
+        TaskIds second = insertQueuedTask();
+        CountDownLatch ready = new CountDownLatch(2);
+        CountDownLatch start = new CountDownLatch(1);
+        List<TaskClaimOutcome> outcomes = new ArrayList<>();
+
+        try (var executor = Executors.newFixedThreadPool(2)) {
+            List<Future<TaskClaimResult>> futures =
+                    List.of(
+                            executor.submit(() -> concurrentClaim(first, ready, start)),
+                            executor.submit(() -> concurrentClaim(second, ready, start)));
+            assertThat(ready.await(5, TimeUnit.SECONDS)).isTrue();
+            start.countDown();
+            for (Future<TaskClaimResult> future : futures) {
+                outcomes.add(future.get(10, TimeUnit.SECONDS).outcome());
+            }
+        }
+
+        assertThat(outcomes).containsExactlyInAnyOrder(
+                TaskClaimOutcome.CLAIMED, TaskClaimOutcome.DEFERRED);
+
+        JdbcTemplate worker = new JdbcTemplate(workerDataSource);
+        assertThat(
+                        worker.queryForObject(
+                                """
+                                SELECT COUNT(*)
+                                FROM submission
+                                WHERE user_id = 1 AND processing_status = 'RUNNING'
+                                """,
+                                Integer.class))
+                .isEqualTo(1);
+        assertThat(
+                        worker.queryForObject(
+                                """
+                                SELECT COUNT(*)
+                                FROM judge_task
+                                WHERE task_status = 'QUEUED' AND next_attempt_at IS NOT NULL
+                                """,
+                                Integer.class))
+                .isEqualTo(1);
+        assertThat(
+                        worker.queryForObject(
+                                "SELECT COUNT(*) FROM judge_task_attempt",
+                                Integer.class))
+                .isEqualTo(1);
+    }
+
+    @Test
+    void cancelledTaskMessageIsAcknowledgedAsDuplicateWithoutCreatingAttempt() throws Exception {
+        TaskIds task = insertQueuedTask();
+        migratorJdbc()
+                .update(
+                        """
+                        UPDATE judge_task jt
+                        JOIN submission s ON s.id = jt.submission_id
+                        SET jt.task_status = 'CANCELLED', jt.status_version = 1,
+                            jt.finished_at = CURRENT_TIMESTAMP(6),
+                            s.processing_status = 'CANCELLED', s.status_version = 1,
+                            s.finished_at = CURRENT_TIMESTAMP(6)
+                        WHERE jt.id = ?
+                        """,
+                        task.taskId());
+
+        assertThat(claimService.claim(validMessage(task)).outcome())
+                .isEqualTo(TaskClaimOutcome.DUPLICATE);
+        publish(messageJson(task.taskId(), task.submissionId()));
+        publish(messageJson(task.taskId(), task.submissionId()));
+        org.mockito.Mockito.verify(claimService, org.mockito.Mockito.timeout(5000).times(3))
+                .claim(validMessage(task));
+        await(() -> rabbitAdmin.getQueueInfo(RabbitTopology.QUEUE).getMessageCount() == 0,
+                Duration.ofSeconds(5));
+        String queues = RABBIT.execInContainer("rabbitmqctl", "list_queues", "--vhost", "/forgeoj",
+                "name", "messages_ready", "messages_unacknowledged", "--formatter=csv").getStdout();
+        assertThat(queues).contains("\"forgeoj.judge.submission.v1\",\"0\",\"0\"");
+        assertThat(runner.invocationCount()).isZero();
+        assertThat(taskState(new JdbcTemplate(workerDataSource), task.taskId(), task.submissionId()))
+                .containsEntry("task_status", "CANCELLED")
+                .containsEntry("processing_status", "CANCELLED")
+                .containsEntry("attempt_count", 0L)
+                .containsEntry("attempt_rows", 0L);
+    }
+
+    @Test
+    void fullQueueRetryRetainsRunningSlotAndRecoveryExecutesANewAttempt() throws Exception {
+        TaskIds running = insertQueuedTask();
+        TaskClaimResult first = claimService.claim(validMessage(running));
+        TaskIds queued = insertQueuedTask();
+        insertQueuedTask();
+        insertQueuedTask();
+        completionService.recordPlatformFailure(first.claimedTask());
+        JdbcTemplate worker = new JdbcTemplate(workerDataSource);
+        assertThat(taskState(worker, running.taskId(), running.submissionId()))
+                .containsEntry("task_status", "WAITING_RETRY")
+                .containsEntry("processing_status", "RUNNING")
+                .containsEntry("lease_token", null)
+                .containsEntry("attempt_count", 1L);
+        assertThat(claimService.claim(validMessage(running)).outcome())
+                .isEqualTo(TaskClaimOutcome.DUPLICATE);
+        assertThat(claimService.claim(validMessage(queued)).outcome())
+                .isEqualTo(TaskClaimOutcome.DEFERRED);
+        assertThat(worker.queryForObject("""
+                SELECT COUNT(*) FROM submission WHERE user_id = 1
+                  AND processing_status IN ('QUEUED', 'RETRYING')
+                """, Integer.class)).isEqualTo(3);
+        assertThatThrownBy(() -> completionService.recordPlatformFailure(first.claimedTask()))
+                .isInstanceOf(IllegalStateException.class);
+        migratorJdbc().update("""
+                UPDATE judge_task SET next_attempt_at = CURRENT_TIMESTAMP(6) - INTERVAL 1 SECOND
+                WHERE id = ?
+                """, running.taskId());
+        JudgeTaskRecoveryScanner scanner =
+                new JudgeTaskRecoveryScanner(recoveryMapper, rabbitTemplate, objectMapper, 20);
+        assertThat(scanner.recoverDueTasks()).isEqualTo(1);
+        assertThat(runner.awaitInvocations(1, Duration.ofSeconds(5))).isTrue();
+        assertThat(taskState(worker, running.taskId(), running.submissionId()))
+                .containsEntry("task_status", "RUNNING")
+                .containsEntry("processing_status", "RUNNING")
+                .containsEntry("attempt_count", 2L)
+                .containsEntry("attempt_rows", 2L);
+        assertThat(worker.queryForObject("""
+                SELECT COUNT(*) FROM submission WHERE user_id = 1
+                  AND processing_status IN ('QUEUED', 'RETRYING')
+                """, Integer.class)).isEqualTo(3);
+    }
+
+    @Test
+    void fullQueueRetriesRemainFiniteAndReleaseRunningSlotAtExhaustion() {
+        TaskIds running = insertQueuedTask();
+        TaskClaimResult current = claimService.claim(validMessage(running));
+        TaskIds queued = insertQueuedTask();
+        insertQueuedTask();
+        insertQueuedTask();
+        for (int attempt = 1; attempt < 3; attempt++) {
+            completionService.recordPlatformFailure(current.claimedTask());
+            assertThat(taskState(new JdbcTemplate(workerDataSource), running.taskId(), running.submissionId()))
+                    .containsEntry("task_status", "WAITING_RETRY")
+                    .containsEntry("processing_status", "RUNNING");
+            migratorJdbc().update("""
+                    UPDATE judge_task SET next_attempt_at = CURRENT_TIMESTAMP(6) - INTERVAL 1 SECOND
+                    WHERE id = ?
+                    """, running.taskId());
+            current = claimService.claim(validMessage(running));
+            assertThat(current.outcome()).isEqualTo(TaskClaimOutcome.CLAIMED);
+            assertThat(current.claimedTask().attemptNo()).isEqualTo(attempt + 1);
+        }
+        completionService.recordPlatformFailure(current.claimedTask());
+        assertThat(taskState(new JdbcTemplate(workerDataSource), running.taskId(), running.submissionId()))
+                .containsEntry("task_status", "DEAD_LETTER")
+                .containsEntry("processing_status", "SYSTEM_ERROR")
+                .containsEntry("attempt_count", 3L)
+                .containsEntry("attempt_rows", 3L);
+        assertThat(claimService.claim(validMessage(queued)).outcome()).isEqualTo(TaskClaimOutcome.CLAIMED);
+    }
+
+    @Test
+    void runningQuotaDoesNotBlockADifferentUser() {
+        TaskIds first = insertQueuedTask();
+        TaskIds second = insertQueuedTask();
+        JdbcTemplate migrator = migratorJdbc();
+        migrator.update("""
+                INSERT IGNORE INTO user_account (id, username, password_hash, status)
+                VALUES (2, 'quota-other-user', 'fixture-hash', 'ACTIVE')
+                """);
+        migrator.update("INSERT IGNORE INTO user_judge_quota_lock (user_id) VALUES (2)");
+        migrator.update("UPDATE submission SET user_id = 2 WHERE id = ?", second.submissionId());
+        assertThat(claimService.claim(validMessage(first)).outcome()).isEqualTo(TaskClaimOutcome.CLAIMED);
+        assertThat(claimService.claim(validMessage(second)).outcome()).isEqualTo(TaskClaimOutcome.CLAIMED);
+    }
+
+    @Test
+    void quotaDeferredTaskIsRepublishedAfterTheRunningSlotIsReleased() throws Exception {
+        TaskIds running = insertQueuedTask();
+        TaskIds deferred = insertQueuedTask();
+        TaskClaimResult firstClaim = claimService.claim(validMessage(running));
+        assertThat(firstClaim.outcome()).isEqualTo(TaskClaimOutcome.CLAIMED);
+        assertThat(claimService.claim(validMessage(deferred)).outcome())
+                .isEqualTo(TaskClaimOutcome.DEFERRED);
+
+        JdbcTemplate migrator = migratorJdbc();
+        migrator.update(
+                """
+                UPDATE judge_task jt
+                JOIN submission s ON s.id = jt.submission_id
+                SET jt.task_status = 'FINISHED', jt.status_version = jt.status_version + 1,
+                    jt.lease_owner = NULL, jt.lease_token = NULL, jt.lease_expires_at = NULL,
+                    jt.finished_at = CURRENT_TIMESTAMP(6),
+                    s.processing_status = 'FINISHED', s.status_version = s.status_version + 1,
+                    s.verdict = 'AC', s.finished_at = CURRENT_TIMESTAMP(6)
+                WHERE jt.id = ?
+                """,
+                running.taskId());
+        migrator.update(
+                """
+                UPDATE judge_task_attempt
+                SET attempt_status = 'SUCCEEDED', finished_at = CURRENT_TIMESTAMP(6)
+                WHERE id = ?
+                """,
+                firstClaim.claimedTask().attemptId());
+        migrator.update(
+                """
+                UPDATE judge_task
+                SET next_attempt_at = CURRENT_TIMESTAMP(6) - INTERVAL 1 SECOND
+                WHERE id = ?
+                """,
+                deferred.taskId());
+
+        JudgeTaskRecoveryScanner scanner =
+                new JudgeTaskRecoveryScanner(recoveryMapper, rabbitTemplate, objectMapper, 20);
+        assertThat(scanner.recoverDueTasks()).isEqualTo(1);
+        assertThat(runner.awaitInvocations(1, Duration.ofSeconds(5))).isTrue();
+
+        assertThat(taskState(new JdbcTemplate(workerDataSource), deferred.taskId(), deferred.submissionId()))
+                .containsEntry("task_status", "RUNNING")
+                .containsEntry("processing_status", "RUNNING")
+                .containsEntry("attempt_count", 1L)
+                .containsEntry("attempt_rows", 1L);
     }
 
     @Test
@@ -568,6 +792,13 @@ class JudgeTaskClaimIntegrationTests {
                 task.taskId(), task.submissionId(), "JUDGE_SUBMISSION", 1);
     }
 
+    private TaskClaimResult concurrentClaim(
+            TaskIds task, CountDownLatch ready, CountDownLatch start) throws InterruptedException {
+        ready.countDown();
+        start.await();
+        return claimService.claim(validMessage(task));
+    }
+
     private String messageJson(String taskId, String submissionId) {
         return """
                 {"taskId":"%s","submissionId":"%s","taskType":"JUDGE_SUBMISSION","contractVersion":1}
@@ -605,6 +836,12 @@ class JudgeTaskClaimIntegrationTests {
                     connection,
                     new FileSystemResource(
                             repositoryFile(
+                                    "forgeoj-api/src/main/resources/db/migration/"
+                                            + "V4__add_user_judge_quota_lock.sql")));
+            ScriptUtils.executeSqlScript(
+                    connection,
+                    new FileSystemResource(
+                            repositoryFile(
                                     "forgeoj-api/src/main/resources/db/devdata/"
                                             + "R__seed_m0_development_data.sql")));
         }
@@ -631,10 +868,13 @@ class JudgeTaskClaimIntegrationTests {
 
     private void await(BooleanSupplier condition, Duration timeout) throws Exception {
         long deadline = System.nanoTime() + timeout.toNanos();
-        while (!condition.getAsBoolean() && System.nanoTime() < deadline) {
+        do {
+            if (condition.getAsBoolean()) {
+                return;
+            }
             Thread.sleep(25);
-        }
-        assertThat(condition.getAsBoolean()).isTrue();
+        } while (System.nanoTime() < deadline);
+        throw new AssertionError("Condition was not met within " + timeout);
     }
 
     record TaskIds(String taskId, String submissionId) {}

@@ -15,6 +15,7 @@ interface JudgeTaskMapper {
             """
             SELECT jt.id AS taskId,
                    jt.submission_id AS submissionId,
+                   s.user_id AS userId,
                    jt.task_type AS taskType,
                    jt.contract_version AS contractVersion,
                    jt.task_status AS taskStatus,
@@ -34,6 +35,51 @@ interface JudgeTaskMapper {
             FOR UPDATE
             """)
     Optional<JudgeTaskClaimRow> findForUpdate(@Param("taskId") String taskId);
+
+    @Select(
+            """
+            SELECT user_id
+            FROM user_judge_quota_lock
+            WHERE user_id = #{userId}
+            FOR UPDATE
+            """)
+    Optional<Long> lockUserQuota(@Param("userId") long userId);
+
+    @Select(
+            """
+            SELECT COUNT(*)
+            FROM submission
+            WHERE user_id = #{userId}
+              AND processing_status = 'RUNNING'
+              AND id <> #{submissionId}
+            """)
+    int countOtherRunningSubmissions(
+            @Param("userId") long userId, @Param("submissionId") String submissionId);
+
+    @Select(
+            """
+            SELECT COUNT(*) FROM submission
+            WHERE user_id = #{userId} AND processing_status IN ('QUEUED', 'RETRYING')
+            """)
+    int countQueuedOrRetrying(@Param("userId") long userId);
+
+    @Update(
+            """
+            UPDATE judge_task
+            SET next_attempt_at = TIMESTAMPADD(
+                    SECOND, #{delaySeconds}, CURRENT_TIMESTAMP(6)
+                )
+            WHERE id = #{taskId}
+              AND submission_id = #{submissionId}
+              AND task_status = #{expectedStatus}
+              AND status_version = #{statusVersion}
+            """)
+    int deferForUserQuota(
+            @Param("taskId") String taskId,
+            @Param("submissionId") String submissionId,
+            @Param("expectedStatus") String expectedStatus,
+            @Param("statusVersion") long statusVersion,
+            @Param("delaySeconds") long delaySeconds);
 
     @Update(
             """
@@ -56,7 +102,7 @@ interface JudgeTaskMapper {
               AND attempt_count < max_attempts
               AND (
                   #{expectedStatus} = 'QUEUED'
-                  OR (#{expectedStatus} = 'RETRYING'
+                  OR (#{expectedStatus} IN ('RETRYING', 'WAITING_RETRY')
                       AND (next_attempt_at IS NULL OR next_attempt_at <= CURRENT_TIMESTAMP(6)))
                   OR (#{expectedStatus} = 'RUNNING'
                       AND lease_expires_at <= CURRENT_TIMESTAMP(6))
@@ -138,7 +184,7 @@ interface JudgeTaskMapper {
     @Update(
             """
             UPDATE judge_task
-            SET task_status = 'RETRYING',
+            SET task_status = #{retryStatus},
                 status_version = status_version + 1,
                 next_attempt_at = TIMESTAMPADD(
                     SECOND, #{delaySeconds}, CURRENT_TIMESTAMP(6)
@@ -162,13 +208,14 @@ interface JudgeTaskMapper {
             @Param("statusVersion") long statusVersion,
             @Param("leaseToken") String leaseToken,
             @Param("delaySeconds") long delaySeconds,
+            @Param("retryStatus") String retryStatus,
             @Param("failureCode") String failureCode,
             @Param("failureMessage") String failureMessage);
 
     @Update(
             """
             UPDATE submission
-            SET processing_status = 'RETRYING',
+            SET processing_status = #{retryStatus},
                 verdict = NULL,
                 diagnostic_message = NULL,
                 status_version = status_version + 1,
@@ -179,7 +226,8 @@ interface JudgeTaskMapper {
             """)
     int markSubmissionRetrying(
             @Param("submissionId") String submissionId,
-            @Param("statusVersion") long statusVersion);
+            @Param("statusVersion") long statusVersion,
+            @Param("retryStatus") String retryStatus);
 
     @Insert(
             """

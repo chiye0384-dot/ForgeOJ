@@ -120,6 +120,10 @@ class OutboxPublisherIntegrationTests {
         JdbcTemplate jdbc = new JdbcTemplate(dataSource);
         SubmissionResult delivered = createSubmission();
 
+        assertThat(rabbitAdmin.getQueueInfo(RabbitTopology.SELF_TEST_QUEUE)).isNotNull();
+        assertThat(rabbitAdmin.getQueueInfo(RabbitTopology.RETRY_QUEUE)).isNotNull();
+        assertThat(rabbitAdmin.getQueueInfo(RabbitTopology.DEAD_LETTER_QUEUE)).isNotNull();
+
         assertThat(publishedAt(jdbc, delivered.submissionId())).isNull();
         assertThat(outboxPublisher.publishPending()).isEqualTo(1);
         assertThat(publishedAt(jdbc, delivered.submissionId())).isNotNull();
@@ -141,7 +145,14 @@ class OutboxPublisherIntegrationTests {
                 .doesNotContain("37881a92ca996970e09475fdb29435b9bc13ae1501fa118e5fd9afd47e561adf");
 
         String taskId = taskId(jdbc, delivered.submissionId());
-        insertOutbox(jdbc, taskId, delivered.submissionId(), "JUDGE_TASK_QUEUED", 1, 86400);
+        insertOutbox(jdbc, taskId, delivered.submissionId(), "JUDGE_TASK_QUEUED", 1, 0);
+        assertThat(outboxPublisher.publishPending()).isEqualTo(1);
+        assertThat(rabbitTemplate.receive(RabbitTopology.QUEUE, 200)).isNull();
+        Message retry = rabbitTemplate.receive(RabbitTopology.RETRY_QUEUE, 5000);
+        assertThat(retry).isNotNull();
+        assertThat(new String(retry.getBody(), StandardCharsets.UTF_8))
+                .contains(delivered.submissionId());
+
         insertOutbox(
                 jdbc,
                 taskId,

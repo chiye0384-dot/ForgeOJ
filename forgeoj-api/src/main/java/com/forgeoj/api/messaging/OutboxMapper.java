@@ -14,6 +14,7 @@ interface OutboxMapper {
             """
             SELECT id,
                    event_type AS eventType,
+                   sequence_no AS sequenceNo,
                    CAST(payload AS CHAR) AS payload,
                    publish_attempts AS publishAttempts
             FROM outbox_event

@@ -44,7 +44,7 @@ class JudgeTaskRecoveryScannerTests {
         verify(rabbitTemplate)
                 .send(
                         org.mockito.ArgumentMatchers.eq(RabbitTopology.EXCHANGE),
-                        org.mockito.ArgumentMatchers.eq(RabbitTopology.ROUTING_KEY),
+                        org.mockito.ArgumentMatchers.eq(RabbitTopology.RETRY_ROUTING_KEY),
                         outbound.capture());
         assertThat(outbound.getValue().getMessageProperties().getDeliveryMode())
                 .isEqualTo(MessageDeliveryMode.PERSISTENT);

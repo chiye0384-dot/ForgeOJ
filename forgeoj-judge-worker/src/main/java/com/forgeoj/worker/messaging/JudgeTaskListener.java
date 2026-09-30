@@ -34,7 +34,16 @@ final class JudgeTaskListener {
     }
 
     @RabbitListener(queues = RabbitTopology.QUEUE)
-    void consume(Message inbound, Channel channel) throws IOException {
+    void consumeSubmission(Message inbound, Channel channel) throws IOException {
+        consume(inbound, channel);
+    }
+
+    @RabbitListener(queues = RabbitTopology.RETRY_QUEUE)
+    void consumeRetry(Message inbound, Channel channel) throws IOException {
+        consume(inbound, channel);
+    }
+
+    private void consume(Message inbound, Channel channel) throws IOException {
         long deliveryTag = inbound.getMessageProperties().getDeliveryTag();
         JudgeTaskMessage message;
         try {

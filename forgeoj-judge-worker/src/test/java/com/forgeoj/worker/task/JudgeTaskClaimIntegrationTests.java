@@ -145,6 +145,7 @@ class JudgeTaskClaimIntegrationTests {
         migrator.update("DELETE FROM judge_task");
         migrator.update("DELETE FROM submission");
         rabbitAdmin.purgeQueue(RabbitTopology.QUEUE, false);
+        rabbitAdmin.purgeQueue(RabbitTopology.RETRY_QUEUE, false);
         runner.reset();
     }
 

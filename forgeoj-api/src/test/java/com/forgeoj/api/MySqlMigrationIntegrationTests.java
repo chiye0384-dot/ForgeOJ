@@ -64,7 +64,7 @@ class MySqlMigrationIntegrationTests {
     private DataSource apiDataSource;
 
     @Test
-    void migratesAllM0TablesAndEnforcesDatabaseReadBoundaries() throws Exception {
+    void migratesCurrentTablesAndEnforcesDatabaseReadBoundaries() throws Exception {
         JdbcTemplate api = new JdbcTemplate(apiDataSource);
         JdbcTemplate migrator =
                 new JdbcTemplate(
@@ -85,6 +85,7 @@ class MySqlMigrationIntegrationTests {
                 .contains(
                         "flyway_schema_history",
                         "judge_task",
+                        "judge_task_attempt",
                         "outbox_event",
                         "problem",
                         "problem_judge_version",
@@ -103,11 +104,72 @@ class MySqlMigrationIntegrationTests {
                           AND constraint_name = 'chk_submission_verdict'
                         """,
                         String.class);
-        assertThat(verdictConstraint).contains("OLE");
+        assertThat(verdictConstraint).contains("MLE", "OLE", "SECURITY_VIOLATION");
+        String submissionStatusConstraint =
+                migrator.queryForObject(
+                        """
+                        SELECT check_clause
+                        FROM information_schema.check_constraints
+                        WHERE constraint_schema = 'forgeoj'
+                          AND constraint_name = 'chk_submission_status'
+                        """,
+                        String.class);
+        assertThat(submissionStatusConstraint).contains("RETRYING", "CANCELLED");
+        String taskStatusConstraint =
+                migrator.queryForObject(
+                        """
+                        SELECT check_clause
+                        FROM information_schema.check_constraints
+                        WHERE constraint_schema = 'forgeoj'
+                          AND constraint_name = 'chk_judge_task_status'
+                        """,
+                        String.class);
+        assertThat(taskStatusConstraint).contains("RETRYING", "DEAD_LETTER", "CANCELLED");
+        List<String> taskColumns =
+                migrator.queryForList(
+                        """
+                        SELECT column_name
+                        FROM information_schema.columns
+                        WHERE table_schema = 'forgeoj'
+                          AND table_name = 'judge_task'
+                        """,
+                        String.class);
+        assertThat(taskColumns)
+                .contains(
+                        "attempt_count",
+                        "max_attempts",
+                        "next_attempt_at",
+                        "lease_owner",
+                        "lease_token",
+                        "lease_expires_at",
+                        "last_failure_code",
+                        "last_failure_message");
+        List<String> outboxColumns =
+                migrator.queryForList(
+                        """
+                        SELECT column_name
+                        FROM information_schema.columns
+                        WHERE table_schema = 'forgeoj'
+                          AND table_name = 'outbox_event'
+                        """,
+                        String.class);
+        assertThat(outboxColumns)
+                .contains(
+                        "sequence_no",
+                        "publish_attempts",
+                        "next_attempt_at",
+                        "last_attempt_at",
+                        "last_error_code",
+                        "failed_at");
         assertThatThrownBy(
                         () ->
                                 api.queryForObject(
                                         "SELECT COUNT(*) FROM problem_test_case", Integer.class))
+                .isInstanceOf(DataAccessException.class);
+        assertThatThrownBy(
+                        () ->
+                                api.queryForObject(
+                                        "SELECT COUNT(*) FROM judge_task_attempt", Integer.class))
                 .isInstanceOf(DataAccessException.class);
 
         try (var workerConnection =
@@ -118,6 +180,11 @@ class MySqlMigrationIntegrationTests {
                         workerStatement.executeQuery("SELECT COUNT(*) FROM problem_test_case")) {
             assertThat(hiddenTestCount.next()).isTrue();
             assertThat(hiddenTestCount.getInt(1)).isZero();
+            try (var attemptCount =
+                    workerStatement.executeQuery("SELECT COUNT(*) FROM judge_task_attempt")) {
+                assertThat(attemptCount.next()).isTrue();
+                assertThat(attemptCount.getInt(1)).isZero();
+            }
             assertThatThrownBy(
                             () ->
                                     workerStatement.executeQuery(

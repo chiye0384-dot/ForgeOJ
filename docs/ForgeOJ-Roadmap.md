@@ -92,7 +92,7 @@ V2.0 综合学习内容：BACKLOG，需另行确认是否立项
 - 提交 `39e91145` 在固定 Linux/amd64 Maven 镜像中通过 API 14 项、Worker 35 项测试，前端在固定 Node 镜像中通过类型、lint、格式、Vitest 和生产构建；
 - 真实 Linux 进程级重放证明 Vite 代理、无 Docker 权限 API、MySQL/Outbox/RabbitMQ、独占 Docker 权限 Worker 和判题容器能够闭环，AC、WA、CE、RE、TLE、OLE 全部到达 `FINISHED/version 2`；
 - `docs/M0-E2E-VALIDATION.md` 已对照设计第 12 节记录 20/20 门禁 `PASS`，因此 M0 标记为 `VERIFIED`；
-- 当前下一个候选工作是 M1：attempt/lease、崩溃恢复、有限重试、死信与运维闭环；M1 仍为 `PLANNED`。
+- M0 关闭时的下一里程碑是 M1；M1 现已进入 `IN_PROGRESS`，实时进度以本文件第 5 节、`docs/M1-RELIABLE-JUDGING-DESIGN.md` 和当前分支证据为准。
 
 最短流程：
 
@@ -121,7 +121,7 @@ M0 的登录只用于打通受保护提交链路，可使用预置账号和最�
 
 目标：把“能跑”提升为“故障下仍可解释和恢复”。
 
-当前状态：`IN_PROGRESS`。实现与门禁顺序以 `docs/M1-RELIABLE-JUDGING-DESIGN.md` 为准；当前只代表已经启动，不代表 attempt/lease、重试、死信或安全矩阵已经完成。
+当前状态：`IN_PROGRESS`。截至实现提交 `52c9164`，attempt/lease 栅栏、执行期心跳、过期任务被动与主动恢复、有限重试、死信、Outbox 发布退避，以及正式提交/自测预留/重试/死信队列边界已有 Windows/Testcontainers 自动化证据；最近完整回归为 API 14 项、Worker 51 项全部通过。并发用户配额、`QUEUED` 取消、WebSocket/版本乱序、可观测性、更宽安全与崩溃矩阵、固定 Linux 重放和最终证据更新尚未完成，因此不得升级为 `VERIFIED`。
 
 范围：
 

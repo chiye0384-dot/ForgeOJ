@@ -38,7 +38,10 @@ import org.testcontainers.utility.MountableFile;
             "spring.rabbitmq.listener.simple.auto-startup=false",
             "spring.rabbitmq.listener.direct.auto-startup=false",
             "forgeoj.outbox.publisher.enabled=false",
-            "forgeoj.outbox.publisher.confirm-timeout-ms=5000"
+            "forgeoj.outbox.publisher.confirm-timeout-ms=5000",
+            "forgeoj.outbox.publisher.max-attempts=3",
+            "forgeoj.outbox.publisher.base-delay-seconds=1",
+            "forgeoj.outbox.publisher.max-delay-seconds=4"
         })
 class OutboxPublisherIntegrationTests {
 
@@ -160,6 +163,32 @@ class OutboxPublisherIntegrationTests {
 
         assertThat(outboxPublisher.publishPending()).isZero();
         assertThat(publishedAt(jdbc, unroutable.submissionId())).isNull();
+        java.util.Map<String, Object> firstFailure =
+                outboxFailureState(jdbc, unroutable.submissionId());
+        assertThat(firstFailure)
+                .containsEntry("publish_attempts", 1L)
+                .containsEntry("last_error_code", "UNROUTABLE");
+        assertThat(firstFailure.get("failed_at")).isNull();
+
+        assertThat(outboxPublisher.publishPending()).isZero();
+        assertThat(outboxFailureState(jdbc, unroutable.submissionId()))
+                .containsEntry("publish_attempts", 1L);
+
+        makeOutboxDue(jdbc, unroutable.submissionId());
+        assertThat(outboxPublisher.publishPending()).isZero();
+        makeOutboxDue(jdbc, unroutable.submissionId());
+        assertThat(outboxPublisher.publishPending()).isZero();
+
+        java.util.Map<String, Object> failed =
+                outboxFailureState(jdbc, unroutable.submissionId());
+        assertThat(failed)
+                .containsEntry("publish_attempts", 3L)
+                .containsEntry("last_error_code", "UNROUTABLE");
+        assertThat(failed.get("failed_at")).isNotNull();
+        makeOutboxDue(jdbc, unroutable.submissionId());
+        assertThat(outboxPublisher.publishPending()).isZero();
+        assertThat(outboxFailureState(jdbc, unroutable.submissionId()))
+                .containsEntry("publish_attempts", 3L);
     }
 
     private SubmissionResult createSubmission() {
@@ -216,5 +245,30 @@ class OutboxPublisherIntegrationTests {
                 taskId,
                 submissionId,
                 delaySeconds);
+    }
+
+    private java.util.Map<String, Object> outboxFailureState(
+            JdbcTemplate jdbc, String submissionId) {
+        return jdbc.queryForMap(
+                """
+                SELECT o.publish_attempts, o.last_error_code, o.failed_at
+                FROM outbox_event o
+                JOIN judge_task jt ON jt.id = o.aggregate_id
+                WHERE jt.submission_id = ?
+                  AND o.sequence_no = 0
+                """,
+                submissionId);
+    }
+
+    private void makeOutboxDue(JdbcTemplate jdbc, String submissionId) {
+        jdbc.update(
+                """
+                UPDATE outbox_event o
+                JOIN judge_task jt ON jt.id = o.aggregate_id
+                SET o.next_attempt_at = CURRENT_TIMESTAMP(6) - INTERVAL 1 SECOND
+                WHERE jt.submission_id = ?
+                  AND o.failed_at IS NULL
+                """,
+                submissionId);
     }
 }

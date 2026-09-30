@@ -12,7 +12,10 @@ interface OutboxMapper {
 
     @Select(
             """
-            SELECT id, event_type AS eventType, CAST(payload AS CHAR) AS payload
+            SELECT id,
+                   event_type AS eventType,
+                   CAST(payload AS CHAR) AS payload,
+                   publish_attempts AS publishAttempts
             FROM outbox_event
             WHERE published_at IS NULL
               AND failed_at IS NULL
@@ -28,9 +31,42 @@ interface OutboxMapper {
     @Update(
             """
             UPDATE outbox_event
-            SET published_at = CURRENT_TIMESTAMP(6)
+            SET publish_attempts = publish_attempts + 1,
+                last_attempt_at = CURRENT_TIMESTAMP(6),
+                last_error_code = NULL,
+                published_at = CURRENT_TIMESTAMP(6)
             WHERE id = #{eventId}
               AND published_at IS NULL
+              AND failed_at IS NULL
+              AND publish_attempts = #{expectedAttempts}
             """)
-    int markPublished(@Param("eventId") String eventId);
+    int markPublished(
+            @Param("eventId") String eventId,
+            @Param("expectedAttempts") int expectedAttempts);
+
+    @Update(
+            """
+            UPDATE outbox_event
+            SET failed_at = CASE
+                    WHEN publish_attempts + 1 >= #{maximumAttempts}
+                        THEN CURRENT_TIMESTAMP(6)
+                    ELSE NULL
+                END,
+                publish_attempts = publish_attempts + 1,
+                last_attempt_at = CURRENT_TIMESTAMP(6),
+                last_error_code = #{errorCode},
+                next_attempt_at = TIMESTAMPADD(
+                    SECOND, #{delaySeconds}, CURRENT_TIMESTAMP(6)
+                )
+            WHERE id = #{eventId}
+              AND published_at IS NULL
+              AND failed_at IS NULL
+              AND publish_attempts = #{expectedAttempts}
+            """)
+    int recordPublishFailure(
+            @Param("eventId") String eventId,
+            @Param("expectedAttempts") int expectedAttempts,
+            @Param("maximumAttempts") int maximumAttempts,
+            @Param("delaySeconds") long delaySeconds,
+            @Param("errorCode") String errorCode);
 }

@@ -1,13 +1,13 @@
 # ForgeOJ 面试问答骨架
 
-> 当前状态：M-1 与 M0 已验证，M1 及后续业务里程碑仍为计划。
+> 当前状态：M-1 与 M0 已验证；M1 为 `IN_PROGRESS`，后续业务里程碑仍为计划。
 > 下列答案必须区分 M0 已验证能力和后续设计。涉及性能、云上运行和尚未完成功能时，不能背诵虚构答案。
 
 ## 1. 项目介绍骨架
 
 ### 1.1 现在可以说的版本
 
-ForgeOJ 是一个正在开发的 Java 在线判题与小班教学平台。已验证的 M0 最小纵向切片支持预置账号登录、读取一道内置题、原子创建 Submission/JudgeTask/Outbox、经 RabbitMQ 交给独立 Worker，再用受限 Docker 容器执行 Java 21 单文件代码并回写结果。固定 Linux/amd64 验证已覆盖 AC、WA、CE、RE、TLE 和 OLE，但 Worker 崩溃恢复、attempt/lease、有限重试和死信属于尚未开始的 M1；公共题库、官方题解、班级作业、审核和管理后台也仍是后续里程碑，不能说成已完成。
+ForgeOJ 是一个正在开发的 Java 在线判题与小班教学平台。已验证的 M0 最小纵向切片支持预置账号登录、读取一道内置题、原子创建 Submission/JudgeTask/Outbox、经 RabbitMQ 交给独立 Worker，再用受限 Docker 容器执行 Java 21 单文件代码并回写结果。固定 Linux/amd64 验证已覆盖 AC、WA、CE、RE、TLE 和 OLE。M1 已在开发分支实现 attempt/lease 栅栏、心跳、过期恢复、有限重试、死信、可恢复 Outbox 和独立队列边界，并通过当前 Windows/Testcontainers 回归，但尚未完成全部门禁和固定 Linux 验收，不能把 M1 说成已验证；公共题库、官方题解、班级作业、审核和管理后台也仍是后续里程碑。
 
 ### 1.2 V1.0 完成后的 60 秒结构
 

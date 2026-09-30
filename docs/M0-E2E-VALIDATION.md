@@ -151,4 +151,4 @@ API 容器的唯一挂载目标为 `/artifacts`，环境中无 `DOCKER_*` 或 `F
 | 19 | PASS | reactor/POM 和源码依赖扫描证明 API 与 Worker 是并列模块，互不依赖。 |
 | 20 | PASS | 本记录保存固定 Linux/amd64 构建、进程级全链路、commit、镜像 digest、产物哈希、结果和清理记录。 |
 
-20 项均为 `PASS`，因此 M0 于 2026-09-30 标记为 `VERIFIED`。下一个可开始里程碑为 M1“可靠异步判题”，当前仍为 `PLANNED`。
+20 项均为 `PASS`，因此 M0 于 2026-09-30 标记为 `VERIFIED`。在 M0 关闭当时，下一个可开始里程碑为仍处于 `PLANNED` 的 M1“可靠异步判题”；M1 后续已进入 `IN_PROGRESS`，实时状态以 Roadmap 和 M1 设计文档为准。

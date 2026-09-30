@@ -129,6 +129,7 @@ class JudgeTaskClaimIntegrationTests {
     void resetState() {
         JdbcTemplate migrator = migratorJdbc();
         migrator.update("DELETE FROM judge_task_attempt");
+        migrator.update("DELETE FROM outbox_event");
         migrator.update("DELETE FROM judge_task");
         migrator.update("DELETE FROM submission");
         rabbitAdmin.purgeQueue(RabbitTopology.QUEUE, false);
@@ -305,6 +306,50 @@ class JudgeTaskClaimIntegrationTests {
                                 Long.class,
                                 task.taskId()))
                 .isEqualTo(2L);
+    }
+
+    @Test
+    void expiredLeaseAtAttemptLimitAtomicallyMovesTaskToDeadLetter() {
+        TaskIds task = insertQueuedTask();
+        TaskClaimResult current = claimService.claim(validMessage(task));
+        JdbcTemplate migrator = migratorJdbc();
+
+        for (int attemptNo = 1; attemptNo < 3; attemptNo++) {
+            expireLease(migrator, task.taskId(), current.claimedTask().attemptId());
+            current = claimService.claim(validMessage(task));
+            assertThat(current.outcome()).isEqualTo(TaskClaimOutcome.CLAIMED);
+            assertThat(current.claimedTask().attemptNo()).isEqualTo(attemptNo + 1);
+        }
+
+        expireLease(migrator, task.taskId(), current.claimedTask().attemptId());
+        TaskClaimResult exhausted = claimService.claim(validMessage(task));
+
+        assertThat(exhausted.outcome()).isEqualTo(TaskClaimOutcome.EXHAUSTED);
+        assertThat(taskState(new JdbcTemplate(workerDataSource), task.taskId(), task.submissionId()))
+                .containsEntry("task_status", "DEAD_LETTER")
+                .containsEntry("processing_status", "SYSTEM_ERROR")
+                .containsEntry("attempt_count", 3L);
+        assertThat(
+                        migrator.queryForObject(
+                                "SELECT attempt_status FROM judge_task_attempt WHERE id = ?",
+                                String.class,
+                                current.claimedTask().attemptId()))
+                .isEqualTo("DEAD_LETTERED");
+        assertThat(
+                        migrator.queryForObject(
+                                "SELECT event_type FROM outbox_event WHERE aggregate_id = ?",
+                                String.class,
+                                task.taskId()))
+                .isEqualTo("JUDGE_TASK_DEAD_LETTERED");
+    }
+
+    private void expireLease(JdbcTemplate migrator, String taskId, String attemptId) {
+        migrator.update(
+                "UPDATE judge_task SET lease_expires_at = CURRENT_TIMESTAMP(6) - INTERVAL 1 SECOND WHERE id = ?",
+                taskId);
+        migrator.update(
+                "UPDATE judge_task_attempt SET lease_expires_at = CURRENT_TIMESTAMP(6) - INTERVAL 1 SECOND WHERE id = ?",
+                attemptId);
     }
 
     private void publish(String body) {

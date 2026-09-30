@@ -383,31 +383,37 @@ public final class DockerCliSandboxRuntime implements SandboxRuntime {
         try {
             UUID.fromString(snapshot.taskId());
         } catch (IllegalArgumentException invalid) {
-            throw new SandboxException("Task identifier is invalid", invalid);
+            throw new InvalidSandboxConfigurationException("Task identifier is invalid", invalid);
         }
         if (!PINNED_IMAGE.matcher(snapshot.javaImageDigest()).matches()) {
-            throw new SandboxException("Sandbox image must be pinned by SHA-256 digest");
+            throw new InvalidSandboxConfigurationException(
+                    "Sandbox image must be pinned by SHA-256 digest");
         }
         if (snapshot.memoryLimitMb() < 64 || snapshot.memoryLimitMb() > 2048) {
-            throw new SandboxException("Sandbox memory limit is outside M0 policy");
+            throw new InvalidSandboxConfigurationException(
+                    "Sandbox memory limit is outside M0 policy");
         }
         if (snapshot.timeLimitMs() < 100 || snapshot.timeLimitMs() > 30_000) {
-            throw new SandboxException("Sandbox time limit is outside M0 policy");
+            throw new InvalidSandboxConfigurationException(
+                    "Sandbox time limit is outside M0 policy");
         }
         if (snapshot.outputLimitBytes() < 1 || snapshot.outputLimitBytes() > 16L * 1024 * 1024) {
-            throw new SandboxException("Sandbox output limit is outside M0 policy");
+            throw new InvalidSandboxConfigurationException(
+                    "Sandbox output limit is outside M0 policy");
         }
         if (!"JAVA_21".equals(snapshot.language())) {
-            throw new SandboxException("Unsupported sandbox language");
+            throw new InvalidSandboxConfigurationException("Unsupported sandbox language");
         }
         if (!"trim-trailing-whitespace-v1".equals(snapshot.comparisonRuleVersion())) {
-            throw new SandboxException("Unsupported output comparison rule");
+            throw new InvalidSandboxConfigurationException(
+                    "Unsupported output comparison rule");
         }
         if (!"m0-v1".equals(snapshot.sandboxPolicyVersion())) {
-            throw new SandboxException("Unsupported sandbox policy version");
+            throw new InvalidSandboxConfigurationException(
+                    "Unsupported sandbox policy version");
         }
         if (snapshot.testCases().isEmpty()) {
-            throw new SandboxException("Sandbox task has no test cases");
+            throw new InvalidSandboxConfigurationException("Sandbox task has no test cases");
         }
     }
 

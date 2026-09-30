@@ -89,6 +89,7 @@ class JudgeTaskCompletionIntegrationTests {
     void resetTasks() {
         JdbcTemplate migrator = migrator();
         migrator.update("DELETE FROM judge_task_attempt");
+        migrator.update("DELETE FROM outbox_event");
         migrator.update("DELETE FROM judge_task");
         migrator.update("DELETE FROM submission");
     }
@@ -120,20 +121,66 @@ class JudgeTaskCompletionIntegrationTests {
     }
 
     @Test
-    void atomicallyPersistsPlatformFailureWithoutAUserVerdict() {
+    void atomicallySchedulesRetryForPlatformFailureWithoutAUserVerdict() {
         TaskIds ids = insertRunningTask();
 
-        completionService.failSystem(claim(ids));
+        completionService.recordPlatformFailure(claim(ids));
 
         java.util.Map<String, Object> state = state(ids);
         assertThat(state)
-                .containsEntry("task_status", "SYSTEM_ERROR")
+                .containsEntry("task_status", "RETRYING")
+                .containsEntry("processing_status", "RETRYING")
+                .containsEntry("attempt_status", "RETRYABLE_FAILURE");
+        assertThat(state.get("verdict")).isNull();
+        assertThat(state.get("diagnostic_message")).isNull();
+        assertThat(state.get("next_attempt_at")).isNotNull();
+        assertThat(((Number) state.get("task_version")).longValue()).isEqualTo(2L);
+        assertThat(((Number) state.get("submission_version")).longValue()).isEqualTo(2L);
+        assertThat(outboxState(ids))
+                .containsEntry("event_type", "JUDGE_TASK_QUEUED")
+                .containsEntry("sequence_no", 1L);
+    }
+
+    @Test
+    void atomicallyDeadLettersPlatformFailureAtAttemptLimit() {
+        TaskIds ids = insertRunningTask(3, 3);
+
+        completionService.recordPlatformFailure(claim(ids));
+
+        java.util.Map<String, Object> state = state(ids);
+        assertThat(state)
+                .containsEntry("task_status", "DEAD_LETTER")
                 .containsEntry("processing_status", "SYSTEM_ERROR")
                 .containsEntry("attempt_status", "DEAD_LETTERED");
         assertThat(state.get("verdict")).isNull();
         assertThat(state.get("diagnostic_message")).isEqualTo("Judging infrastructure failed");
-        assertThat(((Number) state.get("task_version")).longValue()).isEqualTo(2L);
-        assertThat(((Number) state.get("submission_version")).longValue()).isEqualTo(2L);
+        assertThat(state.get("next_attempt_at")).isNull();
+        assertThat(outboxState(ids))
+                .containsEntry("event_type", "JUDGE_TASK_DEAD_LETTERED")
+                .containsEntry("sequence_no", 3L);
+    }
+
+    @Test
+    void atomicallyDeadLettersAnUnrecoverableFailureWithoutWaitingForAttemptLimit() {
+        TaskIds ids = insertRunningTask();
+
+        completionService.recordUnrecoverablePlatformFailure(claim(ids));
+
+        assertThat(state(ids))
+                .containsEntry("task_status", "DEAD_LETTER")
+                .containsEntry("processing_status", "SYSTEM_ERROR")
+                .containsEntry("attempt_status", "DEAD_LETTERED")
+                .containsEntry("last_failure_code", "SNAPSHOT_INVALID");
+        assertThat(outboxState(ids))
+                .containsEntry("event_type", "JUDGE_TASK_DEAD_LETTERED")
+                .containsEntry("sequence_no", 1L);
+        assertThat(
+                        migrator()
+                                .queryForObject(
+                                        "SELECT failure_code FROM judge_task_attempt WHERE id = ?",
+                                        String.class,
+                                        ids.attemptId()))
+                .isEqualTo("SNAPSHOT_INVALID");
     }
 
     @Test
@@ -224,6 +271,10 @@ class JudgeTaskCompletionIntegrationTests {
     }
 
     private TaskIds insertRunningTask() {
+        return insertRunningTask(1, 3);
+    }
+
+    private TaskIds insertRunningTask(int attemptNo, int maxAttempts) {
         String submissionId = UUID.randomUUID().toString();
         String taskId = UUID.randomUUID().toString();
         String attemptId = UUID.randomUUID().toString();
@@ -249,27 +300,30 @@ class JudgeTaskCompletionIntegrationTests {
                 """
                 INSERT INTO judge_task (
                     id, submission_id, task_type, contract_version, task_status,
-                    status_version, attempt_count, lease_owner, lease_token,
+                    status_version, attempt_count, max_attempts, lease_owner, lease_token,
                     lease_expires_at, started_at
-                ) VALUES (?, ?, 'JUDGE_SUBMISSION', 1, 'RUNNING', 1, 1,
+                ) VALUES (?, ?, 'JUDGE_SUBMISSION', 1, 'RUNNING', 1, ?, ?,
                     'completion-test-worker', ?, CURRENT_TIMESTAMP(6) + INTERVAL 30 SECOND,
                     CURRENT_TIMESTAMP(6))
                 """,
                 taskId,
                 submissionId,
+                attemptNo,
+                maxAttempts,
                 leaseToken);
         migrator.update(
                 """
                 INSERT INTO judge_task_attempt (
                     id, judge_task_id, attempt_no, lease_token, worker_id,
                     attempt_status, lease_expires_at
-                ) VALUES (?, ?, 1, ?, 'completion-test-worker', 'RUNNING',
+                ) VALUES (?, ?, ?, ?, 'completion-test-worker', 'RUNNING',
                     CURRENT_TIMESTAMP(6) + INTERVAL 30 SECOND)
                 """,
                 attemptId,
                 taskId,
+                attemptNo,
                 leaseToken);
-        return new TaskIds(taskId, submissionId, attemptId, leaseToken);
+        return new TaskIds(taskId, submissionId, attemptId, leaseToken, attemptNo);
     }
 
     private java.util.Map<String, Object> state(TaskIds ids) {
@@ -279,6 +333,8 @@ class JudgeTaskCompletionIntegrationTests {
                         SELECT jt.task_status,
                                jt.status_version AS task_version,
                                jt.finished_at AS task_finished_at,
+                               jt.next_attempt_at,
+                               jt.last_failure_code,
                                a.attempt_status,
                                s.processing_status,
                                s.verdict,
@@ -294,6 +350,17 @@ class JudgeTaskCompletionIntegrationTests {
                         ids.submissionId());
     }
 
+    private java.util.Map<String, Object> outboxState(TaskIds ids) {
+        return migrator()
+                .queryForMap(
+                        """
+                        SELECT event_type, sequence_no
+                        FROM outbox_event
+                        WHERE aggregate_id = ?
+                        """,
+                        ids.taskId());
+    }
+
     private JudgeTaskMessage message(TaskIds ids) {
         return new JudgeTaskMessage(
                 ids.taskId(), ids.submissionId(), "JUDGE_SUBMISSION", 1);
@@ -303,7 +370,7 @@ class JudgeTaskCompletionIntegrationTests {
         return new ClaimedJudgeTask(
                 message(ids),
                 ids.attemptId(),
-                1,
+                ids.attemptNo(),
                 ids.leaseToken(),
                 "completion-test-worker");
     }
@@ -333,5 +400,9 @@ class JudgeTaskCompletionIntegrationTests {
     }
 
     private record TaskIds(
-            String taskId, String submissionId, String attemptId, String leaseToken) {}
+            String taskId,
+            String submissionId,
+            String attemptId,
+            String leaseToken,
+            int attemptNo) {}
 }

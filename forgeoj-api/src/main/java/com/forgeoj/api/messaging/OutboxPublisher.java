@@ -62,7 +62,7 @@ public class OutboxPublisher {
         try {
             rabbitTemplate.convertAndSend(
                     RabbitTopology.EXCHANGE,
-                    RabbitTopology.ROUTING_KEY,
+                    routingKey(event),
                     event.payload(),
                     message -> {
                         message.getMessageProperties().setContentType("application/json");
@@ -98,5 +98,14 @@ public class OutboxPublisher {
                     failure.getClass().getSimpleName());
             return false;
         }
+    }
+
+    private String routingKey(OutboxEventRow event) {
+        return switch (event.eventType()) {
+            case "JUDGE_TASK_QUEUED" -> RabbitTopology.ROUTING_KEY;
+            case "JUDGE_TASK_DEAD_LETTERED" -> RabbitTopology.DEAD_LETTER_ROUTING_KEY;
+            default -> throw new IllegalArgumentException(
+                    "Unsupported Outbox event type: " + event.eventType());
+        };
     }
 }

@@ -51,6 +51,7 @@ public class JudgeTaskClaimService {
 
     private TaskClaimResult claimExecution(JudgeTaskClaimRow row, JudgeTaskMessage message) {
         if (row.attemptCount() >= row.maxAttempts()) {
+            deadLetterExhausted(row);
             return TaskClaimResult.withoutOwnership(TaskClaimOutcome.EXHAUSTED);
         }
 
@@ -83,6 +84,42 @@ public class JudgeTaskClaimService {
         return TaskClaimResult.claimed(
                 new ClaimedJudgeTask(
                         message, attemptId, row.attemptCount() + 1, leaseToken, workerId));
+    }
+
+    private void deadLetterExhausted(JudgeTaskClaimRow row) {
+        int attemptUpdates = 1;
+        if ("RUNNING".equals(row.taskStatus())) {
+            if (row.leaseToken() == null) {
+                throw new IllegalStateException("Expired judge task has no lease token");
+            }
+            attemptUpdates =
+                    mapper.markExpiredAttemptDeadLettered(row.taskId(), row.leaseToken());
+        }
+        int taskUpdates =
+                mapper.markTaskExhausted(
+                        row.taskId(),
+                        row.submissionId(),
+                        row.taskStatus(),
+                        row.taskStatusVersion());
+        int submissionUpdates =
+                mapper.markSubmissionSystemError(
+                        row.submissionId(),
+                        row.submissionStatus(),
+                        row.submissionStatusVersion());
+        int outboxInserts =
+                mapper.insertOutboxEvent(
+                        UUID.randomUUID().toString(),
+                        row.taskId(),
+                        row.submissionId(),
+                        "JUDGE_TASK_DEAD_LETTERED",
+                        row.attemptCount(),
+                        0);
+        if (attemptUpdates != 1
+                || taskUpdates != 1
+                || submissionUpdates != 1
+                || outboxInserts != 1) {
+            throw new IllegalStateException("Exhausted judge task transition was not atomic");
+        }
     }
 
     private boolean claimable(JudgeTaskClaimRow row) {

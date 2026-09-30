@@ -57,13 +57,17 @@ final class JudgeTaskListener {
             return;
         }
 
-        if (claim.outcome() == TaskClaimOutcome.REJECTED
-                || claim.outcome() == TaskClaimOutcome.EXHAUSTED) {
+        if (claim.outcome() == TaskClaimOutcome.REJECTED) {
             LOGGER.warn(
                     "Rejected judge task contract mismatch; taskId={}, submissionId={}",
                     message.taskId(),
                     message.submissionId());
             channel.basicReject(deliveryTag, false);
+            return;
+        }
+        if (claim.outcome() == TaskClaimOutcome.EXHAUSTED) {
+            LOGGER.warn("Judge task exhausted its attempt limit; taskId={}", message.taskId());
+            channel.basicAck(deliveryTag, false);
             return;
         }
         if (claim.outcome() == TaskClaimOutcome.DUPLICATE) {

@@ -10,6 +10,8 @@ import org.springframework.web.server.ResponseStatusException;
 @Service
 class SubmissionTransactionService {
 
+    private static final int MAX_QUEUED_OR_RETRYING_PER_USER = 3;
+
     private final SubmissionMapper submissionMapper;
 
     SubmissionTransactionService(SubmissionMapper submissionMapper) {
@@ -24,8 +26,21 @@ class SubmissionTransactionService {
             String language,
             String sourceCode,
             String sourceSha256) {
+        if (submissionMapper.lockQuota(userId).isEmpty()) {
+            throw new IllegalStateException("User judge quota lock is unavailable");
+        }
         if (!submissionMapper.isActiveUser(userId)) {
             throw new ResponseStatusException(HttpStatus.FORBIDDEN, "Account is not active");
+        }
+        // A concurrent caller may have committed this key while we waited for the quota lock.
+        var existing = submissionMapper.findResultByRequest(userId, clientRequestId.toString());
+        if (existing.isPresent()) {
+            return existing.get();
+        }
+        if (submissionMapper.countQueuedOrRetrying(userId)
+                >= MAX_QUEUED_OR_RETRYING_PER_USER) {
+            throw new ResponseStatusException(
+                    HttpStatus.TOO_MANY_REQUESTS, "Queued submission limit reached");
         }
 
         JudgeVersionSnapshot judgeVersion =

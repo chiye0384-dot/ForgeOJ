@@ -18,17 +18,24 @@ public class JudgeTaskClaimService {
     private final JudgeTaskMapper mapper;
     private final String workerId;
     private final long leaseDurationSeconds;
+    private final long quotaRetryDelaySeconds;
 
     JudgeTaskClaimService(
             JudgeTaskMapper mapper,
             @Value("${forgeoj.worker.instance-id:${random.uuid}}") String workerId,
-            @Value("${forgeoj.worker.lease-duration-seconds:30}") long leaseDurationSeconds) {
+            @Value("${forgeoj.worker.lease-duration-seconds:30}") long leaseDurationSeconds,
+            @Value("${forgeoj.worker.quota-retry-delay-seconds:5}")
+                    long quotaRetryDelaySeconds) {
         this.mapper = mapper;
         this.workerId = workerId;
         if (leaseDurationSeconds < 1) {
             throw new IllegalArgumentException("Worker lease duration must be positive");
         }
         this.leaseDurationSeconds = leaseDurationSeconds;
+        if (quotaRetryDelaySeconds < 1) {
+            throw new IllegalArgumentException("Worker quota retry delay must be positive");
+        }
+        this.quotaRetryDelaySeconds = quotaRetryDelaySeconds;
     }
 
     @Transactional
@@ -39,11 +46,28 @@ public class JudgeTaskClaimService {
         }
 
         if (claimable(row)) {
+            if (mapper.lockUserQuota(row.userId()).isEmpty()) {
+                throw new IllegalStateException("User judge quota lock is unavailable");
+            }
+            if (mapper.countOtherRunningSubmissions(row.userId(), row.submissionId()) >= 1) {
+                if (mapper.deferForUserQuota(
+                                row.taskId(),
+                                row.submissionId(),
+                                row.taskStatus(),
+                                row.taskStatusVersion(),
+                                quotaRetryDelaySeconds)
+                        != 1) {
+                    throw new IllegalStateException("Judge task quota deferral lost its state");
+                }
+                return TaskClaimResult.withoutOwnership(TaskClaimOutcome.DEFERRED);
+            }
             return claimExecution(row, message);
         }
 
-        if (row.taskStatus().equals(row.submissionStatus())
-                && DUPLICATE_STATUSES.contains(row.taskStatus())) {
+        if ((row.taskStatus().equals(row.submissionStatus())
+                && DUPLICATE_STATUSES.contains(row.taskStatus()))
+                || ("WAITING_RETRY".equals(row.taskStatus())
+                        && "RUNNING".equals(row.submissionStatus()))) {
             return TaskClaimResult.withoutOwnership(TaskClaimOutcome.DUPLICATE);
         }
         return TaskClaimResult.withoutOwnership(TaskClaimOutcome.REJECTED);
@@ -123,6 +147,10 @@ public class JudgeTaskClaimService {
     }
 
     private boolean claimable(JudgeTaskClaimRow row) {
+        if ("WAITING_RETRY".equals(row.taskStatus())
+                && "RUNNING".equals(row.submissionStatus())) {
+            return row.retryDue();
+        }
         if (!row.taskStatus().equals(row.submissionStatus())) {
             return false;
         }

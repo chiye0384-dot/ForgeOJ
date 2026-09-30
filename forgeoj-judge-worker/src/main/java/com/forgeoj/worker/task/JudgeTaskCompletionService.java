@@ -100,6 +100,12 @@ public class JudgeTaskCompletionService {
     }
 
     private void scheduleRetry(ClaimedJudgeTask claimedTask, JudgeTaskClaimRow row) {
+        if (mapper.lockUserQuota(row.userId()).isEmpty()) {
+            throw new IllegalStateException("User judge quota lock is unavailable");
+        }
+        // Do not turn 1 RUNNING + 3 pending into 4 pending. A full queue retry
+        // keeps this user's running slot until the next attempt or terminal result.
+        boolean queueFull = mapper.countQueuedOrRetrying(row.userId()) >= 3;
         long delaySeconds = retryBackoffPolicy.delaySeconds(claimedTask.attemptNo());
         int taskUpdates =
                 mapper.markTaskRetrying(
@@ -108,11 +114,13 @@ public class JudgeTaskCompletionService {
                         row.taskStatusVersion(),
                         claimedTask.leaseToken(),
                         delaySeconds,
+                        queueFull ? "WAITING_RETRY" : "RETRYING",
                         PLATFORM_FAILURE_CODE,
                         SYSTEM_ERROR_DIAGNOSTIC);
         int submissionUpdates =
                 mapper.markSubmissionRetrying(
-                        row.submissionId(), row.submissionStatusVersion());
+                        row.submissionId(), row.submissionStatusVersion(),
+                        queueFull ? "RUNNING" : "RETRYING");
         int attemptUpdates =
                 mapper.markAttemptTerminal(
                         claimedTask.attemptId(),

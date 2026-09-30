@@ -3,6 +3,7 @@ package com.forgeoj.worker.task;
 record JudgeTaskClaimRow(
         String taskId,
         String submissionId,
+        long userId,
         String taskType,
         int contractVersion,
         String taskStatus,

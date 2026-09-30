@@ -39,7 +39,7 @@ M1 把 M0 的“正常情况下能够完成判题”提升为“Worker 中断、
 
 - `attempt_count`：已经创建的 attempt 数量；
 - `max_attempts`：包含首次执行在内的最大 attempt 数，M1 默认 3；
-- `next_attempt_at`：处于 `RETRYING` 时最早允许再次领取的时间；
+- `next_attempt_at`：`RETRYING/WAITING_RETRY` 的重试到期时间，或 `QUEUED` 配额延后任务的恢复投递时间；
 - `lease_owner`：Worker 实例标识；
 - `lease_token`：本次执行的随机 UUID，也是终态写回栅栏；
 - `lease_expires_at`：租约截止时间；
@@ -50,6 +50,7 @@ M1 把 M0 的“正常情况下能够完成判题”提升为“Worker 中断、
 ```text
 QUEUED -> RUNNING -> FINISHED
                   -> RETRYING -> RUNNING
+                  -> WAITING_RETRY -> RUNNING  (排队已满，保留原运行槽位)
                   -> DEAD_LETTER
 QUEUED -> CANCELLED
 ```
@@ -86,6 +87,7 @@ Worker 在短事务中锁定 JudgeTask 与 Submission，只允许以下任务被
 
 - `QUEUED`；
 - 已到 `next_attempt_at` 的 `RETRYING`；
+- 已到 `next_attempt_at` 的内部 `WAITING_RETRY`（对应 Submission 为 `RUNNING`）；
 - 租约已经过期的 `RUNNING`。
 
 领取事务必须同时：
@@ -103,7 +105,7 @@ Worker 在短事务中锁定 JudgeTask 与 Submission，只允许以下任务被
 - 默认租约时长由配置提供，不能短于单次心跳间隔的三倍；
 - Worker 在执行期间周期性续租，同时更新 task 与 attempt 的截止时间；
 - 心跳失败时停止继续信任执行所有权，并尽力终止沙箱；
-- 恢复扫描器只重新发布 MySQL 中租约过期或重试到期的任务；
+- 恢复扫描器重新发布 MySQL 中租约过期、重试到期或配额延后到期的任务；启用 M1 消费时必须同时启用 `forgeoj.worker.recovery.enabled=true`，否则已 ACK 的配额延后任务没有自动恢复来源；
 - 重复发布安全，因为原子领取和租约栅栏决定唯一执行权；
 - Worker 在终态数据库事务提交之后才 ACK。
 
@@ -152,6 +154,20 @@ M1 最终使用独立队列：
 - `RUNNING` 在 V1.0 不支持用户强制取消；
 - 重复取消必须幂等。
 
+### 8.1 并发配额与满队列重试
+
+API 新建与 Worker 领取/重试检查均在事务中锁定 V4 的 `user_judge_quota_lock`，不锁或开放更新账号凭证表。V4 回填既有账号；dev seed 为预置账号补行，M2 新建账号必须在同一事务插入 quota lock，缺失时 fail closed。API 获锁后再次查幂等键，再检查 `QUEUED/RETRYING` 合计是否达到 3；达到时拒绝新请求（429），已有请求重放仍成功。
+
+Worker 先锁 Task/Submission，再锁用户 quota row；发现该用户另有 `RUNNING` Submission 时只写 `next_attempt_at`（默认延后 5 秒），保持当前状态/版本、不创建 attempt，事务提交后 ACK。扫描器到期重新投递，避免热 requeue；不同用户互不消耗配额。
+
+用户确认不为未来重试预留排队名额：1 个 `RUNNING` 可同时拥有 3 个 `QUEUED/RETRYING`。平台失败时若等待队列已满，Task 同事务进入内部 `WAITING_RETRY`，Submission 保持 `RUNNING`，attempt 记为 `RETRYABLE_FAILURE`，清除旧 lease 并写带到期时间的四字段 Outbox。它保留原运行槽位，不占第四个排队名额；退避期间不执行程序，后续同用户任务不能抢占。到期领取新 lease/attempt；旧 Worker 不能续租或写回。若队列未满仍转入 `RETRYING`，最后一次失败仍进入死信/SYSTEM_ERROR。
+
+### 8.2 取消 HTTP 合约
+
+`POST /api/v1/submissions/{submissionId}/cancel` 无请求体，须登录并带 CSRF；200 仅返回 `submissionId/processingStatus/statusVersion` 三字段。Task 与 Submission 都为 `QUEUED` 时同事务条件更新为 `CANCELLED`，写完成时间，各递增一次版本并释放等待名额。都已取消时返回原结果，版本和完成时间不再改变。`RUNNING/RETRYING/FINISHED/SYSTEM_ERROR` 或状态不一致返回 409，不修改结果；他人/不存在/非法 UUID 统一 404，不泄露归属。
+
+取消锁定从 Task 主键开始的联表记录，与 Worker 领取顺序一致；领取先提交则取消 409，取消先提交则 Worker 吸收消息并 ACK，不创建 attempt 或启动沙箱。Outbox 不删除，即使取消前已经发出或取消后才发出旧排队事件，均按 MySQL 终态处理。API 只获得取消所需列的 UPDATE，不获得源码、verdict、lease、attempt 或删除权限。
+
 ## 9. 通知与可观测性
 
 WebSocket 只发送：
@@ -183,4 +199,3 @@ WebSocket 只发送：
 13. 每个任务能通过 ID 串联 API、Outbox、MQ、attempt、Worker 和结果日志；
 14. API 仍无 Docker 权限，所有终止路径无管理容器残留；
 15. 固定 Linux 环境完成构建、故障恢复和真实进程链路重放。
-

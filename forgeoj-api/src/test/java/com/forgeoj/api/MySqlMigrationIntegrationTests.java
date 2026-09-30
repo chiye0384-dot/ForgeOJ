@@ -91,7 +91,8 @@ class MySqlMigrationIntegrationTests {
                         "problem_judge_version",
                         "problem_test_case",
                         "submission",
-                        "user_account");
+                        "user_account",
+                        "user_judge_quota_lock");
 
         assertThat(api.queryForObject("SELECT COUNT(*) FROM problem", Integer.class)).isZero();
         assertThat(api.queryForObject("SELECT COUNT(*) FROM user_account", Integer.class)).isZero();
@@ -124,7 +125,7 @@ class MySqlMigrationIntegrationTests {
                           AND constraint_name = 'chk_judge_task_status'
                         """,
                         String.class);
-        assertThat(taskStatusConstraint).contains("RETRYING", "DEAD_LETTER", "CANCELLED");
+        assertThat(taskStatusConstraint).contains("RETRYING", "WAITING_RETRY", "DEAD_LETTER", "CANCELLED");
         List<String> taskColumns =
                 migrator.queryForList(
                         """
@@ -171,6 +172,16 @@ class MySqlMigrationIntegrationTests {
                                 api.queryForObject(
                                         "SELECT COUNT(*) FROM judge_task_attempt", Integer.class))
                 .isInstanceOf(DataAccessException.class);
+        assertThatThrownBy(() -> api.update("UPDATE user_account SET status = 'DISABLED'"))
+                .isInstanceOf(DataAccessException.class);
+        assertThatThrownBy(() -> api.update("UPDATE submission SET source_code = 'tampered'"))
+                .isInstanceOf(DataAccessException.class);
+        assertThatThrownBy(() -> api.update("UPDATE submission SET verdict = 'AC'"))
+                .isInstanceOf(DataAccessException.class);
+        assertThatThrownBy(() -> api.update("UPDATE judge_task SET lease_token = NULL"))
+                .isInstanceOf(DataAccessException.class);
+        assertThatThrownBy(() -> api.update("DELETE FROM submission"))
+                .isInstanceOf(DataAccessException.class);
 
         try (var workerConnection =
                         DriverManager.getConnection(
@@ -185,10 +196,20 @@ class MySqlMigrationIntegrationTests {
                 assertThat(attemptCount.next()).isTrue();
                 assertThat(attemptCount.getInt(1)).isZero();
             }
+            try (var quotaLockCount =
+                    workerStatement.executeQuery("SELECT COUNT(*) FROM user_judge_quota_lock")) {
+                assertThat(quotaLockCount.next()).isTrue();
+                assertThat(quotaLockCount.getInt(1)).isZero();
+            }
             assertThatThrownBy(
                             () ->
                                     workerStatement.executeQuery(
                                             "SELECT password_hash FROM user_account"))
+                    .isInstanceOf(SQLException.class);
+            assertThatThrownBy(
+                            () ->
+                                    workerStatement.executeUpdate(
+                                            "UPDATE user_account SET status = 'DISABLED'"))
                     .isInstanceOf(SQLException.class);
         }
     }

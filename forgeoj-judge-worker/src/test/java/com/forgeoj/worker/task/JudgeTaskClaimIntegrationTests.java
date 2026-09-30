@@ -12,6 +12,7 @@ import java.nio.file.Path;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.time.Duration;
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
@@ -112,6 +113,9 @@ class JudgeTaskClaimIntegrationTests {
 
     @Autowired
     private JudgeTaskClaimService claimService;
+
+    @Autowired
+    private JudgeTaskLeaseService leaseService;
 
     @Autowired
     private RecordingRunner runner;
@@ -306,6 +310,76 @@ class JudgeTaskClaimIntegrationTests {
                                 Long.class,
                                 task.taskId()))
                 .isEqualTo(2L);
+    }
+
+    @Test
+    void heartbeatRenewsTaskAndAttemptLeaseTogether() {
+        TaskIds task = insertQueuedTask();
+        TaskClaimResult claim = claimService.claim(validMessage(task));
+        assertThat(claim.outcome()).isEqualTo(TaskClaimOutcome.CLAIMED);
+
+        JdbcTemplate migrator = migratorJdbc();
+        migrator.update(
+                "UPDATE judge_task SET lease_expires_at = CURRENT_TIMESTAMP(6) + INTERVAL 1 SECOND WHERE id = ?",
+                task.taskId());
+        migrator.update(
+                "UPDATE judge_task_attempt SET lease_expires_at = CURRENT_TIMESTAMP(6) + INTERVAL 1 SECOND WHERE id = ?",
+                claim.claimedTask().attemptId());
+
+        LocalDateTime previousExpiry =
+                migrator.queryForObject(
+                        "SELECT lease_expires_at FROM judge_task WHERE id = ?",
+                        LocalDateTime.class,
+                        task.taskId());
+
+        leaseService.renew(claim.claimedTask());
+
+        java.util.Map<String, Object> leaseState =
+                migrator.queryForMap(
+                        """
+                        SELECT jt.lease_expires_at AS task_expiry,
+                               a.lease_expires_at AS attempt_expiry,
+                               a.heartbeat_at
+                        FROM judge_task jt
+                        JOIN judge_task_attempt a ON a.judge_task_id = jt.id
+                        WHERE jt.id = ? AND a.id = ?
+                        """,
+                        task.taskId(),
+                        claim.claimedTask().attemptId());
+        assertThat(leaseState.get("task_expiry")).isEqualTo(leaseState.get("attempt_expiry"));
+        assertThat((LocalDateTime) leaseState.get("task_expiry")).isAfter(previousExpiry);
+        assertThat(leaseState.get("heartbeat_at")).isNotNull();
+    }
+
+    @Test
+    void heartbeatRollsBackWhenAttemptOwnershipNoLongerMatches() {
+        TaskIds task = insertQueuedTask();
+        TaskClaimResult claim = claimService.claim(validMessage(task));
+        assertThat(claim.outcome()).isEqualTo(TaskClaimOutcome.CLAIMED);
+
+        JdbcTemplate migrator = migratorJdbc();
+        LocalDateTime previousExpiry =
+                migrator.queryForObject(
+                        "SELECT lease_expires_at FROM judge_task WHERE id = ?",
+                        LocalDateTime.class,
+                        task.taskId());
+        ClaimedJudgeTask staleAttempt =
+                new ClaimedJudgeTask(
+                        claim.claimedTask().message(),
+                        UUID.randomUUID().toString(),
+                        claim.claimedTask().attemptNo(),
+                        claim.claimedTask().leaseToken(),
+                        claim.claimedTask().workerId());
+
+        assertThatThrownBy(() -> leaseService.renew(staleAttempt))
+                .isInstanceOf(LeaseOwnershipLostException.class);
+
+        assertThat(
+                        migrator.queryForObject(
+                                "SELECT lease_expires_at FROM judge_task WHERE id = ?",
+                                LocalDateTime.class,
+                                task.taskId()))
+                .isEqualTo(previousExpiry);
     }
 
     @Test

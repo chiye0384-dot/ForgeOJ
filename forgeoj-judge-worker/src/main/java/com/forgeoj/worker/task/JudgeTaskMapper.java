@@ -335,4 +335,40 @@ interface JudgeTaskMapper {
             @Param("attemptStatus") String attemptStatus,
             @Param("failureCode") String failureCode,
             @Param("failureMessage") String failureMessage);
+
+    @Update(
+            """
+            UPDATE judge_task
+            SET lease_expires_at = TIMESTAMPADD(
+                    SECOND, #{leaseDurationSeconds}, CURRENT_TIMESTAMP(6)
+                )
+            WHERE id = #{taskId}
+              AND submission_id = #{submissionId}
+              AND task_status = 'RUNNING'
+              AND lease_token = #{leaseToken}
+              AND lease_expires_at > CURRENT_TIMESTAMP(6)
+            """)
+    int renewTaskLease(
+            @Param("taskId") String taskId,
+            @Param("submissionId") String submissionId,
+            @Param("leaseToken") String leaseToken,
+            @Param("leaseDurationSeconds") long leaseDurationSeconds);
+
+    @Update(
+            """
+            UPDATE judge_task_attempt a
+            JOIN judge_task jt ON jt.id = a.judge_task_id
+            SET a.heartbeat_at = CURRENT_TIMESTAMP(6),
+                a.lease_expires_at = jt.lease_expires_at
+            WHERE a.id = #{attemptId}
+              AND a.judge_task_id = #{taskId}
+              AND a.attempt_status = 'RUNNING'
+              AND a.lease_token = #{leaseToken}
+              AND jt.task_status = 'RUNNING'
+              AND jt.lease_token = #{leaseToken}
+            """)
+    int renewAttemptLease(
+            @Param("attemptId") String attemptId,
+            @Param("taskId") String taskId,
+            @Param("leaseToken") String leaseToken);
 }

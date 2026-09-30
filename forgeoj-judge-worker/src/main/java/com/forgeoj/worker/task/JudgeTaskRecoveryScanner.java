@@ -53,7 +53,7 @@ public class JudgeTaskRecoveryScanner {
             try {
                 rabbitTemplate.send(
                         RabbitTopology.EXCHANGE,
-                        RabbitTopology.ROUTING_KEY,
+                        RabbitTopology.RETRY_ROUTING_KEY,
                         recoveryMessage(candidate));
                 published++;
             } catch (RuntimeException publishFailure) {

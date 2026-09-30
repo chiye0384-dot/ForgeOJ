@@ -137,7 +137,10 @@ public class OutboxPublisher {
 
     private String routingKey(OutboxEventRow event) {
         return switch (event.eventType()) {
-            case "JUDGE_TASK_QUEUED" -> RabbitTopology.ROUTING_KEY;
+            case "JUDGE_TASK_QUEUED" ->
+                    event.sequenceNo() == 0
+                            ? RabbitTopology.ROUTING_KEY
+                            : RabbitTopology.RETRY_ROUTING_KEY;
             case "JUDGE_TASK_DEAD_LETTERED" -> RabbitTopology.DEAD_LETTER_ROUTING_KEY;
             default -> throw new IllegalArgumentException(
                     "Unsupported Outbox event type: " + event.eventType());

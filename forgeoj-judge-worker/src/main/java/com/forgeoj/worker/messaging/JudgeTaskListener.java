@@ -1,6 +1,7 @@
 package com.forgeoj.worker.messaging;
 
 import com.forgeoj.worker.task.JudgeTaskClaimService;
+import com.forgeoj.worker.task.TaskClaimResult;
 import com.forgeoj.worker.task.TaskClaimOutcome;
 import com.rabbitmq.client.Channel;
 
@@ -44,9 +45,9 @@ final class JudgeTaskListener {
             return;
         }
 
-        TaskClaimOutcome outcome;
+        TaskClaimResult claim;
         try {
-            outcome = claimService.claim(message);
+            claim = claimService.claim(message);
         } catch (RuntimeException databaseFailure) {
             LOGGER.warn(
                     "Could not claim judge task {}; failureType={}",
@@ -56,7 +57,8 @@ final class JudgeTaskListener {
             return;
         }
 
-        if (outcome == TaskClaimOutcome.REJECTED) {
+        if (claim.outcome() == TaskClaimOutcome.REJECTED
+                || claim.outcome() == TaskClaimOutcome.EXHAUSTED) {
             LOGGER.warn(
                     "Rejected judge task contract mismatch; taskId={}, submissionId={}",
                     message.taskId(),
@@ -64,13 +66,13 @@ final class JudgeTaskListener {
             channel.basicReject(deliveryTag, false);
             return;
         }
-        if (outcome == TaskClaimOutcome.DUPLICATE) {
+        if (claim.outcome() == TaskClaimOutcome.DUPLICATE) {
             channel.basicAck(deliveryTag, false);
             return;
         }
 
         try {
-            runner.run(message);
+            runner.run(claim.claimedTask());
             channel.basicAck(deliveryTag, false);
         } catch (RuntimeException executionFailure) {
             LOGGER.error(

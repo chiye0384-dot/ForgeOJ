@@ -55,6 +55,8 @@ import org.testcontainers.utility.MountableFile;
 @SpringBootTest(
         properties = {
             "forgeoj.worker.consumer.enabled=true",
+            "forgeoj.worker.instance-id=claim-test-worker",
+            "forgeoj.worker.lease-duration-seconds=30",
             "spring.rabbitmq.listener.simple.acknowledge-mode=manual",
             "spring.rabbitmq.listener.simple.prefetch=1"
         })
@@ -126,6 +128,7 @@ class JudgeTaskClaimIntegrationTests {
     @BeforeEach
     void resetState() {
         JdbcTemplate migrator = migratorJdbc();
+        migrator.update("DELETE FROM judge_task_attempt");
         migrator.update("DELETE FROM judge_task");
         migrator.update("DELETE FROM submission");
         rabbitAdmin.purgeQueue(RabbitTopology.QUEUE, false);
@@ -154,7 +157,10 @@ class JudgeTaskClaimIntegrationTests {
                 taskState(worker, task.taskId(), task.submissionId());
         assertThat(state)
                 .containsEntry("task_status", "RUNNING")
-                .containsEntry("processing_status", "RUNNING");
+                .containsEntry("processing_status", "RUNNING")
+                .containsEntry("attempt_count", 1L)
+                .containsEntry("attempt_rows", 1L);
+        assertThat(state.get("lease_token")).isNotNull();
         assertThat(((Number) state.get("task_version")).longValue()).isEqualTo(1L);
         assertThat(((Number) state.get("submission_version")).longValue()).isEqualTo(1L);
         assertThat(runner.messages())
@@ -188,7 +194,7 @@ class JudgeTaskClaimIntegrationTests {
         CountDownLatch start = new CountDownLatch(1);
 
         try (var executor = Executors.newFixedThreadPool(callers)) {
-            List<Future<TaskClaimOutcome>> futures = new ArrayList<>();
+            List<Future<TaskClaimResult>> futures = new ArrayList<>();
             for (int index = 0; index < callers; index++) {
                 futures.add(
                         executor.submit(
@@ -203,8 +209,8 @@ class JudgeTaskClaimIntegrationTests {
             start.countDown();
 
             List<TaskClaimOutcome> outcomes = new ArrayList<>();
-            for (Future<TaskClaimOutcome> future : futures) {
-                outcomes.add(future.get(10, TimeUnit.SECONDS));
+            for (Future<TaskClaimResult> future : futures) {
+                outcomes.add(future.get(10, TimeUnit.SECONDS).outcome());
             }
             assertThat(outcomes).containsOnly(TaskClaimOutcome.CLAIMED, TaskClaimOutcome.DUPLICATE);
             assertThat(outcomes.stream().filter(TaskClaimOutcome.CLAIMED::equals).count())
@@ -218,12 +224,14 @@ class JudgeTaskClaimIntegrationTests {
         TaskIds second = insertQueuedTask();
 
         assertThat(
-                        claimService.claim(
+                        claimService
+                                .claim(
                                 new JudgeTaskMessage(
                                         first.taskId(),
                                         second.submissionId(),
                                         "JUDGE_SUBMISSION",
-                                        1)))
+                                        1))
+                                .outcome())
                 .isEqualTo(TaskClaimOutcome.REJECTED);
 
         JdbcTemplate worker = new JdbcTemplate(workerDataSource);
@@ -231,7 +239,9 @@ class JudgeTaskClaimIntegrationTests {
                 taskState(worker, first.taskId(), first.submissionId());
         assertThat(state)
                 .containsEntry("task_status", "QUEUED")
-                .containsEntry("processing_status", "QUEUED");
+                .containsEntry("processing_status", "QUEUED")
+                .containsEntry("attempt_count", 0L)
+                .containsEntry("attempt_rows", 0L);
         assertThat(((Number) state.get("task_version")).longValue()).isZero();
         assertThat(((Number) state.get("submission_version")).longValue()).isZero();
     }
@@ -255,9 +265,46 @@ class JudgeTaskClaimIntegrationTests {
                 taskState(worker, task.taskId(), task.submissionId());
         assertThat(state)
                 .containsEntry("task_status", "QUEUED")
-                .containsEntry("processing_status", "QUEUED");
+                .containsEntry("processing_status", "QUEUED")
+                .containsEntry("attempt_count", 0L)
+                .containsEntry("attempt_rows", 0L);
         assertThat(((Number) state.get("task_version")).longValue()).isZero();
         assertThat(((Number) state.get("submission_version")).longValue()).isZero();
+    }
+
+    @Test
+    void expiredLeaseCreatesANewAttemptAndExpiresTheOldOwner() {
+        TaskIds task = insertQueuedTask();
+
+        TaskClaimResult first = claimService.claim(validMessage(task));
+        assertThat(first.outcome()).isEqualTo(TaskClaimOutcome.CLAIMED);
+
+        JdbcTemplate migrator = migratorJdbc();
+        migrator.update(
+                "UPDATE judge_task SET lease_expires_at = CURRENT_TIMESTAMP(6) - INTERVAL 1 SECOND WHERE id = ?",
+                task.taskId());
+        migrator.update(
+                "UPDATE judge_task_attempt SET lease_expires_at = CURRENT_TIMESTAMP(6) - INTERVAL 1 SECOND WHERE id = ?",
+                first.claimedTask().attemptId());
+
+        TaskClaimResult recovered = claimService.claim(validMessage(task));
+
+        assertThat(recovered.outcome()).isEqualTo(TaskClaimOutcome.CLAIMED);
+        assertThat(recovered.claimedTask().attemptNo()).isEqualTo(2);
+        assertThat(recovered.claimedTask().leaseToken())
+                .isNotEqualTo(first.claimedTask().leaseToken());
+        assertThat(
+                        migrator.queryForObject(
+                                "SELECT attempt_status FROM judge_task_attempt WHERE id = ?",
+                                String.class,
+                                first.claimedTask().attemptId()))
+                .isEqualTo("LEASE_EXPIRED");
+        assertThat(
+                        migrator.queryForObject(
+                                "SELECT COUNT(*) FROM judge_task_attempt WHERE judge_task_id = ?",
+                                Long.class,
+                                task.taskId()))
+                .isEqualTo(2L);
     }
 
     private void publish(String body) {
@@ -308,8 +355,12 @@ class JudgeTaskClaimIntegrationTests {
                 """
                 SELECT jt.task_status,
                        jt.status_version AS task_version,
+                       jt.attempt_count,
+                       jt.lease_token,
                        s.processing_status,
-                       s.status_version AS submission_version
+                       s.status_version AS submission_version,
+                       (SELECT COUNT(*) FROM judge_task_attempt a
+                        WHERE a.judge_task_id = jt.id) AS attempt_rows
                 FROM judge_task jt
                 JOIN submission s ON s.id = jt.submission_id
                 WHERE jt.id = ? AND s.id = ?
@@ -350,6 +401,12 @@ class JudgeTaskClaimIntegrationTests {
                             repositoryFile(
                                     "forgeoj-api/src/main/resources/db/migration/"
                                             + "V2__allow_ole_verdict.sql")));
+            ScriptUtils.executeSqlScript(
+                    connection,
+                    new FileSystemResource(
+                            repositoryFile(
+                                    "forgeoj-api/src/main/resources/db/migration/"
+                                            + "V3__add_m1_attempt_lease_and_retry.sql")));
             ScriptUtils.executeSqlScript(
                     connection,
                     new FileSystemResource(
@@ -405,8 +462,8 @@ class JudgeTaskClaimIntegrationTests {
         private volatile CountDownLatch latch = new CountDownLatch(1);
 
         @Override
-        public void run(JudgeTaskMessage message) {
-            messages.add(message);
+        public void run(ClaimedJudgeTask claimedTask) {
+            messages.add(claimedTask.message());
             invocations.incrementAndGet();
             latch.countDown();
         }

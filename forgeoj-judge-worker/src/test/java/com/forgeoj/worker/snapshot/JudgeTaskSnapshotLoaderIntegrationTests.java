@@ -84,6 +84,12 @@ class JudgeTaskSnapshotLoaderIntegrationTests {
                     connection,
                     new FileSystemResource(
                             repositoryFile(
+                                    "forgeoj-api/src/main/resources/db/migration/"
+                                            + "V3__add_m1_attempt_lease_and_retry.sql")));
+            ScriptUtils.executeSqlScript(
+                    connection,
+                    new FileSystemResource(
+                            repositoryFile(
                                     "forgeoj-api/src/main/resources/db/devdata/"
                                             + "R__seed_m0_development_data.sql")));
         }

@@ -16,6 +16,7 @@ import com.forgeoj.worker.snapshot.JudgeTaskSnapshotException;
 import com.forgeoj.worker.snapshot.JudgeTaskSnapshotLoader;
 import com.forgeoj.worker.snapshot.JudgeTestCase;
 import com.forgeoj.worker.task.JudgeTaskCompletionService;
+import com.forgeoj.worker.task.ClaimedJudgeTask;
 
 import java.nio.charset.StandardCharsets;
 import java.util.List;
@@ -31,6 +32,13 @@ class M0JudgeTaskRunnerTests {
                     "a9987de8-880d-42af-b463-06ae4f7b9717",
                     "JUDGE_SUBMISSION",
                     1);
+    private static final ClaimedJudgeTask CLAIM =
+            new ClaimedJudgeTask(
+                    MESSAGE,
+                    "c5862430-ab78-436f-b78c-bcdeb728503a",
+                    1,
+                    "b806756b-18bf-482b-83eb-9536d59d57aa",
+                    "runner-test-worker");
 
     private JudgeTaskSnapshotLoader loader;
     private SandboxRuntime sandbox;
@@ -52,21 +60,21 @@ class M0JudgeTaskRunnerTests {
         when(loader.load(MESSAGE)).thenReturn(snapshot);
         when(sandbox.execute(snapshot)).thenReturn(result);
 
-        runner.run(MESSAGE);
+        runner.run(CLAIM);
 
         var order = inOrder(loader, sandbox, completion);
         order.verify(loader).load(MESSAGE);
         order.verify(sandbox).execute(snapshot);
-        order.verify(completion).finish(MESSAGE, result);
+        order.verify(completion).finish(CLAIM, result);
     }
 
     @Test
     void recordsSystemErrorWhenSnapshotOrSandboxFails() {
         when(loader.load(MESSAGE)).thenThrow(new JudgeTaskSnapshotException("tampered"));
 
-        runner.run(MESSAGE);
+        runner.run(CLAIM);
 
-        verify(completion).failSystem(MESSAGE);
+        verify(completion).failSystem(CLAIM);
         verifyNoInteractions(sandbox);
     }
 
@@ -77,9 +85,9 @@ class M0JudgeTaskRunnerTests {
         IllegalStateException databaseFailure = new IllegalStateException("database failed");
         when(loader.load(MESSAGE)).thenReturn(snapshot);
         when(sandbox.execute(snapshot)).thenReturn(result);
-        doThrow(databaseFailure).when(completion).finish(MESSAGE, result);
+        doThrow(databaseFailure).when(completion).finish(CLAIM, result);
 
-        assertThatThrownBy(() -> runner.run(MESSAGE)).isSameAs(databaseFailure);
+        assertThatThrownBy(() -> runner.run(CLAIM)).isSameAs(databaseFailure);
     }
 
     private JudgeTaskSnapshot snapshot() {

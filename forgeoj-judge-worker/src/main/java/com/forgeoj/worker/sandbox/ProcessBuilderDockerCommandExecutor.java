@@ -56,6 +56,7 @@ final class ProcessBuilderDockerCommandExecutor implements DockerCommandExecutor
         try (var readers = Executors.newVirtualThreadPerTaskExecutor()) {
             AtomicInteger remainingOutput = new AtomicInteger(outputLimitBytes);
             AtomicBoolean outputTruncated = new AtomicBoolean();
+            AtomicBoolean stopRequested = new AtomicBoolean();
             Future<BoundedOutput> stdout =
                     readers.submit(
                             () ->
@@ -63,6 +64,7 @@ final class ProcessBuilderDockerCommandExecutor implements DockerCommandExecutor
                                             process.getInputStream(),
                                             remainingOutput,
                                             outputTruncated,
+                                            stopRequested,
                                             process));
             Future<BoundedOutput> stderr =
                     readers.submit(
@@ -71,11 +73,13 @@ final class ProcessBuilderDockerCommandExecutor implements DockerCommandExecutor
                                             process.getErrorStream(),
                                             remainingOutput,
                                             outputTruncated,
+                                            stopRequested,
                                             process));
             Future<?> inputWriter = readers.submit(() -> writeInput(process, inputBytes));
 
             boolean finished = process.waitFor(timeout.toMillis(), TimeUnit.MILLISECONDS);
             if (!finished) {
+                stopRequested.set(true);
                 process.destroyForcibly();
                 process.waitFor(FORCE_STOP_WAIT.toMillis(), TimeUnit.MILLISECONDS);
             }
@@ -129,21 +133,29 @@ final class ProcessBuilderDockerCommandExecutor implements DockerCommandExecutor
             InputStream input,
             AtomicInteger remaining,
             AtomicBoolean sharedTruncated,
+            AtomicBoolean stopRequested,
             Process process)
             throws IOException {
         ByteArrayOutputStream retained = new ByteArrayOutputStream(8192);
         byte[] buffer = new byte[8192];
         boolean truncated = false;
-        int read;
-        while ((read = input.read(buffer)) != -1) {
-            int writable = reserve(remaining, read);
-            if (writable > 0) {
-                retained.write(buffer, 0, writable);
+        try {
+            int read;
+            while ((read = input.read(buffer)) != -1) {
+                int writable = reserve(remaining, read);
+                if (writable > 0) {
+                    retained.write(buffer, 0, writable);
+                }
+                if (writable < read) {
+                    truncated = true;
+                    sharedTruncated.set(true);
+                    stopRequested.set(true);
+                    process.destroyForcibly();
+                }
             }
-            if (writable < read) {
-                truncated = true;
-                sharedTruncated.set(true);
-                process.destroyForcibly();
+        } catch (IOException failure) {
+            if (!stopRequested.get()) {
+                throw failure;
             }
         }
         return new BoundedOutput(retained.toString(StandardCharsets.UTF_8), truncated);

@@ -16,6 +16,7 @@ import com.forgeoj.worker.snapshot.JudgeTaskSnapshotException;
 import com.forgeoj.worker.snapshot.JudgeTaskSnapshotLoader;
 import com.forgeoj.worker.snapshot.JudgeTestCase;
 import com.forgeoj.worker.task.JudgeTaskCompletionService;
+import com.forgeoj.worker.task.JudgeTaskHeartbeatCoordinator;
 import com.forgeoj.worker.task.ClaimedJudgeTask;
 
 import java.nio.charset.StandardCharsets;
@@ -43,6 +44,8 @@ class M0JudgeTaskRunnerTests {
     private JudgeTaskSnapshotLoader loader;
     private SandboxRuntime sandbox;
     private JudgeTaskCompletionService completion;
+    private JudgeTaskHeartbeatCoordinator heartbeatCoordinator;
+    private JudgeTaskHeartbeatCoordinator.HeartbeatSession heartbeatSession;
     private M0JudgeTaskRunner runner;
 
     @BeforeEach
@@ -50,7 +53,10 @@ class M0JudgeTaskRunnerTests {
         loader = mock(JudgeTaskSnapshotLoader.class);
         sandbox = mock(SandboxRuntime.class);
         completion = mock(JudgeTaskCompletionService.class);
-        runner = new M0JudgeTaskRunner(loader, sandbox, completion);
+        heartbeatCoordinator = mock(JudgeTaskHeartbeatCoordinator.class);
+        heartbeatSession = mock(JudgeTaskHeartbeatCoordinator.HeartbeatSession.class);
+        when(heartbeatCoordinator.start(CLAIM)).thenReturn(heartbeatSession);
+        runner = new M0JudgeTaskRunner(loader, sandbox, completion, heartbeatCoordinator);
     }
 
     @Test
@@ -66,6 +72,8 @@ class M0JudgeTaskRunnerTests {
         order.verify(loader).load(MESSAGE);
         order.verify(sandbox).execute(snapshot);
         order.verify(completion).finish(CLAIM, result);
+        verify(heartbeatCoordinator).start(CLAIM);
+        verify(heartbeatSession).close();
     }
 
     @Test
@@ -75,6 +83,7 @@ class M0JudgeTaskRunnerTests {
         runner.run(CLAIM);
 
         verify(completion).recordUnrecoverablePlatformFailure(CLAIM);
+        verify(heartbeatSession).close();
         verifyNoInteractions(sandbox);
     }
 
@@ -87,6 +96,7 @@ class M0JudgeTaskRunnerTests {
         runner.run(CLAIM);
 
         verify(completion).recordPlatformFailure(CLAIM);
+        verify(heartbeatSession).close();
     }
 
     @Test

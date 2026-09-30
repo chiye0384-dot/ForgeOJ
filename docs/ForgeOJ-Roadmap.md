@@ -121,7 +121,7 @@ M0 的登录只用于打通受保护提交链路，可使用预置账号和最�
 
 目标：把“能跑”提升为“故障下仍可解释和恢复”。
 
-当前状态：`IN_PROGRESS`。截至实现提交 `52c9164`，attempt/lease 栅栏、执行期心跳、过期任务被动与主动恢复、有限重试、死信、Outbox 发布退避，以及正式提交/自测预留/重试/死信队列边界已有 Windows/Testcontainers 自动化证据；最近完整回归为 API 14 项、Worker 51 项全部通过。并发用户配额、`QUEUED` 取消、WebSocket/版本乱序、可观测性、更宽安全与崩溃矩阵、固定 Linux 重放和最终证据更新尚未完成，因此不得升级为 `VERIFIED`。
+当前状态：`IN_PROGRESS`。截至实现提交 `44642f3`，attempt/lease 栅栏、心跳、被动/主动恢复、有限重试/死信、Outbox 发布退避、独立队列边界、并发用户配额和 `QUEUED` 取消已有 Windows/Testcontainers 自动化证据；最新完整回归 API 26 项、Worker 57 项全部通过且零跳过，并发/消息聚焦复验另通过 19 + 16 项。用户确认运行时始终允许另有三个排队任务；满队列平台失败通过内部 `WAITING_RETRY` 保留运行槽位等待有限重试，见 D-038 和 [本轮验证记录](M1-QUOTA-CANCELLATION-VALIDATION.md)。WebSocket/版本乱序、可观测性、更宽安全与崩溃矩阵、固定 Linux 重放和最终证据更新尚未完成，因此不得升级为 `VERIFIED`。
 
 范围：
 

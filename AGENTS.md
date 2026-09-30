@@ -2,7 +2,7 @@
 
 ## Repository status
 
-ForgeOJ has an approved requirements baseline, a verified M-1 minimal project scaffold, and a verified M0 minimum judging vertical slice. On 2026-09-30, commit `39e91145` passed 49 backend tests and the complete frontend verification in fixed Linux/amd64 containers, then passed a real Linux process-level Vite/API/Outbox/RabbitMQ/Worker/Docker/MySQL replay for AC, WA, CE, RE, TLE, and OLE. All 20 M0 gates are recorded as passed in `docs/M0-E2E-VALIDATION.md`. M1 remains `PLANNED`; crash recovery, attempt/lease, finite retry, dead-letter operations, and the wider hostile-code matrix are not yet implemented.
+ForgeOJ has an approved requirements baseline, a verified M-1 minimal project scaffold, and a verified M0 minimum judging vertical slice. On 2026-09-30, commit `39e91145` passed 49 backend tests and the complete frontend verification in fixed Linux/amd64 containers, then passed a real Linux process-level Vite/API/Outbox/RabbitMQ/Worker/Docker/MySQL replay for AC, WA, CE, RE, TLE, and OLE. All 20 M0 gates are recorded as passed in `docs/M0-E2E-VALIDATION.md`. M1 is `IN_PROGRESS` on `feat/m1-reliable-judging`; `docs/M1-RELIABLE-JUDGING-DESIGN.md` is its implementation baseline. Crash recovery, attempt/lease, finite retry, dead-letter operations, and the wider hostile-code matrix remain incomplete until their M1 gates pass.
 
 Use these documents as authoritative sources:
 

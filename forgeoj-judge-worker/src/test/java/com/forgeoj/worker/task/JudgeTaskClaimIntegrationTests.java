@@ -50,6 +50,8 @@ import org.testcontainers.rabbitmq.RabbitMQContainer;
 import org.testcontainers.utility.DockerImageName;
 import org.testcontainers.utility.MountableFile;
 
+import tools.jackson.databind.ObjectMapper;
+
 @Testcontainers
 @DirtiesContext(classMode = DirtiesContext.ClassMode.AFTER_CLASS)
 @Import(JudgeTaskClaimIntegrationTests.RunnerConfiguration.class)
@@ -118,6 +120,9 @@ class JudgeTaskClaimIntegrationTests {
     private JudgeTaskLeaseService leaseService;
 
     @Autowired
+    private JudgeTaskRecoveryMapper recoveryMapper;
+
+    @Autowired
     private RecordingRunner runner;
 
     @Autowired
@@ -125,6 +130,9 @@ class JudgeTaskClaimIntegrationTests {
 
     @Autowired
     private RabbitAdmin rabbitAdmin;
+
+    @Autowired
+    private ObjectMapper objectMapper;
 
     @Autowired
     private DataSource workerDataSource;
@@ -310,6 +318,72 @@ class JudgeTaskClaimIntegrationTests {
                                 Long.class,
                                 task.taskId()))
                 .isEqualTo(2L);
+    }
+
+    @Test
+    void recoveryScanRepublishesExpiredLeaseForAnotherAttempt() throws Exception {
+        TaskIds task = insertQueuedTask();
+        TaskClaimResult first = claimService.claim(validMessage(task));
+        assertThat(first.outcome()).isEqualTo(TaskClaimOutcome.CLAIMED);
+        expireLease(migratorJdbc(), task.taskId(), first.claimedTask().attemptId());
+
+        JudgeTaskRecoveryScanner scanner =
+                new JudgeTaskRecoveryScanner(
+                        recoveryMapper, rabbitTemplate, objectMapper, 20);
+        assertThat(scanner.recoverDueTasks()).isEqualTo(1);
+
+        assertThat(runner.awaitInvocations(1, Duration.ofSeconds(5))).isTrue();
+        await(
+                () ->
+                        ((Number)
+                                                taskState(
+                                                                new JdbcTemplate(workerDataSource),
+                                                                task.taskId(),
+                                                                task.submissionId())
+                                                        .get("attempt_count"))
+                                        .longValue()
+                                == 2L,
+                Duration.ofSeconds(5));
+
+        JdbcTemplate migrator = migratorJdbc();
+        assertThat(
+                        migrator.queryForObject(
+                                "SELECT attempt_status FROM judge_task_attempt WHERE id = ?",
+                                String.class,
+                                first.claimedTask().attemptId()))
+                .isEqualTo("LEASE_EXPIRED");
+    }
+
+    @Test
+    void recoveryScanRepublishesRetryOnlyAfterItBecomesDue() throws Exception {
+        TaskIds task = insertQueuedTask();
+        JdbcTemplate migrator = migratorJdbc();
+        migrator.update(
+                "UPDATE judge_task SET task_status = 'RETRYING', next_attempt_at = CURRENT_TIMESTAMP(6) + INTERVAL 1 HOUR WHERE id = ?",
+                task.taskId());
+        migrator.update(
+                "UPDATE submission SET processing_status = 'RETRYING' WHERE id = ?",
+                task.submissionId());
+        JudgeTaskRecoveryScanner scanner =
+                new JudgeTaskRecoveryScanner(
+                        recoveryMapper, rabbitTemplate, objectMapper, 20);
+
+        assertThat(scanner.recoverDueTasks()).isZero();
+        migrator.update(
+                "UPDATE judge_task SET next_attempt_at = CURRENT_TIMESTAMP(6) - INTERVAL 1 SECOND WHERE id = ?",
+                task.taskId());
+        assertThat(scanner.recoverDueTasks()).isEqualTo(1);
+
+        assertThat(runner.awaitInvocations(1, Duration.ofSeconds(5))).isTrue();
+        await(
+                () ->
+                        "RUNNING".equals(
+                                taskState(
+                                                new JdbcTemplate(workerDataSource),
+                                                task.taskId(),
+                                                task.submissionId())
+                                        .get("task_status")),
+                Duration.ofSeconds(5));
     }
 
     @Test

@@ -21,6 +21,9 @@ public class OutboxPublisher {
     private final boolean scheduledPublishingEnabled;
     private final int batchSize;
     private final long confirmTimeoutMs;
+    private final int maximumAttempts;
+    private final long baseDelaySeconds;
+    private final long maximumDelaySeconds;
 
     public OutboxPublisher(
             OutboxMapper outboxMapper,
@@ -29,12 +32,27 @@ public class OutboxPublisher {
                     boolean scheduledPublishingEnabled,
             @Value("${forgeoj.outbox.publisher.batch-size:20}") int batchSize,
             @Value("${forgeoj.outbox.publisher.confirm-timeout-ms:5000}")
-                    long confirmTimeoutMs) {
+                    long confirmTimeoutMs,
+            @Value("${forgeoj.outbox.publisher.max-attempts:5}") int maximumAttempts,
+            @Value("${forgeoj.outbox.publisher.base-delay-seconds:1}")
+                    long baseDelaySeconds,
+            @Value("${forgeoj.outbox.publisher.max-delay-seconds:60}")
+                    long maximumDelaySeconds) {
+        if (batchSize < 1
+                || confirmTimeoutMs < 1
+                || maximumAttempts < 1
+                || baseDelaySeconds < 1
+                || maximumDelaySeconds < baseDelaySeconds) {
+            throw new IllegalArgumentException("Outbox publisher settings are invalid");
+        }
         this.outboxMapper = outboxMapper;
         this.rabbitTemplate = rabbitTemplate;
         this.scheduledPublishingEnabled = scheduledPublishingEnabled;
         this.batchSize = batchSize;
         this.confirmTimeoutMs = confirmTimeoutMs;
+        this.maximumAttempts = maximumAttempts;
+        this.baseDelaySeconds = baseDelaySeconds;
+        this.maximumDelaySeconds = maximumDelaySeconds;
     }
 
     @Scheduled(fixedDelayString = "${forgeoj.outbox.publisher.fixed-delay-ms:1000}")
@@ -47,17 +65,24 @@ public class OutboxPublisher {
     public int publishPending() {
         int published = 0;
         for (OutboxEventRow event : outboxMapper.findPending(batchSize)) {
-            if (!publishConfirmed(event)) {
+            PublishAttempt attempt = publishConfirmed(event);
+            if (!attempt.succeeded()) {
+                outboxMapper.recordPublishFailure(
+                        event.id(),
+                        event.publishAttempts(),
+                        maximumAttempts,
+                        retryDelaySeconds(event.publishAttempts() + 1),
+                        attempt.errorCode());
                 break;
             }
-            if (outboxMapper.markPublished(event.id()) == 1) {
+            if (outboxMapper.markPublished(event.id(), event.publishAttempts()) == 1) {
                 published++;
             }
         }
         return published;
     }
 
-    private boolean publishConfirmed(OutboxEventRow event) {
+    private PublishAttempt publishConfirmed(OutboxEventRow event) {
         CorrelationData correlation = new CorrelationData(event.id());
         try {
             rabbitTemplate.convertAndSend(
@@ -80,24 +105,34 @@ public class OutboxPublisher {
                         "RabbitMQ negatively acknowledged Outbox event {}; reason={}",
                         event.id(),
                         confirm.reason());
-                return false;
+                return PublishAttempt.failed("BROKER_NACK");
             }
             if (correlation.getReturned() != null) {
                 LOGGER.warn("RabbitMQ returned unroutable Outbox event {}", event.id());
-                return false;
+                return PublishAttempt.failed("UNROUTABLE");
             }
-            return true;
+            return PublishAttempt.success();
         } catch (InterruptedException interrupted) {
             Thread.currentThread().interrupt();
             LOGGER.warn("Interrupted while publishing Outbox event {}", event.id());
-            return false;
+            return PublishAttempt.failed("INTERRUPTED");
         } catch (Exception failure) {
             LOGGER.warn(
                     "Failed to publish Outbox event {}; failureType={}",
                     event.id(),
                     failure.getClass().getSimpleName());
-            return false;
+            return PublishAttempt.failed("PUBLISH_EXCEPTION");
         }
+    }
+
+    private long retryDelaySeconds(int failedAttemptNo) {
+        long delay = baseDelaySeconds;
+        for (int attempt = 1; attempt < failedAttemptNo && delay < maximumDelaySeconds; attempt++) {
+            delay = Math.min(
+                    maximumDelaySeconds,
+                    delay > maximumDelaySeconds / 2 ? maximumDelaySeconds : delay * 2);
+        }
+        return delay;
     }
 
     private String routingKey(OutboxEventRow event) {
@@ -107,5 +142,16 @@ public class OutboxPublisher {
             default -> throw new IllegalArgumentException(
                     "Unsupported Outbox event type: " + event.eventType());
         };
+    }
+
+    private record PublishAttempt(boolean succeeded, String errorCode) {
+
+        private static PublishAttempt success() {
+            return new PublishAttempt(true, null);
+        }
+
+        private static PublishAttempt failed(String errorCode) {
+            return new PublishAttempt(false, errorCode);
+        }
     }
 }

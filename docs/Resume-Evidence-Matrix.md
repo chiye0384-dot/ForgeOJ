@@ -85,7 +85,7 @@
 
 建议证据文件：集成测试报告、故障注入记录、状态时序图、队列和数据库截图、相关 commit。
 
-当前局部证据（不足以把 E-01 提升为 `VERIFIED`）：M0 已验证 Submission/JudgeTask/Outbox 原子创建与回滚、四字段持久消息、publisher confirm、幂等领取、Submission/JudgeTask 原子终态写回、写回后 ACK、重复投递吸收和 `SYSTEM_ERROR`。2026-09-30 的固定 Linux/amd64 进程级重放又以 AC、WA、CE、RE、TLE、OLE 六种真实提交证明 Outbox/RabbitMQ/Worker/Docker/MySQL 链路，7 条 Outbox 全部发布且队列归零。Worker 在写库前后崩溃恢复、ACK 丢失、attempt/lease、有限重试/死信和 OPS_ADMIN 运维闭环属于 M1，尚未完成。
+当前局部证据（不足以把 E-01 提升为 `VERIFIED`）：M0 已验证 Submission/JudgeTask/Outbox 原子创建与回滚、四字段持久消息、publisher confirm、幂等领取、原子终态写回、写回后 ACK、重复投递吸收和 `SYSTEM_ERROR`；固定 Linux/amd64 进程级重放已覆盖六 verdict。M1 截至 `44642f3` 又实现 attempt/lease 栅栏、心跳、被动/主动恢复、有限重试/死信、可恢复 Outbox、独立队列、并发用户配额和排队取消。2026-09-30 Windows 完整回归 API 26 项、Worker 57 项（零跳过），并发/消息聚焦复验通过 19 + 16 项；代码、V4、合约、限制和命令见 [M1 配额与取消记录](M1-QUOTA-CANCELLATION-VALIDATION.md)。尚缺完整 Worker 进程崩溃/ACK 丢失矩阵、固定 Linux M1 重放、OPS_ADMIN 运维闭环与 release，不能生成可靠链路已发布或简历就绪的结论。
 
 ### E-02：Docker 代码沙箱
 

@@ -84,6 +84,7 @@ npm run verify
 - [版本路线图](docs/ForgeOJ-Roadmap.md)
 - [M0 最小判题纵向切片设计](docs/M0-VERTICAL-SLICE-DESIGN.md)
 - [M0 真实纵向链路验证记录](docs/M0-E2E-VALIDATION.md)
+- [M1 配额与排队取消验证记录](docs/M1-QUOTA-CANCELLATION-VALIDATION.md)
 - [已知限制](docs/KNOWN_LIMITATIONS.md)
 - [简历证据矩阵](docs/Resume-Evidence-Matrix.md)
 - [性能测试计划](docs/Performance-Test-Plan.md)
@@ -102,4 +103,4 @@ npm run verify
 
 用户已经完成人工结构审阅并确认 Apache-2.0 根许可证；后端和前端已在只读源码、全新依赖缓存的 Linux 容器中复现通过。首个公开提交的 [GitHub Actions 运行](https://github.com/chiye0384-dot/ForgeOJ/actions/runs/36386617957) 中，`backend` 与 `frontend` 两个 job 也均为 `success`，因此 M-1 标记为 `VERIFIED`。
 
-M-1 的证据只证明工程起点、许可证边界和构建链路可复现。M0 已闭环“预置账号登录 → 查看内置题 → 原子创建 Submission/JudgeTask/Outbox → RabbitMQ confirm 后标记已发布 → Worker 原子幂等领取 → 校验快照与隐藏测试 → 受限 Docker 执行 → Submission/JudgeTask 同事务写入终态 → ACK → 所有者查询 → 页面轮询”。2026-09-29 的 disposable Windows 开发栈完成真实浏览器 AC；2026-09-30 的提交 `39e91145` 又在固定 Linux/amd64 中通过 49 项后端测试、前端全部校验和 AC/WA/CE/RE/TLE/OLE 真实进程链路，20 项 M0 门禁全部 `PASS`。详细 commit、镜像 digest、产物哈希和清理记录见 [M0 验证记录](docs/M0-E2E-VALIDATION.md)。M1 当前已推进到独立队列边界，下一项是并发用户配额和 `QUEUED` 取消；在通知、可观测性、安全/崩溃矩阵与固定 Linux 验收完成前，不得把 M1 标为 `VERIFIED`。
+M-1 的证据只证明工程起点、许可证边界和构建链路可复现。M0 已闭环“预置账号登录 → 查看内置题 → 原子创建 Submission/JudgeTask/Outbox → RabbitMQ confirm 后标记已发布 → Worker 原子幂等领取 → 校验快照与隐藏测试 → 受限 Docker 执行 → Submission/JudgeTask 同事务写入终态 → ACK → 所有者查询 → 页面轮询”。2026-09-29 的 disposable Windows 开发栈完成真实浏览器 AC；2026-09-30 的提交 `39e91145` 又在固定 Linux/amd64 中通过 49 项后端测试、前端全部校验和 AC/WA/CE/RE/TLE/OLE 真实进程链路，20 项 M0 门禁全部 `PASS`。详细 commit、镜像 digest、产物哈希和清理记录见 [M0 验证记录](docs/M0-E2E-VALIDATION.md)。M1 已推进到并发用户配额和所有者 `QUEUED` 取消（实现提交 `44642f3`）：运行中允许另有三个排队任务，满队列重试保留原运行槽位；Windows/Testcontainers 完整回归通过 API 26 项、Worker 57 项，详见 [M1 局部验证记录](docs/M1-QUOTA-CANCELLATION-VALIDATION.md)。在通知、可观测性、安全/崩溃矩阵与固定 Linux 验收完成前，不得把 M1 标为 `VERIFIED`。

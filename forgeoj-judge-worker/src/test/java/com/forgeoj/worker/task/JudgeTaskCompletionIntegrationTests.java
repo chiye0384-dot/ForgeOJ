@@ -74,6 +74,7 @@ class JudgeTaskCompletionIntegrationTests {
                         MYSQL.getJdbcUrl(), "forgeoj_migrator", MIGRATOR_PASSWORD)) {
             executeScript(connection, "db/migration/V1__create_m0_core_schema.sql");
             executeScript(connection, "db/migration/V2__allow_ole_verdict.sql");
+            executeScript(connection, "db/migration/V3__add_m1_attempt_lease_and_retry.sql");
             executeScript(connection, "db/devdata/R__seed_m0_development_data.sql");
         }
     }
@@ -87,6 +88,7 @@ class JudgeTaskCompletionIntegrationTests {
     @BeforeEach
     void resetTasks() {
         JdbcTemplate migrator = migrator();
+        migrator.update("DELETE FROM judge_task_attempt");
         migrator.update("DELETE FROM judge_task");
         migrator.update("DELETE FROM submission");
     }
@@ -98,12 +100,13 @@ class JudgeTaskCompletionIntegrationTests {
         String diagnostic = outcome == SandboxOutcome.COMPILE_ERROR ? "Main.java: compiler detail" : "";
 
         completionService.finish(
-                message(ids), new SandboxExecutionResult(outcome, diagnostic));
+                claim(ids), new SandboxExecutionResult(outcome, diagnostic));
 
         java.util.Map<String, Object> state = state(ids);
         assertThat(state)
                 .containsEntry("task_status", "FINISHED")
                 .containsEntry("processing_status", "FINISHED")
+                .containsEntry("attempt_status", "SUCCEEDED")
                 .containsEntry("verdict", verdict);
         assertThat(((Number) state.get("task_version")).longValue()).isEqualTo(2L);
         assertThat(((Number) state.get("submission_version")).longValue()).isEqualTo(2L);
@@ -120,12 +123,13 @@ class JudgeTaskCompletionIntegrationTests {
     void atomicallyPersistsPlatformFailureWithoutAUserVerdict() {
         TaskIds ids = insertRunningTask();
 
-        completionService.failSystem(message(ids));
+        completionService.failSystem(claim(ids));
 
         java.util.Map<String, Object> state = state(ids);
         assertThat(state)
                 .containsEntry("task_status", "SYSTEM_ERROR")
-                .containsEntry("processing_status", "SYSTEM_ERROR");
+                .containsEntry("processing_status", "SYSTEM_ERROR")
+                .containsEntry("attempt_status", "DEAD_LETTERED");
         assertThat(state.get("verdict")).isNull();
         assertThat(state.get("diagnostic_message")).isEqualTo("Judging infrastructure failed");
         assertThat(((Number) state.get("task_version")).longValue()).isEqualTo(2L);
@@ -142,7 +146,7 @@ class JudgeTaskCompletionIntegrationTests {
             assertThatThrownBy(
                             () ->
                                     completionService.finish(
-                                            message(ids),
+                                            claim(ids),
                                             SandboxExecutionResult.of(
                                                     SandboxOutcome.ACCEPTED)))
                     .isInstanceOf(RuntimeException.class);
@@ -167,17 +171,46 @@ class JudgeTaskCompletionIntegrationTests {
         assertThatThrownBy(
                         () ->
                                 completionService.finish(
-                                        new JudgeTaskMessage(
-                                                first.taskId(),
-                                                second.submissionId(),
-                                                "JUDGE_SUBMISSION",
-                                                1),
+                                        new ClaimedJudgeTask(
+                                                new JudgeTaskMessage(
+                                                        first.taskId(),
+                                                        second.submissionId(),
+                                                        "JUDGE_SUBMISSION",
+                                                        1),
+                                                first.attemptId(),
+                                                1,
+                                                first.leaseToken(),
+                                                "completion-test-worker"),
                                         SandboxExecutionResult.of(SandboxOutcome.ACCEPTED)))
                 .isInstanceOf(IllegalStateException.class);
 
         assertThat(state(first))
                 .containsEntry("task_status", "RUNNING")
                 .containsEntry("processing_status", "RUNNING");
+    }
+
+    @Test
+    void staleLeaseCannotOverwriteTheCurrentRunningAttempt() {
+        TaskIds ids = insertRunningTask();
+        ClaimedJudgeTask stale =
+                new ClaimedJudgeTask(
+                        message(ids),
+                        ids.attemptId(),
+                        1,
+                        UUID.randomUUID().toString(),
+                        "stale-worker");
+
+        assertThatThrownBy(
+                        () ->
+                                completionService.finish(
+                                        stale,
+                                        SandboxExecutionResult.of(SandboxOutcome.ACCEPTED)))
+                .isInstanceOf(IllegalStateException.class);
+
+        assertThat(state(ids))
+                .containsEntry("task_status", "RUNNING")
+                .containsEntry("processing_status", "RUNNING")
+                .containsEntry("attempt_status", "RUNNING");
     }
 
     private static Stream<Arguments> userOutcomes() {
@@ -193,6 +226,8 @@ class JudgeTaskCompletionIntegrationTests {
     private TaskIds insertRunningTask() {
         String submissionId = UUID.randomUUID().toString();
         String taskId = UUID.randomUUID().toString();
+        String attemptId = UUID.randomUUID().toString();
+        String leaseToken = UUID.randomUUID().toString();
         JdbcTemplate migrator = migrator();
         migrator.update(
                 """
@@ -214,12 +249,27 @@ class JudgeTaskCompletionIntegrationTests {
                 """
                 INSERT INTO judge_task (
                     id, submission_id, task_type, contract_version, task_status,
-                    status_version, started_at
-                ) VALUES (?, ?, 'JUDGE_SUBMISSION', 1, 'RUNNING', 1, CURRENT_TIMESTAMP(6))
+                    status_version, attempt_count, lease_owner, lease_token,
+                    lease_expires_at, started_at
+                ) VALUES (?, ?, 'JUDGE_SUBMISSION', 1, 'RUNNING', 1, 1,
+                    'completion-test-worker', ?, CURRENT_TIMESTAMP(6) + INTERVAL 30 SECOND,
+                    CURRENT_TIMESTAMP(6))
                 """,
                 taskId,
-                submissionId);
-        return new TaskIds(taskId, submissionId);
+                submissionId,
+                leaseToken);
+        migrator.update(
+                """
+                INSERT INTO judge_task_attempt (
+                    id, judge_task_id, attempt_no, lease_token, worker_id,
+                    attempt_status, lease_expires_at
+                ) VALUES (?, ?, 1, ?, 'completion-test-worker', 'RUNNING',
+                    CURRENT_TIMESTAMP(6) + INTERVAL 30 SECOND)
+                """,
+                attemptId,
+                taskId,
+                leaseToken);
+        return new TaskIds(taskId, submissionId, attemptId, leaseToken);
     }
 
     private java.util.Map<String, Object> state(TaskIds ids) {
@@ -229,12 +279,14 @@ class JudgeTaskCompletionIntegrationTests {
                         SELECT jt.task_status,
                                jt.status_version AS task_version,
                                jt.finished_at AS task_finished_at,
+                               a.attempt_status,
                                s.processing_status,
                                s.verdict,
                                s.status_version AS submission_version,
                                s.diagnostic_message,
                                s.finished_at AS submission_finished_at
                         FROM judge_task jt
+                        JOIN judge_task_attempt a ON a.judge_task_id = jt.id
                         JOIN submission s ON s.id = jt.submission_id
                         WHERE jt.id = ? AND s.id = ?
                         """,
@@ -245,6 +297,15 @@ class JudgeTaskCompletionIntegrationTests {
     private JudgeTaskMessage message(TaskIds ids) {
         return new JudgeTaskMessage(
                 ids.taskId(), ids.submissionId(), "JUDGE_SUBMISSION", 1);
+    }
+
+    private ClaimedJudgeTask claim(TaskIds ids) {
+        return new ClaimedJudgeTask(
+                message(ids),
+                ids.attemptId(),
+                1,
+                ids.leaseToken(),
+                "completion-test-worker");
     }
 
     private JdbcTemplate migrator() {
@@ -271,5 +332,6 @@ class JudgeTaskCompletionIntegrationTests {
         throw new IllegalStateException("Cannot locate repository file: " + relativePath);
     }
 
-    private record TaskIds(String taskId, String submissionId) {}
+    private record TaskIds(
+            String taskId, String submissionId, String attemptId, String leaseToken) {}
 }

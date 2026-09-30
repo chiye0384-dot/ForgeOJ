@@ -20,29 +20,38 @@ public class JudgeTaskCompletionService {
     }
 
     @Transactional
-    public void finish(JudgeTaskMessage message, SandboxExecutionResult result) {
+    public void finish(ClaimedJudgeTask claimedTask, SandboxExecutionResult result) {
         String verdict = verdict(result.outcome());
         String diagnostic =
                 result.outcome() == SandboxOutcome.COMPILE_ERROR
                         ? safeDiagnostic(result.diagnosticMessage())
                         : null;
-        complete(message, "FINISHED", verdict, diagnostic);
+        complete(claimedTask, "FINISHED", verdict, diagnostic, "SUCCEEDED", null);
     }
 
     @Transactional
-    public void failSystem(JudgeTaskMessage message) {
-        complete(message, "SYSTEM_ERROR", null, SYSTEM_ERROR_DIAGNOSTIC);
+    public void failSystem(ClaimedJudgeTask claimedTask) {
+        complete(
+                claimedTask,
+                "SYSTEM_ERROR",
+                null,
+                SYSTEM_ERROR_DIAGNOSTIC,
+                "DEAD_LETTERED",
+                "PLATFORM_FAILURE");
     }
 
     private void complete(
-            JudgeTaskMessage message,
+            ClaimedJudgeTask claimedTask,
             String terminalStatus,
             String verdict,
-            String diagnosticMessage) {
+            String diagnosticMessage,
+            String attemptStatus,
+            String failureCode) {
+        JudgeTaskMessage message = claimedTask.message();
         JudgeTaskClaimRow row =
                 mapper.findForUpdate(message.taskId())
                         .orElseThrow(() -> new IllegalStateException("Judge task does not exist"));
-        if (!matchesRunningTask(row, message)) {
+        if (!matchesRunningTask(row, claimedTask)) {
             throw new IllegalStateException("Judge task is not the matching running task");
         }
 
@@ -51,6 +60,7 @@ public class JudgeTaskCompletionService {
                         row.taskId(),
                         row.submissionId(),
                         row.taskStatusVersion(),
+                        claimedTask.leaseToken(),
                         terminalStatus);
         int submissionUpdates =
                 mapper.markSubmissionTerminal(
@@ -59,18 +69,28 @@ public class JudgeTaskCompletionService {
                         terminalStatus,
                         verdict,
                         diagnosticMessage);
-        if (taskUpdates != 1 || submissionUpdates != 1) {
+        int attemptUpdates =
+                mapper.markAttemptTerminal(
+                        claimedTask.attemptId(),
+                        row.taskId(),
+                        claimedTask.leaseToken(),
+                        attemptStatus,
+                        failureCode,
+                        failureCode == null ? null : SYSTEM_ERROR_DIAGNOSTIC);
+        if (taskUpdates != 1 || submissionUpdates != 1 || attemptUpdates != 1) {
             throw new IllegalStateException("Judge task completion lost its compare-and-swap");
         }
     }
 
-    private boolean matchesRunningTask(JudgeTaskClaimRow row, JudgeTaskMessage message) {
+    private boolean matchesRunningTask(JudgeTaskClaimRow row, ClaimedJudgeTask claimedTask) {
+        JudgeTaskMessage message = claimedTask.message();
         return row.taskId().equals(message.taskId())
                 && row.submissionId().equals(message.submissionId())
                 && row.taskType().equals(message.taskType())
                 && row.contractVersion() == message.contractVersion()
                 && "RUNNING".equals(row.taskStatus())
-                && "RUNNING".equals(row.submissionStatus());
+                && "RUNNING".equals(row.submissionStatus())
+                && claimedTask.leaseToken().equals(row.leaseToken());
     }
 
     private String verdict(SandboxOutcome outcome) {

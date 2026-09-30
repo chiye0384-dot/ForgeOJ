@@ -112,6 +112,7 @@ class JudgeTaskExecutionIntegrationTests {
     @BeforeEach
     void resetState() {
         JdbcTemplate migrator = migrator();
+        migrator.update("DELETE FROM judge_task_attempt");
         migrator.update("DELETE FROM judge_task");
         migrator.update("DELETE FROM submission");
         rabbitAdmin.purgeQueue(RabbitTopology.QUEUE, false);
@@ -235,6 +236,7 @@ class JudgeTaskExecutionIntegrationTests {
                         MYSQL.getJdbcUrl(), "forgeoj_migrator", MIGRATOR_PASSWORD)) {
             executeScript(connection, "db/migration/V1__create_m0_core_schema.sql");
             executeScript(connection, "db/migration/V2__allow_ole_verdict.sql");
+            executeScript(connection, "db/migration/V3__add_m1_attempt_lease_and_retry.sql");
             executeScript(connection, "db/devdata/R__seed_m0_development_data.sql");
         }
         schemaInitialized = true;

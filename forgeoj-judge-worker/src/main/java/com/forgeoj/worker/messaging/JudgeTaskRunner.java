@@ -1,7 +1,9 @@
 package com.forgeoj.worker.messaging;
 
+import com.forgeoj.worker.task.ClaimedJudgeTask;
+
 @FunctionalInterface
 public interface JudgeTaskRunner {
 
-    void run(JudgeTaskMessage message);
+    void run(ClaimedJudgeTask claimedTask);
 }

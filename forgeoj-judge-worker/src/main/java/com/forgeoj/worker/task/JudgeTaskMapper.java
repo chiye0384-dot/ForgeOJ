@@ -100,6 +100,21 @@ interface JudgeTaskMapper {
     int markAttemptLeaseExpired(
             @Param("taskId") String taskId, @Param("leaseToken") String leaseToken);
 
+    @Update(
+            """
+            UPDATE judge_task_attempt
+            SET attempt_status = 'DEAD_LETTERED',
+                heartbeat_at = CURRENT_TIMESTAMP(6),
+                finished_at = CURRENT_TIMESTAMP(6),
+                failure_code = 'ATTEMPT_LIMIT_EXHAUSTED',
+                failure_message = 'Worker lease expired at the configured attempt limit'
+            WHERE judge_task_id = #{taskId}
+              AND lease_token = #{leaseToken}
+              AND attempt_status = 'RUNNING'
+            """)
+    int markExpiredAttemptDeadLettered(
+            @Param("taskId") String taskId, @Param("leaseToken") String leaseToken);
+
     @Insert(
             """
             INSERT INTO judge_task_attempt (
@@ -123,6 +138,118 @@ interface JudgeTaskMapper {
     @Update(
             """
             UPDATE judge_task
+            SET task_status = 'RETRYING',
+                status_version = status_version + 1,
+                next_attempt_at = TIMESTAMPADD(
+                    SECOND, #{delaySeconds}, CURRENT_TIMESTAMP(6)
+                ),
+                lease_owner = NULL,
+                lease_token = NULL,
+                lease_expires_at = NULL,
+                last_failure_code = #{failureCode},
+                last_failure_message = #{failureMessage},
+                finished_at = NULL
+            WHERE id = #{taskId}
+              AND submission_id = #{submissionId}
+              AND task_status = 'RUNNING'
+              AND status_version = #{statusVersion}
+              AND lease_token = #{leaseToken}
+              AND attempt_count < max_attempts
+            """)
+    int markTaskRetrying(
+            @Param("taskId") String taskId,
+            @Param("submissionId") String submissionId,
+            @Param("statusVersion") long statusVersion,
+            @Param("leaseToken") String leaseToken,
+            @Param("delaySeconds") long delaySeconds,
+            @Param("failureCode") String failureCode,
+            @Param("failureMessage") String failureMessage);
+
+    @Update(
+            """
+            UPDATE submission
+            SET processing_status = 'RETRYING',
+                verdict = NULL,
+                diagnostic_message = NULL,
+                status_version = status_version + 1,
+                finished_at = NULL
+            WHERE id = #{submissionId}
+              AND processing_status = 'RUNNING'
+              AND status_version = #{statusVersion}
+            """)
+    int markSubmissionRetrying(
+            @Param("submissionId") String submissionId,
+            @Param("statusVersion") long statusVersion);
+
+    @Insert(
+            """
+            INSERT INTO outbox_event (
+                id, aggregate_type, aggregate_id, event_type, contract_version,
+                sequence_no, payload, next_attempt_at
+            ) VALUES (
+                #{eventId}, 'JUDGE_TASK', #{taskId}, #{eventType}, 1,
+                #{sequenceNo},
+                JSON_OBJECT(
+                    'taskId', #{taskId},
+                    'submissionId', #{submissionId},
+                    'taskType', 'JUDGE_SUBMISSION',
+                    'contractVersion', 1
+                ),
+                TIMESTAMPADD(SECOND, #{delaySeconds}, CURRENT_TIMESTAMP(6))
+            )
+            """)
+    int insertOutboxEvent(
+            @Param("eventId") String eventId,
+            @Param("taskId") String taskId,
+            @Param("submissionId") String submissionId,
+            @Param("eventType") String eventType,
+            @Param("sequenceNo") int sequenceNo,
+            @Param("delaySeconds") long delaySeconds);
+
+    @Update(
+            """
+            UPDATE judge_task
+            SET task_status = 'DEAD_LETTER',
+                status_version = status_version + 1,
+                next_attempt_at = NULL,
+                lease_owner = NULL,
+                lease_token = NULL,
+                lease_expires_at = NULL,
+                last_failure_code = 'ATTEMPT_LIMIT_EXHAUSTED',
+                last_failure_message = 'Judge task exhausted its configured attempts',
+                finished_at = CURRENT_TIMESTAMP(6)
+            WHERE id = #{taskId}
+              AND submission_id = #{submissionId}
+              AND task_status = #{expectedStatus}
+              AND status_version = #{statusVersion}
+              AND attempt_count >= max_attempts
+            """)
+    int markTaskExhausted(
+            @Param("taskId") String taskId,
+            @Param("submissionId") String submissionId,
+            @Param("expectedStatus") String expectedStatus,
+            @Param("statusVersion") long statusVersion);
+
+    @Update(
+            """
+            UPDATE submission
+            SET processing_status = 'SYSTEM_ERROR',
+                verdict = NULL,
+                diagnostic_message = 'Judging infrastructure failed',
+                status_version = status_version + 1,
+                finished_at = CURRENT_TIMESTAMP(6)
+            WHERE id = #{submissionId}
+              AND processing_status = #{expectedStatus}
+              AND status_version = #{statusVersion}
+            """)
+    int markSubmissionSystemError(
+            @Param("submissionId") String submissionId,
+            @Param("expectedStatus") String expectedStatus,
+            @Param("statusVersion") long statusVersion);
+
+    @Update(
+            """
+            UPDATE judge_task
             SET task_status = #{terminalStatus},
                 status_version = status_version + 1,
                 next_attempt_at = NULL,
@@ -142,6 +269,32 @@ interface JudgeTaskMapper {
             @Param("statusVersion") long statusVersion,
             @Param("leaseToken") String leaseToken,
             @Param("terminalStatus") String terminalStatus);
+
+    @Update(
+            """
+            UPDATE judge_task
+            SET task_status = 'DEAD_LETTER',
+                status_version = status_version + 1,
+                next_attempt_at = NULL,
+                lease_owner = NULL,
+                lease_token = NULL,
+                lease_expires_at = NULL,
+                last_failure_code = #{failureCode},
+                last_failure_message = #{failureMessage},
+                finished_at = CURRENT_TIMESTAMP(6)
+            WHERE id = #{taskId}
+              AND submission_id = #{submissionId}
+              AND task_status = 'RUNNING'
+              AND status_version = #{statusVersion}
+              AND lease_token = #{leaseToken}
+            """)
+    int markTaskDeadLetter(
+            @Param("taskId") String taskId,
+            @Param("submissionId") String submissionId,
+            @Param("statusVersion") long statusVersion,
+            @Param("leaseToken") String leaseToken,
+            @Param("failureCode") String failureCode,
+            @Param("failureMessage") String failureMessage);
 
     @Update(
             """

@@ -69,13 +69,24 @@ class M0JudgeTaskRunnerTests {
     }
 
     @Test
-    void recordsSystemErrorWhenSnapshotOrSandboxFails() {
+    void deadLettersAnInvalidSnapshotWithoutRetrying() {
         when(loader.load(MESSAGE)).thenThrow(new JudgeTaskSnapshotException("tampered"));
 
         runner.run(CLAIM);
 
-        verify(completion).failSystem(CLAIM);
+        verify(completion).recordUnrecoverablePlatformFailure(CLAIM);
         verifyNoInteractions(sandbox);
+    }
+
+    @Test
+    void schedulesRetryWhenSandboxPlatformFails() {
+        JudgeTaskSnapshot snapshot = snapshot();
+        when(loader.load(MESSAGE)).thenReturn(snapshot);
+        when(sandbox.execute(snapshot)).thenThrow(new IllegalStateException("docker unavailable"));
+
+        runner.run(CLAIM);
+
+        verify(completion).recordPlatformFailure(CLAIM);
     }
 
     @Test

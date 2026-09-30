@@ -12,13 +12,15 @@ interface OutboxMapper {
 
     @Select(
             """
-            SELECT id, CAST(payload AS CHAR) AS payload
+            SELECT id, event_type AS eventType, CAST(payload AS CHAR) AS payload
             FROM outbox_event
             WHERE published_at IS NULL
+              AND failed_at IS NULL
+              AND next_attempt_at <= CURRENT_TIMESTAMP(6)
               AND aggregate_type = 'JUDGE_TASK'
-              AND event_type = 'JUDGE_TASK_QUEUED'
+              AND event_type IN ('JUDGE_TASK_QUEUED', 'JUDGE_TASK_DEAD_LETTERED')
               AND contract_version = 1
-            ORDER BY created_at, id
+            ORDER BY next_attempt_at, created_at, id
             LIMIT #{limit}
             """)
     List<OutboxEventRow> findPending(@Param("limit") int limit);

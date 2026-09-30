@@ -137,6 +137,24 @@ class OutboxPublisherIntegrationTests {
                 .doesNotContain("OUTBOX_SOURCE_SENTINEL")
                 .doesNotContain("37881a92ca996970e09475fdb29435b9bc13ae1501fa118e5fd9afd47e561adf");
 
+        String taskId = taskId(jdbc, delivered.submissionId());
+        insertOutbox(jdbc, taskId, delivered.submissionId(), "JUDGE_TASK_QUEUED", 1, 86400);
+        insertOutbox(
+                jdbc,
+                taskId,
+                delivered.submissionId(),
+                "JUDGE_TASK_DEAD_LETTERED",
+                1,
+                0);
+
+        assertThat(outboxPublisher.publishPending()).isEqualTo(1);
+        assertThat(rabbitTemplate.receive(RabbitTopology.QUEUE, 200)).isNull();
+        Message deadLetter =
+                rabbitTemplate.receive(RabbitTopology.DEAD_LETTER_QUEUE, 5000);
+        assertThat(deadLetter).isNotNull();
+        assertThat(new String(deadLetter.getBody(), StandardCharsets.UTF_8))
+                .contains(delivered.submissionId());
+
         SubmissionResult unroutable = createSubmission();
         assertThat(rabbitAdmin.deleteQueue(RabbitTopology.QUEUE)).isTrue();
 
@@ -163,5 +181,40 @@ class OutboxPublisherIntegrationTests {
                 """,
                 Object.class,
                 submissionId);
+    }
+
+    private String taskId(JdbcTemplate jdbc, String submissionId) {
+        return jdbc.queryForObject(
+                "SELECT id FROM judge_task WHERE submission_id = ?",
+                String.class,
+                submissionId);
+    }
+
+    private void insertOutbox(
+            JdbcTemplate jdbc,
+            String taskId,
+            String submissionId,
+            String eventType,
+            int sequenceNo,
+            long delaySeconds) {
+        jdbc.update(
+                """
+                INSERT INTO outbox_event (
+                    id, aggregate_type, aggregate_id, event_type, contract_version,
+                    sequence_no, payload, next_attempt_at
+                ) VALUES (?, 'JUDGE_TASK', ?, ?, 1, ?, JSON_OBJECT(
+                    'taskId', ?,
+                    'submissionId', ?,
+                    'taskType', 'JUDGE_SUBMISSION',
+                    'contractVersion', 1
+                ), TIMESTAMPADD(SECOND, ?, CURRENT_TIMESTAMP(6)))
+                """,
+                UUID.randomUUID().toString(),
+                taskId,
+                eventType,
+                sequenceNo,
+                taskId,
+                submissionId,
+                delaySeconds);
     }
 }

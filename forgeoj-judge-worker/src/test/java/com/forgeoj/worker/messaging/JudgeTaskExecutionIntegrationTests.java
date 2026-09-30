@@ -113,6 +113,7 @@ class JudgeTaskExecutionIntegrationTests {
     void resetState() {
         JdbcTemplate migrator = migrator();
         migrator.update("DELETE FROM judge_task_attempt");
+        migrator.update("DELETE FROM outbox_event");
         migrator.update("DELETE FROM judge_task");
         migrator.update("DELETE FROM submission");
         rabbitAdmin.purgeQueue(RabbitTopology.QUEUE, false);
@@ -139,18 +140,20 @@ class JudgeTaskExecutionIntegrationTests {
     }
 
     @Test
-    void convertsSandboxPlatformFailureToDurableSystemErrorBeforeAck() throws Exception {
+    void deadLettersInvalidTrustedSandboxConfigurationBeforeAck() throws Exception {
         TaskIds ids = insertQueuedTask(SIMPLE_SOURCE, "unsupported-policy", 65536);
 
         publish(ids);
-        await(() -> "SYSTEM_ERROR".equals(state(ids).get("task_status")), Duration.ofSeconds(8));
+        await(() -> "DEAD_LETTER".equals(state(ids).get("task_status")), Duration.ofSeconds(8));
         awaitQueueDrained(Duration.ofSeconds(8));
 
         java.util.Map<String, Object> state = state(ids);
         assertThat(state)
-                .containsEntry("task_status", "SYSTEM_ERROR")
+                .containsEntry("task_status", "DEAD_LETTER")
                 .containsEntry("processing_status", "SYSTEM_ERROR")
-                .containsEntry("diagnostic_message", "Judging infrastructure failed");
+                .containsEntry("diagnostic_message", "Judging infrastructure failed")
+                .containsEntry("attempt_status", "DEAD_LETTERED");
+        assertThat(outboxEventType(ids)).isEqualTo("JUDGE_TASK_DEAD_LETTERED");
         assertThat(state.get("verdict")).isNull();
         assertThat(state.toString()).doesNotContain("unsupported-policy");
     }
@@ -218,13 +221,31 @@ class JudgeTaskExecutionIntegrationTests {
                                s.processing_status,
                                s.verdict,
                                s.status_version AS submission_version,
-                               s.diagnostic_message
+                               s.diagnostic_message,
+                               (SELECT a.attempt_status
+                                FROM judge_task_attempt a
+                                WHERE a.judge_task_id = jt.id
+                                ORDER BY a.attempt_no DESC LIMIT 1) AS attempt_status
                         FROM judge_task jt
                         JOIN submission s ON s.id = jt.submission_id
                         WHERE jt.id = ? AND s.id = ?
                         """,
                         ids.taskId(),
                         ids.submissionId());
+    }
+
+    private String outboxEventType(TaskIds ids) {
+        return migrator()
+                .queryForObject(
+                        """
+                        SELECT event_type
+                        FROM outbox_event
+                        WHERE aggregate_id = ?
+                        ORDER BY created_at DESC
+                        LIMIT 1
+                        """,
+                        String.class,
+                        ids.taskId());
     }
 
     private static synchronized void initializeSchema() throws Exception {

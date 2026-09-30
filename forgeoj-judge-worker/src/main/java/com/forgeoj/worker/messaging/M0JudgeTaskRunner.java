@@ -1,8 +1,10 @@
 package com.forgeoj.worker.messaging;
 
 import com.forgeoj.worker.sandbox.SandboxExecutionResult;
+import com.forgeoj.worker.sandbox.InvalidSandboxConfigurationException;
 import com.forgeoj.worker.sandbox.SandboxRuntime;
 import com.forgeoj.worker.snapshot.JudgeTaskSnapshot;
+import com.forgeoj.worker.snapshot.JudgeTaskSnapshotException;
 import com.forgeoj.worker.snapshot.JudgeTaskSnapshotLoader;
 import com.forgeoj.worker.task.JudgeTaskCompletionService;
 import com.forgeoj.worker.task.ClaimedJudgeTask;
@@ -36,9 +38,18 @@ final class M0JudgeTaskRunner implements JudgeTaskRunner {
         try {
             JudgeTaskSnapshot snapshot = snapshotLoader.load(message);
             result = sandboxRuntime.execute(snapshot);
+        } catch (JudgeTaskSnapshotException | InvalidSandboxConfigurationException
+                unrecoverableFailure) {
+            try {
+                completionService.recordUnrecoverablePlatformFailure(claimedTask);
+                return;
+            } catch (RuntimeException writeFailure) {
+                writeFailure.addSuppressed(unrecoverableFailure);
+                throw writeFailure;
+            }
         } catch (RuntimeException platformFailure) {
             try {
-                completionService.failSystem(claimedTask);
+                completionService.recordPlatformFailure(claimedTask);
                 return;
             } catch (RuntimeException writeFailure) {
                 writeFailure.addSuppressed(platformFailure);

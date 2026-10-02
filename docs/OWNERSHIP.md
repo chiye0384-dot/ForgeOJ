@@ -1,7 +1,7 @@
 # ForgeOJ 代码归属与复用边界
 
 > 更新日期：2026-10-02
-> 当前范围：M-1 与 M0 均已验证；M1 为 `IN_PROGRESS`，已有 Windows、固定 Linux/amd64 自动化/子 JVM 故障和独立完整纵向链路证据，尚缺运维闭环和最终门禁；后续里程碑未实现。下文日期标记保留各历史阶段的证据边界。
+> 当前范围：M-1、M0 与 M1 均为 `VERIFIED`；M1 15 门禁、固定 Linux 后端 160/前端 8 项和相同运行时代码的独立 E2E 证据闭环，见 `M1-GATE-AUDIT.md`。独立管理认证与人工 DLQ 处置属于 M4，并未由本轮实现。下文日期标记保留各历史阶段的证据边界。
 
 ## 1. 生成与第三方部分
 
@@ -37,7 +37,7 @@ M0 当前自行设计和实现的边界包括：预置账号的登录会话与�
 
 `db/devdata/R__seed_m0_development_data.sql` 中的“两数之和”题面、样例和隐藏测试数据是为 ForgeOJ M0 编写的最小原创开发数据，不来自第三方题库。它只在 `dev` profile 或显式集成测试位置中加载，不属于默认生产 migration。Spring Security、BCrypt、MyBatis 和 Flyway 仍是第三方框架能力；ForgeOJ 自有部分是配置、数据模型、Mapper/DTO、接口边界和相应测试，不能把框架本身表述为自行实现。
 
-M1 自有实现目前包括 V3/V4 attempt/lease/retry/quota 模型、租约栅栏、心跳与恢复扫描、有限重试/死信、Outbox 退避、用户配额和所有者排队取消，以及 D-039 的同源所有者状态通知与前端版本/轮询恢复。通知的 WebSocket 传输由 Spring Framework/Tomcat 提供，不是 ForgeOJ 自行实现协议栈。源码入口、命令和本地验证边界记录在 M1 设计、配额取消、通知与可观测性验证文档；M1 固定 Linux、完整崩溃矩阵与运维闭环仍待验收。
+M1 自有实现目前包括 V3/V4 attempt/lease/retry/quota 模型、租约栅栏、心跳与恢复扫描、有限重试/死信、Outbox 退避、用户配额和所有者排队取消，以及 D-039 的同源所有者状态通知与前端版本/轮询恢复。通知的 WebSocket 传输由 Spring Framework/Tomcat 提供，不是 ForgeOJ 自行实现协议栈。源码入口、命令和验证边界记录在 M1 设计及分阶段验证文档；固定 Linux 构建/子 JVM 故障/真实链路已有证据，最终门禁单独审计，M4 运维能力不算作本轮自有实现。
 
 关联日志的自有部分是内部 requestId 生命周期、业务字段白名单、提交后事件、固定故障码与回归测试；JSON 编码和日志传输仍由既有 Spring Boot/SLF4J/Logback 提供。未引入日志采集平台或修改四字段消息，局部证据见 `M1-OBSERVABILITY-VALIDATION.md`，不等于固定 Linux 或持久审计验收。
 
@@ -50,6 +50,8 @@ M1 自有实现目前包括 V3/V4 attempt/lease/retry/quota 模型、租约栅�
 同日新增的 `tools/validation/` 为 ForgeOJ 原创验证编排：固定镜像、只读源码复制、排除缓存/本地配置、输入哈希、报告收集与本轮精确资源清理。Maven/npm/JDK/Docker/Testcontainers 仍为第三方工具；复用已记录的 M0 镜像，不分发 Docker 二进制、不引入外部脚本或新业务依赖。实现提交 `ab61c9a` 的固定 Linux 后端 158 项、前端 8 项证据见 `M1-FIXED-LINUX-VALIDATION.md`，不声称完成 M5 Linux 主机验收。
 
 随后独立 E2E 的 Compose/PowerShell 编排、Node 内置库的受限 HTTP/WebSocket 探针、故障代理、原创测试程序和脱敏事实审计为 ForgeOJ 自有验证实现；RFC 6455 只用作握手/帧格式参考，不复制协议代码，不把 Spring/Tomcat 的生产 WebSocket 能力算作自建协议栈。真实浏览器操作是人工验收，截图/记录不是自动 UI 测试。MySQL 初始化脚本子 shell 修复为本项目部署适配；镜像 entrypoint、数据库、MQ、浏览器和 Docker 隔离仍是第三方平台能力。没有新依赖或发布物，证据见 `M1-E2E-VALIDATION.md`。
+
+最终审计补齐的同一 Outbox event 恢复成功、真实重新领取后拒绝旧 owner 全部写路径，为 ForgeOJ 在既有测试中的原创回归。只操作一次性 fixture，未复制外部测试、改业务代码或增加依赖/权限；记录偏差的 M1/M4 范围纠正以既有 Roadmap 为依据，不把未实现的管理员闭环计入成果。
 
 ## 4. 明确排除
 

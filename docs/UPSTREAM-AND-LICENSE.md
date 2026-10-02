@@ -165,6 +165,8 @@
 
 2026-10-02 的原创 `tools/validation/` 仅编排已登记的固定 Maven/Node/Temurin/Docker CLI/MySQL/RabbitMQ 镜像，digest 与复现证据见 `M1-FIXED-LINUX-VALIDATION.md` 和 `M0-E2E-VALIDATION.md`。Docker CLI 二进制只在一次性测试镜像内从官方固定镜像复制，不存入仓库或新增生产发布物；未复制外部脚本，未新增 Maven/npm 依赖或变更根许可证。
 
+同日独立重放工具沿用这些固定镜像，仅使用既有 Node 内置模块编写原创有界 HTTP/WebSocket 探针。协议格式参考 [RFC 6455](https://www.rfc-editor.org/rfc/rfc6455.html)，不复制 RFC 实现代码；第三方生产 WebSocket 仍由既有 Spring/Tomcat 提供。原创故障代理、SQL fixture、事实/日志审计及 MySQL 初始化子 shell 修复均不新增依赖、grants 或镜像分发；细节见 `M1-E2E-VALIDATION.md`。
+
 ~~~markdown
 ### U-XXX：组件或脚手架名称
 

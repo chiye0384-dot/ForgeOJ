@@ -1,7 +1,7 @@
 # ForgeOJ 代码归属与复用边界
 
 > 更新日期：2026-10-02
-> 当前范围：M-1 与 M0 均已验证；M1 为 `IN_PROGRESS`，已有 Windows 与固定 Linux/amd64 自动化/子 JVM 故障证据，但尚缺 M1 独立完整纵向链路、运维和最终门禁；后续里程碑未实现。
+> 当前范围：M-1 与 M0 均已验证；M1 为 `IN_PROGRESS`，已有 Windows、固定 Linux/amd64 自动化/子 JVM 故障和独立完整纵向链路证据，尚缺运维闭环和最终门禁；后续里程碑未实现。下文日期标记保留各历史阶段的证据边界。
 
 ## 1. 生成与第三方部分
 
@@ -48,6 +48,8 @@ M1 自有实现目前包括 V3/V4 attempt/lease/retry/quota 模型、租约栅�
 2026-10-02 资源结果的自有部分是可信 cgroup 事件读取/校验与逐例增量分类、平台故障优先级、八类终态映射、V5 列宽修复和真实 MQ/查询/升级保留测试。内核 oom/PID 计数由 Linux 提供，不是自建内存或进程控制器；未增加第三方依赖。边界见 `M1-RESOURCE-VERDICT-VALIDATION.md`。
 
 同日新增的 `tools/validation/` 为 ForgeOJ 原创验证编排：固定镜像、只读源码复制、排除缓存/本地配置、输入哈希、报告收集与本轮精确资源清理。Maven/npm/JDK/Docker/Testcontainers 仍为第三方工具；复用已记录的 M0 镜像，不分发 Docker 二进制、不引入外部脚本或新业务依赖。实现提交 `ab61c9a` 的固定 Linux 后端 158 项、前端 8 项证据见 `M1-FIXED-LINUX-VALIDATION.md`，不声称完成 M5 Linux 主机验收。
+
+随后独立 E2E 的 Compose/PowerShell 编排、Node 内置库的受限 HTTP/WebSocket 探针、故障代理、原创测试程序和脱敏事实审计为 ForgeOJ 自有验证实现；RFC 6455 只用作握手/帧格式参考，不复制协议代码，不把 Spring/Tomcat 的生产 WebSocket 能力算作自建协议栈。真实浏览器操作是人工验收，截图/记录不是自动 UI 测试。MySQL 初始化脚本子 shell 修复为本项目部署适配；镜像 entrypoint、数据库、MQ、浏览器和 Docker 隔离仍是第三方平台能力。没有新依赖或发布物，证据见 `M1-E2E-VALIDATION.md`。
 
 ## 4. 明确排除
 

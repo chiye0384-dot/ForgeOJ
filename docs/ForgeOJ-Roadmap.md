@@ -125,6 +125,8 @@ M0 的登录只用于打通受保护提交链路，可使用预置账号和最�
 
 最新更新（2026-10-02）：累计通知/日志/故障/安全/资源结果已提交为 `ab61c9a`，固定 Linux/amd64 全新缓存通过 API 48 + Worker 110、前端 8 项与全部检查，零失败/错误/跳过，无验证容器残留；复现脚本与完整证据见 [Linux 验证](M1-FIXED-LINUX-VALIDATION.md)。本轮按用户授权提交/推送功能分支，不创建完成 PR 或发布。下文未提交表述为各阶段当时状态；完整独立 Linux 纵向链路、OPS_ADMIN 运维与最终门禁仍缺，M1 状态不提升。
 
+后续独立 Linux 纵向链路已通过：八 verdict、owner 通知/API 负向握手、logout/queued cancel、真实浏览器正常及断线轮询、日志/Outbox/权限/队列和精确清理均有证据；见 [M1 E2E](M1-E2E-VALIDATION.md)。复用 hash-verified Linux JAR，未再运行全量测试。下一步仅剩既定 OPS_ADMIN/DLQ 运维闭环与最终 15 门禁审计；L-029～L-032 不因本轮关闭，M1 仍 IN_PROGRESS。
+
 2026-10-01 已在现有 M1 分支工作树实现 D-039 的所有者同源 WebSocket、三字段通知、单调版本、登出/终态清理与前端轮询/有界重连。通知阶段完整回归 API **38**、Worker **57** 全过且零跳过；前端 **8** 项测试及全部校验/构建通过，见 [通知验证记录](M1-NOTIFICATION-VALIDATION.md)。这是局部 Windows/Testcontainers 与模拟前端证据，不是浏览器/独立 Worker 的固定 Linux M1 重放。
 
 同日追加关联脱敏 JSON 日志：内部 requestId、提交/任务/attempt 白名单、提交后事件、固定错误码与上下文清理，不改变数据库或 MQ 四字段契约。18:33 完整回归 API **46** + Worker **67**、前端 **8** 项全过，零失败/错误/跳过，见 [可观测性验证记录](M1-OBSERVABILITY-VALIDATION.md)。通知及日志均尚未提交推送；日志不是持久审计。更宽安全与崩溃/ACK 丢失矩阵、运维闭环、固定 Linux 验收和最终门禁仍未完成，不升级为 `VERIFIED`。

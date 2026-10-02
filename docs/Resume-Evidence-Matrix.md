@@ -117,6 +117,8 @@
 
 随后实现保存为 `ab61c9a`，同一源码在固定 Linux/amd64、只读挂载、全新缓存中通过 API 48 + Worker 110、前端 8 项和全部检查（零失败/错误/跳过）。Linux 五项真实子 Worker 故障/凭据检查、16 项安全程序、HTTP/WebSocket 与实际 MQ 资源结果均通过，详见 [Linux 记录](M1-FIXED-LINUX-VALIDATION.md)。仍缺本轮 Linux 产物的独立完整纵向链路与 OPS_ADMIN/最终门禁，且没有 Release/tag/个人解释验收，不把 E-01/E-02 改为 VERIFIED 或 RESUME_READY。
 
+后续独立 Linux 重放新增八 verdict、真实浏览器 normal/fallback、owner/Origin/logout/取消、日志链路、Outbox/队列和 API 权限审计证据，见 [M1 E2E](M1-E2E-VALIDATION.md)。11 个提交中 10 FINISHED/1 CANCELLED，11 Outbox 已发布、四队列空、精确资源清理通过。复用已核验 JAR，不新增全量测试次数或性能数字；OPS_ADMIN/最终门禁、发布与个人解释验收仍缺，E-01/E-02 保持原状态。
+
 ### E-03：班级与作业权限模型
 
 必须证明：

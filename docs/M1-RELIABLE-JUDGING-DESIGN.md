@@ -117,7 +117,7 @@ Worker 在短事务中锁定 JudgeTask 与 Submission，只允许以下任务被
 
 启动及周期清理仅删除本数据库精确匹配的已关闭 attempt（`SUCCEEDED/RETRYABLE_FAILURE/LEASE_EXPIRED/DEAD_LETTERED` 且 finished_at 非空）。状态关闭是单调事实：不能仅因租约时间过期删除仍为 RUNNING 的容器，必须先由领取/耗尽事务关闭并栅栏旧 attempt。其他数据库、缺失记录、legacy 无 attempt 标签、非法标签或名称均保留；Docker/数据库异常不授权删除。默认清理间隔 `forgeoj.worker.sandbox.cleanup-delay-ms=5000`，周期清理与 sandbox/recovery 开关同时开启；数据库/daemon 恢复后再次扫描，失败只输出固定脱敏码。
 
-恢复先依靠独立 attempt 名称继续判题，关闭的旧沙箱由扫描器最终回收，不保证原进程被杀死瞬间即删除。未知或旧格式资源需要运维按完整 ID、所属任务和活跃进程核对后处理，不使用全局 prune，见 L-031。API 不获得 Docker 权限，原非 root、禁网、只读、资源与输出限制不变。Windows 子 JVM 故障证据见 `M1-FAULT-RECOVERY-VALIDATION.md`；固定 Linux 验收仍待完成。
+恢复先依靠独立 attempt 名称继续判题，关闭的旧沙箱由扫描器最终回收，不保证原进程被杀死瞬间即删除。未知或旧格式资源需要运维按完整 ID、所属任务和活跃进程核对后处理，不使用全局 prune，见 L-031。API 不获得 Docker 权限，原非 root、禁网、只读、资源与输出限制不变。Windows 子 JVM 故障证据见 `M1-FAULT-RECOVERY-VALIDATION.md`；固定 Linux 子 JVM 复验与独立真实链路分别见 `M1-FIXED-LINUX-VALIDATION.md`、`M1-E2E-VALIDATION.md`，OPS_ADMIN 与最终门禁审计仍待完成。
 
 ### 5.2 逐用例资源隔离加固
 

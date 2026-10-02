@@ -1,5 +1,7 @@
 # M1 关联脱敏日志：局部验证记录
 
+> 后续状态：累计实现已提交为 `ab61c9a`，2026-10-02 固定 Linux 复验后端 158 项、前端 8 项通过；见 [Linux 记录](M1-FIXED-LINUX-VALIDATION.md)。下文未提交/未验收表述为日志阶段当时状态。
+
 > 日期：2026-10-01（Asia/Shanghai）
 > 分支：`feat/m1-reliable-judging`；HEAD：`ceee82c4904fd8a64be1eda9558ed96482cfdc81`
 > 本步与此前通知修改仍在本地工作树，尚未提交或推送。M1 整体仍为 `IN_PROGRESS`，不是固定 Linux 验收、持久审计、PR 合并或 Release。

@@ -1,7 +1,7 @@
 # ForgeOJ 代码归属与复用边界
 
-> 更新日期：2026-09-30
-> 当前范围：M-1 与 M0 均已验证；M0 已通过固定 Linux/amd64 全量构建、六 verdict 真实进程链路和最终 20 项门禁。M1 为 `IN_PROGRESS`，部分能力有 Windows/Testcontainers 局部证据；后续里程碑未实现。
+> 更新日期：2026-10-02
+> 当前范围：M-1 与 M0 均已验证；M1 为 `IN_PROGRESS`，已有 Windows 与固定 Linux/amd64 自动化/子 JVM 故障证据，但尚缺 M1 独立完整纵向链路、运维和最终门禁；后续里程碑未实现。
 
 ## 1. 生成与第三方部分
 
@@ -46,6 +46,8 @@ M1 自有实现目前包括 V3/V4 attempt/lease/retry/quota 模型、租约栅�
 2026-10-01 沙箱安全阶段新增的有界恶意程序、真实 Worker 凭据探测和逐例进程/临时文件清理策略为 ForgeOJ 自有测试及适配实现。init 回收、namespace、cgroup、seccomp 和 capabilities 是 Docker/Linux 能力，chmod/find/pkill 为已有运行环境工具，不声称自行实现隔离内核。没有新增直接依赖、复制外部代码或更改镜像 digest；见 `M1-SANDBOX-SECURITY-VALIDATION.md`。
 
 2026-10-02 资源结果的自有部分是可信 cgroup 事件读取/校验与逐例增量分类、平台故障优先级、八类终态映射、V5 列宽修复和真实 MQ/查询/升级保留测试。内核 oom/PID 计数由 Linux 提供，不是自建内存或进程控制器；未增加第三方依赖。边界见 `M1-RESOURCE-VERDICT-VALIDATION.md`。
+
+同日新增的 `tools/validation/` 为 ForgeOJ 原创验证编排：固定镜像、只读源码复制、排除缓存/本地配置、输入哈希、报告收集与本轮精确资源清理。Maven/npm/JDK/Docker/Testcontainers 仍为第三方工具；复用已记录的 M0 镜像，不分发 Docker 二进制、不引入外部脚本或新业务依赖。实现提交 `ab61c9a` 的固定 Linux 后端 158 项、前端 8 项证据见 `M1-FIXED-LINUX-VALIDATION.md`，不声称完成 M5 Linux 主机验收。
 
 ## 4. 明确排除
 

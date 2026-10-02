@@ -1,5 +1,7 @@
 # M1 沙箱恶意代码验证与清理修复
 
+> 后续状态：累计实现已提交为 `ab61c9a`，资源分类已补齐可信 cgroup 范围且固定 Linux 16 项安全程序通过；见 [资源结果](M1-RESOURCE-VERDICT-VALIDATION.md)与[Linux 记录](M1-FIXED-LINUX-VALIDATION.md)。下文为安全阶段初次验证，保留当时缺口。
+
 > 测试日期：2026-10-01；中断后的证据核验与文档收尾：2026-10-02。基于 `feat/m1-reliable-judging`、HEAD `ceee82c` 的未提交工作树。范围为 Windows Worker + Linux Docker Desktop，不是固定 Linux M1 最终验收；M1 仍为 `IN_PROGRESS`。
 
 ## 1. 范围与环境

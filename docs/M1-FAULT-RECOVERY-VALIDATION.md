@@ -1,5 +1,7 @@
 # M1 真实 Worker 进程故障与沙箱恢复验证
 
+> 后续状态：累计实现提交 `ab61c9a` 的五项真实子 Worker 测试已在固定 Linux 中通过；见 [Linux 记录](M1-FIXED-LINUX-VALIDATION.md)。下文保存初次 Windows 验证和当时剩余工作，不把局部复验写成 M1 整体完成。
+
 > 日期：2026-10-01。范围：本地 Windows 子 JVM + Linux Docker Desktop + 隔离 MySQL/RabbitMQ。M1 仍为 `IN_PROGRESS`，不是固定 Linux M1 验收或发布。代码基于 `ceee82c` 工作树；通知、日志及本阶段改动未提交/推送。
 
 ## 1. 验证方法与边界

@@ -1,5 +1,7 @@
 # M1 可信资源结果与安全 verdict 存储验证
 
+> 后续状态：累计实现已提交为 `ab61c9a`，同一源码的固定 Linux 后端 158 项、前端 8 项通过；见 [Linux 记录](M1-FIXED-LINUX-VALIDATION.md)。下文保留资源阶段初次 Windows 结果与当时 Git 状态；L-032 分类限制未改变。
+
 > 日期：2026-10-02，Asia/Shanghai。范围：Windows API/Worker 与 Linux Docker Desktop/cgroup v2，隔离 MySQL/RabbitMQ。分支 `feat/m1-reliable-judging`、基于 HEAD `ceee82c` 的未提交工作树。M1 保持 `IN_PROGRESS`。
 
 ## 1. 问题与最终行为

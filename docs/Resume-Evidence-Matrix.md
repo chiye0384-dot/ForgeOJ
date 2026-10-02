@@ -115,6 +115,8 @@
 
 2026-10-02 新增内核计数分类、V5 列宽修复及升级保留、实际 MQ 两类结果/重复投递和所有者字段隔离证据。根回归 API 48 + Worker 110，158 项零失败/错误/跳过，见 [资源结果记录](M1-RESOURCE-VERDICT-VALIDATION.md)。只承诺可证实的局部 cgroup OOM 与 PID 上限，纯 JVM OOM/无审计的拒绝操作按 L-032 保留限制；前端未改未重跑。固定 Linux M1、OPS_ADMIN、发布与 M5 仍待验收，E-01/E-02 状态不提升。
 
+随后实现保存为 `ab61c9a`，同一源码在固定 Linux/amd64、只读挂载、全新缓存中通过 API 48 + Worker 110、前端 8 项和全部检查（零失败/错误/跳过）。Linux 五项真实子 Worker 故障/凭据检查、16 项安全程序、HTTP/WebSocket 与实际 MQ 资源结果均通过，详见 [Linux 记录](M1-FIXED-LINUX-VALIDATION.md)。仍缺本轮 Linux 产物的独立完整纵向链路与 OPS_ADMIN/最终门禁，且没有 Release/tag/个人解释验收，不把 E-01/E-02 改为 VERIFIED 或 RESUME_READY。
+
 ### E-03：班级与作业权限模型
 
 必须证明：

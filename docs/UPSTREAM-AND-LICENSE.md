@@ -163,6 +163,8 @@
 
 ## 5. 引入记录模板
 
+2026-10-02 的原创 `tools/validation/` 仅编排已登记的固定 Maven/Node/Temurin/Docker CLI/MySQL/RabbitMQ 镜像，digest 与复现证据见 `M1-FIXED-LINUX-VALIDATION.md` 和 `M0-E2E-VALIDATION.md`。Docker CLI 二进制只在一次性测试镜像内从官方固定镜像复制，不存入仓库或新增生产发布物；未复制外部脚本，未新增 Maven/npm 依赖或变更根许可证。
+
 ~~~markdown
 ### U-XXX：组件或脚手架名称
 

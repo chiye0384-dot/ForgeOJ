@@ -1,0 +1,12 @@
+{
+  "checkedAt": "2026-10-02T08:47:07.257Z",
+  "logs": [
+    "api.log",
+    "worker.log",
+    "frontend.log"
+  ],
+  "activationTokenAbsent": true,
+  "testPasswordAbsent": true,
+  "testEmailAbsent": true,
+  "accessJwtAbsent": true
+}

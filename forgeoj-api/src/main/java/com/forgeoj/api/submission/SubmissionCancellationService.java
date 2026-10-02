@@ -13,13 +13,16 @@ import org.springframework.web.server.ResponseStatusException;
 public class SubmissionCancellationService {
 
     private final SubmissionMapper mapper;
+    private final com.forgeoj.api.auth.AccountService accounts;
 
-    public SubmissionCancellationService(SubmissionMapper mapper) {
+    public SubmissionCancellationService(SubmissionMapper mapper, com.forgeoj.api.auth.AccountService accounts) {
         this.mapper = mapper;
+        this.accounts = accounts;
     }
 
     @Transactional
     public SubmissionResult cancelForOwner(long userId, String submissionId) {
+        accounts.requireCurrentWrite(userId);
         String normalizedId;
         try {
             normalizedId = UUID.fromString(submissionId).toString();

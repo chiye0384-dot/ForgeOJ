@@ -5,6 +5,7 @@ import { createServer, loadConfigFromFile } from 'vite'
 for (const [port, offlineSocket] of [[5173, false], [5174, true]]) {
   const loaded = await loadConfigFromFile({ command: 'serve', mode: 'development' }, 'vite.config.ts')
   const proxy = {
+    '/dev-mail': { target: 'http://api:2526', rewrite: () => '/' },
     ...(offlineSocket ? { '^/api/v1/submissions/[0-9a-f-]+/events$': {
       target: 'http://127.0.0.1:1', ws: true, changeOrigin: false,
       configure(proxy) {

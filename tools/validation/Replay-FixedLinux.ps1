@@ -31,6 +31,7 @@ function Set-ReplayEnvironment {
     $env:FORGEOJ_E2E_PROJECT = $state.Project
     $env:FORGEOJ_E2E_ARTIFACTS = $state.BuildDirectory
     $env:FORGEOJ_E2E_REPORTS = $RunDirectory
+    $env:FORGEOJ_E2E_MAIL_APP_URL = $(if ($state.FrontendUrl) { $state.FrontendUrl } else { 'http://localhost:5173' })
 }
 function Save-State { $state | ConvertTo-Json -Depth 5 | Set-Content -LiteralPath (Join-Path $RunDirectory 'state.json') -Encoding utf8 }
 function Sql-Fixture([string]$Sql) {
@@ -55,7 +56,7 @@ if ($Action -eq 'Start') {
     Save-State
     Write-Host "Replay state: $RunDirectory"
     Compose-Checked @('up','--detach','--wait','--wait-timeout','180','mysql','rabbitmq','bootstrap')
-    # V1-V5 + dev seed via real Flyway, then remove the migrator-credential process.
+    # All versioned migrations + dev seed, then remove the migrator-credential process.
     Compose-Checked @('stop','-t','10','bootstrap')
     Compose-Checked @('rm','--force','bootstrap')
     Sql-Fixture (Get-Content (Join-Path $PSScriptRoot 'replay-fixture.sql') -Raw)
@@ -63,6 +64,10 @@ if ($Action -eq 'Start') {
     $state.FrontendUrl = 'http://' + (Compose-Checked @('port','frontend','5173')).Trim()
     $state.FallbackUrl = 'http://' + (Compose-Checked @('port','frontend','5174')).Trim()
     Save-State
+    # Configure email links with the actual assigned loopback frontend port before user registration.
+    Set-ReplayEnvironment
+    Compose-Checked @('up','--detach','--force-recreate','--wait','--wait-timeout','180','api')
+    Compose-Checked @('up','--detach','--wait','--wait-timeout','60','mailbox')
     $state | ConvertTo-Json
     exit
 }

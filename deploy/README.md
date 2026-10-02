@@ -28,7 +28,7 @@ accounts have separate purposes:
 Flyway creates tables and applies the final table grants. The init script only
 creates accounts and grants the migrator enough rights to run those migrations.
 
-## Run the M0 API slice
+## Run the API and local accounts
 
 Set `SPRING_PROFILES_ACTIVE=dev` plus the database and RabbitMQ passwords from
 your ignored `.env` file in the API process environment. At minimum the API
@@ -43,7 +43,10 @@ repository root:
 The `dev` profile adds the repeatable development seed after the production
 migration. It creates only the M0 user `learner` (password
 `forgeoj-dev-only`) and the original `sum-two-integers` problem. The default
-profile creates neither. The currently available HTTP slice is:
+profile creates neither. V6 preserves this legacy ACTIVE account and its history;
+it may still log in with its username, but must confirm its current password and
+verify a bound email before using password recovery. Old in-process sessions do
+not survive the M2 authentication upgrade. The judging HTTP slice remains:
 
 - `GET /api/v1/auth/session` for authentication state and a CSRF token;
 - `POST /api/v1/auth/login` and `POST /api/v1/auth/logout` using that token;
@@ -53,6 +56,82 @@ profile creates neither. The currently available HTTP slice is:
   judge task, and four-field Outbox event;
 - authenticated `GET /api/v1/submissions/{submissionId}` for the owner-only,
   field-limited status and terminal result.
+
+The M2 account unit is `VERIFIED`; the complete M2 milestone remains
+`IN_PROGRESS`. Its browser entry is `http://localhost:5173/account`. Registration,
+email activation, refresh, current/all-session logout, password change/reset and
+legacy email binding are described in [the account design](../docs/M2-ACCOUNTS-DESIGN.md)
+and D-041. [Final acceptance](../docs/M2-ACCOUNTS-VALIDATION.md) records the fixed
+Linux 211 backend / 13 frontend checks, actual browser registration-to-AC, runtime
+audit and exact cleanup; [sanitized facts](../docs/evidence/m2-accounts/README.md)
+are retained with the source. This verifies local email flows, not production SMTP.
+Use disposable account/email values rather than real personal data while testing.
+
+JWT signing/parsing remains third-party Spring Security JOSE / Nimbus capability;
+versions and Apache-2.0 notices are recorded in [the dependency inventory](../docs/DIRECT-DEPENDENCY-LICENSES.md),
+with ForgeOJ account-flow ownership in [OWNERSHIP](../docs/OWNERSHIP.md).
+
+Start the frontend separately with `npm run dev` inside `frontend`. For the
+default dev mailbox, use the same browser hostname and frontend port consistently:
+
+```powershell
+$env:SPRING_PROFILES_ACTIVE = 'dev'
+$env:FORGEOJ_AUTH_MAIL_APP_URL = 'http://localhost:5173'
+.\mvnw.cmd --batch-mode -pl forgeoj-api spring-boot:run
+```
+
+After registering on the account page, open `http://127.0.0.1:2525/`, select the
+activation email and explicitly confirm on the account page. The link carries a
+token in the fragment; the page removes it from the address before sending a
+confirmation POST. Reset and binding use the same mailbox. Binding confirmation
+also requires the correct signed-in account. If Vite uses another port, set
+`FORGEOJ_AUTH_MAIL_APP_URL` to that actual origin before starting the API.
+
+`LocalAccountMail` is restricted to `dev`/`test`, listens only on `127.0.0.1`,
+stores at most 100 messages in memory and clears them on shutdown. It is a local
+fixture, not SMTP or a production mailbox; do not publish its port. Changing
+`FORGEOJ_AUTH_MAIL_PORT` selects another loopback port. The simulator is not
+reachable from the host when it runs inside a container without an explicit
+development-only access arrangement; the provided infrastructure Compose runs
+neither API nor mailbox.
+
+Account configuration belongs to the API process environment. `docker compose
+--env-file .env` supplies interpolation for infrastructure and does not export
+those variables to a separately launched API:
+
+| API environment variable | Default | Development use / deployment boundary |
+|---|---|---|
+| `FORGEOJ_AUTH_JWT_SECRET` | Empty; startup fails outside dev without a valid key | At least 32 UTF-8 bytes of private random signing material in deployment. Dev may generate an ephemeral key when empty; restarting then invalidates old access JWTs. Never use the public Surefire test key for real data. |
+| `FORGEOJ_AUTH_COOKIE_SECURE` | `true` | Dev selects `false` for local HTTP only. Keep `true` with production HTTPS. |
+| `FORGEOJ_AUTH_MAIL_MODE` | `disabled` | Dev selects `local`; local is accepted only with dev/test. No `smtp` mode or production SMTP adapter is included. |
+| `FORGEOJ_AUTH_MAIL_PORT` | `2525` | Loopback mailbox port; development only. |
+| `FORGEOJ_AUTH_MAIL_APP_URL` | `http://localhost:5173` | Actual frontend base URL used by local email links. |
+| `FORGEOJ_AUTH_LIMITS_MULTIPLIER` | `1` | Retain production defaults. Disposable automated tests may increase this value to avoid fixture interactions; that is not production capacity evidence. |
+
+Before enabling public registration or recovery, supply a configured production
+`AccountMailDelivery` bean (for example a ForgeOJ `@Primary` SMTP adapter) and
+verify its actual delivery, credentials, timeouts and failure handling. Default
+disabled mode or delivery failure is caught after the account transaction commits
+and logs only `account.mail_delivery_failed`; the generic 202 response does not
+promise that mail arrived. The user can request another eligible token after the
+database cooldown. There is no durable mail Outbox or automatic retry guarantee
+in this unit.
+
+The signing key must be generated privately once and retained outside the
+repository; it must not be an example password or a key printed in logs. Each
+protected request validates the short JWT and then MySQL ACTIVE/session state;
+database failure does not permit access. Access and refresh are host-only,
+HttpOnly, SameSite=Strict cookies. All write requests need the exact same-origin
+Origin header and the CSRF header returned by `GET /api/v1/auth/session`; login
+and identity changes rotate CSRF, refresh keeps it. The frontend coordinates
+refreshes through Web Locks and rechecks the session after acquiring the lock;
+without Web Locks, short JWT expiry requires a fresh login instead of rotating a
+shared refresh cookie automatically. Clients must not retry an already consumed
+refresh indefinitely.
+Redis session caching/distributed limits remain M4, and production HTTPS/proxy
+and SMTP acceptance remain separate work. Apply V6 with the migrator before
+running the upgraded API; do not roll back by deleting authentication rows or
+editing V1–V5.
 
 With the `dev` profile, the API polls unpublished M0 Outbox rows in small
 batches, publishes persistent JSON to the durable RabbitMQ topology, and only

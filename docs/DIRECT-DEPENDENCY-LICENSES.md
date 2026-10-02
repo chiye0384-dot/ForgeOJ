@@ -1,7 +1,7 @@
 # ForgeOJ 直接依赖许可证清单
 
-> 核验日期：2026-09-30
-> 范围：已验证的 M-1 工程基线和 M0 最小判题纵向切片，以及当前已声明的直接 Maven/npm 依赖和构建工具；M1 为 `IN_PROGRESS`。此清单不是法律意见，也不替代发布前的完整传递依赖报告。
+> 核验日期：2026-10-02（M2 JOSE/Nimbus 增量；其他项保留既有核验记录）
+> 范围：已验证的 M-1/M0/M1、已 `VERIFIED` 的 M2 普通账号单元及已声明的直接 Maven/npm 依赖和构建工具；完整 M2 为 `IN_PROGRESS`，账号事实见 [验收记录](M2-ACCOUNTS-VALIDATION.md)。此清单不是法律意见，也不替代发布前的完整传递/内嵌依赖报告。
 
 ## 1. 核验方法
 
@@ -16,6 +16,7 @@
 |---|---:|---|---|---|
 | Spring Boot parent/BOM、`spring-boot-starter-webmvc`、测试 starter、Maven Plugin | 4.1.1 | 编译、API 运行、测试和打包 | Apache-2.0 | 可采用；保留上游版权与 NOTICE 义务 |
 | `org.springframework.boot:spring-boot-starter-security` | 4.1.1（Security 7.1.1） | API 运行 | Apache-2.0 | 可采用；依赖存在不等于认证功能已经实现 |
+| `org.springframework.security:spring-security-oauth2-jose` | 7.1.1 | API 运行；M2 JWT 编解码 | Apache-2.0 | 可采用；Boot BOM 管理版本；签名与解析是第三方能力，账号状态/会话与撤销流程为 ForgeOJ 实现，见 U-009 |
 | `org.springframework.boot:spring-boot-starter-websocket` | 4.1.1（Spring WebSocket/Messaging 7.0.9；Tomcat WebSocket 11.0.24） | API 运行；M1 原生状态通知 | Apache-2.0 | 可采用；Boot BOM 固定版本；框架提供传输，所有者/同源/版本与恢复规则为 ForgeOJ 自有实现，见 U-008 |
 | `org.springframework.boot:spring-boot-starter-amqp` | 4.1.1（Spring AMQP 4.1.1） | API/Worker 运行 | Apache-2.0 | 可采用；M0 只实现最小 RabbitMQ 链路 |
 | `org.springframework.boot:spring-boot-starter-jackson` | 4.1.1（Jackson Databind 3.1.5） | Worker 运行；严格解析四字段任务 JSON | Apache-2.0 | 可采用；JSON 库为第三方能力，消息契约与校验规则为 ForgeOJ 自有实现 |
@@ -31,6 +32,8 @@
 MySQL Connector/J 的 POM 明确写明 “GPL v2 with Universal FOSS Exception 1.0”。[Oracle 的例外文本](https://oss.oracle.com/licenses/universal-foss-exception/)把额外许可限定在与完整源码、采用 OSI 批准或 FSF 自由许可证的 “Other FOSS” 一起使用/分发。Apache-2.0 是 OSI 批准许可证，因此根许可证类别这一前提已满足；Connector/J 本身仍保持 GPL-2.0 + UFE，不能被 ForgeOJ 根许可证重新许可。首次发布 fat JAR、镜像或安装包前，仍须按实际组合复核完整对应源码可获得性、许可证和告知方式；若发布方式不能满足条件，必须更换驱动方案或取得合适许可。
 
 H2 的测试作用域不能作为 MySQL 语义证据，也不能因为不进入生产运行包就从依赖清单中消失。
+
+M2 新增的 JOSE 直接项及其关键传递项已核实本机实际 Maven Central POM：`spring-security-oauth2-jose:7.1.1` 声明 `nimbus-jose-jwt:10.9.1`，二者均声明 Apache-2.0。Nimbus 不是单独加入 POM 的直接依赖；其固定发布/tag 与构件 SHA-256 见 U-009。Nimbus POM 另有 shade/relocation 配置，最终 Release 必须检查实际内嵌组成及告知义务，不能把这里的库级许可证判断当作全 fat JAR 已审计。
 
 ## 3. 前端运行直接依赖
 
@@ -79,7 +82,7 @@ H2 的测试作用域不能作为 MySQL 语义证据，也不能因为不进入�
 
 ## 6. 当前结论与剩余门禁
 
-- Spring Boot、Spring Security、Spring AMQP、Flyway、Testcontainers、MyBatis、Vue 和构建工具的直接许可证已登记；
+- Spring Boot、Spring Security（含 M2 JOSE）、Spring AMQP、Flyway、Testcontainers、MyBatis、Vue 和构建工具的直接许可证已登记；关键传递项 Nimbus 10.9.1 已补登记；
 - M0 新增直接依赖的 Apache-2.0/MIT 许可证与根 Apache-2.0 不冲突，不需要重新选择根许可证；
 - Testcontainers 库的 MIT 许可证不覆盖它启动的 MySQL、RabbitMQ、Ryuk 等容器镜像；判题使用的 Eclipse Temurin 也有独立许可证边界。当前使用的精确运行时已在第 5 节登记，升级时必须同步更新；
 - H2 被限制为测试作用域；

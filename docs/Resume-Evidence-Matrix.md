@@ -3,6 +3,8 @@
 > 当前状态：E-01/E-02 为 `IMPLEMENTED`，已有 M1 范围的实现与验证证据；完整 V1 候选证据未闭环。其他项仍为 `PLANNED`；没有任何 `RESUME_READY`，不能写入简历。
 > 本文不是简历文案，而是决定一条文案是否有资格进入简历的证据清单。
 
+2026-10-02 M2 普通账号单元已在 `feat/m2-accounts` 验证通过，设计见 D-041 / `M2-ACCOUNTS-DESIGN.md`，实际命令、源码/JAR 哈希、固定 Linux 后端 211 / 前端 13 项、相同产物的真实注册到 AC/旧账号轮询兜底、独立审计和精确清理见 [账号验收](M2-ACCOUNTS-VALIDATION.md)和[脱敏事实](evidence/m2-accounts/README.md)。这不改变下面候选项的准入状态，没有新增 `RESUME_READY`；完整 M2 仍 `IN_PROGRESS`，真实 SMTP、Redis、多节点、云上试运行、性能与发布尚未完成。M1 的 160/8 仍只描述其历史阶段，不充当新账号证据。
+
 ## 1. 准入规则
 
 一条能力只有同时满足以下条件，状态才能从 `PLANNED` 更新为 `RESUME_READY`：

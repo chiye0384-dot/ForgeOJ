@@ -204,6 +204,79 @@ class SubmissionNotificationIntegrationTests {
         assertThat(node.path("statusVersion").asLong()).isEqualTo(version);
     }
 
+    @Test
+    void anonymousAccountErrorsKeepTheirStatusThroughTheRealServletContainer() throws Exception {
+        HttpClient client = newClient();
+        JsonNode session = request(client, "GET", "/api/v1/auth/session", null, null);
+        String header = session.path("csrf").path("headerName").asText();
+        String token = session.path("csrf").path("token").asText();
+        for (String[] invalid : new String[][] {
+                {"email-verification/confirm", "{\"token\":\"" + "a".repeat(43) + "\"}"},
+                {"password-reset/confirm", "{\"token\":\"" + "b".repeat(43) + "\",\"password\":\"valid-fixture-password\"}"},
+                {"register", "{\"username\":\"x\",\"email\":\"invalid@example.test\",\"password\":\"valid-fixture-password\"}"},
+                {"register", "{"}
+        }) {
+            HttpResponse<String> response = client.send(HttpRequest.newBuilder(
+                    URI.create(origin() + "/api/v1/auth/" + invalid[0]))
+                    .header("Origin", origin()).header(header, token)
+                    .header("Content-Type", "application/json")
+                    .POST(HttpRequest.BodyPublishers.ofString(invalid[1])).build(), HttpResponse.BodyHandlers.ofString());
+            assertThat(response.statusCode()).as("Anonymous error path %s", invalid[0]).isEqualTo(400);
+        }
+    }
+
+    @Test
+    void submissionAndProblemErrorsKeepTheirStatusThroughTheRealServletContainer() throws Exception {
+        Login owner = login("learner");
+        String id = createSubmission(owner);
+        Login other = login("notification-other");
+
+        record ReadCase(Login user, String path, int expectedStatus) {}
+        for (ReadCase testCase : new ReadCase[] {
+                new ReadCase(owner, "/api/v1/submissions/" + id, 200),
+                new ReadCase(other, "/api/v1/submissions/" + id, 404),
+                new ReadCase(owner, "/api/v1/submissions/" + UUID.randomUUID(), 404),
+                new ReadCase(owner, "/api/v1/problems/absent-" + UUID.randomUUID(), 404)
+        }) {
+            HttpResponse<String> response = testCase.user().client().send(
+                    HttpRequest.newBuilder(URI.create(origin() + testCase.path()))
+                            .timeout(Duration.ofSeconds(5))
+                            .GET()
+                            .build(),
+                    HttpResponse.BodyHandlers.ofString());
+            assertThat(response.statusCode())
+                    .as("Authenticated GET %s", testCase.path())
+                    .isEqualTo(testCase.expectedStatus());
+        }
+
+        record WriteCase(String label, String body, String idempotencyKey) {}
+        for (WriteCase testCase : new WriteCase[] {
+                new WriteCase("missing Idempotency-Key",
+                        "{\"language\":\"JAVA_21\",\"sourceCode\":\"public class Main {}\"}", null),
+                new WriteCase("malformed JSON", "{", UUID.randomUUID().toString()),
+                new WriteCase("unsupported language",
+                        "{\"language\":\"PYTHON\",\"sourceCode\":\"print(3)\"}", UUID.randomUUID().toString())
+        }) {
+            HttpRequest.Builder request = HttpRequest.newBuilder(
+                            URI.create(origin() + "/api/v1/problems/sum-two-integers/submissions"))
+                    .timeout(Duration.ofSeconds(5))
+                    .header("Origin", origin())
+                    .header(owner.csrfHeader(), owner.csrfToken())
+                    .header("Content-Type", "application/json");
+            if (testCase.idempotencyKey() != null) {
+                request.header("Idempotency-Key", testCase.idempotencyKey());
+            }
+            HttpResponse<String> response = owner.client().send(
+                    request.POST(HttpRequest.BodyPublishers.ofString(testCase.body())).build(),
+                    HttpResponse.BodyHandlers.ofString());
+            assertThat(response.statusCode())
+                    .as("Authenticated submission rejection: %s", testCase.label())
+                    .isEqualTo(400);
+        }
+        assertThat(migrator().queryForObject("SELECT COUNT(*) FROM submission", Integer.class))
+                .isEqualTo(1);
+    }
+
     private Login login(String username) throws Exception {
         HttpClient client = newClient();
         JsonNode anonymous = request(client, "GET", "/api/v1/auth/session", null, null);
@@ -220,21 +293,30 @@ class SubmissionNotificationIntegrationTests {
         HttpRequest request = HttpRequest.newBuilder(URI.create(origin() + "/api/v1/problems/sum-two-integers/submissions"))
                 .header(owner.csrfHeader(), owner.csrfToken()).header("Content-Type", "application/json")
                 .header("Idempotency-Key", UUID.randomUUID().toString())
+                .header("Origin", origin())
                 .POST(HttpRequest.BodyPublishers.ofString("{\"language\":\"JAVA_21\",\"sourceCode\":\"public class Main {}\"}"))
                 .timeout(Duration.ofSeconds(5)).build();
         HttpResponse<String> response = owner.client().send(request, HttpResponse.BodyHandlers.ofString());
         assertThat(response.statusCode()).isEqualTo(202);
+        assertThat(((CookieManager) owner.client().cookieHandler().orElseThrow()).getCookieStore().getCookies().stream().map(java.net.HttpCookie::getName).toList())
+                .as("After submission; cookie headers=%s", response.headers().allValues("Set-Cookie").stream().map(value -> value.split("=",2)[0]+";"+value.substring(value.indexOf(';')+1)).toList())
+                .contains("FORGEOJ_CSRF");
         return json.readTree(response.body()).path("submissionId").asText();
     }
 
     private JsonNode request(HttpClient client, String method, String path, String body, Login csrf) throws Exception {
         HttpRequest.Builder request = HttpRequest.newBuilder(URI.create(origin() + path))
                 .timeout(Duration.ofSeconds(5));
+        if (!"GET".equals(method)) request.header("Origin", origin());
         if (csrf != null) request.header(csrf.csrfHeader(), csrf.csrfToken());
+        if (csrf != null) assertThat(((CookieManager) client.cookieHandler().orElseThrow()).getCookieStore().getCookies()
+                .stream().filter(cookie -> cookie.getName().equals("FORGEOJ_CSRF")).findFirst().orElseThrow().getValue())
+                .as("CSRF cookie still matches login after WebSocket handshake").isEqualTo(csrf.csrfToken());
         if (body != null) request.header("Content-Type", "application/json");
         request.method(method, body == null ? HttpRequest.BodyPublishers.noBody() : HttpRequest.BodyPublishers.ofString(body));
         HttpResponse<String> response = client.send(request.build(), HttpResponse.BodyHandlers.ofString());
-        assertThat(response.statusCode()).isBetween(200, 299);
+        assertThat(response.statusCode()).as("%s %s; cookie names=%s", method, path,
+                ((CookieManager) client.cookieHandler().orElseThrow()).getCookieStore().getCookies().stream().map(java.net.HttpCookie::getName).toList()).isBetween(200, 299);
         return response.body().isBlank() ? null : json.readTree(response.body());
     }
 

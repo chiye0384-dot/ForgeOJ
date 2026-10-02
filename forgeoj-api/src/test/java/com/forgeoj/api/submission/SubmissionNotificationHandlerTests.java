@@ -146,7 +146,10 @@ class SubmissionNotificationHandlerTests {
         when(socket.getId()).thenReturn(socketId);
         when(socket.isOpen()).thenReturn(true);
         when(socket.getAttributes()).thenReturn(Map.of(SubmissionWatch.ATTRIBUTE,
-                new SubmissionWatch(userId, "submission-" + userId, login)));
+                new SubmissionWatch(userId, "submission-" + userId, "fixture-session", () -> {
+                    try { return login.getAttribute(HttpSessionSecurityContextRepository.SPRING_SECURITY_CONTEXT_KEY) != null; }
+                    catch (IllegalStateException expired) { return false; }
+                })));
         return socket;
     }
 }

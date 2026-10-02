@@ -35,7 +35,7 @@ import org.springframework.core.io.ClassPathResource;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.datasource.DriverManagerDataSource;
 import org.springframework.jdbc.datasource.init.ScriptUtils;
-import org.springframework.mock.web.MockHttpSession;
+import jakarta.servlet.http.Cookie;
 import org.springframework.test.context.DynamicPropertyRegistry;
 import org.springframework.test.context.DynamicPropertySource;
 import org.springframework.test.web.servlet.MockMvc;
@@ -56,6 +56,7 @@ import org.testcontainers.utility.MountableFile;
             "spring.rabbitmq.listener.direct.auto-startup=false"
         })
 class SubmissionCreationIntegrationTests {
+    @Autowired private com.forgeoj.api.auth.AccountJwt accountJwt;
 
     private static final String MYSQL_IMAGE =
             "container-registry.oracle.com/mysql/community-server:8.4.12"
@@ -167,6 +168,7 @@ class SubmissionCreationIntegrationTests {
 
     @Test
     void concurrentReplayCreatesOneRecordSet() throws Exception {
+        var authenticated = authentication(login());
         UUID requestId = UUID.randomUUID();
         int callers = 8;
         CountDownLatch ready = new CountDownLatch(callers);
@@ -181,6 +183,7 @@ class SubmissionCreationIntegrationTests {
                                                     () -> {
                                                         ready.countDown();
                                                         start.await();
+                                                        org.springframework.security.core.context.SecurityContextHolder.getContext().setAuthentication(authenticated);
                                                         return submissionService.create(
                                                                 1L,
                                                                 "sum-two-integers",
@@ -204,7 +207,9 @@ class SubmissionCreationIntegrationTests {
     }
 
     @Test
-    void outerRollbackSuppressesCreatedEvent(CapturedOutput output) {
+    void outerRollbackSuppressesCreatedEvent(CapturedOutput output) throws Exception {
+        var identity = authentication(login());
+        org.springframework.security.core.context.SecurityContextHolder.getContext().setAuthentication(identity);
         UUID key = UUID.randomUUID();
         var transaction = new org.springframework.transaction.support.TransactionTemplate(transactionManager);
         assertThatThrownBy(() -> transaction.executeWithoutResult(status -> {
@@ -244,6 +249,7 @@ class SubmissionCreationIntegrationTests {
 
     @Test
     void concurrentDistinctSubmissionsCannotExceedQueuedQuota() throws Exception {
+        var authenticated = authentication(login());
         int callers = 8;
         CountDownLatch ready = new CountDownLatch(callers);
         CountDownLatch start = new CountDownLatch(1);
@@ -260,6 +266,7 @@ class SubmissionCreationIntegrationTests {
                                                         ready.countDown();
                                                         start.await();
                                                         try {
+                                                            org.springframework.security.core.context.SecurityContextHolder.getContext().setAuthentication(authenticated);
                                                             submissionService.create(
                                                                     1L,
                                                                     "sum-two-integers",
@@ -347,13 +354,19 @@ class SubmissionCreationIntegrationTests {
         createSubmission(owner);
         UUID key = UUID.randomUUID();
         String sourceHash = sha256(VALID_SOURCE);
+        var claims = accountJwt.verify(java.util.Arrays.stream(owner.cookies())
+                .filter(cookie -> cookie.getName().equals("FORGEOJ_ACCESS")).findFirst().orElseThrow().getValue());
+        var authentication = new org.springframework.security.authentication.UsernamePasswordAuthenticationToken(
+                new com.forgeoj.api.auth.ForgeOjPrincipal(1L, "learner", "", true, claims.getClaimAsString("sid")), null, java.util.List.of());
         CountDownLatch start = new CountDownLatch(1);
         try (var executor = Executors.newFixedThreadPool(8)) {
             List<Future<SubmissionResult>> results = java.util.stream.IntStream.range(0, 8)
                     .mapToObj(ignored -> executor.submit(() -> {
                         start.await();
-                        return transactionService.createNew(1L, "sum-two-integers", key,
-                                "JAVA_21", VALID_SOURCE, sourceHash);
+                        org.springframework.security.core.context.SecurityContextHolder.getContext().setAuthentication(authentication);
+                        try { return transactionService.createNew(1L, "sum-two-integers", key,
+                                "JAVA_21", VALID_SOURCE, sourceHash); }
+                        finally { org.springframework.security.core.context.SecurityContextHolder.clearContext(); }
                     })).toList();
             start.countDown();
             HashSet<String> ids = new HashSet<>();
@@ -521,10 +534,10 @@ class SubmissionCreationIntegrationTests {
                 .isEqualTo(missing.getResponse().getContentAsString())
                 .isEqualTo(malformed.getResponse().getContentAsString());
         mockMvc.perform(post("/api/v1/submissions/{submissionId}/cancel", submissionId)
-                        .session(owner.session())).andExpect(status().isForbidden());
+                        .cookie(owner.cookies()).header("Origin","http://localhost")).andExpect(status().isForbidden());
         AnonymousSession anonymous = openAnonymousSession();
         mockMvc.perform(post("/api/v1/submissions/{submissionId}/cancel", submissionId)
-                        .session(anonymous.session())
+                        .cookie(anonymous.cookies()).header("Origin","http://localhost")
                         .header(anonymous.csrfHeader(), anonymous.csrfToken()))
                 .andExpect(status().isUnauthorized());
         assertThat(cancellationState(submissionId)).isEqualTo(before);
@@ -557,7 +570,7 @@ class SubmissionCreationIntegrationTests {
     private org.springframework.test.web.servlet.ResultActions cancelSubmission(
             AuthenticatedSession session, String submissionId) throws Exception {
         return mockMvc.perform(post("/api/v1/submissions/{submissionId}/cancel", submissionId)
-                .session(session.session()).header(session.csrfHeader(), session.csrfToken()));
+                .cookie(session.cookies()).header("Origin","http://localhost").header(session.csrfHeader(), session.csrfToken()));
     }
 
     private Map<String, Object> cancellationState(String submissionId) {
@@ -572,7 +585,9 @@ class SubmissionCreationIntegrationTests {
     }
 
     @Test
-    void rollsBackSubmissionAndTaskWhenOutboxInsertFails(CapturedOutput output) {
+    void rollsBackSubmissionAndTaskWhenOutboxInsertFails(CapturedOutput output) throws Exception {
+        var identity = authentication(login());
+        org.springframework.security.core.context.SecurityContextHolder.getContext().setAuthentication(identity);
         JdbcTemplate api = new JdbcTemplate(apiDataSource);
         JdbcTemplate migrator = migratorJdbc();
         UUID requestId = UUID.randomUUID();
@@ -615,7 +630,7 @@ class SubmissionCreationIntegrationTests {
         AnonymousSession anonymous = openAnonymousSession();
         mockMvc.perform(
                         post("/api/v1/problems/sum-two-integers/submissions")
-                                .session(anonymous.session())
+                                .cookie(anonymous.cookies()).header("Origin","http://localhost")
                                 .header(anonymous.csrfHeader(), anonymous.csrfToken())
                                 .header("Idempotency-Key", UUID.randomUUID().toString())
                                 .contentType(MediaType.APPLICATION_JSON)
@@ -628,7 +643,7 @@ class SubmissionCreationIntegrationTests {
 
         mockMvc.perform(
                         post("/api/v1/problems/sum-two-integers/submissions")
-                                .session(session.session())
+                                .cookie(session.cookies()).header("Origin","http://localhost")
                                 .header(session.csrfHeader(), session.csrfToken())
                                 .header("Idempotency-Key", "not-a-uuid")
                                 .contentType(MediaType.APPLICATION_JSON)
@@ -637,7 +652,7 @@ class SubmissionCreationIntegrationTests {
 
         mockMvc.perform(
                         post("/api/v1/problems/sum-two-integers/submissions")
-                                .session(session.session())
+                                .cookie(session.cookies()).header("Origin","http://localhost")
                                 .header(session.csrfHeader(), session.csrfToken())
                                 .header("Idempotency-Key", UUID.randomUUID().toString())
                                 .contentType(MediaType.APPLICATION_JSON)
@@ -813,7 +828,7 @@ class SubmissionCreationIntegrationTests {
             AuthenticatedSession session, UUID requestId, String sourceCode) throws Exception {
         return mockMvc.perform(
                 post("/api/v1/problems/sum-two-integers/submissions")
-                        .session(session.session())
+                        .cookie(session.cookies()).header("Origin","http://localhost")
                         .header(session.csrfHeader(), session.csrfToken())
                         .header("Idempotency-Key", requestId.toString())
                         .contentType(MediaType.APPLICATION_JSON)
@@ -824,7 +839,7 @@ class SubmissionCreationIntegrationTests {
             AuthenticatedSession session, String submissionId) throws Exception {
         return mockMvc.perform(
                 get("/api/v1/submissions/{submissionId}", submissionId)
-                        .session(session.session()));
+                        .cookie(session.cookies()).header("Origin","http://localhost"));
     }
 
     private String createSubmission(AuthenticatedSession session) throws Exception {
@@ -913,12 +928,18 @@ class SubmissionCreationIntegrationTests {
         return login("learner");
     }
 
+    private org.springframework.security.core.Authentication authentication(AuthenticatedSession session) {
+        var claims = accountJwt.verify(java.util.Arrays.stream(session.cookies()).filter(cookie -> cookie.getName().equals("FORGEOJ_ACCESS")).findFirst().orElseThrow().getValue());
+        return new org.springframework.security.authentication.UsernamePasswordAuthenticationToken(
+                new com.forgeoj.api.auth.ForgeOjPrincipal(1L, "learner", "", true, claims.getClaimAsString("sid")), null, java.util.List.of());
+    }
+
     private AuthenticatedSession login(String username) throws Exception {
         AnonymousSession anonymous = openAnonymousSession();
         MvcResult login =
                 mockMvc.perform(
                                 post("/api/v1/auth/login")
-                                        .session(anonymous.session())
+                                        .cookie(anonymous.cookies()).header("Origin","http://localhost")
                                         .header(anonymous.csrfHeader(), anonymous.csrfToken())
                                         .contentType(MediaType.APPLICATION_JSON)
                                         .content(
@@ -931,9 +952,9 @@ class SubmissionCreationIntegrationTests {
                         .andExpect(jsonPath("$.authenticated").value(true))
                         .andReturn();
         return new AuthenticatedSession(
-                (MockHttpSession) login.getRequest().getSession(false),
-                anonymous.csrfHeader(),
-                anonymous.csrfToken());
+                login.getResponse().getCookies(),
+                JsonPath.read(login.getResponse().getContentAsString(), "$.csrf.headerName"),
+                JsonPath.read(login.getResponse().getContentAsString(), "$.csrf.token"));
     }
 
     private void createSecondUser() {
@@ -958,7 +979,7 @@ class SubmissionCreationIntegrationTests {
                         .andReturn();
         String body = result.getResponse().getContentAsString();
         return new AnonymousSession(
-                (MockHttpSession) result.getRequest().getSession(false),
+                result.getResponse().getCookies(),
                 JsonPath.read(body, "$.csrf.headerName"),
                 JsonPath.read(body, "$.csrf.token"));
     }
@@ -996,8 +1017,8 @@ class SubmissionCreationIntegrationTests {
     }
 
     private record AnonymousSession(
-            MockHttpSession session, String csrfHeader, String csrfToken) {}
+            Cookie[] cookies, String csrfHeader, String csrfToken) {}
 
     private record AuthenticatedSession(
-            MockHttpSession session, String csrfHeader, String csrfToken) {}
+            Cookie[] cookies, String csrfHeader, String csrfToken) {}
 }

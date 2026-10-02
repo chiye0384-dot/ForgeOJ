@@ -12,13 +12,21 @@ public final class ForgeOjPrincipal implements UserDetails {
     private final String username;
     private final String passwordHash;
     private final boolean enabled;
+    private final String sessionId;
 
     public ForgeOjPrincipal(long userId, String username, String passwordHash, boolean enabled) {
+        this(userId, username, passwordHash, enabled, null);
+    }
+
+    public ForgeOjPrincipal(long userId, String username, String passwordHash, boolean enabled, String sessionId) {
         this.userId = userId;
         this.username = username;
         this.passwordHash = passwordHash;
         this.enabled = enabled;
+        this.sessionId = sessionId;
     }
+
+    public String sessionId() { return sessionId; }
 
     public long userId() {
         return userId;

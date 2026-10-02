@@ -53,16 +53,54 @@ export class ApiRequestError extends Error {
 }
 
 async function requestJson<T>(path: string, init?: RequestInit): Promise<T> {
-  const response = await fetch(path, {
+  let response = await fetch(path, {
     credentials: 'same-origin',
     ...init,
   })
+
+  const protectedAuth = [
+    'logout-all',
+    'password/change',
+    'email-binding/request',
+    'email-binding/confirm',
+  ].some((action) => path === `/api/v1/auth/${action}`)
+  if (response.status === 401 && (!path.startsWith('/api/v1/auth/') || protectedAuth)) {
+    await refreshSession()
+    response = await fetch(path, { credentials: 'same-origin', ...init })
+  }
 
   if (!response.ok) {
     throw new ApiRequestError(response.status)
   }
 
-  return (await response.json()) as T
+  return (response.status === 204 ? undefined : await response.json()) as T
+}
+
+let refreshing: Promise<SessionResponse> | undefined
+async function rawSession(): Promise<SessionResponse> {
+  const response = await fetch('/api/v1/auth/session', { credentials: 'same-origin' })
+  if (!response.ok) throw new ApiRequestError(response.status)
+  return (await response.json()) as SessionResponse
+}
+
+export function refreshSession(): Promise<SessionResponse> {
+  if (refreshing) return refreshing
+  // Rotating a shared refresh cookie without a cross-tab lock can revoke a valid session.
+  // Older browsers can still log in; they require a new login when the short JWT expires.
+  if (!navigator.locks) return Promise.reject(new ApiRequestError(401))
+  const perform = async (): Promise<SessionResponse> => {
+    // Another tab may have rotated cookies while this tab waited for the lock.
+    const current = await rawSession()
+    if (current.authenticated) return current
+    return requestJson('/api/v1/auth/refresh', {
+      method: 'POST',
+      headers: jsonHeaders(current.csrf),
+    })
+  }
+  refreshing = navigator.locks.request('forgeoj-refresh', perform).finally(() => {
+    refreshing = undefined
+  })
+  return refreshing
 }
 
 function jsonHeaders(csrf?: CsrfToken): Record<string, string> {
@@ -75,6 +113,25 @@ function jsonHeaders(csrf?: CsrfToken): Record<string, string> {
 
 export function getSession(): Promise<SessionResponse> {
   return requestJson('/api/v1/auth/session')
+}
+
+export async function restoreSession(): Promise<SessionResponse> {
+  const current = await getSession()
+  if (current.authenticated) return current
+  try {
+    return await refreshSession()
+  } catch (error) {
+    if (error instanceof ApiRequestError && error.status === 401) return current
+    throw error
+  }
+}
+
+export function accountAction(path: string, body: unknown, csrf: CsrfToken): Promise<void> {
+  return requestJson(`/api/v1/auth/${path}`, {
+    method: 'POST',
+    headers: jsonHeaders(csrf),
+    body: JSON.stringify(body),
+  })
 }
 
 export function login(

@@ -9,16 +9,22 @@ import { writeFile } from 'node:fs/promises'
 const base = 'http://localhost:5173'
 const pause = ms => new Promise(resolve => setTimeout(resolve, ms))
 class Client {
-  cookie = ''
+  cookies = new Map()
+  get cookie() { return [...this.cookies].map(([key, value]) => `${key}=${value}`).join('; ') }
   csrf
   async request(path, method = 'GET', body, extra = {}) {
     const headers = { ...(this.cookie ? { Cookie: this.cookie } : {}), ...extra }
+    if (method !== 'GET') headers.Origin = base
     if (body !== undefined) headers['Content-Type'] = 'application/json'
     if (method !== 'GET' && this.csrf) headers[this.csrf.headerName] = this.csrf.token
     const response = await fetch(base + path, { method, headers,
       body: body === undefined ? undefined : JSON.stringify(body), signal: AbortSignal.timeout(10000) })
     for (const value of response.headers.getSetCookie()) {
-      if (value.startsWith('JSESSIONID=')) this.cookie = value.split(';')[0]
+      const pair = value.split(';')[0], separator = pair.indexOf('=')
+      if (separator < 1) continue
+      const key = pair.slice(0, separator), token = pair.slice(separator + 1)
+      if (!token || /Max-Age=0(?:;|$)/i.test(value)) this.cookies.delete(key)
+      else this.cookies.set(key, token)
     }
     const text = await response.text()
     return { status: response.status, body: text ? JSON.parse(text) : null }

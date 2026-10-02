@@ -11,7 +11,7 @@ function jsonResponse(body: unknown, status = 200): Response {
 }
 
 async function settleVue(): Promise<void> {
-  for (let iteration = 0; iteration < 8; iteration += 1) {
+  for (let iteration = 0; iteration < 30; iteration += 1) {
     await Promise.resolve()
     await nextTick()
   }
@@ -25,6 +25,10 @@ function typeInto(element: HTMLInputElement | HTMLTextAreaElement, value: string
 describe('M0 judge workspace', () => {
   beforeEach(() => {
     vi.useFakeTimers()
+    vi.stubGlobal('navigator', {
+      userAgent: navigator.userAgent,
+      locks: { request: async (_name: string, perform: () => Promise<unknown>) => perform() },
+    })
     vi.stubGlobal(
       'WebSocket',
       class {
@@ -93,6 +97,16 @@ describe('M0 judge workspace', () => {
         hiddenInput: 'must-never-be-rendered',
       }),
     ]
+    responses.splice(
+      1,
+      0,
+      jsonResponse({
+        authenticated: false,
+        user: null,
+        csrf: { headerName: 'X-CSRF-TOKEN', parameterName: '_csrf', token: 'csrf-before-login' },
+      }),
+      jsonResponse({}, 401),
+    )
     const fetchMock = vi.fn<(input: RequestInfo | URL, init?: RequestInit) => Promise<Response>>(
       async () => {
         const response = responses.shift()
@@ -136,11 +150,11 @@ describe('M0 judge workspace', () => {
     expect(host.textContent).toContain('AC')
     expect(host.textContent).toContain('状态版本：2')
     expect(host.textContent).not.toContain('must-never-be-rendered')
-    expect(fetchMock).toHaveBeenCalledTimes(6)
+    expect(fetchMock).toHaveBeenCalledTimes(8)
     expect(vi.getTimerCount()).toBe(0)
 
     expect(fetchMock).toHaveBeenNthCalledWith(
-      2,
+      4,
       '/api/v1/auth/login',
       expect.objectContaining({
         method: 'POST',
@@ -148,7 +162,7 @@ describe('M0 judge workspace', () => {
       }),
     )
     expect(fetchMock).toHaveBeenNthCalledWith(
-      4,
+      6,
       '/api/v1/problems/sum-two-integers/submissions',
       expect.objectContaining({
         method: 'POST',

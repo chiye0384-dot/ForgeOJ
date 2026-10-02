@@ -9,17 +9,18 @@ import org.springframework.security.authentication.ProviderManager;
 import org.springframework.security.authentication.dao.DaoAuthenticationProvider;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configurers.AbstractHttpConfigurer;
-import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.AuthenticationEntryPoint;
 import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.web.authentication.HttpStatusEntryPoint;
-import org.springframework.security.web.authentication.session.ChangeSessionIdAuthenticationStrategy;
-import org.springframework.security.web.authentication.session.SessionAuthenticationStrategy;
-import org.springframework.security.web.context.HttpSessionSecurityContextRepository;
 import org.springframework.security.web.context.SecurityContextRepository;
+import com.forgeoj.api.auth.*;
+import org.springframework.security.web.csrf.CsrfFilter;
+import org.springframework.security.web.csrf.CsrfTokenRequestAttributeHandler;
+import org.springframework.security.web.context.NullSecurityContextRepository;
+import org.springframework.security.web.context.SecurityContextHolderFilter;
 
 @Configuration
 public class SecurityConfig {
@@ -39,12 +40,7 @@ public class SecurityConfig {
 
     @Bean
     SecurityContextRepository securityContextRepository() {
-        return new HttpSessionSecurityContextRepository();
-    }
-
-    @Bean
-    SessionAuthenticationStrategy sessionAuthenticationStrategy() {
-        return new ChangeSessionIdAuthenticationStrategy();
+        return new NullSecurityContextRepository();
     }
 
     @Bean
@@ -56,7 +52,8 @@ public class SecurityConfig {
     SecurityFilterChain securityFilterChain(
             HttpSecurity http,
             SecurityContextRepository securityContextRepository,
-            AuthenticationEntryPoint authenticationEntryPoint)
+            AuthenticationEntryPoint authenticationEntryPoint,
+            AccountCsrfRepository csrfRepository, AccountJwt jwt, AccountMapper mapper)
             throws Exception {
         http.authorizeHttpRequests(
                         authorization ->
@@ -67,7 +64,10 @@ public class SecurityConfig {
                                                 "/api/v1/problems/*")
                                         .permitAll()
                                         .requestMatchers(
-                                                HttpMethod.POST, "/api/v1/auth/login")
+                                                HttpMethod.POST, "/api/v1/auth/login", "/api/v1/auth/register",
+                                                "/api/v1/auth/email-verification/request", "/api/v1/auth/email-verification/confirm",
+                                                "/api/v1/auth/password-reset/request", "/api/v1/auth/password-reset/confirm",
+                                                "/api/v1/auth/refresh", "/api/v1/auth/logout")
                                         .permitAll()
                                         .anyRequest()
                                         .authenticated())
@@ -76,24 +76,23 @@ public class SecurityConfig {
                                 security
                                         .securityContextRepository(securityContextRepository)
                                         .requireExplicitSave(true))
-                .sessionManagement(
-                        session ->
-                                session.sessionCreationPolicy(SessionCreationPolicy.IF_REQUIRED))
+                // JWT identity is reconstructed per request. An implicit SessionManagementFilter
+                // treats every request as a new login and clears the CSRF cookie in Security 7.1.
+                .sessionManagement(AbstractHttpConfigurer::disable)
+                .csrf(csrf -> csrf.csrfTokenRepository(csrfRepository)
+                        .csrfTokenRequestHandler(new CsrfTokenRequestAttributeHandler()))
+                .addFilterBefore(new SameOriginFilter(), CsrfFilter.class)
+                .addFilterAfter(new AccountAuthenticationFilter(jwt, mapper), SecurityContextHolderFilter.class)
+                .requestCache(AbstractHttpConfigurer::disable)
                 .exceptionHandling(
                         exceptions ->
                                 exceptions
                                         .authenticationEntryPoint(authenticationEntryPoint)
                                         .accessDeniedHandler(
                                                 (request, response, exception) ->
-                                                        response.sendError(
-                                                                HttpStatus.FORBIDDEN.value())))
-                .logout(
-                        logout ->
-                                logout.logoutUrl("/api/v1/auth/logout")
-                                        .logoutSuccessHandler(
-                                                (request, response, authentication) ->
                                                         response.setStatus(
-                                                                HttpStatus.NO_CONTENT.value())))
+                                                                HttpStatus.FORBIDDEN.value())))
+                .logout(AbstractHttpConfigurer::disable)
                 .formLogin(AbstractHttpConfigurer::disable)
                 .httpBasic(AbstractHttpConfigurer::disable);
 

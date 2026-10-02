@@ -1,7 +1,7 @@
 # ForgeOJ 代码归属与复用边界
 
 > 更新日期：2026-10-02
-> 当前范围：M-1、M0 与 M1 均为 `VERIFIED`；M1 15 门禁、固定 Linux 后端 160/前端 8 项和相同运行时代码的独立 E2E 证据闭环，见 `M1-GATE-AUDIT.md`。独立管理认证与人工 DLQ 处置属于 M4，并未由本轮实现。下文日期标记保留各历史阶段的证据边界。
+> 当前范围：M-1、M0 与 M1 均为 `VERIFIED`；M1 15 门禁、固定 Linux 后端 160/前端 8 项和相同运行时代码的独立 E2E 证据闭环，见 `M1-GATE-AUDIT.md`。M2 普通账号单元现为 [VERIFIED](M2-ACCOUNTS-VALIDATION.md)，完整 M2 保持 `IN_PROGRESS`；独立管理认证与人工 DLQ 处置属于 M4，并未由本轮实现。下文日期标记保留各历史阶段的证据边界。
 
 ## 1. 生成与第三方部分
 
@@ -52,6 +52,8 @@ M1 自有实现目前包括 V3/V4 attempt/lease/retry/quota 模型、租约栅�
 随后独立 E2E 的 Compose/PowerShell 编排、Node 内置库的受限 HTTP/WebSocket 探针、故障代理、原创测试程序和脱敏事实审计为 ForgeOJ 自有验证实现；RFC 6455 只用作握手/帧格式参考，不复制协议代码，不把 Spring/Tomcat 的生产 WebSocket 能力算作自建协议栈。真实浏览器操作是人工验收，截图/记录不是自动 UI 测试。MySQL 初始化脚本子 shell 修复为本项目部署适配；镜像 entrypoint、数据库、MQ、浏览器和 Docker 隔离仍是第三方平台能力。没有新依赖或发布物，证据见 `M1-E2E-VALIDATION.md`。
 
 最终审计补齐的同一 Outbox event 恢复成功、真实重新领取后拒绝旧 owner 全部写路径，为 ForgeOJ 在既有测试中的原创回归。只操作一次性 fixture，未复制外部测试、改业务代码或增加依赖/权限；记录偏差的 M1/M4 范围纠正以既有 Roadmap 为依据，不把未实现的管理员闭环计入成果。
+
+M2 普通账号单元（`VERIFIED`）的自有部分是 V6 账号/会话/摘要模型和最小数据库授权、原子注册/quota、账号状态与邮箱令牌流程、refresh 单次轮换/重用撤销、当前/全部退出及密码变化撤销、Cookie/CSRF/精确 Origin、敏感写事务内会话复核、sid 通知关闭、账号页面、本地投递接口/模拟器、API 原状态空体错误处理与相应权限/并发/真实 HTTP 测试。JWT 编解码由 Spring Security JOSE 7.1.1 / Nimbus 10.9.1 提供，密码摘要由 BCrypt 提供，随机、SHA-256、本地 HTTP 和事务分别使用既有 JDK/框架能力；不把密码学、JWT 或 SMTP 表述为自建。固定 Linux 211/13、相同产物的真实新账号 AC/旧账号轮询兜底、八 verdict、独立权限/日志/队列审计与精确清理见 [账号验收](M2-ACCOUNTS-VALIDATION.md)和[脱敏证据](evidence/m2-accounts/README.md)。尚无真实 SMTP adapter 或生产投递证据，完整 M2 仍 `IN_PROGRESS`；来源/构件记录见 U-009，限制见 L-033～L-035。
 
 ## 4. 明确排除
 

@@ -5,6 +5,8 @@ import {
   createSubmission,
   getProblem,
   getSession,
+  restoreSession,
+  accountAction,
   login,
   type ProblemResponse,
   type SessionResponse,
@@ -55,7 +57,7 @@ async function initialize(): Promise<void> {
   loading.value = true
   errorMessage.value = ''
   try {
-    session.value = await getSession()
+    session.value = await restoreSession()
     if (session.value.authenticated) {
       await loadProblem()
     }
@@ -82,6 +84,19 @@ async function handleLogin(): Promise<void> {
     errorMessage.value = toMessage(error)
   } finally {
     signingIn.value = false
+  }
+}
+
+async function handleLogout(): Promise<void> {
+  if (!session.value) return
+  try {
+    await accountAction('logout', {}, session.value.csrf)
+    stopMonitoring()
+    session.value = await getSession()
+    problem.value = null
+    submission.value = null
+  } catch (error) {
+    errorMessage.value = toMessage(error)
   }
 }
 
@@ -138,13 +153,13 @@ onBeforeUnmount(() => {
     <p v-if="loading" class="notice">正在读取登录状态……</p>
 
     <div v-else-if="!authenticated" class="card login-card">
-      <p class="eyebrow">M0 垂直切片</p>
+      <p class="eyebrow">ForgeOJ 账号</p>
       <h2>登录后开始判题</h2>
       <p class="muted">使用 ForgeOJ 账号进入内置题目。</p>
 
       <form data-testid="login-form" class="form-stack" @submit.prevent="handleLogin">
         <label>
-          用户名
+          用户名或邮箱
           <input
             v-model.trim="username"
             data-testid="username"
@@ -168,6 +183,7 @@ onBeforeUnmount(() => {
           {{ signingIn ? '登录中……' : '登录' }}
         </button>
       </form>
+      <p><a href="/account">注册、激活或找回密码</a></p>
     </div>
 
     <div v-else-if="problem" class="judge-grid">
@@ -177,7 +193,13 @@ onBeforeUnmount(() => {
             <p class="eyebrow">内置题目 · 版本 {{ problem.judgeVersion }}</p>
             <h2>{{ problem.title }}</h2>
           </div>
-          <span class="user-chip">{{ session?.user?.username }}</span>
+          <div>
+            <span class="user-chip">{{ session?.user?.username }}</span>
+            <p>
+              <a href="/account">账号设置</a> ·
+              <button type="button" @click="handleLogout">退出</button>
+            </p>
+          </div>
         </div>
 
         <p>{{ problem.statement }}</p>

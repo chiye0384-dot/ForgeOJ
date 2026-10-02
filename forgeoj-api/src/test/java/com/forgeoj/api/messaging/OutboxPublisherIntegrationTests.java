@@ -2,11 +2,14 @@ package com.forgeoj.api.messaging;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
+import com.forgeoj.api.auth.AccountService;
+import com.forgeoj.api.auth.ForgeOjPrincipal;
 import com.forgeoj.api.submission.SubmissionResult;
 import com.forgeoj.api.submission.SubmissionService;
 import com.jayway.jsonpath.JsonPath;
 
 import java.nio.charset.StandardCharsets;
+import java.util.List;
 import java.util.UUID;
 
 import javax.sql.DataSource;
@@ -22,6 +25,8 @@ import org.springframework.amqp.rabbit.core.RabbitTemplate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.jdbc.core.JdbcTemplate;
+import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.test.context.DynamicPropertyRegistry;
 import org.springframework.test.context.DynamicPropertySource;
 import org.testcontainers.junit.jupiter.Container;
@@ -106,6 +111,9 @@ class OutboxPublisherIntegrationTests {
 
     @Autowired
     private SubmissionService submissionService;
+
+    @Autowired
+    private AccountService accounts;
 
     @Autowired
     private OutboxPublisher outboxPublisher;
@@ -275,12 +283,22 @@ class OutboxPublisherIntegrationTests {
     }
 
     private SubmissionResult createSubmission() {
-        return submissionService.create(
-                1L,
-                "sum-two-integers",
-                UUID.randomUUID().toString(),
-                "JAVA_21",
-                SOURCE);
+        try {
+            var login = accounts.login("learner", "forgeoj-dev-only");
+            var context = SecurityContextHolder.createEmptyContext();
+            context.setAuthentication(new UsernamePasswordAuthenticationToken(
+                    new ForgeOjPrincipal(login.userId(), login.username(), "", true, login.sessionId()),
+                    null, List.of()));
+            SecurityContextHolder.setContext(context);
+            return submissionService.create(
+                    login.userId(),
+                    "sum-two-integers",
+                    UUID.randomUUID().toString(),
+                    "JAVA_21",
+                    SOURCE);
+        } finally {
+            SecurityContextHolder.clearContext();
+        }
     }
 
     private Object publishedAt(JdbcTemplate jdbc, String submissionId) {

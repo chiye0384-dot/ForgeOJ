@@ -14,7 +14,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.webmvc.test.autoconfigure.AutoConfigureMockMvc;
 import org.springframework.http.MediaType;
-import org.springframework.mock.web.MockHttpSession;
+import jakarta.servlet.http.Cookie;
 import org.springframework.test.context.DynamicPropertyRegistry;
 import org.springframework.test.context.DynamicPropertySource;
 import org.springframework.test.web.servlet.MockMvc;
@@ -69,12 +69,12 @@ class AuthAndProblemIntegrationTests {
     @Test
     void logsInWithServerSessionAndLogsOut() throws Exception {
         AnonymousSession anonymous = openAnonymousSession();
-        String anonymousSessionId = anonymous.session().getId();
+        assertThat(anonymous.cookies()).extracting(Cookie::getName).contains("FORGEOJ_CSRF");
 
         MvcResult loginResult =
                 mockMvc.perform(
                                 post("/api/v1/auth/login")
-                                        .session(anonymous.session())
+                                        .cookie(anonymous.cookies()).header("Origin","http://localhost")
                                         .header(anonymous.csrfHeader(), anonymous.csrfToken())
                                         .contentType(MediaType.APPLICATION_JSON)
                                         .content(
@@ -90,20 +90,21 @@ class AuthAndProblemIntegrationTests {
                         .andExpect(jsonPath("$.user.username").value("learner"))
                         .andReturn();
 
-        MockHttpSession authenticatedSession =
-                (MockHttpSession) loginResult.getRequest().getSession(false);
-        assertThat(authenticatedSession).isNotNull();
-        assertThat(authenticatedSession.getId()).isNotEqualTo(anonymousSessionId);
+        Cookie[] authenticatedSession = loginResult.getResponse().getCookies();
+        assertThat(loginResult.getRequest().getSession(false)).isNull();
+        assertThat(authenticatedSession).extracting(Cookie::getName).contains("FORGEOJ_ACCESS", "FORGEOJ_REFRESH", "FORGEOJ_CSRF");
+        String currentCsrf=JsonPath.read(loginResult.getResponse().getContentAsString(), "$.csrf.token");
+        assertThat(currentCsrf).isNotEqualTo(anonymous.csrfToken());
 
-        mockMvc.perform(get("/api/v1/auth/session").session(authenticatedSession))
+        mockMvc.perform(get("/api/v1/auth/session").cookie(authenticatedSession).header("Origin","http://localhost"))
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$.authenticated").value(true))
                 .andExpect(jsonPath("$.user.username").value("learner"));
 
         mockMvc.perform(
                         post("/api/v1/auth/logout")
-                                .session(authenticatedSession)
-                                .header(anonymous.csrfHeader(), anonymous.csrfToken()))
+                                .cookie(authenticatedSession).header("Origin","http://localhost")
+                                .header(anonymous.csrfHeader(), currentCsrf))
                 .andExpect(status().isNoContent());
 
         mockMvc.perform(get("/api/v1/auth/session"))
@@ -117,7 +118,7 @@ class AuthAndProblemIntegrationTests {
         AnonymousSession missingCsrf = openAnonymousSession();
         mockMvc.perform(
                         post("/api/v1/auth/login")
-                                .session(missingCsrf.session())
+                                .cookie(missingCsrf.cookies()).header("Origin","http://localhost")
                                 .contentType(MediaType.APPLICATION_JSON)
                                 .content(
                                         """
@@ -128,7 +129,7 @@ class AuthAndProblemIntegrationTests {
         AnonymousSession wrongPassword = openAnonymousSession();
         mockMvc.perform(
                         post("/api/v1/auth/login")
-                                .session(wrongPassword.session())
+                                .cookie(wrongPassword.cookies()).header("Origin","http://localhost")
                                 .header(wrongPassword.csrfHeader(), wrongPassword.csrfToken())
                                 .contentType(MediaType.APPLICATION_JSON)
                                 .content(
@@ -136,7 +137,6 @@ class AuthAndProblemIntegrationTests {
                                         {"username":"learner","password":"wrong-password"}
                                         """))
                 .andExpect(status().isUnauthorized())
-                .andExpect(status().reason("Invalid credentials"))
                 .andExpect(content().string(""));
     }
 
@@ -174,11 +174,11 @@ class AuthAndProblemIntegrationTests {
         String body = result.getResponse().getContentAsString();
         String headerName = JsonPath.read(body, "$.csrf.headerName");
         String token = JsonPath.read(body, "$.csrf.token");
-        MockHttpSession session = (MockHttpSession) result.getRequest().getSession(false);
+        Cookie[] session = result.getResponse().getCookies();
         assertThat(session).isNotNull();
         return new AnonymousSession(session, headerName, token);
     }
 
     private record AnonymousSession(
-            MockHttpSession session, String csrfHeader, String csrfToken) {}
+            Cookie[] cookies, String csrfHeader, String csrfToken) {}
 }

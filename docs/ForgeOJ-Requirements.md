@@ -7,7 +7,7 @@
 | 文档版本 | 1.0（需求基线） |
 | 基线日期 | 2026-09-24 |
 | 需求状态 | 已确认 |
-| 实现状态 | M0 `VERIFIED`；固定 Linux/amd64 全量构建、AC/WA/CE/RE/TLE/OLE 真实进程链路和 20 项门禁审计已于 2026-09-30 通过；M1 为 `IN_PROGRESS`，尚未通过门禁 |
+| 实现状态 | M-1、M0、M1 均为 `VERIFIED`；M0 20 项门禁已于 2026-09-30 通过，M1 固定 Linux 回归、独立真实链路与 15 项最终门禁已于 2026-10-02 通过，见 `docs/M1-GATE-AUDIT.md`；M2 普通账号单元为 `VERIFIED`，证据见 [账号验收](M2-ACCOUNTS-VALIDATION.md)，完整 M2 保持 `IN_PROGRESS`，其余 M2 能力仍待设计和实现，未正式发布 |
 | 目标版本 | M0、V1.0、V1.1；V2.0 仅保留路线 |
 
 本文使用“必须、应当、可以”表达约束。本文描述的是目标需求，不代表功能已经实现。实际完成状态以 Git release、自动化测试和证据矩阵为准。
@@ -106,6 +106,17 @@ V1.0 不包含：
 - 登录、验证码发送和密码重置必须限流。
 - 登录和找回接口使用模糊提示，避免泄露账号是否存在。
 - 安全日志不得记录密码、完整 Token 或验证码。
+
+### 5.4 M2 账号实施合约
+
+2026-10-02 用户已确认 D-041 的全部推荐方案，详细参数和接口见 [普通账号设计](M2-ACCOUNTS-DESIGN.md)。首个实施单元包括注册、邮箱激活、短 JWT 与独立 MySQL 会话、refresh 轮换/重用撤销、当前/全部退出、改密、邮箱找回以及旧账号补邮箱；现为 `VERIFIED`。固定 Linux 后端 211 / 前端 13 项、真实注册到 AC、独立权限/日志/队列审计和精确清理见 [账号验收记录](M2-ACCOUNTS-VALIDATION.md)。完整 M2 仍为 `IN_PROGRESS`，不表示全部 M2 门禁或生产 SMTP 通过。
+
+- 新账号为 `PENDING_VERIFICATION`，激活后为 `ACTIVE`，停用为 `DISABLED`；用户、quota lock 与激活令牌摘要同事务建立。
+- 新用户名为 3–32 个 ASCII 字母、数字或下划线，唯一性不区分大小写；邮箱支持常见 ASCII 地址，trim/lowercase，不合并供应商别名。昵称可以重复；新密码至少 12 字符、最多 72 UTF-8 字节，不 trim。
+- 访问 JWT 最长 5 分钟，每次登录的 MySQL 会话绝对期限为 7 天；受保护 HTTP 请求复核账号和会话，敏感写在事务内再次检查。Refresh 为随机 256 bit，数据库只存摘要，轮换后的旧令牌重用撤销该会话。
+- 浏览器认证使用 host-only、HttpOnly、SameSite=Strict Cookie，生产使用 Secure；写请求同时校验精确同源 Origin 和 CSRF。Token 不进入 JSON、localStorage 或 WebSocket URL；登录和身份变更轮换 CSRF，refresh 保留 CSRF。
+- 既有 ID、密码摘要、状态、quota 与提交历史保留。旧 `ACTIVE` 用户仍可用户名登录；没有伪造邮箱或验证时间，必须以当前密码申请并验证邮箱后才能找回密码。旧进程会话升级后重新登录。
+- 本地开发邮件模拟器仅供 `dev`/`test`，绑定 loopback，独立端口且内存有界；默认邮件模式为 `disabled`。本轮不连接真实 SMTP，生产邮件配置/投递与可靠重试仍须在上线前完成。Redis 会话缓存和分布式限流留在 M4，当前直接查询 MySQL，不跳过安全校验。
 
 ## 6. 题库与题单
 

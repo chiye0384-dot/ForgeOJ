@@ -1,0 +1,26 @@
+[
+  {
+    "mode": "normal",
+    "port": 5173,
+    "submissionId": "d0b0870a-6b78-4e1d-b814-86a029b0c76b",
+    "visibleStates": [
+      "QUEUED",
+      "FINISHED",
+      "AC"
+    ],
+    "account": "new-verified-email",
+    "screenshot": "account-ac.jpg"
+  },
+  {
+    "mode": "fallback",
+    "port": 5174,
+    "submissionId": "e0357bb4-c007-48c8-9656-1bb73d85f636",
+    "visibleStates": [
+      "QUEUED",
+      "FINISHED",
+      "AC"
+    ],
+    "account": "legacy-active",
+    "screenshot": "legacy-fallback-ac.jpg"
+  }
+]

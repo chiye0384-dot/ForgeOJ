@@ -176,7 +176,9 @@ class MySqlMigrationIntegrationTests {
                                 api.queryForObject(
                                         "SELECT COUNT(*) FROM judge_task_attempt", Integer.class))
                 .isInstanceOf(DataAccessException.class);
-        assertThatThrownBy(() -> api.update("UPDATE user_account SET status = 'DISABLED'"))
+        assertThatThrownBy(() -> api.update("UPDATE user_account SET username = 'tampered'"))
+                .isInstanceOf(DataAccessException.class);
+        assertThatThrownBy(() -> api.update("DELETE FROM user_account"))
                 .isInstanceOf(DataAccessException.class);
         assertThatThrownBy(() -> api.update("UPDATE submission SET source_code = 'tampered'"))
                 .isInstanceOf(DataAccessException.class);
@@ -209,6 +211,12 @@ class MySqlMigrationIntegrationTests {
                             () ->
                                     workerStatement.executeQuery(
                                             "SELECT password_hash FROM user_account"))
+                    .isInstanceOf(SQLException.class);
+            assertThatThrownBy(() -> workerStatement.executeQuery("SELECT * FROM login_session"))
+                    .isInstanceOf(SQLException.class);
+            assertThatThrownBy(() -> workerStatement.executeQuery("SELECT * FROM refresh_token"))
+                    .isInstanceOf(SQLException.class);
+            assertThatThrownBy(() -> workerStatement.executeQuery("SELECT * FROM account_action_token"))
                     .isInstanceOf(SQLException.class);
             assertThatThrownBy(
                             () ->

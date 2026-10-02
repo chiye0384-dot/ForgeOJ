@@ -6,6 +6,7 @@ import java.util.UUID;
 
 import jakarta.servlet.http.HttpSession;
 import com.forgeoj.api.auth.ForgeOjPrincipal;
+import com.forgeoj.api.auth.AccountService;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.server.ServerHttpRequest;
 import org.springframework.http.server.ServerHttpResponse;
@@ -18,8 +19,9 @@ import org.springframework.web.socket.server.HandshakeInterceptor;
 @Component
 final class SubmissionHandshakeInterceptor implements HandshakeInterceptor {
     private final SubmissionMapper mapper;
+    private final AccountService accounts;
 
-    SubmissionHandshakeInterceptor(SubmissionMapper mapper) { this.mapper = mapper; }
+    SubmissionHandshakeInterceptor(SubmissionMapper mapper, AccountService accounts) { this.mapper = mapper; this.accounts = accounts; }
 
     @Override
     public boolean beforeHandshake(ServerHttpRequest request, ServerHttpResponse response,
@@ -30,8 +32,7 @@ final class SubmissionHandshakeInterceptor implements HandshakeInterceptor {
                 || !authentication.isAuthenticated()
                 || !(authentication.getPrincipal() instanceof ForgeOjPrincipal principal)
                 || !principal.isEnabled()) return reject(response, HttpStatus.UNAUTHORIZED);
-        HttpSession loginSession = servlet.getServletRequest().getSession(false);
-        if (loginSession == null) return reject(response, HttpStatus.UNAUTHORIZED);
+        if (principal.sessionId() == null) return reject(response, HttpStatus.UNAUTHORIZED);
         String path = request.getURI().getPath();
         String prefix = "/api/v1/submissions/";
         String suffix = "/events";
@@ -42,7 +43,8 @@ final class SubmissionHandshakeInterceptor implements HandshakeInterceptor {
         } catch (IllegalArgumentException invalidId) {
             return reject(response, HttpStatus.NOT_FOUND);
         }
-        SubmissionWatch watch = new SubmissionWatch(principal.userId(), id, loginSession);
+        SubmissionWatch watch = new SubmissionWatch(principal.userId(), id, principal.sessionId(),
+                () -> accounts.authenticated(principal.userId(), principal.sessionId()));
         if (!watch.stillAuthenticated()) return reject(response, HttpStatus.UNAUTHORIZED);
         if (mapper.findNoticeByOwner(watch.userId(), id).isEmpty()) return reject(response, HttpStatus.NOT_FOUND);
         attributes.put(SubmissionWatch.ATTRIBUTE, watch);

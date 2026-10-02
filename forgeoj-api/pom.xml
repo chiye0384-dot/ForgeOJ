@@ -25,6 +25,10 @@
 			<artifactId>spring-boot-starter-security</artifactId>
 		</dependency>
 		<dependency>
+			<groupId>org.springframework.security</groupId>
+			<artifactId>spring-security-oauth2-jose</artifactId>
+		</dependency>
+		<dependency>
 			<groupId>org.springframework.boot</groupId>
 			<artifactId>spring-boot-starter-amqp</artifactId>
 		</dependency>
@@ -86,6 +90,17 @@
 
 	<build>
 		<plugins>
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-surefire-plugin</artifactId>
+				<configuration>
+					<systemPropertyVariables>
+						<forgeoj.auth.jwt.secret>public-test-only-signing-key-32-bytes-minimum</forgeoj.auth.jwt.secret>
+						<forgeoj.auth.cookie.secure>false</forgeoj.auth.cookie.secure>
+						<forgeoj.auth.limits.multiplier>100</forgeoj.auth.limits.multiplier>
+					</systemPropertyVariables>
+				</configuration>
+			</plugin>
 			<plugin>
 				<groupId>org.springframework.boot</groupId>
 				<artifactId>spring-boot-maven-plugin</artifactId>

@@ -15,9 +15,11 @@ class SubmissionTransactionService {
     private static final int MAX_QUEUED_OR_RETRYING_PER_USER = 3;
 
     private final SubmissionMapper submissionMapper;
+    private final com.forgeoj.api.auth.AccountService accounts;
 
-    SubmissionTransactionService(SubmissionMapper submissionMapper) {
+    SubmissionTransactionService(SubmissionMapper submissionMapper, com.forgeoj.api.auth.AccountService accounts) {
         this.submissionMapper = submissionMapper;
+        this.accounts = accounts;
     }
 
     @Transactional
@@ -28,6 +30,7 @@ class SubmissionTransactionService {
             String language,
             String sourceCode,
             String sourceSha256) {
+        accounts.requireCurrentWrite(userId);
         if (submissionMapper.lockQuota(userId).isEmpty()) {
             throw new IllegalStateException("User judge quota lock is unavailable");
         }

@@ -1,0 +1,194 @@
+[
+  {
+    "expected": "AC",
+    "submissionId": "a3cef38f-3838-4254-8f47-95dd450de82c",
+    "verdict": "AC",
+    "statusVersion": 2,
+    "notices": [
+      {
+        "submissionId": "a3cef38f-3838-4254-8f47-95dd450de82c",
+        "processingStatus": "QUEUED",
+        "statusVersion": 0
+      },
+      {
+        "submissionId": "a3cef38f-3838-4254-8f47-95dd450de82c",
+        "processingStatus": "RUNNING",
+        "statusVersion": 1
+      },
+      {
+        "submissionId": "a3cef38f-3838-4254-8f47-95dd450de82c",
+        "processingStatus": "FINISHED",
+        "statusVersion": 2
+      }
+    ],
+    "closeCode": 1000
+  },
+  {
+    "expected": "WA",
+    "submissionId": "53833204-6685-406a-946f-77b774560256",
+    "verdict": "WA",
+    "statusVersion": 2,
+    "notices": [
+      {
+        "submissionId": "53833204-6685-406a-946f-77b774560256",
+        "processingStatus": "QUEUED",
+        "statusVersion": 0
+      },
+      {
+        "submissionId": "53833204-6685-406a-946f-77b774560256",
+        "processingStatus": "RUNNING",
+        "statusVersion": 1
+      },
+      {
+        "submissionId": "53833204-6685-406a-946f-77b774560256",
+        "processingStatus": "FINISHED",
+        "statusVersion": 2
+      }
+    ],
+    "closeCode": 1000
+  },
+  {
+    "expected": "CE",
+    "submissionId": "fbf5c812-a9cb-43e6-94a9-26d996b1e242",
+    "verdict": "CE",
+    "statusVersion": 2,
+    "notices": [
+      {
+        "submissionId": "fbf5c812-a9cb-43e6-94a9-26d996b1e242",
+        "processingStatus": "QUEUED",
+        "statusVersion": 0
+      },
+      {
+        "submissionId": "fbf5c812-a9cb-43e6-94a9-26d996b1e242",
+        "processingStatus": "RUNNING",
+        "statusVersion": 1
+      },
+      {
+        "submissionId": "fbf5c812-a9cb-43e6-94a9-26d996b1e242",
+        "processingStatus": "FINISHED",
+        "statusVersion": 2
+      }
+    ],
+    "closeCode": 1000
+  },
+  {
+    "expected": "RE",
+    "submissionId": "808c8e8f-0cd1-41f4-a7f7-edd75d657e97",
+    "verdict": "RE",
+    "statusVersion": 2,
+    "notices": [
+      {
+        "submissionId": "808c8e8f-0cd1-41f4-a7f7-edd75d657e97",
+        "processingStatus": "QUEUED",
+        "statusVersion": 0
+      },
+      {
+        "submissionId": "808c8e8f-0cd1-41f4-a7f7-edd75d657e97",
+        "processingStatus": "RUNNING",
+        "statusVersion": 1
+      },
+      {
+        "submissionId": "808c8e8f-0cd1-41f4-a7f7-edd75d657e97",
+        "processingStatus": "FINISHED",
+        "statusVersion": 2
+      }
+    ],
+    "closeCode": 1000
+  },
+  {
+    "expected": "TLE",
+    "submissionId": "a9853e33-03e3-4f6e-9a0f-5f828e263c4c",
+    "verdict": "TLE",
+    "statusVersion": 2,
+    "notices": [
+      {
+        "submissionId": "a9853e33-03e3-4f6e-9a0f-5f828e263c4c",
+        "processingStatus": "QUEUED",
+        "statusVersion": 0
+      },
+      {
+        "submissionId": "a9853e33-03e3-4f6e-9a0f-5f828e263c4c",
+        "processingStatus": "RUNNING",
+        "statusVersion": 1
+      },
+      {
+        "submissionId": "a9853e33-03e3-4f6e-9a0f-5f828e263c4c",
+        "processingStatus": "FINISHED",
+        "statusVersion": 2
+      }
+    ],
+    "closeCode": 1000
+  },
+  {
+    "expected": "OLE",
+    "submissionId": "f40039c4-d513-4700-a117-3efb887e152d",
+    "verdict": "OLE",
+    "statusVersion": 2,
+    "notices": [
+      {
+        "submissionId": "f40039c4-d513-4700-a117-3efb887e152d",
+        "processingStatus": "QUEUED",
+        "statusVersion": 0
+      },
+      {
+        "submissionId": "f40039c4-d513-4700-a117-3efb887e152d",
+        "processingStatus": "RUNNING",
+        "statusVersion": 1
+      },
+      {
+        "submissionId": "f40039c4-d513-4700-a117-3efb887e152d",
+        "processingStatus": "FINISHED",
+        "statusVersion": 2
+      }
+    ],
+    "closeCode": 1000
+  },
+  {
+    "expected": "MLE",
+    "submissionId": "7582d0fb-3124-4ce0-babc-a6db23f1dfc0",
+    "verdict": "MLE",
+    "statusVersion": 2,
+    "notices": [
+      {
+        "submissionId": "7582d0fb-3124-4ce0-babc-a6db23f1dfc0",
+        "processingStatus": "QUEUED",
+        "statusVersion": 0
+      },
+      {
+        "submissionId": "7582d0fb-3124-4ce0-babc-a6db23f1dfc0",
+        "processingStatus": "RUNNING",
+        "statusVersion": 1
+      },
+      {
+        "submissionId": "7582d0fb-3124-4ce0-babc-a6db23f1dfc0",
+        "processingStatus": "FINISHED",
+        "statusVersion": 2
+      }
+    ],
+    "closeCode": 1000
+  },
+  {
+    "expected": "SECURITY_VIOLATION",
+    "submissionId": "ad16079f-4654-48b2-a78d-733d4b385a47",
+    "verdict": "SECURITY_VIOLATION",
+    "statusVersion": 2,
+    "notices": [
+      {
+        "submissionId": "ad16079f-4654-48b2-a78d-733d4b385a47",
+        "processingStatus": "QUEUED",
+        "statusVersion": 0
+      },
+      {
+        "submissionId": "ad16079f-4654-48b2-a78d-733d4b385a47",
+        "processingStatus": "RUNNING",
+        "statusVersion": 1
+      },
+      {
+        "submissionId": "ad16079f-4654-48b2-a78d-733d4b385a47",
+        "processingStatus": "FINISHED",
+        "statusVersion": 2
+      }
+    ],
+    "closeCode": 1000
+  }
+]

@@ -293,6 +293,17 @@
 - 数据影响：V3 已允许两种结果，但 16 字符列存不下安全结果；V5 向后兼容扩宽到 32，不改已执行迁移，不新增授权。部署先迁移后 Worker。
 - 边界：不是所有 Java OutOfMemoryError 或被拒的文件/网络操作都有可信内核事件，当前不根据不可信文本泛化判定。完整合约、失败处理、测试与限制见 M1 设计 5.3、L-032 和资源结果验证记录。
 
+### D-041：普通账号采用短 JWT 与 MySQL 独立会话，邮件能力先闭环开发环境
+
+- 状态：`ACCEPTED`（2026-10-02 用户确认“全部按你推荐的来，继续完成项目吧”）。设计接受与验证状态分别记录；普通账号单元现为 `VERIFIED`，完整 M2 保持 `IN_PROGRESS`，命令、源码/JAR 哈希与实际闭环见 [账号验收记录](M2-ACCOUNTS-VALIDATION.md)。
+- 结论：新用户通过唯一用户名/邮箱和 BCrypt 密码注册，用户、quota lock 和激活令牌摘要同事务创建；`PENDING_VERIFICATION` 邮箱激活后进入 `ACTIVE`，`DISABLED` 不可邮件重新激活。旧 ID、密码、状态、配额和历史保留，旧 ACTIVE 可用户名登录，验证补邮箱后再开找回。
+- 认证：访问 JWT 最长 5 分钟，每次登录建立绝对期限 7 天的 MySQL session；每个受保护 HTTP 请求校验签名/issuer/audience/期限并查询账号与会话，敏感写再次在事务内检查。Refresh 为随机 256 bit，仅存 SHA-256 摘要，单次轮换，重用撤销当前 sid；其他设备会话保持独立。全部退出、改密、重置和停用撤销全部旧会话，密码变化使旧重置令牌失效。
+- 浏览器与通知：访问/refresh 使用 host-only、HttpOnly、SameSite=Strict Cookie，生产 Secure；所有写同时校验精确 Origin 和 CSRF，身份变化轮换 CSRF，refresh 保留 CSRF。凭据不进入业务 JSON、localStorage 或 URL。D-039 的 WebSocket 路径、owner/Origin、三字段、单调版本和轮询保持，认证改为 sid 并复核 MySQL；事务提交后的撤销关闭订阅，数据库扫描兜底，DB 异常关闭。
+- 邮件与提示：激活 24 小时，重置/补邮箱 30 分钟，随机单次令牌仅存摘要；链接 fragment 由页面读取后清地址，POST 消费。注册/重发/找回统一 202 模糊提示，登录失败统一 401，无效/过期/已消费令牌统一 400。发信在提交后，开发模拟器仅 dev/test、loopback、有界内存，默认关闭，无真实 SMTP 和持久投递保证；失败可重发。
+- 数据与权限：追加 V6，不修改 V1–V5；API 仅增加账号 INSERT、必要列 UPDATE 和认证表最小权限，Worker 不读用户或认证表；不改变 MQ 四字段、判题快照或 API 无 Docker 边界。
+- 原因：保留 MySQL 权威会话与即时撤销，避免仅凭未到期 JWT 放行；与已验证判题/通知兼容，先使普通学习者注册到 AC 的开发链路可审查。Spring Security JOSE 提供 JWT 编解码，账号模型、状态、锁序、权限和流程由 ForgeOJ 实现。
+- 代价：受保护请求增加 DB 查询；refresh 响应丢失或跨标签竞争后可能重新登录；进程限流重启不保留，数据库邮件冷却仍保持。开发邮件不证明真实 SMTP、云部署或可靠投递，Redis 缓存/分布式限流留 M4。升级后旧进程会话需重新登录；短 JWT 密钥必须外部配置，dev 临时密钥会在进程重启后变化。详细参数、四个验证单元及剩余边界见 `M2-ACCOUNTS-DESIGN.md` 和 L-033～L-035。
+
 ## 3. 变更流程
 
 1. 新想法先进入 Roadmap 的 Backlog，不直接加入当前版本。

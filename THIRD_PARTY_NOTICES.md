@@ -1,7 +1,7 @@
 # ForgeOJ third-party notices
 
-> Updated: 2026-09-29. This inventory covers the M-1 scaffold and the direct
-> dependencies declared for the M0 work in progress. It is not a substitute
+> Updated: 2026-10-02. This inventory covers the M-1 scaffold and the direct
+> dependencies declared through M1 and the M2 account module. It is not a substitute
 > for the full release dependency/license report.
 
 ForgeOJ-authored source that the copyright holder has the right to license is
@@ -48,12 +48,22 @@ relicensed by the ForgeOJ root license.
   itself was not copied
 - Preserved text: `licenses/create-vue-3.22.3-LICENSE.txt`
 
-## Direct dependencies recorded through M0
+## Direct dependencies recorded through the M2 account module
 
 - `org.mybatis.spring.boot:mybatis-spring-boot-starter:4.1.0` — Apache
   License 2.0, <https://github.com/mybatis/spring-boot-starter>
 - `org.springframework.boot:spring-boot-starter-security:4.1.1` — Apache
   License 2.0; Spring Boot resolves Spring Security 7.1.1
+- `org.springframework.boot:spring-boot-starter-websocket:4.1.1` — Apache
+  License 2.0; Spring WebSocket/Messaging 7.0.9 and Tomcat WebSocket 11.0.24
+  supply transport. ForgeOJ implements ownership, origin, version and recovery rules.
+- `org.springframework.security:spring-security-oauth2-jose:7.1.1` — Apache
+  License 2.0, <https://github.com/spring-projects/spring-security>. Its
+  transitive `com.nimbusds:nimbus-jose-jwt:10.9.1` is Apache-2.0,
+  <https://bitbucket.org/connect2id/nimbus-jose-jwt>. JWT cryptography is
+  third-party capability; ForgeOJ implements account/session/token state and
+  revocation. Actual POM/JAR hashes and the remaining embedded/transitive
+  release review are recorded in U-009 of `docs/UPSTREAM-AND-LICENSE.md`.
 - `org.springframework.boot:spring-boot-starter-amqp:4.1.1` — Apache License
   2.0; Spring Boot resolves Spring AMQP 4.1.1
 - `org.springframework.boot:spring-boot-starter-jackson:4.1.1` — Apache
@@ -109,10 +119,13 @@ and digest when available.
   components retain their own licenses. ForgeOJ records it as an external
   M0 judge runtime, not as ForgeOJ-authored or redistributed source.
 
-These images are fetched from their registries for development or tests. They
-are not copied into this repository, redistributed as archives, or used as the
-basis of a ForgeOJ-derived image. Any future redistribution or derived image
-requires a new license review.
+These images are fetched for development or tests and are not redistributed
+as image archives. Original disposable validation Dockerfiles combine the
+recorded Maven/Temurin runtime with the official Docker CLI; exact inputs and
+use boundaries are recorded in `docs/M1-FIXED-LINUX-VALIDATION.md` and
+`docs/UPSTREAM-AND-LICENSE.md`. The replay frontend and development mailbox
+bridge use the same recorded Node 24.14.1 image and only built-in Node modules.
+Any release redistribution requires review of the actual image contents.
 
 ## Explicitly not imported
 

@@ -1,0 +1,15 @@
+{
+  "checkedDate": "2026-10-02",
+  "replayProject": "forgeoj-e2e-20261002-163550-2eb0aae2",
+  "buildRun": "forgeoj-linux-20261002-162353-b85f8da4",
+  "ownedReplayContainers": 0,
+  "ownedReplayVolumes": 0,
+  "ownedReplayNetworks": 0,
+  "ownedReplayWorkerImages": 0,
+  "ownedBuildContainers": 0,
+  "ownedBuildImages": 0,
+  "managedSandboxes": 0,
+  "testcontainers": 0,
+  "logsAndReportsRetained": true,
+  "globalPruneUsed": false
+}

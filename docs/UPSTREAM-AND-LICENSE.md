@@ -1,6 +1,6 @@
 # ForgeOJ 上游与许可证策略
 
-> 当前状态：M-1、M0 与 M1 均为 `VERIFIED`，M1 15 项门禁证据见 `M1-GATE-AUDIT.md`；本轮测试补齐与范围校正未增加依赖或复制外部代码。M0 直接依赖、消息契约与 Docker 客户端边界已登记。ForgeOJ 自有代码采用 Apache-2.0，版权人为池也；尚无正式发布。
+> 当前状态：M-1、M0 与 M1 均为 `VERIFIED`，M1 15 项门禁证据见 `M1-GATE-AUDIT.md`；M1 最终测试补齐与范围校正未增加依赖或复制外部代码。M2 普通账号单元现为 [VERIFIED](M2-ACCOUNTS-VALIDATION.md)，完整 M2 保持 `IN_PROGRESS`，增量 JOSE/Nimbus 构件见 U-009。M0 直接依赖、消息契约与 Docker 客户端边界已登记。ForgeOJ 自有代码采用 Apache-2.0，版权人为池也；尚无正式发布。
 > 本文定义代码进入仓库之前必须完成的检查，不能被理解为已经获得某个项目的授权。
 
 ## 1. 核心原则
@@ -64,7 +64,8 @@
 |---|---|---|---|---|---|---|---|
 | Spring Initializr 在线生成服务 | [start.spring.io](https://github.com/spring-io/start.spring.io) / [initializr](https://github.com/spring-io/initializr) | 核验日仓库快照：`start.spring.io@29903a3fd5ccdb6f8623111871ab2a9b804cb160`；`initializr@d445a056ced904ba5098df1e75b75bebf9840687` | Apache-2.0 | 生成两个最小 Maven 工程；由 ForgeOJ 重组为根聚合工程 | `ADOPTED` | 2026-09-27 | 在线服务未暴露部署 commit；生成请求和 ZIP SHA-256 见 U-001 |
 | Spring Boot | [spring-projects/spring-boot](https://github.com/spring-projects/spring-boot) | `v4.1.1` → `6fdf67ea1552691e932604d4bf67a5e08ff0b0ea` | Apache-2.0 | 后端框架与 BOM | `ADOPTED` | 2026-09-27 | [4.1.1 发布说明](https://spring.io/blog/2026/08/20/spring-boot-4-1-1-available-now/) |
-| Spring Security | [spring-projects/spring-security](https://github.com/spring-projects/spring-security) | `7.1.1` → `a825937b8175ee85872c49d9c7fc25eea8cff991` | Apache-2.0 | API 最小会话认证与安全测试 | `ADOPTED` | 2026-09-28 | [7.1.1 release](https://github.com/spring-projects/spring-security/releases/tag/7.1.1) |
+| Spring Security | [spring-projects/spring-security](https://github.com/spring-projects/spring-security) | `7.1.1` → `a825937b8175ee85872c49d9c7fc25eea8cff991` | Apache-2.0 | API 认证与安全测试；M2 增量 JOSE 模块 | `ADOPTED` | 2026-09-28；JOSE 2026-10-02 | [7.1.1 release](https://github.com/spring-projects/spring-security/releases/tag/7.1.1)；U-009 固定 POM/构件 |
+| Nimbus JOSE+JWT | [connect2id/nimbus-jose-jwt](https://bitbucket.org/connect2id/nimbus-jose-jwt) | Maven 发布 `10.9.1`，POM SCM tag `10.9.1`；固定构件 SHA-256 见 U-009 | Apache-2.0 | Spring Security JOSE 传递的 JWT 签名/解析；不复制上游源码 | `ADOPTED_TRANSITIVE_RUNTIME` | 2026-10-02 | [10.9.1 固定 POM](https://repo.maven.apache.org/maven2/com/nimbusds/nimbus-jose-jwt/10.9.1/nimbus-jose-jwt-10.9.1.pom) |
 | Spring AMQP | [spring-projects/spring-amqp](https://github.com/spring-projects/spring-amqp) | `v4.1.1` → `cc1c35f30c3e2f06af1c9f258d71b0255e9e5ddc` | Apache-2.0 | API/Worker RabbitMQ 传输 | `ADOPTED` | 2026-09-28 | [4.1.1 release](https://github.com/spring-projects/spring-amqp/releases/tag/v4.1.1) |
 | Jackson Databind | [FasterXML/jackson-databind](https://github.com/FasterXML/jackson-databind) | `jackson-databind-3.1.5` | Apache-2.0 | Worker 严格解析四字段任务 JSON；通过 Boot Starter 引入 | `ADOPTED` | 2026-09-29 | [Maven Central POM](https://repo.maven.apache.org/maven2/tools/jackson/core/jackson-databind/3.1.5/jackson-databind-3.1.5.pom) |
 | Flyway | [flyway/flyway](https://github.com/flyway/flyway) | `flyway-12.4.0` → `be256634108dba6f760dbb0604e3421f12f2c431` | Apache-2.0 | API 唯一生产迁移执行者与 MySQL 模块 | `ADOPTED` | 2026-09-28 | [12.4.0 release](https://github.com/flyway/flyway/releases/tag/flyway-12.4.0) |
@@ -161,6 +162,18 @@
 
 2026-10-01 的关联日志与真实进程故障阶段均未增加直接依赖或复制外部源码。子 JVM 控制使用既有 JDK 21，临时服务使用已登记的 Testcontainers/MySQL/RabbitMQ/Temurin；attempt 容器身份与 MySQL 关闭事实查询是 ForgeOJ 自有实现。框架、broker、daemon 和镜像能力的归属/许可证边界不变，详见两项阶段验证记录与 `OWNERSHIP.md`。
 
+### U-009：M2 普通账号 JWT 编解码依赖
+
+- 采用日期：2026-10-02，D-041 用户已确认的普通账号设计内；账号单元为 `VERIFIED`，完整 M2 仍为 `IN_PROGRESS`，最终命令、哈希和范围见 [账号验收](M2-ACCOUNTS-VALIDATION.md)。
+- API POM 新增直接项 `org.springframework.security:spring-security-oauth2-jose`，版本由既有 Spring Boot 4.1.1 BOM 管理，实际构件为 7.1.1。沿用上表既有 Spring Security `7.1.1` release/commit，没有升级整个框架、引入 OAuth 登录服务或复制源码。
+- 该固定 POM 传递声明 `spring-security-oauth2-core:7.1.1`、`spring-security-core:7.1.1`、`spring-core:7.0.9` 和 `com.nimbusds:nimbus-jose-jwt:10.9.1`。Nimbus 的官方 SCM/tag 由实际 POM 记录为 Bitbucket `connect2id/nimbus-jose-jwt` / `10.9.1`；未把未核实的 commit 写作已核验。
+- 许可证核验：本机 Maven Central 缓存的 JOSE 与 Nimbus POM 均声明 Apache License 2.0；固定来源为 [JOSE 7.1.1 POM](https://repo.maven.apache.org/maven2/org/springframework/security/spring-security-oauth2-jose/7.1.1/spring-security-oauth2-jose-7.1.1.pom)与 [Nimbus 10.9.1 POM](https://repo.maven.apache.org/maven2/com/nimbusds/nimbus-jose-jwt/10.9.1/nimbus-jose-jwt-10.9.1.pom)。Nimbus POM 的 shade 配置仍须在首次 Release 审计实际内嵌依赖和告知材料；本次库级核验不关闭完整发布物门禁。
+- 构件 SHA-256（2026-10-02 本机实际文件）：JOSE POM `6157142BB4720EE555A41075F9DDFBEB9B5C12607FFCBDA53944DE59F1EC9E4E`，JOSE JAR `E07D47CAC04DE4F01BE6A6C3F8BE249472444B24FD4FAD8FF030B45BFE6C5B9C`；Nimbus POM `D729B6D5D9EFCB6BF54E77A9513C54DEB2F1A2D9E9AAB5FF3DDFFBC1CBF716AA`，Nimbus JAR `33152EA83EC50D22706FDAF3B07ACBCD716F9A68EDCABDD7C4D02843CBDCDCF6`。
+- 复用范围：通过库 API 使用 HS256 JWT encoder/decoder 和固定 issuer/audience/期限验证；BCrypt、Spring Security 过滤链、数据库事务和 JDK 随机/摘要能力继续属于现有第三方或平台能力。未复制上游实现、页面、题目或模板，未给 Worker 新增 JOSE 依赖，根许可证未变。
+- ForgeOJ 自有相邻模块：账号/会话/摘要模型与 V6、权限 SQL、激活/找回/补邮箱状态转换、refresh 轮换和重用撤销、Cookie/CSRF/Origin 规则、HTTP 与通知会话复核、账号页和本地邮件投递接口及相应测试。不能表述为自行实现密码学或 JWT 协议库。
+- 验证证据：固定 Linux 后端 211 / 前端 13 项、相同产物的真实账号链路与权限/日志/队列审计和精确清理已闭环，见 [验收记录](M2-ACCOUNTS-VALIDATION.md)和[脱敏事实](evidence/m2-accounts/README.md)。验收执行于基线 HEAD `d38e2c9` 的工作树快照，交付身份见 `feat/m2-accounts` 最新提交；不预写未知提交或 push 状态。
+- 剩余条件：完整传递/内嵌依赖、漏洞与发布物许可证审计留在首次 Release 门禁。依赖装配或构件哈希不单独证明账号安全或生产部署通过，账号本地闭环也不证明 SMTP 上线投递。
+
 ## 5. 引入记录模板
 
 2026-10-02 的原创 `tools/validation/` 仅编排已登记的固定 Maven/Node/Temurin/Docker CLI/MySQL/RabbitMQ 镜像，digest 与复现证据见 `M1-FIXED-LINUX-VALIDATION.md` 和 `M0-E2E-VALIDATION.md`。Docker CLI 二进制只在一次性测试镜像内从官方固定镜像复制，不存入仓库或新增生产发布物；未复制外部脚本，未新增 Maven/npm 依赖或变更根许可证。
@@ -249,4 +262,4 @@ Maven、npm、Docker 镜像和操作系统包都属于第三方组成。Release 
 
 > 基于经许可证核验的通用工程骨架，保留基础页面与通用设施；自行设计并实现 ForgeOJ 的判题任务、Outbox、Judge Worker、沙箱、班级权限和故障恢复链路。
 
-最终表述必须以实际采用记录为准。M-1 阶段只证明官方最小生成骨架；当前 M0/M1 自有业务实现与验证入口见 `OWNERSHIP.md`、`M0-E2E-VALIDATION.md` 和 `M1-GATE-AUDIT.md`，不能把框架/内核能力、M2～M5 计划或未发布能力写成本人已完成的发布成果。
+最终表述必须以实际采用记录为准。M-1 阶段只证明官方最小生成骨架；当前 M0/M1 及普通账号单元的自有业务实现与验证入口见 `OWNERSHIP.md`、`M0-E2E-VALIDATION.md`、`M1-GATE-AUDIT.md` 和 [账号验收](M2-ACCOUNTS-VALIDATION.md)，不能把框架/内核能力、其余 M2～M5 计划或未发布能力写成本人已完成的发布成果。

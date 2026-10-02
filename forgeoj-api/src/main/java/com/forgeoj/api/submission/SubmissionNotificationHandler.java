@@ -108,6 +108,15 @@ final class SubmissionNotificationHandler extends AbstractWebSocketHandler {
         connections.forEach((id, connection) -> close(id, connection, CloseStatus.GOING_AWAY));
     }
 
+    @org.springframework.context.event.EventListener
+    void sessionsRevoked(com.forgeoj.api.auth.AccountSessionsRevoked event) {
+        connections.forEach((id, connection) -> {
+            if (connection.watch.userId() == event.userId()
+                    && (event.sessionId() == null || event.sessionId().equals(connection.watch.sessionId())))
+                close(id, connection, CloseStatus.POLICY_VIOLATION);
+        });
+    }
+
     @Override
     public void handleMessage(WebSocketSession session, WebSocketMessage<?> message) {
         Connection connection = connections.get(session.getId());

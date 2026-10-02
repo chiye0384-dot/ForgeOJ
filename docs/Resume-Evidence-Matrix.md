@@ -1,6 +1,6 @@
 # ForgeOJ 简历证据矩阵
 
-> 当前状态：所有候选亮点均为 `PLANNED`，不能写入简历。  
+> 当前状态：E-01/E-02 为 `IMPLEMENTED`，已有 M1 范围的实现与验证证据；完整 V1 候选证据未闭环。其他项仍为 `PLANNED`；没有任何 `RESUME_READY`，不能写入简历。
 > 本文不是简历文案，而是决定一条文案是否有资格进入简历的证据清单。
 
 ## 1. 准入规则
@@ -29,8 +29,8 @@
 
 | ID | 候选主题 | 当前状态 | 进入简历前必须具备的核心证据 | 主要限制 |
 |---|---|---|---|---|
-| E-01 | 可靠异步判题链路 | `PLANNED` | Outbox、手动 ACK、幂等、重试/死信代码；重复消息与 Worker 崩溃测试；无消息丢失或重复副作用报告 | 至少一次投递；最终一致窗口；单机 MQ |
-| E-02 | Docker 代码沙箱 | `PLANNED` | 非 root/禁网/只读/资源限制配置；恶意代码测试集；超时与清理证据；威胁模型 | 普通 Docker 非绝对安全边界；受控小范围使用 |
+| E-01 | 可靠异步判题链路 | `IMPLEMENTED` | M1 自动恢复/幂等证据已具备；完整候选仍需 M4 管理重试审计、broker 暂停恢复演练与发布 | 至少一次投递；最终一致窗口；单机 MQ |
+| E-02 | Docker 代码沙箱 | `IMPLEMENTED` | M1 实际限制/恶意程序/故障清理证据已具备；完整候选仍需 M5 独立 Linux 主机安全验收与发布 | 普通 Docker 非绝对安全边界；受控小范围使用 |
 | E-03 | 班级与作业权限模型 | `PLANNED` | OWNER/ASSISTANT/MEMBER 资源级鉴权；成员和作业生命周期测试；越权矩阵 | 不验证真实教师；教师只见本班作业数据 |
 | E-04 | Redis/ES 可降级数据架构 | `PLANNED` | MySQL 权威数据、Outbox 同步、版本幂等、缓存和索引重建；Redis/ES 故障演练 | 降级时性能或搜索能力下降 |
 | E-05 | 独立管理员与运维闭环 | `PLANNED` | 三类后台角色权限测试；公共题审核；DLQ 幂等重试；审计记录 | 单人项目仍需用测试证明职责隔离 |
@@ -118,6 +118,10 @@
 随后实现保存为 `ab61c9a`，同一源码在固定 Linux/amd64、只读挂载、全新缓存中通过 API 48 + Worker 110、前端 8 项和全部检查（零失败/错误/跳过）。Linux 五项真实子 Worker 故障/凭据检查、16 项安全程序、HTTP/WebSocket 与实际 MQ 资源结果均通过，详见 [Linux 记录](M1-FIXED-LINUX-VALIDATION.md)。仍缺本轮 Linux 产物的独立完整纵向链路与 OPS_ADMIN/最终门禁，且没有 Release/tag/个人解释验收，不把 E-01/E-02 改为 VERIFIED 或 RESUME_READY。
 
 后续独立 Linux 重放新增八 verdict、真实浏览器 normal/fallback、owner/Origin/logout/取消、日志链路、Outbox/队列和 API 权限审计证据，见 [M1 E2E](M1-E2E-VALIDATION.md)。11 个提交中 10 FINISHED/1 CANCELLED，11 Outbox 已发布、四队列空、精确资源清理通过。复用已核验 JAR，不新增全量测试次数或性能数字；OPS_ADMIN/最终门禁、发布与个人解释验收仍缺，E-01/E-02 保持原状态。
+
+范围与状态校正（2026-10-02）：上面的日期段落保留当时证据，实时门禁见 [M1 最终审计](M1-GATE-AUDIT.md)。代码已存在且具有多阶段验证，候选总表据实从 `PLANNED` 改为 `IMPLEMENTED`，但不把完整 V1 候选写成 `VERIFIED/RELEASED/RESUME_READY`。OPS_ADMIN 属于 M4：它阻止完整 E-01 证据闭环，不是新增的 M1 管理门禁；E-02 的生产主机验收仍属 M5。没有 Release/tag、性能数字或个人解释/现场修改验收。
+
+最终审计结果：M1 的 15/15 门禁 PASS，补齐后的固定 Linux 后端 160/前端 8 项全过，生产 runtime 条目与真实浏览器/八结果 E2E 完全对应，见审计记录。只升级 M1 里程碑，不跳过完整 E-01/E-02 的上述后续证据，也不生成简历文案。
 
 ### E-03：班级与作业权限模型
 

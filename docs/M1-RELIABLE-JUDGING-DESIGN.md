@@ -5,6 +5,8 @@
 > 适用里程碑：M1  
 > 注意：本文约束 M1 的实现顺序和验收边界，不代表相应能力已经通过验收。
 
+验收更新（2026-10-02）：对应 15 项门禁全部 PASS，M1 为 `VERIFIED`；新鲜固定 Linux 后端 160/前端 8 项和既有同运行时代码的真实链路证据见 [最终审计](M1-GATE-AUDIT.md)。本文仍是设计基线，PASS 不扩大普通 Docker、最终清理、通知/日志和资源判定的已接受边界；M4/M5/发布未完成。
+
 ## 1. 目标
 
 M1 把 M0 的“正常情况下能够完成判题”提升为“Worker 中断、消息重复、ACK 丢失和平台临时故障下仍能恢复、追踪且不会覆盖正确结果”。
@@ -16,6 +18,7 @@ M1 把 M0 的“正常情况下能够完成判题”提升为“Worker 中断、
 - API 不获得 Docker 权限；
 - 用户代码结果与平台故障继续分离；
 - M1 不提前实现 M2 的完整账号、题库、提交历史或草稿功能；
+- 独立管理员登录、角色权限、人工死信重试和管理审计按 Roadmap 第 8 节留在 M4；M1 只验证自动有限重试、死信事实和路由，不新增管理员数据/权限/接口；
 - 普通 Docker 仍只是受控小范围边界，不宣称绝对安全。
 
 ## 2. 实施顺序
@@ -117,7 +120,7 @@ Worker 在短事务中锁定 JudgeTask 与 Submission，只允许以下任务被
 
 启动及周期清理仅删除本数据库精确匹配的已关闭 attempt（`SUCCEEDED/RETRYABLE_FAILURE/LEASE_EXPIRED/DEAD_LETTERED` 且 finished_at 非空）。状态关闭是单调事实：不能仅因租约时间过期删除仍为 RUNNING 的容器，必须先由领取/耗尽事务关闭并栅栏旧 attempt。其他数据库、缺失记录、legacy 无 attempt 标签、非法标签或名称均保留；Docker/数据库异常不授权删除。默认清理间隔 `forgeoj.worker.sandbox.cleanup-delay-ms=5000`，周期清理与 sandbox/recovery 开关同时开启；数据库/daemon 恢复后再次扫描，失败只输出固定脱敏码。
 
-恢复先依靠独立 attempt 名称继续判题，关闭的旧沙箱由扫描器最终回收，不保证原进程被杀死瞬间即删除。未知或旧格式资源需要运维按完整 ID、所属任务和活跃进程核对后处理，不使用全局 prune，见 L-031。API 不获得 Docker 权限，原非 root、禁网、只读、资源与输出限制不变。Windows 子 JVM 故障证据见 `M1-FAULT-RECOVERY-VALIDATION.md`；固定 Linux 子 JVM 复验与独立真实链路分别见 `M1-FIXED-LINUX-VALIDATION.md`、`M1-E2E-VALIDATION.md`，OPS_ADMIN 与最终门禁审计仍待完成。
+恢复先依靠独立 attempt 名称继续判题，关闭的旧沙箱由扫描器最终回收，不保证原进程被杀死瞬间即删除。未知或旧格式资源需要运维按完整 ID、所属任务和活跃进程核对后处理，不使用全局 prune，见 L-031。API 不获得 Docker 权限，原非 root、禁网、只读、资源与输出限制不变。Windows 子 JVM 故障证据见 `M1-FAULT-RECOVERY-VALIDATION.md`；固定 Linux 子 JVM 复验与独立真实链路分别见 `M1-FIXED-LINUX-VALIDATION.md`、`M1-E2E-VALIDATION.md`。最终门禁另行逐项审计；OPS_ADMIN 操作闭环属于 M4，不作为本阶段剩余条件。
 
 ### 5.2 逐用例资源隔离加固
 

@@ -67,7 +67,7 @@ Vite 会对拒绝的升级请求直接关闭流，不能依赖它转发 HTTP 401
 `E2E_AUDIT_VERIFIED`：11 submissions、10 finished、1 cancelled、11 publishedOutbox、4 emptyQueues。
 
 - Outbox 每项只含 taskId、submissionId、taskType、contractVersion，无源码/隐藏测试；初始 sequence 0，全部已发布、无 failed 标记。
-- 正式、重试、自测、死信四个队列的 ready/unacknowledged 均为 0。本次不注入死信，不据此关闭 OPS_ADMIN/DLQ 处置门禁。
+- 正式、重试、自测、死信四个队列的 ready/unacknowledged 均为 0。本次不注入死信，不据此声称 M4 OPS_ADMIN/DLQ 人工处置完成；M1 自动耗尽/死信由集成测试另外验证。
 - 每个创建请求 requestId 对应 202，与 submissionId/judgeTaskId/outboxEventId 关联；每个执行 attempt 的 claimed/finished/ack_sent 持有相同 ID，终态日志在 ACK 写出前。`ack_sent` 仍不证明 broker 收到 ACK。
 - API/Worker 日志没有原创源码/编译错误/运行异常哨兵、公开测试密码、会话 Cookie、CSRF header、隐藏 gzip 列名。没有扩大为“所有第三方日志完全脱敏”的保证。
 - 实际数据库拒绝 API 读取 problem_test_case、judge_task_attempt，拒绝 Worker 读取 user_account（ERROR 1142）；API 无 Docker socket/配置，bootstrap 已不存在。
@@ -126,4 +126,6 @@ $replayRun = 'target/forgeoj-e2e-YYYYMMDD-HHMMSS-xxxxxxxx'
 
 本轮不重跑前一阶段 158 后端/8 前端测试，使用其已经核验的 Linux JAR；本轮新增证据是分离进程、真实代理/浏览器、八 verdict 和审计/空库部署。JS syntax、PowerShell parser、Bash syntax 与 diff 检查另行通过。
 
-现在第 15 项固定 Linux 构建/故障/真实链路已有分别可追溯证据，但最终门禁尚未逐条正式审计。下一步只处理既定 OPS_ADMIN/DLQ 运维边界及最后 15 项证据核对，不提前 M2。L-029～L-032 的进程会话、尽力日志、保守最终清理、纯 JVM OOM/无审计拒绝操作和普通 Docker 隔离边界仍保留；没有 PR/main 合并/tag/Release、性能数字或云主机安全承诺。
+现在第 15 项固定 Linux 构建/故障/真实链路已有分别可追溯证据，但本阶段结束时最终门禁尚未逐条正式审计。后续先完成最后 15 项证据核对，不提前 M2。范围校正：本记录曾把 OPS_ADMIN/DLQ 人工处置列为 M1 剩余工作；正式 Roadmap 将其安排在 M4，这不是 M1 的第 16 项隐含门禁。L-029～L-032 的进程会话、尽力日志、保守最终清理、纯 JVM OOM/无审计拒绝操作和普通 Docker 隔离边界仍保留；没有 PR/main 合并/tag/Release、性能数字或云主机安全承诺。
+
+后续收尾：补齐两项门禁回归后的固定 Linux 后端 160/前端 8 项与全部检查通过；新旧 JAR runtime 条目逐项字节相同、本记录五份报告/截图哈希再次一致，未重复执行浏览器 E2E。15 项最终门禁 PASS，M1 为 `VERIFIED`，详见 [M1 最终审计](M1-GATE-AUDIT.md)。本记录保留上述 E2E 阶段的实际输入、时间和边界，不改写成另一轮执行。

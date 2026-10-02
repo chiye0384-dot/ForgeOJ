@@ -1,6 +1,6 @@
 # ForgeOJ 版本路线图
 
-> 当前阶段：M-1 项目准备与 M0 最小判题纵向切片已验证通过；M1 可靠异步判题已经开始实施。
+> 当前阶段：M-1、M0 与 M1 已验证通过；下一里程碑 M2 仍为 `PLANNED`。
 > 路线图描述先后顺序，不代表完成状态。
 
 ## 1. 状态规则
@@ -13,7 +13,7 @@
 - `DEFERRED`：明确推迟到以后。
 - `BACKLOG`：只有候选想法，尚未承诺进入版本。
 
-当前 M-1 与 M0 均为 `VERIFIED`；M1 为 `IN_PROGRESS`；M2 至 V1.1 仍为 `PLANNED`；V2.0 仅为 `BACKLOG` 候选，不是承诺的里程碑。
+当前 M-1、M0 与 M1 均为 `VERIFIED`；M2 至 V1.1 仍为 `PLANNED`；V2.0 仅为 `BACKLOG` 候选，不是承诺的里程碑。
 
 ## 2. 总体顺序
 
@@ -121,11 +121,13 @@ M0 的登录只用于打通受保护提交链路，可使用预置账号和最�
 
 目标：把“能跑”提升为“故障下仍可解释和恢复”。
 
-当前状态：`IN_PROGRESS`。attempt/lease 栅栏、心跳、被动/主动恢复、有限重试/死信、Outbox 发布退避、独立队列边界、并发用户配额和 `QUEUED` 取消已有 Windows/Testcontainers 自动化证据，见 [配额取消记录](M1-QUOTA-CANCELLATION-VALIDATION.md)。D-038 保持一个运行槽位加三个排队任务；满队列失败通过内部 `WAITING_RETRY` 保留运行槽位等待有限重试。
+当前状态：`VERIFIED`（2026-10-02）。[最终 15 项门禁审计](M1-GATE-AUDIT.md) 全部 PASS：补齐 Outbox 同事件恢复和真实重新领取后旧 owner 全写路径拒绝，固定 Linux 全新缓存后端 API 49 + Worker 111、前端 8 项及全部检查通过；五项真实子 Worker 故障/凭据和 16 项安全程序无跳过。运行时代码与既有八 verdict/真实浏览器 normal/fallback/权限/日志/队列/空库 E2E 逐条目对应，资源最终清理完成。D-038 保持一个运行槽位加三个排队任务；满队列失败通过内部 `WAITING_RETRY` 保留运行槽位等待有限重试。L-026 关闭，L-027～L-032 保留。仅本里程碑验证，不代表 M4 运维、M5 主机或发布完成；下文日期段落是历史快照。
 
 最新更新（2026-10-02）：累计通知/日志/故障/安全/资源结果已提交为 `ab61c9a`，固定 Linux/amd64 全新缓存通过 API 48 + Worker 110、前端 8 项与全部检查，零失败/错误/跳过，无验证容器残留；复现脚本与完整证据见 [Linux 验证](M1-FIXED-LINUX-VALIDATION.md)。本轮按用户授权提交/推送功能分支，不创建完成 PR 或发布。下文未提交表述为各阶段当时状态；完整独立 Linux 纵向链路、OPS_ADMIN 运维与最终门禁仍缺，M1 状态不提升。
 
-后续独立 Linux 纵向链路已通过：八 verdict、owner 通知/API 负向握手、logout/queued cancel、真实浏览器正常及断线轮询、日志/Outbox/权限/队列和精确清理均有证据；见 [M1 E2E](M1-E2E-VALIDATION.md)。复用 hash-verified Linux JAR，未再运行全量测试。下一步仅剩既定 OPS_ADMIN/DLQ 运维闭环与最终 15 门禁审计；L-029～L-032 不因本轮关闭，M1 仍 IN_PROGRESS。
+后续独立 Linux 纵向链路已通过并保存为 `2e1af57`：八 verdict、owner 通知/API 负向握手、logout/queued cancel、真实浏览器正常及断线轮询、日志/Outbox/权限/队列和精确清理均有证据；见 [M1 E2E](M1-E2E-VALIDATION.md)。该阶段复用 hash-verified Linux JAR，未再运行全量测试。当前进行最终 15 门禁审计，并补同一 Outbox 事件恢复和旧租约全写路径拒绝的直接回归；L-029～L-032 不因此关闭，M1 仍 `IN_PROGRESS`。
+
+范围校正：独立管理员登录、角色鉴权、人工死信幂等重试和持久管理审计属于本路线图第 8 节 **M4**，不是 M1 第 10 节的 15 项门禁。前面交接和阶段记录把 OPS_ADMIN 提前写入 M1 是记录偏差，不是新增的用户决定；此处恢复原里程碑边界，不删减 V1.0 管理要求。M1 验收有限重试、Task/Submission/attempt/死信 Outbox 原子事实和独立死信路由，不实施管理员操作入口。下文各阶段未提交、未验收和下一步表述保留为当时快照，以本段和最终门禁记录为准。
 
 2026-10-01 已在现有 M1 分支工作树实现 D-039 的所有者同源 WebSocket、三字段通知、单调版本、登出/终态清理与前端轮询/有界重连。通知阶段完整回归 API **38**、Worker **57** 全过且零跳过；前端 **8** 项测试及全部校验/构建通过，见 [通知验证记录](M1-NOTIFICATION-VALIDATION.md)。这是局部 Windows/Testcontainers 与模拟前端证据，不是浏览器/独立 Worker 的固定 Linux M1 重放。
 

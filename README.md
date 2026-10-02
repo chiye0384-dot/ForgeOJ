@@ -1,6 +1,6 @@
 # ForgeOJ
 
-> 当前状态：`M-1：项目准备` 和 `M0：最小判题纵向切片` 均为 `VERIFIED`。M0 已通过固定 Linux/amd64 全量构建、真实进程级六 verdict 闭环和最终 20 项门禁审计；`M1：可靠异步判题` 为 `IN_PROGRESS`，尚未通过完整门禁。
+> 当前状态：`M-1：项目准备`、`M0：最小判题纵向切片` 和 `M1：可靠异步判题` 均为 `VERIFIED`。M0 通过 20 项门禁；M1 于 2026-10-02 通过 [15 项最终门禁审计](docs/M1-GATE-AUDIT.md)。M2～M5 仍为 `PLANNED`，尚未发布。
 >
 > 需求基线：2026-09-24；工程基线：2026-09-28
 
@@ -13,7 +13,7 @@ ForgeOJ 是一个面向 Java 学习者和小型教学班级的在线判题平台
 - JDK 21 + Spring Boot 4.1.1 + Maven Wrapper 3.3.4 / Maven 3.9.14；
 - Maven 根聚合工程，包含独立的 `forgeoj-api` 和 `forgeoj-judge-worker` 可执行模块；
 - 持久层使用官方 `mybatis-spring-boot-starter:4.1.0`，不使用 MyBatis-Plus；
-- M0 已声明 Spring Security、Spring AMQP 与 Flyway 运行依赖，以及仅用于测试的 Testcontainers；最小会话认证、Flyway migration 与异步判题纵向链路已实现并通过 M0 门禁；M1 已有 attempt/lease 栅栏、心跳、恢复扫描、有限重试、死信、Outbox 退避、队列边界、用户配额和排队取消的局部证据；当前工作树又实现所有者同源 WebSocket 与前端版本/轮询恢复，见通知验证记录，但整个 M1 仍未验收；
+- M0 已声明 Spring Security、Spring AMQP 与 Flyway 运行依赖，以及仅用于测试的 Testcontainers；最小会话认证、Flyway migration 与异步判题纵向链路已通过 M0 门禁；M1 又实现 attempt/lease 栅栏、心跳、恢复扫描、有限重试/死信、Outbox 退避、独立队列、用户配额/排队取消，以及所有者同源 WebSocket 与前端版本/轮询恢复，验收状态见 [最终门禁审计](docs/M1-GATE-AUDIT.md)；
 - PageHelper 暂不引入，到 M2 出现真实列表查询和分页语义时再评估；
 - 前端基于 create-vue 3.22.3 的 Vue 3 + TypeScript + Router + Vitest + ESLint + Prettier，实现了 M0 最小判题工作台；
 - H2 仅在测试作用域内用于空上下文启动检查；M0 的 migration、数据库权限、认证和题目读取使用固定 digest 的真实 MySQL 8.4.12 Testcontainer 验证。
@@ -124,4 +124,6 @@ M-1 的证据只证明工程起点、许可证边界和构建链路可复现。M
 
 上述“未提交”是当时记录。实现已保存为 **`ab61c9a`**；2026-10-02 固定 Linux/amd64 全新缓存复验通过后端 **158** 项、前端 **8** 项和全部校验/构建，零失败/错误/跳过、无容器残留，见 [Linux 记录](docs/M1-FIXED-LINUX-VALIDATION.md)。用户授权本轮提交并推送现有 M1 分支，不合并/发布；功能分支 push 不触发现有 CI。M1 仍为 `IN_PROGRESS`，下一步是独立 Linux 纵向链路、OPS_ADMIN 运维与最终门禁审计。
 
-最新推进：同日独立 Linux 纵向链路已经通过，复用上述已核验 JAR；八 verdict 均 FINISHED/version 2，真实浏览器正常通知与 WebSocket 不可用时的轮询均显示 AC。11 个提交（10 完成/1 取消）、11 个已发布四字段 Outbox、4 个空队列、日志 ID 与 API 无 Docker/隐藏测试权限均通过审计，临时栈/数据/镜像已精确清理。另修复 MySQL 空库初始化脚本 strict options 泄漏。见 [E2E 证据](docs/M1-E2E-VALIDATION.md)；没有声称本轮又跑了 158/8 全量测试。下一步为 OPS_ADMIN/DLQ 运维闭环与最终 15 项门禁审计，M1 仍为 `IN_PROGRESS`。
+后续独立 Linux 纵向链路已通过并保存为 `2e1af57`，复用上述已核验 JAR；八 verdict 均 FINISHED/version 2，真实浏览器正常通知与 WebSocket 不可用时的轮询均显示 AC。11 个提交（10 完成/1 取消）、11 个已发布四字段 Outbox、4 个空队列、日志 ID 与 API 无 Docker/隐藏测试权限均通过审计，临时栈/数据/镜像已精确清理。另修复 MySQL 空库初始化脚本 strict options 泄漏。见 [E2E 证据](docs/M1-E2E-VALIDATION.md)；该阶段没有又跑 158/8 全量测试。范围校正：独立管理员认证/角色、人工 DLQ 重试与持久管理审计属于 Roadmap M4，不作为 M1 剩余工作；当前进行 [最终 15 项门禁审计](docs/M1-GATE-AUDIT.md)。
+
+最终收尾：补齐同一 Outbox 事件恢复与旧租约全写路径拒绝的直接集成回归后，10:43:48 固定 Linux 全新缓存后端 **49 + 111 = 160** 项、10:44 前端 **8** 项与全部检查通过，零失败/错误/跳过且资源清理完成。新旧 JAR 共 229 个 runtime 类/资源/依赖条目字节一致，既有真实链路证据可关联而不冒称再跑浏览器。**15/15 门禁 PASS，M1 为 VERIFIED**；L-026 关闭，L-027～L-032 保留。下一步是仍 PLANNED 的 M2 最小账号/学习主流程设计；不表示管理后台、云主机上线、性能验收或 Release 已完成。以上日期段落保留各阶段当时状态，以本段为准。

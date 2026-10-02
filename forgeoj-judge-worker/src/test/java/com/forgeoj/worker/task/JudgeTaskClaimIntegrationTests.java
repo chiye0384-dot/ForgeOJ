@@ -7,6 +7,8 @@ import com.forgeoj.worker.messaging.JudgeTaskMessage;
 import com.forgeoj.worker.messaging.JudgeTaskRunner;
 import com.forgeoj.worker.messaging.RabbitTopology;
 import com.forgeoj.worker.sandbox.SandboxAttemptLookup;
+import com.forgeoj.worker.sandbox.SandboxExecutionResult;
+import com.forgeoj.worker.sandbox.SandboxOutcome;
 
 import java.nio.file.Files;
 import java.nio.file.Path;
@@ -547,6 +549,51 @@ class JudgeTaskClaimIntegrationTests {
                                 Long.class,
                                 task.taskId()))
                 .isEqualTo(2L);
+    }
+
+    @Test
+    void recoveredLeaseRejectsEveryOldOwnerWriteWithoutChangingNewAttempt() {
+        TaskIds task = insertQueuedTask();
+        ClaimedJudgeTask oldOwner = claimService.claim(validMessage(task)).claimedTask();
+        JdbcTemplate migrator = migratorJdbc();
+        expireLease(migrator, task.taskId(), oldOwner.attemptId());
+        ClaimedJudgeTask newOwner = claimService.claim(validMessage(task)).claimedTask();
+        assertThat(newOwner.attemptNo()).isEqualTo(2);
+        assertThat(newOwner.leaseToken()).isNotEqualTo(oldOwner.leaseToken());
+        var beforeTask = migrator.queryForMap("SELECT * FROM judge_task WHERE id = ?", task.taskId());
+        var beforeState = taskState(migrator, task.taskId(), task.submissionId());
+        var beforeAttempts = migrator.queryForList(
+                "SELECT * FROM judge_task_attempt WHERE judge_task_id = ? ORDER BY attempt_no",
+                task.taskId());
+
+        assertThatThrownBy(() -> leaseService.renew(oldOwner))
+                .isInstanceOf(LeaseOwnershipLostException.class);
+        assertThatThrownBy(() -> completionService.recordPlatformFailure(oldOwner))
+                .isInstanceOf(IllegalStateException.class);
+        assertThatThrownBy(() -> completionService.recordUnrecoverablePlatformFailure(oldOwner))
+                .isInstanceOf(IllegalStateException.class);
+        assertThatThrownBy(() -> completionService.finish(
+                oldOwner, SandboxExecutionResult.of(SandboxOutcome.WRONG_ANSWER)))
+                .isInstanceOf(IllegalStateException.class);
+        assertThat(migrator.queryForMap("SELECT * FROM judge_task WHERE id = ?", task.taskId()))
+                .isEqualTo(beforeTask);
+        assertThat(taskState(migrator, task.taskId(), task.submissionId())).isEqualTo(beforeState);
+        assertThat(migrator.queryForList(
+                "SELECT * FROM judge_task_attempt WHERE judge_task_id = ? ORDER BY attempt_no",
+                task.taskId())).isEqualTo(beforeAttempts);
+        assertThat(migrator.queryForObject(
+                "SELECT COUNT(*) FROM outbox_event WHERE aggregate_id = ?", Long.class, task.taskId()))
+                .isZero();
+
+        leaseService.renew(newOwner);
+        completionService.finish(newOwner, SandboxExecutionResult.of(SandboxOutcome.ACCEPTED));
+        assertThat(taskState(migrator, task.taskId(), task.submissionId()))
+                .containsEntry("task_status", "FINISHED")
+                .containsEntry("processing_status", "FINISHED")
+                .containsEntry("attempt_count", 2L);
+        assertThat(migrator.queryForObject(
+                "SELECT verdict FROM submission WHERE id = ?", String.class, task.submissionId()))
+                .isEqualTo("AC");
     }
 
     @Test

@@ -214,6 +214,66 @@ class OutboxPublisherIntegrationTests {
                 .doesNotContain("OUTBOX_SOURCE_SENTINEL", API_PASSWORD, MIGRATOR_PASSWORD, RABBIT_PASSWORD);
     }
 
+    @Test
+    void recoversTheSameEventAfterRoutingReturnsBeforeExhaustion(CapturedOutput output) {
+        // Another method intentionally removes this queue; keep both test orders valid.
+        rabbitAdmin.initialize();
+        JdbcTemplate jdbc = new JdbcTemplate(dataSource);
+        SubmissionResult submission = createSubmission();
+        String taskId = taskId(jdbc, submission.submissionId());
+        String eventId = jdbc.queryForObject(
+                "SELECT id FROM outbox_event WHERE aggregate_id = ? AND sequence_no = 0",
+                String.class,
+                taskId);
+        assertThat(rabbitAdmin.deleteQueue(RabbitTopology.QUEUE)).isTrue();
+        try {
+            assertThat(outboxPublisher.publishPending()).isZero();
+            assertThat(publishedAt(jdbc, submission.submissionId())).isNull();
+            assertThat(outboxFailureState(jdbc, submission.submissionId()))
+                    .containsEntry("publish_attempts", 1L)
+                    .containsEntry("last_error_code", "UNROUTABLE")
+                    .containsEntry("failed_at", null);
+
+            // No busy retry before next_attempt_at, and no new Submission/Task/Event.
+            assertThat(outboxPublisher.publishPending()).isZero();
+            rabbitAdmin.initialize();
+            makeOutboxDue(jdbc, submission.submissionId());
+            assertThat(outboxPublisher.publishPending()).isEqualTo(1);
+            assertThat(publishedAt(jdbc, submission.submissionId())).isNotNull();
+            assertThat(outboxFailureState(jdbc, submission.submissionId()))
+                    .containsEntry("publish_attempts", 2L)
+                    .containsEntry("last_error_code", null)
+                    .containsEntry("failed_at", null);
+            assertThat(jdbc.queryForObject(
+                    "SELECT id FROM outbox_event WHERE aggregate_id = ? AND sequence_no = 0",
+                    String.class,
+                    taskId)).isEqualTo(eventId);
+            assertThat(jdbc.queryForObject(
+                    "SELECT COUNT(*) FROM outbox_event WHERE aggregate_id = ?",
+                    Long.class,
+                    taskId)).isEqualTo(1L);
+            assertThat(jdbc.queryForObject(
+                    "SELECT COUNT(*) FROM judge_task WHERE submission_id = ?",
+                    Long.class,
+                    submission.submissionId())).isEqualTo(1L);
+            Message recovered = rabbitTemplate.receive(RabbitTopology.QUEUE, 5000);
+            assertThat(recovered).isNotNull();
+            assertThat(recovered.getMessageProperties().getReceivedDeliveryMode())
+                    .isEqualTo(MessageDeliveryMode.PERSISTENT);
+            String payload = new String(recovered.getBody(), StandardCharsets.UTF_8);
+            assertThat((String) JsonPath.read(payload, "$.taskId")).isEqualTo(taskId);
+            assertThat((String) JsonPath.read(payload, "$.submissionId"))
+                    .isEqualTo(submission.submissionId());
+            assertThat(((java.util.Map<?, ?>) JsonPath.parse(payload).read("$"))).hasSize(4);
+            assertThat(outboxPublisher.publishPending()).isZero();
+            assertThat(rabbitTemplate.receive(RabbitTopology.QUEUE, 200)).isNull();
+            assertThat(output.getAll()).doesNotContain(
+                    "OUTBOX_SOURCE_SENTINEL", API_PASSWORD, MIGRATOR_PASSWORD, RABBIT_PASSWORD);
+        } finally {
+            rabbitAdmin.initialize();
+        }
+    }
+
     private SubmissionResult createSubmission() {
         return submissionService.create(
                 1L,

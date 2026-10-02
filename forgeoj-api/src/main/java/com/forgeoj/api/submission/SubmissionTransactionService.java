@@ -1,5 +1,7 @@
 package com.forgeoj.api.submission;
 
+import com.forgeoj.api.observability.CommittedJudgingEvents;
+
 import java.util.UUID;
 
 import org.springframework.http.HttpStatus;
@@ -74,6 +76,9 @@ class SubmissionTransactionService {
                         judgeVersion.testDatasetSha256()));
         submissionMapper.insertJudgeTask(taskId, submissionId);
         submissionMapper.insertOutboxEvent(eventId, taskId, taskPayload(taskId, submissionId));
+
+        CommittedJudgingEvents.afterCommit(
+                "submission.created", submissionId, taskId, eventId, "QUEUED", 0);
 
         return new SubmissionResult(submissionId, "QUEUED", 0);
     }

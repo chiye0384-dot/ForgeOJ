@@ -1,6 +1,7 @@
 package com.forgeoj.worker.task;
 
 import com.forgeoj.worker.messaging.JudgeTaskMessage;
+import com.forgeoj.worker.observability.JudgingEvents;
 
 import java.util.Set;
 import java.util.UUID;
@@ -59,6 +60,7 @@ public class JudgeTaskClaimService {
                         != 1) {
                     throw new IllegalStateException("Judge task quota deferral lost its state");
                 }
+                JudgingEvents.afterCommit("task.quota_deferred", message, null, "DEFERRED", null);
                 return TaskClaimResult.withoutOwnership(TaskClaimOutcome.DEFERRED);
             }
             return claimExecution(row, message);
@@ -76,6 +78,8 @@ public class JudgeTaskClaimService {
     private TaskClaimResult claimExecution(JudgeTaskClaimRow row, JudgeTaskMessage message) {
         if (row.attemptCount() >= row.maxAttempts()) {
             deadLetterExhausted(row);
+            JudgingEvents.afterCommit("task.exhausted", message, null,
+                    "SYSTEM_ERROR", "ATTEMPT_LIMIT_EXHAUSTED");
             return TaskClaimResult.withoutOwnership(TaskClaimOutcome.EXHAUSTED);
         }
 
@@ -105,9 +109,13 @@ public class JudgeTaskClaimService {
         if (taskUpdates != 1 || submissionUpdates != 1 || attemptInserts != 1) {
             throw new IllegalStateException("Judge task claim lost its compare-and-swap");
         }
-        return TaskClaimResult.claimed(
-                new ClaimedJudgeTask(
-                        message, attemptId, row.attemptCount() + 1, leaseToken, workerId));
+        ClaimedJudgeTask attempt = new ClaimedJudgeTask(
+                message, attemptId, row.attemptCount() + 1, leaseToken, workerId);
+        JudgingEvents.afterCommit("attempt.claimed", message, attempt, row.taskStatus(), null);
+        if ("RUNNING".equals(row.taskStatus())) {
+            JudgingEvents.afterCommit("task.lease_recovered", message, attempt, "RUNNING", null);
+        }
+        return TaskClaimResult.claimed(attempt);
     }
 
     private void deadLetterExhausted(JudgeTaskClaimRow row) {

@@ -67,16 +67,18 @@ public class OutboxPublisher {
         for (OutboxEventRow event : outboxMapper.findPending(batchSize)) {
             PublishAttempt attempt = publishConfirmed(event);
             if (!attempt.succeeded()) {
-                outboxMapper.recordPublishFailure(
+                int updated = outboxMapper.recordPublishFailure(
                         event.id(),
                         event.publishAttempts(),
                         maximumAttempts,
                         retryDelaySeconds(event.publishAttempts() + 1),
                         attempt.errorCode());
+                if (updated == 1) logEvent(event, "outbox.publish_failed", attempt.errorCode());
                 break;
             }
             if (outboxMapper.markPublished(event.id(), event.publishAttempts()) == 1) {
                 published++;
+                logEvent(event, "outbox.published", null);
             }
         }
         return published;
@@ -101,27 +103,33 @@ public class OutboxPublisher {
             CorrelationData.Confirm confirm =
                     correlation.getFuture().get(confirmTimeoutMs, TimeUnit.MILLISECONDS);
             if (!confirm.ack()) {
-                LOGGER.warn(
-                        "RabbitMQ negatively acknowledged Outbox event {}; reason={}",
-                        event.id(),
-                        confirm.reason());
                 return PublishAttempt.failed("BROKER_NACK");
             }
             if (correlation.getReturned() != null) {
-                LOGGER.warn("RabbitMQ returned unroutable Outbox event {}", event.id());
                 return PublishAttempt.failed("UNROUTABLE");
             }
             return PublishAttempt.success();
         } catch (InterruptedException interrupted) {
             Thread.currentThread().interrupt();
-            LOGGER.warn("Interrupted while publishing Outbox event {}", event.id());
             return PublishAttempt.failed("INTERRUPTED");
         } catch (Exception failure) {
-            LOGGER.warn(
-                    "Failed to publish Outbox event {}; failureType={}",
-                    event.id(),
-                    failure.getClass().getSimpleName());
             return PublishAttempt.failed("PUBLISH_EXCEPTION");
+        }
+    }
+
+    private void logEvent(OutboxEventRow event, String name, String errorCode) {
+        try {
+            var log = (errorCode == null ? LOGGER.atInfo() : LOGGER.atWarn())
+                    .addKeyValue("event", name)
+                    .addKeyValue("outboxEventId", event.id())
+                    .addKeyValue("judgeTaskId", event.judgeTaskId())
+                    .addKeyValue("submissionId", event.submissionId())
+                    .addKeyValue("sequenceNo", event.sequenceNo())
+                    .addKeyValue("publishAttemptNo", event.publishAttempts() + 1);
+            if (errorCode != null) log.addKeyValue("failureCode", errorCode);
+            log.log("Outbox publication outcome persisted");
+        } catch (RuntimeException loggingFailure) {
+            // Observability must not change transport or persistence semantics.
         }
     }
 

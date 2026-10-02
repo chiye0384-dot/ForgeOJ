@@ -19,6 +19,9 @@ import javax.sql.DataSource;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.ExtendWith;
+import org.springframework.boot.test.system.CapturedOutput;
+import org.springframework.boot.test.system.OutputCaptureExtension;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.Arguments;
 import org.junit.jupiter.params.provider.MethodSource;
@@ -37,6 +40,7 @@ import org.testcontainers.utility.DockerImageName;
 import org.testcontainers.utility.MountableFile;
 
 @Testcontainers
+@ExtendWith(OutputCaptureExtension.class)
 @SpringBootTest
 class JudgeTaskCompletionIntegrationTests {
 
@@ -76,6 +80,7 @@ class JudgeTaskCompletionIntegrationTests {
             executeScript(connection, "db/migration/V2__allow_ole_verdict.sql");
             executeScript(connection, "db/migration/V3__add_m1_attempt_lease_and_retry.sql");
             executeScript(connection, "db/migration/V4__add_user_judge_quota_lock.sql");
+            executeScript(connection, "db/migration/V5__widen_submission_verdict.sql");
             executeScript(connection, "db/devdata/R__seed_m0_development_data.sql");
         }
     }
@@ -85,6 +90,9 @@ class JudgeTaskCompletionIntegrationTests {
 
     @Autowired
     private DataSource workerDataSource;
+
+    @Autowired
+    private org.springframework.transaction.PlatformTransactionManager transactionManager;
 
     @BeforeEach
     void resetTasks() {
@@ -97,7 +105,7 @@ class JudgeTaskCompletionIntegrationTests {
 
     @ParameterizedTest
     @MethodSource("userOutcomes")
-    void atomicallyPersistsEveryM0UserVerdict(SandboxOutcome outcome, String verdict) {
+    void atomicallyPersistsEveryUserVerdict(SandboxOutcome outcome, String verdict, CapturedOutput output) {
         TaskIds ids = insertRunningTask();
         String diagnostic = outcome == SandboxOutcome.COMPILE_ERROR ? "Main.java: compiler detail" : "";
 
@@ -119,6 +127,12 @@ class JudgeTaskCompletionIntegrationTests {
         } else {
             assertThat(state.get("diagnostic_message")).isNull();
         }
+        assertThat(output.getAll()).contains("\"event\":\"attempt.finished\"",
+                "\"submissionId\":\"" + ids.submissionId() + "\"",
+                "\"judgeTaskId\":\"" + ids.taskId() + "\"",
+                "\"attemptId\":\"" + ids.attemptId() + "\"",
+                "\"outcome\":\"" + verdict + "\"")
+                .doesNotContain("Main.java: compiler detail", ids.leaseToken(), WORKER_PASSWORD, MIGRATOR_PASSWORD);
     }
 
     @Test
@@ -185,7 +199,7 @@ class JudgeTaskCompletionIntegrationTests {
     }
 
     @Test
-    void rollsBackBothTerminalWritesWhenSubmissionUpdateIsDenied() {
+    void rollsBackBothTerminalWritesWhenSubmissionUpdateIsDenied(CapturedOutput output) {
         TaskIds ids = insertRunningTask();
         JdbcTemplate migrator = migrator();
         migrator.execute("REVOKE UPDATE ON forgeoj.submission FROM 'forgeoj_worker'@'%'");
@@ -209,6 +223,7 @@ class JudgeTaskCompletionIntegrationTests {
                 .containsEntry("processing_status", "RUNNING");
         assertThat(((Number) state.get("task_version")).longValue()).isEqualTo(1L);
         assertThat(((Number) state.get("submission_version")).longValue()).isEqualTo(1L);
+        assertThat(output.getAll()).doesNotContain("\"event\":\"attempt.finished\"");
     }
 
     @Test
@@ -235,6 +250,19 @@ class JudgeTaskCompletionIntegrationTests {
         assertThat(state(first))
                 .containsEntry("task_status", "RUNNING")
                 .containsEntry("processing_status", "RUNNING");
+    }
+
+    @Test
+    void outerRollbackSuppressesFinishedEvent(CapturedOutput output) {
+        TaskIds ids = insertRunningTask();
+        var transaction = new org.springframework.transaction.support.TransactionTemplate(transactionManager);
+        assertThatThrownBy(() -> transaction.executeWithoutResult(status -> {
+            completionService.finish(claim(ids), SandboxExecutionResult.of(SandboxOutcome.ACCEPTED));
+            throw new IllegalStateException("Injected outer rollback");
+        })).isInstanceOf(IllegalStateException.class);
+        assertThat(state(ids)).containsEntry("task_status", "RUNNING")
+                .containsEntry("processing_status", "RUNNING").containsEntry("attempt_status", "RUNNING");
+        assertThat(output.getAll()).doesNotContain("\"event\":\"attempt.finished\"");
     }
 
     @Test
@@ -268,7 +296,9 @@ class JudgeTaskCompletionIntegrationTests {
                 Arguments.of(SandboxOutcome.COMPILE_ERROR, "CE"),
                 Arguments.of(SandboxOutcome.RUNTIME_ERROR, "RE"),
                 Arguments.of(SandboxOutcome.TIME_LIMIT_EXCEEDED, "TLE"),
-                Arguments.of(SandboxOutcome.OUTPUT_LIMIT_EXCEEDED, "OLE"));
+                Arguments.of(SandboxOutcome.OUTPUT_LIMIT_EXCEEDED, "OLE"),
+                Arguments.of(SandboxOutcome.MEMORY_LIMIT_EXCEEDED, "MLE"),
+                Arguments.of(SandboxOutcome.SECURITY_VIOLATION, "SECURITY_VIOLATION"));
     }
 
     private TaskIds insertRunningTask() {

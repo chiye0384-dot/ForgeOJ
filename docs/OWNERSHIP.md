@@ -1,7 +1,7 @@
 # ForgeOJ 代码归属与复用边界
 
 > 更新日期：2026-09-30
-> 当前范围：M-1 与 M0 均已验证；M0 已通过固定 Linux/amd64 全量构建、六 verdict 真实进程链路和最终 20 项门禁。M1 及后续里程碑仍未实现。
+> 当前范围：M-1 与 M0 均已验证；M0 已通过固定 Linux/amd64 全量构建、六 verdict 真实进程链路和最终 20 项门禁。M1 为 `IN_PROGRESS`，部分能力有 Windows/Testcontainers 局部证据；后续里程碑未实现。
 
 ## 1. 生成与第三方部分
 
@@ -36,6 +36,16 @@
 M0 当前自行设计和实现的边界包括：预置账号的登录会话与权限规则、Flyway migration、Submission/JudgeTask/Outbox SQL 与状态机、四字段任务消息契约、Worker 幂等领取、不可变快照与隐藏测试完整性校验、Docker CLI 沙箱适配与清理、M0 前端工作台，以及相应验收测试。其中 ForgeOJ 已自行实现并局部验证 V1/V2 migration、dev/test seed、数据库账号权限、服务端 Session/CSRF 登录边界、公开题目字段白名单、Submission/JudgeTask/Outbox 原子写入与请求幂等、publisher confirm 后才标记已发布的 RabbitMQ Outbox 循环、Worker 严格消息校验、双表原子幂等领取、真实 Docker 执行、六种 M0 verdict 映射、双表终态事务写回、写回后 ACK、仅提交所有者可读且字段/诊断受限的结果查询，以及前端登录、读题、提交和终态轮询。2026-09-29 又在 disposable Windows 开发栈真实跑通浏览器 AC 主链路；固定 Linux 完整重放仍只能描述为“正在验证”。
 
 `db/devdata/R__seed_m0_development_data.sql` 中的“两数之和”题面、样例和隐藏测试数据是为 ForgeOJ M0 编写的最小原创开发数据，不来自第三方题库。它只在 `dev` profile 或显式集成测试位置中加载，不属于默认生产 migration。Spring Security、BCrypt、MyBatis 和 Flyway 仍是第三方框架能力；ForgeOJ 自有部分是配置、数据模型、Mapper/DTO、接口边界和相应测试，不能把框架本身表述为自行实现。
+
+M1 自有实现目前包括 V3/V4 attempt/lease/retry/quota 模型、租约栅栏、心跳与恢复扫描、有限重试/死信、Outbox 退避、用户配额和所有者排队取消，以及 D-039 的同源所有者状态通知与前端版本/轮询恢复。通知的 WebSocket 传输由 Spring Framework/Tomcat 提供，不是 ForgeOJ 自行实现协议栈。源码入口、命令和本地验证边界记录在 M1 设计、配额取消、通知与可观测性验证文档；M1 固定 Linux、完整崩溃矩阵与运维闭环仍待验收。
+
+关联日志的自有部分是内部 requestId 生命周期、业务字段白名单、提交后事件、固定故障码与回归测试；JSON 编码和日志传输仍由既有 Spring Boot/SLF4J/Logback 提供。未引入日志采集平台或修改四字段消息，局部证据见 `M1-OBSERVABILITY-VALIDATION.md`，不等于固定 Linux 或持久审计验收。
+
+真实进程故障阶段的自有部分包括 test-only 子 JVM 屏障/强制中断控制、数据库与队列证据断言、attempt 级容器身份、不可变 Docker ID 操作和基于已关闭 attempt 的保守回收。RabbitMQ 的连接关闭后重投递、Docker daemon、JDK ProcessBuilder 与 Testcontainers fixtures 仍是既有平台能力；没有新依赖、外部代码、迁移或数据库权限变更。记录见 `M1-FAULT-RECOVERY-VALIDATION.md`，不是固定 Linux 或任意网络丢包验收。
+
+2026-10-01 沙箱安全阶段新增的有界恶意程序、真实 Worker 凭据探测和逐例进程/临时文件清理策略为 ForgeOJ 自有测试及适配实现。init 回收、namespace、cgroup、seccomp 和 capabilities 是 Docker/Linux 能力，chmod/find/pkill 为已有运行环境工具，不声称自行实现隔离内核。没有新增直接依赖、复制外部代码或更改镜像 digest；见 `M1-SANDBOX-SECURITY-VALIDATION.md`。
+
+2026-10-02 资源结果的自有部分是可信 cgroup 事件读取/校验与逐例增量分类、平台故障优先级、八类终态映射、V5 列宽修复和真实 MQ/查询/升级保留测试。内核 oom/PID 计数由 Linux 提供，不是自建内存或进程控制器；未增加第三方依赖。边界见 `M1-RESOURCE-VERDICT-VALIDATION.md`。
 
 ## 4. 明确排除
 

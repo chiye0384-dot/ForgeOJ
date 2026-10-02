@@ -1,5 +1,7 @@
 package com.forgeoj.worker.task;
 
+import com.forgeoj.worker.observability.JudgingEvents;
+
 import jakarta.annotation.PreDestroy;
 
 import java.util.concurrent.Executors;
@@ -82,6 +84,8 @@ public class JudgeTaskHeartbeatCoordinator {
                 try {
                     leaseService.renew(claimedTask);
                 } catch (RuntimeException renewalFailure) {
+                    JudgingEvents.record("attempt.heartbeat_failed", claimedTask.message(),
+                            claimedTask, null, "LEASE_RENEWAL_FAILURE");
                     failure = renewalFailure;
                     interruptedOwner = true;
                     ownerThread.interrupt();

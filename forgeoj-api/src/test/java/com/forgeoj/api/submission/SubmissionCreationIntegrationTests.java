@@ -24,12 +24,17 @@ import javax.sql.DataSource;
 
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.ExtendWith;
+import org.springframework.boot.test.system.CapturedOutput;
+import org.springframework.boot.test.system.OutputCaptureExtension;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.webmvc.test.autoconfigure.AutoConfigureMockMvc;
 import org.springframework.http.MediaType;
+import org.springframework.core.io.ClassPathResource;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.datasource.DriverManagerDataSource;
+import org.springframework.jdbc.datasource.init.ScriptUtils;
 import org.springframework.mock.web.MockHttpSession;
 import org.springframework.test.context.DynamicPropertyRegistry;
 import org.springframework.test.context.DynamicPropertySource;
@@ -42,6 +47,7 @@ import org.testcontainers.utility.DockerImageName;
 import org.testcontainers.utility.MountableFile;
 
 @Testcontainers
+@ExtendWith(OutputCaptureExtension.class)
 @AutoConfigureMockMvc(print = org.springframework.boot.webmvc.test.autoconfigure.MockMvcPrint.NONE)
 @SpringBootTest(
         properties = {
@@ -105,6 +111,9 @@ class SubmissionCreationIntegrationTests {
     @Autowired
     private SubmissionTransactionService transactionService;
 
+    @Autowired
+    private org.springframework.transaction.PlatformTransactionManager transactionManager;
+
     @BeforeEach
     void resetSubmissionState() {
         JdbcTemplate migrator = migratorJdbc();
@@ -115,7 +124,7 @@ class SubmissionCreationIntegrationTests {
     }
 
     @Test
-    void createsExactlyOneRecordSetAndReplaysSequentially() throws Exception {
+    void createsExactlyOneRecordSetAndReplaysSequentially(CapturedOutput output) throws Exception {
         AuthenticatedSession session = login();
         UUID firstKey = UUID.randomUUID();
 
@@ -140,6 +149,20 @@ class SubmissionCreationIntegrationTests {
 
         assertThat(secondSubmissionId).isNotEqualTo(firstSubmissionId);
         assertSingleRecordSet(secondKey, secondSubmissionId);
+        var created = output.getAll().lines().filter(line -> line.startsWith("{"))
+                .map(line -> JsonPath.parse(line).<Map<String, Object>>read("$"))
+                .filter(log -> "submission.created".equals(log.get("event"))).toList();
+        assertThat(created).hasSize(2).allSatisfy(log -> {
+            String submissionId = (String) log.get("submissionId");
+            String taskId = migratorJdbc().queryForObject(
+                    "SELECT id FROM judge_task WHERE submission_id = ?", String.class, submissionId);
+            assertThat(log).containsEntry("judgeTaskId", taskId);
+            String internalRequestId = (String) log.get("requestId");
+            assertThat(UUID.fromString(internalRequestId).toString()).isEqualTo(internalRequestId);
+            assertThat(output.getAll()).contains("\"event\":\"request.completed\"");
+            assertThat(log.toString()).doesNotContain("SOURCE_SENTINEL", session.csrfToken());
+        });
+        assertThat(created.get(0).get("requestId")).isNotEqualTo(created.get(1).get("requestId"));
     }
 
     @Test
@@ -178,6 +201,19 @@ class SubmissionCreationIntegrationTests {
             assertThat(submissionIds).hasSize(1);
             assertSingleRecordSet(requestId, submissionIds.iterator().next());
         }
+    }
+
+    @Test
+    void outerRollbackSuppressesCreatedEvent(CapturedOutput output) {
+        UUID key = UUID.randomUUID();
+        var transaction = new org.springframework.transaction.support.TransactionTemplate(transactionManager);
+        assertThatThrownBy(() -> transaction.executeWithoutResult(status -> {
+            submissionService.create(1L, "sum-two-integers", key.toString(), "JAVA_21", VALID_SOURCE);
+            throw new IllegalStateException("Injected outer rollback");
+        })).isInstanceOf(IllegalStateException.class);
+        assertThat(migratorJdbc().queryForObject(
+                "SELECT COUNT(*) FROM submission WHERE client_request_id = ?", Integer.class, key.toString())).isZero();
+        assertThat(output.getAll()).doesNotContain("\"event\":\"submission.created\"");
     }
 
     @Test
@@ -495,7 +531,7 @@ class SubmissionCreationIntegrationTests {
     }
 
     @Test
-    void cancellationRollsBackTaskWhenSubmissionUpdateFails() throws Exception {
+    void cancellationRollsBackTaskWhenSubmissionUpdateFails(CapturedOutput output) throws Exception {
         AuthenticatedSession owner = login();
         String submissionId = createSubmission(owner);
         Map<String, Object> before = cancellationState(submissionId);
@@ -515,6 +551,7 @@ class SubmissionCreationIntegrationTests {
             migrator.execute("DROP TRIGGER fail_cancellation");
         }
         assertThat(cancellationState(submissionId)).isEqualTo(before);
+        assertThat(output.getAll()).doesNotContain("\"event\":\"submission.cancelled\"");
     }
 
     private org.springframework.test.web.servlet.ResultActions cancelSubmission(
@@ -535,7 +572,7 @@ class SubmissionCreationIntegrationTests {
     }
 
     @Test
-    void rollsBackSubmissionAndTaskWhenOutboxInsertFails() {
+    void rollsBackSubmissionAndTaskWhenOutboxInsertFails(CapturedOutput output) {
         JdbcTemplate api = new JdbcTemplate(apiDataSource);
         JdbcTemplate migrator = migratorJdbc();
         UUID requestId = UUID.randomUUID();
@@ -570,6 +607,7 @@ class SubmissionCreationIntegrationTests {
                                 Integer.class,
                                 requestId.toString()))
                 .isZero();
+        assertThat(output.getAll()).doesNotContain("\"event\":\"submission.created\"");
     }
 
     @Test
@@ -664,6 +702,52 @@ class SubmissionCreationIntegrationTests {
                 .doesNotContain("SOURCE_SENTINEL_MUST_NOT_ENTER_OUTBOX")
                 .doesNotContain(
                         "37881a92ca996970e09475fdb29435b9bc13ae1501fa118e5fd9afd47e561adf");
+    }
+
+    @Test
+    void readsResourceVerdictsWithoutLeakingDiagnosticsOrHiddenFields() throws Exception {
+        AuthenticatedSession owner = login();
+        for (String verdict : List.of("MLE", "SECURITY_VIOLATION")) {
+            String submissionId = createSubmission(owner);
+            migratorJdbc().update("""
+                    UPDATE submission SET processing_status = 'FINISHED', verdict = ?, status_version = 2,
+                        diagnostic_message = 'PRIVATE_RESOURCE_DETAIL', finished_at = CURRENT_TIMESTAMP(6)
+                    WHERE id = ?
+                    """, verdict, submissionId);
+            MvcResult result = getSubmission(owner, submissionId).andExpect(status().isOk()).andReturn();
+            String json = result.getResponse().getContentAsString();
+            Map<String, Object> body = JsonPath.parse(json).read("$");
+            assertThat(body).containsEntry("verdict", verdict).containsEntry("processingStatus", "FINISHED")
+                    .containsEntry("diagnosticMessage", null);
+            assertThat(body.keySet()).containsExactlyInAnyOrder("submissionId", "processingStatus", "statusVersion", "verdict", "diagnosticMessage");
+            assertThat(json).doesNotContain("PRIVATE_RESOURCE_DETAIL", "SOURCE_SENTINEL_MUST_NOT_ENTER_OUTBOX");
+        }
+    }
+
+    @Test
+    void verdictWidthUpgradePreservesExistingResultsAndEnablesSecurityVerdict() throws Exception {
+        AuthenticatedSession owner = login();
+        String submissionId = createSubmission(owner);
+        JdbcTemplate database = migratorJdbc();
+        database.update("""
+                UPDATE submission SET processing_status = 'FINISHED', verdict = 'AC', status_version = 2,
+                    finished_at = CURRENT_TIMESTAMP(6) WHERE id = ?
+                """, submissionId);
+        Map<String, Object> before = database.queryForMap("SELECT verdict, status_version, finished_at FROM submission WHERE id = ?", submissionId);
+        try {
+            database.execute("ALTER TABLE submission MODIFY COLUMN verdict VARCHAR(16) NULL");
+            assertThatThrownBy(() -> database.update("UPDATE submission SET verdict = 'SECURITY_VIOLATION' WHERE id = ?", submissionId))
+                    .isInstanceOf(org.springframework.dao.DataAccessException.class);
+        } finally {
+            try (var connection = database.getDataSource().getConnection()) {
+                ScriptUtils.executeSqlScript(connection, new ClassPathResource("db/migration/V5__widen_submission_verdict.sql"));
+            }
+        }
+        assertThat(database.queryForMap("SELECT verdict, status_version, finished_at FROM submission WHERE id = ?", submissionId))
+                .isEqualTo(before);
+        database.update("UPDATE submission SET verdict = 'SECURITY_VIOLATION' WHERE id = ?", submissionId);
+        getSubmission(owner, submissionId).andExpect(status().isOk())
+                .andExpect(jsonPath("$.verdict").value("SECURITY_VIOLATION"));
     }
 
     @Test

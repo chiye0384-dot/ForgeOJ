@@ -17,6 +17,9 @@ import javax.sql.DataSource;
 
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.ExtendWith;
+import org.springframework.boot.test.system.CapturedOutput;
+import org.springframework.boot.test.system.OutputCaptureExtension;
 import org.springframework.amqp.core.MessageDeliveryMode;
 import org.springframework.amqp.rabbit.core.RabbitAdmin;
 import org.springframework.amqp.rabbit.core.RabbitTemplate;
@@ -37,6 +40,7 @@ import org.testcontainers.utility.DockerImageName;
 import org.testcontainers.utility.MountableFile;
 
 @Testcontainers
+@ExtendWith(OutputCaptureExtension.class)
 @DirtiesContext(classMode = DirtiesContext.ClassMode.AFTER_CLASS)
 @SpringBootTest(
         properties = {
@@ -121,7 +125,7 @@ class JudgeTaskExecutionIntegrationTests {
     }
 
     @Test
-    void consumesSnapshotsExecutesAndAcksOnlyAfterOleIsDurable() throws Exception {
+    void consumesSnapshotsExecutesAndAcksOnlyAfterOleIsDurable(CapturedOutput output) throws Exception {
         TaskIds ids = insertQueuedTask(OUTPUT_LIMIT_SOURCE, "m0-v1", 1024);
 
         publish(ids);
@@ -138,6 +142,22 @@ class JudgeTaskExecutionIntegrationTests {
         assertThat(((Number) state.get("task_version")).longValue()).isEqualTo(2L);
         assertThat(((Number) state.get("submission_version")).longValue()).isEqualTo(2L);
         assertThat(state.get("task_finished_at")).isEqualTo(finishedAt);
+        String attemptId = migrator().queryForObject(
+                "SELECT id FROM judge_task_attempt WHERE judge_task_id = ?", String.class, ids.taskId());
+        await(() -> output.getAll().contains("\"event\":\"delivery.ack_sent\""), Duration.ofSeconds(2));
+        var lifecycle = output.getAll().lines().filter(line -> line.startsWith("{"))
+                .map(line -> com.jayway.jsonpath.JsonPath.parse(line).<java.util.Map<String, Object>>read("$"))
+                .filter(log -> ids.taskId().equals(log.get("judgeTaskId"))).toList();
+        assertThat(lifecycle).allSatisfy(log -> assertThat(log).containsEntry("submissionId", ids.submissionId()));
+        var finished = lifecycle.stream().filter(log -> "attempt.finished".equals(log.get("event"))).toList();
+        assertThat(finished).hasSize(1);
+        assertThat(finished.getFirst()).containsEntry("attemptId", attemptId).containsEntry("outcome", "OLE");
+        assertThat(lifecycle).anySatisfy(log -> assertThat(log).containsEntry("event", "delivery.claim_result")
+                .containsEntry("outcome", "DUPLICATE"));
+        int finishedIndex = output.getAll().indexOf("\"event\":\"attempt.finished\"");
+        int ackIndex = output.getAll().indexOf("\"event\":\"delivery.ack_sent\"");
+        assertThat(ackIndex).isGreaterThan(finishedIndex);
+        assertThat(output.getAll()).doesNotContain(OUTPUT_LIMIT_SOURCE, RABBIT_PASSWORD, WORKER_PASSWORD);
     }
 
     @Test
@@ -157,6 +177,56 @@ class JudgeTaskExecutionIntegrationTests {
         assertThat(outboxEventType(ids)).isEqualTo("JUDGE_TASK_DEAD_LETTERED");
         assertThat(state.get("verdict")).isNull();
         assertThat(state.toString()).doesNotContain("unsupported-policy");
+    }
+
+    @Test void persistsKernelMemoryViolationAndDuplicateDeliveryDoesNotRetry() throws Exception {
+        assertResourceVerdict("""
+                public class Main {
+                    public static void main(String[] args) throws Exception {
+                        if (args.length > 0) {
+                            byte[] large = new byte[384 * 1024 * 1024];
+                            for (int i = 0; i < large.length; i += 4096) large[i] = 1;
+                            System.out.println(large[4096]);
+                            return;
+                        }
+                        Process child = new ProcessBuilder("java", "-XX:ActiveProcessorCount=1", "-Xmx768m",
+                                "-cp", "/workspace", "Main", "child").start();
+                        child.waitFor();
+                    }
+                }
+                """, "MLE");
+    }
+
+    @Test void persistsKernelPidViolationAndDuplicateDeliveryDoesNotRetry() throws Exception {
+        assertResourceVerdict("""
+                import java.util.*;
+                public class Main {
+                    public static void main(String[] args) throws Exception {
+                        List<Process> children = new ArrayList<>();
+                        try {
+                            for (int i = 0; i < 80; i++) children.add(new ProcessBuilder("/usr/bin/sleep", "10").start());
+                        } catch (java.io.IOException | OutOfMemoryError limited) { }
+                        finally { for (Process child : children) child.destroyForcibly(); }
+                    }
+                }
+                """, "SECURITY_VIOLATION");
+    }
+
+    private void assertResourceVerdict(String source, String verdict) throws Exception {
+        TaskIds ids = insertQueuedTask(source, "m0-v1", 65536);
+        publish(ids);
+        await(() -> "FINISHED".equals(state(ids).get("task_status")), Duration.ofSeconds(30));
+        var original = state(ids);
+        assertThat(original).containsEntry("processing_status", "FINISHED").containsEntry("verdict", verdict)
+                .containsEntry("diagnostic_message", null);
+        assertThat(migrator().queryForObject("SELECT attempt_count FROM judge_task WHERE id = ?", Integer.class, ids.taskId())).isEqualTo(1);
+        assertThat(migrator().queryForObject("SELECT attempt_status FROM judge_task_attempt WHERE judge_task_id = ?", String.class, ids.taskId()))
+                .isEqualTo("SUCCEEDED");
+        publish(ids);
+        awaitQueueDrained(Duration.ofSeconds(8));
+        assertThat(state(ids)).isEqualTo(original);
+        assertThat(migrator().queryForObject("SELECT COUNT(*) FROM judge_task_attempt WHERE judge_task_id = ?", Integer.class, ids.taskId())).isEqualTo(1);
+        assertThat(migrator().queryForObject("SELECT COUNT(*) FROM outbox_event WHERE aggregate_id = ?", Integer.class, ids.taskId())).isZero();
     }
 
     private void publish(TaskIds ids) {
@@ -260,6 +330,7 @@ class JudgeTaskExecutionIntegrationTests {
             executeScript(connection, "db/migration/V2__allow_ole_verdict.sql");
             executeScript(connection, "db/migration/V3__add_m1_attempt_lease_and_retry.sql");
             executeScript(connection, "db/migration/V4__add_user_judge_quota_lock.sql");
+            executeScript(connection, "db/migration/V5__widen_submission_verdict.sql");
             executeScript(connection, "db/devdata/R__seed_m0_development_data.sql");
         }
         schemaInitialized = true;

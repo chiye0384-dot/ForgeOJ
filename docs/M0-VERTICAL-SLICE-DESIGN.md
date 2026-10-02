@@ -304,6 +304,8 @@ M0 使用系统已安装的官方 Docker CLI，由 `ProcessBuilder(List<String>)
 6. Docker CLI 超时、容器意外停止和控制命令失败属于平台故障；所有分支在 `finally` 中强制删除容器及匿名卷；
 7. Worker 启动时按管理标签清理可确认属于 ForgeOJ 的残留容器。
 
+> 上述 task-only 名称与启动清理为 M0 历史基线。M1 已改为 attempt 级名称、完整不可变容器 ID 与 MySQL 已关闭 attempt 核验，启动不再删除所有 managed 标签容器；并启用 init、禁用额外共享内存、核对用户进程退出及清理全部用户所有的 `/tmp` 资源。当前实现以 `M1-RELIABLE-JUDGING-DESIGN.md` 第 5.1、5.2 节为准。
+
 输出超过提交快照中的 `output_limit_bytes` 时，Worker 终止当前程序并写入 `OLE`。它是用户程序的明确判题结果，不得伪装成 `RE`，也不得写成平台 `SYSTEM_ERROR`。
 
 开发机使用 Docker Desktop 作为外部运行环境，不把 Docker Desktop 分发进 ForgeOJ，也不把它当作 Apache-2.0 项目组件。最终判题证据仍需在固定 Linux 环境复现。

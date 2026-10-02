@@ -2,9 +2,8 @@ package com.forgeoj.worker.task;
 
 import com.forgeoj.worker.messaging.JudgeTaskMessage;
 import com.forgeoj.worker.messaging.RabbitTopology;
+import com.forgeoj.worker.observability.JudgingEvents;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.springframework.amqp.core.Message;
 import org.springframework.amqp.core.MessageBuilder;
 import org.springframework.amqp.core.MessageDeliveryMode;
@@ -20,8 +19,6 @@ import tools.jackson.databind.ObjectMapper;
 @Component
 @ConditionalOnProperty(name = "forgeoj.worker.recovery.enabled", havingValue = "true")
 public class JudgeTaskRecoveryScanner {
-
-    private static final Logger LOGGER = LoggerFactory.getLogger(JudgeTaskRecoveryScanner.class);
 
     private final JudgeTaskRecoveryMapper mapper;
     private final RabbitTemplate rabbitTemplate;
@@ -56,11 +53,10 @@ public class JudgeTaskRecoveryScanner {
                         RabbitTopology.RETRY_ROUTING_KEY,
                         recoveryMessage(candidate));
                 published++;
+                JudgingEvents.record("recovery.sent", identity(candidate), null, null, null);
             } catch (RuntimeException publishFailure) {
-                LOGGER.warn(
-                        "Could not republish recoverable judge task {}; failureType={}",
-                        candidate.taskId(),
-                        publishFailure.getClass().getSimpleName());
+                JudgingEvents.record("recovery.send_failed", identity(candidate), null,
+                        null, "RECOVERY_PUBLISH_FAILURE");
                 break;
             }
         }
@@ -84,5 +80,10 @@ public class JudgeTaskRecoveryScanner {
             throw new IllegalStateException(
                     "Could not serialize judge task recovery message", serializationFailure);
         }
+    }
+
+    private JudgeTaskMessage identity(JudgeTaskRecoveryCandidate candidate) {
+        return new JudgeTaskMessage(candidate.taskId(), candidate.submissionId(),
+                candidate.taskType(), candidate.contractVersion());
     }
 }

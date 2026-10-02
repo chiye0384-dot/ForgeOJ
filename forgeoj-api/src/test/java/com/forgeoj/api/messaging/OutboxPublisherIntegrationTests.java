@@ -12,6 +12,9 @@ import java.util.UUID;
 import javax.sql.DataSource;
 
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.ExtendWith;
+import org.springframework.boot.test.system.CapturedOutput;
+import org.springframework.boot.test.system.OutputCaptureExtension;
 import org.springframework.amqp.core.Message;
 import org.springframework.amqp.core.MessageDeliveryMode;
 import org.springframework.amqp.rabbit.core.RabbitAdmin;
@@ -29,6 +32,7 @@ import org.testcontainers.utility.DockerImageName;
 import org.testcontainers.utility.MountableFile;
 
 @Testcontainers
+@ExtendWith(OutputCaptureExtension.class)
 @SpringBootTest(
         properties = {
             "spring.flyway.locations=classpath:db/migration,classpath:db/devdata",
@@ -116,7 +120,7 @@ class OutboxPublisherIntegrationTests {
     private DataSource dataSource;
 
     @Test
-    void marksPublishedOnlyAfterConfirmedAndRoutableDelivery() {
+    void marksPublishedOnlyAfterConfirmedAndRoutableDelivery(CapturedOutput output) {
         JdbcTemplate jdbc = new JdbcTemplate(dataSource);
         SubmissionResult delivered = createSubmission();
 
@@ -200,6 +204,14 @@ class OutboxPublisherIntegrationTests {
         assertThat(outboxPublisher.publishPending()).isZero();
         assertThat(outboxFailureState(jdbc, unroutable.submissionId()))
                 .containsEntry("publish_attempts", 3L);
+        var publishedLogs = output.getAll().lines().filter(line -> line.startsWith("{"))
+                .map(line -> JsonPath.parse(line).<java.util.Map<String, Object>>read("$"))
+                .filter(log -> "outbox.published".equals(log.get("event"))).toList();
+        assertThat(publishedLogs).hasSize(3).allSatisfy(log -> assertThat(log)
+                .containsEntry("submissionId", delivered.submissionId())
+                .containsEntry("judgeTaskId", taskId));
+        assertThat(output.getAll()).contains("\"failureCode\":\"UNROUTABLE\"")
+                .doesNotContain("OUTBOX_SOURCE_SENTINEL", API_PASSWORD, MIGRATOR_PASSWORD, RABBIT_PASSWORD);
     }
 
     private SubmissionResult createSubmission() {

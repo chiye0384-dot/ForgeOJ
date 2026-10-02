@@ -92,6 +92,8 @@ class JudgeTaskSnapshotLoaderIntegrationTests {
                             repositoryFile(
                                     "forgeoj-api/src/main/resources/db/migration/"
                                             + "V4__add_user_judge_quota_lock.sql")));
+            ScriptUtils.executeSqlScript(connection, new FileSystemResource(repositoryFile(
+                    "forgeoj-api/src/main/resources/db/migration/V5__widen_submission_verdict.sql")));
             ScriptUtils.executeSqlScript(
                     connection,
                     new FileSystemResource(

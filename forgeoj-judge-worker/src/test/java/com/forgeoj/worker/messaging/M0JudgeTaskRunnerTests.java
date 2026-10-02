@@ -64,13 +64,13 @@ class M0JudgeTaskRunnerTests {
         JudgeTaskSnapshot snapshot = snapshot();
         SandboxExecutionResult result = SandboxExecutionResult.of(SandboxOutcome.ACCEPTED);
         when(loader.load(MESSAGE)).thenReturn(snapshot);
-        when(sandbox.execute(snapshot)).thenReturn(result);
+        when(sandbox.execute(snapshot, CLAIM.attemptId())).thenReturn(result);
 
         runner.run(CLAIM);
 
         var order = inOrder(loader, sandbox, completion);
         order.verify(loader).load(MESSAGE);
-        order.verify(sandbox).execute(snapshot);
+        order.verify(sandbox).execute(snapshot, CLAIM.attemptId());
         order.verify(completion).finish(CLAIM, result);
         verify(heartbeatCoordinator).start(CLAIM);
         verify(heartbeatSession).close();
@@ -91,7 +91,7 @@ class M0JudgeTaskRunnerTests {
     void schedulesRetryWhenSandboxPlatformFails() {
         JudgeTaskSnapshot snapshot = snapshot();
         when(loader.load(MESSAGE)).thenReturn(snapshot);
-        when(sandbox.execute(snapshot)).thenThrow(new IllegalStateException("docker unavailable"));
+        when(sandbox.execute(snapshot, CLAIM.attemptId())).thenThrow(new IllegalStateException("docker unavailable"));
 
         runner.run(CLAIM);
 
@@ -105,7 +105,7 @@ class M0JudgeTaskRunnerTests {
         SandboxExecutionResult result = SandboxExecutionResult.of(SandboxOutcome.ACCEPTED);
         IllegalStateException databaseFailure = new IllegalStateException("database failed");
         when(loader.load(MESSAGE)).thenReturn(snapshot);
-        when(sandbox.execute(snapshot)).thenReturn(result);
+        when(sandbox.execute(snapshot, CLAIM.attemptId())).thenReturn(result);
         doThrow(databaseFailure).when(completion).finish(CLAIM, result);
 
         assertThatThrownBy(() -> runner.run(CLAIM)).isSameAs(databaseFailure);

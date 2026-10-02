@@ -43,7 +43,7 @@ class DockerSandboxExecutionIntegrationTests {
         DockerCliSandboxRuntime runtime = new DockerCliSandboxRuntime(executor);
 
         String acceptedSource = sumSource();
-        assertThat(runtime.execute(snapshot(acceptedSource, 2000, 65536, sumCases())).outcome())
+        assertThat(runtime.execute(snapshot(acceptedSource, 2000, 65536, sumCases()), UUID.randomUUID().toString()).outcome())
                 .isEqualTo(SandboxOutcome.ACCEPTED);
         assertThat(executor.commands().stream().filter(this::isJavacCommand)).hasSize(1);
         assertThat(executor.commands().stream().filter(this::isJavaCommand)).hasSize(2);
@@ -57,17 +57,17 @@ class DockerSandboxExecutionIntegrationTests {
                                                                 || argument.contains("1 2")
                                                                 || argument.contains("-4 9")));
         executor.clear();
-        assertThat(runtime.execute(snapshot("public class Main { public static void main(String[] args) { System.out.println(0); } }", 2000, 65536, sumCases())).outcome())
+        assertThat(runtime.execute(snapshot("public class Main { public static void main(String[] args) { System.out.println(0); } }", 2000, 65536, sumCases()), UUID.randomUUID().toString()).outcome())
                 .isEqualTo(SandboxOutcome.WRONG_ANSWER);
         assertThat(executor.commands().stream().filter(this::isJavaCommand)).hasSize(1);
         executor.clear();
-        assertThat(runtime.execute(snapshot("public class Main { broken }", 2000, 65536, oneCase())).outcome())
+        assertThat(runtime.execute(snapshot("public class Main { broken }", 2000, 65536, oneCase()), UUID.randomUUID().toString()).outcome())
                 .isEqualTo(SandboxOutcome.COMPILE_ERROR);
-        assertThat(runtime.execute(snapshot("public class Main { public static void main(String[] args) { throw new RuntimeException(); } }", 2000, 65536, oneCase())).outcome())
+        assertThat(runtime.execute(snapshot("public class Main { public static void main(String[] args) { throw new RuntimeException(); } }", 2000, 65536, oneCase()), UUID.randomUUID().toString()).outcome())
                 .isEqualTo(SandboxOutcome.RUNTIME_ERROR);
-        assertThat(runtime.execute(snapshot("public class Main { public static void main(String[] args) { while (true) { } } }", 500, 65536, oneCase())).outcome())
+        assertThat(runtime.execute(snapshot("public class Main { public static void main(String[] args) { while (true) { } } }", 500, 65536, oneCase()), UUID.randomUUID().toString()).outcome())
                 .isEqualTo(SandboxOutcome.TIME_LIMIT_EXCEEDED);
-        assertThat(runtime.execute(snapshot("public class Main { public static void main(String[] args) { while (true) { System.out.print(\"0123456789\"); } } }", 2000, 1024, oneCase())).outcome())
+        assertThat(runtime.execute(snapshot("public class Main { public static void main(String[] args) { while (true) { System.out.print(\"0123456789\"); } } }", 2000, 1024, oneCase()), UUID.randomUUID().toString()).outcome())
                 .isEqualTo(SandboxOutcome.OUTPUT_LIMIT_EXCEEDED);
 
         DockerCommandResult managed =

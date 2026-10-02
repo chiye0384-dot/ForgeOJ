@@ -25,6 +25,16 @@ function typeInto(element: HTMLInputElement | HTMLTextAreaElement, value: string
 describe('M0 judge workspace', () => {
   beforeEach(() => {
     vi.useFakeTimers()
+    vi.stubGlobal(
+      'WebSocket',
+      class {
+        onmessage = null
+        onopen = null
+        onclose = null
+        onerror = null
+        close = vi.fn<() => void>()
+      },
+    )
     vi.spyOn(globalThis.crypto, 'randomUUID').mockReturnValue(
       '11111111-1111-4111-8111-111111111111',
     )
@@ -33,6 +43,7 @@ describe('M0 judge workspace', () => {
   afterEach(() => {
     vi.useRealTimers()
     vi.restoreAllMocks()
+    vi.unstubAllGlobals()
   })
 
   it('logs in, loads the problem, submits Java 21 code, and polls to a terminal result', async () => {

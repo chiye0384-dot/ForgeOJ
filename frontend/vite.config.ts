@@ -15,7 +15,9 @@ export default defineConfig({
     proxy: {
       '/api': {
         target: 'http://localhost:8080',
-        changeOrigin: true,
+        // Preserve the browser Host/Origin pair for strict same-origin WebSocket checks.
+        changeOrigin: false,
+        ws: true,
       },
     },
   },

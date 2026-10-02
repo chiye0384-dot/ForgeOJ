@@ -6,6 +6,7 @@ import static org.assertj.core.api.Assertions.assertThatThrownBy;
 import com.forgeoj.worker.messaging.JudgeTaskMessage;
 import com.forgeoj.worker.messaging.JudgeTaskRunner;
 import com.forgeoj.worker.messaging.RabbitTopology;
+import com.forgeoj.worker.sandbox.SandboxAttemptLookup;
 
 import java.nio.file.Files;
 import java.nio.file.Path;
@@ -140,6 +141,9 @@ class JudgeTaskClaimIntegrationTests {
 
     @Autowired
     private DataSource workerDataSource;
+
+    @Autowired
+    private SandboxAttemptLookup sandboxAttempts;
 
     @BeforeEach
     void resetState() {
@@ -716,6 +720,20 @@ class JudgeTaskClaimIntegrationTests {
                 .isEqualTo("JUDGE_TASK_DEAD_LETTERED");
     }
 
+    @Test
+    void orphanCleanupRequiresCommittedClosureNotLeaseTimeAlone() {
+        TaskIds task = insertQueuedTask();
+        ClaimedJudgeTask first = claimService.claim(validMessage(task)).claimedTask();
+        assertThat(sandboxAttempts.isClosed(task.taskId(), first.attemptId())).isFalse();
+        expireLease(migratorJdbc(), task.taskId(), first.attemptId());
+        assertThat(sandboxAttempts.isClosed(task.taskId(), first.attemptId())).isFalse();
+        ClaimedJudgeTask recovered = claimService.claim(validMessage(task)).claimedTask();
+        assertThat(sandboxAttempts.isClosed(task.taskId(), first.attemptId())).isTrue();
+        assertThat(sandboxAttempts.isClosed(task.taskId(), recovered.attemptId())).isFalse();
+        assertThat(sandboxAttempts.isClosed(UUID.randomUUID().toString(), first.attemptId())).isFalse();
+        assertThat(sandboxAttempts.isClosed(task.taskId(), UUID.randomUUID().toString())).isFalse();
+    }
+
     private void expireLease(JdbcTemplate migrator, String taskId, String attemptId) {
         migrator.update(
                 "UPDATE judge_task SET lease_expires_at = CURRENT_TIMESTAMP(6) - INTERVAL 1 SECOND WHERE id = ?",
@@ -838,6 +856,8 @@ class JudgeTaskClaimIntegrationTests {
                             repositoryFile(
                                     "forgeoj-api/src/main/resources/db/migration/"
                                             + "V4__add_user_judge_quota_lock.sql")));
+            ScriptUtils.executeSqlScript(connection, new FileSystemResource(repositoryFile(
+                    "forgeoj-api/src/main/resources/db/migration/V5__widen_submission_verdict.sql")));
             ScriptUtils.executeSqlScript(
                     connection,
                     new FileSystemResource(

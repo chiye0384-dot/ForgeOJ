@@ -87,6 +87,12 @@
 
 当前局部证据（不足以把 E-01 提升为 `VERIFIED`）：M0 已验证 Submission/JudgeTask/Outbox 原子创建与回滚、四字段持久消息、publisher confirm、幂等领取、原子终态写回、写回后 ACK、重复投递吸收和 `SYSTEM_ERROR`；固定 Linux/amd64 进程级重放已覆盖六 verdict。M1 截至 `44642f3` 又实现 attempt/lease 栅栏、心跳、被动/主动恢复、有限重试/死信、可恢复 Outbox、独立队列、并发用户配额和排队取消。2026-09-30 Windows 完整回归 API 26 项、Worker 57 项（零跳过），并发/消息聚焦复验通过 19 + 16 项；代码、V4、合约、限制和命令见 [M1 配额与取消记录](M1-QUOTA-CANCELLATION-VALIDATION.md)。尚缺完整 Worker 进程崩溃/ACK 丢失矩阵、固定 Linux M1 重放、OPS_ADMIN 运维闭环与 release，不能生成可靠链路已发布或简历就绪的结论。
 
+2026-10-01 新增局部通知证据：现有 M1 分支工作树实现所有者同源 WebSocket 与版本/轮询恢复；完整 Windows 回归 API 38 + Worker 57（零失败/错误/跳过），前端 8 项测试、类型/静态/格式检查与构建通过。真实 HTTP/WebSocket + MySQL 验证权限与通知，前端使用模拟 API/socket；不是浏览器/独立 Worker 的固定 Linux 重放。详见 [M1 通知验证记录](M1-NOTIFICATION-VALIDATION.md)。E-01 状态仍不变，尚未提交推送，不生成发布或简历就绪声明。
+
+2026-10-01 追加局部关联日志证据：请求 ID 与业务/attempt ID、提交后日志、固定故障码及脱敏/线程复用/外层回滚测试；完整 Windows 回归 API 46 + Worker 67、前端 8 项全过且零跳过，见 [M1 可观测性记录](M1-OBSERVABILITY-VALIDATION.md)。它不是持久审计、统一 tracing 或固定 Linux 故障验收；工作树未提交推送，E-01 状态不提升。
+
+2026-10-01 21:04 追加真实 Worker 子 JVM kill 与租约恢复、终态提交/ACK 前中断、跨队列重复投递，以及孤儿沙箱恢复/活跃 owner 保留；先复现 task-only 名冲突再修复 attempt 身份与安全回收。全量 API 46 + Worker 83、前端 8 项通过且零跳过，见 [故障恢复记录](M1-FAULT-RECOVERY-VALIDATION.md)。仅 Windows 子进程 + Docker Desktop 局部证据，未覆盖任意 socket ACK 丢包或固定 Linux；OPS_ADMIN/release 仍未完成，E-01 状态不提升。
+
 ### E-02：Docker 代码沙箱
 
 必须证明：
@@ -102,6 +108,12 @@
 建议证据文件：威胁模型、沙箱测试表、容器 inspect 脱敏输出、清理监控、相关 commit。
 
 当前局部证据（不足以把 E-02 提升为 `VERIFIED`）：M0 已在固定 Linux/amd64 中验证 API 容器无 Docker Socket，Worker 独占 Docker 控制；真实 inspect 和执行测试覆盖非 root、禁网、只读根、capabilities 删除、no-new-privileges、CPU/内存/PID/tmpfs 限制、stdin 传入源码/隐藏输入、一次编译、逐例独立 JVM、AC/WA/CE/RE/TLE/OLE 和全分支容器清理。固定 Linux 六 verdict 进程级链路结束后管理沙箱数为 0，日志也未出现隐藏哨兵。更宽的进程爆炸、内存耗尽、写文件、联网尝试、凭证不可见性矩阵和 M5 固定 Linux 主机安全验收仍待完成。
+
+新增局部资源所有权证据：真实 Worker 崩溃遗留沙箱可在恢复领取关闭旧 attempt 后回收；另一个 Worker 启动保留活跃沙箱；旧 finally 只操作原完整容器 ID，不碰新 attempt。未知/legacy 归属保守保留、DB/daemon 失败延后，见 L-031 与 [进程故障记录](M1-FAULT-RECOVERY-VALIDATION.md)。没有据此声称任意恶意代码安全、崩溃瞬时清零或固定 Linux 已验收，E-02 状态不提升。
+
+2026-10-01 安全阶段新增 14 项实际受限容器恶意程序和真实 Worker 凭据检查；先复现清理权限、后代残留、全局 tmp 与共享内存问题再修复。根回归 API 46 + Worker 98，144 项零失败/错误/跳过，见 [安全验证记录](M1-SANDBOX-SECURITY-VALIDATION.md)。这是 Windows + Docker Desktop 局部证据；MLE/SECURITY_VIOLATION 可信分类、任意 fork 风暴/内核逃逸防护、固定 Linux M1/M5 验收不因此完成。E-01/E-02 不提升为简历就绪或已发布状态。
+
+2026-10-02 新增内核计数分类、V5 列宽修复及升级保留、实际 MQ 两类结果/重复投递和所有者字段隔离证据。根回归 API 48 + Worker 110，158 项零失败/错误/跳过，见 [资源结果记录](M1-RESOURCE-VERDICT-VALIDATION.md)。只承诺可证实的局部 cgroup OOM 与 PID 上限，纯 JVM OOM/无审计的拒绝操作按 L-032 保留限制；前端未改未重跑。固定 Linux M1、OPS_ADMIN、发布与 M5 仍待验收，E-01/E-02 状态不提升。
 
 ### E-03：班级与作业权限模型
 

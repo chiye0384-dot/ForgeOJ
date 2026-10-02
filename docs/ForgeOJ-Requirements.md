@@ -253,7 +253,11 @@ V1.0 不包含：
 - 处理状态：QUEUED、RUNNING、RETRYING、FINISHED、CANCELLED、SYSTEM_ERROR。
 - 判题结果：AC、WA、CE、RE、TLE、MLE、OLE、SECURITY_VIOLATION。
 
+当前 M1 资源结果的实现定义见 D-040：通过可信内核 cgroup v2 的逐例增量识别内存分配失败（MLE）与进程数上限违规（SECURITY_VIOLATION）。被程序自行打印/抛出的 OOM 文本、退出码或无法审计的拒绝操作不单独作为结果依据；缺少可信证据时保留原运行错误/输出判定或平台失败。纯 JVM 堆/metaspace OOM 的通用可信识别仍为已知差距，见 L-032。
+
 数据库是最终事实来源。WebSocket 只发送提交 ID、状态和单调递增版本；断线、超时或乱序时查询接口恢复。
+
+通知合约使用 `/api/v1/submissions/{submissionId}/events`，沿用登录会话、仅提交所有者连接，严格限制同源（D-039）。消息白名单为 `submissionId/processingStatus/statusVersion`，不含源码、verdict 或判题诊断；页面通过所有者查询接口获取实际结果，保留轮询兜底。
 
 ### 8.5 编译与测试执行
 

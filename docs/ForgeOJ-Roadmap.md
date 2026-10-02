@@ -121,7 +121,13 @@ M0 的登录只用于打通受保护提交链路，可使用预置账号和最�
 
 目标：把“能跑”提升为“故障下仍可解释和恢复”。
 
-当前状态：`IN_PROGRESS`。截至实现提交 `44642f3`，attempt/lease 栅栏、心跳、被动/主动恢复、有限重试/死信、Outbox 发布退避、独立队列边界、并发用户配额和 `QUEUED` 取消已有 Windows/Testcontainers 自动化证据；最新完整回归 API 26 项、Worker 57 项全部通过且零跳过，并发/消息聚焦复验另通过 19 + 16 项。用户确认运行时始终允许另有三个排队任务；满队列平台失败通过内部 `WAITING_RETRY` 保留运行槽位等待有限重试，见 D-038 和 [本轮验证记录](M1-QUOTA-CANCELLATION-VALIDATION.md)。WebSocket/版本乱序、可观测性、更宽安全与崩溃矩阵、固定 Linux 重放和最终证据更新尚未完成，因此不得升级为 `VERIFIED`。
+当前状态：`IN_PROGRESS`。attempt/lease 栅栏、心跳、被动/主动恢复、有限重试/死信、Outbox 发布退避、独立队列边界、并发用户配额和 `QUEUED` 取消已有 Windows/Testcontainers 自动化证据，见 [配额取消记录](M1-QUOTA-CANCELLATION-VALIDATION.md)。D-038 保持一个运行槽位加三个排队任务；满队列失败通过内部 `WAITING_RETRY` 保留运行槽位等待有限重试。
+
+2026-10-01 已在现有 M1 分支工作树实现 D-039 的所有者同源 WebSocket、三字段通知、单调版本、登出/终态清理与前端轮询/有界重连。通知阶段完整回归 API **38**、Worker **57** 全过且零跳过；前端 **8** 项测试及全部校验/构建通过，见 [通知验证记录](M1-NOTIFICATION-VALIDATION.md)。这是局部 Windows/Testcontainers 与模拟前端证据，不是浏览器/独立 Worker 的固定 Linux M1 重放。
+
+同日追加关联脱敏 JSON 日志：内部 requestId、提交/任务/attempt 白名单、提交后事件、固定错误码与上下文清理，不改变数据库或 MQ 四字段契约。18:33 完整回归 API **46** + Worker **67**、前端 **8** 项全过，零失败/错误/跳过，见 [可观测性验证记录](M1-OBSERVABILITY-VALIDATION.md)。通知及日志均尚未提交推送；日志不是持久审计。更宽安全与崩溃/ACK 丢失矩阵、运维闭环、固定 Linux 验收和最终门禁仍未完成，不升级为 `VERIFIED`。
+
+21:04:37 追加真实子 JVM 故障恢复证据：领取后 kill、终态提交但 ACK 前 kill、已启动 Worker 的孤儿沙箱回收、并行 Worker 启动不删除活跃沙箱，四项均通过。修复 task-only 容器名冲突及全标签启动清理风险，改为 attempt 独立身份、完整 Docker ID、只回收数据库已关闭 attempt。最新根回归 API **46** + Worker **83**（129 项），前端 **8** 项和全部校验通过，零失败/错误/跳过，无管理沙箱/测试子进程残留。见 [进程故障与沙箱恢复记录](M1-FAULT-RECOVERY-VALIDATION.md)。仍未提交推送；更宽安全矩阵、固定 Linux、运维闭环与最终门禁不因本轮通过而关闭。
 
 范围：
 
@@ -142,6 +148,10 @@ M0 的登录只用于打通受保护提交链路，可使用预置账号和最�
 - SYSTEM_ERROR 不会被记录为用户 RE；
 - 隐藏数据和基础设施凭证不可从用户程序读取；
 - 每个提交可通过 ID 串联 API、消息、Worker 和结果日志。
+
+2026-10-01 21:39:40 完成当前安全阶段全量验证（10 月 2 日恢复会话核验）：API **46** + Worker **98**，144 项零失败/错误/跳过。14 项恶意程序及真实 Worker 凭据检查通过，修复子进程/临时文件清理及共享内存绕过；见 [安全验证记录](M1-SANDBOX-SECURITY-VALIDATION.md)。前端未改未重跑。下一步先补 MLE/SECURITY_VIOLATION 可信分类及必要合约/迁移评审，再固定 Linux、运维与最终门禁；本地资源限制证据不等于所有 verdict 已实现，M1 状态不提升，未提交推送。
+
+2026-10-02 08:34:50 资源分类阶段根回归 API **48** + Worker **110**，158 项零失败/错误/跳过，无沙箱/测试子 Worker 残留。内核逐例 oom/PID max 增量得到 MLE/SECURITY_VIOLATION；V5 修复原列宽 16 无法存储安全结果，并验证旧数据保留、真实 MQ 重复投递与所有者查询。见 [资源结果记录](M1-RESOURCE-VERDICT-VALIDATION.md)。纯 JVM OOM、拒绝操作审计仍有 L-032 限制；下一步为固定 Linux M1 构建、通知/故障/资源结果重放、OPS_ADMIN 与最终门禁。状态不提升，未提交推送，前端未改未重跑。
 
 ## 6. M2：题库、账号与学习主流程
 

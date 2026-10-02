@@ -1,0 +1,7 @@
+# Copyright 2026 池也
+# SPDX-License-Identifier: Apache-2.0
+# Local disposable validation only; do not publish this image.
+FROM docker:29.8.0-cli@sha256:f5b8bb0333cfaa027640106e5f02e48b0a8e0c00f7165015f581d58783c76fcf AS cli
+FROM eclipse-temurin:21.0.12_8-jdk-jammy@sha256:c7d5863b5dd8f26b90c64f1d80cc2b0e5a5e4642f8db9955a370d348edd8f438
+COPY --from=cli /usr/local/bin/docker /usr/local/bin/docker
+ENTRYPOINT ["java", "-Xmx256m", "-jar", "/app/worker.jar"]

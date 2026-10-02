@@ -1,5 +1,8 @@
 #!/usr/bin/env bash
 
+# Oracle's entrypoint sources init scripts. Keep strict options/functions local
+# so its later optional environment-variable checks retain their own semantics.
+(
 set -euo pipefail
 
 validate_secret() {
@@ -25,3 +28,4 @@ CREATE USER IF NOT EXISTS 'forgeoj_worker'@'%' IDENTIFIED BY '${FORGEOJ_WORKER_D
 GRANT ALL PRIVILEGES ON forgeoj.* TO 'forgeoj_migrator'@'%' WITH GRANT OPTION;
 FLUSH PRIVILEGES;
 EOSQL
+)

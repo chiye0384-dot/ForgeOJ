@@ -1,5 +1,7 @@
 # M1 所有者通知与轮询恢复：局部验证记录
 
+> 后续状态：累计实现已提交为 `ab61c9a`，2026-10-02 固定 Linux 自动化/进程故障复验通过；见 [Linux 记录](M1-FIXED-LINUX-VALIDATION.md)。下文保留通知阶段当时的 Git 状态和验证范围。
+
 > 日期：2026-09-30 至 2026-10-01（Asia/Shanghai）
 > 分支：`feat/m1-reliable-judging`；实现起点 `ceee82c4904fd8a64be1eda9558ed96482cfdc81`
 > 当前实现位于该分支工作树，本步尚未提交/推送；当前 HEAD 仍为上述起点。M1 整体仍为 `IN_PROGRESS`，不是固定 Linux 验收、PR 合并或 Release。

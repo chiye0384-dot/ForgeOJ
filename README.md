@@ -53,6 +53,8 @@ npm run verify
 
 `npm run verify` 会依次执行类型检查、静态检查、格式检查、单元测试和生产构建。
 
+固定 Linux/amd64、只读源码与全新缓存复验入口为 `tools/validation/Verify-FixedLinux.ps1`，可从仓库根执行；前提为可用 Docker、固定镜像与无其他 ForgeOJ 沙箱测试并发。报告保存到忽略的 `target/forgeoj-linux-*`，不改真实数据库。详细参数及验证与生产 API 权限的区别见 [Linux 验证记录](docs/M1-FIXED-LINUX-VALIDATION.md)。
+
 从 M0 起，后端 `clean verify` 会通过 Testcontainers 启动固定 digest 的 MySQL 8.4.12 和 RabbitMQ 4.3.6，并使用已登记的固定 Temurin Java 21 镜像真实编译和执行原创测试程序，因此需要可用的 Linux Docker Engine。缺少判题镜像时测试会按固定 digest 拉取。开发用 MySQL/RabbitMQ Compose 的启动和重置方法见 [deploy/README.md](deploy/README.md)。
 
 ## M0 本地开发账号
@@ -90,6 +92,7 @@ npm run verify
 - [M1 真实 Worker 进程故障与沙箱恢复验证记录](docs/M1-FAULT-RECOVERY-VALIDATION.md)
 - [M1 沙箱恶意代码验证与清理修复](docs/M1-SANDBOX-SECURITY-VALIDATION.md)
 - [M1 可信资源结果与存储验证](docs/M1-RESOURCE-VERDICT-VALIDATION.md)
+- [M1 固定 Linux 构建与自动化验证](docs/M1-FIXED-LINUX-VALIDATION.md)
 - [已知限制](docs/KNOWN_LIMITATIONS.md)
 - [简历证据矩阵](docs/Resume-Evidence-Matrix.md)
 - [性能测试计划](docs/Performance-Test-Plan.md)
@@ -115,3 +118,5 @@ M-1 的证据只证明工程起点、许可证边界和构建链路可复现。M
 安全阶段于 **2026-10-01 21:39:40** 完成根 `clean verify`：API **46** + Worker **98**，共 **144** 项，零失败/错误/跳过；10 月 2 日恢复会话后核验结果与零沙箱/测试子进程残留。新增 14 项受限容器恶意程序及真实 Worker 凭据检查，修复临时文件、子进程回收和共享内存隔离问题，见 [安全验证记录](docs/M1-SANDBOX-SECURITY-VALIDATION.md)。
 
 最新资源结果阶段于 **2026-10-02 08:34:50** 完成根 `clean verify`：API **48** + Worker **110**，共 **158** 项，零失败/错误/跳过、无沙箱/测试子 Worker 残留。内核可确认的 cgroup OOM/PID 超限现在写为 MLE/SECURITY_VIOLATION；V5 修复安全结果存不下的列宽，保留旧结果，部署须先迁移再启动新 Worker。真实 MQ 消费与重复投递、所有者查询和升级保存历史均通过，见 [资源结果验证](docs/M1-RESOURCE-VERDICT-VALIDATION.md)。纯 JVM OOM/无审计的拒绝操作保留 L-032 的边界；前端本阶段未改未重跑。固定 Linux、运维闭环与最终门禁仍待完成，M1 为 `IN_PROGRESS`，修改未提交推送。
+
+上述“未提交”是当时记录。实现已保存为 **`ab61c9a`**；2026-10-02 固定 Linux/amd64 全新缓存复验通过后端 **158** 项、前端 **8** 项和全部校验/构建，零失败/错误/跳过、无容器残留，见 [Linux 记录](docs/M1-FIXED-LINUX-VALIDATION.md)。用户授权本轮提交并推送现有 M1 分支，不合并/发布；功能分支 push 不触发现有 CI。M1 仍为 `IN_PROGRESS`，下一步是独立 Linux 纵向链路、OPS_ADMIN 运维与最终门禁审计。

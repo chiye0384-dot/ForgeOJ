@@ -42,7 +42,7 @@ class DockerCliSandboxRuntimeIntegrationTests {
         DockerCommandExecutor executor = new ProcessBuilderDockerCommandExecutor("docker");
         DockerCliSandboxRuntime runtime = new DockerCliSandboxRuntime(executor);
         runtime.verifyAvailable();
-        SandboxContainer container = runtime.prepare(snapshot());
+        SandboxContainer container = runtime.prepare(snapshot(), UUID.randomUUID().toString());
 
         try {
             DockerCommandResult inspected =
@@ -56,7 +56,7 @@ class DockerCliSandboxRuntimeIntegrationTests {
                                             + "{{.HostConfig.MemorySwap}}|{{.HostConfig.PidsLimit}}|"
                                             + "{{json .HostConfig.CapDrop}}|"
                                             + "{{json .HostConfig.SecurityOpt}}|"
-                                            + "{{json .HostConfig.Tmpfs}}",
+                                            + "{{json .HostConfig.Tmpfs}}|{{.HostConfig.IpcMode}}|{{.HostConfig.Init}}",
                                     container.name()),
                             Duration.ofSeconds(15),
                             64 * 1024);
@@ -69,7 +69,8 @@ class DockerCliSandboxRuntimeIntegrationTests {
                     .contains("[\"ALL\"]")
                     .contains("[\"no-new-privileges\"]")
                     .contains("/workspace")
-                    .contains("/tmp");
+                    .contains("/tmp")
+                    .endsWith("|none|true\n");
         } finally {
             runtime.cleanup(container);
         }

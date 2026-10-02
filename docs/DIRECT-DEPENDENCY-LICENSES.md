@@ -16,6 +16,7 @@
 |---|---:|---|---|---|
 | Spring Boot parent/BOM、`spring-boot-starter-webmvc`、测试 starter、Maven Plugin | 4.1.1 | 编译、API 运行、测试和打包 | Apache-2.0 | 可采用；保留上游版权与 NOTICE 义务 |
 | `org.springframework.boot:spring-boot-starter-security` | 4.1.1（Security 7.1.1） | API 运行 | Apache-2.0 | 可采用；依赖存在不等于认证功能已经实现 |
+| `org.springframework.boot:spring-boot-starter-websocket` | 4.1.1（Spring WebSocket/Messaging 7.0.9；Tomcat WebSocket 11.0.24） | API 运行；M1 原生状态通知 | Apache-2.0 | 可采用；Boot BOM 固定版本；框架提供传输，所有者/同源/版本与恢复规则为 ForgeOJ 自有实现，见 U-008 |
 | `org.springframework.boot:spring-boot-starter-amqp` | 4.1.1（Spring AMQP 4.1.1） | API/Worker 运行 | Apache-2.0 | 可采用；M0 只实现最小 RabbitMQ 链路 |
 | `org.springframework.boot:spring-boot-starter-jackson` | 4.1.1（Jackson Databind 3.1.5） | Worker 运行；严格解析四字段任务 JSON | Apache-2.0 | 可采用；JSON 库为第三方能力，消息契约与校验规则为 ForgeOJ 自有实现 |
 | `org.springframework.boot:spring-boot-starter-flyway` | 4.1.1（Flyway Core 12.4.0） | API 运行；唯一生产迁移执行者 | Apache-2.0 | 可采用；Worker 不引入生产 Flyway |

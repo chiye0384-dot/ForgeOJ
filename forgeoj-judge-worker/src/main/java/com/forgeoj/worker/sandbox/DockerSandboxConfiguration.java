@@ -17,8 +17,8 @@ class DockerSandboxConfiguration {
     }
 
     @Bean
-    SandboxRuntime sandboxRuntime(DockerCommandExecutor executor) {
-        return new DockerCliSandboxRuntime(executor);
+    SandboxRuntime sandboxRuntime(DockerCommandExecutor executor, SandboxAttemptLookup attempts) {
+        return new DockerCliSandboxRuntime(executor, attempts);
     }
 
     @Bean

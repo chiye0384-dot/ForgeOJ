@@ -1,14 +1,14 @@
 package com.forgeoj.worker.messaging;
 
+import com.forgeoj.worker.observability.JudgingEvents;
+import com.forgeoj.worker.task.ClaimedJudgeTask;
 import com.forgeoj.worker.task.JudgeTaskClaimService;
-import com.forgeoj.worker.task.TaskClaimResult;
 import com.forgeoj.worker.task.TaskClaimOutcome;
+import com.forgeoj.worker.task.TaskClaimResult;
 import com.rabbitmq.client.Channel;
 
 import java.io.IOException;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.springframework.amqp.core.Message;
 import org.springframework.amqp.rabbit.annotation.RabbitListener;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
@@ -17,8 +17,6 @@ import org.springframework.stereotype.Component;
 @Component
 @ConditionalOnProperty(name = "forgeoj.worker.consumer.enabled", havingValue = "true")
 final class JudgeTaskListener {
-
-    private static final Logger LOGGER = LoggerFactory.getLogger(JudgeTaskListener.class);
 
     private final JudgeTaskMessageParser parser;
     private final JudgeTaskClaimService claimService;
@@ -49,54 +47,54 @@ final class JudgeTaskListener {
         try {
             message = parser.parse(inbound.getBody());
         } catch (InvalidJudgeTaskMessageException invalid) {
-            LOGGER.warn("Rejected invalid judge task message");
+            JudgingEvents.record("delivery.rejected", null, null, null, "INVALID_MESSAGE");
             channel.basicReject(deliveryTag, false);
             return;
         }
-
+        JudgingEvents.record("delivery.received", message, null, null, null);
         TaskClaimResult claim;
         try {
             claim = claimService.claim(message);
         } catch (RuntimeException databaseFailure) {
-            LOGGER.warn(
-                    "Could not claim judge task {}; failureType={}",
-                    message.taskId(),
-                    databaseFailure.getClass().getSimpleName());
+            JudgingEvents.record("delivery.claim_failed", message, null, null, "CLAIM_FAILURE");
             channel.basicNack(deliveryTag, false, true);
             return;
         }
-
+        JudgingEvents.record("delivery.claim_result", message, claim.claimedTask(),
+                claim.outcome().name(), null);
         if (claim.outcome() == TaskClaimOutcome.REJECTED) {
-            LOGGER.warn(
-                    "Rejected judge task contract mismatch; taskId={}, submissionId={}",
-                    message.taskId(),
-                    message.submissionId());
             channel.basicReject(deliveryTag, false);
             return;
         }
-        if (claim.outcome() == TaskClaimOutcome.EXHAUSTED) {
-            LOGGER.warn("Judge task exhausted its attempt limit; taskId={}", message.taskId());
-            channel.basicAck(deliveryTag, false);
+        if (claim.outcome() != TaskClaimOutcome.CLAIMED) {
+            acknowledge(channel, deliveryTag, message, null);
             return;
         }
-        if (claim.outcome() == TaskClaimOutcome.DEFERRED) {
-            channel.basicAck(deliveryTag, false);
-            return;
-        }
-        if (claim.outcome() == TaskClaimOutcome.DUPLICATE) {
-            channel.basicAck(deliveryTag, false);
-            return;
-        }
-
         try {
             runner.run(claim.claimedTask());
-            channel.basicAck(deliveryTag, false);
         } catch (RuntimeException executionFailure) {
-            LOGGER.error(
-                    "Claimed judge task execution failed; taskId={}, failureType={}",
-                    message.taskId(),
-                    executionFailure.getClass().getSimpleName());
+            JudgingEvents.record("delivery.execution_failed", message, claim.claimedTask(),
+                    null, "EXECUTION_FAILURE");
+            channel.basicReject(deliveryTag, false);
+            return;
+        }
+        try {
+            acknowledge(channel, deliveryTag, message, claim.claimedTask());
+        } catch (RuntimeException ackFailure) {
+            // Preserve the existing claimed-delivery rejection path for runtime ACK failures.
             channel.basicReject(deliveryTag, false);
         }
+    }
+
+    private void acknowledge(Channel channel, long tag, JudgeTaskMessage message,
+            ClaimedJudgeTask attempt) throws IOException {
+        try {
+            channel.basicAck(tag, false);
+        } catch (IOException | RuntimeException ackFailure) {
+            JudgingEvents.record("delivery.ack_failed", message, attempt, null, "ACK_FAILURE");
+            throw ackFailure;
+        }
+        // Client accepted the ACK write; this does not prove broker receipt.
+        JudgingEvents.record("delivery.ack_sent", message, attempt, null, null);
     }
 }

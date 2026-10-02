@@ -40,7 +40,7 @@ class QuotaMigrationUpgradeIntegrationTests {
         var accountsBefore = migrator.queryForList("SELECT * FROM user_account ORDER BY id");
         Flyway flyway = Flyway.configure()
                 .dataSource(MYSQL.getJdbcUrl(), "forgeoj_migrator", "m0-migrator-test-secret")
-                .locations("classpath:db/migration").load();
+                .locations("classpath:db/migration").target("4").load();
         assertThat(flyway.migrate().migrationsExecuted).isEqualTo(1);
         assertThat(migrator.queryForList("SELECT user_id FROM user_judge_quota_lock ORDER BY user_id",
                 Long.class)).containsExactly(11L, 12L);

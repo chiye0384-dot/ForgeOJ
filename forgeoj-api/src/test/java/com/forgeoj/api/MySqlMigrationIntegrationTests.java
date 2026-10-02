@@ -106,6 +106,10 @@ class MySqlMigrationIntegrationTests {
                         """,
                         String.class);
         assertThat(verdictConstraint).contains("MLE", "OLE", "SECURITY_VIOLATION");
+        assertThat(migrator.queryForObject("""
+                SELECT character_maximum_length FROM information_schema.columns
+                WHERE table_schema = 'forgeoj' AND table_name = 'submission' AND column_name = 'verdict'
+                """, Integer.class)).isEqualTo(32);
         String submissionStatusConstraint =
                 migrator.queryForObject(
                         """

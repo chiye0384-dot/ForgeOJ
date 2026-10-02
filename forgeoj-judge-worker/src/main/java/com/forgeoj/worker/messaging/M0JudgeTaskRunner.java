@@ -42,7 +42,7 @@ final class M0JudgeTaskRunner implements JudgeTaskRunner {
         try (JudgeTaskHeartbeatCoordinator.HeartbeatSession ignored =
                 heartbeatCoordinator.start(claimedTask)) {
             JudgeTaskSnapshot snapshot = snapshotLoader.load(message);
-            result = sandboxRuntime.execute(snapshot);
+            result = sandboxRuntime.execute(snapshot, claimedTask.attemptId());
         } catch (JudgeTaskSnapshotException | InvalidSandboxConfigurationException
                 unrecoverableFailure) {
             try {

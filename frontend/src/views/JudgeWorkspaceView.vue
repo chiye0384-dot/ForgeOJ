@@ -5,15 +5,14 @@ import {
   createSubmission,
   getProblem,
   getSession,
-  getSubmission,
   login,
   type ProblemResponse,
   type SessionResponse,
   type SubmissionStatusResponse,
 } from '@/services/forgeojApi'
+import { monitorSubmission } from '@/services/submissionMonitor'
 
 const problemSlug = 'sum-two-integers'
-const pollIntervalMs = 1000
 
 const username = ref('')
 const password = ref('')
@@ -35,37 +34,13 @@ const loading = ref(true)
 const signingIn = ref(false)
 const submitting = ref(false)
 const errorMessage = ref('')
-let pollTimer: ReturnType<typeof setTimeout> | undefined
+let stopMonitor: (() => void) | undefined
+let disposed = false
 
 const authenticated = computed(() => session.value?.authenticated === true)
-const isTerminal = (processingStatus: string): boolean =>
-  processingStatus === 'FINISHED' || processingStatus === 'SYSTEM_ERROR'
-
-function stopPolling(): void {
-  if (pollTimer !== undefined) {
-    clearTimeout(pollTimer)
-    pollTimer = undefined
-  }
-}
-
-function schedulePoll(submissionId: string): void {
-  stopPolling()
-  pollTimer = setTimeout(() => {
-    void pollSubmission(submissionId)
-  }, pollIntervalMs)
-}
-
-async function pollSubmission(submissionId: string): Promise<void> {
-  try {
-    const latest = await getSubmission(submissionId)
-    submission.value = latest
-    if (!isTerminal(latest.processingStatus)) {
-      schedulePoll(submissionId)
-    }
-  } catch (error) {
-    errorMessage.value = toMessage(error)
-    stopPolling()
-  }
+function stopMonitoring(): void {
+  stopMonitor?.()
+  stopMonitor = undefined
 }
 
 function toMessage(error: unknown): string {
@@ -115,7 +90,7 @@ async function handleSubmit(): Promise<void> {
     return
   }
 
-  stopPolling()
+  stopMonitoring()
   submitting.value = true
   submission.value = null
   errorMessage.value = ''
@@ -126,12 +101,22 @@ async function handleSubmit(): Promise<void> {
       session.value.csrf,
       crypto.randomUUID(),
     )
+    if (disposed) return
     submission.value = {
       ...created,
       verdict: null,
       diagnosticMessage: null,
     }
-    await pollSubmission(created.submissionId)
+    stopMonitor = monitorSubmission(
+      submission.value,
+      (latest) => {
+        submission.value = latest
+        errorMessage.value = ''
+      },
+      (error) => {
+        errorMessage.value = toMessage(error)
+      },
+    )
   } catch (error) {
     errorMessage.value = toMessage(error)
   } finally {
@@ -142,7 +127,10 @@ async function handleSubmit(): Promise<void> {
 onMounted(() => {
   void initialize()
 })
-onBeforeUnmount(stopPolling)
+onBeforeUnmount(() => {
+  disposed = true
+  stopMonitoring()
+})
 </script>
 
 <template>

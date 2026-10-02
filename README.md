@@ -13,7 +13,7 @@ ForgeOJ 是一个面向 Java 学习者和小型教学班级的在线判题平台
 - JDK 21 + Spring Boot 4.1.1 + Maven Wrapper 3.3.4 / Maven 3.9.14；
 - Maven 根聚合工程，包含独立的 `forgeoj-api` 和 `forgeoj-judge-worker` 可执行模块；
 - 持久层使用官方 `mybatis-spring-boot-starter:4.1.0`，不使用 MyBatis-Plus；
-- M0 已声明 Spring Security、Spring AMQP 与 Flyway 运行依赖，以及仅用于测试的 Testcontainers；最小会话认证、Flyway migration 与异步判题纵向链路已实现并通过 M0 门禁；M1 已实现并在 Windows/Testcontainers 中验证 attempt/lease 栅栏、心跳、恢复扫描、有限重试、死信、Outbox 退避和队列边界，但整个 M1 仍未验收；
+- M0 已声明 Spring Security、Spring AMQP 与 Flyway 运行依赖，以及仅用于测试的 Testcontainers；最小会话认证、Flyway migration 与异步判题纵向链路已实现并通过 M0 门禁；M1 已有 attempt/lease 栅栏、心跳、恢复扫描、有限重试、死信、Outbox 退避、队列边界、用户配额和排队取消的局部证据；当前工作树又实现所有者同源 WebSocket 与前端版本/轮询恢复，见通知验证记录，但整个 M1 仍未验收；
 - PageHelper 暂不引入，到 M2 出现真实列表查询和分页语义时再评估；
 - 前端基于 create-vue 3.22.3 的 Vue 3 + TypeScript + Router + Vitest + ESLint + Prettier，实现了 M0 最小判题工作台；
 - H2 仅在测试作用域内用于空上下文启动检查；M0 的 migration、数据库权限、认证和题目读取使用固定 digest 的真实 MySQL 8.4.12 Testcontainer 验证。
@@ -85,6 +85,11 @@ npm run verify
 - [M0 最小判题纵向切片设计](docs/M0-VERTICAL-SLICE-DESIGN.md)
 - [M0 真实纵向链路验证记录](docs/M0-E2E-VALIDATION.md)
 - [M1 配额与排队取消验证记录](docs/M1-QUOTA-CANCELLATION-VALIDATION.md)
+- [M1 所有者通知与轮询恢复验证记录](docs/M1-NOTIFICATION-VALIDATION.md)
+- [M1 关联脱敏日志验证记录](docs/M1-OBSERVABILITY-VALIDATION.md)
+- [M1 真实 Worker 进程故障与沙箱恢复验证记录](docs/M1-FAULT-RECOVERY-VALIDATION.md)
+- [M1 沙箱恶意代码验证与清理修复](docs/M1-SANDBOX-SECURITY-VALIDATION.md)
+- [M1 可信资源结果与存储验证](docs/M1-RESOURCE-VERDICT-VALIDATION.md)
 - [已知限制](docs/KNOWN_LIMITATIONS.md)
 - [简历证据矩阵](docs/Resume-Evidence-Matrix.md)
 - [性能测试计划](docs/Performance-Test-Plan.md)
@@ -103,4 +108,10 @@ npm run verify
 
 用户已经完成人工结构审阅并确认 Apache-2.0 根许可证；后端和前端已在只读源码、全新依赖缓存的 Linux 容器中复现通过。首个公开提交的 [GitHub Actions 运行](https://github.com/chiye0384-dot/ForgeOJ/actions/runs/36386617957) 中，`backend` 与 `frontend` 两个 job 也均为 `success`，因此 M-1 标记为 `VERIFIED`。
 
-M-1 的证据只证明工程起点、许可证边界和构建链路可复现。M0 已闭环“预置账号登录 → 查看内置题 → 原子创建 Submission/JudgeTask/Outbox → RabbitMQ confirm 后标记已发布 → Worker 原子幂等领取 → 校验快照与隐藏测试 → 受限 Docker 执行 → Submission/JudgeTask 同事务写入终态 → ACK → 所有者查询 → 页面轮询”。2026-09-29 的 disposable Windows 开发栈完成真实浏览器 AC；2026-09-30 的提交 `39e91145` 又在固定 Linux/amd64 中通过 49 项后端测试、前端全部校验和 AC/WA/CE/RE/TLE/OLE 真实进程链路，20 项 M0 门禁全部 `PASS`。详细 commit、镜像 digest、产物哈希和清理记录见 [M0 验证记录](docs/M0-E2E-VALIDATION.md)。M1 已推进到并发用户配额和所有者 `QUEUED` 取消（实现提交 `44642f3`）：运行中允许另有三个排队任务，满队列重试保留原运行槽位；Windows/Testcontainers 完整回归通过 API 26 项、Worker 57 项，详见 [M1 局部验证记录](docs/M1-QUOTA-CANCELLATION-VALIDATION.md)。在通知、可观测性、安全/崩溃矩阵与固定 Linux 验收完成前，不得把 M1 标为 `VERIFIED`。
+M-1 的证据只证明工程起点、许可证边界和构建链路可复现。M0 已闭环“预置账号登录 → 查看内置题 → 原子创建 Submission/JudgeTask/Outbox → RabbitMQ confirm 后标记已发布 → Worker 原子幂等领取 → 校验快照与隐藏测试 → 受限 Docker 执行 → Submission/JudgeTask 同事务写入终态 → ACK → 所有者查询 → 页面轮询”。2026-09-29 的 disposable Windows 开发栈完成真实浏览器 AC；2026-09-30 的提交 `39e91145` 又在固定 Linux/amd64 中通过 49 项后端测试、前端全部校验和 AC/WA/CE/RE/TLE/OLE 真实进程链路，20 项 M0 门禁全部 `PASS`。详细 commit、镜像 digest、产物哈希和清理记录见 [M0 验证记录](docs/M0-E2E-VALIDATION.md)。M1 并发配额与所有者 `QUEUED` 取消实现提交为 `44642f3`：运行中允许另有三个排队任务，满队列重试保留原运行槽位；该步 Windows 回归 API 26 + Worker 57，详见 [配额取消记录](docs/M1-QUOTA-CANCELLATION-VALIDATION.md)。2026-10-01 的本地工作树又完成所有者同源通知与关联脱敏 JSON 日志，日志阶段完整回归 API 46 + Worker 67、前端 8 项全过，见 [通知记录](docs/M1-NOTIFICATION-VALIDATION.md)与[日志记录](docs/M1-OBSERVABILITY-VALIDATION.md)。
+
+21:04:37 故障阶段根 `clean verify` 通过 API **46** + Worker **83**（129 项，零失败/错误/跳过），前端 **8** 项及全部检查通过。新增真实 Worker 子 JVM kill/租约恢复、终态提交但 ACK 前中断、重复投递、孤儿沙箱回收与活跃 owner 保留，修复 attempt 容器身份和保守清理，末尾无管理沙箱/测试子进程残留，见 [故障恢复记录](docs/M1-FAULT-RECOVERY-VALIDATION.md)。本地 Windows 进程测试不等于固定 Linux 或任意 ACK 丢包演练。
+
+安全阶段于 **2026-10-01 21:39:40** 完成根 `clean verify`：API **46** + Worker **98**，共 **144** 项，零失败/错误/跳过；10 月 2 日恢复会话后核验结果与零沙箱/测试子进程残留。新增 14 项受限容器恶意程序及真实 Worker 凭据检查，修复临时文件、子进程回收和共享内存隔离问题，见 [安全验证记录](docs/M1-SANDBOX-SECURITY-VALIDATION.md)。
+
+最新资源结果阶段于 **2026-10-02 08:34:50** 完成根 `clean verify`：API **48** + Worker **110**，共 **158** 项，零失败/错误/跳过、无沙箱/测试子 Worker 残留。内核可确认的 cgroup OOM/PID 超限现在写为 MLE/SECURITY_VIOLATION；V5 修复安全结果存不下的列宽，保留旧结果，部署须先迁移再启动新 Worker。真实 MQ 消费与重复投递、所有者查询和升级保存历史均通过，见 [资源结果验证](docs/M1-RESOURCE-VERDICT-VALIDATION.md)。纯 JVM OOM/无审计的拒绝操作保留 L-032 的边界；前端本阶段未改未重跑。固定 Linux、运维闭环与最终门禁仍待完成，M1 为 `IN_PROGRESS`，修改未提交推送。

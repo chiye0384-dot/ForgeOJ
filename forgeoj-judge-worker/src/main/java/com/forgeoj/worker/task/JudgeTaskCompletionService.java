@@ -1,6 +1,7 @@
 package com.forgeoj.worker.task;
 
 import com.forgeoj.worker.messaging.JudgeTaskMessage;
+import com.forgeoj.worker.observability.JudgingEvents;
 import com.forgeoj.worker.sandbox.SandboxExecutionResult;
 import com.forgeoj.worker.sandbox.SandboxOutcome;
 
@@ -86,6 +87,8 @@ public class JudgeTaskCompletionService {
         if (taskUpdates != 1 || submissionUpdates != 1 || attemptUpdates != 1) {
             throw new IllegalStateException("Judge task completion lost its compare-and-swap");
         }
+        JudgingEvents.afterCommit("attempt.finished", claimedTask.message(), claimedTask,
+                verdict, null);
     }
 
     private JudgeTaskClaimRow lockedMatchingRunningTask(ClaimedJudgeTask claimedTask) {
@@ -138,6 +141,8 @@ public class JudgeTaskCompletionService {
                         claimedTask.attemptNo(),
                         delaySeconds);
         requireAllWritten(taskUpdates, submissionUpdates, attemptUpdates, outboxInserts);
+        JudgingEvents.afterCommit("attempt.retry_scheduled", claimedTask.message(), claimedTask,
+                queueFull ? "WAITING_RETRY" : "RETRYING", PLATFORM_FAILURE_CODE);
     }
 
     private void deadLetter(
@@ -174,6 +179,8 @@ public class JudgeTaskCompletionService {
                         claimedTask.attemptNo(),
                         0);
         requireAllWritten(taskUpdates, submissionUpdates, attemptUpdates, outboxInserts);
+        JudgingEvents.afterCommit("attempt.dead_lettered", claimedTask.message(), claimedTask,
+                "SYSTEM_ERROR", failureCode);
     }
 
     private void requireAllWritten(int... updates) {
@@ -203,6 +210,8 @@ public class JudgeTaskCompletionService {
             case RUNTIME_ERROR -> "RE";
             case TIME_LIMIT_EXCEEDED -> "TLE";
             case OUTPUT_LIMIT_EXCEEDED -> "OLE";
+            case MEMORY_LIMIT_EXCEEDED -> "MLE";
+            case SECURITY_VIOLATION -> "SECURITY_VIOLATION";
         };
     }
 

@@ -11,6 +11,16 @@ import org.apache.ibatis.annotations.Update;
 @Mapper
 interface SubmissionMapper {
 
+    @Select("""
+            SELECT s.id AS submissionId, s.processing_status AS processingStatus,
+                   s.status_version AS statusVersion
+            FROM submission s JOIN user_account u ON u.id = s.user_id
+            WHERE s.id = #{submissionId} AND s.user_id = #{userId} AND u.status = 'ACTIVE'
+            LIMIT 1
+            """)
+    Optional<SubmissionResult> findNoticeByOwner(
+            @Param("userId") long userId, @Param("submissionId") String submissionId);
+
     @Select(
             """
             SELECT jt.id FROM judge_task jt

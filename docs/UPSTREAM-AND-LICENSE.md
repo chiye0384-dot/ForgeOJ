@@ -150,6 +150,17 @@
 - ForgeOJ 当前只让 Docker Engine 从 registry 拉取该镜像作为用户代码的外部 Java 21 运行时，不把镜像层、tar 归档或派生镜像提交/分发到仓库，也不把 JDK 或 Dockerfile 表述为 ForgeOJ 自研。
 - digest 固定用于重现提交时的判题环境，不代表镜像永远安全；升级时必须创建新的 judge version，并同步审计 tag、index/平台 digest、来源 revision、许可证和回归结果，不能静默改写历史提交环境。
 
+### U-008：M1 原生 WebSocket 通知依赖
+
+- 2026-09-30 在 API POM 加入 `org.springframework.boot:spring-boot-starter-websocket:4.1.1`，不添加 STOMP/SockJS 或前端 socket 包，也不向 Worker 添加 WebSocket 依赖。
+- 来源是现有 Spring Boot `v4.1.1`（上表固定 commit）与 Spring Framework `v7.0.9` 发行构件；Maven 实际解析 `spring-boot-websocket:4.1.1`、`spring-websocket:7.0.9`、`spring-messaging:7.0.9`。已有 WebMVC/Tomcat 依赖含 `tomcat-embed-websocket:11.0.24`。
+- 本机缓存的 Starter、Framework 与 Tomcat POM 声明 Apache-2.0；版本、许可证与传递依赖仍需纳入首次 Release 的完整发布审计，不由根许可证重新许可。
+- 核验来源：[Starter 固定 POM](https://repo.maven.apache.org/maven2/org/springframework/boot/spring-boot-starter-websocket/4.1.1/spring-boot-starter-websocket-4.1.1.pom)、[Framework 固定 POM](https://repo.maven.apache.org/maven2/org/springframework/spring-websocket/7.0.9/spring-websocket-7.0.9.pom)、[Spring WebSocket 官方文档](https://docs.spring.io/spring-framework/reference/web/websocket/server.html)、[Spring Security 官方边界说明](https://docs.spring.io/spring-security/reference/servlet/integrations/websocket.html)。当前文档可能随上游升级，实际采用版本以固定构件为准。
+- 不复制上游源码、业务模块或模板；Spring 提供握手、传输和并发发送包装。ForgeOJ 自行实现同源/所有者授权、三字段投影、会话复核、有界订阅、单调快照、终态清理、轮询/重连及测试。Tomcat 1 秒同步发送超时属性已对固定 11.0.24 sources JAR 核验，不宣称跨容器通用。
+- 构建与运行验证见 `M1-NOTIFICATION-VALIDATION.md`；不把依赖装配成功单独视为通知或 M1 已验证。
+
+2026-10-01 的关联日志与真实进程故障阶段均未增加直接依赖或复制外部源码。子 JVM 控制使用既有 JDK 21，临时服务使用已登记的 Testcontainers/MySQL/RabbitMQ/Temurin；attempt 容器身份与 MySQL 关闭事实查询是 ForgeOJ 自有实现。框架、broker、daemon 和镜像能力的归属/许可证边界不变，详见两项阶段验证记录与 `OWNERSHIP.md`。
+
 ## 5. 引入记录模板
 
 ~~~markdown
@@ -170,6 +181,10 @@
 - 最终决定：采用 / 拒绝 / 替换
 - 决定原因：
 ~~~
+
+2026-10-01 沙箱安全验证使用原创有界 Java 程序和既有 Docker CLI、固定 Temurin 镜像与 JDK/Testcontainers。启用 daemon 提供的 `--init` 与 `--ipc none`，不复制或打包 Docker init 可执行文件，不新增依赖或改变镜像 digest。进程回收和 cgroup/namespace 为平台能力，ForgeOJ 的贡献是控制策略、验证与清理修复；详见 `M1-SANDBOX-SECURITY-VALIDATION.md` 和 `OWNERSHIP.md`。
+
+2026-10-02 资源 verdict 阶段仍使用既有 JDK、Docker CLI、固定镜像和 MySQL/Flyway/Testcontainers，没有外部代码导入或新增依赖。cgroup 事件接口定义参考 Linux 官方文档，分类器、V5 与原创回归程序属于 ForgeOJ；来源与限度记录在 `M1-RESOURCE-VERDICT-VALIDATION.md`。
 
 ## 6. 仓库内需要保留的归属材料
 

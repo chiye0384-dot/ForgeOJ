@@ -46,6 +46,12 @@ export interface SubmissionStatusResponse extends SubmissionCreatedResponse {
   diagnosticMessage: string | null
 }
 
+export class ApiRequestError extends Error {
+  constructor(readonly status: number) {
+    super(`请求失败（HTTP ${status}）`)
+  }
+}
+
 async function requestJson<T>(path: string, init?: RequestInit): Promise<T> {
   const response = await fetch(path, {
     credentials: 'same-origin',
@@ -53,7 +59,7 @@ async function requestJson<T>(path: string, init?: RequestInit): Promise<T> {
   })
 
   if (!response.ok) {
-    throw new Error(`请求失败（HTTP ${response.status}）`)
+    throw new ApiRequestError(response.status)
   }
 
   return (await response.json()) as T

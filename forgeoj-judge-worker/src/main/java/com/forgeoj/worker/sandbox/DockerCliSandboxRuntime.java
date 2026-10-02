@@ -6,18 +6,19 @@ import com.forgeoj.worker.snapshot.JudgeTestCase;
 import java.nio.charset.StandardCharsets;
 import java.time.Duration;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 import java.util.Locale;
 import java.util.UUID;
 import java.util.regex.Pattern;
+
+import tools.jackson.databind.json.JsonMapper;
 
 public final class DockerCliSandboxRuntime implements SandboxRuntime {
 
     private static final Pattern PINNED_IMAGE =
             Pattern.compile("[a-zA-Z0-9._/:\\-]+@sha256:[0-9a-f]{64}");
     private static final Pattern CONTAINER_ID = Pattern.compile("[0-9a-f]{64}");
-    private static final Pattern MANAGED_NAME = Pattern.compile("forgeoj-[0-9a-f]{32}");
+    private static final JsonMapper JSON = JsonMapper.builder().build();
     private static final Duration CONTROL_TIMEOUT = Duration.ofSeconds(15);
     private static final Duration COMPILE_TIMEOUT = Duration.ofSeconds(15);
     private static final int CONTROL_OUTPUT_LIMIT = 64 * 1024;
@@ -28,10 +29,16 @@ public final class DockerCliSandboxRuntime implements SandboxRuntime {
     private static final String INIT_USER_ID = "65534:65534";
 
     private final DockerCommandExecutor executor;
+    private final SandboxAttemptLookup attempts;
     private final M0OutputComparator outputComparator = new M0OutputComparator();
 
     public DockerCliSandboxRuntime(DockerCommandExecutor executor) {
+        this(executor, (taskId, attemptId) -> false);
+    }
+
+    public DockerCliSandboxRuntime(DockerCommandExecutor executor, SandboxAttemptLookup attempts) {
         this.executor = executor;
+        this.attempts = attempts;
     }
 
     @Override
@@ -67,24 +74,31 @@ public final class DockerCliSandboxRuntime implements SandboxRuntime {
         if (listed.stdout().isBlank()) {
             return;
         }
-        Arrays.stream(listed.stdout().split("\\R"))
-                .map(String::strip)
-                .filter(identifier -> CONTAINER_ID.matcher(identifier).matches())
-                .forEach(this::removeByIdentifier);
+        for (String identifier : listed.stdout().lines().map(String::strip).toList()) {
+            if (!CONTAINER_ID.matcher(identifier).matches()) continue;
+            SandboxContainer container = inspectOwnedContainer(identifier);
+            // RUNNING, missing/foreign database records and legacy unlabeled attempts are retained.
+            // Lease expiry alone is not sufficient: a successful claim must first fence the old attempt.
+            if (container != null && attempts.isClosed(container.taskId(), container.attemptId())) {
+                removeByIdentifier(container.identifier());
+            }
+        }
     }
 
     @Override
-    public SandboxContainer prepare(JudgeTaskSnapshot snapshot) {
+    public SandboxContainer prepare(JudgeTaskSnapshot snapshot, String attemptId) {
         validateSnapshot(snapshot);
-        String compactTaskId = UUID.fromString(snapshot.taskId()).toString().replace("-", "");
-        String containerName = "forgeoj-" + compactTaskId;
+        String containerName = managedName(snapshot.taskId(), attemptId);
 
         List<String> command = new ArrayList<>();
         command.addAll(List.of("container", "create"));
+        command.add("--init");
         command.addAll(List.of("--name", containerName));
         command.addAll(List.of("--label", "com.forgeoj.managed=true"));
         command.addAll(List.of("--label", "com.forgeoj.task-id=" + snapshot.taskId()));
+        command.addAll(List.of("--label", "com.forgeoj.attempt-id=" + attemptId));
         command.addAll(List.of("--network", "none"));
+        command.addAll(List.of("--ipc", "none"));
         command.add("--read-only");
         command.addAll(List.of("--cap-drop", "ALL"));
         command.addAll(List.of("--security-opt", "no-new-privileges"));
@@ -107,18 +121,18 @@ public final class DockerCliSandboxRuntime implements SandboxRuntime {
         if (!CONTAINER_ID.matcher(created.stdout().strip()).matches()) {
             throw new SandboxException("Docker returned an invalid container identifier");
         }
-        return new SandboxContainer(snapshot.taskId(), containerName);
+        return new SandboxContainer(snapshot.taskId(), attemptId, containerName, created.stdout().strip());
     }
 
     @Override
-    public SandboxExecutionResult execute(JudgeTaskSnapshot snapshot) {
+    public SandboxExecutionResult execute(JudgeTaskSnapshot snapshot, String attemptId) {
         validateSnapshot(snapshot);
         SandboxContainer container = null;
         Throwable primaryFailure = null;
         try {
-            container = prepare(snapshot);
+            container = prepare(snapshot, attemptId);
             runControl(
-                    List.of("container", "start", container.name()),
+                    List.of("container", "start", container.identifier()),
                     "Could not start sandbox container");
             DockerCommandResult sourceTransfer =
                     executor.execute(
@@ -128,7 +142,7 @@ public final class DockerCliSandboxRuntime implements SandboxRuntime {
                                     "--interactive",
                                     "--user",
                                     INIT_USER_ID,
-                                    container.name(),
+                                    container.identifier(),
                                     "dd",
                                     "of=" + CONTAINER_WORKSPACE + "/Main.java",
                                     "status=none"),
@@ -144,7 +158,7 @@ public final class DockerCliSandboxRuntime implements SandboxRuntime {
                                     "exec",
                                     "--user",
                                     INIT_USER_ID,
-                                    container.name(),
+                                    container.identifier(),
                                     "javac",
                                     "-encoding",
                                     "UTF-8",
@@ -168,7 +182,7 @@ public final class DockerCliSandboxRuntime implements SandboxRuntime {
                             "exec",
                             "--user",
                             "0:0",
-                            container.name(),
+                            container.identifier(),
                             "chmod",
                             "a-w",
                             CONTAINER_WORKSPACE),
@@ -210,14 +224,59 @@ public final class DockerCliSandboxRuntime implements SandboxRuntime {
 
     @Override
     public void cleanup(SandboxContainer container) {
-        String expectedName =
-                "forgeoj-"
-                        + UUID.fromString(container.taskId()).toString().replace("-", "");
-        if (!expectedName.equals(container.name())
-                || !MANAGED_NAME.matcher(container.name()).matches()) {
+        if (!managedName(container.taskId(), container.attemptId()).equals(container.name())
+                || !CONTAINER_ID.matcher(container.identifier()).matches()) {
             throw new SandboxException("Refusing to remove an unmanaged container");
         }
-        removeByIdentifier(container.name());
+        SandboxContainer actual = inspectOwnedContainer(container.identifier());
+        if (actual == null) {
+            if (isAbsent(container.identifier())) return;
+            throw new SandboxException("Refusing to remove a container with mismatched ownership");
+        }
+        if (!actual.equals(container)) throw new SandboxException("Sandbox ownership changed");
+        removeByIdentifier(container.identifier());
+    }
+
+    private String managedName(String taskId, String attemptId) {
+        if (taskId == null || attemptId == null) throw new InvalidSandboxConfigurationException("Sandbox identity is missing");
+        try {
+            String task = UUID.fromString(taskId).toString();
+            String attempt = UUID.fromString(attemptId).toString();
+            if (!task.equals(taskId) || !attempt.equals(attemptId)) throw new IllegalArgumentException();
+            return "forgeoj-" + task.replace("-", "") + "-" + attempt.replace("-", "");
+        } catch (IllegalArgumentException invalid) {
+            throw new InvalidSandboxConfigurationException("Sandbox identity is invalid", invalid);
+        }
+    }
+
+    private SandboxContainer inspectOwnedContainer(String identifier) {
+        DockerCommandResult inspected = executor.execute(List.of("container", "inspect", "--format",
+                "{{.Id}}|{{.Name}}|{{json .Config.Labels}}", identifier), CONTROL_TIMEOUT, CONTROL_OUTPUT_LIMIT);
+        if (inspected.exitCode() != 0 && !inspected.timedOut() && !inspected.outputTruncated()
+                && isAbsent(identifier)) return null;
+        requireSuccess(inspected, "Could not inspect sandbox ownership");
+        String[] parts = inspected.stdout().strip().split("\\|", 3);
+        if (parts.length != 3 || !identifier.equals(parts[0])) return null;
+        try {
+            var labels = JSON.readTree(parts[2]);
+            if (!"true".equals(labels.path("com.forgeoj.managed").asText())) return null;
+            String taskId = labels.path("com.forgeoj.task-id").asText();
+            String attemptId = labels.path("com.forgeoj.attempt-id").asText();
+            String name = managedName(taskId, attemptId);
+            if (!parts[1].equals("/" + name)) return null;
+            return new SandboxContainer(taskId, attemptId, name, identifier);
+        } catch (InvalidSandboxConfigurationException | IllegalArgumentException invalidMetadata) {
+            return null;
+        } catch (tools.jackson.core.JacksonException invalidJson) {
+            return null;
+        }
+    }
+
+    private boolean isAbsent(String identifier) {
+        DockerCommandResult listed = executor.execute(List.of("container", "ls", "--all", "--quiet", "--no-trunc",
+                "--filter", "id=" + identifier), CONTROL_TIMEOUT, CONTROL_OUTPUT_LIMIT);
+        requireSuccess(listed, "Could not check sandbox removal");
+        return listed.stdout().isBlank();
     }
 
     private void removeByIdentifier(String identifier) {
@@ -226,6 +285,7 @@ public final class DockerCliSandboxRuntime implements SandboxRuntime {
                         List.of("container", "rm", "--force", "--volumes", identifier),
                         CONTROL_TIMEOUT,
                         CONTROL_OUTPUT_LIMIT);
+        if (removed.exitCode() != 0 && !removed.timedOut() && !removed.outputTruncated() && isAbsent(identifier)) return;
         requireSuccess(removed, "Could not remove managed sandbox container");
     }
 
@@ -241,7 +301,7 @@ public final class DockerCliSandboxRuntime implements SandboxRuntime {
                         "exec",
                         "--user",
                         USER_ID,
-                        container.name(),
+                        container.identifier(),
                         "mkdir",
                         "-m",
                         "700",
@@ -249,6 +309,8 @@ public final class DockerCliSandboxRuntime implements SandboxRuntime {
                 "Could not create isolated test-case directory");
 
         DockerCommandResult execution;
+        SandboxResourceEvents before = readResourceEvents(container);
+        SandboxResourceEvents after;
         try {
             int heapMb = Math.max(32, snapshot.memoryLimitMb() / 2);
             execution =
@@ -263,7 +325,7 @@ public final class DockerCliSandboxRuntime implements SandboxRuntime {
                                     "HOME=" + caseDirectory,
                                     "--env",
                                     "TMPDIR=" + caseDirectory,
-                                    container.name(),
+                                    container.identifier(),
                                     "java",
                                     "-XX:ActiveProcessorCount=1",
                                     "-Xms16m",
@@ -279,9 +341,15 @@ public final class DockerCliSandboxRuntime implements SandboxRuntime {
                             Math.toIntExact(snapshot.outputLimitBytes()));
         } finally {
             terminateUserProcesses(container);
-            removeCaseDirectory(container, caseDirectory);
+            try {
+                after = readResourceEvents(container);
+            } finally {
+                cleanupUserTemporaryFiles(container);
+            }
         }
 
+        SandboxOutcome violation = after.violationSince(before);
+        if (violation != null) return SandboxExecutionResult.of(violation);
         if (execution.outputTruncated()) {
             return SandboxExecutionResult.of(SandboxOutcome.OUTPUT_LIMIT_EXCEEDED);
         }
@@ -299,6 +367,20 @@ public final class DockerCliSandboxRuntime implements SandboxRuntime {
         return SandboxExecutionResult.of(SandboxOutcome.ACCEPTED);
     }
 
+    private SandboxResourceEvents readResourceEvents(SandboxContainer container) {
+        return SandboxResourceEvents.parse(
+                readResourceFile(container, "/sys/fs/cgroup/memory.events"),
+                readResourceFile(container, "/sys/fs/cgroup/pids.events"));
+    }
+
+    private String readResourceFile(SandboxContainer container, String path) {
+        DockerCommandResult result = executor.execute(
+                List.of("container", "exec", "--user", INIT_USER_ID, container.identifier(),
+                        "/usr/bin/cat", path), CONTROL_TIMEOUT, CONTROL_OUTPUT_LIMIT);
+        requireSuccess(result, "Could not read sandbox resource evidence");
+        return result.stdout();
+    }
+
     private Duration totalExecutionBudget(JudgeTaskSnapshot snapshot) {
         long totalMillis;
         try {
@@ -312,14 +394,29 @@ public final class DockerCliSandboxRuntime implements SandboxRuntime {
     }
 
     private void terminateUserProcesses(SandboxContainer container) {
+        for (int sweep = 0; sweep < 5; sweep++) {
+            killUserProcesses(container);
+            DockerCommandResult remaining = executor.execute(
+                    List.of("container", "exec", "--user", INIT_USER_ID, container.identifier(),
+                            "/usr/bin/pgrep", "-u", "65532"), CONTROL_TIMEOUT, CONTROL_OUTPUT_LIMIT);
+            if (remaining.timedOut() || remaining.outputTruncated() || remaining.exitCode() > 1) {
+                throw new SandboxException("Could not verify test-case process cleanup");
+            }
+            if (remaining.exitCode() == 1) return;
+        }
+        // Never let another case run, or walk user-controlled paths, with surviving processes.
+        throw new SandboxException("Test-case processes survived cleanup");
+    }
+
+    private void killUserProcesses(SandboxContainer container) {
         DockerCommandResult result =
                 executor.execute(
                         List.of(
                                 "container",
                                 "exec",
                                 "--user",
-                                "0:0",
-                                container.name(),
+                                USER_ID,
+                                container.identifier(),
                                 "/usr/bin/pkill",
                                 "-KILL",
                                 "-u",
@@ -331,18 +428,24 @@ public final class DockerCliSandboxRuntime implements SandboxRuntime {
         }
     }
 
-    private void removeCaseDirectory(SandboxContainer container, String caseDirectory) {
+    private void cleanupUserTemporaryFiles(SandboxContainer container) {
+        // Only owned, real directories are chmod targets. GNU chmod -R does not traverse
+        // nested symlinks; user processes have already been killed before this walk.
+        runControl(
+                List.of("container", "exec", "--user", USER_ID, container.identifier(),
+                        "find", "/tmp", "-mindepth", "1", "-maxdepth", "1", "-type", "d", "-uid", "65532",
+                        "-exec", "chmod", "-R", "u+rwX", "--", "{}", "+"),
+                "Could not restore owned temporary directory permissions");
         runControl(
                 List.of(
                         "container",
                         "exec",
                         "--user",
-                        "0:0",
-                        container.name(),
-                        "rm",
-                        "-rf",
-                        caseDirectory),
-                "Could not clean isolated test-case directory");
+                        USER_ID,
+                        container.identifier(),
+                        "find", "/tmp", "-mindepth", "1", "-maxdepth", "1", "-uid", "65532",
+                        "-exec", "rm", "-rf", "--", "{}", "+"),
+                "Could not clean owned temporary files");
     }
 
     private void ensureContainerRunning(SandboxContainer container) {
@@ -353,7 +456,7 @@ public final class DockerCliSandboxRuntime implements SandboxRuntime {
                                 "inspect",
                                 "--format",
                                 "{{.State.Running}}",
-                                container.name()),
+                                container.identifier()),
                         CONTROL_TIMEOUT,
                         CONTROL_OUTPUT_LIMIT);
         if (inspected.timedOut()

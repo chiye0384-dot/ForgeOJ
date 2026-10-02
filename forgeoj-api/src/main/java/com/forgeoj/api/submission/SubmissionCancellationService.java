@@ -1,5 +1,7 @@
 package com.forgeoj.api.submission;
 
+import com.forgeoj.api.observability.CommittedJudgingEvents;
+
 import java.util.UUID;
 
 import org.springframework.http.HttpStatus;
@@ -42,6 +44,8 @@ public class SubmissionCancellationService {
                 || mapper.cancelQueuedSubmission(row.submissionId(), row.submissionVersion()) != 1) {
             throw new IllegalStateException("Queued cancellation lost state ownership");
         }
+        CommittedJudgingEvents.afterCommit("submission.cancelled", row.submissionId(),
+                row.taskId(), null, "CANCELLED", row.submissionVersion() + 1);
         return new SubmissionResult(row.submissionId(), "CANCELLED", row.submissionVersion() + 1);
     }
 

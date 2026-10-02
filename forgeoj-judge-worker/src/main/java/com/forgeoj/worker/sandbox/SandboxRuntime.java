@@ -8,9 +8,9 @@ public interface SandboxRuntime {
 
     void cleanupManagedContainers();
 
-    SandboxContainer prepare(JudgeTaskSnapshot snapshot);
+    SandboxContainer prepare(JudgeTaskSnapshot snapshot, String attemptId);
 
-    SandboxExecutionResult execute(JudgeTaskSnapshot snapshot);
+    SandboxExecutionResult execute(JudgeTaskSnapshot snapshot, String attemptId);
 
     void cleanup(SandboxContainer container);
 }

@@ -35,6 +35,31 @@ export interface ProblemResponse {
   }
 }
 
+export type ProblemDifficulty = 'EASY' | 'MEDIUM' | 'HARD'
+
+export interface ProblemListQuery {
+  keyword?: string
+  difficulty?: ProblemDifficulty
+  tag?: string
+  page: number
+  size: number
+}
+
+export interface ProblemListItem {
+  slug: string
+  title: string
+  difficulty: ProblemDifficulty | null
+  tags: string[]
+  judgeVersion: number
+}
+
+export interface ProblemListResponse {
+  items: ProblemListItem[]
+  page: number
+  size: number
+  total: number
+}
+
 export interface SubmissionCreatedResponse {
   submissionId: string
   processingStatus: string
@@ -148,6 +173,18 @@ export function login(
 
 export function getProblem(slug: string): Promise<ProblemResponse> {
   return requestJson(`/api/v1/problems/${encodeURIComponent(slug)}`)
+}
+
+export function getProblems(query: ProblemListQuery): Promise<ProblemListResponse> {
+  const parameters = new URLSearchParams({ page: String(query.page), size: String(query.size) })
+  if (query.keyword) parameters.set('keyword', query.keyword)
+  if (query.difficulty) parameters.set('difficulty', query.difficulty)
+  if (query.tag) parameters.set('tag', query.tag)
+  return requestJson(`/api/v1/problems?${parameters}`)
+}
+
+export function getProblemTags(): Promise<{ tags: string[] }> {
+  return requestJson('/api/v1/problem-tags')
 }
 
 export function createSubmission(

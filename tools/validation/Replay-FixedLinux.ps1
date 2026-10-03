@@ -2,14 +2,14 @@
 # SPDX-License-Identifier: Apache-2.0
 [CmdletBinding()]
 param(
-    [ValidateSet('Start','Status','Matrix','WorkerStart','WorkerStop','Permissions','Audit','Stop')]
+    [ValidateSet('Start','Status','Matrix','Library','WorkerStart','WorkerStop','Permissions','Audit','Stop')]
     [string]$Action = 'Start',
     [string]$RunDirectory,
     [ValidatePattern('^$|^[a-f0-9-]{36}$')]
     [string]$SubmissionId = '',
-    [string]$BuildDirectory = 'target/forgeoj-linux-20261002-084610-f76a1ccc',
-    [string]$ApiSha256 = '236e2352d2d67d1885dbf8905b0e6adb82479c5732c44b64efd326d32b4de650',
-    [string]$WorkerSha256 = '60d9f0aa42d143e95a3036984b48096967548d61bb52b0e391ccfa3d3fe46d5b',
+    [string]$BuildDirectory = '',
+    [string]$ApiSha256 = '',
+    [string]$WorkerSha256 = '',
     [string]$DockerCommand = 'docker'
 )
 $ErrorActionPreference = 'Stop'
@@ -35,12 +35,15 @@ function Set-ReplayEnvironment {
 }
 function Save-State { $state | ConvertTo-Json -Depth 5 | Set-Content -LiteralPath (Join-Path $RunDirectory 'state.json') -Encoding utf8 }
 function Sql-Fixture([string]$Sql) {
-    $output = $Sql | & $DockerCommand compose --project-name $state.Project -f $composeFile exec -T mysql sh -c 'exec mysql -uroot --password="$MYSQL_ROOT_PASSWORD" --batch --skip-column-names forgeoj'
+    $output = $Sql | & $DockerCommand compose --project-name $state.Project -f $composeFile exec -T mysql sh -c 'exec mysql -uroot --password="$MYSQL_ROOT_PASSWORD" --default-character-set=utf8mb4 --batch --skip-column-names forgeoj'
     if ($LASTEXITCODE -ne 0) { throw 'Disposable fixture SQL failed' }
     return $output
 }
 
 if ($Action -eq 'Start') {
+    if (-not $BuildDirectory -or -not $ApiSha256 -or -not $WorkerSha256) {
+        throw 'Start requires an explicitly reviewed BuildDirectory, ApiSha256 and WorkerSha256; historical default artifacts are not reused.'
+    }
     $build = (Resolve-Path (Join-Path $repository $BuildDirectory)).Path
     $apiHash = (Get-FileHash "$build/forgeoj-api/forgeoj-api-0.0.1-SNAPSHOT.jar").Hash.ToLower()
     $workerHash = (Get-FileHash "$build/forgeoj-judge-worker/forgeoj-judge-worker-0.0.1-SNAPSHOT.jar").Hash.ToLower()
@@ -87,6 +90,7 @@ switch ($Action) {
         $state | ConvertTo-Json
     }
     'Matrix' { Compose-Checked @('exec','-T','frontend','node','/source/tools/validation/replay-probe.mjs','matrix') }
+    'Library' { Compose-Checked @('exec','-T','frontend','node','/source/tools/validation/replay-probe.mjs','library') }
     'Permissions' { Compose-Checked (@('exec','-T','frontend','node','/source/tools/validation/replay-probe.mjs','permissions') + $(if($SubmissionId) { @($SubmissionId) } else { @() })) }
     'WorkerStop' { Compose-Checked @('stop','-t','10','worker') }
     'WorkerStart' { Compose-Checked @('up','--detach','worker') }
@@ -94,13 +98,16 @@ switch ($Action) {
         # Export only platform identifiers/states: never source, tests, hashes or diagnostics.
         $facts = Sql-Fixture @'
 SELECT JSON_OBJECT('submissionId',s.id,'processingStatus',s.processing_status,'verdict',s.verdict,
+ 'problemSlug',p.slug,'judgeVersion',jv.version_no,
  'statusVersion',s.status_version,'judgeTaskId',jt.id,'taskStatus',jt.task_status,
  'taskVersion',jt.status_version,'attemptCount',jt.attempt_count,
  'leaseCleared',jt.lease_owner IS NULL AND jt.lease_token IS NULL AND jt.lease_expires_at IS NULL,
  'attempts',COALESCE((SELECT JSON_ARRAYAGG(JSON_OBJECT('attemptId',a.id,'attemptNo',a.attempt_no,
  'status',a.attempt_status,'finished',a.finished_at IS NOT NULL)) FROM judge_task_attempt a
  WHERE a.judge_task_id=jt.id),JSON_ARRAY()))
- FROM submission s JOIN judge_task jt ON jt.submission_id=s.id ORDER BY s.created_at;
+ FROM submission s JOIN judge_task jt ON jt.submission_id=s.id
+ JOIN problem p ON p.id=s.problem_id
+ JOIN problem_judge_version jv ON jv.id=s.judge_version_id ORDER BY s.created_at;
 '@
         $facts | Set-Content -LiteralPath (Join-Path $RunDirectory 'database.jsonl') -Encoding utf8
         $outbox = Sql-Fixture @'
@@ -125,7 +132,10 @@ SELECT JSON_OBJECT('outboxEventId',id,'judgeTaskId',aggregate_id,'published',pub
         $denials = @(
             @('forgeoj_api','FORGEOJ_API_DB_PASSWORD','SELECT id FROM problem_test_case LIMIT 0;'),
             @('forgeoj_api','FORGEOJ_API_DB_PASSWORD','SELECT id FROM judge_task_attempt LIMIT 0;'),
-            @('forgeoj_worker','FORGEOJ_WORKER_DB_PASSWORD','SELECT id FROM user_account LIMIT 0;')
+            @('forgeoj_worker','FORGEOJ_WORKER_DB_PASSWORD','SELECT id FROM user_account LIMIT 0;'),
+            @('forgeoj_worker','FORGEOJ_WORKER_DB_PASSWORD','SELECT problem_id FROM problem_tag LIMIT 0;'),
+            @('forgeoj_api','FORGEOJ_API_DB_PASSWORD','DELETE FROM problem_tag WHERE 1 = 0;'),
+            @('forgeoj_api','FORGEOJ_API_DB_PASSWORD','UPDATE problem SET difficulty = difficulty WHERE 1 = 0;')
         )
         foreach($denial in $denials) {
             # Inputs are the fixed roles/queries above, not user-controlled shell text.

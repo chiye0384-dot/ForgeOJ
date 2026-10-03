@@ -8,17 +8,20 @@ import {
   restoreSession,
   accountAction,
   login,
+  ApiRequestError,
   type ProblemResponse,
   type SessionResponse,
   type SubmissionStatusResponse,
 } from '@/services/forgeojApi'
 import { monitorSubmission } from '@/services/submissionMonitor'
 
-const problemSlug = 'sum-two-integers'
+const props = withDefaults(defineProps<{ slug?: string }>(), { slug: 'sum-two-integers' })
 
 const username = ref('')
 const password = ref('')
-const sourceCode = ref(`import java.util.Scanner;
+const initialSourceCode =
+  props.slug === 'sum-two-integers'
+    ? `import java.util.Scanner;
 
 public class Main {
     public static void main(String[] args) {
@@ -27,7 +30,13 @@ public class Main {
         long b = scanner.nextLong();
         System.out.println(a + b);
     }
-}`)
+}`
+    : `public class Main {
+    public static void main(String[] args) {
+        // 在这里编写解答。
+    }
+}`
+const sourceCode = ref(initialSourceCode)
 
 const session = ref<SessionResponse | null>(null)
 const problem = ref<ProblemResponse | null>(null)
@@ -35,9 +44,11 @@ const submission = ref<SubmissionStatusResponse | null>(null)
 const loading = ref(true)
 const signingIn = ref(false)
 const submitting = ref(false)
+const loggingOut = ref(false)
 const errorMessage = ref('')
 let stopMonitor: (() => void) | undefined
 let disposed = false
+let generation = 0
 
 const authenticated = computed(() => session.value?.authenticated === true)
 function stopMonitoring(): void {
@@ -46,25 +57,44 @@ function stopMonitoring(): void {
 }
 
 function toMessage(error: unknown): string {
+  if (error instanceof ApiRequestError && error.status === 503)
+    return '服务暂时不可用，请稍后重试。'
   return error instanceof Error ? error.message : '发生未知错误'
 }
 
-async function loadProblem(): Promise<void> {
-  problem.value = await getProblem(problemSlug)
+function isCurrent(operation: number): boolean {
+  return !disposed && operation === generation
+}
+
+async function loadProblem(operation: number): Promise<void> {
+  const loaded = await getProblem(props.slug).catch((error: unknown) => {
+    if (error instanceof ApiRequestError && error.status === 404)
+      throw new Error('题目不存在或暂时不可用，请返回题库选择其他题目。')
+    throw error
+  })
+  if (!isCurrent(operation)) return
+  if (loaded.slug !== props.slug) throw new Error('题目读取失败，请重新读取。')
+  problem.value = loaded
 }
 
 async function initialize(): Promise<void> {
+  const operation = ++generation
+  stopMonitoring()
+  problem.value = null
+  submission.value = null
   loading.value = true
   errorMessage.value = ''
   try {
-    session.value = await restoreSession()
-    if (session.value.authenticated) {
-      await loadProblem()
+    const nextSession = await restoreSession()
+    if (!isCurrent(operation)) return
+    session.value = nextSession
+    if (nextSession.authenticated) {
+      await loadProblem(operation)
     }
   } catch (error) {
-    errorMessage.value = toMessage(error)
+    if (isCurrent(operation)) errorMessage.value = toMessage(error)
   } finally {
-    loading.value = false
+    if (isCurrent(operation)) loading.value = false
   }
 }
 
@@ -74,38 +104,59 @@ async function handleLogin(): Promise<void> {
   }
 
   signingIn.value = true
+  const operation = ++generation
   errorMessage.value = ''
   try {
     const nextSession = await login(username.value, password.value, session.value.csrf)
+    if (!isCurrent(operation)) return
     session.value = nextSession
     password.value = ''
-    await loadProblem()
+    await loadProblem(operation)
   } catch (error) {
-    errorMessage.value = toMessage(error)
+    if (isCurrent(operation)) errorMessage.value = toMessage(error)
   } finally {
-    signingIn.value = false
+    if (isCurrent(operation)) signingIn.value = false
   }
 }
 
 async function handleLogout(): Promise<void> {
-  if (!session.value) return
+  if (!session.value || loggingOut.value) return
+  const operation = ++generation
+  const csrf = session.value.csrf
+  loggingOut.value = true
+  loading.value = true
+  submitting.value = false
+  errorMessage.value = ''
+  stopMonitoring()
+  problem.value = null
+  submission.value = null
+  sourceCode.value = initialSourceCode
+  username.value = ''
+  password.value = ''
   try {
-    await accountAction('logout', {}, session.value.csrf)
-    stopMonitoring()
-    session.value = await getSession()
-    problem.value = null
-    submission.value = null
+    await accountAction('logout', {}, csrf)
+    if (!isCurrent(operation)) return
+    const nextSession = await getSession()
+    if (!isCurrent(operation)) return
+    session.value = nextSession
+    if (nextSession.authenticated) await loadProblem(operation)
   } catch (error) {
-    errorMessage.value = toMessage(error)
+    if (isCurrent(operation)) errorMessage.value = `退出未完成：${toMessage(error)}`
+  } finally {
+    if (isCurrent(operation)) {
+      loading.value = false
+      loggingOut.value = false
+    }
   }
 }
 
 async function handleSubmit(): Promise<void> {
-  if (!session.value || !problem.value || submitting.value) {
+  if (!session.value?.authenticated || !problem.value || submitting.value || loggingOut.value) {
     return
   }
 
   stopMonitoring()
+  const operation = ++generation
   submitting.value = true
   submission.value = null
   errorMessage.value = ''
@@ -116,7 +167,7 @@ async function handleSubmit(): Promise<void> {
       session.value.csrf,
       crypto.randomUUID(),
     )
-    if (disposed) return
+    if (!isCurrent(operation)) return
     submission.value = {
       ...created,
       verdict: null,
@@ -125,17 +176,18 @@ async function handleSubmit(): Promise<void> {
     stopMonitor = monitorSubmission(
       submission.value,
       (latest) => {
+        if (!isCurrent(operation)) return
         submission.value = latest
         errorMessage.value = ''
       },
       (error) => {
-        errorMessage.value = toMessage(error)
+        if (isCurrent(operation)) errorMessage.value = toMessage(error)
       },
     )
   } catch (error) {
-    errorMessage.value = toMessage(error)
+    if (isCurrent(operation)) errorMessage.value = toMessage(error)
   } finally {
-    submitting.value = false
+    if (isCurrent(operation)) submitting.value = false
   }
 }
 
@@ -144,18 +196,20 @@ onMounted(() => {
 })
 onBeforeUnmount(() => {
   disposed = true
+  generation += 1
   stopMonitoring()
 })
 </script>
 
 <template>
   <section class="workspace" aria-live="polite">
+    <p class="workspace-navigation"><a href="/problems">返回题库</a></p>
     <p v-if="loading" class="notice">正在读取登录状态……</p>
 
     <div v-else-if="!authenticated" class="card login-card">
       <p class="eyebrow">ForgeOJ 账号</p>
       <h2>登录后开始判题</h2>
-      <p class="muted">使用 ForgeOJ 账号进入内置题目。</p>
+      <p class="muted">使用 ForgeOJ 账号开始练习所选题目。</p>
 
       <form data-testid="login-form" class="form-stack" @submit.prevent="handleLogin">
         <label>
@@ -190,14 +244,14 @@ onBeforeUnmount(() => {
       <article class="card problem-card">
         <div class="problem-heading">
           <div>
-            <p class="eyebrow">内置题目 · 版本 {{ problem.judgeVersion }}</p>
+            <p class="eyebrow">题目 · 版本 {{ problem.judgeVersion }}</p>
             <h2>{{ problem.title }}</h2>
           </div>
           <div>
             <span class="user-chip">{{ session?.user?.username }}</span>
             <p>
               <a href="/account">账号设置</a> ·
-              <button type="button" @click="handleLogout">退出</button>
+              <button type="button" data-testid="logout" @click="handleLogout">退出</button>
             </p>
           </div>
         </div>
@@ -239,6 +293,7 @@ onBeforeUnmount(() => {
         </div>
 
         <form data-testid="submission-form" class="form-stack" @submit.prevent="handleSubmit">
+          <p class="muted">代码尚未自动保存，退出或离开前请自行保存。</p>
           <label>
             Main.java
             <textarea
@@ -266,6 +321,14 @@ onBeforeUnmount(() => {
           </p>
         </section>
       </section>
+    </div>
+
+    <div v-else-if="!loading" class="card unavailable-card">
+      <p>当前题目暂时无法读取。</p>
+      <button type="button" @click="initialize">重新读取</button>
+      <button type="button" data-testid="logout" :disabled="loggingOut" @click="handleLogout">
+        退出账号
+      </button>
     </div>
 
     <p v-if="errorMessage" role="alert" class="error">{{ errorMessage }}</p>
@@ -321,6 +384,14 @@ h3 {
 .limits,
 .notice {
   color: #5d6878;
+}
+
+.workspace-navigation a {
+  color: #15576d;
+}
+
+.unavailable-card button + button {
+  margin-left: 0.75rem;
 }
 
 .form-stack {

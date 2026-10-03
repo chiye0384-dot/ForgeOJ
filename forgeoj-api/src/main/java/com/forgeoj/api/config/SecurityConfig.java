@@ -61,6 +61,8 @@ public class SecurityConfig {
                                         .requestMatchers(
                                                 HttpMethod.GET,
                                                 "/api/v1/auth/session",
+                                                "/api/v1/problems",
+                                                "/api/v1/problem-tags",
                                                 "/api/v1/problems/*")
                                         .permitAll()
                                         .requestMatchers(

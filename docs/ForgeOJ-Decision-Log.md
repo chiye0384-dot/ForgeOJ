@@ -236,6 +236,8 @@
 - 原因：PageHelper 很便利，但当前还没有任何列表 Mapper；现在加入只能证明依赖存在，不能证明分页行为正确。
 - 代价：M2 第一个分页查询前需要一次专门评估和集成；本决策不是永久拒绝 PageHelper。
 
+2026-10-03 首个公共题库分页已专门评估：固定 ID 排序、ACTIVE/当前版本条件和 EXISTS 标签筛选，由原生 MyBatis 明确执行 COUNT、LIMIT/OFFSET 及页内标签批量查询，可重复读事务保持同页统计一致。当前没有需要分页拦截器解决的复杂查询；本轮不增加 PageHelper，状态继续 DEFERRED。页大小上限 50，正整数页码转 long 偏移；这不代表深分页或 COUNT 已经通过性能验收。评估和验证范围见 [剩余 M2 实施计划](M2-REMAINING-IMPLEMENTATION.md)。以后采用 PageHelper 时仍需固定版本、许可证与实际 Boot 4.1 集成证据。
+
 ### D-033：使用主干加短期主题分支
 
 - 状态：`ACCEPTED`

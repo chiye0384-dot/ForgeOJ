@@ -3,17 +3,18 @@ package com.forgeoj.api.auth;
 import com.sun.net.httpserver.HttpServer;
 import java.io.IOException;
 import java.net.InetSocketAddress;
-import java.net.URI;
 import java.nio.charset.StandardCharsets;
 import java.util.ArrayDeque;
 import java.util.List;
 import jakarta.annotation.PreDestroy;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
 import org.springframework.core.env.Environment;
 import org.springframework.stereotype.Component;
 
 /** Development simulator. Never log mail or expose it through the ordinary API. */
 @Component
+@ConditionalOnProperty(name = "forgeoj.auth.mail.mode", havingValue = "local")
 public class LocalAccountMail implements AccountMailDelivery {
     public record Mail(String recipient, String purpose, String link) {}
     private final ArrayDeque<Mail> messages = new ArrayDeque<>();
@@ -23,11 +24,9 @@ public class LocalAccountMail implements AccountMailDelivery {
             @Value("${forgeoj.auth.mail.mode:disabled}") String mode,
             @Value("${forgeoj.auth.mail.port:2525}") int port,
             @Value("${forgeoj.auth.mail.app-url:http://localhost:5173}") String baseUrl) throws IOException {
-        this.baseUrl = baseUrl;
+        this.baseUrl = AccountMailContent.applicationUrl(baseUrl, false);
         if ("local".equals(mode)) {
             if (!environment.matchesProfiles("dev", "test")) throw new IllegalStateException("Local mailbox requires dev/test profile");
-            URI uri=URI.create(baseUrl);
-            if (!List.of("http","https").contains(uri.getScheme()) || uri.getHost()==null || uri.getUserInfo()!=null || uri.getQuery()!=null || uri.getFragment()!=null) throw new IllegalStateException("Invalid mail application URL");
             server=HttpServer.create(new InetSocketAddress("127.0.0.1",port),8);
             server.createContext("/", exchange -> {
                 if (!"GET".equals(exchange.getRequestMethod())) { exchange.sendResponseHeaders(405,-1); exchange.close(); return; }
@@ -42,13 +41,13 @@ public class LocalAccountMail implements AccountMailDelivery {
                 try(var out=exchange.getResponseBody()) {out.write(bytes);} finally {exchange.close();}
             }); server.start();
         } else if ("disabled".equals(mode)) server=null;
-        else throw new IllegalStateException("Unsupported mail mode; real SMTP is not configured");
+        else throw new IllegalStateException("Unsupported local mail mode");
     }
     @Override
     public void send(String recipient,String purpose,String token) {
         if(server==null) throw new IllegalStateException("Account mail delivery is disabled");
-        String action=switch(purpose){ case "ACTIVATE"->"activate"; case "RESET_PASSWORD"->"reset"; case "BIND_EMAIL"->"bind"; default->throw new IllegalArgumentException("Unknown mail purpose"); };
-        synchronized(messages) { if(messages.size()==100) messages.removeLast(); messages.addFirst(new Mail(recipient,purpose,baseUrl+"/account#action="+action+"&token="+token)); }
+        String link = AccountMailContent.link(baseUrl, purpose, token);
+        synchronized(messages) { if(messages.size()==100) messages.removeLast(); messages.addFirst(new Mail(recipient,purpose,link)); }
     }
     public List<Mail> messages(){ synchronized(messages){return List.copyOf(messages);} }
     public int port(){return server==null?-1:server.getAddress().getPort();}

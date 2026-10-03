@@ -7,6 +7,13 @@ const read = name => readFile(`/reports/${name}`, 'utf8')
 const json = async name => JSON.parse(await read(name))
 const lines = async name => (await read(name)).split(/\r?\n/).filter(s => s.startsWith('{')).map(s => JSON.parse(s))
 const matrix = await json('matrix.json'), permissions = await json('permissions.json')
+const library = await json('library.json')
+assert.equal(library.anonymous, true)
+assert.equal(library.secondSlug, 'larger-of-two-integers')
+assert.equal(library.filteredSlug, library.secondSlug)
+assert.equal(library.invalidSizeStatus, 400)
+assert.equal(library.exactListFields, true)
+assert.equal(library.exactDetailFields, true)
 assert.deepEqual(matrix.map(r => r.expected).sort(), ['AC','CE','MLE','OLE','RE','SECURITY_VIOLATION','TLE','WA'])
 const facts = await lines('database.jsonl'), outbox = await lines('outbox.jsonl')
 const apiText = await read('api.log'), workerText = await read('worker.log')
@@ -84,7 +91,7 @@ for (const row of browser) {
 }
 assert.equal(facts.length, matrix.length + 1 + browser.length)
 const summary = { verifiedAt:new Date().toISOString(), submissions:facts.length, finished:chains.length,
-  cancelled:1, publishedOutbox:outbox.length, emptyQueues:queues.length, browser, chains }
+  cancelled:1, publishedOutbox:outbox.length, emptyQueues:queues.length, library, browser, chains }
 await writeFile('/reports/audit.json', JSON.stringify(summary, null, 2))
 console.log(JSON.stringify({ event:'E2E_AUDIT_VERIFIED', submissions:facts.length,
   finished:chains.length, cancelled:1, publishedOutbox:outbox.length, emptyQueues:queues.length }))

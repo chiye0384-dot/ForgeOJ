@@ -9,6 +9,17 @@ available under Apache License 2.0; see `LICENSE` and `NOTICE`. The entries
 below retain their original licenses and attribution requirements and are not
 relicensed by the ForgeOJ root license.
 
+## M2 SMTP runtime libraries (2026-10-03)
+
+Spring Boot Mail starter/module 4.1.1 and Spring Context Support 7.0.9 use
+Apache-2.0. Jakarta Mail API 2.1.5 and Angus Mail 2.0.5 declare
+`EPL-2.0 OR GPL-2.0 WITH Classpath-exception-2.0`; Jakarta Activation API 2.1.4
+and Angus Activation 2.0.3 include EDL-1.0/BSD-style LICENSE text. Each library
+retains its own license and embedded LICENSE/NOTICE, without relicensing by
+ForgeOJ. No upstream source was copied. Exact artifact hashes and official
+fixed license links are recorded in `docs/evidence/m2-library/smtp-dependencies.md`
+and U-010. Distribution obligations remain part of the complete release audit.
+
 ## Generated scaffold and retained files
 
 ### Spring Initializr and Spring Boot

@@ -212,4 +212,40 @@ async function permissions() {
 
 if (process.argv[2] === 'matrix') await matrix()
 else if (process.argv[2] === 'permissions') await permissions()
-else throw new Error('Expected matrix or permissions')
+else if (process.argv[2] === 'library') await library()
+else throw new Error('Expected matrix, permissions or library')
+
+async function library() {
+  const client = new Client()
+  const list = await client.request('/api/v1/problems?size=1')
+  assert.equal(list.status, 200)
+  assert.deepEqual(Object.keys(list.body).sort(), ['items','page','size','total'])
+  assert.equal(list.body.total, 2)
+  assert.equal(list.body.items.length, 1)
+  assert.equal(list.body.items[0].slug, 'sum-two-integers')
+  const next = await client.request('/api/v1/problems?size=1&page=2')
+  assert.equal(next.status, 200)
+  assert.deepEqual(Object.keys(next.body.items[0]).sort(), ['difficulty','judgeVersion','slug','tags','title'])
+  assert.equal(next.body.items[0].slug, 'larger-of-two-integers')
+  const filtered = await client.request('/api/v1/problems?keyword=' + encodeURIComponent('较大') + '&difficulty=EASY&tag=' + encodeURIComponent('比较'))
+  assert.equal(filtered.status, 200)
+  assert.equal(filtered.body.total, 1)
+  assert.equal(filtered.body.items[0].slug, 'larger-of-two-integers')
+  const wildcard = await client.request('/api/v1/problems?keyword=%25')
+  assert.equal(wildcard.status, 200)
+  assert.equal(wildcard.body.total, 0)
+  const bad = await client.request('/api/v1/problems?size=51')
+  assert.equal(bad.status, 400)
+  const tags = await client.request('/api/v1/problem-tags')
+  assert.equal(tags.status, 200)
+  assert.deepEqual(Object.keys(tags.body), ['tags'])
+  assert.deepEqual([...tags.body.tags].sort(), ['入门','数学','比较'].sort())
+  const detail = await client.request('/api/v1/problems/larger-of-two-integers')
+  assert.equal(detail.status, 200)
+  assert.deepEqual(Object.keys(detail.body).sort(), ['inputDescription','judgeVersion','outputDescription','publicSamples','resourceLimits','slug','statement','title'])
+  await writeFile('/reports/library.json', JSON.stringify({ verifiedAt:new Date().toISOString(), anonymous:true,
+    total:list.body.total, firstSlug:list.body.items[0].slug, secondSlug:next.body.items[0].slug,
+    filteredSlug:filtered.body.items[0].slug, literalWildcardTotal:0, invalidSizeStatus:400,
+    tags:tags.body.tags, exactListFields:true, exactDetailFields:true }, null, 2))
+  console.log(JSON.stringify({ event:'LIBRARY_HTTP_VERIFIED', total:list.body.total, anonymous:true }))
+}

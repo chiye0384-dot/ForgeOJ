@@ -1,0 +1,18 @@
+{
+  "verifiedAt": "2026-10-03T01:54:28.353Z",
+  "browserTopicsMatchDatabase": true,
+  "rows": [
+    {
+      "submissionId": "bf7bd19b-6de2-4422-afaa-6079205c8879",
+      "problemSlug": "larger-of-two-integers",
+      "judgeVersion": 1,
+      "verdict": "AC"
+    },
+    {
+      "submissionId": "441eaf8f-ff55-4b74-9e25-d6c26f04cb1d",
+      "problemSlug": "sum-two-integers",
+      "judgeVersion": 1,
+      "verdict": "AC"
+    }
+  ]
+}

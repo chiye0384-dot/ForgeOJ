@@ -1,0 +1,12 @@
+{
+  "verifiedAt": "2026-10-03T02:17:09.1202794Z",
+  "daemonVerified": true,
+  "ownedContainers": 0,
+  "ownedVolumes": 0,
+  "ownedNetworks": 0,
+  "ownedWorkerImages": 0,
+  "managedSandboxes": 0,
+  "testcontainers": 0,
+  "linuxBuildImage": 0,
+  "globalPruneUsed": false
+}

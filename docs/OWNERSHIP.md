@@ -55,6 +55,10 @@ M1 自有实现目前包括 V3/V4 attempt/lease/retry/quota 模型、租约栅�
 
 M2 普通账号单元（`VERIFIED`）的自有部分是 V6 账号/会话/摘要模型和最小数据库授权、原子注册/quota、账号状态与邮箱令牌流程、refresh 单次轮换/重用撤销、当前/全部退出及密码变化撤销、Cookie/CSRF/精确 Origin、敏感写事务内会话复核、sid 通知关闭、账号页面、本地投递接口/模拟器、API 原状态空体错误处理与相应权限/并发/真实 HTTP 测试。JWT 编解码由 Spring Security JOSE 7.1.1 / Nimbus 10.9.1 提供，密码摘要由 BCrypt 提供，随机、SHA-256、本地 HTTP 和事务分别使用既有 JDK/框架能力；不把密码学、JWT 或 SMTP 表述为自建。固定 Linux 211/13、相同产物的真实新账号 AC/旧账号轮询兜底、八 verdict、独立权限/日志/队列审计与精确清理见 [账号验收](M2-ACCOUNTS-VALIDATION.md)和[脱敏证据](evidence/m2-accounts/README.md)。尚无真实 SMTP adapter 或生产投递证据，完整 M2 仍 `IN_PROGRESS`；来源/构件记录见 U-009，限制见 L-033～L-035。
 
+2026-10-03 题库单元的自有实现为 V7 nullable 难度/标签模型、显式 SQL 标题转义/筛选/COUNT/分页/页内标签批量读取、公开 DTO 白名单、只读一致事务、题库页面及实际 slug 的工作区生命周期与回归。题库的 SQL/事务执行仍使用 MyBatis/MySQL/Spring，路由/模板由 Vue 提供；没有引入 PageHelper、外部题面或题库数据。隔离 Replay 的“两数较大值”题面、样例和测试由 ForgeOJ 原创，仅用于验收，不声称已审核发布正式题库内容。
+
+同日 SMTP 适配的自有部分是模式选择、配置/地址/链接/TLS/超时约束与 loopback 协议测试。MIME 和 SMTP/TLS 客户端由 Spring Mail/Jakarta Mail/Angus 提供，证书/密钥在测试临时目录动态生成，不修改生产信任。普通账号阶段的“无 SMTP adapter”是当时的历史事实；本轮适配/题库单元 VERIFIED，固定 Linux 229/24 和实际选题 AC 见 [验收](M2-LIBRARY-SMTP-VALIDATION.md)。真实服务商投递仍未验收，依赖与许可见 U-010/[构件事实](evidence/m2-library/smtp-dependencies.md)，整体 M2 仍 IN_PROGRESS。
+
 ## 4. 明确排除
 
 - 没有引入 RuoYi-Vue-Plus、ruoyi-vue-pro 或 JHipster 代码；

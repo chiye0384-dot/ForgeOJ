@@ -1,0 +1,24 @@
+[
+  {
+    "mode": "normal",
+    "port": 5173,
+    "submissionId": "bf7bd19b-6de2-4422-afaa-6079205c8879",
+    "problemSlug": "larger-of-two-integers",
+    "visibleStates": [
+      "QUEUED",
+      "FINISHED",
+      "AC"
+    ]
+  },
+  {
+    "mode": "fallback",
+    "port": 5174,
+    "submissionId": "441eaf8f-ff55-4b74-9e25-d6c26f04cb1d",
+    "problemSlug": "sum-two-integers",
+    "visibleStates": [
+      "QUEUED",
+      "FINISHED",
+      "AC"
+    ]
+  }
+]

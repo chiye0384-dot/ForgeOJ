@@ -282,6 +282,43 @@ class OutboxPublisherIntegrationTests {
         }
     }
 
+    @Test
+    void confirmedContentEventsUseOnlyTheirOwnDurableQueues(CapturedOutput output) {
+        rabbitAdmin.initialize();
+        JdbcTemplate jdbc = new JdbcTemplate(dataSource);
+        String job = UUID.randomUUID().toString(), snapshot = UUID.randomUUID().toString();
+        for (String queue : List.of("forgeoj.content.validation.v1", "forgeoj.content.validation.dead.v1")) {
+            assertThat(rabbitAdmin.getQueueInfo(queue)).isNotNull();
+            rabbitAdmin.purgeQueue(queue, true);
+        }
+        for (String type : List.of("CONTENT_VALIDATION_QUEUED", "CONTENT_VALIDATION_DEAD_LETTERED")) {
+            String event = UUID.randomUUID().toString();
+            jdbc.update("""
+                INSERT INTO outbox_event(id,aggregate_type,aggregate_id,event_type,contract_version,sequence_no,payload)
+                VALUES(?,'CONTENT_VALIDATION',?,?,1,?,JSON_OBJECT('taskId',?,'snapshotId',?,'taskType','CONTENT_VALIDATE','contractVersion',1))
+                """, event, job, type, type.endsWith("QUEUED") ? 0 : 1, job, snapshot);
+            assertThat(outboxPublisher.publishPending()).isEqualTo(1);
+            assertThat(jdbc.queryForObject("SELECT published_at FROM outbox_event WHERE id=?", Object.class, event)).isNotNull();
+            String queue = type.endsWith("QUEUED") ? "forgeoj.content.validation.v1" : "forgeoj.content.validation.dead.v1";
+            Message delivered = rabbitTemplate.receive(queue, 5000);
+            assertThat(delivered).isNotNull();
+            assertThat(delivered.getMessageProperties().getReceivedDeliveryMode()).isEqualTo(MessageDeliveryMode.PERSISTENT);
+            String payload = new String(delivered.getBody(), StandardCharsets.UTF_8);
+            assertThat((java.util.Map<String,Object>) JsonPath.parse(payload).read("$"))
+                .hasSize(4).containsEntry("taskId", job).containsEntry("snapshotId", snapshot)
+                .containsEntry("taskType", "CONTENT_VALIDATE").containsEntry("contractVersion", 1);
+            assertThat(rabbitTemplate.receive(RabbitTopology.QUEUE, 100)).isNull();
+            assertThat(rabbitTemplate.receive(RabbitTopology.RETRY_QUEUE, 100)).isNull();
+            assertThat(rabbitTemplate.receive(RabbitTopology.SELF_TEST_QUEUE, 100)).isNull();
+            assertThat(output.getAll().lines().filter(line -> line.startsWith("{"))
+                .map(line -> JsonPath.parse(line).<java.util.Map<String,Object>>read("$"))
+                .filter(log -> event.equals(log.get("outboxEventId"))).toList())
+                .anySatisfy(log -> assertThat(log).containsEntry("event", "outbox.published")
+                    .containsEntry("contentJobId", job).doesNotContainKey("judgeTaskId").containsEntry("submissionId", null));
+        }
+        assertThat(outboxPublisher.publishPending()).isZero();
+    }
+
     private SubmissionResult createSubmission() {
         try {
             var login = accounts.login("learner", "forgeoj-dev-only");

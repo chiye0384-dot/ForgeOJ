@@ -1,0 +1,15 @@
+{
+  "verifiedAt": "2026-10-03T23:23:42.779Z",
+  "frozenInputs": 261,
+  "unchangedInputs": 260,
+  "allBackendFrontendContractInputsMatch": true,
+  "validationToolChanges": [
+    {
+      "path": "tools/validation/replay-audit.mjs",
+      "beforeSha256": "ba7527d59e3f3d3dc8073546078a37a911513baaf2a3d6b32e1a25135448e293",
+      "afterSha256": "c0ce411f9bc122701fc3056c574fa0f84f60f81fd31f21852b802b43aa18af5a",
+      "reason": "Record actual normal UI SUBMITTING to FINISHED/AC without inventing an observed QUEUED state.",
+      "directReplayAuditExecuted": true
+    }
+  ]
+}

@@ -163,7 +163,7 @@ M0 的登录只用于打通受保护提交链路，可使用预置账号和最�
 
 目标：完成普通学习者可用的核心产品。
 
-作者内容草稿阶段已 VERIFIED：V9 私有作者表、owner/CAS、逐条/ZIP 导入、独立参考和题解代码及草稿归档，固定 Linux 后端 261 / 前端 39、实际浏览器与独立审计清理见 [验收](M2-CONTENT-VALIDATION.md)。完整内容仍 IN_PROGRESS，下一步是正式沙箱验证、不可变送审/撤回和生成输出预览；自测/真实 SMTP 仍待完成；题解访问已 VERIFIED（最终 269/45、真实取消/跨账号/AC 解锁与审计清理），见 [验收](M2-SOLUTION-ACCESS-VALIDATION.md)，正式题解验证和发布未完成。
+作者内容草稿阶段已 VERIFIED：V9 私有作者表、owner/CAS、逐条/ZIP 导入、独立参考和题解代码及草稿归档，固定 Linux 后端 261 / 前端 39、实际浏览器与独立审计清理见 [验收](M2-CONTENT-VALIDATION.md)。2026-10-04 正式双程序验证单元已 VERIFIED：V11 独立冻结快照、双 ACCEPTED、共享额度、attempt/lease fencing、私有版本历史；固定 Linux **283/50**、真实参考 AC/题解 WA 与双 AC、实际 Worker SIGKILL 后自然恢复、六队列/权限/日志审计和清理见 [验收](M2-CONTENT-VALIDATION-JOBS-VALIDATION.md)。完整内容仍 IN_PROGRESS，下一步是不可变送审/撤回和生成输出预览；自测/真实 SMTP 仍待完成。题解访问已 VERIFIED（最终 269/45、真实取消/跨账号/AC 解锁与审计清理），见 [验收](M2-SOLUTION-ACCESS-VALIDATION.md)；正式审核发布未完成。
 
 2026-10-03 用户要求接续剩余 M2，实施顺序见 [剩余功能计划](M2-REMAINING-IMPLEMENTATION.md)。题库列表/筛选/分页/实际选题与 SMTP 配置适配单元已 VERIFIED，固定 Linux 后端 229 / 前端 24、真实选题 AC 和审计清理见 [验收](M2-LIBRARY-SMTP-VALIDATION.md)。个人学习记录单元也已 VERIFIED，固定 Linux 后端 241 / 前端 35、真实两页草稿冲突和 AC/进度/历史/题单操作、独立审计清理见 [验收](M2-LEARNING-RECORDS-VALIDATION.md)。下一单元为题目内容/审核版本，随后自测与题解。SMTP 本地 TLS 协议不能替代真实服务商投递，完整 M2 继续 IN_PROGRESS。
 

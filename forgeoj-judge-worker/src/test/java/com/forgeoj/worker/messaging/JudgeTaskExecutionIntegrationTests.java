@@ -331,6 +331,7 @@ class JudgeTaskExecutionIntegrationTests {
             executeScript(connection, "db/migration/V3__add_m1_attempt_lease_and_retry.sql");
             executeScript(connection, "db/migration/V4__add_user_judge_quota_lock.sql");
             executeScript(connection, "db/migration/V5__widen_submission_verdict.sql");
+            com.forgeoj.worker.testinfra.ContentTestSchema.afterV5(connection,repositoryFile("forgeoj-api/src/main/resources/db/migration/V6__ordinary_accounts.sql").getParent());
             executeScript(connection, "db/devdata/R__seed_m0_development_data.sql");
         }
         schemaInitialized = true;

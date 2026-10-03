@@ -76,4 +76,16 @@ public class RabbitTopology {
                 .to(judgeExchange)
                 .with(DEAD_LETTER_ROUTING_KEY);
     }
+    @Bean Queue contentValidationQueue() {
+        return QueueBuilder.durable("forgeoj.content.validation.v1")
+                .withArgument("x-dead-letter-exchange",EXCHANGE)
+                .withArgument("x-dead-letter-routing-key","content.validation.dead.v1").build();
+    }
+    @Bean Queue contentValidationDeadQueue() {return QueueBuilder.durable("forgeoj.content.validation.dead.v1").build();}
+    @Bean Binding contentValidationBinding(DirectExchange judgeExchange,Queue contentValidationQueue) {
+        return BindingBuilder.bind(contentValidationQueue).to(judgeExchange).with("content.validation.v1");
+    }
+    @Bean Binding contentValidationDeadBinding(DirectExchange judgeExchange,Queue contentValidationDeadQueue) {
+        return BindingBuilder.bind(contentValidationDeadQueue).to(judgeExchange).with("content.validation.dead.v1");
+    }
 }

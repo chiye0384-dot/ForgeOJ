@@ -47,19 +47,21 @@ interface JudgeTaskMapper {
 
     @Select(
             """
-            SELECT COUNT(*)
-            FROM submission
+            SELECT (SELECT COUNT(*) FROM submission
             WHERE user_id = #{userId}
               AND processing_status = 'RUNNING'
-              AND id <> #{submissionId}
+              AND id <> #{submissionId})
+              + (SELECT COUNT(*) FROM content_validation_job WHERE owner_id=#{userId}
+                   AND processing_status IN ('RUNNING','WAITING_RETRY'))
             """)
     int countOtherRunningSubmissions(
             @Param("userId") long userId, @Param("submissionId") String submissionId);
 
     @Select(
             """
-            SELECT COUNT(*) FROM submission
-            WHERE user_id = #{userId} AND processing_status IN ('QUEUED', 'RETRYING')
+            SELECT (SELECT COUNT(*) FROM submission
+            WHERE user_id = #{userId} AND processing_status IN ('QUEUED', 'RETRYING'))
+            + (SELECT COUNT(*) FROM content_validation_job WHERE owner_id=#{userId} AND processing_status='QUEUED')
             """)
     int countQueuedOrRetrying(@Param("userId") long userId);
 

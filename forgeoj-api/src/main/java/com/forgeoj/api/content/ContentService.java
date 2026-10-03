@@ -64,8 +64,7 @@ public class ContentService {
     @Transactional
     public void delete(long owner,String id,long version) {
         lock(owner,id,version);
-        // These drafts cannot yet produce public references, tasks or review records. Before
-        // adding those flows, deletion must explicitly check their authoritative references.
+        if(mapper.validationReferences(id)>0) throw conflict();
         mapper.clearTests(owner,id);changed(mapper.delete(owner,id,version));
     }
     private ContentMapper.Row lock(long owner,String id,long version) {
@@ -74,7 +73,7 @@ public class ContentService {
         if(row.version()!=version || row.version()==MAX_VERSION || !row.status().equals("DRAFT")) throw conflict();return row;
     }
     private Detail detail(long owner,ContentMapper.Row r) {return new Detail(new Summary(r.id(),r.title(),r.version(),r.status(),mapper.testCount(owner,r.id())),new Content(json.readValue(r.metadata(),Metadata.class),r.referenceCode(),r.solutionIdea(),r.solutionCode()));}
-    private static void validate(Content c) {
+    static void validate(Content c) {
         if(c==null || c.metadata()==null) throw bad();var m=c.metadata();String title=text(m.title(),400,true);
         if(!title.equals(title.strip()) || title.codePointCount(0,title.length())>100) throw bad();
         text(m.statement(),65536,false);text(m.inputDescription(),16384,false);text(m.outputDescription(),16384,false);

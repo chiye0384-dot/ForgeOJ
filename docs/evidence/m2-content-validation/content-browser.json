@@ -1,0 +1,39 @@
+{
+  "verifiedAt": "2026-10-03T17:19:32.4073367Z",
+  "draftId": "f2bf6248-7374-4b09-af32-598b9dd887d8",
+  "archivedVersion": 7,
+  "crashVerified": true,
+  "oldSandboxRemoved": true,
+  "jobs": [
+    {
+      "jobId": "c9cc6e71-ea9f-4333-a9a0-764c9dd68737",
+      "solutionResult": "WRONG_ANSWER",
+      "recovered": false,
+      "validationStatus": "FAILED",
+      "referenceResult": "ACCEPTED",
+      "requestId": "74bcc7d0-c102-4b3a-ab41-7d6b64052738",
+      "draftVersion": 3
+    },
+    {
+      "jobId": "2c92b846-3169-4646-8179-6de7e480f509",
+      "solutionResult": "ACCEPTED",
+      "recovered": false,
+      "validationStatus": "PASSED",
+      "referenceResult": "ACCEPTED",
+      "requestId": "72c71168-3fe9-480f-8842-b272bde4faa3",
+      "draftVersion": 5
+    },
+    {
+      "jobId": "fd9c0c16-08e5-48ce-8b8d-94425ce93375",
+      "solutionResult": "ACCEPTED",
+      "recovered": true,
+      "validationStatus": "PASSED",
+      "referenceResult": "ACCEPTED",
+      "requestId": "f24f7bc7-4aad-48cd-a21c-4ca40dd5061a",
+      "draftVersion": 6
+    }
+  ],
+  "visibleVersionInvalidation": true,
+  "archivedHistoryVisible": true,
+  "newExecutionDisabledWhenArchived": true
+}

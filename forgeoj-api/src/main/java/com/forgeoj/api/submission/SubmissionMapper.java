@@ -85,10 +85,10 @@ interface SubmissionMapper {
 
     @Select(
             """
-            SELECT COUNT(*)
-            FROM submission s
-            WHERE s.user_id = #{userId}
-              AND s.processing_status IN ('QUEUED', 'RETRYING')
+            SELECT (SELECT COUNT(*) FROM submission s
+            WHERE s.user_id = #{userId} AND s.processing_status IN ('QUEUED', 'RETRYING'))
+            + (SELECT COUNT(*) FROM content_validation_job
+               WHERE owner_id = #{userId} AND processing_status = 'QUEUED')
             """)
     int countQueuedOrRetrying(@Param("userId") long userId);
 

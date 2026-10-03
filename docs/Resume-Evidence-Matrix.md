@@ -1,5 +1,7 @@
 # ForgeOJ 简历证据矩阵
 
+2026-10-04 作者双程序正式验证单元 VERIFIED：V11 独立不可变快照、owner/CAS/幂等、共享额度、双结果、租约隔离与私有历史，固定 Linux API163 + Worker120 =283、前端50及全检查通过。同一产物真实参考AC/题解WA、双AC、编辑失效/归档、实际Worker SIGKILL自然恢复、六队列/20实际数据库拒绝/日志链审计和精确清理见 [验收](M2-CONTENT-VALIDATION-JOBS-VALIDATION.md)与[安全事实](evidence/m2-content-validation/README.md)。完整内容与M2保持IN_PROGRESS，尚未受控审核发布、未新增RESUME_READY或性能结论；这些证据不替代发布和用户自己的项目讲解能力。下面阶段记录保留历史。
+
 > 当前状态：E-01/E-02 为 `IMPLEMENTED`，已有 M1 范围的实现与验证证据；完整 V1 候选证据未闭环。其他项仍为 `PLANNED`；没有任何 `RESUME_READY`，不能写入简历。
 > 本文不是简历文案，而是决定一条文案是否有资格进入简历的证据清单。
 

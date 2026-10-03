@@ -117,6 +117,8 @@
 - MyBatis-Plus 没有引入，也不会从被拒绝的后台脚手架中间接复用。
 - PageHelper 是 `DEFERRED`：当前 `pom.xml` 不含它；M2 重新评估时必须记录当时的精确版本、commit/tag、许可证与 Boot 4.1 兼容测试。
 
+2026-10-03 首个题库分页的专门评估见 D-032 与 `M2-REMAINING-IMPLEMENTATION.md`：当前固定排序、显式 COUNT 和页内标签批量读取由 MyBatis 原生 SQL 表达，未引入 PageHelper，故未选择其版本或产生新增许可证义务。后续决定采用时仍执行上述依赖门禁。
+
 ### U-004：M0 后端直接依赖门禁
 
 - API 运行依赖新增 Spring Security、Spring AMQP、Spring Boot Flyway Starter 与 `flyway-mysql`；Worker 运行依赖新增 Spring AMQP 与 Spring Boot Jackson Starter，后者只用于严格解析四字段任务 JSON。
@@ -173,6 +175,15 @@
 - ForgeOJ 自有相邻模块：账号/会话/摘要模型与 V6、权限 SQL、激活/找回/补邮箱状态转换、refresh 轮换和重用撤销、Cookie/CSRF/Origin 规则、HTTP 与通知会话复核、账号页和本地邮件投递接口及相应测试。不能表述为自行实现密码学或 JWT 协议库。
 - 验证证据：固定 Linux 后端 211 / 前端 13 项、相同产物的真实账号链路与权限/日志/队列审计和精确清理已闭环，见 [验收记录](M2-ACCOUNTS-VALIDATION.md)和[脱敏事实](evidence/m2-accounts/README.md)。验收执行于基线 HEAD `d38e2c9` 的工作树快照，交付身份见 `feat/m2-accounts` 最新提交；不预写未知提交或 push 状态。
 - 剩余条件：完整传递/内嵌依赖、漏洞与发布物许可证审计留在首次 Release 门禁。依赖装配或构件哈希不单独证明账号安全或生产部署通过，账号本地闭环也不证明 SMTP 上线投递。
+
+### U-010：M2 SMTP 库适配
+
+- 采用日期：2026-10-03，用户要求继续剩余 M2（含真实 SMTP）并开始实施；本轮先验证适配和本地 TLS 协议，真实服务商投递仍待配置。
+- 直接新增 `org.springframework.boot:spring-boot-starter-mail:4.1.1`，由现有 Boot BOM 管理；仅 API 使用，Worker 不获得邮件依赖或凭据。实际树为 Boot Mail 4.1.1、Spring Context Support 7.0.9、Jakarta Mail API 2.1.5 / Activation API 2.1.4、Angus Mail 2.0.5 / Activation 2.0.3。
+- 官方固定来源：[Boot v4.1.1](https://github.com/spring-projects/spring-boot/tree/v4.1.1)、[Framework v7.0.9](https://github.com/spring-projects/spring-framework/tree/v7.0.9)、[Angus Mail 2.0.5 LICENSE](https://raw.githubusercontent.com/eclipse-ee4j/angus-mail/2.0.5/LICENSE.md)、[Mail API 2.1.5 LICENSE](https://raw.githubusercontent.com/jakartaee/mail-api/2.1.5/LICENSE.md)、[Angus Activation 2.0.3 LICENSE](https://raw.githubusercontent.com/eclipse-ee4j/angus-activation/2.0.3/LICENSE.md)、[Activation API 2.1.4 LICENSE](https://raw.githubusercontent.com/jakartaee/jaf-api/2.1.4/LICENSE.md)。全部固定 POM/JAR SHA-256 与 JAR 内 LICENSE/NOTICE 位置见 [构件事实](evidence/m2-library/smtp-dependencies.md)。
+- 许可证：Spring 项为 Apache-2.0；Mail API/Angus Mail 的 POM SPDX 为 EPL-2.0 OR GPL-2.0 WITH Classpath-exception-2.0；Activation 两项为 EDL-1.0/BSD-style。上游各自许可证不由根 Apache-2.0 覆盖，实际分发组合、告知和对应源码条件继续由首次 Release 完整审计核实。
+- 复用 MIME、SMTP/TLS 客户端及 Spring 配置能力，不复制上游源码。ForgeOJ 自有部分为模式选择、地址/链接/TLS/超时配置约束、提交后邮件接入以及 loopback 协议测试；不称为自建邮件协议栈。
+- 验证与边界：Windows 与固定 Linux 各 11 项实际 SMTP/TLS 测试通过，证书/私钥在 JUnit 临时目录动态生成，不提交、不修改全局信任。统一 229/24 和 JAR/输入证据见 [题库/SMTP 验收](M2-LIBRARY-SMTP-VALIDATION.md)；无真实邮件服务、Inbox 送达或可靠持久重试证据，见 `M2-SMTP-DESIGN.md` 和 L-033。
 
 ## 5. 引入记录模板
 

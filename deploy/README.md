@@ -77,6 +77,7 @@ default dev mailbox, use the same browser hostname and frontend port consistentl
 ```powershell
 $env:SPRING_PROFILES_ACTIVE = 'dev'
 $env:FORGEOJ_AUTH_MAIL_APP_URL = 'http://localhost:5173'
+$env:FORGEOJ_AUTH_MAIL_MODE = 'local'
 .\mvnw.cmd --batch-mode -pl forgeoj-api spring-boot:run
 ```
 
@@ -103,14 +104,19 @@ those variables to a separately launched API:
 |---|---|---|
 | `FORGEOJ_AUTH_JWT_SECRET` | Empty; startup fails outside dev without a valid key | At least 32 UTF-8 bytes of private random signing material in deployment. Dev may generate an ephemeral key when empty; restarting then invalidates old access JWTs. Never use the public Surefire test key for real data. |
 | `FORGEOJ_AUTH_COOKIE_SECURE` | `true` | Dev selects `false` for local HTTP only. Keep `true` with production HTTPS. |
-| `FORGEOJ_AUTH_MAIL_MODE` | `disabled` | Dev selects `local`; local is accepted only with dev/test. No `smtp` mode or production SMTP adapter is included. |
+| `FORGEOJ_AUTH_MAIL_MODE` | `disabled` | Dev defaults to `local`; an explicit environment value wins. Local is accepted only with dev/test. Select `smtp` explicitly for the configured TLS adapter. |
 | `FORGEOJ_AUTH_MAIL_PORT` | `2525` | Loopback mailbox port; development only. |
-| `FORGEOJ_AUTH_MAIL_APP_URL` | `http://localhost:5173` | Actual frontend base URL used by local email links. |
+| `FORGEOJ_AUTH_MAIL_APP_URL` | `http://localhost:5173` | Actual frontend root URL; production SMTP requires HTTPS. |
+| `FORGEOJ_AUTH_MAIL_SMTP_HOST` / `PORT` / `TLS` | Empty / `587` / `starttls` | Provider host/port; required STARTTLS or `implicit` TLS, normal certificate/hostname validation. |
+| `FORGEOJ_AUTH_MAIL_SMTP_FROM` / `USERNAME` / `PASSWORD` | Empty | Single sender and a complete authentication pair in the API environment; never commit or log credentials. |
+| `FORGEOJ_AUTH_MAIL_SMTP_CONNECT_TIMEOUT_MS` / `READ_TIMEOUT_MS` / `WRITE_TIMEOUT_MS` | `5000` each | Socket wait bounds 100–30000 ms. |
 | `FORGEOJ_AUTH_LIMITS_MULTIPLIER` | `1` | Retain production defaults. Disposable automated tests may increase this value to avoid fixture interactions; that is not production capacity evidence. |
 
-Before enabling public registration or recovery, supply a configured production
-`AccountMailDelivery` bean (for example a ForgeOJ `@Primary` SMTP adapter) and
-verify its actual delivery, credentials, timeouts and failure handling. Default
+The explicit `smtp` adapter is implemented; local TLS protocol tests verify the
+wire behavior, without contacting a provider. Before enabling public registration
+or recovery, configure the verified provider and authorized recipient and verify
+actual delivery, credentials, timeouts and failure handling. See
+`docs/M2-SMTP-DESIGN.md` and `.env.example`. Default
 disabled mode or delivery failure is caught after the account transaction commits
 and logs only `account.mail_delivery_failed`; the generic 202 response does not
 promise that mail arrived. The user can request another eligible token after the
@@ -129,9 +135,12 @@ without Web Locks, short JWT expiry requires a fresh login instead of rotating a
 shared refresh cookie automatically. Clients must not retry an already consumed
 refresh indefinitely.
 Redis session caching/distributed limits remain M4, and production HTTPS/proxy
-and SMTP acceptance remain separate work. Apply V6 with the migrator before
+and SMTP acceptance remain separate work. Apply through V7 with the migrator before
 running the upgraded API; do not roll back by deleting authentication rows or
-editing V1–V5.
+editing V1–V6. V7 adds nullable problem difficulty and read-only problem tags;
+the dev repeatable seed labels only the existing original A+B example. Public
+library entry is `/problems`, with actual topics at `/problems/:slug`; `/` remains
+the original A+B entry. Production migrations do not seed problems or users.
 
 With the `dev` profile, the API polls unpublished M0 Outbox rows in small
 batches, publishes persistent JSON to the durable RabbitMQ topology, and only

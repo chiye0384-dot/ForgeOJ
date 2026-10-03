@@ -2,7 +2,10 @@ package com.forgeoj.api.problem;
 
 import java.util.List;
 
+import org.springframework.dao.DataAccessException;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -57,4 +60,9 @@ public class ProblemController {
 
     public record ResourceLimitsResponse(
             int timeLimitMs, int memoryLimitMb, long outputLimitBytes) {}
+
+    @ExceptionHandler(DataAccessException.class)
+    ResponseEntity<Void> unavailable() {
+        return ResponseEntity.status(HttpStatus.SERVICE_UNAVAILABLE).build();
+    }
 }

@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { RouterView } from 'vue-router'
+import { RouterLink, RouterView } from 'vue-router'
 </script>
 
 <template>
@@ -8,12 +8,19 @@ import { RouterView } from 'vue-router'
       <span class="brand-mark">F</span>
       <div>
         <h1>ForgeOJ</h1>
-        <p>从提交到判题结果的最小可信链路</p>
+        <p>Java 21 在线练习与判题</p>
       </div>
+      <nav aria-label="主导航">
+        <RouterLink to="/problems">题库</RouterLink>
+        <RouterLink to="/">做题</RouterLink>
+        <RouterLink to="/account">账号</RouterLink>
+      </nav>
     </div>
   </header>
   <main>
-    <RouterView />
+    <RouterView v-slot="{ Component, route }">
+      <component :is="Component" :key="route.path" />
+    </RouterView>
   </main>
 </template>
 
@@ -56,6 +63,24 @@ textarea {
   padding: 1rem 0;
   gap: 0.8rem;
   align-items: center;
+  flex-wrap: wrap;
+}
+
+.brand nav {
+  display: flex;
+  margin-left: auto;
+  gap: 1rem;
+}
+
+.brand nav a {
+  color: #15576d;
+  font-weight: 650;
+  text-decoration: none;
+}
+
+.brand nav a.router-link-exact-active {
+  text-decoration: underline;
+  text-underline-offset: 0.3rem;
 }
 
 .brand-mark {

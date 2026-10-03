@@ -1,6 +1,7 @@
 # ForgeOJ 直接依赖许可证清单
 
 > 核验日期：2026-10-02（M2 JOSE/Nimbus 增量；其他项保留既有核验记录）
+> 2026-10-03 增量：SMTP starter 与关键传递项的实际解析、固定构件和 JAR 内 LICENSE/NOTICE 已登记，见 U-010 和 [构件事实](evidence/m2-library/smtp-dependencies.md)。SMTP 服务商投递尚未验收。
 > 范围：已验证的 M-1/M0/M1、已 `VERIFIED` 的 M2 普通账号单元及已声明的直接 Maven/npm 依赖和构建工具；完整 M2 为 `IN_PROGRESS`，账号事实见 [验收记录](M2-ACCOUNTS-VALIDATION.md)。此清单不是法律意见，也不替代发布前的完整传递/内嵌依赖报告。
 
 ## 1. 核验方法
@@ -17,6 +18,7 @@
 | Spring Boot parent/BOM、`spring-boot-starter-webmvc`、测试 starter、Maven Plugin | 4.1.1 | 编译、API 运行、测试和打包 | Apache-2.0 | 可采用；保留上游版权与 NOTICE 义务 |
 | `org.springframework.boot:spring-boot-starter-security` | 4.1.1（Security 7.1.1） | API 运行 | Apache-2.0 | 可采用；依赖存在不等于认证功能已经实现 |
 | `org.springframework.security:spring-security-oauth2-jose` | 7.1.1 | API 运行；M2 JWT 编解码 | Apache-2.0 | 可采用；Boot BOM 管理版本；签名与解析是第三方能力，账号状态/会话与撤销流程为 ForgeOJ 实现，见 U-009 |
+| `org.springframework.boot:spring-boot-starter-mail` | 4.1.1 | API 运行；显式 SMTP 适配 | Apache-2.0 | Boot BOM 管理；关键 Mail/Activation 传递项保持各自许可证，见 U-010 |
 | `org.springframework.boot:spring-boot-starter-websocket` | 4.1.1（Spring WebSocket/Messaging 7.0.9；Tomcat WebSocket 11.0.24） | API 运行；M1 原生状态通知 | Apache-2.0 | 可采用；Boot BOM 固定版本；框架提供传输，所有者/同源/版本与恢复规则为 ForgeOJ 自有实现，见 U-008 |
 | `org.springframework.boot:spring-boot-starter-amqp` | 4.1.1（Spring AMQP 4.1.1） | API/Worker 运行 | Apache-2.0 | 可采用；M0 只实现最小 RabbitMQ 链路 |
 | `org.springframework.boot:spring-boot-starter-jackson` | 4.1.1（Jackson Databind 3.1.5） | Worker 运行；严格解析四字段任务 JSON | Apache-2.0 | 可采用；JSON 库为第三方能力，消息契约与校验规则为 ForgeOJ 自有实现 |
@@ -34,6 +36,8 @@ MySQL Connector/J 的 POM 明确写明 “GPL v2 with Universal FOSS Exception 1
 H2 的测试作用域不能作为 MySQL 语义证据，也不能因为不进入生产运行包就从依赖清单中消失。
 
 M2 新增的 JOSE 直接项及其关键传递项已核实本机实际 Maven Central POM：`spring-security-oauth2-jose:7.1.1` 声明 `nimbus-jose-jwt:10.9.1`，二者均声明 Apache-2.0。Nimbus 不是单独加入 POM 的直接依赖；其固定发布/tag 与构件 SHA-256 见 U-009。Nimbus POM 另有 shade/relocation 配置，最终 Release 必须检查实际内嵌组成及告知义务，不能把这里的库级许可证判断当作全 fat JAR 已审计。
+
+SMTP 新增传递项实际为 Spring Boot Mail 4.1.1 / Spring Context Support 7.0.9（Apache-2.0），Jakarta Mail API 2.1.5 / Angus Mail 2.0.5（POM SPDX `EPL-2.0 OR GPL-2.0 WITH Classpath-exception-2.0`），Jakarta Activation API 2.1.4 / Angus Activation 2.0.3（JAR LICENSE 的 EDL-1.0/BSD-style）。Mail 聚合 POM 另列 EDL，不能据此把整个 Mail 库当作 BSD。未复制上游源码，各 JAR 自带 LICENSE/NOTICE；首次发布前仍须审查实际依赖组合与对应告知/源码义务，ForgeOJ 根 Apache-2.0 不重新许可这些库。完整固定 POM/JAR 哈希、资源路径和官方原文见 [SMTP 构件事实](evidence/m2-library/smtp-dependencies.md)。
 
 ## 3. 前端运行直接依赖
 

@@ -1,0 +1,131 @@
+{
+  "verifiedAt": "2026-10-03T01:53:16.042Z",
+  "submissions": 11,
+  "finished": 10,
+  "cancelled": 1,
+  "publishedOutbox": 11,
+  "emptyQueues": 4,
+  "library": {
+    "verifiedAt": "2026-10-03T01:48:14.219Z",
+    "anonymous": true,
+    "total": 2,
+    "firstSlug": "sum-two-integers",
+    "secondSlug": "larger-of-two-integers",
+    "filteredSlug": "larger-of-two-integers",
+    "literalWildcardTotal": 0,
+    "invalidSizeStatus": 400,
+    "tags": [
+      "入门",
+      "数学",
+      "比较"
+    ],
+    "exactListFields": true,
+    "exactDetailFields": true
+  },
+  "browser": [
+    {
+      "mode": "normal",
+      "port": 5173,
+      "submissionId": "bf7bd19b-6de2-4422-afaa-6079205c8879",
+      "problemSlug": "larger-of-two-integers",
+      "visibleStates": [
+        "QUEUED",
+        "FINISHED",
+        "AC"
+      ]
+    },
+    {
+      "mode": "fallback",
+      "port": 5174,
+      "submissionId": "441eaf8f-ff55-4b74-9e25-d6c26f04cb1d",
+      "problemSlug": "sum-two-integers",
+      "visibleStates": [
+        "QUEUED",
+        "FINISHED",
+        "AC"
+      ]
+    }
+  ],
+  "chains": [
+    {
+      "submissionId": "b8f545ff-9fbe-47bf-96b3-e953a5a35d18",
+      "requestId": "265446ce-edc7-497c-bc8b-461eb0d2e6bb",
+      "judgeTaskId": "16521045-442b-4b77-b2e6-44ea3499fa50",
+      "outboxEventId": "c39cad08-abf3-4729-84b9-0d4b6b693473",
+      "attemptId": "b2fdbf7b-dcc0-433d-a36d-b51301cfdee2",
+      "verdict": "AC"
+    },
+    {
+      "submissionId": "b6691661-97f8-4a43-91c5-7b6c27c37b3a",
+      "requestId": "a7585816-7707-431c-b7e9-3e764832df03",
+      "judgeTaskId": "6b4edef5-9f83-4169-b88a-d7a58a56cb15",
+      "outboxEventId": "9a377eff-9449-4c4a-bf08-96af8bbdc0d8",
+      "attemptId": "5821d18f-51a2-43c3-b3b9-f08d5e8b7aa0",
+      "verdict": "WA"
+    },
+    {
+      "submissionId": "f60e3dd1-fc46-4856-9a13-c0c6c67594bd",
+      "requestId": "81b62523-0d8a-4539-8d93-d290501fced6",
+      "judgeTaskId": "a4a28f4f-b65e-4473-845b-f9a1d3423116",
+      "outboxEventId": "7179b56d-2e9c-40a9-98fa-840d510d4d35",
+      "attemptId": "0c4d9745-5683-4d7e-880a-1c7d9ebd898f",
+      "verdict": "CE"
+    },
+    {
+      "submissionId": "3350bbbc-cbe3-4397-87d2-e45d12fcca19",
+      "requestId": "28f4be6c-e759-4cfc-9967-657f6a28b3c5",
+      "judgeTaskId": "15ccfc5c-e58a-49f3-a85b-9396bed7df88",
+      "outboxEventId": "26a0db86-01ea-4021-90b7-394b225d502e",
+      "attemptId": "50408c80-87dc-43de-a23a-60b33fb1c957",
+      "verdict": "RE"
+    },
+    {
+      "submissionId": "f633e16f-a642-443b-b4e7-ec0831b43b6b",
+      "requestId": "c21ed854-267b-4c6e-842a-9d5a50a2f413",
+      "judgeTaskId": "d0ea1cf2-6420-4085-ae41-5343ab850f88",
+      "outboxEventId": "463ddcd9-1761-41f1-a173-3789092e676f",
+      "attemptId": "1c79bafb-65a4-46ef-a72b-10eeba6561a3",
+      "verdict": "TLE"
+    },
+    {
+      "submissionId": "0d76d2b1-0e2b-4826-bb0b-784229d8f4ae",
+      "requestId": "27f43a62-b2f8-4f38-85dc-f6ca0d42e2a4",
+      "judgeTaskId": "7629b17e-34f5-421e-92f4-282e01862382",
+      "outboxEventId": "b1697cfb-a41c-4ef2-86a9-47cc722bdf1c",
+      "attemptId": "48a43bfc-9020-4a34-a30d-b948305be499",
+      "verdict": "OLE"
+    },
+    {
+      "submissionId": "f0688f06-18f5-4a2e-8b0b-8d633c244dab",
+      "requestId": "8fde1cab-0f16-4277-bf18-10b38a810da5",
+      "judgeTaskId": "e7a0dc2c-9b79-4802-beb8-45a13b07ef24",
+      "outboxEventId": "0d57b705-1b59-4fcb-acc2-e566dad074b7",
+      "attemptId": "46c989c3-db42-4235-a0b4-f79fb660307a",
+      "verdict": "MLE"
+    },
+    {
+      "submissionId": "33c3c3aa-1939-4bd4-8338-cc311fc79d69",
+      "requestId": "34c14c85-6879-4b76-800a-41a3ba368232",
+      "judgeTaskId": "6fa10744-6309-4c9e-a7e4-b48c99c1c3d4",
+      "outboxEventId": "e163e260-2561-4994-8395-8a8dabd03d02",
+      "attemptId": "4b470295-95b2-4138-a84c-f1f854e21f38",
+      "verdict": "SECURITY_VIOLATION"
+    },
+    {
+      "submissionId": "bf7bd19b-6de2-4422-afaa-6079205c8879",
+      "requestId": "52652949-5711-45b2-88dd-c1171d3c174b",
+      "judgeTaskId": "0a6e75ce-e715-48de-99e8-dbb4b2b10e82",
+      "outboxEventId": "87eeca0a-861b-4c89-a9c1-80fa59c724a3",
+      "attemptId": "156438c1-8863-436a-9ede-541b88a125a2",
+      "verdict": "AC"
+    },
+    {
+      "submissionId": "441eaf8f-ff55-4b74-9e25-d6c26f04cb1d",
+      "requestId": "d4dd2215-4a42-4d3c-a9c6-e2ce9d8ee228",
+      "judgeTaskId": "5250b609-6a67-43be-9436-4320ecaf6f93",
+      "outboxEventId": "584bb9c4-7384-4997-993b-dd1985aef3f8",
+      "attemptId": "bb74a133-4031-4d38-9ea8-da3d7197244b",
+      "verdict": "AC"
+    }
+  ]
+}

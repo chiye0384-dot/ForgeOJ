@@ -1,0 +1,14 @@
+{
+  "verifiedAt": "2026-10-03T01:47:46.223Z",
+  "businessAndTestInputs": 192,
+  "allBusinessAndTestsMatch": true,
+  "validationTools": 13,
+  "changedValidationTools": [
+    {
+      "path": "tools/validation/Replay-FixedLinux.ps1",
+      "before": "8cffc2d2224f5ed53023eaa70d2f92327bcbed2c8112d2755dc3ef518795dd95",
+      "after": "330c9c585628595517ee63315ea92c20f238d81a606ef6102621ce9df248adc9"
+    }
+  ],
+  "reason": "Replay-only UTF-8 client import and topic/version audit; no compiled application, migration, frontend or test changed"
+}

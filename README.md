@@ -1,6 +1,6 @@
 # ForgeOJ
 
-> 当前状态：`M-1：项目准备`、`M0：最小判题纵向切片` 和 `M1：可靠异步判题` 均为 `VERIFIED`。M0 通过 20 项门禁；M1 于 2026-10-02 通过 [15 项最终门禁审计](docs/M1-GATE-AUDIT.md)。M2 普通账号单元已为 [VERIFIED](docs/M2-ACCOUNTS-VALIDATION.md)，完整 M2 保持 `IN_PROGRESS`，其余 M2 能力尚待设计和实现，M3～M5 为 `PLANNED`，尚未发布。
+> 当前状态：`M-1：项目准备`、`M0：最小判题纵向切片` 和 `M1：可靠异步判题` 均为 `VERIFIED`。M0 通过 20 项门禁；M1 于 2026-10-02 通过 [15 项最终门禁审计](docs/M1-GATE-AUDIT.md)。M2 [普通账号](docs/M2-ACCOUNTS-VALIDATION.md)及[公开题库/SMTP 适配](docs/M2-LIBRARY-SMTP-VALIDATION.md)单元 VERIFIED，完整 M2 保持 `IN_PROGRESS`；学习记录、题目内容、自测、题解与真实邮件投递尚待完成，M3～M5 为 `PLANNED`，尚未发布。
 >
 > 需求基线：2026-09-24；工程基线：2026-09-28
 
@@ -76,7 +76,7 @@ npm run verify
 
 当前实现使用最长 5 分钟的访问 JWT 和 MySQL 中绝对期限 7 天的独立 session，不再以 HttpSession 作为认证事实。每个受保护请求复核数据库，旧会话撤销即使 JWT 未过期也不再放行。访问/refresh Cookie 为 HttpOnly、host-only、SameSite=Strict；所有写仍须精确同源 Origin 与 CSRF。升级后旧进程会话需重新登录。Redis 缓存和分布式限流属于 M4。
 
-默认 `forgeoj.auth.mail.mode=disabled`，不连接真实 SMTP。生产注册/找回上线前还需实现并验证生产 `AccountMailDelivery` adapter，不能把开发邮件测试当作真实投递完成。生产必须通过 `FORGEOJ_AUTH_JWT_SECRET` 提供至少 32 字节的私有随机签名密钥并保留 Secure Cookie；只有隔离 HTTP dev/test 可关闭 Secure。缺省 dev 临时签名密钥重启会变化，公开测试密钥不得用于真实部署。相关边界见 [已知限制 L-033～L-035](docs/KNOWN_LIMITATIONS.md)。
+默认 `forgeoj.auth.mail.mode=disabled`，不连接真实 SMTP。2026-10-03 已新增显式 `smtp` 适配，要求 STARTTLS/implicit TLS、信任链/主机校验及 socket 超时，配置见 [SMTP 设计](docs/M2-SMTP-DESIGN.md)和 `.env.example`；dev 默认 local，可由邮件模式环境变量覆盖。真实服务商配置与邮箱投递仍待验收，开发协议测试不能代替实际送达。生产必须通过 `FORGEOJ_AUTH_JWT_SECRET` 提供至少 32 字节的私有随机签名密钥并保留 Secure Cookie；只有隔离 HTTP dev/test 可关闭 Secure。缺省 dev 临时签名密钥重启会变化，公开测试密钥不得用于真实部署。相关边界见 [已知限制 L-033～L-035](docs/KNOWN_LIMITATIONS.md)。
 
 ## V1.0 已确认目标范围
 
@@ -94,6 +94,9 @@ npm run verify
 
 - [需求基线](docs/ForgeOJ-Requirements.md)
 - [决策日志](docs/ForgeOJ-Decision-Log.md)
+- [M2 剩余功能实施顺序](docs/M2-REMAINING-IMPLEMENTATION.md)
+- [M2 题库与 SMTP 适配验收](docs/M2-LIBRARY-SMTP-VALIDATION.md)
+- [M2 个人学习记录设计（尚待实施）](docs/M2-LEARNING-RECORDS-DESIGN.md)
 - [版本路线图](docs/ForgeOJ-Roadmap.md)
 - [M0 最小判题纵向切片设计](docs/M0-VERTICAL-SLICE-DESIGN.md)
 - [M0 真实纵向链路验证记录](docs/M0-E2E-VALIDATION.md)

@@ -122,7 +122,7 @@ public class OutboxPublisher {
             var log = (errorCode == null ? LOGGER.atInfo() : LOGGER.atWarn())
                     .addKeyValue("event", name)
                     .addKeyValue("outboxEventId", event.id())
-                    .addKeyValue("judgeTaskId", event.judgeTaskId())
+                    .addKeyValue(event.eventType().startsWith("CONTENT_VALIDATION") ? "contentJobId" : "judgeTaskId", event.judgeTaskId())
                     .addKeyValue("submissionId", event.submissionId())
                     .addKeyValue("sequenceNo", event.sequenceNo())
                     .addKeyValue("publishAttemptNo", event.publishAttempts() + 1);
@@ -150,6 +150,8 @@ public class OutboxPublisher {
                             ? RabbitTopology.ROUTING_KEY
                             : RabbitTopology.RETRY_ROUTING_KEY;
             case "JUDGE_TASK_DEAD_LETTERED" -> RabbitTopology.DEAD_LETTER_ROUTING_KEY;
+            case "CONTENT_VALIDATION_QUEUED" -> "content.validation.v1";
+            case "CONTENT_VALIDATION_DEAD_LETTERED" -> "content.validation.dead.v1";
             default -> throw new IllegalArgumentException(
                     "Unsupported Outbox event type: " + event.eventType());
         };

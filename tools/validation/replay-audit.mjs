@@ -24,7 +24,7 @@ const facts = await lines('database.jsonl'), outbox = await lines('outbox.jsonl'
 const apiText = await read('api.log'), workerText = await read('worker.log')
 for (const text of [apiText, workerText]) {
   for (const sentinel of ['E2E_SOURCE_SENTINEL','E2E_DRAFT_SENTINEL','E2E_INVALID_TOKEN','E2E_RUNTIME_DIAGNOSTIC_SENTINEL',
-    'forgeoj-dev-only','m1-e2e-','JSESSIONID=','X-CSRF-TOKEN','input_gzip','expected_output_gzip']) {
+    'forgeoj-dev-only','m1-e2e-','JSESSIONID=','X-CSRF-TOKEN','input_gzip','expected_output_gzip','E2E_CONTENT_PRIVATE_SENTINEL']) {
     assert.ok(!text.includes(sentinel), `Leaked sentinel: ${sentinel}`)
   }
 }
@@ -70,20 +70,64 @@ for (const fact of facts) {
   }
 }
 assert.equal(outbox.length, facts.length)
+const content = await lines('content-database.jsonl'), contentOutbox = await lines('content-outbox.jsonl')
+if (content.length) {
+  const browserContent = await json('content-browser.json'), httpContent = await json('content-http.json')
+  assert.equal(httpContent.ownerDenied, true); assert.equal(httpContent.requestReplaySameJob, true)
+  assert.equal(httpContent.deleteReferencedDraftStatus, 409)
+  assert.equal(content.length, browserContent.jobs.length)
+  for (const observed of browserContent.jobs) {
+    const row = content.find(item => item.jobId === observed.jobId)
+    assert.ok(row); assert.equal(row.draftId, browserContent.draftId)
+    assert.equal(row.draftVersion, observed.draftVersion)
+    assert.equal(row.processingStatus, 'FINISHED'); assert.equal(row.validationStatus, observed.validationStatus)
+    assert.equal(row.referenceResult, observed.referenceResult); assert.equal(row.solutionResult, observed.solutionResult)
+    assert.equal(row.stale, true); assert.equal(row.archived, true); assert.equal(row.leaseCleared, true)
+    assert.equal(row.sourceDigestsMatch, true); assert.equal(row.testCount, 1)
+    const attempts = row.attempts.sort((a,b) => a.attemptNo-b.attemptNo)
+    assert.equal(row.attemptCount, observed.recovered ? 2 : 1)
+    assert.equal(attempts.length, row.attemptCount)
+    assert.deepEqual(attempts.map(a => a.status), observed.recovered ? ['LEASE_EXPIRED','SUCCEEDED'] : ['SUCCEEDED'])
+    assert.ok(attempts.every(a => a.finished === true))
+    const events = contentOutbox.filter(e => e.jobId === row.jobId)
+    assert.equal(events.length, row.attemptCount)
+    assert.deepEqual(events.map(e => e.sequenceNo), observed.recovered ? [0,1] : [0])
+    const created = api.filter(l => l.event === 'content.validation_created' && l.contentJobId === row.jobId)
+    assert.equal(created.length,1); assert.equal(created[0].outboxEventId,events[0].outboxEventId)
+    assert.equal(created[0].draftVersion,row.draftVersion)
+    assert.ok(api.some(l => l.event === 'request.completed' && l.requestId === created[0].requestId &&
+      l.route === 'content.validation' && l.method === 'POST' && l.httpStatus === 202))
+    for (const event of events) {
+      assert.equal(event.eventType, 'CONTENT_VALIDATION_QUEUED'); assert.equal(event.published, true); assert.equal(event.failed, false)
+      assert.deepEqual(event.keys.sort(), ['contractVersion','snapshotId','taskId','taskType'])
+      assert.ok(api.some(l => l.event === 'outbox.published' && l.outboxEventId === event.outboxEventId && l.contentJobId === row.jobId))
+    }
+    const last = attempts.at(-1)
+    const logs = worker.filter(l => l.contentJobId === row.jobId && l.contentAttemptId === last.attemptId)
+    const claim = logs.find(l => l.event === 'content.attempt_claimed'), commit = logs.find(l => l.event === 'content.attempt_committed'), ack = logs.find(l => l.event === 'content.ack_sent')
+    assert.ok(claim && commit && ack); assert.ok(claim['@timestamp'] <= commit['@timestamp'] && commit['@timestamp'] <= ack['@timestamp'])
+    if (observed.recovered) {
+      assert.ok(browserContent.crashVerified && browserContent.oldSandboxRemoved)
+      assert.ok(worker.some(l => l.event === 'content.attempt_claimed' && l.contentAttemptId === attempts[0].attemptId))
+    }
+  }
+  assert.equal(contentOutbox.length, content.reduce((n,j) => n+j.attemptCount,0))
+} else assert.equal(contentOutbox.length, 0)
 for (const row of matrix) {
   assert.ok(facts.some(f => f.submissionId === row.submissionId && f.verdict === row.expected))
   assert.equal(row.closeCode, 1000)
   assert.ok(row.notices.some(n => n.processingStatus === 'FINISHED' && n.statusVersion === 2))
 }
 const queues = await json('queues.json')
-assert.deepEqual(queues.map(q => q.name).sort(), ['forgeoj.judge.retry.v1','forgeoj.judge.self-test.v1',
+assert.deepEqual(queues.map(q => q.name).sort(), ['forgeoj.content.validation.dead.v1','forgeoj.content.validation.v1','forgeoj.judge.retry.v1','forgeoj.judge.self-test.v1',
   'forgeoj.judge.submission.dead.v1','forgeoj.judge.submission.v1'])
 for (const queue of queues) { assert.equal(queue.messages_ready, 0); assert.equal(queue.messages_unacknowledged, 0) }
 // Browser evidence is separately observed in the real UI, not simulated by this protocol probe.
 const browser = await json('browser.json'), frontend = await lines('frontend.log')
 assert.deepEqual(browser.map(b => b.mode).sort(), ['fallback','normal'])
 for (const row of browser) {
-  assert.deepEqual(row.visibleStates, ['QUEUED','FINISHED','AC'])
+  assert.ok(['QUEUED','SUBMITTING'].includes(row.visibleStates[0]))
+  assert.deepEqual(row.visibleStates.slice(1), ['FINISHED','AC'])
   assert.ok(facts.some(f => f.submissionId === row.submissionId && f.verdict === 'AC'))
   const gets = frontend.filter(l => l.event === 'validation.result_get' && l.submissionId === row.submissionId && l.port === row.port)
   assert.ok(gets.length >= 2)
@@ -96,7 +140,7 @@ for (const row of browser) {
 }
 assert.equal(facts.length, matrix.length + 1 + browser.length)
 const summary = { verifiedAt:new Date().toISOString(), submissions:facts.length, finished:chains.length,
-  cancelled:1, publishedOutbox:outbox.length, emptyQueues:queues.length, library, learning, browser, chains }
+  cancelled:1, publishedOutbox:outbox.length, contentJobs:content.length, contentPublishedOutbox:contentOutbox.length, emptyQueues:queues.length, library, learning, browser, chains }
 await writeFile('/reports/audit.json', JSON.stringify(summary, null, 2))
 console.log(JSON.stringify({ event:'E2E_AUDIT_VERIFIED', submissions:facts.length,
   finished:chains.length, cancelled:1, publishedOutbox:outbox.length, emptyQueues:queues.length }))

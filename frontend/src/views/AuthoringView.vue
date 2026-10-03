@@ -2,6 +2,7 @@
 <script setup lang="ts">
 import { computed, onBeforeUnmount, onMounted, ref } from 'vue'
 import { ApiRequestError, restoreSession, type SessionResponse } from '@/services/forgeojApi'
+import ContentValidation from '@/components/ContentValidation.vue'
 import {
   authoredDetail,
   authoredList,
@@ -303,6 +304,16 @@ onBeforeUnmount(() => {
         /></label>
       </fieldset>
       <button :disabled="!editable" @click="archive">归档此草稿</button>
+      <ContentValidation
+        v-if="session?.user"
+        :draft-id="selected.draft.id"
+        :version="selected.draft.version"
+        :status="selected.draft.status"
+        :user-id="session.user.id"
+        :csrf="session.csrf"
+        :editing-busy="busy"
+        @conflict="conflict = true"
+      />
     </template>
     <p role="status">{{ message }}</p>
   </section>

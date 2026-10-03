@@ -8,6 +8,8 @@ import org.apache.ibatis.annotations.*;
 
 @Mapper
 public interface ContentMapper {
+    @Select("SELECT COUNT(*) FROM content_validation_snapshot WHERE draft_id=#{id}")
+    int validationReferences(String id);
     record Row(String id,String title,String metadata,String referenceCode,String solutionIdea,String solutionCode,long version,String status) {}
     record TestRow(int sequence,byte[] inputGzip,byte[] outputGzip,long inputBytes,long outputBytes,String inputSha256,String outputSha256) {}
     String COLUMNS="id,title,CAST(metadata_json AS CHAR CHARACTER SET utf8mb4) AS metadata,reference_code,solution_idea,solution_code,version,status";

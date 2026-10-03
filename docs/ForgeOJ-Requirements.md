@@ -146,7 +146,9 @@ V1.0 不包含：
 
 ### 6.3 题目归属
 
-2026-10-03 作者草稿阶段已按 6.3–6.6/7.1 实施 V9 独立私有表和 `/authoring`，owner/CAS、逐条与 ZIP、独立参考/题解代码和草稿归档均 VERIFIED；固定 Linux 261/39、真实页面/导入/冲突/审计清理见 [记录](M2-CONTENT-VALIDATION.md)。代码尚无正式验证或送审入口，不能把草稿称作正式公共题或已验证官方题解，完整内容与 M2 仍 IN_PROGRESS。
+2026-10-03 作者草稿阶段已按 6.3–6.6/7.1 实施 V9 独立私有表和 `/authoring`，owner/CAS、逐条与 ZIP、独立参考/题解代码和草稿归档均 VERIFIED；固定 Linux 261/39、真实页面/导入/冲突/审计清理见 [记录](M2-CONTENT-VALIDATION.md)。该历史阶段只证明保存与导入。
+
+2026-10-04 已按 7.2/7.3 验收 V11 独立不可变内容验证：参考程序与独立题解均实际 ACCEPTED 才通过，私有 owner/CAS/幂等、版本绑定、共享额度、自然租约恢复与归档历史均 VERIFIED；固定 Linux 283/50、真实浏览器/Worker 中断/审计清理见 [记录](M2-CONTENT-VALIDATION-JOBS-VALIDATION.md)。验证不会创建正式 Submission/AC、公共题或官方题解；送审/撤回、输出生成预览与受控审核发布仍未完成，完整内容与 M2 保持 IN_PROGRESS。
 
 - 未发布个人草稿归创建者。
 - 发布为班级私有题后归班级，保留 created_by 供审计；助教退出不会删除题目。

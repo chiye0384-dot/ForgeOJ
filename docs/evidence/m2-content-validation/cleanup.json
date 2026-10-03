@@ -1,0 +1,20 @@
+{
+  "verifiedAt": "2026-10-03T23:28:53.8329077Z",
+  "project": "forgeoj-e2e-20261004-010844-26feff40",
+  "dockerServerVersion": "29.8.0",
+  "counts": {
+    "managedSandboxes": 0,
+    "ownedContainers": 0,
+    "testcontainers": 0,
+    "ownedWorkerImages": 0,
+    "ownedNetworks": 0,
+    "ownedVolumes": 0,
+    "ownedBuildImages": 0,
+    "ownedBuilders": 0
+  },
+  "allZero": true,
+  "ownedBrowserTabsClosed": true,
+  "firstStopFailure": "Docker Desktop Linux engine named pipe unavailable",
+  "retryAfterDesktopStart": true,
+  "unrelatedResourcesRemoved": false
+}

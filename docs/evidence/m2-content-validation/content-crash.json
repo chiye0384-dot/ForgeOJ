@@ -1,0 +1,38 @@
+{
+  "verifiedAt": "2026-10-03T17:16:26.0842507Z",
+  "jobId": "fd9c0c16-08e5-48ce-8b8d-94425ce93375",
+  "workerContainerId": "8e13c28533981ccbc8808537da5db08d4fbb7844379d2f43d289a4529c9a72cd",
+  "oldAttemptId": "6e08c532-8a09-48ce-9e82-0810be201e71",
+  "oldSandboxIds": "ec14958cd18ba5d6aeaf0aab7880462296498851b6cd6c6792ac76fa0ea2f962",
+  "killedAt": "2026-10-03T17:15:47.0733015Z",
+  "killConfirmed": true,
+  "before": {
+    "jobId": "fd9c0c16-08e5-48ce-8b8d-94425ce93375",
+    "leaseValid": true,
+    "attemptCount": 1,
+    "leaseCleared": false,
+    "solutionResult": null,
+    "referenceResult": null,
+    "processingStatus": "RUNNING",
+    "validationStatus": null
+  },
+  "after": {
+    "jobId": "fd9c0c16-08e5-48ce-8b8d-94425ce93375",
+    "leaseValid": null,
+    "attemptCount": 2,
+    "leaseCleared": true,
+    "solutionResult": "ACCEPTED",
+    "referenceResult": "ACCEPTED",
+    "processingStatus": "FINISHED",
+    "validationStatus": "PASSED"
+  },
+  "attemptStatuses": [
+    "LEASE_EXPIRED",
+    "SUCCEEDED"
+  ],
+  "oldSandboxRemoved": true,
+  "formalSubmissionCountBefore": 9,
+  "formalSubmissionCountAfter": 9,
+  "publishedContentOutbox": 2,
+  "naturalExpiry": true
+}

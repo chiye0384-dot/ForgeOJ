@@ -83,6 +83,12 @@ class WorkerProcessFaultIntegrationTests {
             for (String script : List.of("db/migration/V1__create_m0_core_schema.sql", "db/migration/V2__allow_ole_verdict.sql",
                     "db/migration/V3__add_m1_attempt_lease_and_retry.sql", "db/migration/V4__add_user_judge_quota_lock.sql",
                     "db/migration/V5__widen_submission_verdict.sql",
+                    "db/migration/V6__ordinary_accounts.sql",
+                    "db/migration/V7__public_problem_library.sql",
+                    "db/migration/V8__personal_learning_records.sql",
+                    "db/migration/V9__authored_problem_drafts.sql",
+                    "db/migration/V10__official_solution_access.sql",
+                    "db/migration/V11__content_validation_jobs.sql",
                     "db/devdata/R__seed_m0_development_data.sql")) {
                 ScriptUtils.executeSqlScript(database, new FileSystemResource(repositoryFile("forgeoj-api/src/main/resources/" + script)));
             }

@@ -1,0 +1,39 @@
+{
+  "verifiedAt": "2026-10-03T17:28:02.9856671Z",
+  "baseAuditDeniedQueries": 15,
+  "extraDeniedQueries": 5,
+  "extraChecks": [
+    {
+      "expected": "1143",
+      "role": "forgeoj_worker",
+      "variable": "FORGEOJ_WORKER_DB_PASSWORD",
+      "sql": "UPDATE content_validation_job SET owner_id=owner_id WHERE 1=0;"
+    },
+    {
+      "expected": "1143",
+      "role": "forgeoj_worker",
+      "variable": "FORGEOJ_WORKER_DB_PASSWORD",
+      "sql": "UPDATE content_validation_job SET snapshot_id=snapshot_id WHERE 1=0;"
+    },
+    {
+      "expected": "1143",
+      "role": "forgeoj_worker",
+      "variable": "FORGEOJ_WORKER_DB_PASSWORD",
+      "sql": "UPDATE content_validation_job SET client_request_id=client_request_id WHERE 1=0;"
+    },
+    {
+      "expected": "1142",
+      "role": "forgeoj_api",
+      "variable": "FORGEOJ_API_DB_PASSWORD",
+      "sql": "UPDATE content_validation_job SET processing_status=processing_status WHERE 1=0;"
+    },
+    {
+      "expected": "1142",
+      "role": "forgeoj_worker",
+      "variable": "FORGEOJ_WORKER_DB_PASSWORD",
+      "sql": "INSERT INTO content_validation_snapshot(id) SELECT 'not-inserted' WHERE 1=0;"
+    }
+  ],
+  "allDenied": true,
+  "apiDockerAndMigratorBoundaryPassed": true
+}

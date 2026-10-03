@@ -1,6 +1,6 @@
 # ForgeOJ
 
-> 当前状态：`M-1：项目准备`、`M0：最小判题纵向切片` 和 `M1：可靠异步判题` 均为 `VERIFIED`。M0 通过 20 项门禁；M1 于 2026-10-02 通过 [15 项最终门禁审计](docs/M1-GATE-AUDIT.md)。M2 [普通账号](docs/M2-ACCOUNTS-VALIDATION.md)、[公开题库/SMTP 适配](docs/M2-LIBRARY-SMTP-VALIDATION.md)及[学习记录](docs/M2-LEARNING-RECORDS-VALIDATION.md)单元 VERIFIED，完整 M2 保持 `IN_PROGRESS`；正式内容验证/送审、自测与真实邮件投递尚待完成，M3～M5 为 `PLANNED`，尚未发布。
+> 当前状态：`M-1：项目准备`、`M0：最小判题纵向切片` 和 `M1：可靠异步判题` 均为 `VERIFIED`。M0 通过 20 项门禁；M1 于 2026-10-02 通过 [15 项最终门禁审计](docs/M1-GATE-AUDIT.md)。M2 [普通账号](docs/M2-ACCOUNTS-VALIDATION.md)、[公开题库/SMTP 适配](docs/M2-LIBRARY-SMTP-VALIDATION.md)、[学习记录](docs/M2-LEARNING-RECORDS-VALIDATION.md)、[作者双程序验证](docs/M2-CONTENT-VALIDATION-JOBS-VALIDATION.md)等单元 VERIFIED，完整 M2 保持 `IN_PROGRESS`；不可变送审/撤回、输出生成预览、自测与真实邮件投递尚待完成，M3～M5 为 `PLANNED`，尚未发布。
 >
 > 需求基线：2026-09-24；工程基线：2026-09-28
 
@@ -12,7 +12,9 @@ ForgeOJ 是一个面向 Java 学习者和小型教学班级的在线判题平台
 
 ## 当前工程基线
 
-2026-10-03 已继续验收[个人学习记录](docs/M2-LEARNING-RECORDS-VALIDATION.md)和[作者内容草稿阶段](docs/M2-CONTENT-VALIDATION.md)：`/learning` 支持本人题单/进度/草稿/历史，`/authoring` 支持私有内容/独立参考与题解代码/逐条与 ZIP 测试/归档。作者阶段固定 Linux 后端 261、前端 39 及实际浏览器/审计清理通过。随后[官方题解访问](docs/M2-SOLUTION-ACCESS-VALIDATION.md)单元 VERIFIED：最终固定 Linux 269/45，实际取消不留记录、跨账号隔离、真实 AC 自动解锁和降级审计清理通过；作者保存与合成快照仍不等于正式验证或发布，完整内容生命周期、自测和真实 SMTP 仍待完成。
+2026-10-03 已继续验收[个人学习记录](docs/M2-LEARNING-RECORDS-VALIDATION.md)和[作者内容草稿阶段](docs/M2-CONTENT-VALIDATION.md)：`/learning` 支持本人题单/进度/草稿/历史，`/authoring` 支持私有内容/独立参考与题解代码/逐条与 ZIP 测试/归档。作者阶段固定 Linux 后端 261、前端 39 及实际浏览器/审计清理通过。随后[官方题解访问](docs/M2-SOLUTION-ACCESS-VALIDATION.md)单元 VERIFIED：最终固定 Linux 269/45，实际取消不留记录、跨账号隔离、真实 AC 自动解锁和降级审计清理通过；作者保存与合成快照本身不证明正式验证或发布。
+
+2026-10-04 [作者双程序验证](docs/M2-CONTENT-VALIDATION-JOBS-VALIDATION.md)单元 VERIFIED：V11 独立不可变快照、owner/CAS/幂等、共享额度、双程序正式沙箱执行与私有历史完成。固定 Linux API 163 + Worker 120 = **283**、前端 **50** 及全部检查通过；真实页面分别观察参考通过/题解失败、双通过、旧版本失效和归档保留，实际 Worker SIGKILL 后自然恢复通过，六队列/权限/日志审计与精确清理通过。设计见 [验证任务设计](docs/M2-CONTENT-VALIDATION-JOBS-DESIGN.md)，安全事实见 [证据目录](docs/evidence/m2-content-validation/README.md)。部署须先迁移 V11 再启动新 Worker。完整内容生命周期、自测和真实 SMTP 仍待完成。
 
 - JDK 21 + Spring Boot 4.1.1 + Maven Wrapper 3.3.4 / Maven 3.9.14；
 - Maven 根聚合工程，包含独立的 `forgeoj-api` 和 `forgeoj-judge-worker` 可执行模块；

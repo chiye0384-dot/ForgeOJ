@@ -4,7 +4,7 @@
 import assert from 'node:assert/strict'
 import http from 'node:http'
 import { randomBytes, randomUUID, createHash } from 'node:crypto'
-import { writeFile } from 'node:fs/promises'
+import { writeFile, readFile } from 'node:fs/promises'
 
 const base = 'http://localhost:5173'
 const pause = ms => new Promise(resolve => setTimeout(resolve, ms))
@@ -214,7 +214,39 @@ if (process.argv[2] === 'matrix') await matrix()
 else if (process.argv[2] === 'permissions') await permissions()
 else if (process.argv[2] === 'library') await library()
 else if (process.argv[2] === 'learning') await learning()
-else throw new Error('Expected matrix, permissions, library or learning')
+else if (process.argv[2] === 'content') await contentValidation()
+else throw new Error('Expected matrix, permissions, library, learning or content')
+
+async function contentValidation() {
+  const observed = JSON.parse(await readFile('/reports/content-browser.json','utf8'))
+  const owner=new Client(),other=new Client(),anonymous=new Client()
+  await owner.login();await other.login('other-learner')
+  const path='/api/v1/me/authored-problems/'+observed.draftId
+  const draft=await owner.request(path);assert.equal(draft.status,200);assert.equal(draft.body.draft.status,'ARCHIVED')
+  const list=await owner.request(path+'/validations?size=1');assert.equal(list.status,200)
+  assert.equal(list.body.total, observed.jobs.length);assert.equal(list.body.items.length,1)
+  assert.deepEqual(Object.keys(list.body.items[0]).sort(),['draftId','draftVersion','jobId','processingStatus','referenceResult','solutionResult','stale','statusVersion','validationStatus'])
+  assert.equal((await anonymous.request(path+'/validations')).status,401)
+  assert.equal((await other.request(path+'/validations')).status,404)
+  assert.equal((await owner.request(path+'/validations?size=51')).status,400)
+  const results=[]
+  for (const job of observed.jobs) {
+    const result=await owner.request(path+'/validations/'+job.jobId);assert.equal(result.status,200)
+    for (const field of ['jobId','draftVersion','validationStatus','referenceResult','solutionResult']) assert.equal(result.body[field],job[field])
+    assert.equal(result.body.stale,true);assert.equal(result.body.processingStatus,'FINISHED')
+    assert.equal((await other.request(path+'/validations/'+job.jobId)).status,404)
+    const replay=await owner.request(path+'/validations','POST',{expectedVersion:job.draftVersion,requestId:job.requestId})
+    assert.equal(replay.status,202);assert.equal(replay.body.jobId,job.jobId)
+    assert.equal((await owner.request(path+'/validations','POST',{expectedVersion:job.draftVersion+1,requestId:job.requestId})).status,409)
+    results.push(result.body)
+  }
+  assert.equal((await owner.request(path+'/validations','POST',{expectedVersion:draft.body.draft.version,requestId:randomUUID()})).status,409)
+  const deletion=await owner.request(path+'?expectedVersion='+draft.body.draft.version,'DELETE');assert.equal(deletion.status,409)
+  const publicList=await anonymous.request('/api/v1/problems');assert.equal(publicList.body.total,2)
+  await writeFile('/reports/content-http.json',JSON.stringify({verifiedAt:new Date().toISOString(),draftId:observed.draftId,
+    ownerDenied:true,requestReplaySameJob:true,deleteReferencedDraftStatus:deletion.status,publicProblemCount:2,results},null,2))
+  console.log('E2E_CONTENT_HTTP_VERIFIED')
+}
 
 async function learning() {
   const owner=new Client(), other=new Client(), anonymous=new Client()

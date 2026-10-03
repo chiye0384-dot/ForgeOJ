@@ -10,8 +10,8 @@
 
 所有作者写入先复核账号/会话，再锁 owner 草稿并检查 expectedVersion；修改内容或测试使旧验证失效。资源限制不超过已批准沙箱允许值。列表和详情 no-store；代码/测试不进入日志或匿名公共 DTO。引用/运行/送审前可删除无记录草稿，产生记录后归档并保留不可变快照。归档中断新的作者编辑，历史结果仍可由作者查看。
 
-正式执行继续仅在 Worker。后续验证任务使用独立内容快照，不借用正式 Submission 或伪造 AC；源代码、测试和资源摘要必须绑定同一内容版本。沿用账号/quota 1 RUNNING + 3 pending、有限重试、attempt/lease fencing、提交后 ACK 和实际沙箱清理；API 无 Docker，Worker 无账号/个人学习表读取。异步验证成功后仍不能绕过不可变送审与受控审核。
+正式执行继续仅在 Worker。V11 验证任务已使用独立内容快照，不借用正式 Submission 或伪造 AC；源代码、测试和资源摘要绑定同一内容版本。沿用账号/quota 1 RUNNING + 3 pending、有限重试、attempt/lease fencing、提交后 ACK 和实际沙箱清理；API 无 Docker，Worker 无账号/个人学习/可变作者表读取。异步验证成功后仍不能绕过不可变送审与受控审核。
 
-当前已实现 V9 作者草稿/独立测试表、owner/CAS CRUD/归档、压缩/字节数/SHA-256、逐条与 ZIP 原子替换、请求反序列化前 32 MiB JSON/8 MiB ZIP 限制，以及 `/authoring` 页面。参考程序和题解代码是独立列，没有官方可读接口；正文/测试更新不触发执行，也没有制造 AC。草稿还不能产生运行或审核记录，因此当前物理删除仅针对 DRAFT；新增这些记录时必须先扩展权威引用检查和删除/归档规则。
+当前已实现 V9 作者草稿/独立测试表、owner/CAS CRUD/归档、压缩/字节数/SHA-256、逐条与 ZIP 原子替换、请求反序列化前 32 MiB JSON/8 MiB ZIP 限制，以及 `/authoring` 页面。参考程序和题解代码是独立列，没有官方可读接口；正文/测试更新不触发执行，也没有制造 AC。V11 显式验证可创建独立运行记录，已扩展权威验证引用检查与外键：仅无引用的 DRAFT 可物理删除，有验证记录的草稿须归档并保留快照/任务/历史。后续审核引用仍须扩展同一删除规则。
 
-作者草稿阶段固定 Linux 后端 261/前端 39、真实页面和文件选择器导入/冲突/归档、现有判题重放、审计与清理均通过，阶段 VERIFIED，见 [记录](M2-CONTENT-VALIDATION.md)。完整内容单元仍 IN_PROGRESS：正式验证任务、不可变送审/撤回、参考程序输出生成预览与真实 SMTP 尚未完成；学习侧官方题解访问单元已 VERIFIED，见 [访问验收](M2-SOLUTION-ACCESS-VALIDATION.md)，其合成快照不替代正式内容发布，内容草稿页面不是完整内容生命周期。完整 M2 保持 IN_PROGRESS。
+作者草稿阶段固定 Linux 后端 261/前端 39、真实页面和文件选择器导入/冲突/归档、现有判题重放、审计与清理均通过，阶段 VERIFIED，见 [记录](M2-CONTENT-VALIDATION.md)。2026-10-04 正式双程序验证单元已 VERIFIED，固定 Linux 283/50 与实际 Worker 中断恢复/页面/审计/清理见 [记录](M2-CONTENT-VALIDATION-JOBS-VALIDATION.md)。完整内容单元仍 IN_PROGRESS：不可变送审/撤回、参考程序输出生成预览与真实 SMTP 尚未完成；学习侧官方题解访问单元已 VERIFIED，见 [访问验收](M2-SOLUTION-ACCESS-VALIDATION.md)，其合成快照不替代正式内容发布，内容草稿页面不是完整内容生命周期。完整 M2 保持 IN_PROGRESS。

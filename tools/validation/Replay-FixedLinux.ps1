@@ -2,7 +2,7 @@
 # SPDX-License-Identifier: Apache-2.0
 [CmdletBinding()]
 param(
-    [ValidateSet('Start','Status','Matrix','Library','Learning','WorkerStart','WorkerStop','Permissions','Audit','Stop')]
+    [ValidateSet('Start','Status','Matrix','Library','Learning','Content','WorkerStart','WorkerStop','Permissions','Audit','Stop')]
     [string]$Action = 'Start',
     [string]$RunDirectory,
     [ValidatePattern('^$|^[a-f0-9-]{36}$')]
@@ -92,6 +92,7 @@ switch ($Action) {
     'Matrix' { Compose-Checked @('exec','-T','frontend','node','/source/tools/validation/replay-probe.mjs','matrix') }
     'Library' { Compose-Checked @('exec','-T','frontend','node','/source/tools/validation/replay-probe.mjs','library') }
     'Learning' { Compose-Checked @('exec','-T','frontend','node','/source/tools/validation/replay-probe.mjs','learning') }
+    'Content' { Compose-Checked @('exec','-T','frontend','node','/source/tools/validation/replay-probe.mjs','content') }
     'Permissions' { Compose-Checked (@('exec','-T','frontend','node','/source/tools/validation/replay-probe.mjs','permissions') + $(if($SubmissionId) { @($SubmissionId) } else { @() })) }
     'WorkerStop' { Compose-Checked @('stop','-t','10','worker') }
     'WorkerStart' { Compose-Checked @('up','--detach','worker') }
@@ -113,9 +114,30 @@ SELECT JSON_OBJECT('submissionId',s.id,'processingStatus',s.processing_status,'v
         $facts | Set-Content -LiteralPath (Join-Path $RunDirectory 'database.jsonl') -Encoding utf8
         $outbox = Sql-Fixture @'
 SELECT JSON_OBJECT('outboxEventId',id,'judgeTaskId',aggregate_id,'published',published_at IS NOT NULL,
- 'failed',failed_at IS NOT NULL,'sequenceNo',sequence_no,'keys',JSON_KEYS(payload)) FROM outbox_event;
+ 'failed',failed_at IS NOT NULL,'sequenceNo',sequence_no,'keys',JSON_KEYS(payload)) FROM outbox_event WHERE aggregate_type='JUDGE_TASK';
 '@
         $outbox | Set-Content -LiteralPath (Join-Path $RunDirectory 'outbox.jsonl') -Encoding utf8
+        $content = Sql-Fixture @'
+SELECT JSON_OBJECT('jobId',j.id,'draftId',s.draft_id,'draftVersion',s.draft_version,
+ 'processingStatus',j.processing_status,'statusVersion',j.status_version,'validationStatus',j.validation_status,
+ 'referenceResult',j.reference_result,'solutionResult',j.solution_result,'attemptCount',j.attempt_count,
+ 'stale',d.version<>s.draft_version OR d.status<>'DRAFT','archived',d.status='ARCHIVED',
+ 'leaseCleared',j.lease_owner IS NULL AND j.lease_token IS NULL AND j.lease_expires_at IS NULL,
+ 'sourceDigestsMatch',SHA2(s.reference_code,256)=s.reference_sha256 AND SHA2(s.solution_code,256)=s.solution_sha256,
+ 'testCount',(SELECT COUNT(*) FROM content_validation_test_case t WHERE t.snapshot_id=s.id),
+ 'attempts',COALESCE((SELECT JSON_ARRAYAGG(JSON_OBJECT('attemptId',a.id,'attemptNo',a.attempt_no,
+ 'status',a.attempt_status,'finished',a.finished_at IS NOT NULL)) FROM content_validation_attempt a WHERE a.job_id=j.id),JSON_ARRAY()))
+ FROM content_validation_job j JOIN content_validation_snapshot s ON s.id=j.snapshot_id
+ JOIN authored_problem_draft d ON d.id=s.draft_id ORDER BY j.created_at;
+'@
+        $content | Set-Content -LiteralPath (Join-Path $RunDirectory 'content-database.jsonl') -Encoding utf8
+        $contentOutbox = Sql-Fixture @'
+SELECT JSON_OBJECT('outboxEventId',id,'jobId',aggregate_id,'eventType',event_type,'sequenceNo',sequence_no,
+ 'published',published_at IS NOT NULL,'failed',failed_at IS NOT NULL,'keys',JSON_KEYS(payload))
+ FROM outbox_event WHERE aggregate_type='CONTENT_VALIDATION' ORDER BY aggregate_id,sequence_no;
+'@
+        $contentOutbox | Set-Content -LiteralPath (Join-Path $RunDirectory 'content-outbox.jsonl') -Encoding utf8
+        if ((Sql-Fixture "SELECT COUNT(*) FROM outbox_event WHERE aggregate_type NOT IN ('JUDGE_TASK','CONTENT_VALIDATION');").Trim() -ne '0') { throw 'Unknown Outbox aggregate is not audited' }
         $queues = Compose-Checked @('exec','-T','rabbitmq','rabbitmqctl','--quiet','list_queues','-p','/forgeoj','name','messages_ready','messages_unacknowledged','--formatter','json')
         $queues | Set-Content -LiteralPath (Join-Path $RunDirectory 'queues.json') -Encoding utf8
         foreach($service in @('api','worker','frontend')) {
@@ -134,6 +156,11 @@ SELECT JSON_OBJECT('outboxEventId',id,'judgeTaskId',aggregate_id,'published',pub
             @('forgeoj_api','FORGEOJ_API_DB_PASSWORD','SELECT id FROM problem_test_case LIMIT 0;'),
             @('forgeoj_api','FORGEOJ_API_DB_PASSWORD','SELECT id FROM judge_task_attempt LIMIT 0;'),
             @('forgeoj_worker','FORGEOJ_WORKER_DB_PASSWORD','SELECT id FROM user_account LIMIT 0;'),
+            @('forgeoj_worker','FORGEOJ_WORKER_DB_PASSWORD','SELECT id FROM authored_problem_draft LIMIT 0;'),
+            @('forgeoj_worker','FORGEOJ_WORKER_DB_PASSWORD','SELECT draft_id FROM authored_problem_test_case LIMIT 0;'),
+            @('forgeoj_api','FORGEOJ_API_DB_PASSWORD','SELECT id FROM content_validation_attempt LIMIT 0;'),
+            @('forgeoj_api','FORGEOJ_API_DB_PASSWORD','UPDATE content_validation_snapshot SET reference_code=reference_code WHERE 1=0;'),
+            @('forgeoj_worker','FORGEOJ_WORKER_DB_PASSWORD','UPDATE content_validation_snapshot SET solution_code=solution_code WHERE 1=0;'),
             @('forgeoj_worker','FORGEOJ_WORKER_DB_PASSWORD','SELECT problem_id FROM problem_tag LIMIT 0;'),
             @('forgeoj_worker','FORGEOJ_WORKER_DB_PASSWORD','SELECT user_id FROM user_code_draft LIMIT 0;'),
             @('forgeoj_worker','FORGEOJ_WORKER_DB_PASSWORD','SELECT id FROM personal_problem_list LIMIT 0;'),

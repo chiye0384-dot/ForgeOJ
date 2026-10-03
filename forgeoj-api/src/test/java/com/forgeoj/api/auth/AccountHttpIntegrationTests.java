@@ -54,7 +54,7 @@ class AccountHttpIntegrationTests {
 
     @Container
     static final MySQLContainer MYSQL =
-            new MySQLContainer(
+            new com.forgeoj.api.testinfra.DirectMySQLContainer(
                             DockerImageName.parse(
                                             "container-registry.oracle.com/mysql/community-server:8.4.12"
                                                     + "@sha256:7dcc4add9183664de3a214daf85a50c3ba6cccfd7534f700b6561bf5b41885be")

@@ -64,7 +64,7 @@ class WorkerProcessFaultIntegrationTests {
     private static final HttpClient HTTP = HttpClient.newBuilder().connectTimeout(Duration.ofSeconds(3)).build();
     private static final JsonMapper JSON = JsonMapper.builder().build();
 
-    @Container static final MySQLContainer MYSQL = new MySQLContainer(DockerImageName.parse(MYSQL_IMAGE)
+    @Container static final MySQLContainer MYSQL = new com.forgeoj.worker.testinfra.DirectMySQLContainer(DockerImageName.parse(MYSQL_IMAGE)
             .asCompatibleSubstituteFor("mysql")).withDatabaseName("forgeoj").withUsername("bootstrap")
             .withPassword("bootstrap-test-secret").withCopyFileToContainer(MountableFile.forHostPath(
                     repositoryFile("forgeoj-api/src/test/resources/mysql/init-test-users.sql")),

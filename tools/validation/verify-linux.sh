@@ -41,7 +41,11 @@ case "${1:-}" in
         mvn --version
         docker --version
         # The pinned image supplies exactly Maven 3.9.14. No host .m2 mount.
-        mvn --batch-mode --no-transfer-progress clean verify 2>&1 | tee /artifacts/backend.log
+        # Builder and disposable MySQL containers share the default bridge. Avoid Desktop host forwarding.
+        # This flag is read only by test sources; production JARs contain no direct-route adapter.
+        export FORGEOJ_TEST_DIRECT_DB=1
+        mvn --settings /source/tools/validation/maven-central-settings.xml \
+            --batch-mode --no-transfer-progress clean verify 2>&1 | tee /artifacts/backend.log
         ;;
     frontend)
         cd frontend

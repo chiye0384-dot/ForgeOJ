@@ -135,9 +135,9 @@ without Web Locks, short JWT expiry requires a fresh login instead of rotating a
 shared refresh cookie automatically. Clients must not retry an already consumed
 refresh indefinitely.
 Redis session caching/distributed limits remain M4, and production HTTPS/proxy
-and SMTP acceptance remain separate work. Apply through V9 with the migrator before
+and SMTP acceptance remain separate work. Apply through V10 with the migrator before
 running the upgraded API; do not roll back by deleting authentication rows or
-editing V1–V8. V7 adds nullable problem difficulty and read-only problem tags;
+editing V1–V9. V7 adds nullable problem difficulty and read-only problem tags;
 the dev repeatable seed labels only the existing original A+B example. Public
 library entry is `/problems`, with actual topics at `/problems/:slug`; `/` remains
 the original A+B entry. Production migrations do not seed problems or users.
@@ -155,8 +155,15 @@ successful-validation seed. `/authoring` supports separate reference/solution
 code and manual/ZIP tests. Writes require the current session, Origin/CSRF and
 expectedVersion; archived drafts stay read-only. Worker has no mutable-authoring
 table access. This draft phase is VERIFIED; formal content sandbox validation,
-review/withdrawal and public solution access remain pending. See
+review/withdrawal remain pending. See
 `docs/M2-CONTENT-VALIDATION.md`.
+
+V10 adds immutable official-solution snapshots and private, version-bound first
+early-view records. API only reads official content; it cannot publish author
+drafts or modify solution snapshots. Worker receives no solution/learning grants.
+Migrations seed no solution, and controlled publication after formal validation
+and review is still pending. The workspace shows unavailable when no snapshot
+exists; see `docs/M2-SOLUTION-ACCESS-DESIGN.md` for the access contract.
 
 With the `dev` profile, the API polls unpublished M0 Outbox rows in small
 batches, publishes persistent JSON to the durable RabbitMQ topology, and only
@@ -198,3 +205,11 @@ data. Use it only when an intentional clean reset is required.
 The images are pinned to exact patch tags and immutable digests for
 `linux/amd64`. Updating a digest is an explicit dependency change that requires
 license, migration, and integration-test review.
+
+V10 solution access is VERIFIED; see `docs/M2-SOLUTION-ACCESS-VALIDATION.md`.
+Snapshots have no seed or ordinary-user publication route. Own current-version AC
+or explicit versioned early-view confirmation unlocks a separate snapshot;
+private references are never copied or disclosed. Formal validated/reviewed
+publication, self-test and external SMTP are still unfinished. Fixed Linux tests
+opt into sibling MySQL routing only in test sources; production JARs contain no
+adapter. Other Docker networks need fresh route validation.

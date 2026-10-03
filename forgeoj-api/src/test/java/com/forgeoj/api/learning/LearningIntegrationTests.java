@@ -30,7 +30,7 @@ import org.testcontainers.utility.*;
     "spring.rabbitmq.listener.direct.auto-startup=false"
 })
 class LearningIntegrationTests {
-    @Container static final MySQLContainer MYSQL=new MySQLContainer(DockerImageName.parse(
+    @Container static final MySQLContainer MYSQL=new com.forgeoj.api.testinfra.DirectMySQLContainer(DockerImageName.parse(
             "container-registry.oracle.com/mysql/community-server:8.4.12@sha256:7dcc4add9183664de3a214daf85a50c3ba6cccfd7534f700b6561bf5b41885be").asCompatibleSubstituteFor("mysql"))
             .withDatabaseName("forgeoj").withUsername("bootstrap").withPassword("bootstrap-test-secret")
             .withCopyFileToContainer(MountableFile.forClasspathResource("mysql/init-test-users.sql"),"/docker-entrypoint-initdb.d/01-users.sql");

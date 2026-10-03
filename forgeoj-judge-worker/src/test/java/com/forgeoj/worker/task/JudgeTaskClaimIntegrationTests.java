@@ -83,7 +83,7 @@ class JudgeTaskClaimIntegrationTests {
 
     @Container
     static final MySQLContainer MYSQL =
-            new MySQLContainer(
+            new com.forgeoj.worker.testinfra.DirectMySQLContainer(
                             DockerImageName.parse(MYSQL_IMAGE)
                                     .asCompatibleSubstituteFor("mysql"))
                     .withDatabaseName("forgeoj")

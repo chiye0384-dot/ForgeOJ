@@ -1,0 +1,44 @@
+[
+  {
+    "role": "forgeoj_worker",
+    "query": "SELECT judge_version_id FROM official_problem_solution LIMIT 0;",
+    "denied": true,
+    "mysqlError": 1142
+  },
+  {
+    "role": "forgeoj_worker",
+    "query": "SELECT user_id FROM user_solution_early_view LIMIT 0;",
+    "denied": true,
+    "mysqlError": 1142
+  },
+  {
+    "role": "forgeoj_api",
+    "query": "INSERT INTO official_problem_solution SELECT * FROM official_problem_solution WHERE 1=0;",
+    "denied": true,
+    "mysqlError": 1142
+  },
+  {
+    "role": "forgeoj_api",
+    "query": "UPDATE official_problem_solution SET idea=idea WHERE 1=0;",
+    "denied": true,
+    "mysqlError": 1142
+  },
+  {
+    "role": "forgeoj_api",
+    "query": "DELETE FROM official_problem_solution WHERE 1=0;",
+    "denied": true,
+    "mysqlError": 1142
+  },
+  {
+    "role": "forgeoj_api",
+    "query": "UPDATE user_solution_early_view SET first_viewed_at=first_viewed_at WHERE 1=0;",
+    "denied": true,
+    "mysqlError": 1142
+  },
+  {
+    "role": "forgeoj_api",
+    "query": "DELETE FROM user_solution_early_view WHERE 1=0;",
+    "denied": true,
+    "mysqlError": 1142
+  }
+]

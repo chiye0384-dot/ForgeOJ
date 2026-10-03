@@ -77,7 +77,7 @@ export class ApiRequestError extends Error {
   }
 }
 
-async function requestJson<T>(path: string, init?: RequestInit): Promise<T> {
+export async function requestJson<T>(path: string, init?: RequestInit): Promise<T> {
   let response = await fetch(path, {
     credentials: 'same-origin',
     ...init,
@@ -128,7 +128,7 @@ export function refreshSession(): Promise<SessionResponse> {
   return refreshing
 }
 
-function jsonHeaders(csrf?: CsrfToken): Record<string, string> {
+export function jsonHeaders(csrf?: CsrfToken): Record<string, string> {
   const headers: Record<string, string> = { 'Content-Type': 'application/json' }
   if (csrf) {
     headers[csrf.headerName] = csrf.token

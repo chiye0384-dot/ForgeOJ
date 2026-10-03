@@ -1,0 +1,23 @@
+{
+  "verifiedAt": "2026-10-03T03:08:51.693Z",
+  "listId": "e16f455c-db9a-43c1-8a19-ca8eaa7c4e62",
+  "officialListId": "00000000-0000-0000-0000-000000000101",
+  "ownerDenied": true,
+  "draftRace": [
+    200,
+    409
+  ],
+  "existingDraftRace": [
+    200,
+    409
+  ],
+  "listRace": [
+    200,
+    409
+  ],
+  "currentAcProgress": 1,
+  "available": 2,
+  "historyTotal": 9,
+  "publicPersonalFactsAbsent": true,
+  "historyExactFields": true
+}

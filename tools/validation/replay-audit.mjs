@@ -8,6 +8,11 @@ const json = async name => JSON.parse(await read(name))
 const lines = async name => (await read(name)).split(/\r?\n/).filter(s => s.startsWith('{')).map(s => JSON.parse(s))
 const matrix = await json('matrix.json'), permissions = await json('permissions.json')
 const library = await json('library.json')
+const learning = await json('learning.json')
+assert.equal(learning.ownerDenied, true)
+assert.deepEqual(learning.draftRace, [200,409])
+assert.equal(learning.currentAcProgress, 1)
+assert.equal(learning.publicPersonalFactsAbsent, true)
 assert.equal(library.anonymous, true)
 assert.equal(library.secondSlug, 'larger-of-two-integers')
 assert.equal(library.filteredSlug, library.secondSlug)
@@ -18,7 +23,7 @@ assert.deepEqual(matrix.map(r => r.expected).sort(), ['AC','CE','MLE','OLE','RE'
 const facts = await lines('database.jsonl'), outbox = await lines('outbox.jsonl')
 const apiText = await read('api.log'), workerText = await read('worker.log')
 for (const text of [apiText, workerText]) {
-  for (const sentinel of ['E2E_SOURCE_SENTINEL','E2E_INVALID_TOKEN','E2E_RUNTIME_DIAGNOSTIC_SENTINEL',
+  for (const sentinel of ['E2E_SOURCE_SENTINEL','E2E_DRAFT_SENTINEL','E2E_INVALID_TOKEN','E2E_RUNTIME_DIAGNOSTIC_SENTINEL',
     'forgeoj-dev-only','m1-e2e-','JSESSIONID=','X-CSRF-TOKEN','input_gzip','expected_output_gzip']) {
     assert.ok(!text.includes(sentinel), `Leaked sentinel: ${sentinel}`)
   }
@@ -91,7 +96,7 @@ for (const row of browser) {
 }
 assert.equal(facts.length, matrix.length + 1 + browser.length)
 const summary = { verifiedAt:new Date().toISOString(), submissions:facts.length, finished:chains.length,
-  cancelled:1, publishedOutbox:outbox.length, emptyQueues:queues.length, library, browser, chains }
+  cancelled:1, publishedOutbox:outbox.length, emptyQueues:queues.length, library, learning, browser, chains }
 await writeFile('/reports/audit.json', JSON.stringify(summary, null, 2))
 console.log(JSON.stringify({ event:'E2E_AUDIT_VERIFIED', submissions:facts.length,
   finished:chains.length, cancelled:1, publishedOutbox:outbox.length, emptyQueues:queues.length }))

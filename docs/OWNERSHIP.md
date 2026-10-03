@@ -57,6 +57,8 @@ M2 普通账号单元（`VERIFIED`）的自有部分是 V6 账号/会话/摘要�
 
 2026-10-03 题库单元的自有实现为 V7 nullable 难度/标签模型、显式 SQL 标题转义/筛选/COUNT/分页/页内标签批量读取、公开 DTO 白名单、只读一致事务、题库页面及实际 slug 的工作区生命周期与回归。题库的 SQL/事务执行仍使用 MyBatis/MySQL/Spring，路由/模板由 Vue 提供；没有引入 PageHelper、外部题面或题库数据。隔离 Replay 的“两数较大值”题面、样例和测试由 ForgeOJ 原创，仅用于验收，不声称已审核发布正式题库内容。
 
+同日学习记录单元自有实现为 V8 五表和列授权、题单 owner/CAS/排序事务、当前版本 AC 的 EXISTS/批量统计、安全历史 DTO、草稿 CAS 与前端冲突/代次管理，以及真实 DB/HTTP/迁移/前端测试。继续复用既有 MyBatis/Spring/MySQL/Vue，没有新增依赖或第三方题单内容；API 不获得 Docker，Worker 不获得学习表或账号读取权限。单元 VERIFIED，固定 Linux 241/35、真实浏览器与独立审计清理见 [记录](M2-LEARNING-RECORDS-VALIDATION.md)。
+
 同日 SMTP 适配的自有部分是模式选择、配置/地址/链接/TLS/超时约束与 loopback 协议测试。MIME 和 SMTP/TLS 客户端由 Spring Mail/Jakarta Mail/Angus 提供，证书/密钥在测试临时目录动态生成，不修改生产信任。普通账号阶段的“无 SMTP adapter”是当时的历史事实；本轮适配/题库单元 VERIFIED，固定 Linux 229/24 和实际选题 AC 见 [验收](M2-LIBRARY-SMTP-VALIDATION.md)。真实服务商投递仍未验收，依赖与许可见 U-010/[构件事实](evidence/m2-library/smtp-dependencies.md)，整体 M2 仍 IN_PROGRESS。
 
 ## 4. 明确排除

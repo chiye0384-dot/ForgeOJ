@@ -135,12 +135,20 @@ without Web Locks, short JWT expiry requires a fresh login instead of rotating a
 shared refresh cookie automatically. Clients must not retry an already consumed
 refresh indefinitely.
 Redis session caching/distributed limits remain M4, and production HTTPS/proxy
-and SMTP acceptance remain separate work. Apply through V7 with the migrator before
+and SMTP acceptance remain separate work. Apply through V8 with the migrator before
 running the upgraded API; do not roll back by deleting authentication rows or
-editing V1–V6. V7 adds nullable problem difficulty and read-only problem tags;
+editing V1–V7. V7 adds nullable problem difficulty and read-only problem tags;
 the dev repeatable seed labels only the existing original A+B example. Public
 library entry is `/problems`, with actual topics at `/problems/:slug`; `/` remains
 the original A+B entry. Production migrations do not seed problems or users.
+
+V8 adds private personal lists, official read-only lists and Java21 code drafts;
+it seeds no lists, drafts or progress. `/learning` exposes own lists/history and
+official public metadata. Draft writes require the current session, Origin, CSRF
+and expectedVersion; 409 needs an explicit conflict choice. Progress counts only
+the current judge_version's own FINISHED/AC. This unit passed fixed Linux and
+real-browser acceptance; see `docs/M2-LEARNING-RECORDS-VALIDATION.md`. Full M2 and
+external SMTP delivery remain unfinished.
 
 With the `dev` profile, the API polls unpublished M0 Outbox rows in small
 batches, publishes persistent JSON to the durable RabbitMQ topology, and only

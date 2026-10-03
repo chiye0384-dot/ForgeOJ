@@ -5,6 +5,10 @@ INSERT INTO user_account (id, username, password_hash, status)
 SELECT 2, 'other-learner', password_hash, 'ACTIVE' FROM user_account WHERE id = 1;
 INSERT INTO user_judge_quota_lock (user_id) VALUES (2);
 
+-- Original official read-only list ONLY in this isolated fixture; production migration seeds none.
+INSERT INTO official_problem_list(id,title,description) VALUES
+ ('00000000-0000-0000-0000-000000000101','原创入门练习','一次性验收题单');
+
 -- Original second problem ONLY for this empty disposable replay, no public release/review claim.
 -- Dataset manifest is ASCII "ordinal:inputSHA256:outputSHA256\n" in ordinal order.
 INSERT INTO problem (id, slug, title, statement_text, input_description, output_description,
@@ -40,3 +44,6 @@ INSERT INTO problem_test_case (id, judge_version_id, ordinal, input_data_gzip, e
  UNHEX('1f8b080000000000020ad335e402000de25ce903000000'),24,3,
  '8c2632dafa0b1b22ea9009cc14852c3a28b75352f9325f8434b366678d912833',
  'ee3aa64bb94a50845d5024cd4bd20202a4567aed5cd5328c0d97e9920775fc28');
+INSERT INTO official_problem_list_item(id,list_id,problem_id,position) VALUES
+ ('00000000-0000-0000-0000-000000000102','00000000-0000-0000-0000-000000000101',1,1),
+ ('00000000-0000-0000-0000-000000000103','00000000-0000-0000-0000-000000000101',100,2);

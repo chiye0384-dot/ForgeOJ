@@ -1,0 +1,11 @@
+{
+  "verifiedAt": "2026-10-03T06:42:02.6677890Z",
+  "daemonVerified": true,
+  "daemonVersion": "29.8.0",
+  "project": "forgeoj-e2e-20261003-110553-7ea77fa8",
+  "containers": 0,
+  "volumes": 0,
+  "networks": 0,
+  "managedSandboxes": 0,
+  "workerImages": 0
+}

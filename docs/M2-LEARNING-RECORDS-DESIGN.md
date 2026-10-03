@@ -1,6 +1,6 @@
 # M2 个人学习记录设计
 
-状态：`PLANNED`（2026-10-03）。本文件是下一实施单元的设计，不表示代码、迁移或门禁已经通过。完整 M2 仍为 `IN_PROGRESS`。实施顺序见 [剩余 M2 计划](M2-REMAINING-IMPLEMENTATION.md)。
+状态：学习记录单元 `VERIFIED`（2026-10-03），证据见 [验收](M2-LEARNING-RECORDS-VALIDATION.md)。完整 M2 仍为 `IN_PROGRESS`。实施顺序见 [剩余 M2 计划](M2-REMAINING-IMPLEMENTATION.md)。
 
 依据：[Requirements 6.1、6.2、6.6、8.2](ForgeOJ-Requirements.md)、[Roadmap M2](ForgeOJ-Roadmap.md)、D-018 私有题单、D-032 原生分页评估及 D-041 普通账号合约。本单元只完成个人私有题单、官方题单公开只读与本人进度、本人提交历史、服务端作答草稿和冲突提示。
 
@@ -30,7 +30,7 @@
 
 ## 2. 最小持久化方案
 
-实施时新增一份 append-only Flyway migration，编号取当时已有最新编号之后；本设计不预建或预占 V8，也不改写 V1–V7。生产迁移不写入官方题单或用户业务数据。
+实际实施追加 V8，V1–V7 不改。生产迁移不写入官方题单或用户业务数据，V7→V8 保留全部旧表事实的迁移测试已通过。
 
 | 新表 | 必要列与约束 |
 | --- | --- |
@@ -149,4 +149,4 @@ JSON 接口的 version/expectedVersion 限制到 JavaScript 安全整数范围�
 - SMTP 真实服务商投递、可靠邮件重试及后续 Redis 分布式支持分别验收；题单和草稿完成不能代替这些门禁。
 - M3 班级题、公开个人题单、排行榜、Redis/ES、管理员维护界面及新依赖不属于本单元。
 
-实施开始后才能把本文件对应单元提升为 IN_PROGRESS；代码存在后仍须完整证据才能 VERIFIED。即使本单元通过，题目内容、自测、题解与真实邮件投递等剩余事项未闭环前，完整 M2 仍保持 IN_PROGRESS。
+本单元固定 Linux、真实浏览器和审计已通过；题目内容、自测、题解与真实邮件投递等剩余事项未闭环前，完整 M2 仍保持 IN_PROGRESS。

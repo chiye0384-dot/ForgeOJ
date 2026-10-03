@@ -213,7 +213,57 @@ async function permissions() {
 if (process.argv[2] === 'matrix') await matrix()
 else if (process.argv[2] === 'permissions') await permissions()
 else if (process.argv[2] === 'library') await library()
-else throw new Error('Expected matrix, permissions or library')
+else if (process.argv[2] === 'learning') await learning()
+else throw new Error('Expected matrix, permissions, library or learning')
+
+async function learning() {
+  const owner=new Client(), other=new Client(), anonymous=new Client()
+  await owner.login(); await other.login('other-learner')
+  const official='00000000-0000-0000-0000-000000000101'
+  const publicList=await anonymous.request('/api/v1/official-problem-lists/'+official)
+  assert.equal(publicList.status,200)
+  assert.ok(!JSON.stringify(publicList.body).includes('completed'))
+  const created=await owner.request('/api/v1/me/problem-lists','POST',{title:'隔离学习验收'})
+  assert.equal(created.status,201)
+  const id=created.body.id, path='/api/v1/me/problem-lists/'+id
+  assert.equal((await owner.request(path+'/items','POST',{problemSlug:'sum-two-integers',expectedVersion:1})).status,200)
+  assert.equal((await owner.request(path+'/items','POST',{problemSlug:'larger-of-two-integers',expectedVersion:2})).status,200)
+  const detail=await owner.request(path)
+  assert.equal(detail.status,200);assert.equal(detail.body.list.completedCount,1)
+  assert.equal(detail.body.list.availableCount,2)
+  assert.equal((await other.request(path)).status,404)
+  assert.equal((await other.request(path,'PATCH',{title:'other',expectedVersion:3})).status,404)
+  const removed=await other.request(path+'?expectedVersion=3','DELETE')
+  assert.equal(removed.status,404)
+  assert.equal((await other.request(path+'/items','POST',{problemSlug:'sum-two-integers',expectedVersion:3})).status,404)
+  const itemIds=detail.body.items.map(i=>i.itemId).reverse()
+  assert.equal((await other.request(path+'/order','PUT',{itemIds,expectedVersion:3})).status,404)
+  assert.equal((await other.request(path+'/items/'+itemIds[0]+'?expectedVersion=3','DELETE')).status,404)
+  assert.equal((await owner.request(path+'/order','PUT',{itemIds,expectedVersion:3})).status,200)
+  assert.equal((await owner.request(path+'/order','PUT',{itemIds,expectedVersion:3})).status,409)
+  const listRace=await Promise.all(['one','two'].map(title=>owner.request(path,'PATCH',{title,expectedVersion:4})))
+  assert.deepEqual(listRace.map(r=>r.status).sort(),[200,409])
+  assert.equal((await owner.request(path,'PATCH',{title:'隔离学习验收',expectedVersion:5})).status,200)
+  const draftPath='/api/v1/me/problems/larger-of-two-integers/draft'
+  assert.equal((await owner.request(draftPath)).body.version,0)
+  const draftBody={language:'JAVA_21',sourceCode:'// E2E_DRAFT_SENTINEL incomplete original fixture',expectedVersion:0}
+  const first=await Promise.all([owner.request(draftPath,'PUT',draftBody),owner.request(draftPath,'PUT',draftBody)])
+  assert.deepEqual(first.map(r=>r.status).sort(),[200,409])
+  const second=await Promise.all([owner.request(draftPath,'PUT',{...draftBody,expectedVersion:1}),owner.request(draftPath,'PUT',{...draftBody,expectedVersion:1})])
+  assert.deepEqual(second.map(r=>r.status).sort(),[200,409])
+  assert.equal((await other.request(draftPath)).body.version,0)
+  const history=await owner.request('/api/v1/me/submissions?size=2')
+  assert.equal(history.status,200);assert.equal(history.body.total,9)
+  const row=history.body.items[0]
+  assert.deepEqual(Object.keys(row).sort(),['createdAt','judgeVersion','language','problem','processingStatus','statusVersion','submissionId','verdict'])
+  const ownOfficial=await owner.request('/api/v1/me/official-problem-lists/'+official)
+  assert.equal(ownOfficial.status,200);assert.equal(ownOfficial.body.list.completedCount,1)
+  await writeFile('/reports/learning.json',JSON.stringify({verifiedAt:new Date().toISOString(),listId:id,
+    officialListId:official,ownerDenied:true,draftRace:[200,409],existingDraftRace:[200,409],
+    listRace:[200,409],currentAcProgress:1,available:2,historyTotal:9,
+    publicPersonalFactsAbsent:true,historyExactFields:true},null,2))
+  console.log('E2E_LEARNING_HTTP_VERIFIED')
+}
 
 async function library() {
   const client = new Client()

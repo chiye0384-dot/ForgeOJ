@@ -1,0 +1,20 @@
+[
+  {
+    "role": "forgeoj_worker",
+    "operation": "SELECT id FROM authored_problem_draft LIMIT 0;",
+    "expectedError": "ERROR 1142",
+    "denied": true
+  },
+  {
+    "role": "forgeoj_worker",
+    "operation": "SELECT draft_id FROM authored_problem_test_case LIMIT 0;",
+    "expectedError": "ERROR 1142",
+    "denied": true
+  },
+  {
+    "role": "forgeoj_api",
+    "operation": "UPDATE authored_problem_draft SET owner_id=owner_id WHERE 1=0;",
+    "expectedError": "ERROR 1143",
+    "denied": true
+  }
+]

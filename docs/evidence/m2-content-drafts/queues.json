@@ -1,0 +1,6 @@
+[
+{"name":"forgeoj.judge.retry.v1","messages_unacknowledged":0,"messages_ready":0}
+,{"name":"forgeoj.judge.self-test.v1","messages_unacknowledged":0,"messages_ready":0}
+,{"name":"forgeoj.judge.submission.dead.v1","messages_unacknowledged":0,"messages_ready":0}
+,{"name":"forgeoj.judge.submission.v1","messages_unacknowledged":0,"messages_ready":0}
+]

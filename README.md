@@ -12,6 +12,8 @@ ForgeOJ 是一个面向 Java 学习者和小型教学班级的在线判题平台
 
 ## 当前工程基线
 
+2026-10-03 已继续验收[个人学习记录](docs/M2-LEARNING-RECORDS-VALIDATION.md)和[作者内容草稿阶段](docs/M2-CONTENT-VALIDATION.md)：`/learning` 支持本人题单/进度/草稿/历史，`/authoring` 支持私有内容/独立参考与题解代码/逐条与 ZIP 测试/归档。最新固定 Linux 后端 261、前端 39 及实际浏览器/审计清理通过；作者代码保存尚不等于正式验证或发布，完整内容生命周期、自测、题解解锁和真实 SMTP 仍待完成。
+
 - JDK 21 + Spring Boot 4.1.1 + Maven Wrapper 3.3.4 / Maven 3.9.14；
 - Maven 根聚合工程，包含独立的 `forgeoj-api` 和 `forgeoj-judge-worker` 可执行模块；
 - 持久层使用官方 `mybatis-spring-boot-starter:4.1.0`，不使用 MyBatis-Plus；

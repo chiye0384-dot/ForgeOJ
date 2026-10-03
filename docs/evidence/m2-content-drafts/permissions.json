@@ -1,0 +1,13 @@
+{
+  "submissionId": "79734979-5708-459a-9382-25ea5e6de0da",
+  "anonymous": 401,
+  "otherOwner": 404,
+  "missing": 404,
+  "crossOrigin": 403,
+  "logoutClose": 1008,
+  "cancelled": {
+    "submissionId": "79734979-5708-459a-9382-25ea5e6de0da",
+    "processingStatus": "CANCELLED",
+    "statusVersion": 1
+  }
+}

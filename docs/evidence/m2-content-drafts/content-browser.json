@@ -1,0 +1,29 @@
+{
+  "created": true,
+  "independentCodesSaved": true,
+  "zipImport": {
+    "pairs": 2,
+    "version": 3,
+    "localEditorPreserved": true,
+    "numericOrder": true
+  },
+  "invalidZip": {
+    "httpStatus": 400,
+    "versionUnchanged": true,
+    "originalPairsPreserved": true
+  },
+  "staleSaveConflictVisible": true,
+  "localContentPreservedOnConflict": true,
+  "explicitServerReload": true,
+  "manualTestAdded": true,
+  "archived": {
+    "version": 5,
+    "pairs": 3,
+    "readOnly": true
+  },
+  "screenshots": [
+    "content-zip-import.png",
+    "content-conflict.png",
+    "content-archived.png"
+  ]
+}

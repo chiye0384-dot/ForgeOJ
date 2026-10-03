@@ -59,6 +59,8 @@ M2 普通账号单元（`VERIFIED`）的自有部分是 V6 账号/会话/摘要�
 
 同日学习记录单元自有实现为 V8 五表和列授权、题单 owner/CAS/排序事务、当前版本 AC 的 EXISTS/批量统计、安全历史 DTO、草稿 CAS 与前端冲突/代次管理，以及真实 DB/HTTP/迁移/前端测试。继续复用既有 MyBatis/Spring/MySQL/Vue，没有新增依赖或第三方题单内容；API 不获得 Docker，Worker 不获得学习表或账号读取权限。单元 VERIFIED，固定 Linux 241/35、真实浏览器与独立审计清理见 [记录](M2-LEARNING-RECORDS-VALIDATION.md)。
 
+作者草稿阶段的自有部分为 V9 owner/CAS 与归档、独立参考/题解字段、测试压缩和摘要、JDK ZIP 有界解析/CRC/UTF-8/路径限制、请求体限制、作者编辑器及权限/迁移/竞争/回滚测试。复用既有 JDK/Spring/MyBatis/Vue，无新增依赖、外部代码或题库素材；阶段 VERIFIED，固定 Linux 261/39、真实浏览器/审计/清理见 [记录](M2-CONTENT-VALIDATION.md)。不把保存参考程序和题解代码表述为已经正式沙箱验证或发布。
+
 同日 SMTP 适配的自有部分是模式选择、配置/地址/链接/TLS/超时约束与 loopback 协议测试。MIME 和 SMTP/TLS 客户端由 Spring Mail/Jakarta Mail/Angus 提供，证书/密钥在测试临时目录动态生成，不修改生产信任。普通账号阶段的“无 SMTP adapter”是当时的历史事实；本轮适配/题库单元 VERIFIED，固定 Linux 229/24 和实际选题 AC 见 [验收](M2-LIBRARY-SMTP-VALIDATION.md)。真实服务商投递仍未验收，依赖与许可见 U-010/[构件事实](evidence/m2-library/smtp-dependencies.md)，整体 M2 仍 IN_PROGRESS。
 
 ## 4. 明确排除

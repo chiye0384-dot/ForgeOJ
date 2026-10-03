@@ -75,3 +75,5 @@ M2 普通账号单元（`VERIFIED`）的自有部分是 V6 账号/会话/摘要�
 池也拥有版权并有权许可的 ForgeOJ 自有源代码采用 Apache License 2.0，版权声明为 `Copyright 2026 池也`，见根 `LICENSE` 与 `NOTICE`。
 
 这个根许可证不改变归属边界：Spring Initializr/create-vue 生成文件、Maven Wrapper、本仓库保留的其他上游代码以及 Maven/npm 依赖继续遵循各自许可证；题目、题解、测试数据和用户提交内容也不会自动改用 Apache-2.0。来源、修改点和发布义务继续记录在 `THIRD_PARTY_NOTICES.md`、`licenses/` 与直接依赖清单中。
+
+2026-10-03 题解访问单元 VERIFIED 的自有部分为 V10 独立快照/私有首次查看、当前版本本人 AC 与严格确认授权、会话复核/锁/幂等、页面文本/乱序与实际权限/迁移/竞争测试。固定 Linux 269/45 与真实浏览器证据见 [验收](M2-SOLUTION-ACCESS-VALIDATION.md)；复用既有 Spring/MyBatis/Vue/Testcontainers，无新增依赖或外部源码。新 DirectMySQLContainer 是两个模块的 test-only 构建诊断适配，运行 JAR 均无它，不将 Docker/Maven/Testcontainers 底层能力表述为自建。完整内容验证/发布与 M2 未完成。

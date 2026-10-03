@@ -15,6 +15,7 @@ import {
 } from '@/services/forgeojApi'
 import { monitorSubmission } from '@/services/submissionMonitor'
 import { useCodeDraft } from '@/composables/useCodeDraft'
+import OfficialSolution from '@/components/OfficialSolution.vue'
 
 const props = withDefaults(defineProps<{ slug?: string }>(), { slug: 'sum-two-integers' })
 
@@ -288,6 +289,14 @@ onBeforeUnmount(() => {
           {{ problem.resourceLimits.memoryLimitMb }} MB · 输出上限
           {{ problem.resourceLimits.outputLimitBytes }} bytes
         </p>
+        <OfficialSolution
+          v-if="session?.user"
+          :slug="problem.slug"
+          :judge-version="problem.judgeVersion"
+          :user-id="session.user.id"
+          :csrf="session.csrf"
+          :refresh-key="submission?.processingStatus === 'FINISHED' ? submission.statusVersion : 0"
+        />
       </article>
 
       <section class="card submission-card">

@@ -1,0 +1,12 @@
+{
+  "verifiedAt": "2026-10-03T13:41:19.3291997Z",
+  "daemonVerified": true,
+  "dockerServer": "29.8.0",
+  "project": "forgeoj-e2e-20261003-212227-d3049408",
+  "ownedContainers": 0,
+  "ownedVolumes": 0,
+  "ownedNetworks": 0,
+  "ownedImages": 0,
+  "managedSandboxes": 0,
+  "preciseOwnedCleanup": true
+}

@@ -75,7 +75,7 @@ class OutboxPublisherIntegrationTests {
 
     @Container
     static final MySQLContainer MYSQL =
-            new MySQLContainer(
+            new com.forgeoj.api.testinfra.DirectMySQLContainer(
                             DockerImageName.parse(MYSQL_IMAGE)
                                     .asCompatibleSubstituteFor("mysql"))
                     .withDatabaseName("forgeoj")

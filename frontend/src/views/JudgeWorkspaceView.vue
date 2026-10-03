@@ -14,6 +14,7 @@ import {
   type SubmissionStatusResponse,
 } from '@/services/forgeojApi'
 import { monitorSubmission } from '@/services/submissionMonitor'
+import { useCodeDraft } from '@/composables/useCodeDraft'
 
 const props = withDefaults(defineProps<{ slug?: string }>(), { slug: 'sum-two-integers' })
 
@@ -37,6 +38,7 @@ public class Main {
     }
 }`
 const sourceCode = ref(initialSourceCode)
+const draft = useCodeDraft(props.slug, sourceCode)
 
 const session = ref<SessionResponse | null>(null)
 const problem = ref<ProblemResponse | null>(null)
@@ -75,11 +77,13 @@ async function loadProblem(operation: number): Promise<void> {
   if (!isCurrent(operation)) return
   if (loaded.slug !== props.slug) throw new Error('题目读取失败，请重新读取。')
   problem.value = loaded
+  if (session.value?.authenticated) await draft.load(session.value.csrf)
 }
 
 async function initialize(): Promise<void> {
   const operation = ++generation
   stopMonitoring()
+  draft.reset()
   problem.value = null
   submission.value = null
   loading.value = true
@@ -87,6 +91,7 @@ async function initialize(): Promise<void> {
   try {
     const nextSession = await restoreSession()
     if (!isCurrent(operation)) return
+    if (session.value?.user?.id !== nextSession.user?.id) sourceCode.value = initialSourceCode
     session.value = nextSession
     if (nextSession.authenticated) {
       await loadProblem(operation)
@@ -111,6 +116,7 @@ async function handleLogin(): Promise<void> {
     if (!isCurrent(operation)) return
     session.value = nextSession
     password.value = ''
+    sourceCode.value = initialSourceCode
     await loadProblem(operation)
   } catch (error) {
     if (isCurrent(operation)) errorMessage.value = toMessage(error)
@@ -130,6 +136,7 @@ async function handleLogout(): Promise<void> {
   stopMonitoring()
   problem.value = null
   submission.value = null
+  draft.reset()
   sourceCode.value = initialSourceCode
   username.value = ''
   password.value = ''
@@ -293,7 +300,13 @@ onBeforeUnmount(() => {
         </div>
 
         <form data-testid="submission-form" class="form-stack" @submit.prevent="handleSubmit">
-          <p class="muted">代码尚未自动保存，退出或离开前请自行保存。</p>
+          <p class="muted" data-testid="draft-status">{{ draft.message.value }}</p>
+          <div v-if="draft.conflict.value" class="draft-conflict" role="alert">
+            <button type="button" @click="draft.useServer">载入服务端草稿</button>
+            <button type="button" @click="draft.keepLocal">保留本页代码</button>
+            <button type="button" @click="draft.saveLocal">保存本页版本</button>
+          </div>
+          <button v-else type="button" @click="draft.retry">重试草稿读取或保存</button>
           <label>
             Main.java
             <textarea
@@ -308,6 +321,12 @@ onBeforeUnmount(() => {
             {{ submitting ? '提交中……' : '提交并判题' }}
           </button>
         </form>
+        <p>
+          <a :href="`/learning?tab=history&problemSlug=${encodeURIComponent(props.slug)}`"
+            >查看本人提交历史</a
+          >
+          · <a href="/learning">管理题单与进度</a>
+        </p>
 
         <section v-if="submission" class="result-card">
           <p class="eyebrow">提交 {{ submission.submissionId }}</p>

@@ -7,6 +7,8 @@
 
 ## 1. 准入规则
 
+2026-10-03 个人学习记录单元 VERIFIED：固定 Linux 后端 241 / 前端 35、真实两页草稿冲突、正常/兜底 AC、题单进度与本人历史、提交快照独立性及审计清理见 [验收](M2-LEARNING-RECORDS-VALIDATION.md)。没有性能、发布或真实 SMTP 投递证据，完整 M2 与简历准入状态保持原边界。
+
 2026-10-03 新增公开题库与 SMTP 适配单元 VERIFIED：固定 Linux 后端 229 / 前端 24、实际选题与轮询到 AC、独立审计和精确清理见 [验收](M2-LIBRARY-SMTP-VALIDATION.md)。SMTP 仅本地 TLS 协议通过，真实投递未验收；完整 M2 与下面简历准入状态均不因此提升。
 
 一条能力只有同时满足以下条件，状态才能从 `PLANNED` 更新为 `RESUME_READY`：

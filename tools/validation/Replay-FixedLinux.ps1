@@ -2,7 +2,7 @@
 # SPDX-License-Identifier: Apache-2.0
 [CmdletBinding()]
 param(
-    [ValidateSet('Start','Status','Matrix','Library','WorkerStart','WorkerStop','Permissions','Audit','Stop')]
+    [ValidateSet('Start','Status','Matrix','Library','Learning','WorkerStart','WorkerStop','Permissions','Audit','Stop')]
     [string]$Action = 'Start',
     [string]$RunDirectory,
     [ValidatePattern('^$|^[a-f0-9-]{36}$')]
@@ -91,6 +91,7 @@ switch ($Action) {
     }
     'Matrix' { Compose-Checked @('exec','-T','frontend','node','/source/tools/validation/replay-probe.mjs','matrix') }
     'Library' { Compose-Checked @('exec','-T','frontend','node','/source/tools/validation/replay-probe.mjs','library') }
+    'Learning' { Compose-Checked @('exec','-T','frontend','node','/source/tools/validation/replay-probe.mjs','learning') }
     'Permissions' { Compose-Checked (@('exec','-T','frontend','node','/source/tools/validation/replay-probe.mjs','permissions') + $(if($SubmissionId) { @($SubmissionId) } else { @() })) }
     'WorkerStop' { Compose-Checked @('stop','-t','10','worker') }
     'WorkerStart' { Compose-Checked @('up','--detach','worker') }
@@ -134,6 +135,10 @@ SELECT JSON_OBJECT('outboxEventId',id,'judgeTaskId',aggregate_id,'published',pub
             @('forgeoj_api','FORGEOJ_API_DB_PASSWORD','SELECT id FROM judge_task_attempt LIMIT 0;'),
             @('forgeoj_worker','FORGEOJ_WORKER_DB_PASSWORD','SELECT id FROM user_account LIMIT 0;'),
             @('forgeoj_worker','FORGEOJ_WORKER_DB_PASSWORD','SELECT problem_id FROM problem_tag LIMIT 0;'),
+            @('forgeoj_worker','FORGEOJ_WORKER_DB_PASSWORD','SELECT user_id FROM user_code_draft LIMIT 0;'),
+            @('forgeoj_worker','FORGEOJ_WORKER_DB_PASSWORD','SELECT id FROM personal_problem_list LIMIT 0;'),
+            @('forgeoj_api','FORGEOJ_API_DB_PASSWORD','DELETE FROM official_problem_list WHERE 1 = 0;'),
+            @('forgeoj_api','FORGEOJ_API_DB_PASSWORD','UPDATE personal_problem_list SET owner_id=owner_id WHERE 1 = 0;'),
             @('forgeoj_api','FORGEOJ_API_DB_PASSWORD','DELETE FROM problem_tag WHERE 1 = 0;'),
             @('forgeoj_api','FORGEOJ_API_DB_PASSWORD','UPDATE problem SET difficulty = difficulty WHERE 1 = 0;')
         )
@@ -141,7 +146,8 @@ SELECT JSON_OBJECT('outboxEventId',id,'judgeTaskId',aggregate_id,'published',pub
             # Inputs are the fixed roles/queries above, not user-controlled shell text.
             $command = 'exec mysql -h127.0.0.1 -u' + $denial[0] + ' --password="$' + $denial[1] + '" forgeoj'
             $result = $denial[2] | & $DockerCommand compose --project-name $state.Project -f $composeFile exec -T mysql sh -c $command 2>&1
-            if ($LASTEXITCODE -eq 0 -or "$result" -notmatch 'ERROR 1142') { throw 'Expected database privilege denial missing' }
+            $expectedError = if ($denial[2] -eq 'UPDATE personal_problem_list SET owner_id=owner_id WHERE 1 = 0;') { 'ERROR 1143' } else { 'ERROR 1142' }
+            if ($LASTEXITCODE -eq 0 -or "$result" -notmatch $expectedError) { throw 'Expected database privilege denial missing' }
         }
         if (Docker-Checked @('ps','-aq','--filter','label=com.forgeoj.managed=true')) { throw 'Managed sandbox residue remains' }
         Write-Host 'API has no Docker/Worker/migrator configuration or socket mount.'

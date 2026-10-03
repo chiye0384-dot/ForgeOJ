@@ -1,6 +1,6 @@
 # ForgeOJ
 
-> 当前状态：`M-1：项目准备`、`M0：最小判题纵向切片` 和 `M1：可靠异步判题` 均为 `VERIFIED`。M0 通过 20 项门禁；M1 于 2026-10-02 通过 [15 项最终门禁审计](docs/M1-GATE-AUDIT.md)。M2 [普通账号](docs/M2-ACCOUNTS-VALIDATION.md)及[公开题库/SMTP 适配](docs/M2-LIBRARY-SMTP-VALIDATION.md)单元 VERIFIED，完整 M2 保持 `IN_PROGRESS`；学习记录、题目内容、自测、题解与真实邮件投递尚待完成，M3～M5 为 `PLANNED`，尚未发布。
+> 当前状态：`M-1：项目准备`、`M0：最小判题纵向切片` 和 `M1：可靠异步判题` 均为 `VERIFIED`。M0 通过 20 项门禁；M1 于 2026-10-02 通过 [15 项最终门禁审计](docs/M1-GATE-AUDIT.md)。M2 [普通账号](docs/M2-ACCOUNTS-VALIDATION.md)、[公开题库/SMTP 适配](docs/M2-LIBRARY-SMTP-VALIDATION.md)及[学习记录](docs/M2-LEARNING-RECORDS-VALIDATION.md)单元 VERIFIED，完整 M2 保持 `IN_PROGRESS`；题目内容、自测、题解与真实邮件投递尚待完成，M3～M5 为 `PLANNED`，尚未发布。
 >
 > 需求基线：2026-09-24；工程基线：2026-09-28
 
@@ -96,6 +96,7 @@ npm run verify
 - [决策日志](docs/ForgeOJ-Decision-Log.md)
 - [M2 剩余功能实施顺序](docs/M2-REMAINING-IMPLEMENTATION.md)
 - [M2 题库与 SMTP 适配验收](docs/M2-LIBRARY-SMTP-VALIDATION.md)
+- [M2 学习记录验收](docs/M2-LEARNING-RECORDS-VALIDATION.md)
 - [M2 个人学习记录设计（尚待实施）](docs/M2-LEARNING-RECORDS-DESIGN.md)
 - [版本路线图](docs/ForgeOJ-Roadmap.md)
 - [M0 最小判题纵向切片设计](docs/M0-VERTICAL-SLICE-DESIGN.md)

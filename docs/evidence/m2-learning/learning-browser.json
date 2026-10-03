@@ -1,0 +1,34 @@
+{
+  "draftConflictVisible": true,
+  "keepLocalPaused": true,
+  "explicitLocalCasSaved": true,
+  "loadServerReplacedWithPageB": true,
+  "personalProgress": {
+    "completed": 2,
+    "available": 2
+  },
+  "officialProgress": {
+    "completed": 2,
+    "available": 2
+  },
+  "historyRows": 11,
+  "historyDetailAc": true,
+  "browserList": {
+    "created": true,
+    "renamed": true,
+    "added": 2,
+    "reordered": true,
+    "removed": 1,
+    "remainingCompleted": 1
+  },
+  "screenshots": [
+    "draft-conflict.png",
+    "draft-server-loaded.png",
+    "learning-selected-ac.png",
+    "learning-fallback-ac.png",
+    "learning-personal-progress.png",
+    "learning-official-progress.png",
+    "learning-history.png",
+    "learning-browser-list.png"
+  ]
+}

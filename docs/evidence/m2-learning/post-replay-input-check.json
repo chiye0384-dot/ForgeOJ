@@ -1,0 +1,15 @@
+{
+  "verifiedAt": "2026-10-03T06:42:35.9052060Z",
+  "inputs": 217,
+  "businessInputs": 204,
+  "businessAllMatch": true,
+  "unchangedInputs": 216,
+  "differences": [
+    {
+      "path": "tools/validation/Replay-FixedLinux.ps1",
+      "builtSha256": "44ecf1a03a0704c0805a34d261c70a066ddd8b908174c1116fdac9a4c1ce0d24",
+      "currentSha256": "e0982d0366f7f30d9e1059ee253005445c5075bec2d4b5ccb47e1f2816dc8e7e"
+    }
+  ],
+  "reason": "Replay-only exact MySQL 1143 column-denial assertion; no application/test/build input changed; actual Audit/Stop rerun passed"
+}

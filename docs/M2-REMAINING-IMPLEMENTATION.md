@@ -34,4 +34,6 @@
 
 ## 3. 当前状态
 
-普通账号及公开题库/SMTP 适配单元已 `VERIFIED`，后者固定 Linux 后端 229/前端 24 与真实选题 AC、独立审计及精确清理见 [验收记录](M2-LIBRARY-SMTP-VALIDATION.md)。下一单元按 [学习记录设计](M2-LEARNING-RECORDS-DESIGN.md) 实现个人题单、官方题单只读、当前版本 AC 进度、草稿和历史；题目内容、自测、题解等仍待实现。测试 fixture 只用于可丢弃数据库，不向真实题库发布内容。真实 SMTP 尚未配置或投递；适配通过不能替代服务商验收。无 PR、main 合并、tag 或 Release。
+学习记录单元现已 VERIFIED，固定 Linux 后端 241 / 前端全门禁 35、真实两页草稿冲突、正常与兜底 AC、个人/官方进度、历史、页面题单操作、提交快照独立性及审计清理通过，见 [记录](M2-LEARNING-RECORDS-VALIDATION.md)。API/Worker、普通账号和当前判题契约继续保持原边界。
+
+普通账号及公开题库/SMTP 适配单元已 `VERIFIED`，后者固定 Linux 后端 229/前端 24 与真实选题 AC、独立审计及精确清理见 [验收记录](M2-LIBRARY-SMTP-VALIDATION.md)。下一单元为题目内容、私有参考程序与不可变送审版本，随后自测与题解；已完成的学习合约见 [设计](M2-LEARNING-RECORDS-DESIGN.md)。测试 fixture 只用于可丢弃数据库，不向真实题库发布内容。真实 SMTP 尚未配置或投递；适配通过不能替代服务商验收。无 PR、main 合并、tag 或 Release。

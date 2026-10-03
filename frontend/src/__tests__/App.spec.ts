@@ -108,7 +108,17 @@ describe('M0 judge workspace', () => {
       jsonResponse({}, 401),
     )
     const fetchMock = vi.fn<(input: RequestInfo | URL, init?: RequestInit) => Promise<Response>>(
-      async () => {
+      async (input, init) => {
+        if (String(input).endsWith('/draft')) {
+          const body = init?.body ? (JSON.parse(String(init.body)) as { sourceCode: string }) : null
+          return jsonResponse({
+            language: 'JAVA_21',
+            sourceCode: body?.sourceCode ?? null,
+            version: body ? 1 : 0,
+            updatedAt: null,
+            editable: true,
+          })
+        }
         const response = responses.shift()
         if (!response) {
           throw new Error('Unexpected fetch call')
@@ -150,7 +160,7 @@ describe('M0 judge workspace', () => {
     expect(host.textContent).toContain('AC')
     expect(host.textContent).toContain('状态版本：2')
     expect(host.textContent).not.toContain('must-never-be-rendered')
-    expect(fetchMock).toHaveBeenCalledTimes(8)
+    expect(fetchMock).toHaveBeenCalledTimes(10)
     expect(vi.getTimerCount()).toBe(0)
 
     expect(fetchMock).toHaveBeenNthCalledWith(
@@ -162,7 +172,7 @@ describe('M0 judge workspace', () => {
       }),
     )
     expect(fetchMock).toHaveBeenNthCalledWith(
-      6,
+      7,
       '/api/v1/problems/sum-two-integers/submissions',
       expect.objectContaining({
         method: 'POST',

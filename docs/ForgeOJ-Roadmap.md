@@ -163,6 +163,8 @@ M0 的登录只用于打通受保护提交链路，可使用预置账号和最�
 
 目标：完成普通学习者可用的核心产品。
 
+作者内容草稿阶段已 VERIFIED：V9 私有作者表、owner/CAS、逐条/ZIP 导入、独立参考和题解代码及草稿归档，固定 Linux 后端 261 / 前端 39、实际浏览器与独立审计清理见 [验收](M2-CONTENT-VALIDATION.md)。完整内容仍 IN_PROGRESS，下一步是正式沙箱验证、不可变送审/撤回和生成输出预览；自测/题解解锁/真实 SMTP 仍待完成。
+
 2026-10-03 用户要求接续剩余 M2，实施顺序见 [剩余功能计划](M2-REMAINING-IMPLEMENTATION.md)。题库列表/筛选/分页/实际选题与 SMTP 配置适配单元已 VERIFIED，固定 Linux 后端 229 / 前端 24、真实选题 AC 和审计清理见 [验收](M2-LIBRARY-SMTP-VALIDATION.md)。个人学习记录单元也已 VERIFIED，固定 Linux 后端 241 / 前端 35、真实两页草稿冲突和 AC/进度/历史/题单操作、独立审计清理见 [验收](M2-LEARNING-RECORDS-VALIDATION.md)。下一单元为题目内容/审核版本，随后自测与题解。SMTP 本地 TLS 协议不能替代真实服务商投递，完整 M2 继续 IN_PROGRESS。
 
 当前状态：完整 M2 为 `IN_PROGRESS`（2026-10-02）。用户已确认首个普通账号单元的全部推荐方案，实施分支为 `feat/m2-accounts`，验收基于 M1 `d38e2c9` HEAD 的工作树快照；详细边界见 D-041 与 [普通账号设计](M2-ACCOUNTS-DESIGN.md)。注册/激活、JWT 与 MySQL 独立会话、刷新/撤销、改密/找回/补邮箱及 M1 通知兼容的账号单元已 `VERIFIED`：固定 Linux 后端 211 / 前端 13 项、相同产物的真实注册到 AC 与旧账号轮询兜底、完整独立审计和精确清理通过，见 [账号验收](M2-ACCOUNTS-VALIDATION.md)。题库、题单、草稿、自测、历史等下列剩余能力尚未完成，整个里程碑不提升为 `VERIFIED`。

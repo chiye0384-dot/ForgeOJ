@@ -13,6 +13,7 @@ import { RouterLink, RouterView } from 'vue-router'
       <nav aria-label="主导航">
         <RouterLink to="/problems">题库</RouterLink>
         <RouterLink to="/learning">学习记录</RouterLink>
+        <RouterLink to="/authoring">我的题目</RouterLink>
         <RouterLink to="/">做题</RouterLink>
         <RouterLink to="/account">账号</RouterLink>
       </nav>

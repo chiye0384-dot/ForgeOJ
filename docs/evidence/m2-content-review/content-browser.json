@@ -1,0 +1,43 @@
+{
+  "newExecutionDisabledWhenArchived": true,
+  "crashVerified": false,
+  "draftId": "ce96b247-7940-41df-ac45-eb9e53b790d7",
+  "archivedHistoryVisible": true,
+  "newWorkerKillReplayPerformed": false,
+  "visibleVersionInvalidation": true,
+  "verifiedAt": "2026-10-04T10:17:31.4074135Z",
+  "archivedVersion": 6,
+  "observedInActualBrowser": true,
+  "jobs": [
+    {
+      "jobId": "02e4728c-8f43-4852-ba2e-e5a0310e42a2",
+      "draftId": "ce96b247-7940-41df-ac45-eb9e53b790d7",
+      "recovered": false,
+      "requestId": "7fa0e22b-70ab-43b9-b729-c51fbf42cf95",
+      "draftVersion": 3,
+      "solutionResult": "WRONG_ANSWER",
+      "referenceResult": "ACCEPTED",
+      "validationStatus": "FAILED"
+    },
+    {
+      "jobId": "af091b4d-5bc1-457c-818f-c3759b1daabb",
+      "draftId": "ce96b247-7940-41df-ac45-eb9e53b790d7",
+      "recovered": false,
+      "requestId": "cfe0f149-dd92-43d0-ab81-19f47ef2200d",
+      "draftVersion": 4,
+      "solutionResult": "ACCEPTED",
+      "referenceResult": "ACCEPTED",
+      "validationStatus": "PASSED"
+    },
+    {
+      "jobId": "9bb4bcd6-78d9-4c39-bf19-7d566605833d",
+      "draftId": "ce96b247-7940-41df-ac45-eb9e53b790d7",
+      "recovered": false,
+      "requestId": "071d98b8-cb98-4a5e-bdab-026092890485",
+      "draftVersion": 5,
+      "solutionResult": "ACCEPTED",
+      "referenceResult": "ACCEPTED",
+      "validationStatus": "PASSED"
+    }
+  ]
+}

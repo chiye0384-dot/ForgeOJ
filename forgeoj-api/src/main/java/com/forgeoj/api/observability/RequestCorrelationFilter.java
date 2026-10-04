@@ -64,6 +64,8 @@ public class RequestCorrelationFilter extends OncePerRequestFilter {
         }
         if (path.startsWith("/api/v1/me/authored-problems/") && path.contains("/validations"))
             return path.endsWith("/validations") ? "content.validation" : "content.validation.get";
+        if (path.startsWith("/api/v1/me/authored-problems/") && path.contains("/reviews"))
+            return path.endsWith("/withdraw") ? "content.review.withdraw" : "content.review";
         if (path.startsWith("/api/v1/auth/")) return "auth";
         return "other";
     }

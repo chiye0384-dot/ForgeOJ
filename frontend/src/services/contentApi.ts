@@ -23,7 +23,7 @@ export interface AuthoredSummary {
   id: string
   title: string
   version: number
-  status: 'DRAFT' | 'ARCHIVED'
+  status: 'DRAFT' | 'UNDER_REVIEW' | 'ARCHIVED'
   testCount: number
 }
 export interface AuthoredDetail {

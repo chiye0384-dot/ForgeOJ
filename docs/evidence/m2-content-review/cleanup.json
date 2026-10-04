@@ -1,0 +1,19 @@
+{
+  "project": "forgeoj-e2e-20261004-180055-e991fd13",
+  "allZero": true,
+  "counts": {
+    "ownedContainers": 0,
+    "ownedVolumes": 0,
+    "ownedNetworks": 0,
+    "ownedWorkerImages": 0,
+    "managedSandboxes": 0,
+    "testcontainers": 0,
+    "ownedBuilders": 0,
+    "ownedBuildImages": 0
+  },
+  "verifiedAt": "2026-10-04T10:21:33.7403507Z",
+  "dockerServerVersion": "29.8.0",
+  "unrelatedResourcesRemoved": false,
+  "ownedBrowserTabsClosed": true,
+  "buildImageChecked": "forgeoj-linux-20261004-173714-5aba44b0-backend-image"
+}

@@ -2,7 +2,7 @@
 # SPDX-License-Identifier: Apache-2.0
 [CmdletBinding()]
 param(
-    [ValidateSet('Start','Status','Matrix','Library','Learning','Content','WorkerStart','WorkerStop','Permissions','Audit','Stop')]
+    [ValidateSet('Start','Status','Matrix','Library','Learning','Content','ReviewLock','Review','WorkerStart','WorkerStop','Permissions','Audit','Stop')]
     [string]$Action = 'Start',
     [string]$RunDirectory,
     [ValidatePattern('^$|^[a-f0-9-]{36}$')]
@@ -93,6 +93,8 @@ switch ($Action) {
     'Library' { Compose-Checked @('exec','-T','frontend','node','/source/tools/validation/replay-probe.mjs','library') }
     'Learning' { Compose-Checked @('exec','-T','frontend','node','/source/tools/validation/replay-probe.mjs','learning') }
     'Content' { Compose-Checked @('exec','-T','frontend','node','/source/tools/validation/replay-probe.mjs','content') }
+    'ReviewLock' { Compose-Checked @('exec','-T','frontend','node','/source/tools/validation/replay-probe.mjs','review-lock') }
+    'Review' { Compose-Checked @('exec','-T','frontend','node','/source/tools/validation/replay-probe.mjs','review') }
     'Permissions' { Compose-Checked (@('exec','-T','frontend','node','/source/tools/validation/replay-probe.mjs','permissions') + $(if($SubmissionId) { @($SubmissionId) } else { @() })) }
     'WorkerStop' { Compose-Checked @('stop','-t','10','worker') }
     'WorkerStart' { Compose-Checked @('up','--detach','worker') }
@@ -137,6 +139,18 @@ SELECT JSON_OBJECT('outboxEventId',id,'jobId',aggregate_id,'eventType',event_typ
  FROM outbox_event WHERE aggregate_type='CONTENT_VALIDATION' ORDER BY aggregate_id,sequence_no;
 '@
         $contentOutbox | Set-Content -LiteralPath (Join-Path $RunDirectory 'content-outbox.jsonl') -Encoding utf8
+        $reviews = Sql-Fixture @'
+SELECT JSON_OBJECT('reviewId',r.id,'draftId',r.draft_id,'draftVersion',r.draft_version,'reviewNo',r.review_no,
+ 'validationJobId',r.validation_job_id,'status',r.review_status,'version',r.version,
+ 'withdrawn',r.withdrawn_at IS NOT NULL,'active',r.active_draft_id IS NOT NULL,
+ 'passedBinding',j.snapshot_id=r.snapshot_id AND j.owner_id=r.owner_id AND j.processing_status='FINISHED'
+    AND j.validation_status='PASSED' AND j.reference_result='ACCEPTED' AND j.solution_result='ACCEPTED'
+    AND s.draft_id=r.draft_id AND s.owner_id=r.owner_id AND s.draft_version=r.draft_version,
+ 'frozenStatementSha256',SHA2(JSON_UNQUOTE(JSON_EXTRACT(s.metadata_text,'$.statement')),256))
+ FROM content_review r JOIN content_validation_job j ON j.id=r.validation_job_id
+ JOIN content_validation_snapshot s ON s.id=r.snapshot_id ORDER BY r.review_no;
+'@
+        $reviews | Set-Content -LiteralPath (Join-Path $RunDirectory 'review-database.jsonl') -Encoding utf8
         if ((Sql-Fixture "SELECT COUNT(*) FROM outbox_event WHERE aggregate_type NOT IN ('JUDGE_TASK','CONTENT_VALIDATION');").Trim() -ne '0') { throw 'Unknown Outbox aggregate is not audited' }
         $queues = Compose-Checked @('exec','-T','rabbitmq','rabbitmqctl','--quiet','list_queues','-p','/forgeoj','name','messages_ready','messages_unacknowledged','--formatter','json')
         $queues | Set-Content -LiteralPath (Join-Path $RunDirectory 'queues.json') -Encoding utf8
@@ -167,13 +181,18 @@ SELECT JSON_OBJECT('outboxEventId',id,'jobId',aggregate_id,'eventType',event_typ
             @('forgeoj_api','FORGEOJ_API_DB_PASSWORD','DELETE FROM official_problem_list WHERE 1 = 0;'),
             @('forgeoj_api','FORGEOJ_API_DB_PASSWORD','UPDATE personal_problem_list SET owner_id=owner_id WHERE 1 = 0;'),
             @('forgeoj_api','FORGEOJ_API_DB_PASSWORD','DELETE FROM problem_tag WHERE 1 = 0;'),
-            @('forgeoj_api','FORGEOJ_API_DB_PASSWORD','UPDATE problem SET difficulty = difficulty WHERE 1 = 0;')
+            @('forgeoj_api','FORGEOJ_API_DB_PASSWORD','UPDATE problem SET difficulty = difficulty WHERE 1 = 0;'),
+            @('forgeoj_worker','FORGEOJ_WORKER_DB_PASSWORD','SELECT id FROM content_review LIMIT 0;'),
+            @('forgeoj_worker','FORGEOJ_WORKER_DB_PASSWORD','UPDATE content_review SET review_status=review_status WHERE 1=0;'),
+            @('forgeoj_api','FORGEOJ_API_DB_PASSWORD','DELETE FROM content_review WHERE 1=0;'),
+            @('forgeoj_api','FORGEOJ_API_DB_PASSWORD','UPDATE content_review SET snapshot_id=snapshot_id WHERE 1=0;'),
+            @('forgeoj_api','FORGEOJ_API_DB_PASSWORD','UPDATE content_review SET validation_job_id=validation_job_id WHERE 1=0;')
         )
         foreach($denial in $denials) {
             # Inputs are the fixed roles/queries above, not user-controlled shell text.
             $command = 'exec mysql -h127.0.0.1 -u' + $denial[0] + ' --password="$' + $denial[1] + '" forgeoj'
             $result = $denial[2] | & $DockerCommand compose --project-name $state.Project -f $composeFile exec -T mysql sh -c $command 2>&1
-            $expectedError = if ($denial[2] -eq 'UPDATE personal_problem_list SET owner_id=owner_id WHERE 1 = 0;') { 'ERROR 1143' } else { 'ERROR 1142' }
+            $expectedError = if ($denial[2] -eq 'UPDATE personal_problem_list SET owner_id=owner_id WHERE 1 = 0;' -or $denial[2] -match '^UPDATE content_review SET (snapshot_id|validation_job_id)=') { 'ERROR 1143' } else { 'ERROR 1142' }
             if ($LASTEXITCODE -eq 0 -or "$result" -notmatch $expectedError) { throw 'Expected database privilege denial missing' }
         }
         if (Docker-Checked @('ps','-aq','--filter','label=com.forgeoj.managed=true')) { throw 'Managed sandbox residue remains' }

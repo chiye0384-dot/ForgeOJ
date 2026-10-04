@@ -26,7 +26,9 @@ const page = ref(1),
 const stale = computed(
   () =>
     result.value &&
-    (result.value.stale || result.value.draftVersion !== props.version || props.status !== 'DRAFT'),
+    (result.value.stale ||
+      result.value.draftVersion !== props.version ||
+      props.status === 'ARCHIVED'),
 )
 let generation = 0,
   disposed = false,

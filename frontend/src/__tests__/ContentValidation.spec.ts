@@ -70,6 +70,20 @@ afterEach(() => {
   app.unmount()
 })
 describe('author immutable content validation', () => {
+  it('retains current passed evidence while review freezes editing without claiming an old version', async () => {
+    vi.mocked(createValidation).mockResolvedValue(passed())
+    click('验证当前已保存版本')
+    await settle()
+    props.status = 'UNDER_REVIEW'
+    await settle()
+    expect(host.textContent).toContain('冻结草稿版本 3 · 验证通过')
+    expect(host.textContent).not.toContain('此结果属于旧版本')
+    click('验证当前已保存版本')
+    expect(createValidation).toHaveBeenCalledTimes(1)
+    props.status = 'ARCHIVED'
+    await settle()
+    expect(host.textContent).toContain('此结果属于旧版本或已归档')
+  })
   it('submits the saved version with CSRF and reports two authoritative results', async () => {
     click('验证当前已保存版本')
     await settle()

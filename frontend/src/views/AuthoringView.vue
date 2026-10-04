@@ -3,6 +3,7 @@
 import { computed, onBeforeUnmount, onMounted, ref } from 'vue'
 import { ApiRequestError, restoreSession, type SessionResponse } from '@/services/forgeojApi'
 import ContentValidation from '@/components/ContentValidation.vue'
+import ContentReview from '@/components/ContentReview.vue'
 import {
   authoredDetail,
   authoredList,
@@ -23,12 +24,17 @@ const title = ref('')
 const page = ref(1)
 const total = ref(0)
 const busy = ref(false)
+const workflowBusy = ref(false)
 const conflict = ref(false)
 const message = ref('')
 let generation = 0
 let disposed = false
 const editable = computed(
-  () => selected.value?.draft.status === 'DRAFT' && !busy.value && !conflict.value,
+  () =>
+    selected.value?.draft.status === 'DRAFT' &&
+    !busy.value &&
+    !workflowBusy.value &&
+    !conflict.value,
 )
 function current(g: number) {
   return !disposed && g === generation
@@ -191,6 +197,11 @@ function archive() {
 function addTest() {
   tests.value.push({ sequence: tests.value.length + 1, input: '', expectedOutput: '' })
 }
+function workflow(summary: AuthoredSummary) {
+  if (!selected.value || selected.value.draft.id !== summary.id) return
+  selected.value = { ...selected.value, draft: summary }
+  lists.value = lists.value.map((row) => (row.id === summary.id ? summary : row))
+}
 function previous() {
   page.value--
   selected.value = null
@@ -215,7 +226,7 @@ onBeforeUnmount(() => {
     <p v-if="session && !session.authenticated">
       请先到 <RouterLink to="/account">账号页面</RouterLink> 登录。
     </p>
-    <fieldset v-if="session?.authenticated" :disabled="busy">
+    <fieldset v-if="session?.authenticated" :disabled="busy || workflowBusy">
       <label>新题目标题 <input v-model="title" maxlength="100" /></label>
       <button @click="create">创建内容草稿</button>
       <ul>
@@ -311,7 +322,19 @@ onBeforeUnmount(() => {
         :status="selected.draft.status"
         :user-id="session.user.id"
         :csrf="session.csrf"
-        :editing-busy="busy"
+        :editing-busy="busy || workflowBusy || conflict"
+        @conflict="conflict = true"
+      />
+      <ContentReview
+        v-if="session?.user"
+        :draft-id="selected.draft.id"
+        :version="selected.draft.version"
+        :status="selected.draft.status"
+        :user-id="session.user.id"
+        :csrf="session.csrf"
+        :editing-busy="busy || conflict"
+        @workflow="workflow"
+        @busy="workflowBusy = $event"
         @conflict="conflict = true"
       />
     </template>

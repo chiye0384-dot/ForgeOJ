@@ -1,0 +1,10 @@
+{
+  "verifiedAt": "2026-10-04T10:01:12.9250545Z",
+  "previousBuild": "target/forgeoj-linux-20261004-005209-5f775952",
+  "currentBuild": "target/forgeoj-linux-20261004-173714-5aba44b0",
+  "runtimeEntries": 117,
+  "allClassesResourcesDependenciesIdentical": true,
+  "excluded": "META-INF/build-info.properties timestamp",
+  "actualPreviousWorkerKillProof": "../m2-content-validation/content-crash.json",
+  "newWorkerKillReplayPerformed": false
+}

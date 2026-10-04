@@ -10,12 +10,16 @@ import org.apache.ibatis.annotations.*;
 public interface ContentMapper {
     @Select("SELECT COUNT(*) FROM content_validation_snapshot WHERE draft_id=#{id}")
     int validationReferences(String id);
+    @Select("SELECT COUNT(*) FROM content_review WHERE draft_id=#{id}")
+    int reviewReferences(String id);
+    @Select("SELECT id FROM content_review WHERE active_draft_id=#{id} FOR UPDATE")
+    Optional<String> pendingReview(String id);
     record Row(String id,String title,String metadata,String referenceCode,String solutionIdea,String solutionCode,long version,String status) {}
     record TestRow(int sequence,byte[] inputGzip,byte[] outputGzip,long inputBytes,long outputBytes,String inputSha256,String outputSha256) {}
-    String COLUMNS="id,title,CAST(metadata_json AS CHAR CHARACTER SET utf8mb4) AS metadata,reference_code,solution_idea,solution_code,version,status";
+    String COLUMNS="id,title,CAST(metadata_json AS CHAR CHARACTER SET utf8mb4) AS metadata,reference_code,solution_idea,solution_code,version,IF(status='DRAFT' AND EXISTS(SELECT 1 FROM content_review r WHERE r.draft_id=authored_problem_draft.id AND r.review_status='PENDING'),'UNDER_REVIEW',status) AS status";
     @Select("SELECT COUNT(*) FROM authored_problem_draft WHERE owner_id=#{owner}")
     long count(long owner);
-    @Select("SELECT d.id,d.title,d.version,d.status,(SELECT COUNT(*) FROM authored_problem_test_case t WHERE t.draft_id=d.id) AS testCount FROM authored_problem_draft d WHERE d.owner_id=#{owner} ORDER BY d.created_at DESC,d.id DESC LIMIT #{size} OFFSET #{offset}")
+    @Select("SELECT d.id,d.title,d.version,IF(d.status='DRAFT' AND EXISTS(SELECT 1 FROM content_review r WHERE r.draft_id=d.id AND r.review_status='PENDING'),'UNDER_REVIEW',d.status) AS status,(SELECT COUNT(*) FROM authored_problem_test_case t WHERE t.draft_id=d.id) AS testCount FROM authored_problem_draft d WHERE d.owner_id=#{owner} ORDER BY d.created_at DESC,d.id DESC LIMIT #{size} OFFSET #{offset}")
     List<Summary> summaries(@Param("owner") long owner,@Param("size") int size,@Param("offset") long offset);
     @Select("SELECT "+COLUMNS+" FROM authored_problem_draft WHERE id=#{id} AND owner_id=#{owner}")
     Optional<Row> find(@Param("owner") long owner,@Param("id") String id);

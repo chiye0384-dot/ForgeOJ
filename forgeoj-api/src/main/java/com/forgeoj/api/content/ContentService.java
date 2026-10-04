@@ -64,13 +64,13 @@ public class ContentService {
     @Transactional
     public void delete(long owner,String id,long version) {
         lock(owner,id,version);
-        if(mapper.validationReferences(id)>0) throw conflict();
+        if(mapper.validationReferences(id)>0 || mapper.reviewReferences(id)>0) throw conflict();
         mapper.clearTests(owner,id);changed(mapper.delete(owner,id,version));
     }
     private ContentMapper.Row lock(long owner,String id,long version) {
         uuid(id);if(version<1 || version>MAX_VERSION) throw bad();accounts.requireCurrentWrite(owner);
         var row=mapper.lock(owner,id).orElseThrow(ContentService::missing);
-        if(row.version()!=version || row.version()==MAX_VERSION || !row.status().equals("DRAFT")) throw conflict();return row;
+        if(row.version()!=version || row.version()==MAX_VERSION || !row.status().equals("DRAFT") || mapper.pendingReview(id).isPresent()) throw conflict();return row;
     }
     private Detail detail(long owner,ContentMapper.Row r) {return new Detail(new Summary(r.id(),r.title(),r.version(),r.status(),mapper.testCount(owner,r.id())),new Content(json.readValue(r.metadata(),Metadata.class),r.referenceCode(),r.solutionIdea(),r.solutionCode()));}
     static void validate(Content c) {

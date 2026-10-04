@@ -1,0 +1,67 @@
+{
+  "verifiedAt": "2026-10-04T10:20:33.8370851Z",
+  "totalActualDenials": 30,
+  "additionalActualDenials": [
+    {
+      "role": "forgeoj_api",
+      "sql": "UPDATE content_validation_job SET owner_id=owner_id WHERE 1=0;",
+      "mysqlError": 1142,
+      "denied": true
+    },
+    {
+      "role": "forgeoj_api",
+      "sql": "UPDATE content_validation_job SET processing_status=processing_status WHERE 1=0;",
+      "mysqlError": 1142,
+      "denied": true
+    },
+    {
+      "role": "forgeoj_worker",
+      "sql": "UPDATE content_validation_job SET owner_id=owner_id WHERE 1=0;",
+      "mysqlError": 1143,
+      "denied": true
+    },
+    {
+      "role": "forgeoj_worker",
+      "sql": "UPDATE content_validation_job SET snapshot_id=snapshot_id WHERE 1=0;",
+      "mysqlError": 1143,
+      "denied": true
+    },
+    {
+      "role": "forgeoj_worker",
+      "sql": "INSERT INTO content_validation_snapshot(id) SELECT id FROM content_validation_snapshot WHERE 1=0;",
+      "mysqlError": 1142,
+      "denied": true
+    },
+    {
+      "role": "forgeoj_api",
+      "sql": "UPDATE content_review SET draft_id=draft_id WHERE 1=0;",
+      "mysqlError": 1143,
+      "denied": true
+    },
+    {
+      "role": "forgeoj_api",
+      "sql": "UPDATE content_review SET owner_id=owner_id WHERE 1=0;",
+      "mysqlError": 1143,
+      "denied": true
+    },
+    {
+      "role": "forgeoj_api",
+      "sql": "UPDATE content_review SET draft_version=draft_version WHERE 1=0;",
+      "mysqlError": 1143,
+      "denied": true
+    },
+    {
+      "role": "forgeoj_api",
+      "sql": "UPDATE content_review SET request_id=request_id WHERE 1=0;",
+      "mysqlError": 1143,
+      "denied": true
+    },
+    {
+      "role": "forgeoj_api",
+      "sql": "UPDATE content_review SET review_no=review_no WHERE 1=0;",
+      "mysqlError": 1143,
+      "denied": true
+    }
+  ],
+  "baseActualDenials": 20
+}

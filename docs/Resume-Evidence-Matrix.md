@@ -1,5 +1,7 @@
 # ForgeOJ 简历证据矩阵
 
+2026-10-04 不可变送审/撤回单元已 VERIFIED：V12 精确绑定本人当前双 PASSED 的不可变快照，唯一待审、owner/CAS/幂等、待审禁改、撤回后修改与历史保留完成。全新固定 Linux API169 + Worker120 = **289**、前端 **56** 及全部检查通过；相同构件真实页面两轮送审/撤回/归档、HTTP 六类待审写409、旧撤回不影响新待审、冻结题面不变、正常与轮询回退 AC、六空队列、30 项实际数据库权限拒绝及精确清理通过。见 [验收](M2-CONTENT-REVIEW-VALIDATION.md)。本轮未重复 Worker SIGKILL，117 个运行文件逐字节等同上轮真实故障验收；截图接口不可用，保存真实 DOM 观察，不提供合成截图。完整内容与 M2 仍 IN_PROGRESS；下一步为输出生成预览、独立自测，外部 SMTP 仍需服务商和授权收件箱配置；受控审核身份/批准发布保持 M4。
+
 2026-10-04 作者双程序正式验证单元 VERIFIED：V11 独立不可变快照、owner/CAS/幂等、共享额度、双结果、租约隔离与私有历史，固定 Linux API163 + Worker120 =283、前端50及全检查通过。同一产物真实参考AC/题解WA、双AC、编辑失效/归档、实际Worker SIGKILL自然恢复、六队列/20实际数据库拒绝/日志链审计和精确清理见 [验收](M2-CONTENT-VALIDATION-JOBS-VALIDATION.md)与[安全事实](evidence/m2-content-validation/README.md)。完整内容与M2保持IN_PROGRESS，尚未受控审核发布、未新增RESUME_READY或性能结论；这些证据不替代发布和用户自己的项目讲解能力。下面阶段记录保留历史。
 
 > 当前状态：E-01/E-02 为 `IMPLEMENTED`，已有 M1 范围的实现与验证证据；完整 V1 候选证据未闭环。其他项仍为 `PLANNED`；没有任何 `RESUME_READY`，不能写入简历。

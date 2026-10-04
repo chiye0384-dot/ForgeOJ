@@ -37,7 +37,7 @@ public class ContentValidationService {
             return previous.get();
         }
         var row=drafts.lock(owner,draft).orElseThrow(()->status(HttpStatus.NOT_FOUND));
-        if(row.version()!=version || !row.status().equals("DRAFT")) throw status(HttpStatus.CONFLICT);
+        if(row.version()!=version || !row.status().equals("DRAFT") || drafts.pendingReview(draft).isPresent()) throw status(HttpStatus.CONFLICT);
         var metadata=json.readValue(row.metadata(),ContentRecords.Metadata.class);
         var frozen=new ContentRecords.Content(metadata,row.referenceCode(),row.solutionIdea(),row.solutionCode());
         ContentService.validate(frozen);

@@ -1,0 +1,28 @@
+{
+  "verifiedAt": "2026-10-04T09:59:54.840Z",
+  "buildDirectory": "target/forgeoj-linux-20261004-173714-5aba44b0",
+  "sourceCommit": "d6393cef81096b7dd972bf15570f671c0f1ae2cd",
+  "platform": "linux/amd64",
+  "backend": {
+    "forgeoj-api": {
+      "tests": 169,
+      "failures": 0,
+      "errors": 0,
+      "skipped": 0,
+      "suites": 32
+    },
+    "forgeoj-judge-worker": {
+      "tests": 120,
+      "failures": 0,
+      "errors": 0,
+      "skipped": 0,
+      "suites": 22
+    }
+  },
+  "frontendTests": 56,
+  "frontendSuites": 12,
+  "frontendTypeLintFormatBuildPassed": true,
+  "apiSha256": "0f4fb439bd17ede296d4ba78bc209b7b014e290d82aa1e9c762070dce2490e39",
+  "workerSha256": "35455d50c29837592ca6e6ac84d5f1a51acfecedac1e4f5b083510ec1a893bec",
+  "manifestSha256": "18cea1dedf34f0df72a9498a58ee1ce3171964b8278cd3ee1d4da1c4db6835c0"
+}

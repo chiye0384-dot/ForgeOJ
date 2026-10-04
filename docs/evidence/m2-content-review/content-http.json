@@ -1,0 +1,43 @@
+{
+  "verifiedAt": "2026-10-04T10:17:32.054Z",
+  "draftId": "ce96b247-7940-41df-ac45-eb9e53b790d7",
+  "ownerDenied": true,
+  "requestReplaySameJob": true,
+  "deleteReferencedDraftStatus": 409,
+  "publicProblemCount": 2,
+  "results": [
+    {
+      "jobId": "02e4728c-8f43-4852-ba2e-e5a0310e42a2",
+      "draftId": "ce96b247-7940-41df-ac45-eb9e53b790d7",
+      "draftVersion": 3,
+      "processingStatus": "FINISHED",
+      "statusVersion": 2,
+      "validationStatus": "FAILED",
+      "referenceResult": "ACCEPTED",
+      "solutionResult": "WRONG_ANSWER",
+      "stale": true
+    },
+    {
+      "jobId": "af091b4d-5bc1-457c-818f-c3759b1daabb",
+      "draftId": "ce96b247-7940-41df-ac45-eb9e53b790d7",
+      "draftVersion": 4,
+      "processingStatus": "FINISHED",
+      "statusVersion": 2,
+      "validationStatus": "PASSED",
+      "referenceResult": "ACCEPTED",
+      "solutionResult": "ACCEPTED",
+      "stale": true
+    },
+    {
+      "jobId": "9bb4bcd6-78d9-4c39-bf19-7d566605833d",
+      "draftId": "ce96b247-7940-41df-ac45-eb9e53b790d7",
+      "draftVersion": 5,
+      "processingStatus": "FINISHED",
+      "statusVersion": 2,
+      "validationStatus": "PASSED",
+      "referenceResult": "ACCEPTED",
+      "solutionResult": "ACCEPTED",
+      "stale": true
+    }
+  ]
+}

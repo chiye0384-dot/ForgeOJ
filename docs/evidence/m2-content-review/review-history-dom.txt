@@ -1,0 +1,114 @@
+- banner:
+  - generic: F
+  - heading "ForgeOJ" [level=1]
+  - paragraph: Java 21 在线练习与判题
+  - navigation "主导航":
+    - link "题库":
+      - /url: /problems
+    - link "学习记录":
+      - /url: /learning
+    - link "我的题目":
+      - /url: /authoring
+    - link "做题":
+      - /url: /
+    - link "账号":
+      - /url: /account
+- main:
+  - heading "我的题目草稿" [level=2]
+  - paragraph: 草稿、参考程序和测试数据仅本人可见。保存草稿后可继续完善内容。
+  - text: 新题目标题
+  - textbox "新题目标题": 原创不可变送审验收
+  - button "创建内容草稿"
+  - list:
+    - button "原创不可变送审验收"
+    - text: · ARCHIVED · 1 组测试
+  - button "上一页" [disabled]
+  - text: 1 / 1
+  - button "下一页" [disabled]
+  - heading "原创不可变送审验收" [level=3]
+  - paragraph: 版本 6 · ARCHIVED
+  - text: 题目标题
+  - textbox "题目标题" [disabled]: 原创不可变送审验收
+  - text: 题面
+  - textbox "题面" [disabled]: 撤回后的原创修订题面：计算两个整数的和。
+  - text: 输入说明
+  - textbox "输入说明" [disabled]: 一行两个整数。
+  - text: 输出说明
+  - textbox "输出说明" [disabled]: 输出两整数之和。
+  - text: 公开样例 JSON
+  - textbox "公开样例 JSON" [disabled]: "[ { \"input\": \"1 2\\n\", \"output\": \"3\\n\" } ]"
+  - text: 来源声明
+  - combobox "来源声明" [disabled]:
+    - option "原创" [disabled] [selected]
+    - option "基于允许使用的来源改编" [disabled]
+  - text: 来源链接
+  - textbox "来源链接" [disabled]
+  - text: 许可证或授权说明
+  - textbox "许可证或授权说明" [disabled]: 本人原创，仅用于可丢弃验收。
+  - text: 时间上限 ms
+  - spinbutton "时间上限 ms" [disabled]: "2000"
+  - text: 内存上限 MB
+  - spinbutton "内存上限 MB" [disabled]: "256"
+  - text: 输出上限 bytes
+  - spinbutton "输出上限 bytes" [disabled]: "1048576"
+  - text: 私有参考程序 Main.java
+  - textbox "私有参考程序 Main.java" [disabled]: "import java.util.Scanner; public class Main { public static void main(String[] args) { Scanner s=new Scanner(System.in); System.out.println(s.nextLong()+s.nextLong()); }}"
+  - text: 官方题解核心思路
+  - textbox "官方题解核心思路" [disabled]: 读取两个整数并相加，独立程序使用 BufferedReader。
+  - text: 独立题解代码 Main.java
+  - textbox "独立题解代码 Main.java" [disabled]: "import java.io.*; public class Main { public static void main(String[] args) throws Exception { String[] p=new BufferedReader(new InputStreamReader(System.in)).readLine().trim().split(\"\\\\s+\"); System.out.println(Long.parseLong(p[0])+Long.parseLong(p[1])); }}"
+  - button "保存题目内容" [disabled]
+  - group "测试数据":
+    - generic: 测试数据
+    - paragraph: 最多 100 对；单文件 1 MiB，总量 16 MiB。ZIP 仅包含根目录 001.in/001.out 等成对 UTF-8 文件。
+    - text: 测试 1 输入
+    - textbox "测试 1 输入" [disabled]: 1 2
+    - text: 测试 1 正确输出
+    - textbox "测试 1 正确输出" [disabled]: "3"
+    - button "移除本页测试" [disabled]
+    - button "添加测试" [disabled]
+    - button "保存全部测试" [disabled]
+    - text: 以 ZIP 替换全部测试
+    - button "以 ZIP 替换全部测试" [disabled]
+  - button "归档此草稿" [disabled]
+  - heading "正式沙箱验证" [level=4]
+  - paragraph: 仅验证当前已保存版本；本页未保存内容不会提交。参考程序和题解分别执行，验证通过后仍须送审。
+  - button "验证当前已保存版本" [disabled]
+  - button "查看验证记录"
+  - article:
+    - paragraph: 冻结草稿版本 5 · 验证通过
+    - paragraph: 此结果属于旧版本或已归档草稿，不能用于当前内容送审。
+    - paragraph: 参考程序：通过全部测试；独立题解：通过全部测试
+    - button "刷新验证结果"
+  - list
+  - status
+  - region "不可变送审":
+    - heading "送审与撤回" [level=4]
+    - paragraph: 只送审当前已保存、双程序验证通过的版本；本页未保存内容不会提交。审核期间须先撤回再修改，历史快照永久保留。
+    - button "载入通过验证与送审历史"
+    - text: 选择当前版本通过记录
+    - combobox "选择当前版本通过记录" [disabled]:
+      - option "请选择验证记录" [selected]
+    - button "送审当前已保存版本" [disabled]
+    - button "上一页验证" [disabled]
+    - button "下一页验证" [disabled]
+    - list:
+      - text: 第 2 次送审 · 冻结草稿版本 5 · 已撤回
+      - button "查看第 2 次冻结快照"
+      - text: 第 1 次送审 · 冻结草稿版本 4 · 已撤回
+      - button "查看第 1 次冻结快照"
+    - button "上一页送审" [disabled]
+    - button "下一页送审" [disabled]
+    - article:
+      - heading "第 1 次送审快照 · 版本 4" [level=5]
+      - paragraph: 原创不可变送审验收 · 1 组冻结测试
+      - generic: 原创送审验收：计算两个整数的和。
+      - paragraph: 输入：一行两个整数。
+      - paragraph: 输出：输出两整数之和。
+      - paragraph: 来源：ORIGINAL
+      - paragraph: 授权：本人原创，仅用于可丢弃验收。
+      - generic: 读取两个整数并相加，独立程序使用 BufferedReader。
+      - generic "冻结参考程序"
+      - generic "冻结独立题解"
+    - status
+  - status: 草稿已更新。

@@ -1,6 +1,6 @@
 # ForgeOJ
 
-> 当前状态：`M-1：项目准备`、`M0：最小判题纵向切片` 和 `M1：可靠异步判题` 均为 `VERIFIED`。M0 通过 20 项门禁；M1 于 2026-10-02 通过 [15 项最终门禁审计](docs/M1-GATE-AUDIT.md)。M2 [普通账号](docs/M2-ACCOUNTS-VALIDATION.md)、[公开题库/SMTP 适配](docs/M2-LIBRARY-SMTP-VALIDATION.md)、[学习记录](docs/M2-LEARNING-RECORDS-VALIDATION.md)、[作者双程序验证](docs/M2-CONTENT-VALIDATION-JOBS-VALIDATION.md)等单元 VERIFIED，完整 M2 保持 `IN_PROGRESS`；不可变送审/撤回、输出生成预览、自测与真实邮件投递尚待完成，M3～M5 为 `PLANNED`，尚未发布。
+> 当前状态：`M-1：项目准备`、`M0：最小判题纵向切片` 和 `M1：可靠异步判题` 均为 `VERIFIED`。M0 通过 20 项门禁；M1 于 2026-10-02 通过 [15 项最终门禁审计](docs/M1-GATE-AUDIT.md)。M2 [普通账号](docs/M2-ACCOUNTS-VALIDATION.md)、[公开题库/SMTP 适配](docs/M2-LIBRARY-SMTP-VALIDATION.md)、[学习记录](docs/M2-LEARNING-RECORDS-VALIDATION.md)、[作者双程序验证](docs/M2-CONTENT-VALIDATION-JOBS-VALIDATION.md)、[不可变送审/撤回](docs/M2-CONTENT-REVIEW-VALIDATION.md)等单元 VERIFIED，完整 M2 保持 `IN_PROGRESS`；输出生成预览、自测与真实邮件投递尚待完成，M3～M5 为 `PLANNED`，尚未发布。
 >
 > 需求基线：2026-09-24；工程基线：2026-09-28
 
@@ -11,6 +11,8 @@ ForgeOJ 是一个面向 Java 学习者和小型教学班级的在线判题平台
 `feat/m2-accounts` 已把预置账号认证升级为注册/邮箱激活、短 JWT 与 MySQL 独立会话、刷新轮换/重用撤销、当前/全部退出、改密/找回和旧账号补邮箱。普通账号单元已验证：固定 Linux 后端 **100 + 111 = 211** 项、前端 **13** 项及全部检查通过，相同产物的新账号注册→本地邮件→激活→邮箱登录→实际 AC、旧账号轮询兜底与独立权限/日志/队列审计和精确清理均通过。设计见 [普通账号设计](docs/M2-ACCOUNTS-DESIGN.md)与 D-041，命令、源码/JAR 哈希和范围见 [账号验收记录](docs/M2-ACCOUNTS-VALIDATION.md)，可提交脱敏事实见 [证据目录](docs/evidence/m2-accounts/README.md)。完整 M2 与真实 SMTP 尚未完成。
 
 ## 当前工程基线
+
+2026-10-04 不可变送审/撤回单元已 VERIFIED：V12 精确绑定本人当前双 PASSED 的不可变快照，唯一待审、owner/CAS/幂等、待审禁改、撤回后修改与历史保留完成。全新固定 Linux API169 + Worker120 = **289**、前端 **56** 及全部检查通过；相同构件真实页面两轮送审/撤回/归档、HTTP 六类待审写409、旧撤回不影响新待审、冻结题面不变、正常与轮询回退 AC、六空队列、30 项实际数据库权限拒绝及精确清理通过。见 [验收](docs/M2-CONTENT-REVIEW-VALIDATION.md)。本轮未重复 Worker SIGKILL，117 个运行文件逐字节等同上轮真实故障验收；截图接口不可用，保存真实 DOM 观察，不提供合成截图。完整内容与 M2 仍 IN_PROGRESS；下一步为输出生成预览、独立自测，外部 SMTP 仍需服务商和授权收件箱配置；受控审核身份/批准发布保持 M4。
 
 2026-10-03 已继续验收[个人学习记录](docs/M2-LEARNING-RECORDS-VALIDATION.md)和[作者内容草稿阶段](docs/M2-CONTENT-VALIDATION.md)：`/learning` 支持本人题单/进度/草稿/历史，`/authoring` 支持私有内容/独立参考与题解代码/逐条与 ZIP 测试/归档。作者阶段固定 Linux 后端 261、前端 39 及实际浏览器/审计清理通过。随后[官方题解访问](docs/M2-SOLUTION-ACCESS-VALIDATION.md)单元 VERIFIED：最终固定 Linux 269/45，实际取消不留记录、跨账号隔离、真实 AC 自动解锁和降级审计清理通过；作者保存与合成快照本身不证明正式验证或发布。
 

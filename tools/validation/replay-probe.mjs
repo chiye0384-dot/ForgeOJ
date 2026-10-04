@@ -215,6 +215,8 @@ else if (process.argv[2] === 'permissions') await permissions()
 else if (process.argv[2] === 'library') await library()
 else if (process.argv[2] === 'learning') await learning()
 else if (process.argv[2] === 'content') await contentValidation()
+else if (process.argv[2] === 'review-lock') await reviewLock()
+else if (process.argv[2] === 'review') await reviewHistory()
 else throw new Error('Expected matrix, permissions, library, learning or content')
 
 async function contentValidation() {
@@ -246,6 +248,55 @@ async function contentValidation() {
   await writeFile('/reports/content-http.json',JSON.stringify({verifiedAt:new Date().toISOString(),draftId:observed.draftId,
     ownerDenied:true,requestReplaySameJob:true,deleteReferencedDraftStatus:deletion.status,publicProblemCount:2,results},null,2))
   console.log('E2E_CONTENT_HTTP_VERIFIED')
+}
+
+async function reviewLock() {
+  const observed=JSON.parse(await readFile('/reports/review-browser.json','utf8'))
+  const owner=new Client();await owner.login()
+  const path='/api/v1/me/authored-problems/'+observed.draftId
+  const draft=await owner.request(path);assert.equal(draft.status,200);assert.equal(draft.body.draft.status,'UNDER_REVIEW')
+  const version=draft.body.draft.version, pending=observed.reviews.find(r=>r.status==='PENDING');assert.ok(pending)
+  assert.equal(pending.draftVersion,version)
+  const checks=[
+    [path,'PUT',{expectedVersion:version,content:draft.body.content}],
+    [path+'/tests','PUT',{expectedVersion:version,tests:[{input:'1 2\n',expectedOutput:'3\n'}]}],
+    [path+'/archive','POST',{expectedVersion:version}],
+    [path+'?expectedVersion='+version,'DELETE',undefined],
+    [path+'/validations','POST',{expectedVersion:version,requestId:randomUUID()}],
+    [path+'/reviews','POST',{expectedVersion:version,validationJobId:pending.validationJobId,requestId:randomUUID()}]
+  ]
+  for(const [url,method,body] of checks) assert.equal((await owner.request(url,method,body)).status,409)
+  const old=observed.reviews.find(r=>r.status==='WITHDRAWN');assert.ok(old)
+  assert.equal((await owner.request(path+'/reviews/'+old.reviewId+'/withdraw','POST',{expectedVersion:old.draftVersion,expectedReviewVersion:0})).status,200)
+  assert.equal((await owner.request(path+'/reviews/'+pending.reviewId)).body.review.status,'PENDING')
+  const response=await fetch(base+path+'/reviews/'+pending.reviewId+'/withdraw',{method:'POST',headers:{Cookie:owner.cookie,Origin:'https://untrusted.invalid','Content-Type':'application/json',[owner.csrf.headerName]:owner.csrf.token},body:JSON.stringify({expectedVersion:version,expectedReviewVersion:0})})
+  assert.equal(response.status,403)
+  await writeFile('/reports/review-lock.json',JSON.stringify({verifiedAt:new Date().toISOString(),draftId:observed.draftId,pendingReviewId:pending.reviewId,blockedWrites:checks.length,allConflict:true,oldWithdrawalLeavesNewPending:true,crossOrigin:403},null,2))
+  console.log('E2E_REVIEW_PENDING_WRITES_VERIFIED')
+}
+async function reviewHistory() {
+  const observed=JSON.parse(await readFile('/reports/review-browser.json','utf8'))
+  const owner=new Client(),other=new Client(),anonymous=new Client();await owner.login();await other.login('other-learner')
+  const path='/api/v1/me/authored-problems/'+observed.draftId
+  const draft=await owner.request(path);assert.equal(draft.status,200);assert.equal(draft.body.draft.status,'ARCHIVED')
+  const history=await owner.request(path+'/reviews?size=1');assert.equal(history.status,200);assert.equal(history.body.total,observed.reviews.length);assert.equal(history.body.items.length,1)
+  assert.deepEqual(Object.keys(history.body.items[0]).sort(),['draftId','draftVersion','reviewId','reviewNo','status','validationJobId','version'])
+  assert.equal((await other.request(path+'/reviews')).status,404);assert.equal((await anonymous.request(path+'/reviews')).status,401);assert.equal((await owner.request(path+'/reviews?size=51')).status,400)
+  for(const r of observed.reviews) {
+    const url=path+'/reviews/'+r.reviewId,detail=await owner.request(url);assert.equal(detail.status,200)
+    assert.deepEqual(Object.keys(detail.body).sort(),['content','review','testCount'])
+    for(const key of ['reviewId','draftVersion','reviewNo','validationJobId','status']) assert.equal(detail.body.review[key],r[key])
+    assert.equal(detail.body.review.status,'WITHDRAWN');assert.equal(detail.body.testCount,1)
+    assert.equal(createHash('sha256').update(detail.body.content.metadata.statement).digest('hex'),r.frozenStatementSha256)
+    assert.equal((await other.request(url)).status,404);assert.equal((await other.request(url+'/withdraw','POST',{expectedVersion:r.draftVersion,expectedReviewVersion:0})).status,404)
+    const replay=await owner.request(path+'/reviews','POST',{expectedVersion:r.draftVersion,validationJobId:r.validationJobId,requestId:r.requestId});assert.equal(replay.status,202);assert.equal(replay.body.reviewId,r.reviewId);assert.equal(replay.body.status,'WITHDRAWN')
+    assert.equal((await owner.request(path+'/reviews','POST',{expectedVersion:r.draftVersion+1,validationJobId:r.validationJobId,requestId:r.requestId})).status,409)
+  }
+  assert.equal((await owner.request(path+'/reviews','POST',{expectedVersion:draft.body.draft.version,validationJobId:observed.reviews.at(-1).validationJobId,requestId:randomUUID()})).status,409)
+  assert.equal((await owner.request(path+'?expectedVersion='+draft.body.draft.version,'DELETE')).status,409)
+  assert.equal((await anonymous.request('/api/v1/problems')).body.total,2)
+  await writeFile('/reports/review-http.json',JSON.stringify({verifiedAt:new Date().toISOString(),draftId:observed.draftId,ownerDenied:true,anonymous:401,requestReplayReturnsOriginalWithdrawn:true,allFrozenStatementsMatch:true,archivedHistoryReadable:true,referencedDeletion:409,publicProblemCount:2},null,2))
+  console.log('E2E_REVIEW_HISTORY_VERIFIED')
 }
 
 async function learning() {

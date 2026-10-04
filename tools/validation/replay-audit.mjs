@@ -139,7 +139,27 @@ for (const row of browser) {
   }
 }
 assert.equal(facts.length, matrix.length + 1 + browser.length)
-const summary = { verifiedAt:new Date().toISOString(), submissions:facts.length, finished:chains.length,
+const reviewFacts=await lines('review-database.jsonl')
+if(reviewFacts.length) {
+  const observed=await json('review-browser.json'), reviewHttp=await json('review-http.json'), reviewLock=await json('review-lock.json')
+  assert.ok(reviewHttp.ownerDenied && reviewHttp.requestReplayReturnsOriginalWithdrawn && reviewHttp.allFrozenStatementsMatch && reviewHttp.archivedHistoryReadable)
+  assert.equal(reviewHttp.referencedDeletion,409);assert.equal(reviewHttp.publicProblemCount,2)
+  assert.ok(reviewLock.allConflict && reviewLock.oldWithdrawalLeavesNewPending);assert.equal(reviewLock.blockedWrites,6);assert.equal(reviewLock.crossOrigin,403)
+  assert.equal(reviewFacts.length,observed.reviews.length)
+  for(const r of observed.reviews) {
+    const row=reviewFacts.find(f=>f.reviewId===r.reviewId);assert.ok(row)
+    for(const key of ['draftVersion','reviewNo','validationJobId','frozenStatementSha256']) assert.equal(row[key],r[key])
+    assert.equal(row.draftId,observed.draftId);assert.equal(row.status,'WITHDRAWN');assert.equal(row.version,1)
+    assert.equal(row.withdrawn,true);assert.equal(row.active,false);assert.equal(row.passedBinding,true)
+    const submit=api.filter(l=>l.event==='content.review_submitted' && l.contentReviewId===row.reviewId)
+    const withdraw=api.filter(l=>l.event==='content.review_withdrawn' && l.contentReviewId===row.reviewId)
+    assert.equal(submit.length,1);assert.equal(withdraw.length,1)
+    assert.ok(submit[0]['@timestamp']<=withdraw[0]['@timestamp'])
+    assert.ok(api.some(l=>l.event==='request.completed' && l.requestId===submit[0].requestId && l.route==='content.review' && l.method==='POST' && l.httpStatus===202))
+    assert.ok(api.some(l=>l.event==='request.completed' && l.requestId===withdraw[0].requestId && l.route==='content.review.withdraw' && l.method==='POST' && l.httpStatus===200))
+  }
+}
+const summary = { verifiedAt:new Date().toISOString(), contentReviews:reviewFacts.length, submissions:facts.length, finished:chains.length,
   cancelled:1, publishedOutbox:outbox.length, contentJobs:content.length, contentPublishedOutbox:contentOutbox.length, emptyQueues:queues.length, library, learning, browser, chains }
 await writeFile('/reports/audit.json', JSON.stringify(summary, null, 2))
 console.log(JSON.stringify({ event:'E2E_AUDIT_VERIFIED', submissions:facts.length,

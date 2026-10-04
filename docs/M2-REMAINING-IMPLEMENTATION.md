@@ -34,8 +34,12 @@
 
 ## 3. 当前状态
 
-题目内容的作者草稿阶段已 VERIFIED：V9、本人 CRUD/归档、逐条/有界 ZIP、压缩完整性及编辑页面完成，固定 Linux 261/39、实际文件选择器/两页冲突/归档与独立审计清理通过，见 [设计](M2-CONTENT-DESIGN.md)与[记录](M2-CONTENT-VALIDATION.md)。2026-10-04 V11 正式双程序验证已 VERIFIED，固定 Linux **283/50**、实际页面双结果/版本失效/归档、Worker SIGKILL 自然恢复、六队列/权限/日志审计与清理见 [验收](M2-CONTENT-VALIDATION-JOBS-VALIDATION.md)。完整内容仍 IN_PROGRESS，下一步不可变送审/撤回，随后生成输出预览和独立自测。官方题解访问已 VERIFIED（269/45、实际取消/用户隔离/真实 AC 解锁与审计清理），见 [验收](M2-SOLUTION-ACCESS-VALIDATION.md)；合成快照不等于正式发布。
+2026-10-04 不可变送审/撤回单元已 VERIFIED：V12 精确绑定本人当前双 PASSED 的不可变快照，唯一待审、owner/CAS/幂等、待审禁改、撤回后修改与历史保留完成。全新固定 Linux API169 + Worker120 = **289**、前端 **56** 及全部检查通过；相同构件真实页面两轮送审/撤回/归档、HTTP 六类待审写409、旧撤回不影响新待审、冻结题面不变、正常与轮询回退 AC、六空队列、30 项实际数据库权限拒绝及精确清理通过。见 [验收](M2-CONTENT-REVIEW-VALIDATION.md)。本轮未重复 Worker SIGKILL，117 个运行文件逐字节等同上轮真实故障验收；截图接口不可用，保存真实 DOM 观察，不提供合成截图。完整内容与 M2 仍 IN_PROGRESS；下一步为输出生成预览、独立自测，外部 SMTP 仍需服务商和授权收件箱配置；受控审核身份/批准发布保持 M4。
+
+以下阶段段落保留当时记录，后续顺序以本段为准。
+
+题目内容的作者草稿阶段已 VERIFIED：V9、本人 CRUD/归档、逐条/有界 ZIP、压缩完整性及编辑页面完成，固定 Linux 261/39、实际文件选择器/两页冲突/归档与独立审计清理通过，见 [设计](M2-CONTENT-DESIGN.md)与[记录](M2-CONTENT-VALIDATION.md)。2026-10-04 V11 正式双程序验证已 VERIFIED，固定 Linux **283/50**、实际页面双结果/版本失效/归档、Worker SIGKILL 自然恢复、六队列/权限/日志审计与清理见 [验收](M2-CONTENT-VALIDATION-JOBS-VALIDATION.md)。完整内容仍 IN_PROGRESS，不可变送审/撤回已在下一个单元验收，下一步生成输出预览和独立自测。官方题解访问已 VERIFIED（269/45、实际取消/用户隔离/真实 AC 解锁与审计清理），见 [验收](M2-SOLUTION-ACCESS-VALIDATION.md)；合成快照不等于正式发布。
 
 学习记录单元现已 VERIFIED，固定 Linux 后端 241 / 前端全门禁 35、真实两页草稿冲突、正常与兜底 AC、个人/官方进度、历史、页面题单操作、提交快照独立性及审计清理通过，见 [记录](M2-LEARNING-RECORDS-VALIDATION.md)。API/Worker、普通账号和当前判题契约继续保持原边界。
 
-普通账号及公开题库/SMTP 适配单元已 `VERIFIED`，后者固定 Linux 后端 229/前端 24 与真实选题 AC、独立审计及精确清理见 [验收记录](M2-LIBRARY-SMTP-VALIDATION.md)。当前下一单元为不可变送审/撤回，正式内容发布仍待实现；已完成的学习合约见 [设计](M2-LEARNING-RECORDS-DESIGN.md)。测试 fixture 只用于可丢弃数据库，不向真实题库发布内容。真实 SMTP 尚未配置或投递；适配通过不能替代服务商验收。无 PR、main 合并、tag 或 Release。
+普通账号及公开题库/SMTP 适配单元已 `VERIFIED`，后者固定 Linux 后端 229/前端 24 与真实选题 AC、独立审计及精确清理见 [验收记录](M2-LIBRARY-SMTP-VALIDATION.md)。当前下一单元为输出生成预览，正式内容发布仍待实现；已完成的学习合约见 [设计](M2-LEARNING-RECORDS-DESIGN.md)。测试 fixture 只用于可丢弃数据库，不向真实题库发布内容。真实 SMTP 尚未配置或投递；适配通过不能替代服务商验收。无 PR、main 合并、tag 或 Release。

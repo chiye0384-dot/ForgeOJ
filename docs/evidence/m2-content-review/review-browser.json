@@ -1,0 +1,28 @@
+{
+  "pendingUiWritesDisabled": true,
+  "draftId": "ce96b247-7940-41df-ac45-eb9e53b790d7",
+  "firstFrozenStatementUnchangedAfterEdit": true,
+  "observedInActualBrowser": true,
+  "reviews": [
+    {
+      "status": "WITHDRAWN",
+      "draftId": "ce96b247-7940-41df-ac45-eb9e53b790d7",
+      "reviewId": "3f026a10-daf1-4c90-8aa5-ea4de7251566",
+      "reviewNo": 1,
+      "requestId": "a1af29a2-7b0c-48de-9c76-68b8b461e66d",
+      "draftVersion": 4,
+      "validationJobId": "af091b4d-5bc1-457c-818f-c3759b1daabb",
+      "frozenStatementSha256": "215cb6d80f9a18d89596d61c4d3c4db0a52233f8c828c3a7bb9e8f168122222e"
+    },
+    {
+      "status": "WITHDRAWN",
+      "draftId": "ce96b247-7940-41df-ac45-eb9e53b790d7",
+      "reviewId": "784bab58-bea9-4ce9-8558-7102a5fcaa21",
+      "reviewNo": 2,
+      "requestId": "be6f49ba-a978-4fed-81e6-2e7a9b69da82",
+      "draftVersion": 5,
+      "validationJobId": "9bb4bcd6-78d9-4c39-bf19-7d566605833d",
+      "frozenStatementSha256": "537d75e33e24d274e4d363fee4beb75163fc5d4428b279e944203ed5d9076959"
+    }
+  ]
+}

@@ -1,0 +1,24 @@
+{
+  "verifiedAt": "2026-10-04T11:48:43.3999106Z",
+  "observedInActualBrowser": true,
+  "draftId": "3483fd08-ce74-4048-b9cf-0e0fdfa4f0ce",
+  "testCount": 2,
+  "archivedVersion": 7,
+  "visibleVersionInvalidation": true,
+  "archivedHistoryVisible": true,
+  "newExecutionDisabledWhenArchived": true,
+  "crashVerified": false,
+  "newWorkerKillReplayPerformed": false,
+  "jobs": [
+    {
+      "jobId": "c7dea14f-e47f-4eb4-aed2-cd8a5817e594",
+      "draftId": "3483fd08-ce74-4048-b9cf-0e0fdfa4f0ce",
+      "requestId": "0fa9e447-fc15-4bf0-a26f-d5e7211ed6df",
+      "draftVersion": 6,
+      "solutionResult": "ACCEPTED",
+      "referenceResult": "ACCEPTED",
+      "validationStatus": "PASSED",
+      "recovered": false
+    }
+  ]
+}

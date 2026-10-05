@@ -1,0 +1,127 @@
+- banner:
+  - generic: F
+  - heading "ForgeOJ" [level=1]
+  - paragraph: Java 21 在线练习与判题
+  - navigation "主导航":
+    - link "题库":
+      - /url: /problems
+    - link "学习记录":
+      - /url: /learning
+    - link "我的题目":
+      - /url: /authoring
+    - link "做题":
+      - /url: /
+    - link "账号":
+      - /url: /account
+- main:
+  - heading "我的题目草稿" [level=2]
+  - paragraph: 草稿、参考程序和测试数据仅本人可见。保存草稿后可继续完善内容。
+  - text: 新题目标题
+  - textbox "新题目标题": 输出预览真实验收
+  - button "创建内容草稿"
+  - list:
+    - button "输出预览真实验收"
+    - text: · DRAFT · 2 组测试
+  - button "上一页" [disabled]
+  - text: 1 / 1
+  - button "下一页" [disabled]
+  - heading "输出预览真实验收" [level=3]
+  - paragraph: 版本 3 · DRAFT
+  - text: 题目标题
+  - textbox "题目标题": 输出预览真实验收
+  - text: 题面
+  - textbox "题面": 原创验收：读入两个整数，输出它们的和。
+  - text: 输入说明
+  - textbox "输入说明": 两个整数 a b。
+  - text: 输出说明
+  - textbox "输出说明": 输出 a+b 和换行。
+  - text: 公开样例 JSON
+  - textbox "公开样例 JSON": "[ { \"input\": \"1 2\\n\", \"output\": \"3\\n\" } ]"
+  - text: 来源声明
+  - combobox "来源声明":
+    - option "原创" [selected]
+    - option "基于允许使用的来源改编"
+  - text: 来源链接
+  - textbox "来源链接"
+  - text: 许可证或授权说明
+  - textbox "许可证或授权说明": 本人原创临时验收材料，允许本次项目测试使用。
+  - text: 时间上限 ms
+  - spinbutton "时间上限 ms": "20000"
+  - text: 内存上限 MB
+  - spinbutton "内存上限 MB": "256"
+  - text: 输出上限 bytes
+  - spinbutton "输出上限 bytes": "1048576"
+  - text: 私有参考程序 Main.java
+  - textbox "私有参考程序 Main.java": "public class Main { invalid reference; } // E2E_CONTENT_PRIVATE_SENTINEL"
+  - text: 官方题解核心思路
+  - textbox "官方题解核心思路": 使用 BufferedReader 独立读入两数并求和。
+  - text: 独立题解代码 Main.java
+  - textbox "独立题解代码 Main.java": "import java.io.*; public class Main { public static void main(String[] args) throws Exception { String[] s=new BufferedReader(new InputStreamReader(System.in)).readLine().trim().split(\"\\s+\"); System.out.println(Long.parseLong(s[0])+Long.parseLong(s[1])); } }"
+  - button "保存题目内容"
+  - group "测试数据":
+    - generic: 测试数据
+    - paragraph: 最多 100 对；单文件 1 MiB，总量 16 MiB。ZIP 仅包含根目录 001.in/001.out 等成对 UTF-8 文件。
+    - text: 测试 1 输入
+    - textbox "测试 1 输入": 1 2
+    - text: 测试 1 正确输出
+    - textbox "测试 1 正确输出": wrong
+    - button "移除本页测试"
+    - text: 测试 2 输入
+    - textbox "测试 2 输入": 7 8
+    - text: 测试 2 正确输出
+    - textbox "测试 2 正确输出": wrong
+    - button "移除本页测试"
+    - button "添加测试"
+    - button "保存全部测试"
+    - text: 以 ZIP 替换全部测试
+    - button "以 ZIP 替换全部测试"
+  - button "归档此草稿"
+  - heading "正式沙箱验证" [level=4]
+  - paragraph: 仅验证当前已保存版本；本页未保存内容不会提交。参考程序和题解分别执行，验证通过后仍须送审。
+  - button "验证当前已保存版本"
+  - button "查看验证记录"
+  - list
+  - status
+  - region "参考输出预览":
+    - heading "参考输出预览" [level=4]
+    - paragraph: 仅运行当前已保存的参考程序和测试输入；忽略原答案，不执行题解，不产生验证通过或正式成绩。
+    - button "生成当前已保存输入的输出预览"
+    - button "查看输出预览历史"
+    - list
+    - button "上一页预览" [disabled]
+    - button "下一页预览" [disabled]
+    - article:
+      - paragraph: 冻结版本 3 · FINISHED · COMPILE_ERROR
+      - button "刷新输出预览"
+      - heading "测试 1" [level=5]
+      - paragraph: 冻结输入
+      - generic: 1 2
+      - paragraph: 原正确输出
+      - generic: wrong
+      - paragraph: 生成输出
+      - generic: 无可确认输出
+      - heading "测试 2" [level=5]
+      - paragraph: 冻结输入
+      - generic: 7 8
+      - paragraph: 原正确输出
+      - generic: wrong
+      - paragraph: 生成输出
+      - generic: 无可确认输出
+      - paragraph: 确认将替换已保存的全部测试答案及本页测试列表，并使旧验证失效；未保存的题面和代码保留。
+      - button "确认使用这组生成输出" [disabled]
+    - status
+  - region "不可变送审":
+    - heading "送审与撤回" [level=4]
+    - paragraph: 只送审当前已保存、双程序验证通过的版本；本页未保存内容不会提交。审核期间须先撤回再修改，历史快照永久保留。
+    - button "载入通过验证与送审历史"
+    - text: 选择当前版本通过记录
+    - combobox "选择当前版本通过记录":
+      - option "请选择验证记录" [selected]
+    - button "送审当前已保存版本" [disabled]
+    - button "上一页验证" [disabled]
+    - button "下一页验证" [disabled]
+    - list
+    - button "上一页送审" [disabled]
+    - button "下一页送审" [disabled]
+    - status
+  - status: 草稿已更新。

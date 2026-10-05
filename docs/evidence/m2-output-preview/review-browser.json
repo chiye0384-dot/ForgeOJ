@@ -1,0 +1,29 @@
+{
+  "verifiedAt": "2026-10-04T11:48:40.4156565Z",
+  "observedInActualBrowser": true,
+  "draftId": "3483fd08-ce74-4048-b9cf-0e0fdfa4f0ce",
+  "testCount": 2,
+  "pendingUiWritesDisabled": true,
+  "reviews": [
+    {
+      "status": "WITHDRAWN",
+      "draftId": "3483fd08-ce74-4048-b9cf-0e0fdfa4f0ce",
+      "reviewId": "efe59cc0-3ac9-4617-89f7-731edfa23bd0",
+      "reviewNo": 1,
+      "requestId": "cec70bd2-b4fc-444c-aac3-f2661392c428",
+      "draftVersion": 6,
+      "validationJobId": "c7dea14f-e47f-4eb4-aed2-cd8a5817e594",
+      "frozenStatementSha256": "b763fbf4fcebe14eea2938f9e03dba3cbf81450664e17579801f85b9fb7547af"
+    },
+    {
+      "status": "WITHDRAWN",
+      "draftId": "3483fd08-ce74-4048-b9cf-0e0fdfa4f0ce",
+      "reviewId": "43ffbde6-cb7e-45c5-98fe-6bda313abc3a",
+      "reviewNo": 2,
+      "requestId": "19479daa-eba9-44f9-8283-6da1f6995bb1",
+      "draftVersion": 6,
+      "validationJobId": "c7dea14f-e47f-4eb4-aed2-cd8a5817e594",
+      "frozenStatementSha256": "b763fbf4fcebe14eea2938f9e03dba3cbf81450664e17579801f85b9fb7547af"
+    }
+  ]
+}

@@ -4,6 +4,7 @@ import { computed, onBeforeUnmount, onMounted, ref } from 'vue'
 import { ApiRequestError, restoreSession, type SessionResponse } from '@/services/forgeojApi'
 import ContentValidation from '@/components/ContentValidation.vue'
 import ContentReview from '@/components/ContentReview.vue'
+import ContentOutput from '@/components/ContentOutput.vue'
 import {
   authoredDetail,
   authoredList,
@@ -202,6 +203,12 @@ function workflow(summary: AuthoredSummary) {
   selected.value = { ...selected.value, draft: summary }
   lists.value = lists.value.map((row) => (row.id === summary.id ? summary : row))
 }
+function outputApplied(summary: AuthoredSummary, entries: AuthoredTest[]) {
+  if (!selected.value || selected.value.draft.id !== summary.id) return
+  workflow(summary)
+  tests.value = entries
+  message.value = '生成输出已确认，测试答案已保存；请验证新的草稿版本。'
+}
 function previous() {
   page.value--
   selected.value = null
@@ -325,6 +332,18 @@ onBeforeUnmount(() => {
         :editing-busy="busy || workflowBusy || conflict"
         @conflict="conflict = true"
       />
+      <ContentOutput
+        v-if="session?.user"
+        :draft-id="selected.draft.id"
+        :version="selected.draft.version"
+        :status="selected.draft.status"
+        :user-id="session.user.id"
+        :csrf="session.csrf"
+        :editing-busy="busy || workflowBusy || conflict"
+        @applied="outputApplied"
+        @busy="workflowBusy = $event"
+        @conflict="conflict = true"
+      />
       <ContentReview
         v-if="session?.user"
         :draft-id="selected.draft.id"
@@ -332,7 +351,7 @@ onBeforeUnmount(() => {
         :status="selected.draft.status"
         :user-id="session.user.id"
         :csrf="session.csrf"
-        :editing-busy="busy || conflict"
+        :editing-busy="busy || workflowBusy || conflict"
         @workflow="workflow"
         @busy="workflowBusy = $event"
         @conflict="conflict = true"

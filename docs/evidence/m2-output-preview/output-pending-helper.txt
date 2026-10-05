@@ -1,0 +1,17 @@
+import assert from 'node:assert/strict'
+import {readFile,writeFile} from 'node:fs/promises'
+import {randomUUID} from 'node:crypto'
+const base='http://localhost:5173',cookies=new Map();let csrf
+async function request(path,method='GET',body){
+ const headers={Cookie:[...cookies].map(([k,v])=>k+'='+v).join('; ')}
+ if(method!=='GET'){headers.Origin=base;headers['Content-Type']='application/json';headers[csrf.headerName]=csrf.token}
+ const r=await fetch(base+path,{method,headers,body:body===undefined?undefined:JSON.stringify(body),signal:AbortSignal.timeout(10000)})
+ for(const v of r.headers.getSetCookie()){const p=v.split(';')[0],i=p.indexOf('=');cookies.set(p.slice(0,i),p.slice(i+1))}
+ const t=await r.text();return {status:r.status,body:t?JSON.parse(t):null}
+}
+csrf=(await request('/api/v1/auth/session')).body.csrf;assert.equal((await request('/api/v1/auth/login','POST',{username:'learner',password:'forgeoj-dev-only'})).status,200);csrf=(await request('/api/v1/auth/session')).body.csrf
+const observed=JSON.parse(await readFile('/reports/review-browser.json','utf8')),path='/api/v1/me/authored-problems/'+observed.draftId
+const d=await request(path);assert.equal(d.body.draft.status,'UNDER_REVIEW')
+assert.equal((await request(path+'/output-previews','POST',{expectedVersion:d.body.draft.version,requestId:randomUUID()})).status,409)
+const afterward=await request(path);assert.equal(afterward.body.draft.version,d.body.draft.version);assert.equal(afterward.body.draft.status,'UNDER_REVIEW')
+await writeFile('/reports/output-pending-lock.json',JSON.stringify({verifiedAt:new Date().toISOString(),draftId:observed.draftId,version:d.body.draft.version,newPreviewStatus:409,versionUnchanged:true,stillUnderReview:true},null,2));console.log('ACTUAL_OUTPUT_PENDING_LOCK_VERIFIED')

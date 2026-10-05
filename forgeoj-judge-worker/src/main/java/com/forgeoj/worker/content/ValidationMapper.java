@@ -7,6 +7,12 @@ import org.apache.ibatis.annotations.*;
 
 @Mapper
 public interface ValidationMapper {
+    @Select("SELECT execution_kind='OUTPUT_PREVIEW' FROM content_validation_job WHERE id=#{id}")
+    boolean preview(String id);
+    @Insert("INSERT INTO content_output_preview_case(job_id,snapshot_id,sequence_no,output_gzip,output_bytes,output_sha256) VALUES(#{id},#{snapshot},#{sequence},#{gzip},#{bytes},#{sha})")
+    int output(@Param("id") String id,@Param("snapshot") String snapshot,@Param("sequence") int sequence,@Param("gzip") byte[] gzip,@Param("bytes") long bytes,@Param("sha") String sha);
+    @Update("UPDATE content_validation_job SET processing_status='FINISHED',status_version=status_version+1,reference_result=#{result},lease_owner=NULL,lease_token=NULL,lease_expires_at=NULL,next_attempt_at=NULL,finished_at=CURRENT_TIMESTAMP(6) WHERE id=#{id} AND execution_kind='OUTPUT_PREVIEW' AND processing_status='RUNNING' AND lease_token=#{token} AND lease_expires_at>CURRENT_TIMESTAMP(6)")
+    int finishPreview(@Param("id") String id,@Param("token") String token,@Param("result") String result);
     record Job(String id,String snapshotId,long ownerId,String processingStatus,long statusVersion,int attemptCount,
             int maxAttempts,int deliverySequence,String leaseOwner,String leaseToken,boolean leaseValid,boolean due) {}
     record Snapshot(String id,String draftId,long ownerId,long draftVersion,String metadataText,String referenceCode,
@@ -44,7 +50,7 @@ public interface ValidationMapper {
           reference_result=#{reference},solution_result=#{solution},
           validation_status=IF(#{reference}='ACCEPTED' AND #{solution}='ACCEPTED','PASSED','FAILED'),
           lease_owner=NULL,lease_token=NULL,lease_expires_at=NULL,next_attempt_at=NULL,finished_at=CURRENT_TIMESTAMP(6)
-        WHERE id=#{id} AND processing_status='RUNNING' AND lease_token=#{token}
+        WHERE id=#{id} AND execution_kind='VALIDATE' AND processing_status='RUNNING' AND lease_token=#{token}
           AND lease_expires_at>CURRENT_TIMESTAMP(6)
         """)
     int finish(@Param("id") String id,@Param("token") String token,@Param("reference") String reference,@Param("solution") String solution);

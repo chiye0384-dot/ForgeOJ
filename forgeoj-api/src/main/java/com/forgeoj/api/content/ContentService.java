@@ -88,7 +88,7 @@ public class ContentService {
         for(int i=0;i<s.length();i++) {char ch=s.charAt(i);if(Character.isHighSurrogate(ch)) {if(++i>=s.length() || !Character.isLowSurrogate(s.charAt(i))) throw bad();}else if(Character.isLowSurrogate(ch)) throw bad();}return s;
     }
     private static byte[] gzip(byte[] bytes) {try {var out=new ByteArrayOutputStream();try(var stream=new GZIPOutputStream(out)) {stream.write(bytes);}return out.toByteArray();}catch(IOException e) {throw new IllegalStateException("Test compression failed");}}
-    private static String unzip(byte[] bytes,long expected,String digest) {
+    static String unzip(byte[] bytes,long expected,String digest) {
         if(expected<0 || expected>TestDatasetArchive.MAX_FILE_BYTES) throw new IllegalStateException("Invalid private test size");
         try(var stream=new GZIPInputStream(new ByteArrayInputStream(bytes))) {byte[] data=stream.readNBytes(TestDatasetArchive.MAX_FILE_BYTES+1);if(data.length!=expected || stream.read()!=-1 || !hash(data).equals(digest)) throw new IllegalStateException("Invalid private test integrity");return new String(data,StandardCharsets.UTF_8);}catch(IOException e) {throw new IllegalStateException("Invalid private test integrity");}
     }

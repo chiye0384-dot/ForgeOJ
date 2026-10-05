@@ -1,0 +1,21 @@
+{
+  "verifiedAt": "2026-10-04T11:48:43.962Z",
+  "draftId": "3483fd08-ce74-4048-b9cf-0e0fdfa4f0ce",
+  "ownerDenied": true,
+  "requestReplaySameJob": true,
+  "deleteReferencedDraftStatus": 409,
+  "publicProblemCount": 2,
+  "results": [
+    {
+      "jobId": "c7dea14f-e47f-4eb4-aed2-cd8a5817e594",
+      "draftId": "3483fd08-ce74-4048-b9cf-0e0fdfa4f0ce",
+      "draftVersion": 6,
+      "processingStatus": "FINISHED",
+      "statusVersion": 2,
+      "validationStatus": "PASSED",
+      "referenceResult": "ACCEPTED",
+      "solutionResult": "ACCEPTED",
+      "stale": true
+    }
+  ]
+}

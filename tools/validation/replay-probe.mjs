@@ -215,6 +215,7 @@ else if (process.argv[2] === 'permissions') await permissions()
 else if (process.argv[2] === 'library') await library()
 else if (process.argv[2] === 'learning') await learning()
 else if (process.argv[2] === 'content') await contentValidation()
+else if (process.argv[2] === 'output') await outputPreview()
 else if (process.argv[2] === 'review-lock') await reviewLock()
 else if (process.argv[2] === 'review') await reviewHistory()
 else throw new Error('Expected matrix, permissions, library, learning or content')
@@ -286,7 +287,7 @@ async function reviewHistory() {
     const url=path+'/reviews/'+r.reviewId,detail=await owner.request(url);assert.equal(detail.status,200)
     assert.deepEqual(Object.keys(detail.body).sort(),['content','review','testCount'])
     for(const key of ['reviewId','draftVersion','reviewNo','validationJobId','status']) assert.equal(detail.body.review[key],r[key])
-    assert.equal(detail.body.review.status,'WITHDRAWN');assert.equal(detail.body.testCount,1)
+    assert.equal(detail.body.review.status,'WITHDRAWN');assert.equal(detail.body.testCount,observed.testCount??1)
     assert.equal(createHash('sha256').update(detail.body.content.metadata.statement).digest('hex'),r.frozenStatementSha256)
     assert.equal((await other.request(url)).status,404);assert.equal((await other.request(url+'/withdraw','POST',{expectedVersion:r.draftVersion,expectedReviewVersion:0})).status,404)
     const replay=await owner.request(path+'/reviews','POST',{expectedVersion:r.draftVersion,validationJobId:r.validationJobId,requestId:r.requestId});assert.equal(replay.status,202);assert.equal(replay.body.reviewId,r.reviewId);assert.equal(replay.body.status,'WITHDRAWN')
@@ -381,4 +382,35 @@ async function library() {
     filteredSlug:filtered.body.items[0].slug, literalWildcardTotal:0, invalidSizeStatus:400,
     tags:tags.body.tags, exactListFields:true, exactDetailFields:true }, null, 2))
   console.log(JSON.stringify({ event:'LIBRARY_HTTP_VERIFIED', total:list.body.total, anonymous:true }))
+}
+
+async function outputPreview() {
+  const observed=JSON.parse(await readFile('/reports/output-browser.json','utf8'))
+  const owner=new Client(),other=new Client(),anonymous=new Client();await owner.login();await other.login('other-learner')
+  const path='/api/v1/me/authored-problems/'+observed.draftId, previews=path+'/output-previews'
+  const archived=await owner.request(path);assert.equal(archived.body.draft.status,'ARCHIVED');assert.equal(archived.body.draft.version,observed.archivedVersion)
+  const list=await owner.request(previews);assert.equal(list.body.total,observed.jobs.length)
+  assert.deepEqual(Object.keys(list.body.items[0]).sort(),['acceptedVersion','draftId','draftVersion','jobId','processingStatus','referenceResult','stale','statusVersion'])
+  assert.equal((await other.request(previews)).status,404);assert.equal((await anonymous.request(previews)).status,401);assert.equal((await owner.request(previews+'?size=51')).status,400)
+  for(const j of observed.jobs) {
+    const result=await owner.request(previews+'/'+j.jobId);assert.equal(result.status,200);assert.deepEqual(Object.keys(result.body).sort(),['cases','preview'])
+    assert.equal(result.body.preview.referenceResult,j.referenceResult);assert.equal(result.body.preview.stale,true);assert.equal(result.body.cases.length,observed.testCount)
+    for(let i=0;i<result.body.cases.length;i++) {
+      const c=result.body.cases[i];assert.deepEqual(Object.keys(c).sort(),['generatedOutput','input','previousOutput','sequence'])
+      if(j.referenceResult==='ACCEPTED') assert.equal(createHash('sha256').update(c.generatedOutput).digest('hex'),j.outputSha256[i])
+      else assert.equal(c.generatedOutput,null)
+    }
+    assert.equal((await other.request(previews+'/'+j.jobId)).status,404)
+    assert.equal((await owner.request(path+'/validations/'+j.jobId)).status,404)
+    assert.equal((await owner.request(path+'/reviews','POST',{expectedVersion:j.draftVersion,validationJobId:j.jobId,requestId:randomUUID()})).status,409)
+    const replay=await owner.request(previews,'POST',{expectedVersion:j.draftVersion,requestId:j.requestId});assert.equal(replay.status,202);assert.equal(replay.body.jobId,j.jobId)
+    assert.equal((await owner.request(path+'/validations','POST',{expectedVersion:j.draftVersion,requestId:j.requestId})).status,409)
+    const accept=await owner.request(previews+'/'+j.jobId+'/accept','POST',{expectedVersion:j.draftVersion})
+    if(j.acceptedVersion){assert.equal(accept.status,200);assert.equal(accept.body.appliedVersion,j.acceptedVersion)}else assert.equal(accept.status,409)
+    assert.equal((await other.request(previews+'/'+j.jobId+'/accept','POST',{expectedVersion:j.draftVersion})).status,404)
+  }
+  assert.equal((await owner.request(path)).body.draft.version,observed.archivedVersion)
+  assert.equal((await anonymous.request('/api/v1/problems')).body.total,2)
+  await writeFile('/reports/output-http.json',JSON.stringify({verifiedAt:new Date().toISOString(),ownerDenied:true,requestReplaySameJob:true,purposeIsolation:true,acceptedReplayNeverOverwrites:true,allOutputDigestsMatch:true,archivedVersion:observed.archivedVersion,publicProblemCount:2},null,2))
+  console.log('E2E_OUTPUT_PREVIEW_HTTP_VERIFIED')
 }

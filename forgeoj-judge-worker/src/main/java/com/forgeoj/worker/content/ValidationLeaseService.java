@@ -39,6 +39,23 @@ public class ValidationLeaseService {
         matching(claim);one(mapper.finish(claim.jobId(),claim.token(),reference,solution));
         one(mapper.closeAttempt(claim.jobId(),claim.token(),"SUCCEEDED",null));
     }
+    @Transactional public void finishPreview(Claim claim,com.forgeoj.worker.sandbox.SandboxOutputPreview preview) {
+        matching(claim);if(!mapper.preview(claim.jobId())) throw new IllegalStateException("Invalid preview purpose");
+        if(preview.outcome()==com.forgeoj.worker.sandbox.SandboxOutcome.ACCEPTED) {
+            int expected=mapper.tests(claim.snapshotId()).size();
+            if(preview.outputs().size()!=expected || expected<1 || expected>100) throw new IllegalStateException("Incomplete generated output");
+            long total=mapper.tests(claim.snapshotId()).stream().mapToLong(t->t.inputBytes()).sum();
+            for(int i=0;i<expected;i++) {
+                byte[] data=preview.outputs().get(i).getBytes(java.nio.charset.StandardCharsets.UTF_8);
+                total+=data.length;if(data.length>1048576 || total>16L*1024*1024) throw new IllegalStateException("Generated output too large");
+                var compressed=new java.io.ByteArrayOutputStream();
+                try(var gzip=new java.util.zip.GZIPOutputStream(compressed)){gzip.write(data);}catch(java.io.IOException e){throw new IllegalStateException("Output compression failed");}
+                one(mapper.output(claim.jobId(),claim.snapshotId(),i+1,compressed.toByteArray(),data.length,ValidationSnapshotLoader.hash(preview.outputs().get(i))));
+            }
+        }
+        one(mapper.finishPreview(claim.jobId(),claim.token(),preview.outcome().name()));
+        one(mapper.closeAttempt(claim.jobId(),claim.token(),"SUCCEEDED",null));
+    }
     @Transactional public void failure(Claim claim,boolean invalid) {
         var row=matching(claim);retry(row,invalid,invalid?"SNAPSHOT_INVALID":"PLATFORM_FAILURE","RETRYABLE_FAILURE");
     }

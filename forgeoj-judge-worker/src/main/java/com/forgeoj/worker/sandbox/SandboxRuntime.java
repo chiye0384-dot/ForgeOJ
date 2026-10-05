@@ -12,5 +12,7 @@ public interface SandboxRuntime {
 
     SandboxExecutionResult execute(JudgeTaskSnapshot snapshot, String attemptId);
 
+    default SandboxOutputPreview generate(JudgeTaskSnapshot snapshot,String attemptId) {throw new SandboxException("Output generation unsupported");}
+
     void cleanup(SandboxContainer container);
 }

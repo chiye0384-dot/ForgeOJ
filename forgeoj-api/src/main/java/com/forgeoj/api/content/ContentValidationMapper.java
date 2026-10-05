@@ -6,6 +6,8 @@ import org.apache.ibatis.annotations.*;
 
 @Mapper
 public interface ContentValidationMapper {
+    @Select("SELECT execution_kind FROM content_validation_job WHERE owner_id=#{owner} AND id=#{job}")
+    String kind(@Param("owner") long owner,@Param("job") String job);
     record Result(String jobId,String draftId,long draftVersion,String processingStatus,long statusVersion,
             String validationStatus,String referenceResult,String solutionResult,boolean stale) {}
     record Page(java.util.List<Result> items,int page,int size,long total) {}
@@ -15,6 +17,19 @@ public interface ContentValidationMapper {
             int timeLimitMs,int memoryLimitMb,long outputLimitBytes) {}
     String RESULT="j.id AS jobId,s.draft_id AS draftId,s.draft_version AS draftVersion,IF(j.processing_status='WAITING_RETRY','RUNNING',j.processing_status) AS processingStatus,j.status_version AS statusVersion,j.validation_status AS validationStatus,j.reference_result AS referenceResult,j.solution_result AS solutionResult,(d.version<>s.draft_version OR d.status<>'DRAFT') AS stale";
     String FROM=" FROM content_validation_job j JOIN content_validation_snapshot s ON s.id=j.snapshot_id JOIN authored_problem_draft d ON d.id=s.draft_id ";
+    @Insert("""
+        INSERT INTO content_validation_snapshot(id,draft_id,owner_id,draft_version,metadata_text,
+          reference_code,solution_idea,solution_code,reference_sha256,solution_sha256,test_dataset_sha256,
+          snapshot_sha256,java_image_digest,time_limit_ms,memory_limit_mb,output_limit_bytes,execution_kind)
+        VALUES(#{id},#{draftId},#{ownerId},#{draftVersion},#{metadataText},#{referenceCode},#{solutionIdea},
+          #{solutionCode},#{referenceSha256},#{solutionSha256},#{testDatasetSha256},#{snapshotSha256},
+          #{image},#{timeLimitMs},#{memoryLimitMb},#{outputLimitBytes},'OUTPUT_PREVIEW')
+        """)
+    int insertPreviewSnapshot(Snapshot snapshot);
+    @Insert("INSERT INTO content_validation_job(id,snapshot_id,owner_id,client_request_id,execution_kind) VALUES(#{job},#{snapshot},#{owner},#{request},'OUTPUT_PREVIEW')")
+    int previewJob(@Param("job") String job,@Param("snapshot") String snapshot,@Param("owner") long owner,@Param("request") String request);
+    @Select("SELECT execution_kind FROM content_validation_job WHERE owner_id=#{owner} AND client_request_id=#{request}")
+    String requestKind(@Param("owner") long owner,@Param("request") String request);
     @Select("SELECT user_id FROM user_judge_quota_lock WHERE user_id=#{owner} FOR UPDATE")
     Optional<Long> lockQuota(long owner);
     @Select("SELECT (SELECT COUNT(*) FROM submission WHERE user_id=#{owner} AND processing_status IN ('QUEUED','RETRYING'))+(SELECT COUNT(*) FROM content_validation_job WHERE owner_id=#{owner} AND processing_status='QUEUED')")
@@ -23,9 +38,9 @@ public interface ContentValidationMapper {
     Optional<Result> request(@Param("owner") long owner,@Param("request") String request);
     @Select("SELECT "+RESULT+FROM+"WHERE j.owner_id=#{owner} AND s.draft_id=#{draft} AND j.id=#{job}")
     Optional<Result> result(@Param("owner") long owner,@Param("draft") String draft,@Param("job") String job);
-    @Select("SELECT COUNT(*)"+FROM+"WHERE j.owner_id=#{owner} AND s.draft_id=#{draft}")
+    @Select("SELECT COUNT(*)"+FROM+"WHERE j.owner_id=#{owner} AND s.draft_id=#{draft} AND j.execution_kind='VALIDATE'")
     long count(@Param("owner") long owner,@Param("draft") String draft);
-    @Select("SELECT "+RESULT+FROM+"WHERE j.owner_id=#{owner} AND s.draft_id=#{draft} ORDER BY j.created_at DESC,j.id DESC LIMIT #{size} OFFSET #{offset}")
+    @Select("SELECT "+RESULT+FROM+"WHERE j.owner_id=#{owner} AND s.draft_id=#{draft} AND j.execution_kind='VALIDATE' ORDER BY j.created_at DESC,j.id DESC LIMIT #{size} OFFSET #{offset}")
     java.util.List<Result> list(@Param("owner") long owner,@Param("draft") String draft,@Param("size") int size,@Param("offset") long offset);
     @Insert("""
         INSERT INTO content_validation_snapshot(id,draft_id,owner_id,draft_version,metadata_text,

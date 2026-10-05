@@ -1,0 +1,36 @@
+param([Parameter(Mandatory)][string]$RunDirectory)
+$ErrorActionPreference='Stop'
+$taskRepo=(Resolve-Path '.').Path
+$taskRun=(Resolve-Path -LiteralPath $RunDirectory).Path
+if(-not $taskRun.StartsWith((Join-Path $taskRepo 'target')+[IO.Path]::DirectorySeparatorChar,[StringComparison]::OrdinalIgnoreCase)){throw 'Not owned target'}
+$taskState=Get-Content -LiteralPath (Join-Path $taskRun 'state.json') -Raw | ConvertFrom-Json
+if((Split-Path -Leaf $taskRun) -ne $taskState.Project -or $taskState.Project -notmatch '^forgeoj-e2e-\d{8}-\d{6}-[a-f0-9]{8}$'){throw 'Wrong replay identity'}
+$env:FORGEOJ_E2E_SOURCE=$taskRepo;$env:FORGEOJ_E2E_PROJECT=$taskState.Project;$env:FORGEOJ_E2E_ARTIFACTS=$taskState.BuildDirectory;$env:FORGEOJ_E2E_REPORTS=$taskRun
+$taskChecks=@((Get-Content docs/evidence/m2-content-review/additional-grant-denials.json -Raw | ConvertFrom-Json).additionalActualDenials)
+foreach($taskSpec in @(
+ @('forgeoj_api','INSERT INTO content_output_preview_case(job_id) SELECT job_id FROM content_output_preview_case WHERE 1=0;',1142),
+ @('forgeoj_api','UPDATE content_output_preview_case SET output_sha256=output_sha256 WHERE 1=0;',1142),
+ @('forgeoj_api','DELETE FROM content_output_preview_case WHERE 1=0;',1142),
+ @('forgeoj_worker','UPDATE content_output_preview_case SET output_sha256=output_sha256 WHERE 1=0;',1142),
+ @('forgeoj_worker','DELETE FROM content_output_preview_case WHERE 1=0;',1142),
+ @('forgeoj_worker','SELECT job_id FROM content_output_acceptance LIMIT 0;',1142),
+ @('forgeoj_worker','INSERT INTO content_output_acceptance(job_id) SELECT job_id FROM content_output_acceptance WHERE 1=0;',1142),
+ @('forgeoj_worker','UPDATE content_output_acceptance SET applied_version=applied_version WHERE 1=0;',1142),
+ @('forgeoj_worker','DELETE FROM content_output_acceptance WHERE 1=0;',1142),
+ @('forgeoj_api','UPDATE content_output_acceptance SET applied_version=applied_version WHERE 1=0;',1142),
+ @('forgeoj_api','DELETE FROM content_output_acceptance WHERE 1=0;',1142),
+ @('forgeoj_api','UPDATE content_validation_job SET execution_kind=execution_kind WHERE 1=0;',1142),
+ @('forgeoj_worker','UPDATE content_validation_job SET execution_kind=execution_kind WHERE 1=0;',1143),
+ @('forgeoj_api','UPDATE content_validation_snapshot SET execution_kind=execution_kind WHERE 1=0;',1142),
+ @('forgeoj_worker','UPDATE content_validation_snapshot SET execution_kind=execution_kind WHERE 1=0;',1142)
+)) {$taskChecks += [pscustomobject]@{role=$taskSpec[0];sql=$taskSpec[1];mysqlError=$taskSpec[2]}}
+$taskResults=@()
+foreach($taskCheck in $taskChecks){
+ $taskVar=if($taskCheck.role -eq 'forgeoj_api'){'FORGEOJ_API_DB_PASSWORD'}else{'FORGEOJ_WORKER_DB_PASSWORD'}
+ $taskCommand='exec mysql -h127.0.0.1 -u'+$taskCheck.role+' --password="$'+$taskVar+'" forgeoj'
+ $taskResponse=$taskCheck.sql | & docker compose --project-name $taskState.Project -f tools/validation/compose.replay.yml exec -T mysql sh -c $taskCommand 2>&1
+ if($LASTEXITCODE -eq 0 -or "$taskResponse" -notmatch ('ERROR '+$taskCheck.mysqlError)){throw ('Missing actual denial for '+$taskCheck.role+' '+$taskCheck.sql)}
+ $taskResults += [pscustomobject]@{role=$taskCheck.role;sql=$taskCheck.sql;mysqlError=$taskCheck.mysqlError;denied=$true}
+}
+[ordered]@{verifiedAt=(Get-Date).ToUniversalTime().ToString('o');baseActualDenials=20;totalActualDenials=20+$taskResults.Count;additionalActualDenials=$taskResults} | ConvertTo-Json -Depth 6 | Set-Content -LiteralPath (Join-Path $taskRun 'additional-grant-denials.json') -Encoding utf8
+Write-Host ('ACTUAL_GRANT_DENIALS_VERIFIED '+(20+$taskResults.Count))

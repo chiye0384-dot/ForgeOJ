@@ -1,0 +1,158 @@
+{
+  "verifiedAt": "2026-10-04T11:51:50.685Z",
+  "contentReviews": 2,
+  "outputPreviews": 3,
+  "submissions": 11,
+  "finished": 10,
+  "cancelled": 1,
+  "publishedOutbox": 11,
+  "contentJobs": 1,
+  "contentPublishedOutbox": 1,
+  "emptyQueues": 6,
+  "library": {
+    "verifiedAt": "2026-10-04T11:37:56.291Z",
+    "anonymous": true,
+    "total": 2,
+    "firstSlug": "sum-two-integers",
+    "secondSlug": "larger-of-two-integers",
+    "filteredSlug": "larger-of-two-integers",
+    "literalWildcardTotal": 0,
+    "invalidSizeStatus": 400,
+    "tags": [
+      "入门",
+      "数学",
+      "比较"
+    ],
+    "exactListFields": true,
+    "exactDetailFields": true
+  },
+  "learning": {
+    "verifiedAt": "2026-10-04T11:38:21.692Z",
+    "listId": "ec56f91a-8a65-4e8c-bf1e-f321c98b16ff",
+    "officialListId": "00000000-0000-0000-0000-000000000101",
+    "ownerDenied": true,
+    "draftRace": [
+      200,
+      409
+    ],
+    "existingDraftRace": [
+      200,
+      409
+    ],
+    "listRace": [
+      200,
+      409
+    ],
+    "currentAcProgress": 1,
+    "available": 2,
+    "historyTotal": 9,
+    "publicPersonalFactsAbsent": true,
+    "historyExactFields": true
+  },
+  "browser": [
+    {
+      "mode": "normal",
+      "visibleStates": [
+        "QUEUED",
+        "FINISHED",
+        "AC"
+      ],
+      "submissionId": "9966c6a6-5a88-48fb-bd0d-774f794027a6",
+      "port": 5173,
+      "hostPort": 62256
+    },
+    {
+      "mode": "fallback",
+      "visibleStates": [
+        "QUEUED",
+        "FINISHED",
+        "AC"
+      ],
+      "submissionId": "a1871122-13fa-4d7f-aee8-37134db979e3",
+      "port": 5174,
+      "hostPort": 62257
+    }
+  ],
+  "chains": [
+    {
+      "submissionId": "938b4a84-9b97-4c23-8148-18d4e5d7d9d6",
+      "requestId": "09d28406-5419-4c1e-adab-ee2072551583",
+      "judgeTaskId": "b0fd90ac-c48f-482f-812e-743cfeb878d9",
+      "outboxEventId": "9b275588-ec5c-4007-983b-9e44f49e4177",
+      "attemptId": "44647d18-6c6f-42ba-bce0-7f4cfaa1efff",
+      "verdict": "AC"
+    },
+    {
+      "submissionId": "96e802d5-2d05-49b8-98e1-c31392cd4fe7",
+      "requestId": "503bf31d-6704-432f-ba31-3cb917094572",
+      "judgeTaskId": "b68172d6-a28a-4451-b827-30ba56bab20e",
+      "outboxEventId": "8cec4890-c3ad-4dee-9684-4f80a6e9a810",
+      "attemptId": "8a2c9a4a-3d54-4389-8caf-9de0be8f83be",
+      "verdict": "WA"
+    },
+    {
+      "submissionId": "8446e7a9-8c2a-4e7e-b2bb-4fd035f0bc54",
+      "requestId": "59aad367-f7e6-462b-9a72-44017a483d4e",
+      "judgeTaskId": "07eb9325-2841-4056-8e00-4db2511f8f36",
+      "outboxEventId": "70005b70-4ad1-4533-950b-c7b7b154f200",
+      "attemptId": "f70b628b-cef9-4753-8e3b-8fd53293f3bb",
+      "verdict": "CE"
+    },
+    {
+      "submissionId": "55318faf-e930-4961-a25f-aef48edbaa70",
+      "requestId": "e4d388ac-060b-490a-b1cd-f9061bba1de4",
+      "judgeTaskId": "f32e5a77-9604-41d9-8ef7-0b8bf9d82bab",
+      "outboxEventId": "b178d14d-094b-4ad4-95a3-4a0ee44d1fe3",
+      "attemptId": "eca34732-ee25-424f-8467-350b3e535ec5",
+      "verdict": "RE"
+    },
+    {
+      "submissionId": "a4995562-6056-447b-bb4f-832ba1fd1e6e",
+      "requestId": "ad86ca94-050a-4381-9ccc-69feebde2da9",
+      "judgeTaskId": "6720bfa7-056e-4894-a058-280c85b6cac9",
+      "outboxEventId": "e6ea4e2c-34ee-436a-b56c-2dd2b42c7361",
+      "attemptId": "5fab2f19-a5f5-425e-8449-4eea093cd911",
+      "verdict": "TLE"
+    },
+    {
+      "submissionId": "4af6e0aa-7fa0-49d7-aad7-f875d3feae00",
+      "requestId": "c194e5e5-9bd0-447d-a406-fd3430a35dbf",
+      "judgeTaskId": "f6a61cf4-d71c-468f-9492-6161934fff70",
+      "outboxEventId": "eff64659-260e-4948-a4e3-10c7ad80c857",
+      "attemptId": "0ae18d4e-c628-44e7-aeec-57db6c981d8d",
+      "verdict": "OLE"
+    },
+    {
+      "submissionId": "f62894f9-b348-4d7a-82b0-aeefcf1adeca",
+      "requestId": "ed78def2-3c70-4fe6-9043-585f6907a493",
+      "judgeTaskId": "95d385d5-9cd5-40c6-a76b-1102f85cae81",
+      "outboxEventId": "3630110c-387e-4c23-aec7-79ee53d6d9d2",
+      "attemptId": "194fae1b-d009-48ef-a2e5-33070f58b098",
+      "verdict": "MLE"
+    },
+    {
+      "submissionId": "99262953-ec04-4fa1-b7aa-1f3520cae646",
+      "requestId": "76496030-0d66-4ad8-b660-bc5d2768cdc9",
+      "judgeTaskId": "1690e279-d1b0-4a0c-9615-0fa1986bb640",
+      "outboxEventId": "f8373893-3e09-4afe-ac4e-960496ad84fa",
+      "attemptId": "547d1f19-ff72-4bd7-9e1d-c649a0faecc6",
+      "verdict": "SECURITY_VIOLATION"
+    },
+    {
+      "submissionId": "9966c6a6-5a88-48fb-bd0d-774f794027a6",
+      "requestId": "6486eceb-75d5-4aee-a3a1-016fb79c37fb",
+      "judgeTaskId": "33416392-c262-4c8a-b4bb-4bd3251cf06d",
+      "outboxEventId": "1bf4582e-9311-490b-ae92-0de0bd0dfbfe",
+      "attemptId": "148c5bf6-b786-457f-bfb4-ecbd94256564",
+      "verdict": "AC"
+    },
+    {
+      "submissionId": "a1871122-13fa-4d7f-aee8-37134db979e3",
+      "requestId": "1b88c90e-bb82-4b4e-a567-9baccaaf5450",
+      "judgeTaskId": "e220e70d-b7af-45c9-8fef-88e31feb030f",
+      "outboxEventId": "b6e20d3d-2b17-4cec-999c-974a18a235bb",
+      "attemptId": "3755d63c-fc3b-4a9a-9bd3-41473f7a2803",
+      "verdict": "AC"
+    }
+  ]
+}

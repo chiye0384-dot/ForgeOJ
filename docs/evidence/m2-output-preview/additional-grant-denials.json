@@ -1,0 +1,157 @@
+{
+  "verifiedAt": "2026-10-04T11:51:58.0206179Z",
+  "baseActualDenials": 20,
+  "totalActualDenials": 45,
+  "additionalActualDenials": [
+    {
+      "role": "forgeoj_api",
+      "sql": "UPDATE content_validation_job SET owner_id=owner_id WHERE 1=0;",
+      "mysqlError": 1142,
+      "denied": true
+    },
+    {
+      "role": "forgeoj_api",
+      "sql": "UPDATE content_validation_job SET processing_status=processing_status WHERE 1=0;",
+      "mysqlError": 1142,
+      "denied": true
+    },
+    {
+      "role": "forgeoj_worker",
+      "sql": "UPDATE content_validation_job SET owner_id=owner_id WHERE 1=0;",
+      "mysqlError": 1143,
+      "denied": true
+    },
+    {
+      "role": "forgeoj_worker",
+      "sql": "UPDATE content_validation_job SET snapshot_id=snapshot_id WHERE 1=0;",
+      "mysqlError": 1143,
+      "denied": true
+    },
+    {
+      "role": "forgeoj_worker",
+      "sql": "INSERT INTO content_validation_snapshot(id) SELECT id FROM content_validation_snapshot WHERE 1=0;",
+      "mysqlError": 1142,
+      "denied": true
+    },
+    {
+      "role": "forgeoj_api",
+      "sql": "UPDATE content_review SET draft_id=draft_id WHERE 1=0;",
+      "mysqlError": 1143,
+      "denied": true
+    },
+    {
+      "role": "forgeoj_api",
+      "sql": "UPDATE content_review SET owner_id=owner_id WHERE 1=0;",
+      "mysqlError": 1143,
+      "denied": true
+    },
+    {
+      "role": "forgeoj_api",
+      "sql": "UPDATE content_review SET draft_version=draft_version WHERE 1=0;",
+      "mysqlError": 1143,
+      "denied": true
+    },
+    {
+      "role": "forgeoj_api",
+      "sql": "UPDATE content_review SET request_id=request_id WHERE 1=0;",
+      "mysqlError": 1143,
+      "denied": true
+    },
+    {
+      "role": "forgeoj_api",
+      "sql": "UPDATE content_review SET review_no=review_no WHERE 1=0;",
+      "mysqlError": 1143,
+      "denied": true
+    },
+    {
+      "role": "forgeoj_api",
+      "sql": "INSERT INTO content_output_preview_case(job_id) SELECT job_id FROM content_output_preview_case WHERE 1=0;",
+      "mysqlError": 1142,
+      "denied": true
+    },
+    {
+      "role": "forgeoj_api",
+      "sql": "UPDATE content_output_preview_case SET output_sha256=output_sha256 WHERE 1=0;",
+      "mysqlError": 1142,
+      "denied": true
+    },
+    {
+      "role": "forgeoj_api",
+      "sql": "DELETE FROM content_output_preview_case WHERE 1=0;",
+      "mysqlError": 1142,
+      "denied": true
+    },
+    {
+      "role": "forgeoj_worker",
+      "sql": "UPDATE content_output_preview_case SET output_sha256=output_sha256 WHERE 1=0;",
+      "mysqlError": 1142,
+      "denied": true
+    },
+    {
+      "role": "forgeoj_worker",
+      "sql": "DELETE FROM content_output_preview_case WHERE 1=0;",
+      "mysqlError": 1142,
+      "denied": true
+    },
+    {
+      "role": "forgeoj_worker",
+      "sql": "SELECT job_id FROM content_output_acceptance LIMIT 0;",
+      "mysqlError": 1142,
+      "denied": true
+    },
+    {
+      "role": "forgeoj_worker",
+      "sql": "INSERT INTO content_output_acceptance(job_id) SELECT job_id FROM content_output_acceptance WHERE 1=0;",
+      "mysqlError": 1142,
+      "denied": true
+    },
+    {
+      "role": "forgeoj_worker",
+      "sql": "UPDATE content_output_acceptance SET applied_version=applied_version WHERE 1=0;",
+      "mysqlError": 1142,
+      "denied": true
+    },
+    {
+      "role": "forgeoj_worker",
+      "sql": "DELETE FROM content_output_acceptance WHERE 1=0;",
+      "mysqlError": 1142,
+      "denied": true
+    },
+    {
+      "role": "forgeoj_api",
+      "sql": "UPDATE content_output_acceptance SET applied_version=applied_version WHERE 1=0;",
+      "mysqlError": 1142,
+      "denied": true
+    },
+    {
+      "role": "forgeoj_api",
+      "sql": "DELETE FROM content_output_acceptance WHERE 1=0;",
+      "mysqlError": 1142,
+      "denied": true
+    },
+    {
+      "role": "forgeoj_api",
+      "sql": "UPDATE content_validation_job SET execution_kind=execution_kind WHERE 1=0;",
+      "mysqlError": 1142,
+      "denied": true
+    },
+    {
+      "role": "forgeoj_worker",
+      "sql": "UPDATE content_validation_job SET execution_kind=execution_kind WHERE 1=0;",
+      "mysqlError": 1143,
+      "denied": true
+    },
+    {
+      "role": "forgeoj_api",
+      "sql": "UPDATE content_validation_snapshot SET execution_kind=execution_kind WHERE 1=0;",
+      "mysqlError": 1142,
+      "denied": true
+    },
+    {
+      "role": "forgeoj_worker",
+      "sql": "UPDATE content_validation_snapshot SET execution_kind=execution_kind WHERE 1=0;",
+      "mysqlError": 1142,
+      "denied": true
+    }
+  ]
+}

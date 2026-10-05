@@ -18,7 +18,7 @@ public interface ContentReviewMapper {
     Optional<Review> find(@Param("owner") long owner,@Param("draft") String draft,@Param("review") String review);
     @Select("SELECT "+COLUMNS+" FROM content_review WHERE owner_id=#{owner} AND draft_id=#{draft} AND id=#{review} FOR UPDATE")
     Optional<Review> lock(@Param("owner") long owner,@Param("draft") String draft,@Param("review") String review);
-    @Select("SELECT j.snapshot_id AS snapshotId,s.draft_version AS draftVersion,j.processing_status AS processingStatus,j.validation_status AS validationStatus,j.reference_result AS referenceResult,j.solution_result AS solutionResult FROM content_validation_job j JOIN content_validation_snapshot s ON s.id=j.snapshot_id WHERE j.owner_id=#{owner} AND s.draft_id=#{draft} AND j.id=#{job}")
+    @Select("SELECT j.snapshot_id AS snapshotId,s.draft_version AS draftVersion,j.processing_status AS processingStatus,j.validation_status AS validationStatus,j.reference_result AS referenceResult,j.solution_result AS solutionResult FROM content_validation_job j JOIN content_validation_snapshot s ON s.id=j.snapshot_id WHERE j.owner_id=#{owner} AND s.draft_id=#{draft} AND j.id=#{job} AND j.execution_kind='VALIDATE'")
     Optional<Binding> validation(@Param("owner") long owner,@Param("draft") String draft,@Param("job") String job);
     @Select("SELECT review_no FROM content_review WHERE draft_id=#{draft} ORDER BY review_no DESC LIMIT 1 FOR UPDATE")
     Optional<Long> lastNumber(String draft);

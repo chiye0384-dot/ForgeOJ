@@ -62,7 +62,7 @@ class ValidationExecutionIntegrationTests {
     @Autowired com.forgeoj.worker.task.JudgeTaskClaimService formalClaims;
     @BeforeEach void reset() {
         new RabbitAdmin(rabbit).purgeQueue(QUEUE,true);new RabbitAdmin(rabbit).purgeQueue(DEAD,true);
-        for(String table:List.of("outbox_event","judge_task_attempt","judge_task","submission","content_validation_attempt","content_validation_job","content_validation_test_case","content_validation_snapshot","authored_problem_test_case","authored_problem_draft")) db().execute("DELETE FROM "+table);
+        for(String table:List.of("content_output_acceptance","content_output_preview_case","content_review","outbox_event","judge_task_attempt","judge_task","submission","content_validation_attempt","content_validation_job","content_validation_test_case","content_validation_snapshot","authored_problem_test_case","authored_problem_draft")) db().execute("DELETE FROM "+table);
     }
     @Test void actualDurableBrokerRunsBothProgramsToPassedAndAcknowledgesAfterCommit() throws Exception {
         String job=fixture(SOURCE,SOURCE+"\n// independent object");send(job);
@@ -153,6 +153,55 @@ class ValidationExecutionIntegrationTests {
         assertThat(leases.claim(next,(String)row(next).get("snapshot_id"))).isNull();
         assertThat(((Number)row(next).get("attempt_count")).intValue()).isZero();
         assertThat(row(next).get("processing_status")).isEqualTo("QUEUED");
+    }
+
+    @Test void actualPreviewIgnoresWrongAnswersRunsOnlyReferenceAndStoresAllOutputsBeforeAck() throws Exception {
+        String job=previewFixture(SOURCE,List.of("1 2\n","7 8\n"),1048576);send(job);awaitTerminal(job);
+        var result=row(job);assertThat(result.get("reference_result")).isEqualTo("ACCEPTED");
+        assertThat(result.get("validation_status")).isNull();assertThat(result.get("solution_result")).isNull();
+        var generated=db().queryForList("SELECT output_gzip,output_bytes,output_sha256 FROM content_output_preview_case WHERE job_id=? ORDER BY sequence_no",job);
+        assertThat(generated).hasSize(2);
+        for(int i=0;i<2;i++){String expected=i==0?"3\n":"15\n";try(var gzip=new java.util.zip.GZIPInputStream(new ByteArrayInputStream((byte[])generated.get(i).get("output_gzip")))){assertThat(new String(gzip.readAllBytes(),StandardCharsets.UTF_8)).isEqualTo(expected);}assertThat(generated.get(i).get("output_sha256")).isEqualTo(ValidationSnapshotLoader.hash(expected));}
+        assertThat(db().queryForObject("SELECT COUNT(*) FROM submission",Integer.class)).isZero();assertEmptyQueueAndSandboxes();
+        send(job);assertEmptyQueueAndSandboxes();assertThat(db().queryForObject("SELECT COUNT(*) FROM content_output_preview_case WHERE job_id=?",Integer.class,job)).isEqualTo(2);
+    }
+    @Test void actualPreviewFailureDiscardsPartialOutputAndRejectsMalformedUtf8AndResourceOverflow() throws Exception {
+        var programs=List.of(
+            "import java.util.Scanner; public class Main {public static void main(String[] args){Scanner s=new Scanner(System.in);long a=s.nextLong();if(a==7)throw new RuntimeException();System.out.println(a+s.nextLong());}}",
+            "public class Main {public static void main(String[] args){System.out.write(195);System.out.write(40);System.out.flush();}}",
+            "public class Main {public static void main(String[] args){System.out.write(0);System.out.flush();}}",
+            "public class Main {public static void main(String[] args){System.out.print(\"x\".repeat(1048577));}}",
+            "public class Main {broken compiler sentinel}");
+        for(int i=0;i<programs.size();i++){
+            String job=previewFixture(programs.get(i),List.of("1 2\n","7 8\n"),1048576);send(job);awaitTerminal(job);
+            assertThat(row(job).get("reference_result")).isEqualTo(i==3?"OUTPUT_LIMIT_EXCEEDED":i==4?"COMPILE_ERROR":"RUNTIME_ERROR");
+            assertThat(db().queryForObject("SELECT COUNT(*) FROM content_output_preview_case WHERE job_id=?",Integer.class,job)).isZero();assertEmptyQueueAndSandboxes();
+        }
+    }
+    @Test void previewOldLeaseCannotWriteAnyOutputAndNewAttemptCanFinish() throws Exception {
+        String job=previewFixture(SOURCE,List.of("1 2\n"),1048576),snapshot=(String)row(job).get("snapshot_id");var old=leases.claim(job,snapshot);
+        db().update("UPDATE content_validation_job SET lease_expires_at=TIMESTAMPADD(SECOND,-1,CURRENT_TIMESTAMP(6)) WHERE id=?",job);leases.recover(job);
+        assertThatThrownBy(()->leases.finishPreview(old,new SandboxOutputPreview(SandboxOutcome.ACCEPTED,List.of("3\n")))).isInstanceOf(IllegalStateException.class);
+        assertThat(db().queryForObject("SELECT COUNT(*) FROM content_output_preview_case WHERE job_id=?",Integer.class,job)).isZero();
+        db().update("UPDATE content_validation_job SET next_attempt_at=CURRENT_TIMESTAMP(6) WHERE id=?",job);var fresh=leases.claim(job,snapshot);
+        var programs=snapshots.load(fresh);assertThat(programs.preview()).isTrue();assertThat(programs.solution()).isNull();
+        leases.finishPreview(fresh,runtime.generate(programs.reference(),fresh.attemptId()));assertThat(row(job).get("reference_result")).isEqualTo("ACCEPTED");assertNoSandbox();
+    }
+    @Test void previewCommitRollsBackAllOutputsIfAnyGeneratedFileViolatesBounds() {
+        String job=previewFixture(SOURCE,List.of("1 2\n","7 8\n"),1048576);var claim=leases.claim(job,(String)row(job).get("snapshot_id"));
+        assertThatThrownBy(()->leases.finishPreview(claim,new SandboxOutputPreview(SandboxOutcome.ACCEPTED,List.of("3\n","x".repeat(1048577))))).isInstanceOf(IllegalStateException.class);
+        assertThat(db().queryForObject("SELECT COUNT(*) FROM content_output_preview_case WHERE job_id=?",Integer.class,job)).isZero();assertThat(row(job).get("processing_status")).isEqualTo("RUNNING");leases.failure(claim,true);
+    }
+    private String previewFixture(String reference,List<String> inputs,int limit) {
+        String draft=UUID.randomUUID().toString(),snapshot=UUID.randomUUID().toString(),job=UUID.randomUUID().toString();
+        String metadata=JSON.writeValueAsString(Map.of("timeLimitMs",2000,"memoryLimitMb",256,"outputLimitBytes",limit));
+        String refHash=ValidationSnapshotLoader.hash(reference),emptyHash=ValidationSnapshotLoader.hash("");var manifest=new StringBuilder();
+        for(int i=0;i<inputs.size();i++)manifest.append(i+1).append(':').append(ValidationSnapshotLoader.hash(inputs.get(i))).append(':').append(ValidationSnapshotLoader.hash("wrong\n")).append('\n');
+        String dataset=ValidationSnapshotLoader.hash(manifest.toString()),identity=ValidationSnapshotLoader.hash(ValidationSnapshotLoader.framed(draft,"1","1",metadata,"",refHash,emptyHash,dataset,IMAGE,"trim-trailing-whitespace-v1","m0-v1"));
+        db().update("INSERT INTO authored_problem_draft(id,owner_id,title,metadata_json,reference_code,solution_idea,solution_code) VALUES(?,1,'original preview',JSON_OBJECT(),'','','')",draft);
+        db().update("INSERT INTO content_validation_snapshot(id,draft_id,owner_id,draft_version,metadata_text,reference_code,solution_idea,solution_code,reference_sha256,solution_sha256,test_dataset_sha256,snapshot_sha256,java_image_digest,time_limit_ms,memory_limit_mb,output_limit_bytes,execution_kind) VALUES(?,?,1,1,?,?,'','',?,?,?,?,?,2000,256,?,'OUTPUT_PREVIEW')",snapshot,draft,metadata,reference,refHash,emptyHash,dataset,identity,IMAGE,limit);
+        for(int i=0;i<inputs.size();i++)db().update("INSERT INTO content_validation_test_case(snapshot_id,sequence_no,input_gzip,expected_output_gzip,input_bytes,expected_output_bytes,input_sha256,expected_output_sha256) VALUES(?,?,?,?,?,?,?,?)",snapshot,i+1,gzip(inputs.get(i)),gzip("wrong\n"),inputs.get(i).getBytes(StandardCharsets.UTF_8).length,6,ValidationSnapshotLoader.hash(inputs.get(i)),ValidationSnapshotLoader.hash("wrong\n"));
+        db().update("INSERT INTO content_validation_job(id,snapshot_id,owner_id,client_request_id,execution_kind) VALUES(?,?,1,?,'OUTPUT_PREVIEW')",job,snapshot,UUID.randomUUID().toString());return job;
     }
     private String fixture(String reference,String solution) {
         String draft=UUID.randomUUID().toString(),snapshot=UUID.randomUUID().toString(),job=UUID.randomUUID().toString();

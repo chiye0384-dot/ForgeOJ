@@ -1,0 +1,10 @@
+{
+  "verifiedAt": "2026-10-04T11:48:45.729Z",
+  "ownerDenied": true,
+  "requestReplaySameJob": true,
+  "purposeIsolation": true,
+  "acceptedReplayNeverOverwrites": true,
+  "allOutputDigestsMatch": true,
+  "archivedVersion": 7,
+  "publicProblemCount": 2
+}

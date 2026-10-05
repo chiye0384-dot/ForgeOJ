@@ -297,7 +297,7 @@
 
 ### D-041：普通账号采用短 JWT 与 MySQL 独立会话，邮件能力先闭环开发环境
 
-- 状态：`ACCEPTED`（2026-10-02 用户确认“全部按你推荐的来，继续完成项目吧”）。设计接受与验证状态分别记录；普通账号单元现为 `VERIFIED`，完整 M2 保持 `IN_PROGRESS`，命令、源码/JAR 哈希与实际闭环见 [账号验收记录](M2-ACCOUNTS-VALIDATION.md)。
+- 状态：`ACCEPTED`（2026-10-02 用户确认“全部按你推荐的来，继续完成项目吧”）。设计接受与验证状态分别记录；普通账号单元现为 `VERIFIED`，完整 M2 于 2026-10-05 通过 [最终五门禁](M2-GATE-AUDIT.md) 为 `VERIFIED`，命令、源码/JAR 哈希与实际闭环见 [账号验收记录](M2-ACCOUNTS-VALIDATION.md)。
 - 结论：新用户通过唯一用户名/邮箱和 BCrypt 密码注册，用户、quota lock 和激活令牌摘要同事务创建；`PENDING_VERIFICATION` 邮箱激活后进入 `ACTIVE`，`DISABLED` 不可邮件重新激活。旧 ID、密码、状态、配额和历史保留，旧 ACTIVE 可用户名登录，验证补邮箱后再开找回。
 - 认证：访问 JWT 最长 5 分钟，每次登录建立绝对期限 7 天的 MySQL session；每个受保护 HTTP 请求校验签名/issuer/audience/期限并查询账号与会话，敏感写再次在事务内检查。Refresh 为随机 256 bit，仅存 SHA-256 摘要，单次轮换，重用撤销当前 sid；其他设备会话保持独立。全部退出、改密、重置和停用撤销全部旧会话，密码变化使旧重置令牌失效。
 - 浏览器与通知：访问/refresh 使用 host-only、HttpOnly、SameSite=Strict Cookie，生产 Secure；所有写同时校验精确 Origin 和 CSRF，身份变化轮换 CSRF，refresh 保留 CSRF。凭据不进入业务 JSON、localStorage 或 URL。D-039 的 WebSocket 路径、owner/Origin、三字段、单调版本和轮询保持，认证改为 sid 并复核 MySQL；事务提交后的撤销关闭订阅，数据库扫描兜底，DB 异常关闭。

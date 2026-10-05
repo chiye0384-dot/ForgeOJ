@@ -133,6 +133,34 @@ class JudgeTaskSnapshotLoaderIntegrationTests {
     }
 
     @Test
+    void currentVersionAdvanceDoesNotRedirectExistingTaskSnapshotOrHiddenTests() {
+        TaskIds ids = insertRunningTask();
+        JudgeTaskSnapshot before = loader.load(message(ids));
+        JdbcTemplate database = migrator();
+        database.update("""
+                INSERT INTO problem_judge_version
+                    (problem_id, version_no, time_limit_ms, memory_limit_mb, output_limit_bytes,
+                     comparison_rule_version, sandbox_policy_version, java_image_digest, test_dataset_sha256)
+                SELECT problem_id, 2, 999, 128, 4096, comparison_rule_version,
+                       sandbox_policy_version, java_image_digest, REPEAT('f', 64)
+                FROM problem_judge_version WHERE id = 1
+                """);
+        long nextVersion = database.queryForObject(
+                "SELECT id FROM problem_judge_version WHERE problem_id = 1 AND version_no = 2", Long.class);
+        try {
+            database.update("UPDATE problem SET current_judge_version_id = ? WHERE id = 1", nextVersion);
+            JudgeTaskSnapshot after = loader.load(message(ids));
+            assertThat(after).usingRecursiveComparison().isEqualTo(before);
+            assertThat(after.judgeVersionId()).isEqualTo(1);
+            assertThat(after.testCases()).hasSize(3);
+            assertThat(after.timeLimitMs()).isEqualTo(1500);
+        } finally {
+            database.update("UPDATE problem SET current_judge_version_id = 1 WHERE id = 1");
+            database.update("DELETE FROM problem_judge_version WHERE id = ?", nextVersion);
+        }
+    }
+
+    @Test
     void refusesToReadHiddenTestsForQueuedOrMismatchedTask() {
         TaskIds ids = insertRunningTask();
         migrator().update(

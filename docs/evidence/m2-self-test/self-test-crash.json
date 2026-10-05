@@ -1,0 +1,17 @@
+{
+  "verifiedAt": "2026-10-05T10:27:20.9019395Z",
+  "runId": "a2b1b942-476b-4441-a368-702c4663e33a",
+  "oldAttemptId": "2b2ef9bb-4f97-4375-921a-e1628f366af1",
+  "oldSandboxId": "e864ce2992bc",
+  "killedWorkerId": "8cb8472e69bd9656a243cbd2c4ab9daf9015d8a274e0043f372c9a28c291d6d8",
+  "killedAt": "2026-10-05T10:27:02.3870100Z",
+  "leaseExpiresAt": "2026-10-05 10:27:12.805396",
+  "realWorkerSigkill": true,
+  "naturalLeaseExpiry": true,
+  "oldSandboxRemoved": true,
+  "attemptStatuses": [
+    "LEASE_EXPIRED",
+    "SUCCEEDED"
+  ],
+  "result": "SUCCESS"
+}

@@ -1,0 +1,14 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://forgeoj.local/contracts/self-test-v1.schema.json",
+  "title": "Independent Self Test v1",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["taskId", "snapshotId", "taskType", "contractVersion"],
+  "properties": {
+    "taskId": {"type": "string", "format": "uuid"},
+    "snapshotId": {"type": "string", "format": "uuid"},
+    "taskType": {"const": "SELF_TEST"},
+    "contractVersion": {"const": 1, "type": "integer"}
+  }
+}

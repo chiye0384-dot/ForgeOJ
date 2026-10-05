@@ -18,6 +18,10 @@ public interface SandboxAttemptLookup {
                 SELECT 1 FROM content_validation_attempt WHERE id=#{attemptId} AND job_id=#{taskId}
                   AND attempt_status IN ('SUCCEEDED','RETRYABLE_FAILURE','LEASE_EXPIRED','DEAD_LETTERED')
                   AND finished_at IS NOT NULL
+            ) OR EXISTS (
+                SELECT 1 FROM self_test_attempt WHERE id=#{attemptId} AND job_id=#{taskId}
+                  AND attempt_status IN ('SUCCEEDED','RETRYABLE_FAILURE','LEASE_EXPIRED','DEAD_LETTERED')
+                  AND finished_at IS NOT NULL
             )
             """)
     boolean isClosed(@Param("taskId") String taskId, @Param("attemptId") String attemptId);

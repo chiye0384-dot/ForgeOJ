@@ -27,7 +27,8 @@ interface OutboxMapper {
               AND ((o.aggregate_type = 'JUDGE_TASK'
                 AND o.event_type IN ('JUDGE_TASK_QUEUED', 'JUDGE_TASK_DEAD_LETTERED'))
                 OR (o.aggregate_type='CONTENT_VALIDATION'
-                AND o.event_type IN ('CONTENT_VALIDATION_QUEUED','CONTENT_VALIDATION_DEAD_LETTERED')))
+                AND o.event_type IN ('CONTENT_VALIDATION_QUEUED','CONTENT_VALIDATION_DEAD_LETTERED'))
+                OR (o.aggregate_type='SELF_TEST' AND o.event_type IN ('SELF_TEST_QUEUED','SELF_TEST_DEAD_LETTERED')))
               AND o.contract_version = 1
             ORDER BY o.next_attempt_at, o.created_at, o.id
             LIMIT #{limit}

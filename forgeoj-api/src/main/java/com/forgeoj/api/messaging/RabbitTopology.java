@@ -18,6 +18,9 @@ public class RabbitTopology {
     public static final String ROUTING_KEY = "judge.submission.v1";
     public static final String SELF_TEST_QUEUE = "forgeoj.judge.self-test.v1";
     public static final String SELF_TEST_ROUTING_KEY = "judge.self-test.v1";
+    public static final String SELF_TEST_DEAD_ROUTING_KEY = "judge.self-test.dead.v1";
+    @Bean Queue selfTestDeadQueue(){return QueueBuilder.durable("forgeoj.judge.self-test.dead.v1").build();}
+    @Bean Binding selfTestDeadBinding(DirectExchange judgeExchange,Queue selfTestDeadQueue){return BindingBuilder.bind(selfTestDeadQueue).to(judgeExchange).with(SELF_TEST_DEAD_ROUTING_KEY);}
     public static final String RETRY_QUEUE = "forgeoj.judge.retry.v1";
     public static final String RETRY_ROUTING_KEY = "judge.retry.v1";
     public static final String DEAD_LETTER_QUEUE = "forgeoj.judge.submission.dead.v1";

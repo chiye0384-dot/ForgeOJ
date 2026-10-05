@@ -162,6 +162,7 @@ async function submit(): Promise<void> {
       <p v-if="mode === 'bind'">确认验证邮箱。需要登录申请此链接的账号。</p>
       <p v-if="['change', 'reset'].includes(mode)">密码更新成功后，所有旧登录会话都会失效。</p>
       <button
+        :aria-busy="busy"
         :disabled="busy || !session || (['activate', 'reset', 'bind'].includes(mode) && !token)"
       >
         {{ busy ? '处理中……' : '确认操作' }}
@@ -210,6 +211,9 @@ button {
 }
 button:disabled {
   opacity: 0.5;
+  cursor: not-allowed;
+}
+button[aria-busy='true'] {
   cursor: wait;
 }
 [role='alert'] {

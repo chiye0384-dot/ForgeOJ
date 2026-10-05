@@ -14,7 +14,7 @@ class Client {
   csrf
   async request(path, method = 'GET', body, extra = {}) {
     const headers = { ...(this.cookie ? { Cookie: this.cookie } : {}), ...extra }
-    if (method !== 'GET') headers.Origin = base
+    if (method !== 'GET') headers.Origin ??= base
     if (body !== undefined) headers['Content-Type'] = 'application/json'
     if (method !== 'GET' && this.csrf) headers[this.csrf.headerName] = this.csrf.token
     const response = await fetch(base + path, { method, headers,
@@ -216,9 +216,43 @@ else if (process.argv[2] === 'library') await library()
 else if (process.argv[2] === 'learning') await learning()
 else if (process.argv[2] === 'content') await contentValidation()
 else if (process.argv[2] === 'output') await outputPreview()
+else if (process.argv[2] === 'self-test') await selfTest()
 else if (process.argv[2] === 'review-lock') await reviewLock()
 else if (process.argv[2] === 'review') await reviewHistory()
 else throw new Error('Expected matrix, permissions, library, learning or content')
+
+async function selfTest() {
+  const observed=JSON.parse(await readFile('/reports/self-test-browser.json','utf8'))
+  const owner=new Client(),other=new Client(),anonymous=new Client();await owner.login();await other.login('other-learner')
+  const formalBefore=(await owner.request('/api/v1/me/submissions')).body.total
+  assert.equal(formalBefore,0,'Run self-test acceptance before formal judge matrix')
+  const path='/api/v1/problems/sum-two-integers/self-tests', list='/api/v1/me/self-tests?problemSlug=sum-two-integers'
+  assert.equal((await owner.request(list)).body.total,observed.jobs.length)
+  assert.equal((await other.request(list)).body.total,0)
+  assert.equal((await anonymous.request(list)).status,401)
+  assert.equal((await owner.request(list+'&size=51')).status,400)
+  const checked=[]
+  for(const job of observed.jobs) {
+    const result=await owner.request('/api/v1/self-tests/'+job.runId);assert.equal(result.status,200)
+    assert.deepEqual(Object.keys(result.body).sort(),['input','output','run','sourceCode'])
+    const r=result.body.run;assert.deepEqual(Object.keys(r).sort(),['executionResult','expiresAt','judgeVersion','problemSlug','processingStatus','runId','statusVersion'])
+    assert.equal(r.runId,job.runId);assert.equal(r.processingStatus,job.processingStatus);assert.equal(r.executionResult,job.executionResult)
+    assert.equal(result.body.sourceCode,job.sourceCode);assert.equal(result.body.input,job.input)
+    const digest=result.body.output===null?null:createHash('sha256').update(result.body.output).digest('hex');assert.equal(digest,job.outputSha256)
+    assert.equal((await other.request('/api/v1/self-tests/'+job.runId)).status,404)
+    assert.equal((await other.request('/api/v1/self-tests/'+job.runId+'/cancel','POST')).status,404)
+    const body={requestId:job.requestId,language:'JAVA_21',sourceCode:job.sourceCode,input:job.input}
+    const replay=await owner.request(path,'POST',body);assert.equal(replay.status,202);assert.equal(replay.body.runId,job.runId)
+    assert.equal((await owner.request(path,'POST',{...body,input:job.input+'different'})).status,409)
+    assert.equal((await owner.request(path,'POST',body,{Origin:'https://other.example.invalid'})).status,403)
+    checked.push({runId:job.runId,outputSha256:digest})
+  }
+  assert.equal((await owner.request('/api/v1/me/submissions')).body.total,formalBefore)
+  const progress=await owner.request('/api/v1/me/official-problem-lists/00000000-0000-0000-0000-000000000101');assert.equal(progress.body.list.completedCount,0)
+  const solution=await owner.request('/api/v1/me/problems/sum-two-integers/solution');assert.equal(solution.body.access,'LOCKED');assert.equal(solution.body.solution,null)
+  await writeFile('/reports/self-test-http.json',JSON.stringify({verifiedAt:new Date().toISOString(),ownerDenied:true,exactFields:true,replayFrozen:true,conflictingReplay:409,crossOrigin:403,formalBefore,formalAfter:0,currentAcProgress:0,solutionAccess:'LOCKED',checked},null,2))
+  console.log('E2E_SELF_TEST_HTTP_VERIFIED')
+}
 
 async function contentValidation() {
   const observed = JSON.parse(await readFile('/reports/content-browser.json','utf8'))

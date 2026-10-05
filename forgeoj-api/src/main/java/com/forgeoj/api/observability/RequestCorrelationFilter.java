@@ -60,8 +60,11 @@ public class RequestCorrelationFilter extends OncePerRequestFilter {
             return "submission.get";
         }
         if (path.startsWith("/api/v1/problems/")) {
+            if (path.endsWith("/self-tests")) return "selftest.create";
             return path.endsWith("/submissions") ? "submission.create" : "problem.get";
         }
+        if (path.startsWith("/api/v1/self-tests/")) return path.endsWith("/cancel") ? "selftest.cancel" : "selftest.get";
+        if (path.equals("/api/v1/me/self-tests")) return "selftest.list";
         if (path.startsWith("/api/v1/me/authored-problems/") && path.contains("/output-previews"))
             return path.endsWith("/accept") ? "content.output.accept" : "content.output";
         if (path.startsWith("/api/v1/me/authored-problems/") && path.contains("/validations"))

@@ -1,0 +1,10 @@
+{
+  "databasePrivilegeDenials": 29,
+  "actualAuditPassed": true,
+  "apiWithoutDockerSocket": true,
+  "apiWithoutWorkerOrMigratorConfiguration": true,
+  "ownedResourcesRemoved": true,
+  "managedSandboxes": 0,
+  "testcontainers": 0,
+  "dockerServer": "29.8.0"
+}

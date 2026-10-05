@@ -1,0 +1,30 @@
+{
+  "verifiedAt": "2026-10-05T10:29:28.808Z",
+  "ownerDenied": true,
+  "exactFields": true,
+  "replayFrozen": true,
+  "conflictingReplay": 409,
+  "crossOrigin": 403,
+  "formalBefore": 0,
+  "formalAfter": 0,
+  "currentAcProgress": 0,
+  "solutionAccess": "LOCKED",
+  "checked": [
+    {
+      "runId": "3a62aeb9-4d06-45f0-94ac-3f6b247dd705",
+      "outputSha256": null
+    },
+    {
+      "runId": "9d0049f1-a241-46af-a13c-96b093187d64",
+      "outputSha256": "54183f4323f377b737433a1e98229ead0fdc686f93bab057ecb612daa94002b5"
+    },
+    {
+      "runId": "a2b1b942-476b-4441-a368-702c4663e33a",
+      "outputSha256": "238903180cc104ec2c5d8b3f20c5bc61b389ec0a967df8cc208cdc7cd454174f"
+    },
+    {
+      "runId": "d8b255b8-4094-4549-88c3-08c62cf7e852",
+      "outputSha256": null
+    }
+  ]
+}

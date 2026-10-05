@@ -120,7 +120,7 @@ for (const row of matrix) {
   assert.ok(row.notices.some(n => n.processingStatus === 'FINISHED' && n.statusVersion === 2))
 }
 const queues = await json('queues.json')
-assert.deepEqual(queues.map(q => q.name).sort(), ['forgeoj.content.validation.dead.v1','forgeoj.content.validation.v1','forgeoj.judge.retry.v1','forgeoj.judge.self-test.v1',
+assert.deepEqual(queues.map(q => q.name).sort(), ['forgeoj.content.validation.dead.v1','forgeoj.content.validation.v1','forgeoj.judge.retry.v1','forgeoj.judge.self-test.dead.v1','forgeoj.judge.self-test.v1',
   'forgeoj.judge.submission.dead.v1','forgeoj.judge.submission.v1'])
 for (const queue of queues) { assert.equal(queue.messages_ready, 0); assert.equal(queue.messages_unacknowledged, 0) }
 // Browser evidence is separately observed in the real UI, not simulated by this protocol probe.
@@ -188,7 +188,29 @@ if(outputFacts.length) {
  }
  assert.equal(allContentOutbox.length,allContent.reduce((n,j)=>n+j.attemptCount,0))
 }
-const summary = { verifiedAt:new Date().toISOString(), contentReviews:reviewFacts.length, outputPreviews:outputFacts.length, submissions:facts.length, finished:chains.length,
+const selfFacts=await lines('self-test-database.jsonl'), selfOutbox=await lines('self-test-outbox.jsonl')
+if(selfFacts.length) {
+ const observed=await json('self-test-browser.json'), http=await json('self-test-http.json')
+ assert.ok(http.ownerDenied && http.exactFields && http.replayFrozen);assert.equal(http.formalBefore,0);assert.equal(http.formalAfter,0);assert.equal(http.currentAcProgress,0);assert.equal(http.solutionAccess,'LOCKED')
+ assert.equal(selfFacts.length,observed.jobs.length)
+ for(const job of observed.jobs) {
+  const row=selfFacts.find(f=>f.runId===job.runId);assert.ok(row)
+  assert.equal(row.processingStatus,job.processingStatus);assert.equal(row.executionResult,job.executionResult)
+  assert.ok(row.hasExpiry && row.leaseCleared && row.payloadDigestsMatch);assert.equal(row.outputSha256,job.outputSha256)
+  assert.ok(!['AC','ACCEPTED','WRONG_ANSWER'].includes(row.executionResult))
+  const created=api.filter(l=>l.event==='selftest.created' && l.selfTestRunId===row.runId);assert.equal(created.length,1)
+  assert.ok(api.some(l=>l.event==='request.completed' && l.requestId===created[0].requestId && l.route==='selftest.create' && l.httpStatus===202))
+  const attempts=row.attempts.sort((a,b)=>a.attemptNo-b.attemptNo),events=selfOutbox.filter(e=>e.runId===row.runId)
+  assert.deepEqual(attempts.map(a=>a.status),job.processingStatus==='CANCELLED'?[]:job.recovered?['LEASE_EXPIRED','SUCCEEDED']:['SUCCEEDED'])
+  assert.ok(attempts.every(a=>a.finished));assert.equal(row.attemptCount,attempts.length)
+  assert.equal(events.length,job.recovered?2:1)
+  assert.ok(events.every(e=>e.published && !e.failed && e.eventType==='SELF_TEST_QUEUED'))
+  for(const event of events){assert.deepEqual(event.keys.sort(),['contractVersion','snapshotId','taskId','taskType']);assert.ok(api.some(l=>l.event==='outbox.published' && l.outboxEventId===event.outboxEventId && l.selfTestRunId===row.runId))}
+  if(attempts.length){const last=attempts.at(-1),logs=worker.filter(l=>l.selfTestRunId===row.runId && l.selfTestAttemptId===last.attemptId),claim=logs.find(l=>l.event==='selftest.attempt_claimed'),commit=logs.find(l=>l.event==='selftest.attempt_committed'),ack=logs.find(l=>l.event==='selftest.ack_sent');assert.ok(claim && commit && ack);assert.ok(claim['@timestamp']<=commit['@timestamp'] && commit['@timestamp']<=ack['@timestamp'])}
+  if(job.recovered){const crash=await json('self-test-crash.json');assert.equal(crash.runId,row.runId);assert.ok(crash.naturalLeaseExpiry && crash.oldSandboxRemoved && crash.realWorkerSigkill)}
+ }
+}
+const summary = { verifiedAt:new Date().toISOString(), selfTests:selfFacts.length, selfTestPublishedOutbox:selfOutbox.length, contentReviews:reviewFacts.length, outputPreviews:outputFacts.length, submissions:facts.length, finished:chains.length,
   cancelled:1, publishedOutbox:outbox.length, contentJobs:content.length, contentPublishedOutbox:contentOutbox.length, emptyQueues:queues.length, library, learning, browser, chains }
 await writeFile('/reports/audit.json', JSON.stringify(summary, null, 2))
 console.log(JSON.stringify({ event:'E2E_AUDIT_VERIFIED', submissions:facts.length,

@@ -24,7 +24,7 @@ public interface ValidationMapper {
     Optional<Job> lock(String id);
     @Select("SELECT user_id FROM user_judge_quota_lock WHERE user_id=#{owner} FOR UPDATE")
     Optional<Long> quota(long owner);
-    @Select("SELECT (SELECT COUNT(*) FROM submission WHERE user_id=#{owner} AND processing_status='RUNNING')+(SELECT COUNT(*) FROM content_validation_job WHERE owner_id=#{owner} AND id<>#{id} AND processing_status IN ('RUNNING','WAITING_RETRY'))")
+    @Select("SELECT (SELECT COUNT(*) FROM submission WHERE user_id=#{owner} AND processing_status='RUNNING')+(SELECT COUNT(*) FROM content_validation_job WHERE owner_id=#{owner} AND id<>#{id} AND processing_status IN ('RUNNING','WAITING_RETRY'))+(SELECT COUNT(*) FROM self_test_job WHERE owner_id=#{owner} AND processing_status IN ('RUNNING','WAITING_RETRY'))")
     int otherRunning(@Param("owner") long owner,@Param("id") String id);
     @Update("""
         UPDATE content_validation_job SET processing_status='RUNNING',status_version=status_version+1,

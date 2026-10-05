@@ -113,3 +113,9 @@
 - 本机 Docker Desktop 映射端口的 JDBC 路线多次在 fixture 首次连接超时；HTTP 探针或重启不能替代全量 JDBC 证据。仅测试源码 opt-in 使用 inspect 本人的 MySQL bridge IPv4，默认本机仍原路线，固定 Linux 全量 269/45 与实际重放通过。
 - 固定验证脚本目前要求 builder/Testcontainers 共享默认 bridge；其他 Docker 网络配置须重新证明路线，禁止猜网关、放宽生产权限或测试自动重试。两个实际生产 JAR 均无测试适配。
 - 见 [题解访问验收中的失败诊断](M2-SOLUTION-ACCESS-VALIDATION.md)。不是生产高可用/安全/性能结论。
+
+### L-038：自测保留最少生命周期与关闭 attempt 元数据
+
+- V14 自测代码、输入和输出在终态24小时后隐藏并由有界批次物理清理；queued/running/retrying 不清理。最少的 snapshot ID/hash/resource metadata、job幂等绑定和关闭 attempt 永久保留，保证旧请求不能重复执行及沙箱孤儿清理拥有权威关闭证明。这部分元数据仍会累积，不是自测代码或输出永久保存。
+- 后续归档必须同时保留不可重放的幂等事实和可信关闭证明，重新验收 orphan fail-closed，不能只加 TTL 删除。正式 Submission 不受影响。
+- 验证范围与外部 SMTP 范围见 [自测验收](M2-SELF-TEST-VALIDATION.md)，不是生产存储或性能结论。

@@ -16,6 +16,7 @@ import {
 import { monitorSubmission } from '@/services/submissionMonitor'
 import { useCodeDraft } from '@/composables/useCodeDraft'
 import OfficialSolution from '@/components/OfficialSolution.vue'
+import SelfTest from '@/components/SelfTest.vue'
 
 const props = withDefaults(defineProps<{ slug?: string }>(), { slug: 'sum-two-integers' })
 
@@ -330,6 +331,13 @@ onBeforeUnmount(() => {
             {{ submitting ? '提交中……' : '提交并判题' }}
           </button>
         </form>
+        <SelfTest
+          v-if="session?.user && problem"
+          :slug="problem.slug"
+          :source-code="sourceCode"
+          :user-id="session.user.id"
+          :csrf="session.csrf"
+        />
         <p>
           <a :href="`/learning?tab=history&problemSlug=${encodeURIComponent(props.slug)}`"
             >查看本人提交历史</a

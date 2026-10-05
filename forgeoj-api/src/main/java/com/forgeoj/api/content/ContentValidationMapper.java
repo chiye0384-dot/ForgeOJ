@@ -32,7 +32,7 @@ public interface ContentValidationMapper {
     String requestKind(@Param("owner") long owner,@Param("request") String request);
     @Select("SELECT user_id FROM user_judge_quota_lock WHERE user_id=#{owner} FOR UPDATE")
     Optional<Long> lockQuota(long owner);
-    @Select("SELECT (SELECT COUNT(*) FROM submission WHERE user_id=#{owner} AND processing_status IN ('QUEUED','RETRYING'))+(SELECT COUNT(*) FROM content_validation_job WHERE owner_id=#{owner} AND processing_status='QUEUED')")
+    @Select("SELECT (SELECT COUNT(*) FROM submission WHERE user_id=#{owner} AND processing_status IN ('QUEUED','RETRYING'))+(SELECT COUNT(*) FROM content_validation_job WHERE owner_id=#{owner} AND processing_status='QUEUED')+(SELECT COUNT(*) FROM self_test_job WHERE owner_id=#{owner} AND processing_status='QUEUED')")
     int pending(long owner);
     @Select("SELECT "+RESULT+FROM+"WHERE j.owner_id=#{owner} AND j.client_request_id=#{request}")
     Optional<Result> request(@Param("owner") long owner,@Param("request") String request);

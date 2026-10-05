@@ -1,0 +1,13 @@
+{
+  "verifiedAt": "2026-10-05T10:15:21.361785Z",
+  "host": "smtp.qq.com",
+  "port": 465,
+  "tls": "implicit",
+  "registrationStatus": 202,
+  "adapterReportedFailure": false,
+  "inboxConfirmed": true,
+  "linkConfirmed": true,
+  "apiSha256": "6d990fa0529a692402b1b52f07c552147a2ef85967bd7f9724f11efda26988cc",
+  "accountState": "ACTIVE",
+  "emailVerified": true
+}

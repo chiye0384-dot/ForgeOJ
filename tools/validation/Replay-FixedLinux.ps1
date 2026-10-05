@@ -2,7 +2,7 @@
 # SPDX-License-Identifier: Apache-2.0
 [CmdletBinding()]
 param(
-    [ValidateSet('Start','Status','Matrix','Library','Learning','Content','ReviewLock','Review','Output','WorkerStart','WorkerStop','Permissions','Audit','Stop')]
+    [ValidateSet('Start','Status','Matrix','Library','Learning','Content','ReviewLock','Review','Output','SelfTest','WorkerStart','WorkerStop','Permissions','Audit','Stop')]
     [string]$Action = 'Start',
     [string]$RunDirectory,
     [ValidatePattern('^$|^[a-f0-9-]{36}$')]
@@ -38,6 +38,10 @@ function Sql-Fixture([string]$Sql) {
     $output = $Sql | & $DockerCommand compose --project-name $state.Project -f $composeFile exec -T mysql sh -c 'exec mysql -uroot --password="$MYSQL_ROOT_PASSWORD" --default-character-set=utf8mb4 --batch --skip-column-names forgeoj'
     if ($LASTEXITCODE -ne 0) { throw 'Disposable fixture SQL failed' }
     return $output
+}
+function Save-Lines([string]$Name, [object]$Lines) {
+    # An empty SQL result is valid evidence and must still create an empty file.
+    [IO.File]::WriteAllText((Join-Path $RunDirectory $Name), (@($Lines) -join "`n"), [Text.UTF8Encoding]::new($false))
 }
 
 if ($Action -eq 'Start') {
@@ -95,6 +99,7 @@ switch ($Action) {
     'Content' { Compose-Checked @('exec','-T','frontend','node','/source/tools/validation/replay-probe.mjs','content') }
     'ReviewLock' { Compose-Checked @('exec','-T','frontend','node','/source/tools/validation/replay-probe.mjs','review-lock') }
     'Output' { Compose-Checked @('exec','-T','frontend','node','/source/tools/validation/replay-probe.mjs','output') }
+    'SelfTest' { Compose-Checked @('exec','-T','frontend','node','/source/tools/validation/replay-probe.mjs','self-test') }
     'Review' { Compose-Checked @('exec','-T','frontend','node','/source/tools/validation/replay-probe.mjs','review') }
     'Permissions' { Compose-Checked (@('exec','-T','frontend','node','/source/tools/validation/replay-probe.mjs','permissions') + $(if($SubmissionId) { @($SubmissionId) } else { @() })) }
     'WorkerStop' { Compose-Checked @('stop','-t','10','worker') }
@@ -133,7 +138,7 @@ SELECT JSON_OBJECT('jobId',j.id,'executionKind',j.execution_kind,'draftId',s.dra
  FROM content_validation_job j JOIN content_validation_snapshot s ON s.id=j.snapshot_id
  JOIN authored_problem_draft d ON d.id=s.draft_id ORDER BY j.created_at;
 '@
-        $content | Set-Content -LiteralPath (Join-Path $RunDirectory 'content-database.jsonl') -Encoding utf8
+        Save-Lines 'content-database.jsonl' $content
         $contentOutbox = Sql-Fixture @'
 SELECT JSON_OBJECT('outboxEventId',id,'jobId',aggregate_id,'eventType',event_type,'sequenceNo',sequence_no,
  'published',published_at IS NOT NULL,'failed',failed_at IS NOT NULL,'keys',JSON_KEYS(payload))
@@ -144,8 +149,8 @@ SELECT JSON_OBJECT('jobId',j.id,'acceptedVersion',a.applied_version,'expectedVer
  'outputs',COALESCE((SELECT JSON_ARRAYAGG(JSON_OBJECT('sequence',o.sequence_no,'bytes',o.output_bytes,'sha256',o.output_sha256)) FROM content_output_preview_case o WHERE o.job_id=j.id),JSON_ARRAY()))
  FROM content_validation_job j LEFT JOIN content_output_acceptance a ON a.job_id=j.id WHERE j.execution_kind='OUTPUT_PREVIEW';
 '@
-        $outputFacts | Set-Content -LiteralPath (Join-Path $RunDirectory 'output-database.jsonl') -Encoding utf8
-        $contentOutbox | Set-Content -LiteralPath (Join-Path $RunDirectory 'content-outbox.jsonl') -Encoding utf8
+        Save-Lines 'output-database.jsonl' $outputFacts
+        Save-Lines 'content-outbox.jsonl' $contentOutbox
         $reviews = Sql-Fixture @'
 SELECT JSON_OBJECT('reviewId',r.id,'draftId',r.draft_id,'draftVersion',r.draft_version,'reviewNo',r.review_no,
  'validationJobId',r.validation_job_id,'status',r.review_status,'version',r.version,
@@ -157,8 +162,25 @@ SELECT JSON_OBJECT('reviewId',r.id,'draftId',r.draft_id,'draftVersion',r.draft_v
  FROM content_review r JOIN content_validation_job j ON j.id=r.validation_job_id
  JOIN content_validation_snapshot s ON s.id=r.snapshot_id ORDER BY r.review_no;
 '@
-        $reviews | Set-Content -LiteralPath (Join-Path $RunDirectory 'review-database.jsonl') -Encoding utf8
-        if ((Sql-Fixture "SELECT COUNT(*) FROM outbox_event WHERE aggregate_type NOT IN ('JUDGE_TASK','CONTENT_VALIDATION');").Trim() -ne '0') { throw 'Unknown Outbox aggregate is not audited' }
+        Save-Lines 'review-database.jsonl' $reviews
+        $selfFacts = Sql-Fixture @'
+SELECT JSON_OBJECT('runId',j.id,'snapshotId',j.snapshot_id,'processingStatus',j.processing_status,
+ 'executionResult',j.execution_result,'statusVersion',j.status_version,'attemptCount',j.attempt_count,
+ 'hasExpiry',j.expires_at IS NOT NULL,'leaseCleared',j.lease_owner IS NULL AND j.lease_token IS NULL AND j.lease_expires_at IS NULL,
+ 'payloadDigestsMatch',SHA2(p.source_code,256)=s.source_sha256 AND SHA2(p.input_text,256)=s.input_sha256,
+ 'outputSha256',o.output_sha256,'outputBytes',o.output_bytes,
+ 'attempts',COALESCE((SELECT JSON_ARRAYAGG(JSON_OBJECT('attemptId',a.id,'attemptNo',a.attempt_no,'status',a.attempt_status,'finished',a.finished_at IS NOT NULL)) FROM self_test_attempt a WHERE a.job_id=j.id),JSON_ARRAY()))
+ FROM self_test_job j JOIN self_test_snapshot s ON s.id=j.snapshot_id
+ LEFT JOIN self_test_payload p ON p.snapshot_id=s.id LEFT JOIN self_test_output o ON o.job_id=j.id ORDER BY j.created_at,j.id;
+'@
+        Save-Lines 'self-test-database.jsonl' $selfFacts
+        $selfOutbox = Sql-Fixture @'
+SELECT JSON_OBJECT('outboxEventId',id,'runId',aggregate_id,'eventType',event_type,'sequenceNo',sequence_no,
+ 'published',published_at IS NOT NULL,'failed',failed_at IS NOT NULL,'keys',JSON_KEYS(payload))
+ FROM outbox_event WHERE aggregate_type='SELF_TEST' ORDER BY aggregate_id,sequence_no;
+'@
+        Save-Lines 'self-test-outbox.jsonl' $selfOutbox
+        if ((Sql-Fixture "SELECT COUNT(*) FROM outbox_event WHERE aggregate_type NOT IN ('JUDGE_TASK','CONTENT_VALIDATION','SELF_TEST');").Trim() -ne '0') { throw 'Unknown Outbox aggregate is not audited' }
         $queues = Compose-Checked @('exec','-T','rabbitmq','rabbitmqctl','--quiet','list_queues','-p','/forgeoj','name','messages_ready','messages_unacknowledged','--formatter','json')
         $queues | Set-Content -LiteralPath (Join-Path $RunDirectory 'queues.json') -Encoding utf8
         foreach($service in @('api','worker','frontend')) {
@@ -193,7 +215,16 @@ SELECT JSON_OBJECT('reviewId',r.id,'draftId',r.draft_id,'draftVersion',r.draft_v
             @('forgeoj_worker','FORGEOJ_WORKER_DB_PASSWORD','UPDATE content_review SET review_status=review_status WHERE 1=0;'),
             @('forgeoj_api','FORGEOJ_API_DB_PASSWORD','DELETE FROM content_review WHERE 1=0;'),
             @('forgeoj_api','FORGEOJ_API_DB_PASSWORD','UPDATE content_review SET snapshot_id=snapshot_id WHERE 1=0;'),
-            @('forgeoj_api','FORGEOJ_API_DB_PASSWORD','UPDATE content_review SET validation_job_id=validation_job_id WHERE 1=0;')
+            @('forgeoj_api','FORGEOJ_API_DB_PASSWORD','UPDATE content_review SET validation_job_id=validation_job_id WHERE 1=0;'),
+            @('forgeoj_api','FORGEOJ_API_DB_PASSWORD','SELECT id FROM self_test_attempt LIMIT 0;'),
+            @('forgeoj_api','FORGEOJ_API_DB_PASSWORD','UPDATE self_test_snapshot SET source_sha256=source_sha256 WHERE 1=0;'),
+            @('forgeoj_api','FORGEOJ_API_DB_PASSWORD','UPDATE self_test_payload SET source_code=source_code WHERE 1=0;'),
+            @('forgeoj_api','FORGEOJ_API_DB_PASSWORD','INSERT INTO self_test_output(job_id) VALUES(''bad'');'),
+            @('forgeoj_api','FORGEOJ_API_DB_PASSWORD','DELETE FROM self_test_job WHERE 1=0;'),
+            @('forgeoj_worker','FORGEOJ_WORKER_DB_PASSWORD','UPDATE self_test_snapshot SET source_sha256=source_sha256 WHERE 1=0;'),
+            @('forgeoj_worker','FORGEOJ_WORKER_DB_PASSWORD','DELETE FROM self_test_payload WHERE 1=0;'),
+            @('forgeoj_worker','FORGEOJ_WORKER_DB_PASSWORD','DELETE FROM self_test_output WHERE 1=0;'),
+            @('forgeoj_worker','FORGEOJ_WORKER_DB_PASSWORD','DELETE FROM self_test_attempt WHERE 1=0;')
         )
         foreach($denial in $denials) {
             # Inputs are the fixed roles/queries above, not user-controlled shell text.

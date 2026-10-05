@@ -1,0 +1,50 @@
+{
+  "verifiedAt": "2026-10-05T10:29:27.7133259Z",
+  "jobs": [
+    {
+      "runId": "3a62aeb9-4d06-45f0-94ac-3f6b247dd705",
+      "requestId": "ea52c03f-d6e5-4118-94d6-5ba5933b5a01",
+      "sourceCode": "public class Main { broken }",
+      "input": "1 2\n",
+      "processingStatus": "FINISHED",
+      "executionResult": "COMPILE_ERROR",
+      "outputSha256": null,
+      "recovered": false,
+      "observedInBrowser": true
+    },
+    {
+      "runId": "9d0049f1-a241-46af-a13c-96b093187d64",
+      "requestId": "16f842d1-70a5-477d-808d-35a65ab1a70e",
+      "sourceCode": "import java.util.Scanner; public class Main { public static void main(String[] args) { Scanner s=new Scanner(System.in); System.out.println(s.nextLong()+s.nextLong()); } }",
+      "input": "8 9\n",
+      "processingStatus": "FINISHED",
+      "executionResult": "SUCCESS",
+      "outputSha256": "54183f4323f377b737433a1e98229ead0fdc686f93bab057ecb612daa94002b5",
+      "recovered": false,
+      "observedInBrowser": true
+    },
+    {
+      "runId": "a2b1b942-476b-4441-a368-702c4663e33a",
+      "requestId": "e282f5d6-734d-41c8-b776-0d2ca1032736",
+      "sourceCode": "import java.util.Scanner; public class Main { public static void main(String[] args) throws Exception { Scanner s=new Scanner(System.in); Thread.sleep(1200); System.out.println(s.nextLong()+s.nextLong()); } }",
+      "input": "7 8\n",
+      "processingStatus": "FINISHED",
+      "executionResult": "SUCCESS",
+      "outputSha256": "238903180cc104ec2c5d8b3f20c5bc61b389ec0a967df8cc208cdc7cd454174f",
+      "recovered": true,
+      "observedInBrowser": true
+    },
+    {
+      "runId": "d8b255b8-4094-4549-88c3-08c62cf7e852",
+      "requestId": "40871062-957b-4404-8bf5-e030554386d9",
+      "sourceCode": "import java.util.Scanner; public class Main { public static void main(String[] args) { Scanner s=new Scanner(System.in); System.out.println(s.nextLong()+s.nextLong()); } }",
+      "input": "4 5\n",
+      "processingStatus": "CANCELLED",
+      "executionResult": null,
+      "outputSha256": null,
+      "recovered": false,
+      "observedInBrowser": true
+    }
+  ],
+  "browserFrozenLocalEdits": true
+}

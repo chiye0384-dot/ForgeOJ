@@ -1,6 +1,6 @@
 # ForgeOJ
 
-> 当前状态：`M-1：项目准备`、`M0：最小判题纵向切片` 和 `M1：可靠异步判题` 均为 `VERIFIED`。M0 通过 20 项门禁；M1 于 2026-10-02 通过 [15 项最终门禁审计](docs/M1-GATE-AUDIT.md)。M2 [普通账号](docs/M2-ACCOUNTS-VALIDATION.md)、[公开题库/SMTP 适配](docs/M2-LIBRARY-SMTP-VALIDATION.md)、[学习记录](docs/M2-LEARNING-RECORDS-VALIDATION.md)、[作者双程序验证](docs/M2-CONTENT-VALIDATION-JOBS-VALIDATION.md)、[不可变送审/撤回](docs/M2-CONTENT-REVIEW-VALIDATION.md)、[参考输出预览/确认](docs/M2-OUTPUT-PREVIEW-VALIDATION.md)等单元 VERIFIED，完整 M2 保持 `IN_PROGRESS`；自测与真实邮件投递尚待完成，M3～M5 为 `PLANNED`，尚未发布。
+> 当前状态：`M-1：项目准备`、`M0：最小判题纵向切片` 和 `M1：可靠异步判题` 均为 `VERIFIED`。M0 通过 20 项门禁；M1 于 2026-10-02 通过 [15 项最终门禁审计](docs/M1-GATE-AUDIT.md)。M2 [普通账号](docs/M2-ACCOUNTS-VALIDATION.md)、[公开题库/SMTP 适配](docs/M2-LIBRARY-SMTP-VALIDATION.md)、[学习记录](docs/M2-LEARNING-RECORDS-VALIDATION.md)、[作者双程序验证](docs/M2-CONTENT-VALIDATION-JOBS-VALIDATION.md)、[不可变送审/撤回](docs/M2-CONTENT-REVIEW-VALIDATION.md)、[参考输出预览/确认](docs/M2-OUTPUT-PREVIEW-VALIDATION.md)等单元 VERIFIED，完整 M2 保持 `IN_PROGRESS`；[独立自测与真实 QQ SMTP 投递](docs/M2-SELF-TEST-VALIDATION.md)已 VERIFIED，等待 M2 最终门禁汇总，M3～M5 为 `PLANNED`，尚未发布。
 >
 > 需求基线：2026-09-24；工程基线：2026-09-28
 
@@ -8,9 +8,11 @@ ForgeOJ 是一个面向 Java 学习者和小型教学班级的在线判题平台
 
 仓库已包含可构建的工程起点、M0 的 7 张核心业务表、开发/测试种子、最小会话认证、公开题目详情接口、Submission/JudgeTask/Outbox 的原子创建和并发幂等处理、基于 publisher confirm 的 RabbitMQ 发布，以及 Worker 对四字段消息的严格校验、手动 ACK、幂等领取、快照完整性校验、受限 Docker 执行和终态事务写回。Worker 会在结果提交到 MySQL 后 ACK；平台故障写 `SYSTEM_ERROR` 且不伪装成用户 verdict。结果查询只允许提交所有者读取，并对不存在、格式错误和他人提交统一返回 404。Vue 前端已实现登录、读取内置题、提交 Java 21 代码及轮询终态；除模拟 API 自动化外，真实页面 AC 闭环也已在 disposable Windows 开发栈通过。
 
-`feat/m2-accounts` 已把预置账号认证升级为注册/邮箱激活、短 JWT 与 MySQL 独立会话、刷新轮换/重用撤销、当前/全部退出、改密/找回和旧账号补邮箱。普通账号单元已验证：固定 Linux 后端 **100 + 111 = 211** 项、前端 **13** 项及全部检查通过，相同产物的新账号注册→本地邮件→激活→邮箱登录→实际 AC、旧账号轮询兜底与独立权限/日志/队列审计和精确清理均通过。设计见 [普通账号设计](docs/M2-ACCOUNTS-DESIGN.md)与 D-041，命令、源码/JAR 哈希和范围见 [账号验收记录](docs/M2-ACCOUNTS-VALIDATION.md)，可提交脱敏事实见 [证据目录](docs/evidence/m2-accounts/README.md)。完整 M2 与真实 SMTP 尚未完成。
+`feat/m2-accounts` 已把预置账号认证升级为注册/邮箱激活、短 JWT 与 MySQL 独立会话、刷新轮换/重用撤销、当前/全部退出、改密/找回和旧账号补邮箱。普通账号单元已验证：固定 Linux 后端 **100 + 111 = 211** 项、前端 **13** 项及全部检查通过，相同产物的新账号注册→本地邮件→激活→邮箱登录→实际 AC、旧账号轮询兜底与独立权限/日志/队列审计和精确清理均通过。设计见 [普通账号设计](docs/M2-ACCOUNTS-DESIGN.md)与 D-041，命令、源码/JAR 哈希和范围见 [账号验收记录](docs/M2-ACCOUNTS-VALIDATION.md)，可提交脱敏事实见 [证据目录](docs/evidence/m2-accounts/README.md)。这段为账号阶段的历史验收；真实 QQ SMTP 投递与激活随后已验证，完整 M2 仍待最终门禁汇总。
 
 ## 当前工程基线
+
+2026-10-05 最新：独立自测与 QQ SMTP 实际接收/激活单元已 VERIFIED。固定 Linux API181+Worker132=313、最终前端69及全部门禁、真实冻结编辑/取消/历史/Worker SIGKILL自然租约恢复、零AC副作用、七空队列/29实际权限拒绝与精确清理通过，见 [验收](docs/M2-SELF-TEST-VALIDATION.md)。完整 M2 仍 IN_PROGRESS，下一步最终门禁汇总；受控审核发布仍 M4，不新增发布或 RESUME_READY 结论。以下日期段落保留各自历史事实。
 
 2026-10-05 整理：参考输出预览/明确确认单元已 VERIFIED（实际验收2026-10-04）。V13 不可变用途隔离、仅运行参考、整组压缩输出、owner/CAS/幂等确认与版本递增完成；不会自动覆盖答案，不产生双通过或正式成绩。全新固定 Linux 后端 **298**（API174/Worker124）、前端 **61** 及全部检查通过，280 个冻结输入匹配；相同 JAR 真实页面失败→生成→显式确认/保留本地编辑→过期/待审/归档历史，以及新 Worker SIGKILL 自然租约恢复通过。HTTP/输出摘要/Outbox/提交后ACK审计、正常与回退AC、六空队列、45项实际权限拒绝和精确清理均通过；本轮有真实页面截图。见 [验收](docs/M2-OUTPUT-PREVIEW-VALIDATION.md)。完整内容与 M2 保持 IN_PROGRESS；下一单元独立自测，真实 SMTP 仍需服务商和授权收件箱，受控审核与发布仍为 M4。以下旧阶段记录按各自日期保留。
 

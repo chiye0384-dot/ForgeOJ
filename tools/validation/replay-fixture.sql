@@ -47,3 +47,7 @@ INSERT INTO problem_test_case (id, judge_version_id, ordinal, input_data_gzip, e
 INSERT INTO official_problem_list_item(id,list_id,problem_id,position) VALUES
  ('00000000-0000-0000-0000-000000000102','00000000-0000-0000-0000-000000000101',1,1),
  ('00000000-0000-0000-0000-000000000103','00000000-0000-0000-0000-000000000101',100,2);
+
+-- Original disposable access-control fixture, never reviewed/published product content.
+INSERT INTO official_problem_solution(judge_version_id,idea,language,source_code) VALUES
+ (1,'Read two integers and print their sum.','JAVA_21','import java.util.Scanner; public class Main { public static void main(String[] a) { Scanner s=new Scanner(System.in); System.out.println(s.nextLong()+s.nextLong()); } }');

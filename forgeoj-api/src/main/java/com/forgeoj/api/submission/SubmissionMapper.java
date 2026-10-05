@@ -89,6 +89,7 @@ interface SubmissionMapper {
             WHERE s.user_id = #{userId} AND s.processing_status IN ('QUEUED', 'RETRYING'))
             + (SELECT COUNT(*) FROM content_validation_job
                WHERE owner_id = #{userId} AND processing_status = 'QUEUED')
+            + (SELECT COUNT(*) FROM self_test_job WHERE owner_id=#{userId} AND processing_status='QUEUED')
             """)
     int countQueuedOrRetrying(@Param("userId") long userId);
 

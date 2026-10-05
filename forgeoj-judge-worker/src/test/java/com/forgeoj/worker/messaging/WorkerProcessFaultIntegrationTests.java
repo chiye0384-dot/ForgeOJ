@@ -89,6 +89,9 @@ class WorkerProcessFaultIntegrationTests {
                     "db/migration/V9__authored_problem_drafts.sql",
                     "db/migration/V10__official_solution_access.sql",
                     "db/migration/V11__content_validation_jobs.sql",
+                    "db/migration/V12__immutable_content_reviews.sql",
+                    "db/migration/V13__content_output_previews.sql",
+                    "db/migration/V14__independent_self_test.sql",
                     "db/devdata/R__seed_m0_development_data.sql")) {
                 ScriptUtils.executeSqlScript(database, new FileSystemResource(repositoryFile("forgeoj-api/src/main/resources/" + script)));
             }

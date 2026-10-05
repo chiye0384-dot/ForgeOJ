@@ -88,7 +88,7 @@ public class SubmissionService {
         }
     }
 
-    private void validateSource(String sourceCode) {
+    public static void validateSource(String sourceCode) {
         if (sourceCode == null || sourceCode.isBlank()) {
             throw badRequest("sourceCode is required");
         }
@@ -107,7 +107,7 @@ public class SubmissionService {
         }
     }
 
-    private String codeOnly(String sourceCode) {
+    private static String codeOnly(String sourceCode) {
         StringBuilder result = new StringBuilder(sourceCode.length());
         ScanState state = ScanState.CODE;
 
@@ -206,7 +206,7 @@ public class SubmissionService {
         }
     }
 
-    private ResponseStatusException badRequest(String reason) {
+    private static ResponseStatusException badRequest(String reason) {
         return new ResponseStatusException(HttpStatus.BAD_REQUEST, reason);
     }
 

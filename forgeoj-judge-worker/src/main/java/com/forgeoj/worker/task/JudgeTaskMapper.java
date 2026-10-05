@@ -53,6 +53,7 @@ interface JudgeTaskMapper {
               AND id <> #{submissionId})
               + (SELECT COUNT(*) FROM content_validation_job WHERE owner_id=#{userId}
                    AND processing_status IN ('RUNNING','WAITING_RETRY'))
+              + (SELECT COUNT(*) FROM self_test_job WHERE owner_id=#{userId} AND processing_status IN ('RUNNING','WAITING_RETRY'))
             """)
     int countOtherRunningSubmissions(
             @Param("userId") long userId, @Param("submissionId") String submissionId);
@@ -62,6 +63,7 @@ interface JudgeTaskMapper {
             SELECT (SELECT COUNT(*) FROM submission
             WHERE user_id = #{userId} AND processing_status IN ('QUEUED', 'RETRYING'))
             + (SELECT COUNT(*) FROM content_validation_job WHERE owner_id=#{userId} AND processing_status='QUEUED')
+            + (SELECT COUNT(*) FROM self_test_job WHERE owner_id=#{userId} AND processing_status='QUEUED')
             """)
     int countQueuedOrRetrying(@Param("userId") long userId);
 

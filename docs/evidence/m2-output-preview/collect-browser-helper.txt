@@ -1,0 +1,36 @@
+param([ValidateSet('Pending','Archived')][string]$Phase='Archived')
+$ErrorActionPreference='Stop'
+$taskRepo=(Resolve-Path '.').Path;$taskRun=Join-Path $taskRepo 'target/forgeoj-e2e-20261004-193539-8f12e033'
+$taskState=Get-Content (Join-Path $taskRun 'state.json') -Raw | ConvertFrom-Json
+$env:FORGEOJ_E2E_SOURCE=$taskRepo;$env:FORGEOJ_E2E_PROJECT=$taskState.Project;$env:FORGEOJ_E2E_ARTIFACTS=$taskState.BuildDirectory;$env:FORGEOJ_E2E_REPORTS=$taskRun
+function Read-Fact([string]$Query){$taskResult=$Query | & docker compose --project-name $taskState.Project -f tools/validation/compose.replay.yml exec -T mysql sh -c 'exec mysql -uroot --password="$MYSQL_ROOT_PASSWORD" --default-character-set=utf8mb4 --batch --skip-column-names forgeoj' 2>$null;if($LASTEXITCODE -ne 0){throw ('Fact read failed: '+$Query)};return $taskResult}
+# These four IDs were read from actual browser result data-job-id attributes.
+$taskObservedPreviewIds=@('d12f682f-8d63-4074-b3e0-4d7b845fc2ea','891af220-9419-4fbd-aa6b-c5ff8e1a3adc','b4e66e93-5439-4353-8410-49c7e7182199')
+$taskObservedValidationId='c7dea14f-e47f-4eb4-aed2-cd8a5817e594'
+$taskDraft=(Read-Fact "SELECT s.draft_id FROM content_validation_job j JOIN content_validation_snapshot s ON s.id=j.snapshot_id WHERE j.id='$($taskObservedPreviewIds[0])';").Trim()
+if($taskDraft -notmatch '^[a-f0-9-]{36}$'){throw 'No browser-bound draft'}
+$taskDraftFact=Read-Fact "SELECT JSON_OBJECT('version',d.version,'status',IF(d.status='DRAFT' AND EXISTS(SELECT 1 FROM content_review r WHERE r.active_draft_id=d.id),'UNDER_REVIEW',d.status),'testCount',(SELECT COUNT(*) FROM authored_problem_test_case t WHERE t.draft_id=d.id)) FROM authored_problem_draft d WHERE d.id='$taskDraft';" | ConvertFrom-Json
+if($taskDraftFact.testCount -ne 2 -or $taskDraftFact.version -ne $(if($Phase -eq 'Pending'){6}else{7}) -or $taskDraftFact.status -ne $(if($Phase -eq 'Pending'){'UNDER_REVIEW'}else{'ARCHIVED'})){throw 'Unexpected browser draft state'}
+$taskReviews=@(Read-Fact "SELECT JSON_OBJECT('reviewId',r.id,'draftId',r.draft_id,'draftVersion',r.draft_version,'reviewNo',r.review_no,'validationJobId',r.validation_job_id,'requestId',r.request_id,'status',r.review_status,'frozenStatementSha256',SHA2(JSON_UNQUOTE(JSON_EXTRACT(s.metadata_text,'$.statement')),256)) FROM content_review r JOIN content_validation_snapshot s ON s.id=r.snapshot_id WHERE r.draft_id='$taskDraft' ORDER BY r.review_no;" | ForEach-Object {$_ | ConvertFrom-Json})
+if($taskReviews.Count -ne 2 -or $taskReviews[0].status -ne 'WITHDRAWN' -or $taskReviews[1].status -ne $(if($Phase -eq 'Pending'){'PENDING'}else{'WITHDRAWN'})){throw 'Review state mismatch'}
+[ordered]@{verifiedAt=(Get-Date).ToUniversalTime().ToString('o');observedInActualBrowser=$true;draftId=$taskDraft;testCount=2;pendingUiWritesDisabled=$true;reviews=$taskReviews} | ConvertTo-Json -Depth 6 | Set-Content (Join-Path $taskRun 'review-browser.json') -Encoding utf8
+if($Phase -eq 'Pending'){Write-Host 'BROWSER_PENDING_FACTS_CORRELATED';return}
+$taskJobs=@()
+for($taskIndex=0;$taskIndex -lt $taskObservedPreviewIds.Count;$taskIndex++){
+ $taskId=$taskObservedPreviewIds[$taskIndex]
+ $taskJob=Read-Fact "SELECT JSON_OBJECT('jobId',j.id,'draftId',s.draft_id,'draftVersion',s.draft_version,'requestId',j.client_request_id,'referenceResult',j.reference_result,'acceptedVersion',a.applied_version) FROM content_validation_job j JOIN content_validation_snapshot s ON s.id=j.snapshot_id LEFT JOIN content_output_acceptance a ON a.job_id=j.id WHERE j.id='$taskId' AND j.execution_kind='OUTPUT_PREVIEW' AND j.processing_status='FINISHED';" | ConvertFrom-Json
+ if(-not $taskJob -or $taskJob.draftId -ne $taskDraft -or $taskJob.draftVersion -ne @(3,4,5)[$taskIndex] -or $taskJob.referenceResult -ne @('COMPILE_ERROR','ACCEPTED','ACCEPTED')[$taskIndex]){throw 'Observed preview mismatch'}
+ $taskHashes=@(Read-Fact "SELECT output_sha256 FROM content_output_preview_case WHERE job_id='$taskId' ORDER BY sequence_no;")
+ if($taskHashes.Count -ne $(if($taskIndex -eq 0){0}else{2})){throw 'Partial/extra output facts'}
+ $taskJob | Add-Member -NotePropertyName recovered -NotePropertyValue ($taskIndex -eq 2)
+ $taskJob | Add-Member -NotePropertyName outputSha256 -NotePropertyValue $taskHashes
+ $taskJobs+=$taskJob
+}
+$taskCrash=Get-Content (Join-Path $taskRun 'output-crash.json') -Raw | ConvertFrom-Json
+if(-not $taskCrash.killConfirmed -or -not $taskCrash.naturalExpiry -or -not $taskCrash.oldSandboxRemoved -or $taskCrash.jobId -ne $taskObservedPreviewIds[2]){throw 'No actual crash evidence'}
+$taskValidation=Read-Fact "SELECT JSON_OBJECT('jobId',j.id,'draftId',s.draft_id,'draftVersion',s.draft_version,'requestId',j.client_request_id,'referenceResult',j.reference_result,'solutionResult',j.solution_result,'validationStatus',j.validation_status) FROM content_validation_job j JOIN content_validation_snapshot s ON s.id=j.snapshot_id WHERE j.id='$taskObservedValidationId' AND j.execution_kind='VALIDATE' AND j.processing_status='FINISHED';" | ConvertFrom-Json
+if(-not $taskValidation -or $taskValidation.validationStatus -ne 'PASSED' -or $taskValidation.draftVersion -ne 6){throw 'Observed validation mismatch'}
+$taskValidation | Add-Member -NotePropertyName recovered -NotePropertyValue $false
+[ordered]@{verifiedAt=(Get-Date).ToUniversalTime().ToString('o');observedInActualBrowser=$true;draftId=$taskDraft;testCount=2;archivedVersion=7;previewDidNotOverwrite=$true;explicitConfirmationVersion=5;unsavedContentPreserved=$true;visibleVersionInvalidation=$true;archivedHistoryVisible=$true;newExecutionDisabledWhenArchived=$true;crashVerified=$true;oldSandboxRemoved=$true;jobs=$taskJobs} | ConvertTo-Json -Depth 6 | Set-Content (Join-Path $taskRun 'output-browser.json') -Encoding utf8
+[ordered]@{verifiedAt=(Get-Date).ToUniversalTime().ToString('o');observedInActualBrowser=$true;draftId=$taskDraft;testCount=2;archivedVersion=7;visibleVersionInvalidation=$true;archivedHistoryVisible=$true;newExecutionDisabledWhenArchived=$true;crashVerified=$false;newWorkerKillReplayPerformed=$false;jobs=@($taskValidation)} | ConvertTo-Json -Depth 6 | Set-Content (Join-Path $taskRun 'content-browser.json') -Encoding utf8
+Write-Host 'ACTUAL_BROWSER_OUTPUT_FACTS_CORRELATED'

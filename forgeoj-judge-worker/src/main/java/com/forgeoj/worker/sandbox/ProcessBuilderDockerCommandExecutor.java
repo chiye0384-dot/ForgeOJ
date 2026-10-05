@@ -93,7 +93,7 @@ final class ProcessBuilderDockerCommandExecutor implements DockerCommandExecutor
                     out.text(),
                     err.text(),
                     !finished,
-                    outputTruncated.get() || out.truncated() || err.truncated());
+                    outputTruncated.get() || out.truncated() || err.truncated(),out.utf8Valid());
         } catch (InterruptedException interrupted) {
             process.destroyForcibly();
             Thread.currentThread().interrupt();
@@ -158,7 +158,10 @@ final class ProcessBuilderDockerCommandExecutor implements DockerCommandExecutor
                 throw failure;
             }
         }
-        return new BoundedOutput(retained.toString(StandardCharsets.UTF_8), truncated);
+        boolean valid=true;
+        try {StandardCharsets.UTF_8.newDecoder().onMalformedInput(java.nio.charset.CodingErrorAction.REPORT).onUnmappableCharacter(java.nio.charset.CodingErrorAction.REPORT).decode(java.nio.ByteBuffer.wrap(retained.toByteArray()));}
+        catch(java.nio.charset.CharacterCodingException invalid){valid=false;}
+        return new BoundedOutput(retained.toString(StandardCharsets.UTF_8), truncated,valid);
     }
 
     private int reserve(AtomicInteger remaining, int requested) {
@@ -174,5 +177,5 @@ final class ProcessBuilderDockerCommandExecutor implements DockerCommandExecutor
         }
     }
 
-    private record BoundedOutput(String text, boolean truncated) {}
+    private record BoundedOutput(String text, boolean truncated,boolean utf8Valid) {}
 }

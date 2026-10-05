@@ -1,0 +1,20 @@
+{
+  "verifiedAt": "2026-10-04T11:52:56.4593362Z",
+  "project": "forgeoj-e2e-20261004-193539-8f12e033",
+  "dockerVersion": "29.8.0",
+  "ownedContainers": 0,
+  "ownedVolumes": 0,
+  "ownedNetworks": 0,
+  "ownedWorkerImages": 0,
+  "managedSandboxes": 0,
+  "testcontainers": 0,
+  "buildContainers": 0,
+  "builderImages": 0,
+  "unrelatedResourcesTouched": false,
+  "exactBuilderImage": "forgeoj-linux-20261004-191729-3f25e7ce-backend-image",
+  "exactBuilderVerifiedAt": "2026-10-05T08:27:39.8090039Z",
+  "closedCreatedTabs": [
+    "7",
+    "8"
+  ]
+}

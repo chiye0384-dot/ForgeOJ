@@ -1,0 +1,40 @@
+{
+  "verifiedAt": "2026-10-04T11:42:33.0790345Z",
+  "jobId": "b4e66e93-5439-4353-8410-49c7e7182199",
+  "workerContainerId": "ffb318ce35b6193f8140855489b5cb2b5a0182bc3adb9d052b1b711a02b13cda",
+  "oldAttemptId": "abe2cfb9-6a65-4f19-abb3-0bfcb8bf40c1",
+  "oldSandboxIds": "135d113f9013acfefbbaa4cce7cf4439b57c318c4482b0c02100a57cd74a48ca",
+  "killedAt": "2026-10-04T11:41:59.0115452Z",
+  "killConfirmed": true,
+  "before": {
+    "jobId": "b4e66e93-5439-4353-8410-49c7e7182199",
+    "leaseValid": true,
+    "attemptCount": 1,
+    "leaseCleared": false,
+    "executionKind": "OUTPUT_PREVIEW",
+    "solutionResult": null,
+    "referenceResult": null,
+    "processingStatus": "RUNNING",
+    "validationStatus": null
+  },
+  "after": {
+    "jobId": "b4e66e93-5439-4353-8410-49c7e7182199",
+    "leaseValid": null,
+    "attemptCount": 2,
+    "leaseCleared": true,
+    "executionKind": "OUTPUT_PREVIEW",
+    "solutionResult": null,
+    "referenceResult": "ACCEPTED",
+    "processingStatus": "FINISHED",
+    "validationStatus": null
+  },
+  "attemptStatuses": [
+    "LEASE_EXPIRED",
+    "SUCCEEDED"
+  ],
+  "oldSandboxRemoved": true,
+  "formalSubmissionCountBefore": 9,
+  "formalSubmissionCountAfter": 9,
+  "publishedContentOutbox": 2,
+  "naturalExpiry": true
+}

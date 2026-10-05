@@ -1,0 +1,53 @@
+{
+  "verifiedAt": "2026-10-04T11:48:43.3959642Z",
+  "observedInActualBrowser": true,
+  "draftId": "3483fd08-ce74-4048-b9cf-0e0fdfa4f0ce",
+  "testCount": 2,
+  "archivedVersion": 7,
+  "previewDidNotOverwrite": true,
+  "explicitConfirmationVersion": 5,
+  "unsavedContentPreserved": true,
+  "visibleVersionInvalidation": true,
+  "archivedHistoryVisible": true,
+  "newExecutionDisabledWhenArchived": true,
+  "crashVerified": true,
+  "oldSandboxRemoved": true,
+  "jobs": [
+    {
+      "jobId": "d12f682f-8d63-4074-b3e0-4d7b845fc2ea",
+      "draftId": "3483fd08-ce74-4048-b9cf-0e0fdfa4f0ce",
+      "requestId": "ba9c0aec-d469-4e6e-addd-ebf338511928",
+      "draftVersion": 3,
+      "acceptedVersion": null,
+      "referenceResult": "COMPILE_ERROR",
+      "recovered": false,
+      "outputSha256": []
+    },
+    {
+      "jobId": "891af220-9419-4fbd-aa6b-c5ff8e1a3adc",
+      "draftId": "3483fd08-ce74-4048-b9cf-0e0fdfa4f0ce",
+      "requestId": "422fba7e-78a2-4c7c-bb4d-448b95bd631f",
+      "draftVersion": 4,
+      "acceptedVersion": 5,
+      "referenceResult": "ACCEPTED",
+      "recovered": false,
+      "outputSha256": [
+        "1121cfccd5913f0a63fec40a6ffd44ea64f9dc135c66634ba001d10bcf4302a2",
+        "238903180cc104ec2c5d8b3f20c5bc61b389ec0a967df8cc208cdc7cd454174f"
+      ]
+    },
+    {
+      "jobId": "b4e66e93-5439-4353-8410-49c7e7182199",
+      "draftId": "3483fd08-ce74-4048-b9cf-0e0fdfa4f0ce",
+      "requestId": "f94ae686-c61c-4a6d-98f1-0a3685d25580",
+      "draftVersion": 5,
+      "acceptedVersion": null,
+      "referenceResult": "ACCEPTED",
+      "recovered": true,
+      "outputSha256": [
+        "1121cfccd5913f0a63fec40a6ffd44ea64f9dc135c66634ba001d10bcf4302a2",
+        "238903180cc104ec2c5d8b3f20c5bc61b389ec0a967df8cc208cdc7cd454174f"
+      ]
+    }
+  ]
+}

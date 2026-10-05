@@ -27,13 +27,18 @@ public class ContentValidationService {
     }
     @Transactional
     public ContentValidationMapper.Result create(long owner,String draft,long version,String request) {
+        return createExecution(owner,draft,version,request,false);
+    }
+    @Transactional
+    public ContentValidationMapper.Result createExecution(long owner,String draft,long version,String request,boolean preview) {
         uuid(draft,HttpStatus.NOT_FOUND);uuid(request,HttpStatus.BAD_REQUEST);
         if(version<1 || version>9007199254740991L) throw status(HttpStatus.BAD_REQUEST);
         accounts.requireCurrentWrite(owner);
         if(validations.lockQuota(owner).isEmpty()) throw new IllegalStateException("Missing quota lock");
         var previous=validations.request(owner,request);
+        String kind=preview?"OUTPUT_PREVIEW":"VALIDATE";
         if(previous.isPresent()) {
-            if(!previous.get().draftId().equals(draft) || previous.get().draftVersion()!=version) throw status(HttpStatus.CONFLICT);
+            if(!kind.equals(validations.requestKind(owner,request)) || !previous.get().draftId().equals(draft) || previous.get().draftVersion()!=version) throw status(HttpStatus.CONFLICT);
             return previous.get();
         }
         var row=drafts.lock(owner,draft).orElseThrow(()->status(HttpStatus.NOT_FOUND));
@@ -41,22 +46,25 @@ public class ContentValidationService {
         var metadata=json.readValue(row.metadata(),ContentRecords.Metadata.class);
         var frozen=new ContentRecords.Content(metadata,row.referenceCode(),row.solutionIdea(),row.solutionCode());
         ContentService.validate(frozen);
-        if(metadata.statement().isBlank() || metadata.inputDescription().isBlank() || metadata.outputDescription().isBlank()
+        if(!preview && (metadata.statement().isBlank() || metadata.inputDescription().isBlank() || metadata.outputDescription().isBlank()
                 || metadata.samples().isEmpty() || metadata.licenseStatement().isBlank()
                 || (metadata.originType().equals("ADAPTED") && metadata.sourceUrl().isBlank())
-                || row.referenceCode().isBlank() || row.solutionCode().isBlank() || row.solutionIdea().isBlank()) throw status(HttpStatus.BAD_REQUEST);
+                || row.referenceCode().isBlank() || row.solutionCode().isBlank() || row.solutionIdea().isBlank())) throw status(HttpStatus.BAD_REQUEST);
+        if(row.referenceCode().isBlank()) throw status(HttpStatus.BAD_REQUEST);
+        String solution=preview?"":row.solutionCode(),idea=preview?"":row.solutionIdea();
         // Recheck bounded compressed integrity before accepting immutable execution inputs.
         var tests=content.tests(owner,draft);
         if(tests.isEmpty()) throw status(HttpStatus.BAD_REQUEST);
         if(validations.pending(owner)>=3) throw status(HttpStatus.TOO_MANY_REQUESTS);
         StringBuilder manifest=new StringBuilder();
         for(var test:tests) manifest.append(test.sequence()).append(':').append(hash(test.input())).append(':').append(hash(test.expectedOutput())).append('\n');
-        String metadataText=json.writeValueAsString(metadata),referenceHash=hash(row.referenceCode()),solutionHash=hash(row.solutionCode()),datasetHash=hash(manifest.toString());
-        String snapshotHash=hash(framed(draft,Long.toString(owner),Long.toString(version),metadataText,row.solutionIdea(),referenceHash,solutionHash,datasetHash,IMAGE,"trim-trailing-whitespace-v1","m0-v1"));
+        String metadataText=json.writeValueAsString(metadata),referenceHash=hash(row.referenceCode()),solutionHash=hash(solution),datasetHash=hash(manifest.toString());
+        String snapshotHash=hash(framed(draft,Long.toString(owner),Long.toString(version),metadataText,idea,referenceHash,solutionHash,datasetHash,IMAGE,"trim-trailing-whitespace-v1","m0-v1"));
         String snapshot=UUID.randomUUID().toString(),job=UUID.randomUUID().toString();
-        requireOne(validations.snapshot(new ContentValidationMapper.Snapshot(snapshot,draft,owner,version,metadataText,row.referenceCode(),row.solutionIdea(),row.solutionCode(),referenceHash,solutionHash,datasetHash,snapshotHash,IMAGE,metadata.timeLimitMs(),metadata.memoryLimitMb(),metadata.outputLimitBytes())));
+        var executionSnapshot=new ContentValidationMapper.Snapshot(snapshot,draft,owner,version,metadataText,row.referenceCode(),idea,solution,referenceHash,solutionHash,datasetHash,snapshotHash,IMAGE,metadata.timeLimitMs(),metadata.memoryLimitMb(),metadata.outputLimitBytes());
+        requireOne(preview?validations.insertPreviewSnapshot(executionSnapshot):validations.snapshot(executionSnapshot));
         if(validations.copyTests(owner,draft,snapshot)!=tests.size()) throw new IllegalStateException("Snapshot test copy mismatch");
-        requireOne(validations.job(job,snapshot,owner,request));
+        requireOne(preview?validations.previewJob(job,snapshot,owner,request):validations.job(job,snapshot,owner,request));
         String event=UUID.randomUUID().toString();
         requireOne(validations.outbox(event,job,json.writeValueAsString(Map.of("taskId",job,"snapshotId",snapshot,"taskType","CONTENT_VALIDATE","contractVersion",1))));
         TransactionSynchronizationManager.registerSynchronization(new TransactionSynchronization() {
@@ -82,7 +90,9 @@ public class ContentValidationService {
     @Transactional(readOnly=true,isolation=Isolation.REPEATABLE_READ)
     public ContentValidationMapper.Result result(long owner,String draft,String job) {
         uuid(draft,HttpStatus.NOT_FOUND);uuid(job,HttpStatus.NOT_FOUND);
-        return validations.result(owner,draft,job).orElseThrow(()->status(HttpStatus.NOT_FOUND));
+        var result=validations.result(owner,draft,job).orElseThrow(()->status(HttpStatus.NOT_FOUND));
+        if(!"VALIDATE".equals(validations.kind(owner,job))) throw status(HttpStatus.NOT_FOUND);
+        return result;
     }
     static String framed(String... values) {var out=new StringBuilder();for(String value:values) out.append(value.getBytes(StandardCharsets.UTF_8).length).append(':').append(value);return out.toString();}
     static String hash(String text) {try{return HexFormat.of().formatHex(MessageDigest.getInstance("SHA-256").digest(text.getBytes(StandardCharsets.UTF_8)));}catch(java.security.NoSuchAlgorithmException e){throw new IllegalStateException("Missing SHA-256");}}

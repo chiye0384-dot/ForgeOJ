@@ -1,0 +1,13 @@
+import assert from 'node:assert/strict'
+import {readFile,writeFile} from 'node:fs/promises'
+const lines=async n=>(await readFile('/reports/'+n,'utf8')).split(/\r?\n/).filter(s=>s.startsWith('{')).map(s=>JSON.parse(s))
+const observed=JSON.parse(await readFile('/reports/output-browser.json','utf8')),api=await lines('api.log'),outbox=await lines('content-outbox.jsonl'),chains=[]
+for(const job of observed.jobs){
+ const events=outbox.filter(e=>e.jobId===job.jobId).sort((a,b)=>a.sequenceNo-b.sequenceNo),created=api.filter(e=>e.event==='content.validation_created'&&e.contentJobId===job.jobId)
+ assert.equal(created.length,1);assert.equal(created[0].draftVersion,job.draftVersion);assert.equal(created[0].outboxEventId,events[0].outboxEventId)
+ assert.ok(api.some(e=>e.event==='request.completed'&&e.requestId===created[0].requestId&&e.route==='content.output'&&e.method==='POST'&&e.httpStatus===202))
+ assert.deepEqual(events.map(e=>e.sequenceNo),job.recovered?[0,1]:[0])
+ for(const event of events){assert.equal(event.eventType,'CONTENT_VALIDATION_QUEUED');assert.ok(event.published&&!event.failed);assert.ok(api.some(e=>e.event==='outbox.published'&&e.outboxEventId===event.outboxEventId&&e.contentJobId===job.jobId))}
+ chains.push({jobId:job.jobId,requestId:created[0].requestId,outboxEventIds:events.map(e=>e.outboxEventId),allCreatedAndPublishedCorrelated:true})
+}
+await writeFile('/reports/output-events-audit.json',JSON.stringify({verifiedAt:new Date().toISOString(),chains},null,2));console.log('ACTUAL_OUTPUT_CREATED_PUBLISHED_LOG_CHAIN_VERIFIED')

@@ -1,6 +1,6 @@
 # ForgeOJ
 
-> 当前状态：`M-1：项目准备`、`M0：最小判题纵向切片` 和 `M1：可靠异步判题` 均为 `VERIFIED`。M0 通过 20 项门禁；M1 于 2026-10-02 通过 [15 项最终门禁审计](docs/M1-GATE-AUDIT.md)。M2 [普通账号](docs/M2-ACCOUNTS-VALIDATION.md)、[公开题库/SMTP 适配](docs/M2-LIBRARY-SMTP-VALIDATION.md)、[学习记录](docs/M2-LEARNING-RECORDS-VALIDATION.md)、[作者双程序验证](docs/M2-CONTENT-VALIDATION-JOBS-VALIDATION.md)、[不可变送审/撤回](docs/M2-CONTENT-REVIEW-VALIDATION.md)等单元 VERIFIED，完整 M2 保持 `IN_PROGRESS`；输出生成预览、自测与真实邮件投递尚待完成，M3～M5 为 `PLANNED`，尚未发布。
+> 当前状态：`M-1：项目准备`、`M0：最小判题纵向切片` 和 `M1：可靠异步判题` 均为 `VERIFIED`。M0 通过 20 项门禁；M1 于 2026-10-02 通过 [15 项最终门禁审计](docs/M1-GATE-AUDIT.md)。M2 [普通账号](docs/M2-ACCOUNTS-VALIDATION.md)、[公开题库/SMTP 适配](docs/M2-LIBRARY-SMTP-VALIDATION.md)、[学习记录](docs/M2-LEARNING-RECORDS-VALIDATION.md)、[作者双程序验证](docs/M2-CONTENT-VALIDATION-JOBS-VALIDATION.md)、[不可变送审/撤回](docs/M2-CONTENT-REVIEW-VALIDATION.md)、[参考输出预览/确认](docs/M2-OUTPUT-PREVIEW-VALIDATION.md)等单元 VERIFIED，完整 M2 保持 `IN_PROGRESS`；自测与真实邮件投递尚待完成，M3～M5 为 `PLANNED`，尚未发布。
 >
 > 需求基线：2026-09-24；工程基线：2026-09-28
 
@@ -11,6 +11,8 @@ ForgeOJ 是一个面向 Java 学习者和小型教学班级的在线判题平台
 `feat/m2-accounts` 已把预置账号认证升级为注册/邮箱激活、短 JWT 与 MySQL 独立会话、刷新轮换/重用撤销、当前/全部退出、改密/找回和旧账号补邮箱。普通账号单元已验证：固定 Linux 后端 **100 + 111 = 211** 项、前端 **13** 项及全部检查通过，相同产物的新账号注册→本地邮件→激活→邮箱登录→实际 AC、旧账号轮询兜底与独立权限/日志/队列审计和精确清理均通过。设计见 [普通账号设计](docs/M2-ACCOUNTS-DESIGN.md)与 D-041，命令、源码/JAR 哈希和范围见 [账号验收记录](docs/M2-ACCOUNTS-VALIDATION.md)，可提交脱敏事实见 [证据目录](docs/evidence/m2-accounts/README.md)。完整 M2 与真实 SMTP 尚未完成。
 
 ## 当前工程基线
+
+2026-10-05 整理：参考输出预览/明确确认单元已 VERIFIED（实际验收2026-10-04）。V13 不可变用途隔离、仅运行参考、整组压缩输出、owner/CAS/幂等确认与版本递增完成；不会自动覆盖答案，不产生双通过或正式成绩。全新固定 Linux 后端 **298**（API174/Worker124）、前端 **61** 及全部检查通过，280 个冻结输入匹配；相同 JAR 真实页面失败→生成→显式确认/保留本地编辑→过期/待审/归档历史，以及新 Worker SIGKILL 自然租约恢复通过。HTTP/输出摘要/Outbox/提交后ACK审计、正常与回退AC、六空队列、45项实际权限拒绝和精确清理均通过；本轮有真实页面截图。见 [验收](docs/M2-OUTPUT-PREVIEW-VALIDATION.md)。完整内容与 M2 保持 IN_PROGRESS；下一单元独立自测，真实 SMTP 仍需服务商和授权收件箱，受控审核与发布仍为 M4。以下旧阶段记录按各自日期保留。
 
 2026-10-04 不可变送审/撤回单元已 VERIFIED：V12 精确绑定本人当前双 PASSED 的不可变快照，唯一待审、owner/CAS/幂等、待审禁改、撤回后修改与历史保留完成。全新固定 Linux API169 + Worker120 = **289**、前端 **56** 及全部检查通过；相同构件真实页面两轮送审/撤回/归档、HTTP 六类待审写409、旧撤回不影响新待审、冻结题面不变、正常与轮询回退 AC、六空队列、30 项实际数据库权限拒绝及精确清理通过。见 [验收](docs/M2-CONTENT-REVIEW-VALIDATION.md)。本轮未重复 Worker SIGKILL，117 个运行文件逐字节等同上轮真实故障验收；截图接口不可用，保存真实 DOM 观察，不提供合成截图。完整内容与 M2 仍 IN_PROGRESS；下一步为输出生成预览、独立自测，外部 SMTP 仍需服务商和授权收件箱配置；受控审核身份/批准发布保持 M4。
 

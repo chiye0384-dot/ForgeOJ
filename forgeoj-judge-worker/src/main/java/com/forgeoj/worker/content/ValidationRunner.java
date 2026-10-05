@@ -15,14 +15,19 @@ public class ValidationRunner {
     private final ValidationHeartbeat heartbeat;
     public ValidationRunner(ValidationSnapshotLoader snapshots,SandboxRuntime runtime,ValidationLeaseService leases,ValidationHeartbeat heartbeat) {this.snapshots=snapshots;this.runtime=runtime;this.leases=leases;this.heartbeat=heartbeat;}
     public void run(ValidationLeaseService.Claim claim) {
-        SandboxExecutionResult reference,solution;
+        SandboxExecutionResult reference=null,solution=null;
+        SandboxOutputPreview preview=null;
         try(var ignored=heartbeat.start(claim)) {
             var programs=snapshots.load(claim);
-            reference=runtime.execute(programs.reference(),claim.attemptId());
-            leases.renew(claim); // Check durable ownership before executing the second independent object.
-            solution=runtime.execute(programs.solution(),claim.attemptId());
+            if(programs.preview()) preview=runtime.generate(programs.reference(),claim.attemptId());
+            else {
+                reference=runtime.execute(programs.reference(),claim.attemptId());
+                leases.renew(claim); // Check durable ownership before executing the second independent object.
+                solution=runtime.execute(programs.solution(),claim.attemptId());
+            }
         } catch(JudgeTaskSnapshotException | InvalidSandboxConfigurationException invalid) {leases.failure(claim,true);return;}
         catch(RuntimeException failure) {leases.failure(claim,false);return;}
-        leases.finish(claim,reference.outcome().name(),solution.outcome().name());
+        if(preview!=null) leases.finishPreview(claim,preview);
+        else leases.finish(claim,reference.outcome().name(),solution.outcome().name());
     }
 }

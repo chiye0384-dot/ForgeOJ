@@ -126,6 +126,17 @@ public final class DockerCliSandboxRuntime implements SandboxRuntime {
 
     @Override
     public SandboxExecutionResult execute(JudgeTaskSnapshot snapshot, String attemptId) {
+        return executeInternal(snapshot,attemptId,null);
+    }
+
+    @Override
+    public SandboxOutputPreview generate(JudgeTaskSnapshot snapshot,String attemptId) {
+        List<String> outputs=new ArrayList<>();
+        var result=executeInternal(snapshot,attemptId,outputs);
+        return new SandboxOutputPreview(result.outcome(),result.outcome()==SandboxOutcome.ACCEPTED?outputs:List.of());
+    }
+
+    private SandboxExecutionResult executeInternal(JudgeTaskSnapshot snapshot,String attemptId,List<String> outputs) {
         validateSnapshot(snapshot);
         SandboxContainer container = null;
         Throwable primaryFailure = null;
@@ -188,6 +199,7 @@ public final class DockerCliSandboxRuntime implements SandboxRuntime {
                             CONTAINER_WORKSPACE),
                     "Could not freeze compiled sandbox workspace");
 
+            long generatedBytes=snapshot.testCases().stream().mapToLong(t->t.input().length).sum();
             ExecutionBudget executionBudget =
                     ExecutionBudget.start(totalExecutionBudget(snapshot));
             for (JudgeTestCase testCase : snapshot.testCases()) {
@@ -195,7 +207,11 @@ public final class DockerCliSandboxRuntime implements SandboxRuntime {
                     return SandboxExecutionResult.of(SandboxOutcome.TIME_LIMIT_EXCEEDED);
                 }
                 SandboxExecutionResult result =
-                        executeCase(snapshot, container, testCase, executionBudget);
+                        executeCase(snapshot, container, testCase, executionBudget,outputs);
+                if (outputs!=null && result.outcome()==SandboxOutcome.ACCEPTED) {
+                    generatedBytes+=outputs.get(outputs.size()-1).getBytes(StandardCharsets.UTF_8).length;
+                    if(generatedBytes>16L*1024*1024) return SandboxExecutionResult.of(SandboxOutcome.OUTPUT_LIMIT_EXCEEDED);
+                }
                 if (result.outcome() != SandboxOutcome.ACCEPTED) {
                     return result;
                 }
@@ -293,7 +309,7 @@ public final class DockerCliSandboxRuntime implements SandboxRuntime {
             JudgeTaskSnapshot snapshot,
             SandboxContainer container,
             JudgeTestCase testCase,
-            ExecutionBudget executionBudget) {
+            ExecutionBudget executionBudget,List<String> outputs) {
         String caseDirectory = "/tmp/case-" + String.format(Locale.ROOT, "%06d", testCase.ordinal());
         runControl(
                 List.of(
@@ -338,7 +354,7 @@ public final class DockerCliSandboxRuntime implements SandboxRuntime {
                                     "Main"),
                             testCase.input(),
                             executionBudget.limit(Duration.ofMillis(snapshot.timeLimitMs())),
-                            Math.toIntExact(snapshot.outputLimitBytes()));
+                            Math.toIntExact(outputs==null?snapshot.outputLimitBytes():Math.min(1048576,snapshot.outputLimitBytes())));
         } finally {
             terminateUserProcesses(container);
             try {
@@ -359,6 +375,12 @@ public final class DockerCliSandboxRuntime implements SandboxRuntime {
         ensureContainerRunning(container);
         if (execution.exitCode() != 0) {
             return SandboxExecutionResult.of(SandboxOutcome.RUNTIME_ERROR);
+        }
+        if(outputs!=null) {
+            if(!execution.stdoutUtf8Valid() || execution.stdout().indexOf('\0')>=0) return SandboxExecutionResult.of(SandboxOutcome.RUNTIME_ERROR);
+            if(execution.stdout().getBytes(StandardCharsets.UTF_8).length>1048576) return SandboxExecutionResult.of(SandboxOutcome.OUTPUT_LIMIT_EXCEEDED);
+            outputs.add(execution.stdout());
+            return SandboxExecutionResult.of(SandboxOutcome.ACCEPTED);
         }
         String expected = new String(testCase.expectedOutput(), StandardCharsets.UTF_8);
         if (!outputComparator.matches(execution.stdout(), expected)) {

@@ -70,7 +70,8 @@ for (const fact of facts) {
   }
 }
 assert.equal(outbox.length, facts.length)
-const content = await lines('content-database.jsonl'), contentOutbox = await lines('content-outbox.jsonl')
+const allContent=await lines('content-database.jsonl'),allContentOutbox=await lines('content-outbox.jsonl')
+const content=allContent.filter(j=>j.executionKind!=='OUTPUT_PREVIEW'),contentOutbox=allContentOutbox.filter(e=>content.some(j=>j.jobId===e.jobId))
 if (content.length) {
   const browserContent = await json('content-browser.json'), httpContent = await json('content-http.json')
   assert.equal(httpContent.ownerDenied, true); assert.equal(httpContent.requestReplaySameJob, true)
@@ -83,7 +84,7 @@ if (content.length) {
     assert.equal(row.processingStatus, 'FINISHED'); assert.equal(row.validationStatus, observed.validationStatus)
     assert.equal(row.referenceResult, observed.referenceResult); assert.equal(row.solutionResult, observed.solutionResult)
     assert.equal(row.stale, true); assert.equal(row.archived, true); assert.equal(row.leaseCleared, true)
-    assert.equal(row.sourceDigestsMatch, true); assert.equal(row.testCount, 1)
+    assert.equal(row.sourceDigestsMatch, true); assert.equal(row.testCount, browserContent.testCount??1)
     const attempts = row.attempts.sort((a,b) => a.attemptNo-b.attemptNo)
     assert.equal(row.attemptCount, observed.recovered ? 2 : 1)
     assert.equal(attempts.length, row.attemptCount)
@@ -159,7 +160,35 @@ if(reviewFacts.length) {
     assert.ok(api.some(l=>l.event==='request.completed' && l.requestId===withdraw[0].requestId && l.route==='content.review.withdraw' && l.method==='POST' && l.httpStatus===200))
   }
 }
-const summary = { verifiedAt:new Date().toISOString(), contentReviews:reviewFacts.length, submissions:facts.length, finished:chains.length,
+
+const outputFacts=await lines('output-database.jsonl')
+if(outputFacts.length) {
+ const observed=await json('output-browser.json'),http=await json('output-http.json')
+ assert.ok(http.ownerDenied && http.requestReplaySameJob && http.purposeIsolation && http.acceptedReplayNeverOverwrites && http.allOutputDigestsMatch)
+ assert.equal(outputFacts.length,observed.jobs.length)
+ for(const j of observed.jobs) {
+  const row=allContent.find(f=>f.jobId===j.jobId),output=outputFacts.find(f=>f.jobId===j.jobId)
+  assert.ok(row && output);assert.equal(row.executionKind,'OUTPUT_PREVIEW');assert.equal(row.draftVersion,j.draftVersion)
+  assert.equal(row.processingStatus,'FINISHED');assert.equal(row.referenceResult,j.referenceResult);assert.equal(row.validationStatus,null);assert.equal(row.solutionResult,null)
+  assert.ok(row.archived && row.stale && row.leaseCleared && row.sourceDigestsMatch);assert.equal(row.testCount,observed.testCount)
+  const attempts=row.attempts.sort((a,b)=>a.attemptNo-b.attemptNo)
+  assert.deepEqual(attempts.map(a=>a.status),j.recovered?['LEASE_EXPIRED','SUCCEEDED']:['SUCCEEDED']);assert.ok(attempts.every(a=>a.finished))
+  const events=allContentOutbox.filter(e=>e.jobId===j.jobId);assert.equal(events.length,attempts.length);assert.ok(events.every(e=>e.published && !e.failed))
+  for(const e of events) assert.deepEqual(e.keys.sort(),['contractVersion','snapshotId','taskId','taskType'])
+  const final=attempts.at(-1),logs=worker.filter(l=>l.contentJobId===j.jobId && l.contentAttemptId===final.attemptId)
+  const claimed=logs.find(l=>l.event==='content.attempt_claimed'),committed=logs.find(l=>l.event==='content.attempt_committed'),ack=logs.find(l=>l.event==='content.ack_sent')
+  assert.ok(claimed && committed && ack);assert.ok(claimed['@timestamp']<=committed['@timestamp'] && committed['@timestamp']<=ack['@timestamp'])
+  if(j.recovered){assert.ok(observed.crashVerified && observed.oldSandboxRemoved);assert.ok(worker.some(l=>l.event==='content.attempt_claimed' && l.contentAttemptId===attempts[0].attemptId))}
+  output.outputs.sort((a,b)=>a.sequence-b.sequence)
+  if(j.referenceResult==='ACCEPTED'){assert.equal(output.outputs.length,observed.testCount);assert.deepEqual(output.outputs.map(o=>o.sha256),j.outputSha256)}else assert.equal(output.outputs.length,0)
+  assert.equal(output.acceptedVersion,j.acceptedVersion??null)
+  const accepted=api.filter(l=>l.event==='content.output_accepted' && l.contentJobId===j.jobId)
+  assert.equal(accepted.length,j.acceptedVersion?1:0)
+  if(j.acceptedVersion)assert.ok(api.some(l=>l.event==='request.completed' && l.requestId===accepted[0].requestId && l.route==='content.output.accept' && l.httpStatus===200))
+ }
+ assert.equal(allContentOutbox.length,allContent.reduce((n,j)=>n+j.attemptCount,0))
+}
+const summary = { verifiedAt:new Date().toISOString(), contentReviews:reviewFacts.length, outputPreviews:outputFacts.length, submissions:facts.length, finished:chains.length,
   cancelled:1, publishedOutbox:outbox.length, contentJobs:content.length, contentPublishedOutbox:contentOutbox.length, emptyQueues:queues.length, library, learning, browser, chains }
 await writeFile('/reports/audit.json', JSON.stringify(summary, null, 2))
 console.log(JSON.stringify({ event:'E2E_AUDIT_VERIFIED', submissions:facts.length,

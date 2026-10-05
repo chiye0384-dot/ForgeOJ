@@ -1,0 +1,11 @@
+{
+  "verifiedAt": "2026-10-04T11:48:44.831Z",
+  "draftId": "3483fd08-ce74-4048-b9cf-0e0fdfa4f0ce",
+  "ownerDenied": true,
+  "anonymous": 401,
+  "requestReplayReturnsOriginalWithdrawn": true,
+  "allFrozenStatementsMatch": true,
+  "archivedHistoryReadable": true,
+  "referencedDeletion": 409,
+  "publicProblemCount": 2
+}

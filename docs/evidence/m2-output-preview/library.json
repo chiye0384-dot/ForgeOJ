@@ -1,0 +1,17 @@
+{
+  "verifiedAt": "2026-10-04T11:37:56.291Z",
+  "anonymous": true,
+  "total": 2,
+  "firstSlug": "sum-two-integers",
+  "secondSlug": "larger-of-two-integers",
+  "filteredSlug": "larger-of-two-integers",
+  "literalWildcardTotal": 0,
+  "invalidSizeStatus": 400,
+  "tags": [
+    "入门",
+    "数学",
+    "比较"
+  ],
+  "exactListFields": true,
+  "exactDetailFields": true
+}

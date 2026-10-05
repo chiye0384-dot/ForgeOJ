@@ -2,7 +2,7 @@
 # SPDX-License-Identifier: Apache-2.0
 [CmdletBinding()]
 param(
-    [ValidateSet('Start','Status','Matrix','Library','Learning','Content','ReviewLock','Review','WorkerStart','WorkerStop','Permissions','Audit','Stop')]
+    [ValidateSet('Start','Status','Matrix','Library','Learning','Content','ReviewLock','Review','Output','WorkerStart','WorkerStop','Permissions','Audit','Stop')]
     [string]$Action = 'Start',
     [string]$RunDirectory,
     [ValidatePattern('^$|^[a-f0-9-]{36}$')]
@@ -94,6 +94,7 @@ switch ($Action) {
     'Learning' { Compose-Checked @('exec','-T','frontend','node','/source/tools/validation/replay-probe.mjs','learning') }
     'Content' { Compose-Checked @('exec','-T','frontend','node','/source/tools/validation/replay-probe.mjs','content') }
     'ReviewLock' { Compose-Checked @('exec','-T','frontend','node','/source/tools/validation/replay-probe.mjs','review-lock') }
+    'Output' { Compose-Checked @('exec','-T','frontend','node','/source/tools/validation/replay-probe.mjs','output') }
     'Review' { Compose-Checked @('exec','-T','frontend','node','/source/tools/validation/replay-probe.mjs','review') }
     'Permissions' { Compose-Checked (@('exec','-T','frontend','node','/source/tools/validation/replay-probe.mjs','permissions') + $(if($SubmissionId) { @($SubmissionId) } else { @() })) }
     'WorkerStop' { Compose-Checked @('stop','-t','10','worker') }
@@ -120,7 +121,7 @@ SELECT JSON_OBJECT('outboxEventId',id,'judgeTaskId',aggregate_id,'published',pub
 '@
         $outbox | Set-Content -LiteralPath (Join-Path $RunDirectory 'outbox.jsonl') -Encoding utf8
         $content = Sql-Fixture @'
-SELECT JSON_OBJECT('jobId',j.id,'draftId',s.draft_id,'draftVersion',s.draft_version,
+SELECT JSON_OBJECT('jobId',j.id,'executionKind',j.execution_kind,'draftId',s.draft_id,'draftVersion',s.draft_version,
  'processingStatus',j.processing_status,'statusVersion',j.status_version,'validationStatus',j.validation_status,
  'referenceResult',j.reference_result,'solutionResult',j.solution_result,'attemptCount',j.attempt_count,
  'stale',d.version<>s.draft_version OR d.status<>'DRAFT','archived',d.status='ARCHIVED',
@@ -138,6 +139,12 @@ SELECT JSON_OBJECT('outboxEventId',id,'jobId',aggregate_id,'eventType',event_typ
  'published',published_at IS NOT NULL,'failed',failed_at IS NOT NULL,'keys',JSON_KEYS(payload))
  FROM outbox_event WHERE aggregate_type='CONTENT_VALIDATION' ORDER BY aggregate_id,sequence_no;
 '@
+        $outputFacts = Sql-Fixture @'
+SELECT JSON_OBJECT('jobId',j.id,'acceptedVersion',a.applied_version,'expectedVersion',a.expected_version,
+ 'outputs',COALESCE((SELECT JSON_ARRAYAGG(JSON_OBJECT('sequence',o.sequence_no,'bytes',o.output_bytes,'sha256',o.output_sha256)) FROM content_output_preview_case o WHERE o.job_id=j.id),JSON_ARRAY()))
+ FROM content_validation_job j LEFT JOIN content_output_acceptance a ON a.job_id=j.id WHERE j.execution_kind='OUTPUT_PREVIEW';
+'@
+        $outputFacts | Set-Content -LiteralPath (Join-Path $RunDirectory 'output-database.jsonl') -Encoding utf8
         $contentOutbox | Set-Content -LiteralPath (Join-Path $RunDirectory 'content-outbox.jsonl') -Encoding utf8
         $reviews = Sql-Fixture @'
 SELECT JSON_OBJECT('reviewId',r.id,'draftId',r.draft_id,'draftVersion',r.draft_version,'reviewNo',r.review_no,

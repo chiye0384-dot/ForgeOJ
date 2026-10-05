@@ -1,6 +1,8 @@
 # ForgeOJ
 
-> 当前状态：`M-1：项目准备`、`M0：最小判题纵向切片` 和 `M1：可靠异步判题` 均为 `VERIFIED`。M0 通过 20 项门禁；M1 于 2026-10-02 通过 [15 项最终门禁审计](docs/M1-GATE-AUDIT.md)。M2 [普通账号](docs/M2-ACCOUNTS-VALIDATION.md)、[公开题库/SMTP 适配](docs/M2-LIBRARY-SMTP-VALIDATION.md)、[学习记录](docs/M2-LEARNING-RECORDS-VALIDATION.md)、[作者双程序验证](docs/M2-CONTENT-VALIDATION-JOBS-VALIDATION.md)、[不可变送审/撤回](docs/M2-CONTENT-REVIEW-VALIDATION.md)、[参考输出预览/确认](docs/M2-OUTPUT-PREVIEW-VALIDATION.md)等单元 VERIFIED，完整 M2 保持 `IN_PROGRESS`；[独立自测与真实 QQ SMTP 投递](docs/M2-SELF-TEST-VALIDATION.md)已 VERIFIED，等待 M2 最终门禁汇总，M3～M5 为 `PLANNED`，尚未发布。
+2026-10-05 最终门禁：完整 M2 已 VERIFIED，5/5 门禁通过，见 [最终审计](docs/M2-GATE-AUDIT.md)。本轮补齐历史版本两项直接回归，固定 Linux API182+Worker133=315 零失败/错误/跳过；原前端69及其全部输入保持一致，已接受运行时的全部生产源码与 JAR 重新核对一致。真实浏览器/Worker故障/QQ邮件沿用各自原验收记录，本轮未重新回放或发送邮件。受控审核发布和 Redis/ES 仍属 M4；下一步 M3 班级与作业，尚未正式发布或新增 RESUME_READY。下方单元段落保留历史，当前完整状态以本段为准。
+
+> 当前状态：`M-1：项目准备`、`M0：最小判题纵向切片` 和 `M1：可靠异步判题` 均为 `VERIFIED`。M0 通过 20 项门禁；M1 于 2026-10-02 通过 [15 项最终门禁审计](docs/M1-GATE-AUDIT.md)。M2 [普通账号](docs/M2-ACCOUNTS-VALIDATION.md)、[公开题库/SMTP 适配](docs/M2-LIBRARY-SMTP-VALIDATION.md)、[学习记录](docs/M2-LEARNING-RECORDS-VALIDATION.md)、[作者双程序验证](docs/M2-CONTENT-VALIDATION-JOBS-VALIDATION.md)、[不可变送审/撤回](docs/M2-CONTENT-REVIEW-VALIDATION.md)、[参考输出预览/确认](docs/M2-OUTPUT-PREVIEW-VALIDATION.md)等单元 VERIFIED，完整 M2 已通过 [5 项最终门禁](docs/M2-GATE-AUDIT.md)，为 `VERIFIED`；[独立自测与真实 QQ SMTP 投递](docs/M2-SELF-TEST-VALIDATION.md)已 VERIFIED，M3～M5 为 `PLANNED`，尚未发布。
 >
 > 需求基线：2026-09-24；工程基线：2026-09-28
 

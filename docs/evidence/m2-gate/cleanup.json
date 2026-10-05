@@ -1,0 +1,10 @@
+{
+  "checkedAt": "2026-10-05T11:48:24.8504987Z",
+  "dockerServer": "29.8.0",
+  "managedSandboxes": 0,
+  "testcontainers": 0,
+  "auditBuilders": 0,
+  "auditBuilderImages": 0,
+  "globalPruneUsed": false,
+  "realBusinessDatabaseModified": false
+}

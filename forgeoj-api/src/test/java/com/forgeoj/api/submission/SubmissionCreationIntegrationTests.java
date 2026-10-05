@@ -824,6 +824,54 @@ class SubmissionCreationIntegrationTests {
                 .doesNotContain("HIDDEN_SENTINEL");
     }
 
+    @Test
+    void advancingCurrentVersionPreservesOldSubmissionAndIdempotentReplay() throws Exception {
+        AuthenticatedSession session = login();
+        JdbcTemplate database = migratorJdbc();
+        UUID requestId = UUID.randomUUID();
+        MvcResult first = submit(session, requestId, VALID_SOURCE)
+                .andExpect(status().isAccepted()).andReturn();
+        String oldId = JsonPath.read(first.getResponse().getContentAsString(), "$.submissionId");
+        Map<String, Object> oldSubmission = database.queryForMap("SELECT * FROM submission WHERE id = ?", oldId);
+        Map<String, Object> oldTask = database.queryForMap("SELECT * FROM judge_task WHERE submission_id = ?", oldId);
+        Map<String, Object> oldVersion = database.queryForMap("SELECT * FROM problem_judge_version WHERE id = 1");
+        // Only this disposable fixture's current pointer changes; old evidence is immutable.
+        database.update("""
+                INSERT INTO problem_judge_version
+                    (problem_id, version_no, time_limit_ms, memory_limit_mb, output_limit_bytes,
+                     comparison_rule_version, sandbox_policy_version, java_image_digest, test_dataset_sha256)
+                SELECT problem_id, 2, 999, 128, 4096, comparison_rule_version,
+                       sandbox_policy_version, java_image_digest, test_dataset_sha256
+                FROM problem_judge_version WHERE id = 1
+                """);
+        long nextVersion = database.queryForObject(
+                "SELECT id FROM problem_judge_version WHERE problem_id = 1 AND version_no = 2", Long.class);
+        try {
+            database.update("UPDATE problem SET current_judge_version_id = ? WHERE id = 1", nextVersion);
+            MvcResult replay = submit(session, requestId, VALID_SOURCE)
+                    .andExpect(status().isAccepted()).andReturn();
+            assertThat((String) JsonPath.read(replay.getResponse().getContentAsString(), "$.submissionId"))
+                    .isEqualTo(oldId);
+            String newId = createSubmission(session);
+            Map<String, Object> newSubmission = database.queryForMap(
+                    "SELECT judge_version_id, time_limit_ms, memory_limit_mb, output_limit_bytes FROM submission WHERE id = ?", newId);
+            assertThat(((Number) newSubmission.get("judge_version_id")).longValue()).isEqualTo(nextVersion);
+            assertThat(((Number) newSubmission.get("time_limit_ms")).intValue()).isEqualTo(999);
+            assertThat(((Number) newSubmission.get("memory_limit_mb")).intValue()).isEqualTo(128);
+            assertThat(((Number) newSubmission.get("output_limit_bytes")).longValue()).isEqualTo(4096);
+            assertThat(database.queryForMap("SELECT * FROM submission WHERE id = ?", oldId)).isEqualTo(oldSubmission);
+            assertThat(database.queryForMap("SELECT * FROM judge_task WHERE submission_id = ?", oldId)).isEqualTo(oldTask);
+            assertThat(database.queryForMap("SELECT * FROM problem_judge_version WHERE id = 1")).isEqualTo(oldVersion);
+            assertThat(database.queryForObject("SELECT COUNT(*) FROM outbox_event", Integer.class)).isEqualTo(2);
+        } finally {
+            database.update("UPDATE problem SET current_judge_version_id = 1 WHERE id = 1");
+            database.update("DELETE FROM outbox_event");
+            database.update("DELETE FROM judge_task WHERE submission_id IN (SELECT id FROM submission WHERE judge_version_id = ?)", nextVersion);
+            database.update("DELETE FROM submission WHERE judge_version_id = ?", nextVersion);
+            database.update("DELETE FROM problem_judge_version WHERE id = ?", nextVersion);
+        }
+    }
+
     private org.springframework.test.web.servlet.ResultActions submit(
             AuthenticatedSession session, UUID requestId, String sourceCode) throws Exception {
         return mockMvc.perform(

@@ -1,0 +1,97 @@
+{
+  "checkedAt": "2026-10-05T11:49:14.518Z",
+  "baseline": "184ba300e8886ec63d216ad5aad1189977ea2ee1",
+  "backendBuild": "target/forgeoj-linux-20261005-192744-ecabee05",
+  "modules": {
+    "forgeoj-api": {
+      "tests": 182,
+      "failures": 0,
+      "errors": 0,
+      "skipped": 0,
+      "suites": 36,
+      "requiredCases": [
+        "advancingCurrentVersionPreservesOldSubmissionAndIdempotentReplay",
+        "disablingAccountRejectsEveryOldJwtAndRefreshCookie",
+        "privateOwnershipEveryRouteAndIdenticalMissingResponses",
+        "migratesCurrentTablesAndEnforcesDatabaseReadBoundaries",
+        "readsResourceVerdictsWithoutLeakingDiagnosticsOrHiddenFields"
+      ],
+      "jarSha256": "a3a26a537b81c0b8fcb55314db720f2cb2517515df961b06e7f3ccdc8d1217e6"
+    },
+    "forgeoj-judge-worker": {
+      "tests": 133,
+      "failures": 0,
+      "errors": 0,
+      "skipped": 0,
+      "suites": 23,
+      "requiredCases": [
+        "currentVersionAdvanceDoesNotRedirectExistingTaskSnapshotOrHiddenTests"
+      ],
+      "jarSha256": "5fdb2bb558b310d047e8672ad31056afbd9a2be16367fa302012b3bac67d86e2"
+    }
+  },
+  "sourceInputs": {
+    "freshExecutable": 300,
+    "allFreshMatch": true,
+    "acceptedProduction": 165,
+    "allProductionMatch": true,
+    "acceptedFrontend": 56,
+    "allFrontendMatch": true
+  },
+  "frontend": {
+    "build": "target/forgeoj-linux-20261005-182241-40614bbd",
+    "tests": 69,
+    "reusedUnchangedInputs": true
+  },
+  "runtime": {
+    "build": "target/forgeoj-linux-20261005-174012-b069321c",
+    "replay": "target/forgeoj-e2e-20261005-182028-1c3fcd89",
+    "acceptedJars": {
+      "forgeoj-api": "6d990fa0529a692402b1b52f07c552147a2ef85967bd7f9724f11efda26988cc",
+      "forgeoj-judge-worker": "7b51a8057afca665cbc1b3861bd186e1a974349edb7f44c6ce8f507abebc2f01"
+    },
+    "freshReplayThisAudit": false
+  },
+  "evidence": [
+    {
+      "path": "docs/evidence/m2-accounts/browser.json",
+      "sha256": "03b3b549d3acc74b6d8cb3940b036c59291ddda0259a3469c72bfc47a8c9c9b1"
+    },
+    {
+      "path": "docs/evidence/m2-accounts/audit.json",
+      "sha256": "c97ea3a85c2c29ef1e253f39df1224fc70df332ef9648139dc81187ddb444bc6"
+    },
+    {
+      "path": "docs/evidence/m2-learning/learning.json",
+      "sha256": "c1f54fb9ec3086d7602bf5b5d1916236d4c0baf4e6be040d39692e1dc0123a2d"
+    },
+    {
+      "path": "docs/evidence/m2-learning/audit.json",
+      "sha256": "5928ad0718f07cd2846bc63dae5aa8c21af820d15768ad9b1518832f99f5a8d7"
+    },
+    {
+      "path": "docs/evidence/m2-content-review/audit.json",
+      "sha256": "752d0fa5ef4c21e1ea51a3234fa6d3cb29ccd999a66624e98e64f523c36e693e"
+    },
+    {
+      "path": "docs/evidence/m2-output-preview/audit.json",
+      "sha256": "113ec117389e428d74fe0fe75b272c82aec429c098f1d96c605561e3b6846696"
+    },
+    {
+      "path": "docs/evidence/m2-self-test/audit.json",
+      "sha256": "9e378fee2cc71330123687f50059cef828425bc07843fce354702d2b3b5cb091"
+    },
+    {
+      "path": "docs/evidence/m2-self-test/permissions.json",
+      "sha256": "ee4c000a981d9071b447b4b5f5ea0f46d75d84c3c2d5dced206651c9ddf80ec6"
+    },
+    {
+      "path": "docs/evidence/m2-self-test/boundaries.json",
+      "sha256": "86001d4df131773397ee326f9d9be007f9b669dc4334c63146586738c33301dd"
+    },
+    {
+      "path": "docs/evidence/m2-self-test/smtp-delivery.json",
+      "sha256": "0e0a5af9436d3c2b0ee1d0c1bbfc125b7f31cfb05e0707d6ccc8a55febdbfc66"
+    }
+  ]
+}

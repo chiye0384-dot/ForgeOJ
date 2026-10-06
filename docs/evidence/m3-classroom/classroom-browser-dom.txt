@@ -1,0 +1,65 @@
+- banner:
+  - generic: F
+  - heading "ForgeOJ" [level=1]
+  - paragraph: Java 21 在线练习与判题
+  - navigation "主导航":
+    - link "题库":
+      - /url: /problems
+    - link "学习记录":
+      - /url: /learning
+    - link "班级":
+      - /url: /classrooms
+    - link "我的题目":
+      - /url: /authoring
+    - link "做题":
+      - /url: /
+    - link "账号":
+      - /url: /account
+- main:
+  - heading "我的班级" [level=2]
+  - paragraph: 角色仅在对应班级内生效。班级负责人是学习小组管理者。
+  - status: 操作成功。
+  - text: 班级名称
+  - textbox "班级名称"
+  - button "创建班级" [disabled]
+  - text: 邀请码
+  - textbox "邀请码"
+  - button "加入班级" [disabled]
+  - button "刷新班级"
+  - list:
+    - text: M3 最终页面原创班 · OWNER · ARCHIVED · ACTIVE
+    - button "打开班级"
+    - text: M3 HTTP原创班级 · MEMBER · ACTIVE · ACTIVE
+    - button "打开班级"
+  - button "上一页" [disabled]
+  - text: 第 1 页，共 2 个班级
+  - button "下一页" [disabled]
+  - article:
+    - heading "M3 最终页面原创班" [level=3]
+    - paragraph: ARCHIVED · 本班角色 OWNER · 版本 15
+    - button "恢复班级"
+    - button "删除空班级"
+    - button "退出班级"
+    - table:
+      - rowgroup:
+        - row "成员 角色 状态 操作":
+          - columnheader "成员"
+          - columnheader "角色"
+          - columnheader "状态"
+          - columnheader "操作"
+      - rowgroup:
+        - row "learner ASSISTANT ACTIVE —":
+          - cell "learner"
+          - cell "ASSISTANT"
+          - cell "ACTIVE"
+          - cell "—"
+        - row "other-learner MEMBER ACTIVE —":
+          - cell "other-learner"
+          - cell "MEMBER"
+          - cell "ACTIVE"
+          - cell "—"
+        - row "classroom-fixture OWNER ACTIVE —":
+          - cell "classroom-fixture"
+          - cell "OWNER"
+          - cell "ACTIVE"
+          - cell "—"

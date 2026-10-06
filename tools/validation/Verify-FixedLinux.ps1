@@ -2,7 +2,7 @@
 # SPDX-License-Identifier: Apache-2.0
 [CmdletBinding()]
 param(
-    [ValidateSet('All', 'Backend', 'Frontend')]
+    [ValidateSet('All', 'Backend', 'Api', 'Frontend')]
     [string]$Scope = 'All',
     [string]$DockerCommand = 'docker',
     [ValidatePattern('^[A-Za-z0-9.:-]+$')]
@@ -23,7 +23,7 @@ function Invoke-DockerChecked {
 # Each run creates only disposable named containers, no volumes/caches or real DB writes.
 # --rm cleans the named builder; integration fixtures have their own Testcontainers cleanup.
 Write-Host "Linux verification artifacts: $artifacts"
-if ($Scope -in @('All', 'Backend')) {
+if ($Scope -in @('All', 'Backend', 'Api')) {
     # Fault tests intentionally require no concurrent managed sandbox test run.
     $managed = & $DockerCommand container ls -aq --filter 'label=com.forgeoj.managed=true'
     if ($LASTEXITCODE -ne 0) { throw 'Cannot inspect Docker sandbox precondition' }
@@ -57,7 +57,7 @@ if ($Scope -in @('All', 'Backend')) {
             '--mount', "type=bind,source=$artifacts,target=/artifacts",
             '--mount', 'type=bind,source=/var/run/docker.sock,target=/var/run/docker.sock',
             '-e', "TESTCONTAINERS_HOST_OVERRIDE=$TestcontainersHost",
-            $backendImage, '/source/tools/validation/verify-linux.sh', 'backend')
+            $backendImage, '/source/tools/validation/verify-linux.sh', $(if($Scope -eq 'Api') {'api'} else {'backend'}))
     } finally {
         # Only remove the exact image tag created by this invocation, never prune shared images.
         & $DockerCommand image rm $backendImage

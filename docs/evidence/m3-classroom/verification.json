@@ -1,0 +1,62 @@
+{
+  "checkedAt": "2026-10-06T01:42:30.217Z",
+  "apiBuild": "target/forgeoj-linux-20261006-080830-db84cf2c",
+  "workerBuild": "target/forgeoj-linux-20261005-221349-6bab490d",
+  "frontendBuild": "target/forgeoj-linux-20261006-085751-6072a86f",
+  "replay": "target/forgeoj-e2e-20261006-084053-74bfeb1b",
+  "api": {
+    "tests": 192,
+    "failures": 0,
+    "errors": 0,
+    "skipped": 0,
+    "suites": 38,
+    "jarSha256": "1a2c1f6e21313aa1ac80bcd10d8c2265a7642c9c9606bd109d9fe2481f38f962"
+  },
+  "worker": {
+    "tests": 133,
+    "failures": 0,
+    "errors": 0,
+    "skipped": 0,
+    "suites": 23,
+    "jarSha256": "6bd5fddfd5d2248fd095bc1886747e80e141e91cd7993d46697c1cbfae9c51ab"
+  },
+  "frontend": {
+    "tests": 75
+  },
+  "sourceInputs": {
+    "api": 147,
+    "worker": 110,
+    "frontend": 59,
+    "browserFrontend": 59,
+    "allMatch": true
+  },
+  "runtimeBundle": "D:\\Java项目\\ForgeOJ\\target\\m3-classroom-runtime-20261006-0821",
+  "separateBuilds": true,
+  "workerDriverPassed": false,
+  "workerDriverNote": "Maven completed all Worker tests and BUILD SUCCESS; shell wrapper subsequently failed because a mounted script changed while being streamed. Final complete Worker business/test/migration inputs and JAR are unchanged and hash checked. Final API and frontend use separate successful drivers.",
+  "classroom": {
+    "checkedAt": "2026-10-06T01:19:55.263Z",
+    "classrooms": 3,
+    "httpChecks": 62,
+    "multiAccountBrowser": true,
+    "allOwnerInvariants": true,
+    "privilegeDenials": 38,
+    "classroomDenials": 9,
+    "inviteLogsClean": true,
+    "formalSubmissionUnchanged": true,
+    "httpClassroomId": "4ef48103-b912-4609-9bf3-420e9638bbef",
+    "browserClassroomId": "0b8d48be-1d76-433e-963b-5c0a346403a6",
+    "allPassed": true
+  },
+  "judge": {
+    "submissions": 11,
+    "finished": 10,
+    "cancelled": 1,
+    "emptyQueues": 7
+  },
+  "cleanup": {
+    "allClean": true,
+    "checkedAt": "2026-10-06T09:20:47.7978011+08:00"
+  },
+  "allPassed": true
+}

@@ -1,5 +1,7 @@
 # ForgeOJ 简历证据矩阵
 
+2026-10-06 M3班级成员首单元VERIFIED，见 [设计](M3-CLASSROOM-DESIGN.md) 和 [验收](M3-CLASSROOM-VALIDATION.md)：真实三账号/生命周期/62HTTP/38SQL拒绝证据已具备。完整M3 IN_PROGRESS；E-03完整班级作业/教师权限模型仍待后续单元，表中完整候选保持PLANNED，不新增RESUME_READY。
+
 2026-10-05 最终门禁：完整 M2 已 VERIFIED，5/5 门禁通过，见 [最终审计](M2-GATE-AUDIT.md)。本轮补齐历史版本两项直接回归，固定 Linux API182+Worker133=315 零失败/错误/跳过；原前端69及其全部输入保持一致，已接受运行时的全部生产源码与 JAR 重新核对一致。真实浏览器/Worker故障/QQ邮件沿用各自原验收记录，本轮未重新回放或发送邮件。受控审核发布和 Redis/ES 仍属 M4；下一步 M3 班级与作业，尚未正式发布或新增 RESUME_READY。下方单元段落保留历史，当前完整状态以本段为准。
 
 2026-10-05 最新：独立自测与 QQ SMTP 实际接收/激活单元已 VERIFIED。固定 Linux API181+Worker132=313、最终前端69及全部门禁、真实冻结编辑/取消/历史/Worker SIGKILL自然租约恢复、零AC副作用、七空队列/29实际权限拒绝与精确清理通过，见 [验收](M2-SELF-TEST-VALIDATION.md)。完整 M2 仍 IN_PROGRESS，下一步最终门禁汇总；受控审核发布仍 M4，不新增发布或 RESUME_READY 结论。以下日期段落保留各自历史事实。

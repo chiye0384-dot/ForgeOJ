@@ -128,7 +128,7 @@ const browser = await json('browser.json'), frontend = await lines('frontend.log
 assert.deepEqual(browser.map(b => b.mode).sort(), ['fallback','normal'])
 for (const row of browser) {
   assert.ok(['QUEUED','SUBMITTING'].includes(row.visibleStates[0]))
-  assert.deepEqual(row.visibleStates.slice(1), ['FINISHED','AC'])
+  assert.deepEqual(row.visibleStates.slice(1), row.visibleStates.includes('RUNNING') ? ['RUNNING','FINISHED','AC'] : ['FINISHED','AC'])
   assert.ok(facts.some(f => f.submissionId === row.submissionId && f.verdict === 'AC'))
   const gets = frontend.filter(l => l.event === 'validation.result_get' && l.submissionId === row.submissionId && l.port === row.port)
   assert.ok(gets.length >= 2)

@@ -1,5 +1,7 @@
 # ForgeOJ：M2 已验收，转入 M3 的新对话交接
 
+> 2026-10-06 接续更新：本交接下方为2026-10-05起点快照。班级成员首单元现已VERIFIED，完整M3 IN_PROGRESS；下一步班级私有题。请在本交接后读 [最新设计](M3-CLASSROOM-DESIGN.md)、[实际验收/构件/失败轮次](M3-CLASSROOM-VALIDATION.md) 和 [证据](evidence/m3-classroom/README.md)，再核对当前Git HEAD，不沿用d228e3a或M3 PLANNED作为当前事实。私有题写路径前须补真实引用/外键和删除保护；作业、教师关联、完整四门禁仍待完成。
+
 > 整理日期：2026-10-05，Asia/Shanghai。用户明确要求结束过长对话、详细交接并创建可直接接手的新对话。
 > 实际仓库：`D:\Java项目\ForgeOJ`。桌面保存的项目目录是其父目录 `D:\Java项目`，新对话必须先进入 ForgeOJ。
 > 已验收业务基线：`feat/m2-accounts` / `b66c2d69ea06d71d191ae6a0bbe2910104f31f5e`，远端已核实一致；本交接随后作为单独文档提交，可能使 HEAD 再前进一条。

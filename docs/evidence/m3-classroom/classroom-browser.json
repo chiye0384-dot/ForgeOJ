@@ -1,0 +1,28 @@
+{
+  "observations": [
+    "OWNER unchanged while invitation PENDING at version 10",
+    "explicit target acceptance: old OWNER becomes ASSISTANT, new OWNER at version 11",
+    "ARCHIVED OWNER LEFT has restore-and-rejoin entry without detail access",
+    "restore makes OWNER ACTIVE at version 14; final ARCHIVED version 15"
+  ],
+  "allPassed": true,
+  "joined": true,
+  "finalStatus": "ARCHIVED",
+  "screenshot": "docs/evidence/m3-classroom/classroom-browser.jpg",
+  "archivedRestored": true,
+  "assistantAssigned": true,
+  "ownerRestored": true,
+  "finalVersion": 15,
+  "transferAccepted": true,
+  "accounts": [
+    "learner",
+    "other-learner",
+    "classroom-fixture"
+  ],
+  "removedBlocked": true,
+  "verifiedAt": "2026-10-06T09:10:13.1479198+08:00",
+  "classroomId": "0b8d48be-1d76-433e-963b-5c0a346403a6",
+  "leftRejoinedAsMember": true,
+  "created": true,
+  "finalOwnerId": 3
+}

@@ -1,0 +1,22 @@
+{
+  "allClean": true,
+  "managedSandboxes": 0,
+  "projects": {
+    "forgeoj-e2e-20261006-082124-b9a28498": {
+      "workerImages": 0,
+      "containers": 0,
+      "volumes": 0,
+      "networks": 0
+    },
+    "forgeoj-e2e-20261006-084053-74bfeb1b": {
+      "workerImages": 0,
+      "containers": 0,
+      "volumes": 0,
+      "networks": 0
+    }
+  },
+  "testcontainers": 0,
+  "builders": 0,
+  "daemonReached": true,
+  "checkedAt": "2026-10-06T09:20:47.7978011+08:00"
+}

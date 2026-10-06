@@ -35,7 +35,7 @@ collect_backend() {
 }
 
 case "${1:-}" in
-    backend)
+    backend|api)
         trap collect_backend EXIT
         java -version
         mvn --version
@@ -44,8 +44,10 @@ case "${1:-}" in
         # Builder and disposable MySQL containers share the default bridge. Avoid Desktop host forwarding.
         # This flag is read only by test sources; production JARs contain no direct-route adapter.
         export FORGEOJ_TEST_DIRECT_DB=1
+        module_args=()
+        if test "$1" = api; then module_args=(-pl forgeoj-api -am); fi
         mvn --settings /source/tools/validation/maven-central-settings.xml \
-            --batch-mode --no-transfer-progress clean verify 2>&1 | tee /artifacts/backend.log
+            --batch-mode --no-transfer-progress "${module_args[@]}" clean verify 2>&1 | tee /artifacts/backend.log
         ;;
     frontend)
         cd frontend
@@ -55,5 +57,5 @@ case "${1:-}" in
         npm run verify 2>&1 | tee /artifacts/frontend.log
         cp -a dist /artifacts/frontend-dist
         ;;
-    *) printf 'Usage: verify-linux.sh backend|frontend\n' >&2; exit 2 ;;
+    *) printf 'Usage: verify-linux.sh backend|api|frontend\n' >&2; exit 2 ;;
 esac

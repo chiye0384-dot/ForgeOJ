@@ -2,7 +2,7 @@
 # SPDX-License-Identifier: Apache-2.0
 [CmdletBinding()]
 param(
-    [ValidateSet('Start','Status','Matrix','Library','Learning','Content','ReviewLock','Review','Output','SelfTest','WorkerStart','WorkerStop','Permissions','Audit','Stop')]
+    [ValidateSet('Start','Status','Matrix','Library','Learning','Classroom','Content','ReviewLock','Review','Output','SelfTest','WorkerStart','WorkerStop','Permissions','Audit','Stop')]
     [string]$Action = 'Start',
     [string]$RunDirectory,
     [ValidatePattern('^$|^[a-f0-9-]{36}$')]
@@ -96,6 +96,11 @@ switch ($Action) {
     'Matrix' { Compose-Checked @('exec','-T','frontend','node','/source/tools/validation/replay-probe.mjs','matrix') }
     'Library' { Compose-Checked @('exec','-T','frontend','node','/source/tools/validation/replay-probe.mjs','library') }
     'Learning' { Compose-Checked @('exec','-T','frontend','node','/source/tools/validation/replay-probe.mjs','learning') }
+    'Classroom' {
+        # Only this owned disposable DB receives an original third test account.
+        Sql-Fixture "INSERT INTO user_account(id,username,password_hash,status) SELECT 3,'classroom-fixture',password_hash,'ACTIVE' FROM user_account WHERE id=1; INSERT INTO user_judge_quota_lock(user_id) VALUES(3);"
+        Compose-Checked @('exec','-T','frontend','node','/source/tools/validation/replay-classroom.mjs')
+    }
     'Content' { Compose-Checked @('exec','-T','frontend','node','/source/tools/validation/replay-probe.mjs','content') }
     'ReviewLock' { Compose-Checked @('exec','-T','frontend','node','/source/tools/validation/replay-probe.mjs','review-lock') }
     'Output' { Compose-Checked @('exec','-T','frontend','node','/source/tools/validation/replay-probe.mjs','output') }
@@ -103,7 +108,7 @@ switch ($Action) {
     'Review' { Compose-Checked @('exec','-T','frontend','node','/source/tools/validation/replay-probe.mjs','review') }
     'Permissions' { Compose-Checked (@('exec','-T','frontend','node','/source/tools/validation/replay-probe.mjs','permissions') + $(if($SubmissionId) { @($SubmissionId) } else { @() })) }
     'WorkerStop' { Compose-Checked @('stop','-t','10','worker') }
-    'WorkerStart' { Compose-Checked @('up','--detach','worker') }
+    'WorkerStart' { Compose-Checked @('up','--detach','--no-recreate','worker') }
     'Audit' {
         # Export only platform identifiers/states: never source, tests, hashes or diagnostics.
         $facts = Sql-Fixture @'
@@ -180,6 +185,15 @@ SELECT JSON_OBJECT('outboxEventId',id,'runId',aggregate_id,'eventType',event_typ
  FROM outbox_event WHERE aggregate_type='SELF_TEST' ORDER BY aggregate_id,sequence_no;
 '@
         Save-Lines 'self-test-outbox.jsonl' $selfOutbox
+        $classrooms = Sql-Fixture @'
+SELECT JSON_OBJECT('id',c.id,'ownerId',c.owner_id,'status',c.status,'version',c.version,
+ 'activeOwners',(SELECT COUNT(*) FROM classroom_member m WHERE m.classroom_id=c.id AND m.role='OWNER' AND m.status='ACTIVE'),
+ 'ownerMatches',EXISTS(SELECT 1 FROM classroom_member m WHERE m.classroom_id=c.id AND m.user_id=c.owner_id AND m.role='OWNER' AND m.status='ACTIVE'),
+ 'members',(SELECT JSON_ARRAYAGG(JSON_OBJECT('userId',m.user_id,'role',m.role,'status',m.status)) FROM classroom_member m WHERE m.classroom_id=c.id),
+ 'transfers',COALESCE((SELECT JSON_ARRAYAGG(JSON_OBJECT('id',t.id,'fromUserId',t.from_user_id,'targetUserId',t.target_user_id,'status',t.status)) FROM classroom_transfer t WHERE t.classroom_id=c.id),JSON_ARRAY()))
+FROM classroom c ORDER BY c.id;
+'@
+        Save-Lines 'classroom-database.jsonl' $classrooms
         if ((Sql-Fixture "SELECT COUNT(*) FROM outbox_event WHERE aggregate_type NOT IN ('JUDGE_TASK','CONTENT_VALIDATION','SELF_TEST');").Trim() -ne '0') { throw 'Unknown Outbox aggregate is not audited' }
         $queues = Compose-Checked @('exec','-T','rabbitmq','rabbitmqctl','--quiet','list_queues','-p','/forgeoj','name','messages_ready','messages_unacknowledged','--formatter','json')
         $queues | Set-Content -LiteralPath (Join-Path $RunDirectory 'queues.json') -Encoding utf8
@@ -224,18 +238,32 @@ SELECT JSON_OBJECT('outboxEventId',id,'runId',aggregate_id,'eventType',event_typ
             @('forgeoj_worker','FORGEOJ_WORKER_DB_PASSWORD','UPDATE self_test_snapshot SET source_sha256=source_sha256 WHERE 1=0;'),
             @('forgeoj_worker','FORGEOJ_WORKER_DB_PASSWORD','DELETE FROM self_test_payload WHERE 1=0;'),
             @('forgeoj_worker','FORGEOJ_WORKER_DB_PASSWORD','DELETE FROM self_test_output WHERE 1=0;'),
-            @('forgeoj_worker','FORGEOJ_WORKER_DB_PASSWORD','DELETE FROM self_test_attempt WHERE 1=0;')
+            @('forgeoj_worker','FORGEOJ_WORKER_DB_PASSWORD','DELETE FROM self_test_attempt WHERE 1=0;'),
+            @('forgeoj_worker','FORGEOJ_WORKER_DB_PASSWORD','SELECT id FROM classroom LIMIT 0;'),
+            @('forgeoj_worker','FORGEOJ_WORKER_DB_PASSWORD','SELECT user_id FROM classroom_member LIMIT 0;'),
+            @('forgeoj_worker','FORGEOJ_WORKER_DB_PASSWORD','SELECT id FROM classroom_transfer LIMIT 0;'),
+            @('forgeoj_worker','FORGEOJ_WORKER_DB_PASSWORD','SELECT user_id FROM classroom_creation_request LIMIT 0;'),
+            @('forgeoj_api','FORGEOJ_API_DB_PASSWORD','UPDATE classroom SET id=id WHERE 1=0;','ERROR 1143'),
+            @('forgeoj_api','FORGEOJ_API_DB_PASSWORD','UPDATE classroom_member SET user_id=user_id WHERE 1=0;','ERROR 1143'),
+            @('forgeoj_api','FORGEOJ_API_DB_PASSWORD','UPDATE classroom_transfer SET target_user_id=target_user_id WHERE 1=0;','ERROR 1143'),
+            @('forgeoj_api','FORGEOJ_API_DB_PASSWORD','DELETE FROM classroom_transfer WHERE 1=0;'),
+            @('forgeoj_api','FORGEOJ_API_DB_PASSWORD','DELETE FROM classroom_creation_request WHERE 1=0;')
         )
         foreach($denial in $denials) {
             # Inputs are the fixed roles/queries above, not user-controlled shell text.
             $command = 'exec mysql -h127.0.0.1 -u' + $denial[0] + ' --password="$' + $denial[1] + '" forgeoj'
             $result = $denial[2] | & $DockerCommand compose --project-name $state.Project -f $composeFile exec -T mysql sh -c $command 2>&1
             $expectedError = if ($denial[2] -eq 'UPDATE personal_problem_list SET owner_id=owner_id WHERE 1 = 0;' -or $denial[2] -match '^UPDATE content_review SET (snapshot_id|validation_job_id)=') { 'ERROR 1143' } else { 'ERROR 1142' }
+            if ($denial.Count -gt 3) { $expectedError=$denial[3] }
             if ($LASTEXITCODE -eq 0 -or "$result" -notmatch $expectedError) { throw 'Expected database privilege denial missing' }
         }
+        @{checkedAt=(Get-Date -Format o);denials=$denials.Count;classroomDenials=9;allDenied=$true} | ConvertTo-Json | Set-Content -LiteralPath (Join-Path $RunDirectory 'privilege-denials.json') -Encoding utf8
         if (Docker-Checked @('ps','-aq','--filter','label=com.forgeoj.managed=true')) { throw 'Managed sandbox residue remains' }
         Write-Host 'API has no Docker/Worker/migrator configuration or socket mount.'
         Compose-Checked @('exec','-T','frontend','node','/source/tools/validation/replay-audit.mjs')
+        if (Test-Path -LiteralPath (Join-Path $RunDirectory 'classroom-http.json')) {
+            Compose-Checked @('exec','-T','frontend','node','/source/tools/validation/replay-classroom-audit.mjs')
+        }
     }
     'Stop' {
         # Resolve and inspect exact project resources before deleting this disposable DB/queue.

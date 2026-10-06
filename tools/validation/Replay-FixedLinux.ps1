@@ -2,7 +2,7 @@
 # SPDX-License-Identifier: Apache-2.0
 [CmdletBinding()]
 param(
-    [ValidateSet('Start','Status','Matrix','Library','Learning','Classroom','Content','ReviewLock','Review','Output','SelfTest','WorkerStart','WorkerStop','Permissions','Audit','Stop')]
+    [ValidateSet('Start','Status','Matrix','Library','Learning','Classroom','PrivateProblems','PrivateAudit','Content','ReviewLock','Review','Output','SelfTest','WorkerStart','WorkerStop','Permissions','Audit','Stop')]
     [string]$Action = 'Start',
     [string]$RunDirectory,
     [ValidatePattern('^$|^[a-f0-9-]{36}$')]
@@ -100,6 +100,70 @@ switch ($Action) {
         # Only this owned disposable DB receives an original third test account.
         Sql-Fixture "INSERT INTO user_account(id,username,password_hash,status) SELECT 3,'classroom-fixture',password_hash,'ACTIVE' FROM user_account WHERE id=1; INSERT INTO user_judge_quota_lock(user_id) VALUES(3);"
         Compose-Checked @('exec','-T','frontend','node','/source/tools/validation/replay-classroom.mjs')
+    }
+    'PrivateProblems' {
+        Sql-Fixture "INSERT IGNORE INTO user_account(id,username,password_hash,status) SELECT 3,'classroom-fixture',password_hash,'ACTIVE' FROM user_account WHERE id=1; INSERT IGNORE INTO user_judge_quota_lock(user_id) VALUES(3);"
+        Compose-Checked @('exec','-T','frontend','node','/source/tools/validation/replay-private-problems.mjs')
+    }
+    'PrivateAudit' {
+        Save-Lines 'private-problem-facts.jsonl' (Sql-Fixture @'
+SELECT JSON_OBJECT('slug',p.slug,'problemId',p.id,'classroomId',p.classroom_id,'scope',p.scope,'status',p.status,'version',c.version,'createdBy',c.created_by,
+ 'draftId',c.draft_id,'draftVersion',c.draft_version,'jobId',c.validation_job_id,'snapshotId',c.snapshot_id,'policy',c.solution_policy,
+ 'judgeVersionId',v.id,'judgeVersion',v.version_no,'datasetSha256',v.test_dataset_sha256,'snapshotDatasetSha256',s.test_dataset_sha256,
+ 'resourcesMatch',v.time_limit_ms=s.time_limit_ms AND v.memory_limit_mb=s.memory_limit_mb AND v.output_limit_bytes=s.output_limit_bytes AND v.java_image_digest=s.java_image_digest AND v.comparison_rule_version=s.comparison_rule_version AND v.sandbox_policy_version=s.sandbox_policy_version,
+ 'tests',COALESCE((SELECT JSON_ARRAYAGG(JSON_OBJECT('ordinal',t.ordinal,'inputSha256',t.input_sha256,'outputSha256',t.output_sha256)) FROM problem_test_case t WHERE t.judge_version_id=v.id),JSON_ARRAY()),
+ 'copiedTestsMatch',(SELECT COUNT(*) FROM problem_test_case t JOIN content_validation_test_case a ON a.snapshot_id=s.id AND a.sequence_no=t.ordinal WHERE t.judge_version_id=v.id AND t.input_data_gzip=a.input_gzip AND t.expected_output_gzip=a.expected_output_gzip AND t.input_sha256=a.input_sha256 AND t.output_sha256=a.expected_output_sha256 AND t.input_size_bytes=a.input_bytes AND t.output_size_bytes=a.expected_output_bytes)=(SELECT COUNT(*) FROM content_validation_test_case a WHERE a.snapshot_id=s.id))
+FROM classroom_problem c JOIN problem p ON p.id=c.problem_id AND p.classroom_id=c.classroom_id JOIN problem_judge_version v ON v.id=p.current_judge_version_id JOIN content_validation_snapshot s ON s.id=c.snapshot_id ORDER BY p.id;
+'@)
+        Save-Lines 'private-validation-facts.jsonl' (Sql-Fixture @'
+SELECT JSON_OBJECT('jobId',j.id,'snapshotId',j.snapshot_id,'kind',j.execution_kind,'status',j.processing_status,'validationStatus',j.validation_status,'reference',j.reference_result,'solution',j.solution_result,'attemptCount',j.attempt_count,
+ 'sourceDigestsMatch',SHA2(s.reference_code,256)=s.reference_sha256 AND SHA2(s.solution_code,256)=s.solution_sha256,'independentDigests',s.reference_sha256<>s.solution_sha256,
+ 'leaseCleared',j.lease_owner IS NULL AND j.lease_token IS NULL AND j.lease_expires_at IS NULL,
+ 'attempts',COALESCE((SELECT JSON_ARRAYAGG(JSON_OBJECT('id',a.id,'status',a.attempt_status,'finished',a.finished_at IS NOT NULL)) FROM content_validation_attempt a WHERE a.job_id=j.id),JSON_ARRAY()),
+ 'events',COALESCE((SELECT JSON_ARRAYAGG(JSON_OBJECT('id',o.id,'published',o.published_at IS NOT NULL,'failed',o.failed_at IS NOT NULL)) FROM outbox_event o WHERE o.aggregate_type='CONTENT_VALIDATION' AND o.aggregate_id=j.id),JSON_ARRAY()))
+FROM content_validation_job j JOIN content_validation_snapshot s ON s.id=j.snapshot_id ORDER BY j.created_at;
+'@)
+        Save-Lines 'private-submission-facts.jsonl' (Sql-Fixture @'
+SELECT JSON_OBJECT('id',s.id,'userId',s.user_id,'slug',p.slug,'status',s.processing_status,'verdict',s.verdict,'taskId',t.id,'taskStatus',t.task_status,'version',s.status_version,'taskVersion',t.status_version,'attemptCount',t.attempt_count,
+ 'snapshotMatches',s.judge_version_id=v.id AND s.test_dataset_sha256=v.test_dataset_sha256 AND s.time_limit_ms=v.time_limit_ms AND s.memory_limit_mb=v.memory_limit_mb AND s.output_limit_bytes=v.output_limit_bytes AND s.java_image_digest=v.java_image_digest,
+ 'leaseCleared',t.lease_owner IS NULL AND t.lease_token IS NULL AND t.lease_expires_at IS NULL,
+ 'attempts',COALESCE((SELECT JSON_ARRAYAGG(JSON_OBJECT('id',a.id,'status',a.attempt_status,'finished',a.finished_at IS NOT NULL)) FROM judge_task_attempt a WHERE a.judge_task_id=t.id),JSON_ARRAY()),
+ 'events',COALESCE((SELECT JSON_ARRAYAGG(JSON_OBJECT('id',o.id,'published',o.published_at IS NOT NULL,'failed',o.failed_at IS NOT NULL)) FROM outbox_event o WHERE o.aggregate_type='JUDGE_TASK' AND o.aggregate_id=t.id),JSON_ARRAY()))
+FROM submission s JOIN problem p ON p.id=s.problem_id JOIN problem_judge_version v ON v.id=s.judge_version_id JOIN judge_task t ON t.submission_id=s.id WHERE p.scope='CLASSROOM' ORDER BY s.created_at;
+'@)
+        Save-Lines 'private-early-views.jsonl' (Sql-Fixture "SELECT JSON_OBJECT('userId',e.user_id,'slug',p.slug) FROM classroom_solution_early_view e JOIN problem p ON p.id=e.problem_id ORDER BY e.user_id,p.id;")
+        Save-Lines 'private-self-test-facts.jsonl' (Sql-Fixture @'
+SELECT JSON_OBJECT('id',j.id,'userId',j.owner_id,'slug',s.problem_slug,'status',j.processing_status,'result',j.execution_result,'outputSha256',o.output_sha256,
+ 'leaseCleared',j.lease_owner IS NULL AND j.lease_token IS NULL AND j.lease_expires_at IS NULL,
+ 'attempts',COALESCE((SELECT JSON_ARRAYAGG(JSON_OBJECT('id',a.id,'status',a.attempt_status,'finished',a.finished_at IS NOT NULL)) FROM self_test_attempt a WHERE a.job_id=j.id),JSON_ARRAY()),
+ 'events',COALESCE((SELECT JSON_ARRAYAGG(JSON_OBJECT('id',e.id,'published',e.published_at IS NOT NULL,'failed',e.failed_at IS NOT NULL)) FROM outbox_event e WHERE e.aggregate_type='SELF_TEST' AND e.aggregate_id=j.id),JSON_ARRAY()))
+FROM self_test_job j JOIN self_test_snapshot s ON s.id=j.snapshot_id JOIN problem p ON p.id=s.problem_id LEFT JOIN self_test_output o ON o.job_id=j.id WHERE p.scope='CLASSROOM' ORDER BY j.created_at;
+'@)
+        Save-Lines 'private-queues.tsv' (Compose-Checked @('exec','-T','rabbitmq','rabbitmqctl','list_queues','--vhost','/forgeoj','name','messages_ready','messages_unacknowledged','--no-table-headers'))
+        Save-Lines 'private-api.log' (Compose-Checked @('logs','--no-log-prefix','api'))
+        Save-Lines 'private-worker.log' (Compose-Checked @('logs','--no-log-prefix','worker'))
+        $denials=@(
+            @('forgeoj_worker','FORGEOJ_WORKER_DB_PASSWORD','SELECT problem_id FROM classroom_problem LIMIT 0;','ERROR 1142'),
+            @('forgeoj_worker','FORGEOJ_WORKER_DB_PASSWORD','SELECT user_id FROM classroom_solution_early_view LIMIT 0;','ERROR 1142'),
+            @('forgeoj_api','FORGEOJ_API_DB_PASSWORD','DELETE FROM classroom_problem WHERE 1=0;','ERROR 1142'),
+            @('forgeoj_api','FORGEOJ_API_DB_PASSWORD','DELETE FROM classroom_solution_early_view WHERE 1=0;','ERROR 1142'),
+            @('forgeoj_api','FORGEOJ_API_DB_PASSWORD','UPDATE classroom_solution_early_view SET user_id=user_id WHERE 1=0;','ERROR 1142'),
+            @('forgeoj_api','FORGEOJ_API_DB_PASSWORD','UPDATE problem SET scope=scope WHERE 1=0;','ERROR 1143'),
+            @('forgeoj_api','FORGEOJ_API_DB_PASSWORD','UPDATE problem SET classroom_id=classroom_id WHERE 1=0;','ERROR 1143'),
+            @('forgeoj_api','FORGEOJ_API_DB_PASSWORD','UPDATE classroom_problem SET created_by=created_by WHERE 1=0;','ERROR 1143'),
+            @('forgeoj_api','FORGEOJ_API_DB_PASSWORD','UPDATE classroom_problem SET snapshot_id=snapshot_id WHERE 1=0;','ERROR 1143'),
+            @('forgeoj_api','FORGEOJ_API_DB_PASSWORD','UPDATE classroom_problem SET validation_job_id=validation_job_id WHERE 1=0;','ERROR 1143'),
+            @('forgeoj_api','FORGEOJ_API_DB_PASSWORD','UPDATE classroom_problem SET solution_policy=solution_policy WHERE 1=0;','ERROR 1143'),
+            @('forgeoj_api','FORGEOJ_API_DB_PASSWORD','UPDATE problem_judge_version SET time_limit_ms=time_limit_ms WHERE 1=0;','ERROR 1142'),
+            @('forgeoj_api','FORGEOJ_API_DB_PASSWORD','SELECT id FROM problem_test_case LIMIT 0;','ERROR 1142')
+        )
+        foreach($denial in $denials) {
+            $command='exec mysql -h127.0.0.1 -u'+$denial[0]+' --password="$'+$denial[1]+'" forgeoj'
+            $result=$denial[2] | & $DockerCommand compose --project-name $state.Project -f $composeFile exec -T mysql sh -c $command 2>&1
+            if($LASTEXITCODE -eq 0 -or "$result" -notmatch $denial[3]) {throw 'Expected private database privilege denial missing'}
+        }
+        @{checkedAt=(Get-Date -Format o);denials=$denials.Count;allDenied=$true} | ConvertTo-Json | Set-Content -LiteralPath (Join-Path $RunDirectory 'private-privilege-denials.json') -Encoding utf8
+        Compose-Checked @('exec','-T','frontend','node','/source/tools/validation/replay-private-audit.mjs')
     }
     'Content' { Compose-Checked @('exec','-T','frontend','node','/source/tools/validation/replay-probe.mjs','content') }
     'ReviewLock' { Compose-Checked @('exec','-T','frontend','node','/source/tools/validation/replay-probe.mjs','review-lock') }
@@ -224,7 +288,7 @@ FROM classroom c ORDER BY c.id;
             @('forgeoj_api','FORGEOJ_API_DB_PASSWORD','DELETE FROM official_problem_list WHERE 1 = 0;'),
             @('forgeoj_api','FORGEOJ_API_DB_PASSWORD','UPDATE personal_problem_list SET owner_id=owner_id WHERE 1 = 0;'),
             @('forgeoj_api','FORGEOJ_API_DB_PASSWORD','DELETE FROM problem_tag WHERE 1 = 0;'),
-            @('forgeoj_api','FORGEOJ_API_DB_PASSWORD','UPDATE problem SET difficulty = difficulty WHERE 1 = 0;'),
+            @('forgeoj_api','FORGEOJ_API_DB_PASSWORD','UPDATE problem SET difficulty = difficulty WHERE 1 = 0;','ERROR 1143'),
             @('forgeoj_worker','FORGEOJ_WORKER_DB_PASSWORD','SELECT id FROM content_review LIMIT 0;'),
             @('forgeoj_worker','FORGEOJ_WORKER_DB_PASSWORD','UPDATE content_review SET review_status=review_status WHERE 1=0;'),
             @('forgeoj_api','FORGEOJ_API_DB_PASSWORD','DELETE FROM content_review WHERE 1=0;'),
@@ -255,7 +319,7 @@ FROM classroom c ORDER BY c.id;
             $result = $denial[2] | & $DockerCommand compose --project-name $state.Project -f $composeFile exec -T mysql sh -c $command 2>&1
             $expectedError = if ($denial[2] -eq 'UPDATE personal_problem_list SET owner_id=owner_id WHERE 1 = 0;' -or $denial[2] -match '^UPDATE content_review SET (snapshot_id|validation_job_id)=') { 'ERROR 1143' } else { 'ERROR 1142' }
             if ($denial.Count -gt 3) { $expectedError=$denial[3] }
-            if ($LASTEXITCODE -eq 0 -or "$result" -notmatch $expectedError) { throw 'Expected database privilege denial missing' }
+            if ($LASTEXITCODE -eq 0 -or "$result" -notmatch $expectedError) { throw ("Expected database privilege denial missing: " + $denial[2] + " / " + "$result") }
         }
         @{checkedAt=(Get-Date -Format o);denials=$denials.Count;classroomDenials=9;allDenied=$true} | ConvertTo-Json | Set-Content -LiteralPath (Join-Path $RunDirectory 'privilege-denials.json') -Encoding utf8
         if (Docker-Checked @('ps','-aq','--filter','label=com.forgeoj.managed=true')) { throw 'Managed sandbox residue remains' }

@@ -25,7 +25,7 @@ public interface ProblemMapper {
             FROM problem p
             JOIN problem_judge_version jv ON jv.id = p.current_judge_version_id
             WHERE p.slug = #{slug}
-              AND p.status = 'ACTIVE'
+              AND p.status = 'ACTIVE' AND p.scope = 'PUBLIC'
             LIMIT 1
             """)
     Optional<ProblemDetailsRow> findActiveBySlug(@Param("slug") String slug);

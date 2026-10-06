@@ -56,6 +56,12 @@ class SubmissionTransactionService {
                                         new ResponseStatusException(
                                                 HttpStatus.NOT_FOUND, "Problem not found"));
 
+        return enqueue(userId,judgeVersion,clientRequestId,language,sourceCode,sourceSha256);
+    }
+
+    // Called only within an authorized, quota-locked creation transaction.
+    SubmissionResult enqueue(long userId,JudgeVersionSnapshot judgeVersion,UUID clientRequestId,
+            String language,String sourceCode,String sourceSha256) {
         String submissionId = UUID.randomUUID().toString();
         String taskId = UUID.randomUUID().toString();
         String eventId = UUID.randomUUID().toString();

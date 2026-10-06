@@ -147,7 +147,7 @@ public class ClassroomService {
     }
     public void delete(long user,String id,long version) {
         var room=owner(user,id,version,true);
-        if(mapper.memberCount(id)!=1||mapper.transferCount(id)!=0) throw conflict();
+        if(mapper.memberCount(id)!=1||mapper.transferCount(id)!=0||mapper.problemCount(id)!=0) throw conflict();
         mapper.deleteMembers(id);mapper.delete(id);
     }
     private Room lock(long user,String id) {uuid(id);accounts.requireCurrentWrite(user);return mapper.lock(id).orElseThrow(ClassroomService::missing);}

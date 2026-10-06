@@ -13,6 +13,11 @@ import org.springframework.web.server.ResponseStatusException;
 public class SelfTestController {
     private final SelfTestService service;
     public SelfTestController(SelfTestService service){this.service=service;}
+    @PostMapping("/api/v1/classrooms/{id}/problems/{slug}/self-tests")
+    ResponseEntity<SelfTestMapper.Run> classroom(@AuthenticationPrincipal ForgeOjPrincipal p,@PathVariable String id,@PathVariable String slug,@RequestBody Map<String,Object> body){
+        if(!body.keySet().equals(Set.of("requestId","language","sourceCode","input")) || !(body.get("requestId") instanceof String request) || !(body.get("language") instanceof String language) || !(body.get("sourceCode") instanceof String code) || !(body.get("input") instanceof String input)) throw new ResponseStatusException(HttpStatus.BAD_REQUEST);
+        return ResponseEntity.accepted().cacheControl(CacheControl.noStore()).body(service.createClassroom(p.userId(),id,slug,request,language,code,input));
+    }
     @PostMapping("/api/v1/problems/{slug}/self-tests")
     ResponseEntity<SelfTestMapper.Run> create(@AuthenticationPrincipal ForgeOjPrincipal p,@PathVariable String slug,@RequestBody Map<String,Object> body){
         if(!body.keySet().equals(Set.of("requestId","language","sourceCode","input")) || !(body.get("requestId") instanceof String request) || !(body.get("language") instanceof String language) || !(body.get("sourceCode") instanceof String code) || !(body.get("input") instanceof String input)) throw new ResponseStatusException(HttpStatus.BAD_REQUEST);

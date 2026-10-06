@@ -22,15 +22,24 @@ public class SelfTestService {
     private final SelfTestMapper mapper;
     private final AccountService accounts;
     private final ObjectMapper json;
-    public SelfTestService(SelfTestMapper mapper,AccountService accounts,ObjectMapper json){this.mapper=mapper;this.accounts=accounts;this.json=json;}
+    private final com.forgeoj.api.classroom.ClassroomProblemService classroomProblems;
+    public SelfTestService(SelfTestMapper mapper,AccountService accounts,ObjectMapper json,com.forgeoj.api.classroom.ClassroomProblemService classroomProblems){this.mapper=mapper;this.accounts=accounts;this.json=json;this.classroomProblems=classroomProblems;}
     @Transactional
     public SelfTestMapper.Run create(long owner,String slug,String request,String language,String code,String input) {
+        return createExecution(owner,null,slug,request,language,code,input);
+    }
+    @Transactional(isolation=Isolation.READ_COMMITTED)
+    public SelfTestMapper.Run createClassroom(long owner,String room,String slug,String request,String language,String code,String input) {
+        return createExecution(owner,room,slug,request,language,code,input);
+    }
+    private SelfTestMapper.Run createExecution(long owner,String room,String slug,String request,String language,String code,String input) {
         uuid(request,HttpStatus.BAD_REQUEST);slug(slug);
         if(!"JAVA_21".equals(language)) throw status(HttpStatus.BAD_REQUEST);
         SubmissionService.validateSource(code);
         if(input==null || input.indexOf('\0')>=0 || input.getBytes(StandardCharsets.UTF_8).length>1048576) throw status(HttpStatus.BAD_REQUEST);
         accounts.requireCurrentWrite(owner);
         if(mapper.quota(owner).isEmpty()) throw new IllegalStateException("Missing self-test quota");
+        if(room!=null) classroomProblems.authorize(owner,room,false,true);
         String sourceHash=hash(code),inputHash=hash(input);
         var previous=mapper.request(owner,request);
         if(previous.isPresent()) {
@@ -39,7 +48,7 @@ public class SelfTestService {
             if(old.expired()) throw status(HttpStatus.GONE);
             return mapper.run(owner,old.runId()).orElseThrow(()->status(HttpStatus.GONE));
         }
-        var v=mapper.version(slug).orElseThrow(()->status(HttpStatus.NOT_FOUND));
+        var v=(room==null?mapper.version(slug):mapper.classroomVersion(room,slug)).orElseThrow(()->status(HttpStatus.NOT_FOUND));
         if(mapper.pending(owner)>=3) throw status(HttpStatus.TOO_MANY_REQUESTS);
         String snapshot=UUID.randomUUID().toString(),id=UUID.randomUUID().toString(),event=UUID.randomUUID().toString();
         long limit=Math.min(v.outputLimitBytes(),1048576),bytes=input.getBytes(StandardCharsets.UTF_8).length;

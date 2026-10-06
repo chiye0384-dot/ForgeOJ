@@ -6,6 +6,7 @@ import org.apache.ibatis.annotations.*;
 
 @Mapper
 public interface ClassroomMapper {
+    @Select("SELECT COUNT(*) FROM problem WHERE classroom_id=#{id}") int problemCount(String id);
     record Room(String id,long ownerId,String title,String status,String inviteSha256,boolean inviteEnabled,long version) {}
     record Member(long userId,String username,String role,String status) {}
     record Summary(String id,String title,String status,long version,String role,String memberStatus) {}

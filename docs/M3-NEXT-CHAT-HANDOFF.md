@@ -1,5 +1,7 @@
 # ForgeOJ：M2 已验收，转入 M3 的新对话交接
 
+> 2026-10-06 最新接续：班级私有题单元已VERIFIED，完整M3仍IN_PROGRESS。先读 [私有题设计](M3-PRIVATE-PROBLEMS-DESIGN.md)、[最终验收](M3-PRIVATE-PROBLEMS-VALIDATION.md)、[输入/JAR/测试关联](evidence/m3-private-problems/verification.json)，再核对当前Git。基线089d777上的V16/私有题页面/真实共享执行链路完成；API203、Worker133、前端82、155HTTP、实际两账号页面、13私有SQL拒绝和公共38拒绝、7空队列、所有测试资源清理通过。默认AFTER_AC且未AC可提醒后再次确认，作业策略不能被自由练习绕过。作业/教师关联/完整四门禁尚未开始或完成；用户要求本轮只完成这一步，下一步另说。旧交接与SMTP文件保留。下方两段及正文均为先前日期的历史快照，不能再沿用“下一步私有题”作为当前事实。
+
 > 2026-10-06 接续更新：本交接下方为2026-10-05起点快照。班级成员首单元现已VERIFIED，完整M3 IN_PROGRESS；下一步班级私有题。请在本交接后读 [最新设计](M3-CLASSROOM-DESIGN.md)、[实际验收/构件/失败轮次](M3-CLASSROOM-VALIDATION.md) 和 [证据](evidence/m3-classroom/README.md)，再核对当前Git HEAD，不沿用d228e3a或M3 PLANNED作为当前事实。私有题写路径前须补真实引用/外键和删除保护；作业、教师关联、完整四门禁仍待完成。
 
 > 整理日期：2026-10-05，Asia/Shanghai。用户明确要求结束过长对话、详细交接并创建可直接接手的新对话。

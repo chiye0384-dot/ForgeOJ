@@ -1,0 +1,56 @@
+- banner:
+  - generic: F
+  - heading "ForgeOJ" [level=1]
+  - paragraph: Java 21 在线练习与判题
+  - navigation "主导航":
+    - link "题库":
+      - /url: /problems
+    - link "学习记录":
+      - /url: /learning
+    - link "班级":
+      - /url: /classrooms
+    - link "我的题目":
+      - /url: /authoring
+    - link "做题":
+      - /url: /
+    - link "账号":
+      - /url: /account
+- main:
+  - heading "班级私有题" [level=2]
+  - paragraph:
+    - link "返回我的班级":
+      - /url: /classrooms
+    - text: ·
+    - button "刷新班级题"
+  - alertdialog "操作确认":
+    - paragraph: 提前查看题解可能影响独立思考。仍要查看吗？仅记录在自己的学习记录中，不影响继续提交。
+    - button "取消"
+    - button "再次确认"
+  - heading "M3班级私有题真实验收 · 运行中" [level=3]
+  - list:
+    - text: M3班级题浏览器候选 · 可练习
+    - button "打开题目"
+    - text: M3助教原创候选 · 已归档
+    - button "打开题目"
+    - text: M3班级题 HTTP 原创候选 · 可练习
+    - button "打开题目"
+  - button "上一页题目" [disabled]
+  - button "下一页题目" [disabled]
+  - article:
+    - heading "M3班级题浏览器候选" [level=3]
+    - paragraph: 原创班级练习：读入两个整数并输出和。
+    - heading "输入" [level=4]
+    - paragraph: 两个整数
+    - heading "输出" [level=4]
+    - paragraph: 输出整数之和。
+    - generic: 输入：1 2 输出：3
+    - paragraph: Java 21 · 2000 ms · 256 MiB · 池也原创，仅用于 ForgeOJ disposable 验收。
+    - text: Java 源码
+    - textbox "Java 源码": "public class Main { public static void main(String[] args) { } }"
+    - text: 自测输入
+    - textbox "自测输入"
+    - button "运行自测"
+    - button "正式提交"
+    - button "查看官方题解"
+    - paragraph: AC 后自动开放；也可以经提醒再次确认后提前查看。
+    - button "提前查看题解" [active]

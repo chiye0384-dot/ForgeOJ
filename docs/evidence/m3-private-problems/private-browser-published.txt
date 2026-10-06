@@ -1,0 +1,58 @@
+- banner:
+  - generic: F
+  - heading "ForgeOJ" [level=1]
+  - paragraph: Java 21 在线练习与判题
+  - navigation "主导航":
+    - link "题库":
+      - /url: /problems
+    - link "学习记录":
+      - /url: /learning
+    - link "班级":
+      - /url: /classrooms
+    - link "我的题目":
+      - /url: /authoring
+    - link "做题":
+      - /url: /
+    - link "账号":
+      - /url: /account
+- main:
+  - heading "班级私有题" [level=2]
+  - paragraph:
+    - link "返回我的班级":
+      - /url: /classrooms
+    - text: ·
+    - button "刷新班级题"
+  - status: 班级私有题已发布。
+  - heading "M3班级私有题真实验收 · 运行中" [level=3]
+  - heading "从自己的已验证草稿发布" [level=3]
+  - paragraph:
+    - text: 先到
+    - link "创作":
+      - /url: /authoring
+    - text: 准备题面、测试、参考和独立题解，并完成双程序验证。
+  - text: 作者草稿
+  - combobox "作者草稿":
+    - option "请选择"
+    - option "M3班级题浏览器候选 · v3" [selected]
+    - option "M3助教原创候选 · v1"
+    - option "M3班级题 HTTP 原创候选 · v4"
+  - button "上一页草稿" [disabled]
+  - button "下一页草稿" [disabled]
+  - text: 通过的验证
+  - combobox "通过的验证":
+    - option "请选择"
+    - option "v3 · 参考与题解通过 · 7dd2c922-ce78-4ed1-9d9c-89caa3be3dc2" [selected]
+  - text: 自由练习题解
+  - combobox "自由练习题解":
+    - option "AC 后开放；未 AC 可再次确认查看" [selected]
+    - option "立即开放"
+  - button "发布班级私有题"
+  - list:
+    - text: M3班级题浏览器候选 · 可练习
+    - button "打开题目"
+    - text: M3助教原创候选 · 已归档
+    - button "打开题目"
+    - text: M3班级题 HTTP 原创候选 · 可练习
+    - button "打开题目"
+  - button "上一页题目" [disabled]
+  - button "下一页题目" [disabled]

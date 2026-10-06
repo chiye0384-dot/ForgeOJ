@@ -12,7 +12,7 @@ public interface LearningMapper {
     String LIST_TABLE = "<choose><when test='official'>official_problem_list</when><otherwise>personal_problem_list</otherwise></choose>";
     String ITEM_TABLE = "<choose><when test='official'>official_problem_list_item</when><otherwise>personal_problem_list_item</otherwise></choose>";
     String VISIBLE_LIST = "<choose><when test='official'>l.status = 'ACTIVE'</when><otherwise>l.owner_id = #{userId}</otherwise></choose>";
-    String AVAILABLE = "p.status = 'ACTIVE' AND jv.id IS NOT NULL";
+    String AVAILABLE = "p.scope = 'PUBLIC' AND p.status = 'ACTIVE' AND jv.id IS NOT NULL";
     String AC = "EXISTS(SELECT 1 FROM submission s WHERE s.user_id = #{userId} AND s.problem_id=p.id AND s.judge_version_id=p.current_judge_version_id AND s.processing_status='FINISHED' AND s.verdict='AC')";
     String STATS = " SELECT COUNT(*) AS entryCount, COALESCE(SUM(" + AVAILABLE + "),0) AS availableCount, COALESCE(SUM(("+ AVAILABLE + ") AND " + AC + "),0) AS completedCount FROM " + ITEM_TABLE + " i JOIN problem p ON p.id=i.problem_id LEFT JOIN problem_judge_version jv ON jv.id=p.current_judge_version_id WHERE i.list_id=#{id}";
 

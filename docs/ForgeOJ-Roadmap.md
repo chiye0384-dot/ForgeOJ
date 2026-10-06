@@ -205,7 +205,7 @@ M0 的登录只用于打通受保护提交链路，可使用预置账号和最�
 
 ## 7. M3：班级与作业
 
-状态 `IN_PROGRESS`（2026-10-06）。按 [班级设计](M3-CLASSROOM-DESIGN.md) 分成成员、私有题、作业、教师关联四个单元；成员首单元已VERIFIED，实际范围/构件/失败轮次见 [验收](M3-CLASSROOM-VALIDATION.md)。完整四门禁尚未通过，下一单元班级私有题。
+状态 `IN_PROGRESS`（2026-10-06）。按 [班级设计](M3-CLASSROOM-DESIGN.md) 分成成员、私有题、作业、教师关联四个单元；成员首单元和班级私有题单元已VERIFIED，分别见 [成员验收](M3-CLASSROOM-VALIDATION.md)、[私有题验收](M3-PRIVATE-PROBLEMS-VALIDATION.md)。私有题默认AC后开放，未AC可提醒后再次确认，仅个人解锁。完整四门禁尚未通过，后续作业和教师关联；本轮按用户要求到私有题验收为止。
 
 目标：形成区别于纯刷题站的教学闭环。
 

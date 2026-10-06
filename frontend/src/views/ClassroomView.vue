@@ -248,6 +248,9 @@ onBeforeUnmount(() => {
       <button :disabled="busy || page * 20 >= total" @click="turn(page + 1)">下一页</button>
       <article v-if="detail">
         <h3>{{ detail.title }}</h3>
+        <p>
+          <a :href="`/classrooms/${encodeURIComponent(detail.id)}/problems`">班级私有题与练习</a>
+        </p>
         <form
           v-if="detail.role === 'OWNER' && detail.status === 'ACTIVE'"
           @submit.prevent="

@@ -1,0 +1,25 @@
+- banner:
+  - generic: F
+  - heading "ForgeOJ" [level=1]
+  - paragraph: Java 21 在线练习与判题
+  - navigation "主导航":
+    - link "题库":
+      - /url: /problems
+    - link "学习记录":
+      - /url: /learning
+    - link "班级":
+      - /url: /classrooms
+    - link "我的题目":
+      - /url: /authoring
+    - link "做题":
+      - /url: /
+    - link "账号":
+      - /url: /account
+- main:
+  - heading "班级私有题" [level=2]
+  - paragraph:
+    - link "返回我的班级":
+      - /url: /classrooms
+    - text: ·
+    - button "刷新班级题"
+  - status: 班级或题目不可访问。

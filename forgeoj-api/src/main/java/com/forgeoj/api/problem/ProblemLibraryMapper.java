@@ -16,7 +16,7 @@ public interface ProblemLibraryMapper {
     String FILTERED_PROBLEMS = """
             FROM problem p
             JOIN problem_judge_version jv ON jv.id = p.current_judge_version_id
-            WHERE p.status = 'ACTIVE'
+            WHERE p.status = 'ACTIVE' AND p.scope = 'PUBLIC'
             <if test="pattern != null">AND p.title LIKE #{pattern} ESCAPE '='</if>
             <if test="difficulty != null">AND p.difficulty = #{difficulty}</if>
             <if test="tag != null">
@@ -52,7 +52,7 @@ public interface ProblemLibraryMapper {
             FROM problem_tag pt
             JOIN problem p ON p.id = pt.problem_id
             JOIN problem_judge_version jv ON jv.id = p.current_judge_version_id
-            WHERE p.status = 'ACTIVE'
+            WHERE p.status = 'ACTIVE' AND p.scope = 'PUBLIC'
             ORDER BY pt.tag ASC
             """)
     List<String> availableTags();

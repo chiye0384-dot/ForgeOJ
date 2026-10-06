@@ -1,0 +1,29 @@
+{
+  "checkedAt": "2026-10-06T11:16:02.960Z",
+  "allPassed": true,
+  "privateProblems": 3,
+  "realPassedValidationJobs": 3,
+  "httpChecks": 155,
+  "realFormalVerdicts": [
+    "WA",
+    "AC",
+    "AC"
+  ],
+  "realSelfTests": 2,
+  "explicitPersonalEarlyViews": 2,
+  "privatePrivilegeDenials": 13,
+  "emptyQueues": 7,
+  "snapshotCopiesMatch": true,
+  "commitBeforeAck": true,
+  "logsClean": true,
+  "multiAccountBrowser": true,
+  "membershipRevoked": true,
+  "toolInputs": {
+    "tools/validation/Replay-FixedLinux.ps1": "668fcf1d5a452e8b759d27f0d1ca781a0df2f7b34889f8acd90189498ac60e02",
+    "tools/validation/replay-private-problems.mjs": "6fc93e3bf0939204d13f29d3f29705de64744f2d0afc88899b285c6e4428f4d9",
+    "tools/validation/replay-private-audit.mjs": "5d50a6785d74f31a20954659248c1bb28034004ca88328a869f3e0871877ed2b",
+    "tools/validation/replay-private-revoke.mjs": "6de93cb0e6350e564502dd6ab4723845b617486f536315b6eab4bd32e0b70973",
+    "tools/validation/compose.replay.yml": "c9f3ec7b367e4b0f23d30d47523ae886d3980f383d4deb2641615ace90f6222a",
+    "tools/validation/replay-vite.mjs": "5204200c19e01191aa967716632e31debc31348734f5e790b72c349b4d2e334b"
+  }
+}

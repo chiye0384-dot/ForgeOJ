@@ -1,0 +1,22 @@
+[
+  {
+    "port": 5173,
+    "visibleStates": [
+      "QUEUED",
+      "FINISHED",
+      "AC"
+    ],
+    "submissionId": "74c8a404-7480-46c3-9838-bc1c841c6a22",
+    "mode": "normal"
+  },
+  {
+    "port": 5174,
+    "visibleStates": [
+      "SUBMITTING",
+      "FINISHED",
+      "AC"
+    ],
+    "submissionId": "46a46c5c-e8a2-4067-8c4b-4c470c803031",
+    "mode": "fallback"
+  }
+]

@@ -10,6 +10,8 @@ import org.apache.ibatis.annotations.Update;
 
 @Mapper
 interface SubmissionMapper {
+    @Select("SELECT j.problem_id AS problemId,j.id AS judgeVersionId,j.time_limit_ms AS timeLimitMs,j.memory_limit_mb AS memoryLimitMb,j.output_limit_bytes AS outputLimitBytes,j.comparison_rule_version AS comparisonRuleVersion,j.sandbox_policy_version AS sandboxPolicyVersion,j.java_image_digest AS javaImageDigest,j.test_dataset_sha256 AS testDatasetSha256 FROM problem_judge_version j WHERE j.problem_id=#{problem} AND j.id=#{judge} FOR SHARE")
+    Optional<JudgeVersionSnapshot> frozenVersion(@Param("problem") long problem,@Param("judge") long judge);
     @Select("SELECT p.id AS problemId,jv.id AS judgeVersionId,jv.time_limit_ms AS timeLimitMs,jv.memory_limit_mb AS memoryLimitMb,jv.output_limit_bytes AS outputLimitBytes,jv.comparison_rule_version AS comparisonRuleVersion,jv.sandbox_policy_version AS sandboxPolicyVersion,jv.java_image_digest AS javaImageDigest,jv.test_dataset_sha256 AS testDatasetSha256 FROM problem p JOIN problem_judge_version jv ON jv.id=p.current_judge_version_id JOIN classroom_problem c ON c.problem_id=p.id AND c.classroom_id=p.classroom_id WHERE p.classroom_id=#{room} AND p.scope='CLASSROOM' AND p.slug=#{slug} AND p.status='ACTIVE' FOR SHARE")
     Optional<JudgeVersionSnapshot> classroomVersion(@Param("room") String room,@Param("slug") String slug);
     @Select("SELECT EXISTS(SELECT 1 FROM submission WHERE user_id=#{user} AND client_request_id=#{request} AND problem_id=#{problem} AND source_sha256=#{hash} AND language='JAVA_21')")

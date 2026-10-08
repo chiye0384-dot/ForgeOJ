@@ -1,0 +1,237 @@
+{
+  "verifiedAt": "2026-10-08T01:03:28.836Z",
+  "allPassed": true,
+  "backend": "target\\forgeoj-linux-20261007-182252-49e69c3a",
+  "workerRun": "target\\forgeoj-linux-20261007-175240-94e4a90e",
+  "frontend": "target\\forgeoj-linux-20261007-183101-76bd5301",
+  "replay": "target\\forgeoj-e2e-20261008-074908-5182263f",
+  "runtimeProof": "target\\forgeoj-e2e-20261008-085454-c51b6eaf",
+  "supplementalRuntime": {
+    "capturedAt": "2026-10-08T08:56:20.3709670+08:00",
+    "readOnlySourceMount": true,
+    "realBrowserAc": true,
+    "submissionId": "24228967-716c-4b22-8da2-b0aa95a5d32a",
+    "observedAt": "2026-10-08T00:57:12.443Z"
+  },
+  "api": {
+    "suites": 42,
+    "tests": 218,
+    "failures": 0,
+    "errors": 0,
+    "skipped": 0
+  },
+  "worker": {
+    "suites": 23,
+    "tests": 133,
+    "failures": 0,
+    "errors": 0,
+    "skipped": 0
+  },
+  "frontendTests": 92,
+  "backendInputFiles": 251,
+  "frontendInputFiles": 65,
+  "workerAndSharedInputsMatch": true,
+  "apiSha256": "f0cafb66e576b053fe7c593ee01f5709025053bafe6c536737b0e6a7b0aafde5",
+  "workerSha256": "7d2b412815ee25edc049d3ce2e7f80775b0dde974df16e63ec75088a6ee90118",
+  "publicRegression": {
+    "verifiedAt": "2026-10-07T23:57:44.124Z",
+    "selfTests": 0,
+    "selfTestPublishedOutbox": 0,
+    "contentReviews": 0,
+    "outputPreviews": 0,
+    "submissions": 11,
+    "finished": 10,
+    "cancelled": 1,
+    "publishedOutbox": 11,
+    "contentJobs": 0,
+    "contentPublishedOutbox": 0,
+    "emptyQueues": 7,
+    "library": {
+      "verifiedAt": "2026-10-07T23:56:03.588Z",
+      "anonymous": true,
+      "total": 2,
+      "firstSlug": "sum-two-integers",
+      "secondSlug": "larger-of-two-integers",
+      "filteredSlug": "larger-of-two-integers",
+      "literalWildcardTotal": 0,
+      "invalidSizeStatus": 400,
+      "tags": [
+        "入门",
+        "数学",
+        "比较"
+      ],
+      "exactListFields": true,
+      "exactDetailFields": true
+    },
+    "learning": {
+      "verifiedAt": "2026-10-07T23:56:04.845Z",
+      "listId": "65bebfe5-cb9a-4790-a900-024578f1d3f8",
+      "officialListId": "00000000-0000-0000-0000-000000000101",
+      "ownerDenied": true,
+      "draftRace": [
+        200,
+        409
+      ],
+      "existingDraftRace": [
+        200,
+        409
+      ],
+      "listRace": [
+        200,
+        409
+      ],
+      "currentAcProgress": 1,
+      "available": 2,
+      "historyTotal": 9,
+      "publicPersonalFactsAbsent": true,
+      "historyExactFields": true
+    },
+    "browser": [
+      {
+        "mode": "normal",
+        "port": 5173,
+        "submissionId": "3f51b3f6-c828-4ace-97fb-7f9c9dfa87a4",
+        "visibleStates": [
+          "QUEUED",
+          "FINISHED",
+          "AC"
+        ]
+      },
+      {
+        "mode": "fallback",
+        "port": 5174,
+        "submissionId": "ed88e334-614c-4051-b2fa-39542c897bd6",
+        "visibleStates": [
+          "QUEUED",
+          "FINISHED",
+          "AC"
+        ]
+      }
+    ],
+    "chains": [
+      {
+        "submissionId": "98f0115e-c6af-4f02-89b3-dd329d0b8aa0",
+        "requestId": "e6a45a9e-5df0-4a47-9205-451753d7aca8",
+        "judgeTaskId": "c7982d96-3932-49af-948f-45dcb74c7ac0",
+        "outboxEventId": "845cc5ad-a9dc-4a32-8776-fbb19c726ee8",
+        "attemptId": "43535da6-bc6b-4ac9-8590-47563e957019",
+        "verdict": "AC"
+      },
+      {
+        "submissionId": "659c2c33-52b4-4e9d-8e30-3f639090d77e",
+        "requestId": "d16a60ab-bc19-4bcd-b791-2954d385a68f",
+        "judgeTaskId": "219bf8d1-6cb9-4b88-8064-fd8b988af9ba",
+        "outboxEventId": "36cedff6-5cb8-4650-9bed-39e006eec676",
+        "attemptId": "5f5fee8f-71a0-4718-8bfe-72a0a405cedb",
+        "verdict": "WA"
+      },
+      {
+        "submissionId": "794dad1f-aa69-4629-ae17-0eb0160563a6",
+        "requestId": "290586c9-880e-4c96-9054-5b01a91b8828",
+        "judgeTaskId": "4f351b15-a054-4da7-a93b-af3c4c89afcb",
+        "outboxEventId": "406686b8-7c28-4d3e-9e26-7856fe8cfd33",
+        "attemptId": "47f0321b-5cef-442e-954e-b399c24e42bf",
+        "verdict": "CE"
+      },
+      {
+        "submissionId": "6b327254-f98d-4dbe-87aa-549d17e59176",
+        "requestId": "c8be12f9-4709-4ebd-9f2b-a6a43870fad3",
+        "judgeTaskId": "c76bc1c4-f695-4daf-b960-fbd88fa65042",
+        "outboxEventId": "c34e1392-0f1d-43bc-b798-616224c13994",
+        "attemptId": "cbab1fac-529f-4a00-b3ed-f1a289112259",
+        "verdict": "RE"
+      },
+      {
+        "submissionId": "0eccd656-fcff-4330-ab96-070d006fc720",
+        "requestId": "b5fd4381-551d-4c3d-a5a7-c5fb5f78356d",
+        "judgeTaskId": "819a5fd0-eea5-4e5a-b23c-b2631989c51a",
+        "outboxEventId": "7f1fb95f-8fe3-41d7-9ff8-3a991169cd93",
+        "attemptId": "2b37634c-87bc-4f7f-a991-113bb362ed74",
+        "verdict": "TLE"
+      },
+      {
+        "submissionId": "852c767f-e67c-4edf-acc2-50107ad75cba",
+        "requestId": "d2b53ceb-b515-49ef-901e-9e2b8e195192",
+        "judgeTaskId": "30a4a243-5a22-459b-bc12-470c859ed5b0",
+        "outboxEventId": "824d8ab3-2737-48d3-af22-ab92c7a3e5e9",
+        "attemptId": "afa1efc1-2426-4639-b968-3f822bd2be36",
+        "verdict": "OLE"
+      },
+      {
+        "submissionId": "fec9dec6-1f67-44df-a603-abf5b4912728",
+        "requestId": "145df720-d794-4097-9d42-b08b57d4d6d5",
+        "judgeTaskId": "37f27eee-39c1-46f8-b2b8-7ef9d0347ce1",
+        "outboxEventId": "0c0ab9a4-224c-4736-873f-57c883f28576",
+        "attemptId": "45979425-de74-4f64-b1bb-2fc01c586f33",
+        "verdict": "MLE"
+      },
+      {
+        "submissionId": "071163e0-8766-43c0-a4ed-988bf656978f",
+        "requestId": "ff8cecbc-217c-4f18-89cb-5c202f3885a7",
+        "judgeTaskId": "c6f7bef0-063f-4703-9718-ffe620d80ab4",
+        "outboxEventId": "190fcfbe-ee60-4e4e-98bb-6b375836b826",
+        "attemptId": "bfb031c8-c417-4252-8d5d-861a06bd7958",
+        "verdict": "SECURITY_VIOLATION"
+      },
+      {
+        "submissionId": "3f51b3f6-c828-4ace-97fb-7f9c9dfa87a4",
+        "requestId": "2c868db8-15c3-4769-88f6-a7417604b98e",
+        "judgeTaskId": "f92235b0-0c74-4998-8519-c13acec53353",
+        "outboxEventId": "af9b1fc7-8783-4244-a00f-a42c275237f7",
+        "attemptId": "af8ea014-9e5d-4600-900d-0550896e3715",
+        "verdict": "AC"
+      },
+      {
+        "submissionId": "ed88e334-614c-4051-b2fa-39542c897bd6",
+        "requestId": "89dfce5c-eaa0-4137-a3fb-b6cdc7739bf0",
+        "judgeTaskId": "3bb2f13b-45e2-486b-ac7f-846a145c1b4a",
+        "outboxEventId": "6f970e5b-bbc4-403d-8c3e-316e58e0414b",
+        "attemptId": "78f6a951-45c4-4ad8-9338-05e0247dc79d",
+        "verdict": "AC"
+      }
+    ]
+  },
+  "privateAudit": {
+    "checkedAt": "2026-10-08T00:02:53.013Z",
+    "allPassed": true,
+    "httpChecks": 161,
+    "formalAttempts": 6,
+    "verdicts": [
+      "WA",
+      "AC",
+      "AC",
+      "AC",
+      "AC",
+      "AC"
+    ],
+    "realSelfTests": 2,
+    "precompleted": 2,
+    "acceptanceBeforeDeadline": true,
+    "acAfterDeadline": true,
+    "commitBeforeAck": true,
+    "logsClean": true,
+    "emptyQueues": 7,
+    "privilegeDenials": 17,
+    "multiAccountBrowser": true,
+    "apiWithoutDocker": true,
+    "toolInputs": {
+      "tools/validation/Replay-FixedLinux.ps1": "668fcf1d5a452e8b759d27f0d1ca781a0df2f7b34889f8acd90189498ac60e02",
+      "tools/validation/Verify-M3AssignmentReplay.ps1": "357ecfb05bdd85009862fe4d0ad7029d339204456df553146aa16b888ea13c55",
+      "tools/validation/replay-assignments.mjs": "8b89db41e697ecb113c310655bb74d4b0ca7b03b4fa9701e55f95f6553dbb4d5",
+      "tools/validation/replay-assignment-audit.mjs": "c7d434b9a567c0fc35e8e3ce4003b9bb5f076f7724b9028013e87c4e38ed2c93",
+      "tools/validation/replay-private-problems.mjs": "6fc93e3bf0939204d13f29d3f29705de64744f2d0afc88899b285c6e4428f4d9",
+      "tools/validation/compose.replay.yml": "c9f3ec7b367e4b0f23d30d47523ae886d3980f383d4deb2641615ace90f6222a",
+      "tools/validation/replay-vite.mjs": "5204200c19e01191aa967716632e31debc31348734f5e790b72c349b4d2e334b"
+    }
+  },
+  "cleanup": {
+    "ownedNetworks": 0,
+    "ownedContainers": 0,
+    "testcontainers": 0,
+    "builders": 0,
+    "managedSandboxes": 0,
+    "ownedVolumes": 0,
+    "checkedAt": "2026-10-08T08:51:03.4496195+08:00",
+    "ownedImages": 0
+  }
+}

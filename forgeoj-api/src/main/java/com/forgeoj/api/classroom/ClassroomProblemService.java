@@ -18,14 +18,15 @@ public class ClassroomProblemService {
     private final ContentReviewMapper validations;
     private final ObjectMapper json;
     private final ContentService content;
+    private final AssignmentSolutionGuard assignmentSolutions;
     public record Summary(String slug,String title,String status,long version,long createdBy,String solutionPolicy) {}
     public record Page(List<Summary> items,int page,int size,long total) {}
     public record Detail(Summary problem,ContentRecords.Metadata metadata) {}
     public record Maintenance(Detail detail,String referenceCode,String solutionIdea,String solutionCode,int testCount) {}
     public record Solution(String access,String idea,String sourceCode) {}
     public ClassroomProblemService(ClassroomMapper rooms,ClassroomProblemMapper mapper,AccountService accounts,
-            ContentMapper drafts,ContentReviewMapper validations,ObjectMapper json,ContentService content) {
-        this.rooms=rooms;this.mapper=mapper;this.accounts=accounts;this.drafts=drafts;this.validations=validations;this.json=json;this.content=content;
+            ContentMapper drafts,ContentReviewMapper validations,ObjectMapper json,ContentService content,AssignmentSolutionGuard assignmentSolutions) {
+        this.rooms=rooms;this.mapper=mapper;this.accounts=accounts;this.drafts=drafts;this.validations=validations;this.json=json;this.content=content;this.assignmentSolutions=assignmentSolutions;
     }
     // All private reads lock the same account/session/classroom/member order as writes.
     // This serializes authorization with leave, removal, archive and session revocation.
@@ -48,13 +49,17 @@ public class ClassroomProblemService {
         return new Maintenance(detail(r),f.referenceCode(),f.solutionIdea(),f.solutionCode(),f.testCount());
     }
     public Solution solution(long user,String room,String slug) {
+        accounts.requireCurrentWrite(user);assignmentSolutions.lock();
         authorize(user,room,false,false);var r=row(room,slug);
+        if(!assignmentSolutions.allowed(user,r.id())) return new Solution("LOCKED",null,null);
         String access=r.solutionPolicy().equals("IMMEDIATE")?"IMMEDIATE":mapper.completed(user,r.id())?"AC":mapper.viewed(user,r.id())?"EARLY_VIEW":"LOCKED";
         if(access.equals("LOCKED")) return new Solution(access,null,null);
         var f=mapper.solution(r.snapshotId());return new Solution(access,f.idea(),f.code());
     }
     public Solution confirmSolution(long user,String room,String slug,long expectedVersion) {
+        accounts.requireCurrentWrite(user);assignmentSolutions.lock();
         authorize(user,room,false,true);var r=row(room,slug);
+        if(!assignmentSolutions.allowed(user,r.id())) throw ClassroomService.conflict();
         if(expectedVersion<1||expectedVersion>ClassroomService.MAX_VERSION) throw ClassroomService.bad();
         if(r.version()!=expectedVersion||!r.status().equals("ACTIVE")) throw ClassroomService.conflict();
         if(!mapper.completed(user,r.id())&&!r.solutionPolicy().equals("IMMEDIATE")) mapper.earlyView(user,r.id());

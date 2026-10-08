@@ -1,0 +1,83 @@
+- banner:
+  - generic: F
+  - heading "ForgeOJ" [level=1]
+  - paragraph: Java 21 在线练习与判题
+  - navigation "主导航":
+    - link "题库":
+      - /url: /problems
+    - link "学习记录":
+      - /url: /learning
+    - link "班级":
+      - /url: /classrooms
+    - link "我的题目":
+      - /url: /authoring
+    - link "做题":
+      - /url: /
+    - link "账号":
+      - /url: /account
+- main:
+  - heading "M3班级私有题真实验收 · 作业" [level=2]
+  - paragraph:
+    - link "返回班级":
+      - /url: /classrooms
+  - status: 操作已保存。
+  - button "刷新作业"
+  - button "新建作业"
+  - list:
+    - button "截止前入队跨截止 AC"
+    - text: · 进行中 · 截止 2026/10/8 08:00:17
+    - button "教师页面定时发布验收"
+    - text: · 待开始 · 截止 2026/10/10 18:00:00
+    - button "浏览器作业验收"
+    - text: · 进行中 · 截止 2026/10/8 08:59:24
+    - button "迟交可升级作业"
+    - text: · 进行中 · 截止 2026/10/8 08:04:24
+    - button "自动开始作业"
+    - text: · 进行中 · 截止 2026/10/8 07:59:17
+    - button "不可旁路的截止后题解"
+    - text: · 已取消 · 截止 2026/10/8 08:04:06
+    - button "正式成绩作业"
+    - text: · 进行中 · 截止 2026/10/8 08:03:59
+    - button "已有 AC 作业"
+    - text: · 进行中 · 截止 2026/10/8 08:03:59
+  - button "上一页" [disabled]
+  - text: 第 1 页，共 8 份作业
+  - button "下一页" [disabled]
+  - article:
+    - heading "教师页面定时发布验收" [level=3]
+    - paragraph: 待开始 · 版本 2 · 截止 2026/10/10 18:00:00
+    - paragraph: 计划开始 2026/10/9 18:00:00 · 实际开始 —
+    - paragraph: 原创小班作业，验收草稿、取消确认和定时发布。
+    - table:
+      - rowgroup:
+        - row "题目 本人状态 尝试次数 首次 AC 提交结果":
+          - columnheader "题目"
+          - columnheader "本人状态"
+          - columnheader "尝试次数"
+          - columnheader "首次 AC"
+          - columnheader "提交结果"
+      - rowgroup:
+        - row "两数之和 未纳入本人参与关系 — —":
+          - cell "两数之和":
+            - button "两数之和"
+          - cell "未纳入本人参与关系"
+          - cell "—"
+          - cell "—"
+          - cell
+        - row "M3班级题 HTTP 原创候选 未纳入本人参与关系 — —":
+          - cell "M3班级题 HTTP 原创候选":
+            - button "M3班级题 HTTP 原创候选"
+          - cell "未纳入本人参与关系"
+          - cell "—"
+          - cell "—"
+          - cell
+    - button "编辑或延期"
+    - text: 定时开始（留空立即）
+    - textbox "定时开始（留空立即）": 2026-10-09T18:00
+    - button "发布作业"
+    - text: 取消原因
+    - textbox "取消原因"
+    - button "取消作业" [disabled]
+    - text: 复制后的新截止时间
+    - textbox "复制后的新截止时间": 2026-10-10T18:00
+    - button "复制为新草稿"

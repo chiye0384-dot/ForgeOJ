@@ -22,11 +22,13 @@ public class ClassroomService {
     private final AccountService accounts;
     private final AccountRateLimiter limits;
     private final AccountMapper accountMapper;
+    private final AssignmentMapper assignments;
+    private final AssignmentLifecycle assignmentLifecycle;
     private final SecureRandom random=new SecureRandom();
     public record Page(List<Summary> items,int page,int size,long total) {}
     public record Detail(String id,String title,String status,long ownerId,long version,String role,boolean inviteEnabled,List<Member> members,Transfer pendingTransfer) {}
     public record Invite(String inviteCode,long version) {}
-    public ClassroomService(ClassroomMapper mapper,AccountService accounts,AccountRateLimiter limits,AccountMapper accountMapper) {this.mapper=mapper;this.accounts=accounts;this.limits=limits;this.accountMapper=accountMapper;}
+    public ClassroomService(ClassroomMapper mapper,AccountService accounts,AccountRateLimiter limits,AccountMapper accountMapper,AssignmentMapper assignments,AssignmentLifecycle assignmentLifecycle) {this.mapper=mapper;this.accounts=accounts;this.limits=limits;this.accountMapper=accountMapper;this.assignments=assignments;this.assignmentLifecycle=assignmentLifecycle;}
     public Page list(long user,int page,int size) {
         if(page<1 || size<1 || size>50) throw bad();
         accounts.requireCurrentWrite(user);
@@ -135,9 +137,11 @@ public class ClassroomService {
         return new Transfer(t.id(),id,t.fromUserId(),t.targetUserId(),t.clientRequestId(),terminal);
     }
     public void lifecycle(long user,String id,String action,long version) {
+        accounts.requireCurrentWrite(user);assignments.fence();
         var room=owner(user,id,version,true);
         if(action.equals("archive")) {
             active(room);withdrawPending(id,null);
+            assignmentLifecycle.archiveLocked(id);
             bump(new Room(id,room.ownerId(),room.title(),"ARCHIVED",room.inviteSha256(),room.inviteEnabled(),room.version()));
         } else if(action.equals("restore")) {
             if(!room.status().equals("ARCHIVED")) throw conflict();
@@ -147,7 +151,7 @@ public class ClassroomService {
     }
     public void delete(long user,String id,long version) {
         var room=owner(user,id,version,true);
-        if(mapper.memberCount(id)!=1||mapper.transferCount(id)!=0||mapper.problemCount(id)!=0) throw conflict();
+        if(mapper.memberCount(id)!=1||mapper.transferCount(id)!=0||mapper.problemCount(id)!=0||assignments.count(id)!=0) throw conflict();
         mapper.deleteMembers(id);mapper.delete(id);
     }
     private Room lock(long user,String id) {uuid(id);accounts.requireCurrentWrite(user);return mapper.lock(id).orElseThrow(ClassroomService::missing);}

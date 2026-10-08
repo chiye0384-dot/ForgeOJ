@@ -1,0 +1,67 @@
+- banner:
+  - generic: F
+  - heading "ForgeOJ" [level=1]
+  - paragraph: Java 21 在线练习与判题
+  - navigation "主导航":
+    - link "题库":
+      - /url: /problems
+    - link "学习记录":
+      - /url: /learning
+    - link "班级":
+      - /url: /classrooms
+    - link "我的题目":
+      - /url: /authoring
+    - link "做题":
+      - /url: /
+    - link "账号":
+      - /url: /account
+- main:
+  - paragraph:
+    - link "返回题库":
+      - /url: /problems
+  - article:
+    - paragraph: 题目 · 版本 1
+    - heading "两数之和" [level=2]
+    - text: learner
+    - paragraph:
+      - link "账号设置":
+        - /url: /account
+      - text: ·
+      - button "退出"
+    - paragraph: 读入两个有符号整数，输出它们的和。输入和结果均在 64 位有符号整数范围内。
+    - heading "输入" [level=3]
+    - paragraph: 一行包含两个以空格分隔的整数 a 和 b。
+    - heading "输出" [level=3]
+    - paragraph: 输出一行，包含 a + b 的值。
+    - heading "公开样例 1" [level=3]
+    - strong: 输入
+    - generic: 1 2
+    - strong: 输出
+    - generic: "3"
+    - paragraph: 2000 ms · 256 MB · 输出上限 1048576 bytes
+    - heading "官方题解" [level=3]
+    - button "查看官方题解"
+  - paragraph: Java 21
+  - heading "提交代码" [level=2]
+  - generic: JAVA_21
+  - paragraph: 草稿已同步；停止编辑 1 秒后自动保存。
+  - button "重试草稿读取或保存"
+  - text: Main.java
+  - textbox "Main.java": "import java.util.Scanner; public class Main { public static void main(String[] args) { Scanner scanner = new Scanner(System.in); long a = scanner.nextLong(); long b = scanner.nextLong(); System.out.println(a + b); } }"
+  - button "提交并判题"
+  - heading "自定义输入自测" [level=3]
+  - paragraph: 运行当前编辑器的代码。自测成功不计为通过题目，也不解锁题解。完成后的代码、输入和输出保留 24 小时。
+  - text: 自定义输入（可以为空）
+  - textbox "自定义输入（可以为空）"
+  - button "运行自测"
+  - button "刷新短期自测记录"
+  - paragraph:
+    - link "查看本人提交历史":
+      - /url: /learning?tab=history&problemSlug=sum-two-integers
+    - text: ·
+    - link "管理题单与进度":
+      - /url: /learning
+  - paragraph: 提交 ed88e334-614c-4051-b2fa-39542c897bd6
+  - strong: FINISHED
+  - strong: AC
+  - paragraph: 状态版本：2

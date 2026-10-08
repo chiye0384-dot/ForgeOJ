@@ -7,10 +7,17 @@ import LearningView from '@/views/LearningView.vue'
 import AuthoringView from '@/views/AuthoringView.vue'
 import ClassroomView from '@/views/ClassroomView.vue'
 import ClassroomProblemsView from '@/views/ClassroomProblemsView.vue'
+import AssignmentsView from '@/views/AssignmentsView.vue'
 
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
   routes: [
+    {
+      path: '/classrooms/:id/assignments',
+      name: 'assignments',
+      component: AssignmentsView,
+      props: true,
+    },
     {
       path: '/classrooms/:id/problems',
       name: 'classroom-problems',

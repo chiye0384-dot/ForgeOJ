@@ -59,7 +59,7 @@ public interface LearningMapper {
     String HISTORY_FROM=" FROM submission s JOIN problem p ON p.id=s.problem_id JOIN problem_judge_version old ON old.id=s.judge_version_id LEFT JOIN problem_judge_version jv ON jv.id=p.current_judge_version_id WHERE s.user_id=#{userId}<if test='slug != null'> AND p.slug=#{slug} AND " + AVAILABLE + "</if>";
     @Select("<script>SELECT COUNT(*)" + HISTORY_FROM + "</script>")
     long historyCount(@Param("userId") long userId,@Param("slug") String slug);
-    @Select("<script>SELECT s.id AS submissionId,s.created_at AS createdAt,s.language,s.processing_status AS processingStatus,s.status_version AS statusVersion,CASE WHEN s.processing_status='FINISHED' THEN s.verdict END AS verdict,old.version_no AS judgeVersion,CASE WHEN " + AVAILABLE + " THEN p.slug END AS slug,CASE WHEN " + AVAILABLE + " THEN p.title END AS title" + HISTORY_FROM + " ORDER BY s.created_at DESC,s.id DESC LIMIT #{size} OFFSET #{offset}</script>")
+    @Select("<script>SELECT s.id AS submissionId,s.created_at AS createdAt,s.language,s.processing_status AS processingStatus,s.status_version AS statusVersion,CASE WHEN s.processing_status='FINISHED' THEN s.verdict END AS verdict,old.version_no AS judgeVersion,CASE WHEN " + AVAILABLE + " THEN p.slug END AS slug,CASE WHEN " + AVAILABLE + " THEN p.title END AS title,CASE WHEN EXISTS(SELECT 1 FROM public_problem_governance g WHERE g.problem_id=p.id AND g.data_invalid=TRUE) THEN '判题数据存在问题，此历史结果来自作废版本' END AS judgeDataWarning" + HISTORY_FROM + " ORDER BY s.created_at DESC,s.id DESC LIMIT #{size} OFFSET #{offset}</script>")
     List<HistoryRow> history(@Param("userId") long userId,@Param("slug") String slug,@Param("size") int size,@Param("offset") long offset);
 
     record ListRow(String id,String title,long version,String description) {}
@@ -68,5 +68,5 @@ public interface LearningMapper {
     record EntryRow(String itemId,int position,long problemId,String slug,String title,String difficulty,Integer judgeVersion,boolean available,boolean completed) {}
     record ProblemRow(long id,boolean available) {}
     record DraftRow(String language,String sourceCode,long version,LocalDateTime updatedAt) {}
-    record HistoryRow(String submissionId,LocalDateTime createdAt,String language,String processingStatus,long statusVersion,String verdict,int judgeVersion,String slug,String title) {}
+    record HistoryRow(String submissionId,LocalDateTime createdAt,String language,String processingStatus,long statusVersion,String verdict,int judgeVersion,String slug,String title,String judgeDataWarning) {}
 }

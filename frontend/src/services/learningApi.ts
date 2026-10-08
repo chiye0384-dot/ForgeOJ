@@ -27,6 +27,7 @@ export interface ListDetail extends Page<ListEntry> {
   list: ListSummary
 }
 export interface HistoryItem {
+  judgeDataWarning?: string
   submissionId: string
   createdAt: string
   language: string

@@ -71,6 +71,7 @@ const statusNames: Record<string, string> = {
 }
 const gradeNames: Record<string, string> = {
   NOT_STARTED: '未开始',
+  INVALID: '判题数据存在问题，已作废',
   ATTEMPTING: '尝试中',
   PRECOMPLETED: '此前已完成',
   ON_TIME_AC: '按时 AC',
@@ -580,7 +581,9 @@ onBeforeUnmount(() => {
         <p v-if="detail.assignment.closeReason">结束原因：{{ detail.assignment.closeReason }}</p>
         <p class="preserve">{{ detail.description }}</p>
         <p v-if="detail.participating">
-          本人完成 {{ completed }}/{{ detail.problems.length }}
+          本人完成 {{ completed }}/{{
+            detail.problems.filter((p) => p.grade?.state !== 'INVALID').length
+          }}
           题。按服务器接受提交的时间判断按时，最终必须 AC；自测不计次数和完成。
         </p>
         <p v-if="detail.participating">

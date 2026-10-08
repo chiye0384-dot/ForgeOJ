@@ -11,6 +11,7 @@ public interface AssignmentMapper {
     record Problem(long problemId,long judgeVersionId,String problemSlug,String metadataText,String solutionSnapshotId,int ordinal) {}
     record Candidate(long problemId,long judgeVersionId,String problemSlug,String metadataText,String solutionSnapshotId) {}
     record Proof(String submissionId,LocalDateTime acceptedAt,LocalDateTime finishedAt) {}
+    @Select("SELECT EXISTS(SELECT 1 FROM public_problem_governance WHERE problem_id=#{problem} AND data_invalid=TRUE)") boolean invalid(long problem);
     String COLUMNS="id,classroom_id,created_by,title,description,status,starts_at,deadline_at,started_at,ended_at,close_reason,accept_existing_ac,allow_late,solution_policy,version";
     @Select("SELECT id FROM assignment_policy_fence WHERE id=1 FOR UPDATE") int fence();
     @Select("SELECT UTC_TIMESTAMP(6)") LocalDateTime now();

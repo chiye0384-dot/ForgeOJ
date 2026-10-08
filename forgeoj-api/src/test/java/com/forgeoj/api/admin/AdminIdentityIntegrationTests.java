@@ -30,6 +30,7 @@ class AdminIdentityIntegrationTests {
     @DynamicPropertySource static void properties(DynamicPropertyRegistry r){r.add("spring.datasource.url",MYSQL::getJdbcUrl);r.add("spring.datasource.username",()->"forgeoj_api");r.add("spring.datasource.password",()->"m0-api-test-secret");r.add("spring.flyway.url",MYSQL::getJdbcUrl);r.add("spring.flyway.user",()->"forgeoj_migrator");r.add("spring.flyway.password",()->"m0-migrator-test-secret");}
     @LocalServerPort int port;
     @MockitoSpyBean AdminMapper mapper;
+    @Autowired org.mybatis.spring.SqlSessionTemplate sqlSessions;
     @Autowired com.forgeoj.api.auth.AccountService ordinaryAccounts;
     static final String PASSWORD="public-admin-initial-fixture",NEXT="public-admin-changed-fixture",OTHER="public-admin-next-fixture";
     final HttpClient client=HttpClient.newHttpClient();
@@ -97,9 +98,12 @@ class AdminIdentityIntegrationTests {
         db().update("UPDATE admin_login_session SET created_at=DATE_SUB(UTC_TIMESTAMP(6),INTERVAL 1 MINUTE),expires_at=DATE_SUB(UTC_TIMESTAMP(6),INTERVAL 1 SECOND) WHERE admin_id=?",rootId);assertAnonymous(root);code(get(root,"/accounts"),401);
     }
     @Test void revocationBetweenFilterAndTransactionRejectsAnAlreadyAuthenticatedWrite()throws Exception{
-        var root=ready();doAnswer(call->{db().update("UPDATE admin_login_session SET revoked_at=UTC_TIMESTAMP(6) WHERE admin_id=?",rootId);return call.callRealMethod();}).when(mapper).fence();
+        var root=ready();long denials=db().queryForObject("SELECT COUNT(*) FROM admin_audit_event WHERE action='ADMIN_ACCESS_DENIED'",Long.class);
+        // Execute the actual mapped SQL; an interface proxy has no concrete real method.
+        doAnswer(call->{db().update("UPDATE admin_login_session SET revoked_at=UTC_TIMESTAMP(6) WHERE admin_id=?",rootId);return sqlSessions.getMapper(AdminMapper.class).fence();}).when(mapper).fence();
         try{code(write(root,"POST","/accounts",creation("race_must_not_exist","OPS_ADMIN")),401);}finally{reset(mapper);}
         assertThat(db().queryForObject("SELECT COUNT(*) FROM admin_account WHERE username='race_must_not_exist'",Integer.class)).isZero();assertAnonymous(root);
+        assertThat(db().queryForObject("SELECT COUNT(*) FROM admin_audit_event WHERE action='ADMIN_ACCESS_DENIED'",Long.class)).isEqualTo(denials+1);
     }
     @Test void lastSuperProtectionIsCasBoundedAndConcurrentDisablesKeepOneActive()throws Exception{
         var root=ready();code(write(root,"POST","/accounts/"+rootId+"/disable",mutation(rootId,null,null)),409);code(write(root,"PUT","/accounts/"+rootId+"/role",mutation(rootId,"role","OPS_ADMIN")),409);
@@ -134,6 +138,14 @@ class AdminIdentityIntegrationTests {
     }
     @Test void staleVersionsInvalidPaginationAndMissingTargetsFailWithoutWrites()throws Exception{
         var root=ready();long target=create(root,"cas_admin","OPS_ADMIN");code(write(root,"POST","/accounts/"+target+"/disable",Map.of("expectedVersion",99,"reason","stale")),409);code(write(root,"POST","/accounts/not-id/disable",Map.of("expectedVersion",1,"reason","missing")),404);code(get(root,"/accounts?size=51"),400);code(get(root,"/audit-events?page=0"),400);assertThat(db().queryForObject("SELECT version FROM admin_account WHERE id=?",Long.class,target)).isEqualTo(1);
+    }
+    @Test void publicReviewQueueChecksCurrentRoleAtTheServer()throws Exception{
+        var root=ready();code(get(root,"/content-reviews"),200);
+        create(root,"reviewer_queue","CONTENT_REVIEWER");create(root,"ops_queue","OPS_ADMIN");
+        for(String name:List.of("reviewer_queue","ops_queue")){
+            var b=login(name,PASSWORD);code(write(b,"POST","/auth/password/change",Map.of("currentPassword",PASSWORD,"password",NEXT)),204);b=login(name,NEXT);
+            code(get(b,"/content-reviews"),name.equals("reviewer_queue")?200:403);
+        }
     }
     private JdbcTemplate db(){return restricted("forgeoj_migrator","m0-migrator-test-secret");}
     private JdbcTemplate restricted(String user,String password){return new JdbcTemplate(new DriverManagerDataSource(MYSQL.getJdbcUrl(),user,password));}

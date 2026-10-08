@@ -1,4 +1,22 @@
-# ForgeOJ：M4 管理身份单元完成后交接
+# ForgeOJ：M4 第3步已完成
+
+2026-10-08：**公共题审核治理单元 VERIFIED，完整 M4 IN_PROGRESS**。目录 `D:\Java项目\ForgeOJ`，分支 `feat/m2-accounts`，第3步实施基线 `0f983988aa27841c8d110e9f821adbe6494c90f0`。实现、设计和证据组成此单元交付；实际交付hash及推送结果核对 `git log -1`、`git status` 和 `origin/feat/m2-accounts`，不把实施基线误认为最终提交。用户授权推送 `chiye0384-dot/ForgeOJ` 的既有分支，无PR/main/tag/release授权。
+
+先读 [本单元验收](M4-PUBLIC-REVIEW-VALIDATION.md)、[机器证据](evidence/m4-public-review/verification.json)、[设计](M4-PUBLIC-REVIEW-DESIGN.md)、[7步计划](M4-IMPLEMENTATION-PLAN.md)、Requirements及D-043/D-044。D-044已确认：仅原作者复制当前公开冻结内容到本人新草稿，再验证送审；他人反馈、审核员批准或驳回。不重新问管理员、题解、班级、作业或修订选择。
+
+V19、PublicReview/Feedback/Revision服务及页面已完成。冻结审核/显式参考/最新双验证重验Outbox、原作者TEXT与关联CORRECTION、普通下架/恢复与不可逆作废、反馈合并与本人隐私、公开样例/许可、本人历史警告及学生/教师INVALID均通过。复制不继承通过；旧AC不证明新题完成。
+
+完整固定Linux All `target/forgeoj-linux-20261008-201146-a1bd1a95`：API263/47 suites、Worker133/23、前端118/23及所有检查。相同JAR回放 `target/forgeoj-e2e-20261008-204157-6a542650`：102公共治理HTTP、6真实双PASSED、13正式提交、1自测、98审计、62班级检查、14新增+8既有SQL拒绝、实际多角色浏览器/复制/撤权、日志及七空队列通过。197 API/111 Worker/shared/79 frontend输入匹配，79浏览器输入只读且相同，运行JAR摘要一致。20:53:14 +08所有确切测试资源清理为0，tab5已about:blank并保留。没有活跃验收exec或回放栈。失败记录和测试边界见验收；历史checkpoint输入不替代最终source-inputs。
+
+API SHA256 `004391da1f75b8d0751738a3d1f4f87a784e6995cb735b8580fa5d5a5375b43f`；Worker `8653b386c9fb3f010d7398d891ec87a3edfacd1e4c38416ba155407b7cc39182`。测试数据全为一次性，未初始化真实管理员或修改真实库/SMTP。浏览器没有执行新密码输入；HTTP准备凭据与真实UI读取/复制分别记录。
+
+**本轮停止于第3步。用户再次要求继续时，下一单元是第4步运维任务查询和手动重试**：先读已批准的M4管理员角色及有限重试/DLQ/审计设计，核对当前提交及不可变执行合约，收敛OPS/SUPER权限与可重试状态，再实现和验证。第5～7步、完整M4五总门禁、Redis/ES/监控、M5/V1.1、发布和RESUME_READY仍未完成。不重做已验证第2/3步；必要产品选择才问用户，常规工程自主推进。
+
+保留未跟踪 `docs/M2-NEXT-CHAT-HANDOFF.md` 摘要 `e08acd3d26a8cd27aca394bdac91828e13b9455a86f62133c5bafc038b18c054`；忽略 `.smtp.qq.local` 摘要 `6df348a6404786791eb57c0dce9c9fb8968f7f0737de304f17d52c3900a03907`，不能读取/输出/复制/暂存内容。不得关闭、退出、终止、更新或重启Codex/ChatGPT；禁止广泛进程/WSL/服务停止、IAB tab.close/UI关闭或崩溃复现；只清理确切任务PID/容器。临时页面about:blank并markDeliverable，后续取得标签需重新标记。不能声称已修复客户端崩溃。
+
+---
+
+以下为第2步历史交付记录。
 
 2026-10-08，完整M4仍 `IN_PROGRESS`，第1步设计与第2步管理身份单元已完成，第2步 **VERIFIED**；M-1～M3 VERIFIED。工作目录 `D:\Java项目\ForgeOJ`，分支 `feat/m2-accounts`，实现前HEAD为 `0e213e1adc3ae04de7d9160622ea8442940dac28`。设计、实现和证据作为本单元提交，具体交付hash及与远端一致性以 `git log -1`、`git status` 和 `origin/feat/m2-accounts` 核对；用户允许推送至 `chiye0384-dot/ForgeOJ` 同名分支，不授权PR/main合并/tag/release。
 

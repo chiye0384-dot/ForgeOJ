@@ -1,0 +1,4 @@
+{"kind": "TEXT", "draftId": "2e21980f-cd1b-42ae-ba3f-2db48282d596", "problemId": 102, "draftStatus": "DRAFT", "draftVersion": 1, "ownerMatches": true, "validationJobs": 1, "expectedVersion": 1}
+{"kind": "TEXT", "draftId": "4f7b3361-0c4e-41a8-9d65-b62f48fe13df", "problemId": 101, "draftStatus": "DRAFT", "draftVersion": 2, "ownerMatches": true, "validationJobs": 1, "expectedVersion": 1}
+{"kind": "TEXT", "draftId": "5522ccf9-eb17-4daa-9ec9-15305c60722b", "problemId": 102, "draftStatus": "DRAFT", "draftVersion": 1, "ownerMatches": true, "validationJobs": 0, "expectedVersion": 1}
+{"kind": "CORRECTION", "draftId": "56f24fd5-efd1-43cf-9466-1d3eb0b4909e", "problemId": 101, "draftStatus": "DRAFT", "draftVersion": 3, "ownerMatches": true, "validationJobs": 1, "expectedVersion": 5}

@@ -1,0 +1,44 @@
+- banner:
+  - generic: F
+  - heading "ForgeOJ" [level=1]
+  - paragraph: Java 21 在线练习与判题
+  - navigation "主导航":
+    - link "题库":
+      - /url: /problems
+    - link "学习记录":
+      - /url: /learning
+    - link "班级":
+      - /url: /classrooms
+    - link "我的题目":
+      - /url: /authoring
+    - link "做题":
+      - /url: /
+    - link "账号":
+      - /url: /account
+    - link "管理后台":
+      - /url: /admin/login
+- main:
+  - heading "学习记录" [level=2]
+  - navigation "学习记录分类":
+    - button "个人题单"
+    - button "官方题单"
+    - button "提交历史"
+  - text: 题目 slug（可选）
+  - textbox "题目 slug（可选）"
+  - button "查询历史"
+  - list:
+    - link "M4 原创公共求和验收":
+      - /url: /problems/public-371a1e49-b266-40da-bb0a-51d40b42984c
+    - text: · 判题版本 1 · FINISHED AC · 2026-10-08T12:46:30.275254
+    - button "查看本次状态"
+    - link "M4 原创公共求和验收":
+      - /url: /problems/public-371a1e49-b266-40da-bb0a-51d40b42984c
+    - text: · 判题版本 1 · FINISHED WA · 2026-10-08T12:46:28.22472
+    - button "查看本次状态"
+    - text: 题目暂不可用 · 判题版本 1 · FINISHED AC · 2026-10-08T12:46:14.542044 判题数据存在问题，此历史结果来自作废版本
+    - button "查看本次状态"
+  - paragraph:
+    - button "上一页" [disabled]
+    - text: 1 / 1
+    - button "下一页" [disabled]
+  - button "重新读取"

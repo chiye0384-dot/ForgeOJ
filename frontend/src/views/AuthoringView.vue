@@ -5,6 +5,7 @@ import { ApiRequestError, restoreSession, type SessionResponse } from '@/service
 import ContentValidation from '@/components/ContentValidation.vue'
 import ContentReview from '@/components/ContentReview.vue'
 import ContentOutput from '@/components/ContentOutput.vue'
+import PublicRevisionList from '@/components/PublicRevisionList.vue'
 import {
   authoredDetail,
   authoredList,
@@ -91,6 +92,10 @@ async function open(id: string) {
   } finally {
     if (current(g)) busy.value = false
   }
+}
+async function revisionCopied(id: string) {
+  await load()
+  if (session.value?.authenticated) await open(id)
 }
 async function change(
   action: () => Promise<AuthoredDetail>,
@@ -233,6 +238,12 @@ onBeforeUnmount(() => {
     <p v-if="session && !session.authenticated">
       请先到 <RouterLink to="/account">账号页面</RouterLink> 登录。
     </p>
+    <PublicRevisionList
+      v-if="session?.authenticated"
+      :user-id="session.user!.id"
+      :csrf="session.csrf"
+      @copied="revisionCopied"
+    />
     <fieldset v-if="session?.authenticated" :disabled="busy || workflowBusy">
       <label>新题目标题 <input v-model="title" maxlength="100" /></label>
       <button @click="create">创建内容草稿</button>

@@ -1,0 +1,30 @@
+{
+  "checkedAt": "2026-10-08T12:50:46.071Z",
+  "allPassed": true,
+  "adminId": 6,
+  "username": "browser_reviewer",
+  "beforeVersion": 2,
+  "afterVersion": 3,
+  "checks": [
+    {
+      "method": "GET",
+      "path": "/api/v1/admin/auth/session",
+      "status": 200
+    },
+    {
+      "method": "POST",
+      "path": "/api/v1/admin/auth/login",
+      "status": 200
+    },
+    {
+      "method": "GET",
+      "path": "/api/v1/admin/accounts",
+      "status": 200
+    },
+    {
+      "method": "POST",
+      "path": "/api/v1/admin/accounts/6/disable",
+      "status": 200
+    }
+  ]
+}

@@ -11,4 +11,6 @@ public record ProblemDetailsRow(
         int judgeVersion,
         int timeLimitMs,
         int memoryLimitMb,
-        long outputLimitBytes) {}
+        long outputLimitBytes,
+        String publicSamplesJson,
+        String authorName,String originType,String sourceUrl,String licenseStatement,String correctionOfSlug) {}

@@ -7,8 +7,10 @@ export interface ContentReview {
   draftVersion: number
   reviewNo: number
   validationJobId: string
-  status: 'PENDING' | 'WITHDRAWN'
+  status: 'PENDING' | 'WITHDRAWN' | 'APPROVED' | 'REJECTED'
   version: number
+  decisionReason?: string
+  publishedSlug?: string
 }
 export interface ReviewDetail {
   review: ContentReview
@@ -27,7 +29,7 @@ function checked(value: ContentReview, draft: string) {
     value.reviewNo < 1 ||
     !(
       (value.status === 'PENDING' && value.version === 0) ||
-      (value.status === 'WITHDRAWN' && value.version === 1)
+      (['WITHDRAWN', 'APPROVED', 'REJECTED'].includes(value.status) && value.version === 1)
     )
   )
     throw new Error('送审状态格式错误。')

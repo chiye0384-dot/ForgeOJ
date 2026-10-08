@@ -16,6 +16,9 @@ public class AdminAudit {
     void success(String action,Long actor,String target,String reason,String before,String after){
         mapper.audit(new AdminMapper.Event(UUID.randomUUID().toString(),null,"ADMIN",actor,action,"ADMIN_ACCOUNT",target,"SUCCESS",reason,before,after,correlation()));
     }
+    void content(String action,long actor,String type,String target,String reason,String before,String after){
+        mapper.audit(new AdminMapper.Event(UUID.randomUUID().toString(),null,"ADMIN",actor,action,type,target,"SUCCESS",reason,before,after,correlation()));
+    }
     public void denied(int status){
         var auth=SecurityContextHolder.getContext().getAuthentication();var p=auth==null?null:auth.getPrincipal();
         String type=p instanceof AdminPrincipal?"ADMIN":p instanceof ForgeOjPrincipal?"DENIED_USER":"AUTH_ANONYMOUS";

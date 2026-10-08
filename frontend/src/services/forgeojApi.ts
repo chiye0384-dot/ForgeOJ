@@ -27,6 +27,13 @@ export interface ProblemResponse {
   inputDescription: string
   outputDescription: string
   publicSamples: PublicSample[]
+  attribution?: {
+    authorName: string
+    originType: string
+    sourceUrl: string | null
+    licenseStatement: string
+    correctionOfSlug: string | null
+  }
   judgeVersion: number
   resourceLimits: {
     timeLimitMs: number
@@ -67,6 +74,7 @@ export interface SubmissionCreatedResponse {
 }
 
 export interface SubmissionStatusResponse extends SubmissionCreatedResponse {
+  judgeDataWarning?: string
   verdict: string | null
   diagnosticMessage: string | null
 }

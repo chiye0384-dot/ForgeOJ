@@ -1,0 +1,16 @@
+{
+  "checkedAt": "2026-10-08T12:52:14.042Z",
+  "allPassed": true,
+  "httpChecks": 102,
+  "realDualPassed": 6,
+  "reviewCases": 5,
+  "publishedProblems": 2,
+  "formal": 13,
+  "governanceFormal": 3,
+  "auditEvents": 98,
+  "emptyQueues": 7,
+  "sqlDenials": 14,
+  "baselineSqlDenials": 8,
+  "classroomChecks": 62,
+  "commitBeforeAck": true
+}

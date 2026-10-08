@@ -6,12 +6,13 @@ import org.apache.ibatis.annotations.*;
 
 @Mapper
 public interface ContentReviewMapper {
-    record Review(String reviewId,String draftId,long draftVersion,long reviewNo,String validationJobId,String status,long version) {}
+    @com.fasterxml.jackson.annotation.JsonInclude(com.fasterxml.jackson.annotation.JsonInclude.Include.NON_NULL)
+    record Review(String reviewId,String draftId,long draftVersion,long reviewNo,String validationJobId,String status,long version,String decisionReason,String publishedSlug) {}
     record Binding(String snapshotId,long draftVersion,String processingStatus,String validationStatus,String referenceResult,String solutionResult) {}
     record Frozen(String metadataText,String referenceCode,String solutionIdea,String solutionCode,int testCount) {}
     record Detail(Review review,ContentRecords.Content content,int testCount) {}
     record Page(List<Review> items,int page,int size,long total) {}
-    String COLUMNS="id AS reviewId,draft_id AS draftId,draft_version AS draftVersion,review_no AS reviewNo,validation_job_id AS validationJobId,review_status AS status,version";
+    String COLUMNS="id AS reviewId,draft_id AS draftId,draft_version AS draftVersion,review_no AS reviewNo,validation_job_id AS validationJobId,review_status AS status,version,(SELECT d.reason FROM public_review_decision d WHERE d.review_id=content_review.id) AS decisionReason,(SELECT p.slug FROM public_review_decision d JOIN problem p ON p.id=d.problem_id WHERE d.review_id=content_review.id) AS publishedSlug";
     @Select("SELECT "+COLUMNS+" FROM content_review WHERE owner_id=#{owner} AND request_id=#{request} FOR UPDATE")
     Optional<Review> request(@Param("owner") long owner,@Param("request") String request);
     @Select("SELECT "+COLUMNS+" FROM content_review WHERE owner_id=#{owner} AND draft_id=#{draft} AND id=#{review}")

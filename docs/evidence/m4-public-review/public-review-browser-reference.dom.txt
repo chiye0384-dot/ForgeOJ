@@ -1,0 +1,71 @@
+- banner:
+  - generic: F
+  - heading "ForgeOJ" [level=1]
+  - paragraph: Java 21 在线练习与判题
+  - navigation "主导航":
+    - link "题库":
+      - /url: /problems
+    - link "学习记录":
+      - /url: /learning
+    - link "班级":
+      - /url: /classrooms
+    - link "我的题目":
+      - /url: /authoring
+    - link "做题":
+      - /url: /
+    - link "账号":
+      - /url: /account
+    - link "管理后台":
+      - /url: /admin/login
+- main:
+  - main:
+    - navigation:
+      - link "管理首页":
+        - /url: /admin
+      - text: ·
+      - link "公共题审核":
+        - /url: /admin/reviews
+      - text: ·
+      - link "公共题维护":
+        - /url: /admin/problems
+      - text: ·
+      - link "题目反馈":
+        - /url: /admin/feedback
+    - heading "公共题审核" [level=1]
+    - button "刷新列表"
+    - list:
+      - button "M4 原创公共求和验收 · PENDING"
+      - button "M4 原创公共求和验收 · APPROVED"
+      - button "M4 原创公共求和验收 · APPROVED"
+      - button "M4 原创公共求和验收 · APPROVED"
+      - button "M4 原创公共求和验收 · REJECTED"
+    - paragraph: 第 1 页 · 共 5 条
+    - button "上一页" [disabled]
+    - button "下一页" [disabled]
+    - article:
+      - heading "M4 原创公共求和验收 · PENDING · 版本 0" [level=2]
+      - heading "冻结版本" [level=3]
+      - paragraph: 原题文案修订（保留判题版本） · 原题 ID 102 · 依据版本 1
+      - generic: 重新验证并审核的关联修正版。
+      - paragraph: 输入：两个 long 整数
+      - paragraph: 输出：一行和
+      - paragraph: 样例 1
+      - generic: 1 2
+      - generic: "3"
+      - paragraph: 样例 2
+      - generic: 2 3
+      - generic: "5"
+      - paragraph: 来源：ORIGINAL
+      - paragraph: 许可：原创，一次性验收许可。
+      - paragraph: 3 组测试 · 验证任务 FINISHED / PASSED · 2000 ms / 256 MB
+      - heading "独立题解" [level=3]
+      - generic: 读取两个整数并输出和。
+      - generic: "import java.util.Scanner; public class Main {public static void main(String[] a){Scanner s=new Scanner(System.in);System.out.println(s.nextLong()+s.nextLong());}} // M4_INDEPENDENT_SOLUTION_SENTINEL"
+      - button "显式查看本案参考程序（留审计）"
+      - generic: "import java.util.Scanner; public class Main {public static void main(String[] a){Scanner s=new Scanner(System.in);System.out.println(s.nextLong()+s.nextLong());}} // M4_PRIVATE_REFERENCE_SENTINEL"
+      - text: 处置理由
+      - textbox "处置理由"
+      - button "批准并发布" [disabled]
+      - button "驳回" [disabled]
+      - button "重验冻结版本" [disabled]
+    - status

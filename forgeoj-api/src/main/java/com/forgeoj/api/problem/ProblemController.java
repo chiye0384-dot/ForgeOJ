@@ -17,9 +17,11 @@ import org.springframework.web.server.ResponseStatusException;
 public class ProblemController {
 
     private final ProblemMapper problemMapper;
+    private final tools.jackson.databind.ObjectMapper json;
 
-    public ProblemController(ProblemMapper problemMapper) {
+    public ProblemController(ProblemMapper problemMapper,tools.jackson.databind.ObjectMapper json) {
         this.problemMapper = problemMapper;
+        this.json=json;
     }
 
     @GetMapping("/{slug}")
@@ -38,12 +40,13 @@ public class ProblemController {
                 problem.statementText(),
                 problem.inputDescription(),
                 problem.outputDescription(),
-                List.of(new PublicSampleResponse(problem.sampleInput(), problem.sampleOutput())),
+                java.util.Arrays.asList(json.readValue(problem.publicSamplesJson(),PublicSampleResponse[].class)),
                 problem.judgeVersion(),
                 new ResourceLimitsResponse(
                         problem.timeLimitMs(),
                         problem.memoryLimitMb(),
-                        problem.outputLimitBytes()));
+                        problem.outputLimitBytes()),
+                problem.authorName()==null?null:new Attribution(problem.authorName(),problem.originType(),problem.sourceUrl(),problem.licenseStatement(),problem.correctionOfSlug()));
     }
 
     public record ProblemResponse(
@@ -54,7 +57,9 @@ public class ProblemController {
             String outputDescription,
             List<PublicSampleResponse> publicSamples,
             int judgeVersion,
-            ResourceLimitsResponse resourceLimits) {}
+            ResourceLimitsResponse resourceLimits,
+            @com.fasterxml.jackson.annotation.JsonInclude(com.fasterxml.jackson.annotation.JsonInclude.Include.NON_NULL) Attribution attribution) {}
+    public record Attribution(String authorName,String originType,String sourceUrl,String licenseStatement,String correctionOfSlug) {}
 
     public record PublicSampleResponse(String input, String output) {}
 

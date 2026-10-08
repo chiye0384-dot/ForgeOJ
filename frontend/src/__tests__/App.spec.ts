@@ -109,6 +109,9 @@ describe('M0 judge workspace', () => {
     )
     const fetchMock = vi.fn<(input: RequestInfo | URL, init?: RequestInit) => Promise<Response>>(
       async (input, init) => {
+        if (String(input).endsWith('/feedbacks?page=1&size=20')) {
+          return jsonResponse({ items: [], page: 1, size: 20, total: 0 })
+        }
         if (String(input).endsWith('/draft')) {
           const body = init?.body ? (JSON.parse(String(init.body)) as { sourceCode: string }) : null
           return jsonResponse({
@@ -160,7 +163,7 @@ describe('M0 judge workspace', () => {
     expect(host.textContent).toContain('AC')
     expect(host.textContent).toContain('状态版本：2')
     expect(host.textContent).not.toContain('must-never-be-rendered')
-    expect(fetchMock).toHaveBeenCalledTimes(10)
+    expect(fetchMock).toHaveBeenCalledTimes(11)
     expect(vi.getTimerCount()).toBe(0)
 
     expect(fetchMock).toHaveBeenNthCalledWith(
@@ -172,7 +175,7 @@ describe('M0 judge workspace', () => {
       }),
     )
     expect(fetchMock).toHaveBeenNthCalledWith(
-      7,
+      8,
       '/api/v1/problems/sum-two-integers/submissions',
       expect.objectContaining({
         method: 'POST',

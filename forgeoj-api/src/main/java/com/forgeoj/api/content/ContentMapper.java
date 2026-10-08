@@ -12,6 +12,7 @@ public interface ContentMapper {
     int validationReferences(String id);
     @Select("SELECT COUNT(*) FROM content_review WHERE draft_id=#{id}")
     int reviewReferences(String id);
+    @Select("SELECT COUNT(*) FROM public_revision_draft WHERE draft_id=#{id}") int revisionReferences(String id);
     @Select("SELECT id FROM content_review WHERE active_draft_id=#{id} FOR UPDATE")
     Optional<String> pendingReview(String id);
     record Row(String id,String title,String metadata,String referenceCode,String solutionIdea,String solutionCode,long version,String status) {}

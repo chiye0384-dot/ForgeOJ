@@ -25,6 +25,7 @@ let generation = 0,
   disposed = false
 const gradeNames: Record<string, string> = {
   NOT_STARTED: '未开始',
+  INVALID: '判题数据存在问题，已作废',
   ATTEMPTING: '尝试中',
   ON_TIME_AC: '按时 AC',
   LATE_AC: '迟交 AC',
@@ -187,7 +188,7 @@ onBeforeUnmount(() => {
       <article v-for="person in grades.items" :key="person.userId">
         <h4>
           {{ person.username }} · {{ memberNames[person.memberStatus] }} · 完成
-          {{ person.completed }}/{{ person.problems.length }}
+          {{ person.completed }}/{{ person.problems.filter((p) => p.state !== 'INVALID').length }}
         </h4>
         <table>
           <thead>

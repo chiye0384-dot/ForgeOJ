@@ -41,6 +41,19 @@ class AssignmentIntegrationTests {
         db().update("UPDATE problem SET current_judge_version_id=1,status='ACTIVE',statement_text='读入两个有符号整数，输出它们的和。' WHERE id=1");
         owner=login("learner");student=login("assignment-fixture-"+studentId);late=login("assignment-fixture-"+lateId);
     }
+    @Test void invalidPublicJudgePreservesOwnResultsAndAttemptsButExcludesAssignmentCompletion() throws Exception {
+        String room=room();join(student,room);String id=active(room,false,true,"IMMEDIATE",future(120));
+        var submitted=submit(student,room,id,SLUG,UUID.randomUUID().toString());code(submitted,202);String formal=read(submitted,"$.submissionId");finish(formal,"AC");
+        var before=db().queryForMap("SELECT * FROM submission WHERE id=?",formal);
+        db().update("INSERT INTO public_problem_governance(problem_id,data_invalid,invalid_reason) VALUES(1,TRUE,'isolated invalid judge fixture') ON DUPLICATE KEY UPDATE data_invalid=TRUE,invalid_reason=VALUES(invalid_reason)");
+        try {
+            var detail=get(student,path(room,id));code(detail,200);assertThat((Object)read(detail,"$.problems[0].grade.state")).isEqualTo("INVALID");assertThat((Object)read(detail,"$.problems[0].grade.attempts")).isEqualTo(1);
+            var grades=get(owner,path(room,id)+"/teaching/grades?page=2&size=1");code(grades,200);assertThat((Object)read(grades,"$.items[0].problems[0].state")).isEqualTo("INVALID");assertThat((Object)read(grades,"$.items[0].completed")).isEqualTo(0);
+            var status=get(student,"/api/v1/submissions/"+formal);code(status,200);assertThat(status.body()).contains("judgeDataWarning","判题数据存在问题","\"verdict\":\"AC\"");
+            var history=get(student,"/api/v1/me/submissions");code(history,200);assertThat(history.body()).contains("judgeDataWarning",formal);
+            assertThat(db().queryForMap("SELECT * FROM submission WHERE id=?",formal)).isEqualTo(before);
+        } finally {db().update("UPDATE public_problem_governance SET data_invalid=FALSE,invalid_reason=NULL WHERE problem_id=1");}
+    }
     @Test void teacherGradesAndAttemptsRequireExplicitFormalScopeWithoutPrivateOrPrecompletedLeak() throws Exception {
         String room=room();join(student,room);String privateAc=publicSubmission(student);finish(privateAc,"AC");
         String id=active(room,true,true,"AFTER_AC",future(120)), teaching=path(room,id)+"/teaching";

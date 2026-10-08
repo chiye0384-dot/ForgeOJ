@@ -1,0 +1,94 @@
+- banner:
+  - generic: F
+  - heading "ForgeOJ" [level=1]
+  - paragraph: Java 21 在线练习与判题
+  - navigation "主导航":
+    - link "题库":
+      - /url: /problems
+    - link "学习记录":
+      - /url: /learning
+    - link "班级":
+      - /url: /classrooms
+    - link "我的题目":
+      - /url: /authoring
+    - link "做题":
+      - /url: /
+    - link "账号":
+      - /url: /account
+    - link "管理后台":
+      - /url: /admin/login
+- main:
+  - paragraph:
+    - link "返回题库":
+      - /url: /problems
+  - article:
+    - paragraph: 题目 · 版本 1
+    - heading "M4 原创公共求和验收" [level=2]
+    - text: learner
+    - paragraph:
+      - link "账号设置":
+        - /url: /account
+      - text: ·
+      - button "退出"
+    - paragraph: 重新验证并审核的关联修正版。
+    - heading "输入" [level=3]
+    - paragraph: 两个 long 整数
+    - heading "输出" [level=3]
+    - paragraph: 一行和
+    - heading "公开样例 1" [level=3]
+    - strong: 输入
+    - generic: 1 2
+    - strong: 输出
+    - generic: "3"
+    - heading "公开样例 2" [level=3]
+    - strong: 输入
+    - generic: 2 3
+    - strong: 输出
+    - generic: "5"
+    - paragraph: 2000 ms · 256 MB · 输出上限 1048576 bytes
+    - heading "题目来源与许可" [level=3]
+    - paragraph: 作者：learner · ORIGINAL
+    - paragraph: 许可：原创，一次性验收许可。
+    - paragraph: 修正自 public-46e21c81-a0e7-4f18-b59b-4265a3f541ed，旧题完成记录不代表本题已完成。
+    - heading "官方题解" [level=3]
+    - button "查看官方题解"
+  - paragraph: Java 21
+  - heading "提交代码" [level=2]
+  - generic: JAVA_21
+  - paragraph: 草稿已同步；停止编辑 1 秒后自动保存。
+  - button "重试草稿读取或保存"
+  - text: Main.java
+  - textbox "Main.java": "public class Main { public static void main(String[] args) { // 在这里编写解答。 } }"
+  - button "提交并判题"
+  - heading "自定义输入自测" [level=3]
+  - paragraph: 运行当前编辑器的代码。自测成功不计为通过题目，也不解锁题解。完成后的代码、输入和输出保留 24 小时。
+  - text: 自定义输入（可以为空）
+  - textbox "自定义输入（可以为空）"
+  - button "运行自测"
+  - button "刷新短期自测记录"
+  - paragraph:
+    - link "查看本人提交历史":
+      - /url: /learning?tab=history&problemSlug=public-371a1e49-b266-40da-bb0a-51d40b42984c
+    - text: ·
+    - link "管理题单与进度":
+      - /url: /learning
+  - heading "题目反馈" [level=3]
+  - paragraph: 同一待处理案件每人可提交一条反馈。这里仅显示本人反馈，报告数量不会自动下架题目。
+  - text: 分类
+  - combobox "分类":
+    - option "题面歧义" [selected]
+    - option "样例错误"
+    - option "测试数据问题"
+    - option "资源限制问题"
+    - option "来源或版权问题"
+    - option "其他"
+  - text: 说明
+  - textbox "说明"
+  - button "提交反馈" [disabled]
+  - button "刷新本人反馈"
+  - article:
+    - paragraph: 待处理 · AMBIGUITY
+    - generic: M4_OWNER_FEEDBACK_SENTINEL
+  - button "上一页反馈" [disabled]
+  - button "下一页反馈" [disabled]
+  - status

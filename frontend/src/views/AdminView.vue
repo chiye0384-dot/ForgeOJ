@@ -266,6 +266,16 @@ onUnmounted(() => {
     </form>
     <template v-if="session?.authenticated && session.admin">
       <p>当前账号：{{ session.admin.username }} · {{ roles[session.admin.role] }}</p>
+      <nav
+        v-if="
+          !session.admin.mustChangePassword &&
+          ['CONTENT_REVIEWER', 'SUPER_ADMIN'].includes(session.admin.role)
+        "
+      >
+        <RouterLink to="/admin/reviews">公共题审核</RouterLink> ·
+        <RouterLink to="/admin/problems">公共题维护</RouterLink> ·
+        <RouterLink to="/admin/feedback">题目反馈</RouterLink>
+      </nav>
       <p v-if="session.admin.mustChangePassword">请先修改初始或重置密码，完成后重新登录。</p>
       <form data-testid="admin-password" @submit.prevent="change">
         <label

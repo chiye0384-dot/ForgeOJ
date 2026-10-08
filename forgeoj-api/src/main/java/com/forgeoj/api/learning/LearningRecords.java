@@ -20,7 +20,8 @@ public final class LearningRecords {
     public record HistoryProblem(String slug, String title) {}
     public record History(String submissionId, LocalDateTime createdAt, String language,
             String processingStatus, long statusVersion, String verdict, int judgeVersion,
-            HistoryProblem problem) {}
+            HistoryProblem problem,
+            @JsonInclude(JsonInclude.Include.NON_NULL) String judgeDataWarning) {}
     public record Draft(String language, String sourceCode, long version, LocalDateTime updatedAt,
             boolean editable) {}
     public record TitleBody(String title, Long expectedVersion) {}

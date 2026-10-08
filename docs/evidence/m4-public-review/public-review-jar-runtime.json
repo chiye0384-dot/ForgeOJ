@@ -1,0 +1,20 @@
+{
+  "allMatch": true,
+  "capturedAt": "2026-10-08T20:52:02.2969754+08:00",
+  "jars": [
+    {
+      "sha256": "004391da1f75b8d0751738a3d1f4f87a784e6995cb735b8580fa5d5a5375b43f",
+      "readOnly": true,
+      "containerId": "72e0bc19c81074a20fef3fadf7ef269972b6d93e5588a477d8861a5d2820f2f2",
+      "service": "api",
+      "path": "/app/api.jar"
+    },
+    {
+      "sha256": "8653b386c9fb3f010d7398d891ec87a3edfacd1e4c38416ba155407b7cc39182",
+      "readOnly": true,
+      "containerId": "9ae01f1df0ddc6b07c41049419d7c2be3e55c57f7b2eb4c1b21ce0b1589db18a",
+      "service": "worker",
+      "path": "/app/worker.jar"
+    }
+  ]
+}

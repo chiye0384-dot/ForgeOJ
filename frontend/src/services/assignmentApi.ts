@@ -24,7 +24,7 @@ export interface AssignmentSummary extends Omit<
   closeReason: string | null
 }
 export interface AssignmentGrade {
-  state: 'NOT_STARTED' | 'ATTEMPTING' | 'PRECOMPLETED' | 'ON_TIME_AC' | 'LATE_AC'
+  state: 'NOT_STARTED' | 'ATTEMPTING' | 'PRECOMPLETED' | 'ON_TIME_AC' | 'LATE_AC' | 'INVALID'
   attempts: number
   completionSubmissionId: string | null
   firstAcSubmissionId: string | null

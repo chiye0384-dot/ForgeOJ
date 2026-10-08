@@ -1,0 +1,30 @@
+// Copyright 2026 池也; SPDX-License-Identifier: Apache-2.0
+import assert from 'node:assert/strict'
+import { createHash } from 'node:crypto'
+import { readFile, readdir, mkdir, writeFile } from 'node:fs/promises'
+import { resolve, relative, join } from 'node:path'
+import { fileURLToPath } from 'node:url'
+const root=resolve(fileURLToPath(new URL('../..',import.meta.url)))
+const args=process.argv.slice(2);assert.equal(args.length,4,'Provide backend/frontend/replay/output paths')
+const [backend,frontend,replay,out]=args.map(p=>resolve(root,p));for(const p of [backend,frontend,replay,out])assert.ok(!relative(root,p).startsWith('..'),'Evidence outside repository')
+const hash=b=>createHash('sha256').update(b).digest('hex'),json=async(dir,name)=>JSON.parse((await readFile(join(dir,name),'utf8')).replace(/^\uFEFF/,''))
+function manifest(text){return new Map(text.split(/\r?\n/).filter(Boolean).map(line=>{const m=line.match(/^([0-9a-f]{64})\s+(.+)$/);assert.ok(m);return [m[2].replace(/^\.\//,''),m[1]]}))}
+async function walk(path){const result=[];for(const e of await readdir(join(root,path),{withFileTypes:true})){if(['node_modules','dist','target','.git','.idea'].includes(e.name)||e.name.endsWith('.local')||e.name.startsWith('.env'))continue;const p=path+'/'+e.name;if(e.isDirectory())result.push(...await walk(p));else result.push(p)}return result}
+const bm=manifest(await readFile(join(backend,'source-files.sha256'),'utf8')),fm=manifest(await readFile(join(frontend,'source-files.sha256'),'utf8')),rm=manifest(await readFile(join(replay,'frontend-runtime.sha256'),'utf8'))
+const backendInputs=['pom.xml','forgeoj-api/pom.xml','forgeoj-judge-worker/pom.xml',...await walk('forgeoj-api/src'),...await walk('forgeoj-judge-worker/src')],frontendInputs=await walk('frontend')
+for(const p of backendInputs)assert.equal(hash(await readFile(join(root,p))),bm.get(p),'Untested backend input '+p)
+for(const p of frontendInputs){assert.equal(hash(await readFile(join(root,p))),fm.get(p),'Untested frontend input '+p);assert.equal(rm.get(p),fm.get(p),'Browser runtime input differs '+p)}assert.equal(rm.size,frontendInputs.length)
+const executed=manifest(await readFile(join(replay,'teacher-tool-inputs.sha256'),'utf8'));assert.equal(executed.size,3);for(const [p,h] of executed)assert.equal(hash(await readFile(join(root,p))),h,'Unexecuted helper change '+p)
+async function suites(module){const counts={suites:0,tests:0,failures:0,errors:0,skipped:0};for(const f of await readdir(join(backend,module,'surefire-reports')))if(f.startsWith('TEST-')&&f.endsWith('.xml')){const text=await readFile(join(backend,module,'surefire-reports',f),'utf8'),suite=text.match(/<testsuite\s+[^>]*>/);assert.ok(suite);counts.suites++;for(const k of ['tests','failures','errors','skipped']){const m=suite[0].match(new RegExp('\\b'+k+'="(\\d+)"'));assert.ok(m);counts[k]+=Number(m[1])}}for(const k of ['failures','errors','skipped'])assert.equal(counts[k],0);return counts}
+const api=await suites('forgeoj-api'),worker=await suites('forgeoj-judge-worker');assert.equal(api.tests,221);assert.equal(worker.tests,133);assert.match(await readFile(join(backend,'backend.log'),'utf8'),/BUILD SUCCESS/)
+const frontLog=(await readFile(join(frontend,'frontend.log'),'utf8')).replace(/\u001b\[[0-9;]*m/g,'');assert.match(frontLog,/18 passed \(18\)/);assert.match(frontLog,/97 passed \(97\)/);assert.match(frontLog,/built in/)
+const state=await json(replay,'state.json'),apiSha256=hash(await readFile(join(backend,'forgeoj-api/forgeoj-api-0.0.1-SNAPSHOT.jar'))),workerSha256=hash(await readFile(join(backend,'forgeoj-judge-worker/forgeoj-judge-worker-0.0.1-SNAPSHOT.jar')));assert.equal(state.ApiHash,apiSha256);assert.equal(state.WorkerHash,workerSha256)
+const audit=await json(replay,'teacher-audit.json'),http=await json(replay,'teacher-http.json'),browser=await json(replay,'teacher-browser.json'),runtime=await json(replay,'teacher-runtime.json'),cleanup=await json(replay,'teacher-cleanup.json'),publicRegression=await json(replay,'audit.json')
+assert.equal(audit.allPassed,true);assert.equal(audit.httpChecks,http.checks.length);assert.equal(audit.realFormal,5);assert.equal(audit.precompleted,2);assert.equal(audit.realSelfTests,1);assert.equal(audit.emptyQueues,7);assert.equal(runtime.files,frontendInputs.length);assert.equal(runtime.readOnlySourceMount,true)
+assert.equal(publicRegression.submissions,11);assert.equal(publicRegression.finished,10);assert.equal(publicRegression.cancelled,1);assert.equal(publicRegression.emptyQueues,7)
+const publicDenials=await json(replay,'privilege-denials.json');assert.equal(publicDenials.allDenied,true);assert.equal(publicDenials.denials,38)
+for(const k of ['ownerSource','memberDenied','assistantSource','demotionCleared','archivedLeftHistory'])assert.equal(browser[k],true)
+for(const k of ['ownedContainers','ownedVolumes','ownedNetworks','ownedImages','builders','testcontainers','managedSandboxes'])assert.equal(cleanup[k],0,'Residual '+k)
+assert.match(await readFile(join(replay,'teacher-browser-owner.txt'),'utf8'),new RegExp(http.sourceSubmissionId));assert.match(await readFile(join(replay,'teacher-browser-owner.txt'),'utf8'),/正式提交源码/);assert.match(await readFile(join(replay,'teacher-browser-revoked.txt'),'utf8'),/当前角色不能查看/)
+for(const f of ['teacher-browser-owner.png','teacher-browser-revoked.png','teacher-browser-archived.png'])assert.ok((await readFile(join(replay,f))).length>1000)
+await mkdir(out,{recursive:true});const result={verifiedAt:new Date().toISOString(),allPassed:true,backend:relative(root,backend),frontend:relative(root,frontend),replay:relative(root,replay),api,worker,frontendTests:97,backendInputFiles:backendInputs.length,frontendInputFiles:frontendInputs.length,apiSha256,workerSha256,audit,browser,runtime,cleanup,publicRegression};await writeFile(join(out,'verification.json'),JSON.stringify(result,null,2)+'\n');console.log(JSON.stringify({allPassed:true,api:api.tests,worker:worker.tests,frontend:97,backendInputs:backendInputs.length,frontendInputs:frontendInputs.length,teacherHttpChecks:http.checks.length}))

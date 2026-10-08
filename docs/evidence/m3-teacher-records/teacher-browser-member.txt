@@ -1,0 +1,25 @@
+- banner:
+  - generic: F
+  - heading "ForgeOJ" [level=1]
+  - paragraph: Java 21 在线练习与判题
+  - navigation "主导航":
+    - link "题库":
+      - /url: /problems
+    - link "学习记录":
+      - /url: /learning
+    - link "班级":
+      - /url: /classrooms
+    - link "我的题目":
+      - /url: /authoring
+    - link "做题":
+      - /url: /
+    - link "账号":
+      - /url: /account
+- main:
+  - main:
+    - heading "作业教学记录" [level=2]
+    - link "返回班级作业":
+      - /url: /classrooms/955846e8-3ae3-481a-88dc-8f91ff11a4c9/assignments
+    - paragraph: 仅负责人和助教可查看本班作业正式提交；私人练习、自测和预完成历史代码不开放。
+    - alert: 当前角色不能查看教学记录。
+    - button "刷新教学记录"

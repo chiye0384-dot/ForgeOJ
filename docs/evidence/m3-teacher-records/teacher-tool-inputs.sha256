@@ -1,0 +1,3 @@
+0006c96f3ccbbb51de40f264805ea4a574c124a953ae0ba640b9a76ffc15854e  tools/validation/Verify-M3TeacherReplay.ps1
+288b4114f7ae39d69fd576ac453fc99f1ae66a46c8de331694cdf931be3bb467  tools/validation/replay-teacher-records.mjs
+d082e4c88e8113252f68c10dcad79bb839a49fbd409f86e40298377963340b21  tools/validation/replay-teacher-audit.mjs

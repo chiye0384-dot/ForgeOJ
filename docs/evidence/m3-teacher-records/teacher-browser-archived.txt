@@ -1,0 +1,139 @@
+- banner:
+  - generic: F
+  - heading "ForgeOJ" [level=1]
+  - paragraph: Java 21 在线练习与判题
+  - navigation "主导航":
+    - link "题库":
+      - /url: /problems
+    - link "学习记录":
+      - /url: /learning
+    - link "班级":
+      - /url: /classrooms
+    - link "我的题目":
+      - /url: /authoring
+    - link "做题":
+      - /url: /
+    - link "账号":
+      - /url: /account
+- main:
+  - main:
+    - heading "作业教学记录" [level=2]
+    - link "返回班级作业":
+      - /url: /classrooms/955846e8-3ae3-481a-88dc-8f91ff11a4c9/assignments
+    - paragraph: 仅负责人和助教可查看本班作业正式提交；私人练习、自测和预完成历史代码不开放。
+    - button "刷新教学记录"
+    - heading "M3班级私有题真实验收 · 全员成绩与正式源码" [level=3]
+    - paragraph: 班级已归档，历史只读 · 截止 2026/10/8 12:44:27
+    - paragraph: 保留原参与成员，标注当前成员状态。自测不计次数；此前完成不产生作业内首次 AC。
+    - article:
+      - heading "learner · 有效成员 · 完成 0/2" [level=4]
+      - table:
+        - rowgroup:
+          - row "题目 状态 正式尝试次数 作业内首次 AC 正式提交":
+            - columnheader "题目"
+            - columnheader "状态"
+            - columnheader "正式尝试次数"
+            - columnheader "作业内首次 AC"
+            - columnheader "正式提交"
+        - rowgroup:
+          - row "1. M3班级题 HTTP 原创候选 未开始 0 — 查看 learner 第1题提交":
+            - cell "1. M3班级题 HTTP 原创候选"
+            - cell "未开始"
+            - cell "0"
+            - cell "—"
+            - cell "查看 learner 第1题提交":
+              - button "查看 learner 第1题提交": 查看提交
+          - row "2. 两数之和 未开始 0 — 查看 learner 第2题提交":
+            - cell "2. 两数之和"
+            - cell "未开始"
+            - cell "0"
+            - cell "—"
+            - cell "查看 learner 第2题提交":
+              - button "查看 learner 第2题提交": 查看提交
+    - article:
+      - heading "other-learner · 已退出 · 完成 2/2" [level=4]
+      - table:
+        - rowgroup:
+          - row "题目 状态 正式尝试次数 作业内首次 AC 正式提交":
+            - columnheader "题目"
+            - columnheader "状态"
+            - columnheader "正式尝试次数"
+            - columnheader "作业内首次 AC"
+            - columnheader "正式提交"
+        - rowgroup:
+          - row "1. M3班级题 HTTP 原创候选 按时 AC 2 2026/10/8 11:44:32 查看 other-learner 第1题提交":
+            - cell "1. M3班级题 HTTP 原创候选"
+            - cell "按时 AC"
+            - cell "2"
+            - cell "2026/10/8 11:44:32"
+            - cell "查看 other-learner 第1题提交":
+              - button "查看 other-learner 第1题提交": 查看提交
+          - row "2. 两数之和 按时 AC 1 2026/10/8 11:44:35 查看 other-learner 第2题提交":
+            - cell "2. 两数之和"
+            - cell "按时 AC"
+            - cell "1"
+            - cell "2026/10/8 11:44:35"
+            - cell "查看 other-learner 第2题提交":
+              - button "查看 other-learner 第2题提交": 查看提交
+    - article:
+      - heading "classroom-fixture · 有效成员 · 完成 0/2" [level=4]
+      - table:
+        - rowgroup:
+          - row "题目 状态 正式尝试次数 作业内首次 AC 正式提交":
+            - columnheader "题目"
+            - columnheader "状态"
+            - columnheader "正式尝试次数"
+            - columnheader "作业内首次 AC"
+            - columnheader "正式提交"
+        - rowgroup:
+          - row "1. M3班级题 HTTP 原创候选 未开始 0 — 查看 classroom-fixture 第1题提交":
+            - cell "1. M3班级题 HTTP 原创候选"
+            - cell "未开始"
+            - cell "0"
+            - cell "—"
+            - cell "查看 classroom-fixture 第1题提交":
+              - button "查看 classroom-fixture 第1题提交": 查看提交
+          - row "2. 两数之和 未开始 0 — 查看 classroom-fixture 第2题提交":
+            - cell "2. 两数之和"
+            - cell "未开始"
+            - cell "0"
+            - cell "—"
+            - cell "查看 classroom-fixture 第2题提交":
+              - button "查看 classroom-fixture 第2题提交": 查看提交
+    - navigation "成员分页":
+      - button "上一页成员" [disabled]
+      - generic: 第 1 页 · 3 人
+      - button "下一页成员" [disabled]
+    - heading "other-learner · M3班级题 HTTP 原创候选 · 正式提交" [level=3]
+    - table:
+      - rowgroup:
+        - row "提交 接受时间 状态 / 结果 完成时间 源码":
+          - columnheader "提交"
+          - columnheader "接受时间"
+          - columnheader "状态 / 结果"
+          - columnheader "完成时间"
+          - columnheader "源码"
+      - rowgroup:
+        - row "7bddb409-8c3a-4b58-9fb3-4b044778eae9 2026/10/8 11:44:29 FINISHED / AC 2026/10/8 11:44:32 查看源码 7bddb409-8c3a-4b58-9fb3-4b044778eae9":
+          - cell "7bddb409-8c3a-4b58-9fb3-4b044778eae9"
+          - cell "2026/10/8 11:44:29"
+          - cell "FINISHED / AC"
+          - cell "2026/10/8 11:44:32"
+          - cell "查看源码 7bddb409-8c3a-4b58-9fb3-4b044778eae9":
+            - button "查看源码 7bddb409-8c3a-4b58-9fb3-4b044778eae9": 查看源码
+        - row "71e7c2ea-6155-40ba-9707-a07e69f9f0fb 2026/10/8 11:44:27 FINISHED / WA 2026/10/8 11:44:29 查看源码 71e7c2ea-6155-40ba-9707-a07e69f9f0fb":
+          - cell "71e7c2ea-6155-40ba-9707-a07e69f9f0fb"
+          - cell "2026/10/8 11:44:27"
+          - cell "FINISHED / WA"
+          - cell "2026/10/8 11:44:29"
+          - cell "查看源码 71e7c2ea-6155-40ba-9707-a07e69f9f0fb":
+            - button "查看源码 71e7c2ea-6155-40ba-9707-a07e69f9f0fb": 查看源码
+    - navigation "提交分页":
+      - button "上一页提交" [disabled]
+      - generic: 第 1 页 · 2 次
+      - button "下一页提交" [disabled]
+    - region "只读源码":
+      - heading "正式提交源码" [level=3]
+      - paragraph: 7bddb409-8c3a-4b58-9fb3-4b044778eae9 · 第 1 题 · JAVA_21 · 判题版本 101
+      - button "收起源码"
+      - generic: "import java.util.Scanner; public class Main {public static void main(String[] a){Scanner s=new Scanner(System.in);System.out.println(s.nextLong()+s.nextLong());}}"

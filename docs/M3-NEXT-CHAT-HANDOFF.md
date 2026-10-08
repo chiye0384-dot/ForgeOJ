@@ -1,5 +1,9 @@
 # ForgeOJ：M2 已验收，转入 M3 的新对话交接
 
+> 2026-10-08 最新接续：教学作业记录单元 **VERIFIED**，实现基线82afd00，实际仓库D:\Java项目\ForgeOJ，分支feat/m2-accounts；须核对实际HEAD，提交后会前进。先读 [设计](M3-TEACHER-RECORDS-DESIGN.md)、[完整验收和失败轮次](M3-TEACHER-RECORDS-VALIDATION.md)、[机器关联](evidence/m3-teacher-records/verification.json)。本班当前OWNER/ASSISTANT全员成绩、正式尝试和严格作业关联只读源码已完成；本人普通结果GET不扩大，PRECOMPLETED、自由练习、自测无源码教学权限。最终固定Linux API221/Worker133、前端97及全检查，254后端/68前端和实际运行输入、相同JAR回放关联通过；151HTTP、真实5正式判题、迟交延期、三账号页面/降级清空/归档LEFT历史、8教学SQL拒绝与38公共拒绝、提交后ACK和7空队列通过。首轮未捕捉初始排队状态如实保留，最终采用实际暂停/恢复专属Worker完成QUEUED→AC，不改变断言。两个临时栈均零残留，最终11:48:51 +08；旧未跟踪交接与SMTP文件字节保留，Codex/内置标签页保持不关闭。
+>
+> **下一步仅在用户继续后进行完整M3四项总门禁审计**：班级作业端到端、完整权限矩阵、后加入/退出/移除/归档边界、无关私人代码隔离。汇总各已验收单元的需求/证据，发现具体缺口再补测试或实现，不能仅因本单元通过就把完整M3改VERIFIED。本轮到教学记录闭环为止；M4/M5仍PLANNED，无PR/main合并/Release/RESUME_READY。下方段落保留各自日期历史。
+
 > 2026-10-08 当前接续：作业单元 **VERIFIED**，见 [设计](M3-ASSIGNMENTS-DESIGN.md)、[验收及失败轮次](M3-ASSIGNMENTS-VALIDATION.md)、[机器关联](evidence/m3-assignments/verification.json)。实现基线05d63b0，当前功能分支feat/m2-accounts须实际核对HEAD。V17/生命周期/冻结题目及成员/真实PRECOMPLETED/本人提交、自测、成绩/共同题解策略完成。最终独立Linux API218、Worker133、前端92及检查通过；251后端/65前端输入匹配，161HTTP、真实跨截止AC、三账号页面及权限/队列/清理通过。主回放漏存运行输入后单独补充采集和真实页面AC，不伪造原轮次。两个临时栈08:57 +08均零残留，旧交接和SMTP字节保留。本轮到作业为止，下一单元为教师全员成绩/源码关联查询，须待用户继续；完整M3仍IN_PROGRESS、四项总门禁未完成，不创建PR/主分支合并/Release或RESUME_READY。以下带日期段落保留历史。
 >
 > Codex连续性：已确认两次关闭最后一个内置浏览器自动化标签页紧接主进程崩溃。遵守AGENTS.md顶部约束：不关闭/重启/终止Codex，不自动更新；内置标签页改为about:blank并markDeliverable保留，不再关闭或复现。只清理精确任务所属容器。此规避不代表客户端缺陷已修复。

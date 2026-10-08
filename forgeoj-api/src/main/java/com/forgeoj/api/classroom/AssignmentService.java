@@ -29,6 +29,7 @@ public class AssignmentService {
     public record Detail(Summary assignment,String description,boolean member,boolean teaching,boolean participating,List<Item> problems,List<ClassroomMapper.Member> eligibleMembers) {}
     public record Page(List<Summary> items,int page,int size,long total,String classroomTitle,String classroomStatus,boolean member,boolean teaching) {}
     public record Prepared(AssignmentMapper.Row assignment,AssignmentMapper.Problem problem) {}
+    record TeachingContext(AssignmentMapper.Row assignment,String classroomTitle,String classroomStatus) {}
     private record Identity(ClassroomMapper.Room room,boolean member,boolean teaching) {}
 
     private Identity authorize(long user,String room,boolean teaching,boolean writing) {
@@ -55,6 +56,10 @@ public class AssignmentService {
         boolean participant=mapper.participates(id,user);
         if(!who.teaching()&&!participant&&!(who.member()&&r.status().equals("SCHEDULED"))) throw ClassroomService.missing();
         return detail(user,r,who,participant);
+    }
+    TeachingContext teachingContext(long user,String room,String id) {
+        var who=authorize(user,room,true,false);
+        return new TeachingContext(row(room,id),who.room().title(),who.room().status());
     }
     private Detail detail(long user,AssignmentMapper.Row r,Identity who,boolean participant) {
         var items=mapper.problems(r.id()).stream().map(p->new Item(p.ordinal(),who.member()?p.problemSlug():null,who.member()&&(participant||who.teaching())?json.readValue(p.metadataText(),ContentRecords.Metadata.class):null,p.judgeVersionId(),participant?grade(user,r,p):null)).toList();
@@ -151,7 +156,7 @@ public class AssignmentService {
     private static String text(String value,int max,boolean blank) {if(value==null||value.indexOf('\0')>=0||value.codePointCount(0,value.length())>max) throw ClassroomService.bad();value=value.strip();if(!blank&&value.isEmpty()) throw ClassroomService.bad();return value;}
     private static LocalDateTime parse(String value) {try {return OffsetDateTime.parse(value).withOffsetSameInstant(ZoneOffset.UTC).toLocalDateTime().truncatedTo(ChronoUnit.MICROS);}catch(RuntimeException e){throw ClassroomService.bad();}}
     private static String time(LocalDateTime value) {return value==null?null:value.toString()+"Z";}
-    private Summary summary(AssignmentMapper.Row r) {return new Summary(r.id(),r.title(),r.status(),r.version(),time(r.startsAt()),time(r.deadlineAt()),time(r.startedAt()),time(r.endedAt()),r.closeReason(),r.acceptExistingAc(),r.allowLate(),r.solutionPolicy());}
+    Summary summary(AssignmentMapper.Row r) {return new Summary(r.id(),r.title(),r.status(),r.version(),time(r.startsAt()),time(r.deadlineAt()),time(r.startedAt()),time(r.endedAt()),r.closeReason(),r.acceptExistingAc(),r.allowLate(),r.solutionPolicy());}
     private static String hash(String value) {try{return HexFormat.of().formatHex(MessageDigest.getInstance("SHA-256").digest(value.getBytes(StandardCharsets.UTF_8)));}catch(NoSuchAlgorithmException e){throw new IllegalStateException(e);}}
     private static void one(int count) {if(count!=1) throw new IllegalStateException("Assignment write conflict");}
 }

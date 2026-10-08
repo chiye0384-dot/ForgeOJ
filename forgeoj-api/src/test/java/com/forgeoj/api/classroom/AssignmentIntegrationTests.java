@@ -41,6 +41,52 @@ class AssignmentIntegrationTests {
         db().update("UPDATE problem SET current_judge_version_id=1,status='ACTIVE',statement_text='读入两个有符号整数，输出它们的和。' WHERE id=1");
         owner=login("learner");student=login("assignment-fixture-"+studentId);late=login("assignment-fixture-"+lateId);
     }
+    @Test void teacherGradesAndAttemptsRequireExplicitFormalScopeWithoutPrivateOrPrecompletedLeak() throws Exception {
+        String room=room();join(student,room);String privateAc=publicSubmission(student);finish(privateAc,"AC");
+        String id=active(room,true,true,"AFTER_AC",future(120)), teaching=path(room,id)+"/teaching";
+        var grades=get(owner,teaching+"/grades?page=2&size=1");code(grades,200);
+        assertThat((Object)read(grades,"$.total")).isEqualTo(2);assertThat((Object)read(grades,"$.items[0].userId")).isEqualTo(studentId);
+        assertThat((Object)read(grades,"$.items[0].problems[0].state")).isEqualTo("PRECOMPLETED");
+        assertThat((Object)read(grades,"$.items[0].problems[0].attempts")).isEqualTo(0);
+        assertThat(grades.body()).doesNotContain(privateAc,"sourceCode","password","email","testDataset");
+        code(get(owner,teaching+"/submissions/"+privateAc),404);
+        var queued=submit(student,room,id,SLUG,UUID.randomUUID().toString());code(queued,202);String formal=read(queued,"$.submissionId");finish(formal,"WA");
+        var attempts=get(owner,teaching+"/participants/"+studentId+"/problems/1/attempts");code(attempts,200);
+        assertThat((Object)read(attempts,"$.total")).isEqualTo(1);assertThat((Object)read(attempts,"$.items[0].submissionId")).isEqualTo(formal);assertThat(attempts.body()).doesNotContain("sourceCode",privateAc);
+        var source=get(owner,teaching+"/submissions/"+formal);code(source,200);assertThat((Object)read(source,"$.sourceCode")).isEqualTo(CODE);assertThat((Object)read(source,"$.submission.userId")).isEqualTo(studentId);assertThat((Object)read(source,"$.submission.verdict")).isEqualTo("WA");
+        assertThat(source.body()).doesNotContain("testDataset","reference","password","email","stdout");assertThat(source.headers().firstValue("Cache-Control").orElse("")).contains("no-store");
+        code(get(student,teaching+"/grades"),403);code(get(student,teaching+"/submissions/"+formal),403);code(get(null,teaching+"/grades"),401);code(get(late,teaching+"/grades"),404);
+        String foreign=room();code(get(owner,path(foreign,id)+"/teaching/submissions/"+formal),404);
+        String another=active(room,false,true,"AFTER_AC",future(120));code(get(owner,path(room,another)+"/teaching/submissions/"+formal),404);
+        code(get(owner,teaching+"/submissions/"+UUID.randomUUID()),404);code(get(owner,teaching+"/submissions/not-an-id"),404);
+        code(get(owner,teaching+"/grades?size=51"),400);code(get(owner,teaching+"/grades?page=0"),400);
+        code(get(owner,teaching+"/participants/"+lateId+"/problems/1/attempts"),404);code(get(owner,teaching+"/participants/"+studentId+"/problems/2/attempts"),404);
+        assertThat((Object)read(get(owner,teaching+"/grades?page=100&size=50"),"$.items")).isEqualTo(List.of());
+    }
+    @Test void teacherBatchGradesMatchOwnGradesAndHistoricalMembershipSurvivesArchive() throws Exception {
+        String room=room();join(student,room);String id=active(room,false,true,"AFTER_AC",future(120)),t=path(room,id)+"/teaching";
+        String ac=read(submit(student,room,id,SLUG,UUID.randomUUID().toString()),"$.submissionId");finish(ac,"AC");
+        String wa=read(submit(student,room,id,SLUG,UUID.randomUUID().toString()),"$.submissionId");finish(wa,"WA");
+        var own=get(student,path(room,id));var grades=get(owner,t+"/grades?page=2&size=1");code(grades,200);
+        for(String field:List.of("state","attempts","firstAcAt")) assertThat((Object)read(grades,"$.items[0].problems[0]."+field)).isEqualTo((Object)read(own,"$.problems[0].grade."+field));
+        assertThat((Object)read(grades,"$.items[0].completed")).isEqualTo(1);
+        var history=get(owner,t+"/participants/"+studentId+"/problems/1/attempts?size=1");code(history,200);assertThat((Object)read(history,"$.total")).isEqualTo(2);assertThat((Object)read(history,"$.items[0].submissionId")).isEqualTo(wa);
+        join(late,room);assertThat((Object)read(get(owner,t+"/grades"),"$.total")).isEqualTo(2);
+        code(roomAction(student,room,"leave",Map.of()),204);code(get(student,t+"/grades"),404);
+        assertThat((Object)read(get(owner,t+"/grades?page=2&size=1"),"$.items[0].memberStatus")).isEqualTo("LEFT");code(get(owner,t+"/submissions/"+ac),200);
+        code(roomAction(owner,room,"archive",Map.of()),204);code(get(owner,t+"/grades"),200);code(get(owner,t+"/submissions/"+ac),200);
+        code(roomAction(owner,room,"leave",Map.of()),204);code(get(owner,t+"/grades"),404);code(get(owner,t+"/submissions/"+ac),404);
+    }
+    @Test void teacherCurrentRoleAndSessionAreRecheckedForEverySourceRead() throws Exception {
+        String room=room();join(student,room);join(late,room);String id=active(room,false,true,"AFTER_AC",future(120)),t=path(room,id)+"/teaching";
+        String formal=read(submit(student,room,id,SLUG,UUID.randomUUID().toString()),"$.submissionId");
+        String role="/api/v1/classrooms/"+room+"/members/"+lateId+"/role";
+        code(write(owner,"POST",role,Map.of("expectedVersion",roomVersion(room),"role","ASSISTANT")),200);code(get(late,t+"/submissions/"+formal),200);
+        code(write(owner,"POST",role,Map.of("expectedVersion",roomVersion(room),"role","MEMBER")),200);code(get(late,t+"/grades"),403);code(get(late,t+"/submissions/"+formal),403);
+        code(write(owner,"POST",role,Map.of("expectedVersion",roomVersion(room),"role","ASSISTANT")),200);
+        code(write(owner,"POST","/api/v1/classrooms/"+room+"/members/"+lateId+"/remove",Map.of("expectedVersion",roomVersion(room))),200);code(get(late,t+"/submissions/"+formal),404);
+        db().update("UPDATE user_account SET status='DISABLED' WHERE id=1");code(get(owner,t+"/grades"),401);code(get(owner,t+"/submissions/"+formal),401);
+    }
     @Test void strictDraftCasRolesAndCreationReplay() throws Exception {
         String room=room();join(student,room);var d=definition(false,true,"AFTER_AC",future(120));String key=UUID.randomUUID().toString();
         var created=create(room,key,d);code(created,201);String id=read(created,"$.assignment.id");code(create(room,key,d),201);var changed=new LinkedHashMap<>(d);changed.put("title","different");code(create(room,key,changed),409);

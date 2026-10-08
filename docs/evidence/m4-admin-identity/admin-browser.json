@@ -1,0 +1,25 @@
+{
+  "checkedAt": "2026-10-08T09:14:38.427Z",
+  "firstChangeGate": true,
+  "superAccounts": true,
+  "creationFormVisible": true,
+  "reviewerDenied": true,
+  "opsDenied": true,
+  "revokedCleared": true,
+  "auditVisible": true,
+  "auditFilterAndDetails": true,
+  "tabRetained": true,
+  "tabId": "4",
+  "passwordChangeMethod": "actual HTTP; browser observed gate and re-login; no UI password submission",
+  "creationObservation": "single-role create form visible; backend creation checked with actual HTTP; no UI credential entry",
+  "snapshots": [
+    "admin-browser-first-change.dom.txt",
+    "admin-browser-super.dom.txt",
+    "admin-browser-revoked.dom.txt",
+    "admin-browser-reviewer.dom.txt",
+    "admin-browser-reviewer-audit.dom.txt",
+    "admin-browser-ops.dom.txt",
+    "admin-browser-ops-audit.dom.txt",
+    "admin-browser-audit.dom.txt"
+  ]
+}

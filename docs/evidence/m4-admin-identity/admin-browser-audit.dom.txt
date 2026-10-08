@@ -1,0 +1,73 @@
+- banner:
+  - generic: F
+  - heading "ForgeOJ" [level=1]
+  - paragraph: Java 21 在线练习与判题
+  - navigation "主导航":
+    - link "题库":
+      - /url: /problems
+    - link "学习记录":
+      - /url: /learning
+    - link "班级":
+      - /url: /classrooms
+    - link "我的题目":
+      - /url: /authoring
+    - link "做题":
+      - /url: /
+    - link "账号":
+      - /url: /account
+    - link "管理后台":
+      - /url: /admin/login
+- main:
+  - heading "管理后台" [level=2]
+  - navigation "后台导航":
+    - link "管理首页":
+      - /url: /admin
+    - link "管理员账号":
+      - /url: /admin/accounts
+    - link "操作审计":
+      - /url: /admin/audit
+    - button "刷新"
+  - status
+  - paragraph: 当前账号：m4_super · 超级管理员
+  - text: 当前密码
+  - textbox "当前密码"
+  - text: 新密码
+  - textbox "新密码"
+  - button "修改密码"
+  - button "退出当前会话"
+  - button "退出全部会话"
+  - heading "操作审计" [level=3]
+  - text: 动作
+  - textbox "动作": ADMIN_RECOVER
+  - text: 管理员 ID
+  - spinbutton "管理员 ID"
+  - text: 目标账号 ID
+  - spinbutton "目标账号 ID"
+  - text: 开始时间（UTC）
+  - textbox "开始时间（UTC）"
+  - text: 结束时间（UTC）
+  - textbox "结束时间（UTC）"
+  - button "筛选"
+  - table:
+    - rowgroup:
+      - row "时间（UTC） 动作 执行者 目标 结果与原因":
+        - columnheader "时间（UTC）"
+        - columnheader "动作"
+        - columnheader "执行者"
+        - columnheader "目标"
+        - columnheader "结果与原因"
+    - rowgroup:
+      - row "2026-10-08T09:13:32.99883 ADMIN_RECOVER LOCAL_RECOVERY 5 SUCCESS · disposable CLI recovery acceptance":
+        - cell "2026-10-08T09:13:32.99883"
+        - cell "ADMIN_RECOVER"
+        - cell "LOCAL_RECOVERY"
+        - cell "5"
+        - cell "SUCCESS · disposable CLI recovery acceptance":
+          - text: SUCCESS · disposable CLI recovery acceptance
+          - generic "状态与关联记录" [active]
+          - paragraph: status=DISABLED;role=SUPER_ADMIN;mustChangePassword=false;version=3
+          - paragraph: status=ACTIVE;role=SUPER_ADMIN;mustChangePassword=true;version=4
+          - paragraph: 3a736ced-f513-4c17-bd93-f32fc6fc936d
+  - paragraph: 第 1 页，共 1 条
+  - button "上一页" [disabled]
+  - button "下一页" [disabled]

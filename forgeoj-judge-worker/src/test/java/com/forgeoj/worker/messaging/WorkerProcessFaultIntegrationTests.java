@@ -95,6 +95,7 @@ class WorkerProcessFaultIntegrationTests {
                     "db/migration/V15__classrooms_and_members.sql",
                     "db/migration/V16__classroom_private_problems.sql",
                     "db/migration/V17__classroom_assignments.sql",
+                    "db/migration/V18__independent_admin_identity.sql",
                     "db/devdata/R__seed_m0_development_data.sql")) {
                 ScriptUtils.executeSqlScript(database, new FileSystemResource(repositoryFile("forgeoj-api/src/main/resources/" + script)));
             }
@@ -349,7 +350,18 @@ class WorkerProcessFaultIntegrationTests {
     }
 
     private void awaitDrained() throws Exception {
-        await(() -> queueNumber(RabbitTopology.QUEUE, "messages") == 0 && queueNumber(RabbitTopology.RETRY_QUEUE, "messages") == 0, 20);
+        var formal = new java.util.concurrent.atomic.AtomicLong(-1);
+        var retry = new java.util.concurrent.atomic.AtomicLong(-1);
+        try {
+            await(() -> {
+                formal.set(queueNumber(RabbitTopology.QUEUE, "messages"));
+                retry.set(queueNumber(RabbitTopology.RETRY_QUEUE, "messages"));
+                return formal.get() == 0 && retry.get() == 0;
+            }, 20);
+        } catch (AssertionError failure) {
+            throw new AssertionError("Fault queues did not drain: formal=" + formal.get()
+                    + ", retry=" + retry.get() + " (-1 means management query unavailable)", failure);
+        }
     }
 
     private long queueNumber(String queue, String field) {

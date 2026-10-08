@@ -1,0 +1,11 @@
+{
+  "checkedAt": "2026-10-08T09:16:45.579Z",
+  "allPassed": true,
+  "submissions": 10,
+  "finished": 9,
+  "cancelled": 1,
+  "emptyQueues": 7,
+  "classroomChecks": 62,
+  "ordinaryAc": "7ea96160-4833-421c-96ca-d13ceb61a14b",
+  "scope": "actual HTTP/WS protocol verdict matrix and classroom regression; no new ordinary browser fallback claim"
+}

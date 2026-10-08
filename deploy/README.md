@@ -104,6 +104,8 @@ those variables to a separately launched API:
 |---|---|---|
 | `FORGEOJ_AUTH_JWT_SECRET` | Empty; startup fails outside dev without a valid key | At least 32 UTF-8 bytes of private random signing material in deployment. Dev may generate an ephemeral key when empty; restarting then invalidates old access JWTs. Never use the public Surefire test key for real data. |
 | `FORGEOJ_AUTH_COOKIE_SECURE` | `true` | Dev selects `false` for local HTTP only. Keep `true` with production HTTPS. |
+| `FORGEOJ_ADMIN_JWT_SECRET` | Empty; non-dev startup fails without a valid independent key | At least 32 UTF-8 bytes of private random material, different from the ordinary-account key. Dev may generate an ephemeral key. Never use a public fixture key in deployment. |
+| `FORGEOJ_ADMIN_COOKIE_SECURE` | `true` | Keep true with HTTPS. Only isolated local HTTP dev/test may select false. Admin cookies are host-only, SameSite Strict and scoped to `/api/v1/admin`. |
 | `FORGEOJ_AUTH_MAIL_MODE` | `disabled` | Dev defaults to `local`; an explicit environment value wins. Local is accepted only with dev/test. Select `smtp` explicitly for the configured TLS adapter. |
 | `FORGEOJ_AUTH_MAIL_PORT` | `2525` | Loopback mailbox port; development only. |
 | `FORGEOJ_AUTH_MAIL_APP_URL` | `http://localhost:5173` | Actual frontend root URL; production SMTP requires HTTPS. |

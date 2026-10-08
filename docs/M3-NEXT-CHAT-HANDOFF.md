@@ -1,5 +1,7 @@
 # ForgeOJ：M3 已验收，下一步 M4 的新对话交接
 
+> 2026-10-08续接入口已转为 [M4交接](M4-NEXT-CHAT-HANDOFF.md)：用户已要求进入M4，第一步设计与单账号单角色/首次改密/本机恢复决策已完成。M3仍VERIFIED；下方“等待用户继续/未开始M4”是此前停止时的历史快照，不再阻止已授权的M4工作。
+
 > 2026-10-08 最新交接：**完整M3 VERIFIED，4/4总门禁PASS**，见 [最终门禁审计](M3-GATE-AUDIT.md)、[机器核对](evidence/m3-gate/verification.json)。本轮起点4afce92，仓库D:\Java项目\ForgeOJ，分支feat/m2-accounts；提交后HEAD会前进，接手仍须实际核对。只新增两项真实MySQL回归及只读汇总工具/文档，业务、迁移、grants、依赖、Worker和前端未变。最新固定LinuxAPI223（含41项M3）全部通过，Worker133/前端97按相同输入复核复用；254后端/187运行生产/68前端/112Worker共享输入匹配，新旧API的333个运行条目相同。各单元真实多账号/判题/跨截止/权限/日志/空队列按原日期保留，本轮未冒称重新操作浏览器或故障恢复。现场只读Docker零残留，旧交接和SMTP字节保留。
 >
 > **本轮到完整M3验收为止**。下一次用户继续时，先读Roadmap M4、Requirements管理员/审核/运维范围及已接受决策，梳理最小管理员认证与角色模型，再形成首单元设计；不要直接堆Redis/ES或提前实现全部M4。M4/M5/V1.1仍PLANNED；管理员独立于班级角色，M3 OWNER不等于平台管理员。尚无PR/main合并/tag/Release/RESUME_READY。当前续接入口仍是本文件，下方日期段落为各单元的历史快照。

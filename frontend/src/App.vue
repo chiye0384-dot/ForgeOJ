@@ -17,6 +17,7 @@ import { RouterLink, RouterView } from 'vue-router'
         <RouterLink to="/authoring">我的题目</RouterLink>
         <RouterLink to="/">做题</RouterLink>
         <RouterLink to="/account">账号</RouterLink>
+        <RouterLink to="/admin/login">管理后台</RouterLink>
       </nav>
     </div>
   </header>

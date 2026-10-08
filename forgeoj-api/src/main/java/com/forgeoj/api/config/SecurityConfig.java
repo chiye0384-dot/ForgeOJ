@@ -49,6 +49,7 @@ public class SecurityConfig {
     }
 
     @Bean
+    @org.springframework.core.annotation.Order(2)
     SecurityFilterChain securityFilterChain(
             HttpSecurity http,
             SecurityContextRepository securityContextRepository,

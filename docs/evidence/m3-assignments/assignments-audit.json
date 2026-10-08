@@ -1,0 +1,33 @@
+{
+  "checkedAt": "2026-10-08T00:02:53.013Z",
+  "allPassed": true,
+  "httpChecks": 161,
+  "formalAttempts": 6,
+  "verdicts": [
+    "WA",
+    "AC",
+    "AC",
+    "AC",
+    "AC",
+    "AC"
+  ],
+  "realSelfTests": 2,
+  "precompleted": 2,
+  "acceptanceBeforeDeadline": true,
+  "acAfterDeadline": true,
+  "commitBeforeAck": true,
+  "logsClean": true,
+  "emptyQueues": 7,
+  "privilegeDenials": 17,
+  "multiAccountBrowser": true,
+  "apiWithoutDocker": true,
+  "toolInputs": {
+    "tools/validation/Replay-FixedLinux.ps1": "668fcf1d5a452e8b759d27f0d1ca781a0df2f7b34889f8acd90189498ac60e02",
+    "tools/validation/Verify-M3AssignmentReplay.ps1": "357ecfb05bdd85009862fe4d0ad7029d339204456df553146aa16b888ea13c55",
+    "tools/validation/replay-assignments.mjs": "8b89db41e697ecb113c310655bb74d4b0ca7b03b4fa9701e55f95f6553dbb4d5",
+    "tools/validation/replay-assignment-audit.mjs": "c7d434b9a567c0fc35e8e3ce4003b9bb5f076f7724b9028013e87c4e38ed2c93",
+    "tools/validation/replay-private-problems.mjs": "6fc93e3bf0939204d13f29d3f29705de64744f2d0afc88899b285c6e4428f4d9",
+    "tools/validation/compose.replay.yml": "c9f3ec7b367e4b0f23d30d47523ae886d3980f383d4deb2641615ace90f6222a",
+    "tools/validation/replay-vite.mjs": "5204200c19e01191aa967716632e31debc31348734f5e790b72c349b4d2e334b"
+  }
+}

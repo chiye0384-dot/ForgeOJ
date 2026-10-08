@@ -1,0 +1,53 @@
+- banner:
+  - generic: F
+  - heading "ForgeOJ" [level=1]
+  - paragraph: Java 21 在线练习与判题
+  - navigation "主导航":
+    - link "题库":
+      - /url: /problems
+    - link "学习记录":
+      - /url: /learning
+    - link "班级":
+      - /url: /classrooms
+    - link "我的题目":
+      - /url: /authoring
+    - link "做题":
+      - /url: /
+    - link "账号":
+      - /url: /account
+- main:
+  - heading "M3班级私有题真实验收 · 作业" [level=2]
+  - paragraph:
+    - link "返回班级":
+      - /url: /classrooms
+  - paragraph: 已离开班级：可查看本人历史完成摘要和提交结果；重新成为有效成员后恢复原作业关系。
+  - button "刷新作业"
+  - list:
+    - button "正式成绩作业"
+    - text: · 进行中 · 截止 2026/10/8 08:03:59
+  - button "上一页" [disabled]
+  - text: 第 1 页，共 1 份作业
+  - button "下一页" [disabled]
+  - article:
+    - heading "正式成绩作业" [level=3]
+    - paragraph: 进行中 · 版本 3 · 截止 2026/10/8 08:03:59
+    - paragraph: 计划开始 2026/10/8 07:58:59 · 实际开始 2026/10/8 07:58:59
+    - paragraph
+    - paragraph: 本人完成 1/1 题。按服务器接受提交的时间判断按时，最终必须 AC；自测不计次数和完成。
+    - table:
+      - rowgroup:
+        - row "题目 本人状态 尝试次数 首次 AC 提交结果":
+          - columnheader "题目"
+          - columnheader "本人状态"
+          - columnheader "尝试次数"
+          - columnheader "首次 AC"
+          - columnheader "提交结果"
+      - rowgroup:
+        - row "第 1 题 按时 AC 1 2026/10/8 07:59:09 本人完成提交":
+          - cell "第 1 题"
+          - cell "按时 AC"
+          - cell "1"
+          - cell "2026/10/8 07:59:09"
+          - cell "本人完成提交":
+            - button "本人完成提交"
+  - status: 本人提交：FINISHED AC

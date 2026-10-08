@@ -6,6 +6,8 @@ import org.apache.ibatis.annotations.*;
 
 @Mapper
 public interface SelfTestMapper {
+    @Select("SELECT problem_id AS problemId,id AS judgeVersionId,time_limit_ms,memory_limit_mb,output_limit_bytes,java_image_digest,comparison_rule_version,sandbox_policy_version FROM problem_judge_version WHERE problem_id=#{problem} AND id=#{judge}") Optional<Version> frozenVersion(@Param("problem") long problem,@Param("judge") long judge);
+    @Select("SELECT EXISTS(SELECT 1 FROM self_test_job j JOIN self_test_snapshot s ON s.id=j.snapshot_id WHERE j.owner_id=#{owner} AND j.client_request_id=#{request} AND s.judge_version_id=#{judge})") boolean requestBasis(@Param("owner") long owner,@Param("request") String request,@Param("judge") long judge);
     @Select("SELECT p.id AS problemId,v.id AS judgeVersionId,v.time_limit_ms,v.memory_limit_mb,v.output_limit_bytes,v.java_image_digest,v.comparison_rule_version,v.sandbox_policy_version FROM problem p JOIN problem_judge_version v ON v.id=p.current_judge_version_id JOIN classroom_problem c ON c.problem_id=p.id AND c.classroom_id=p.classroom_id WHERE p.classroom_id=#{room} AND p.scope='CLASSROOM' AND p.slug=#{slug} AND p.status='ACTIVE' FOR SHARE")
     Optional<Version> classroomVersion(@Param("room") String room,@Param("slug") String slug);
     record Version(long problemId,long judgeVersionId,int timeLimitMs,int memoryLimitMb,long outputLimitBytes,String javaImageDigest,String comparisonRuleVersion,String sandboxPolicyVersion) {}

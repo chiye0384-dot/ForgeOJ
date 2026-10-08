@@ -231,6 +231,9 @@ onBeforeUnmount(() => {
       <ul>
         <li v-for="r in rooms" :key="r.id">
           {{ r.title }} · {{ r.role }} · {{ r.status }} · {{ r.memberStatus }}
+          <RouterLink :to="`/classrooms/${encodeURIComponent(r.id)}/assignments`"
+            >作业与本人历史</RouterLink
+          >
           <button v-if="r.memberStatus === 'ACTIVE'" :disabled="busy" @click="load(r.id)">
             打开班级
           </button>

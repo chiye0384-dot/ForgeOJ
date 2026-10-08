@@ -1,0 +1,88 @@
+- banner:
+  - generic: F
+  - heading "ForgeOJ" [level=1]
+  - paragraph: Java 21 在线练习与判题
+  - navigation "主导航":
+    - link "题库":
+      - /url: /problems
+    - link "学习记录":
+      - /url: /learning
+    - link "班级":
+      - /url: /classrooms
+    - link "我的题目":
+      - /url: /authoring
+    - link "做题":
+      - /url: /
+    - link "账号":
+      - /url: /account
+- main:
+  - heading "M3班级私有题真实验收 · 作业" [level=2]
+  - paragraph:
+    - link "返回班级":
+      - /url: /classrooms
+  - button "刷新作业"
+  - list:
+    - button "截止前入队跨截止 AC"
+    - text: · 进行中 · 截止 2026/10/8 09:00:32
+    - button "教师页面定时发布验收"
+    - text: · 待开始 · 截止 2026/10/10 18:00:00
+    - button "浏览器作业验收"
+    - text: · 进行中 · 截止 2026/10/8 08:59:24
+    - button "迟交可升级作业"
+    - text: · 进行中 · 截止 2026/10/8 08:04:24
+    - button "自动开始作业"
+    - text: · 进行中 · 截止 2026/10/8 07:59:17
+    - button "不可旁路的截止后题解"
+    - text: · 已取消 · 截止 2026/10/8 08:04:06
+    - button "正式成绩作业"
+    - text: · 进行中 · 截止 2026/10/8 08:03:59
+    - button "已有 AC 作业"
+    - text: · 进行中 · 截止 2026/10/8 08:03:59
+  - button "上一页" [disabled]
+  - text: 第 1 页，共 8 份作业
+  - button "下一页" [disabled]
+  - article:
+    - heading "浏览器作业验收" [level=3]
+    - paragraph: 进行中 · 版本 2 · 截止 2026/10/8 08:59:24
+    - paragraph: 计划开始 2026/10/8 07:59:24 · 实际开始 2026/10/8 07:59:24
+    - paragraph: 原创作业，仅用于一次性验收。
+    - paragraph: 本人完成 1/1 题。按服务器接受提交的时间判断按时，最终必须 AC；自测不计次数和完成。
+    - table:
+      - rowgroup:
+        - row "题目 本人状态 尝试次数 首次 AC 提交结果":
+          - columnheader "题目"
+          - columnheader "本人状态"
+          - columnheader "尝试次数"
+          - columnheader "首次 AC"
+          - columnheader "提交结果"
+      - rowgroup:
+        - row "M3班级题 HTTP 原创候选 按时 AC 1 2026/10/8 08:01:34 本人完成提交":
+          - cell "M3班级题 HTTP 原创候选":
+            - button "M3班级题 HTTP 原创候选"
+          - cell "按时 AC"
+          - cell "1"
+          - cell "2026/10/8 08:01:34"
+          - cell "本人完成提交":
+            - button "本人完成提交"
+  - article:
+    - heading "M3班级题 HTTP 原创候选" [level=3]
+    - paragraph: 原创班级练习：读入两个整数并输出和。
+    - heading "输入" [level=4]
+    - paragraph: 两个整数
+    - heading "输出" [level=4]
+    - paragraph: 输出整数之和。
+    - heading "样例 1" [level=4]
+    - generic: 1 2
+    - generic: "3"
+    - text: Java 21 代码
+    - textbox "Java 21 代码": "import java.util.Scanner; public class Main { public static void main(String[] args) { Scanner s=new Scanner(System.in); System.out.println(s.nextLong()+s.nextLong()); } } // M3_ASSIGN_BROWSER_CODE_SENTINEL"
+    - button "提交作业"
+    - text: 自测输入
+    - textbox "自测输入": 5 6
+    - button "运行作业自测"
+    - button "查看作业题解"
+    - paragraph: 直接读取并相加；独立题解。
+    - generic: "import java.util.Scanner; public class Main { public static void main(String[] args) { Scanner s=new Scanner(System.in); System.out.println(s.nextLong()+s.nextLong()); }} // M3_INDEPENDENT_SOLUTION_SENTINEL"
+  - status: 本人提交：FINISHED AC
+  - paragraph: 自测：FINISHED SUCCESS
+  - generic: "11"

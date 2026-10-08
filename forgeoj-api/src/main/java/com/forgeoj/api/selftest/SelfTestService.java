@@ -23,38 +23,49 @@ public class SelfTestService {
     private final AccountService accounts;
     private final ObjectMapper json;
     private final com.forgeoj.api.classroom.ClassroomProblemService classroomProblems;
-    public SelfTestService(SelfTestMapper mapper,AccountService accounts,ObjectMapper json,com.forgeoj.api.classroom.ClassroomProblemService classroomProblems){this.mapper=mapper;this.accounts=accounts;this.json=json;this.classroomProblems=classroomProblems;}
+    private final com.forgeoj.api.classroom.AssignmentService assignments;
+    public SelfTestService(SelfTestMapper mapper,AccountService accounts,ObjectMapper json,com.forgeoj.api.classroom.ClassroomProblemService classroomProblems,com.forgeoj.api.classroom.AssignmentService assignments){this.mapper=mapper;this.accounts=accounts;this.json=json;this.classroomProblems=classroomProblems;this.assignments=assignments;}
     @Transactional
     public SelfTestMapper.Run create(long owner,String slug,String request,String language,String code,String input) {
-        return createExecution(owner,null,slug,request,language,code,input);
+        return createExecution(owner,null,null,slug,request,language,code,input);
     }
     @Transactional(isolation=Isolation.READ_COMMITTED)
     public SelfTestMapper.Run createClassroom(long owner,String room,String slug,String request,String language,String code,String input) {
-        return createExecution(owner,room,slug,request,language,code,input);
+        return createExecution(owner,room,null,slug,request,language,code,input);
     }
-    private SelfTestMapper.Run createExecution(long owner,String room,String slug,String request,String language,String code,String input) {
+    @Transactional(isolation=Isolation.READ_COMMITTED)
+    public SelfTestMapper.Run createAssignment(long owner,String room,String assignment,String slug,String request,String language,String code,String input) {
+        return createExecution(owner,room,assignment,slug,request,language,code,input);
+    }
+    private SelfTestMapper.Run createExecution(long owner,String room,String assignment,String slug,String request,String language,String code,String input) {
         uuid(request,HttpStatus.BAD_REQUEST);slug(slug);
         if(!"JAVA_21".equals(language)) throw status(HttpStatus.BAD_REQUEST);
         SubmissionService.validateSource(code);
         if(input==null || input.indexOf('\0')>=0 || input.getBytes(StandardCharsets.UTF_8).length>1048576) throw status(HttpStatus.BAD_REQUEST);
         accounts.requireCurrentWrite(owner);
         if(mapper.quota(owner).isEmpty()) throw new IllegalStateException("Missing self-test quota");
-        if(room!=null) classroomProblems.authorize(owner,room,false,true);
-        String sourceHash=hash(code),inputHash=hash(input);
+        com.forgeoj.api.classroom.AssignmentService.Prepared prepared=null;
         var previous=mapper.request(owner,request);
+        if(assignment!=null) {prepared=assignments.prepare(owner,room,assignment,slug,previous.isPresent());}
+        else if(room!=null) classroomProblems.authorize(owner,room,false,true);
+        String sourceHash=hash(code),inputHash=hash(input);
         if(previous.isPresent()) {
             var old=previous.get();
             if(!old.problemSlug().equals(slug) || !old.language().equals(language) || !old.sourceSha256().equals(sourceHash) || !old.inputSha256().equals(inputHash)) throw status(HttpStatus.CONFLICT);
             if(old.expired()) throw status(HttpStatus.GONE);
+            if(prepared!=null&&!mapper.requestBasis(owner,request,prepared.problem().judgeVersionId())) throw status(HttpStatus.CONFLICT);
+            if(prepared!=null&&!assignments.selfTestLinked(owner,prepared,old.runId())) throw status(HttpStatus.CONFLICT);
             return mapper.run(owner,old.runId()).orElseThrow(()->status(HttpStatus.GONE));
         }
-        var v=(room==null?mapper.version(slug):mapper.classroomVersion(room,slug)).orElseThrow(()->status(HttpStatus.NOT_FOUND));
+        var v=(prepared!=null?mapper.frozenVersion(prepared.problem().problemId(),prepared.problem().judgeVersionId()):room==null?mapper.version(slug):mapper.classroomVersion(room,slug)).orElseThrow(()->status(HttpStatus.NOT_FOUND));
         if(mapper.pending(owner)>=3) throw status(HttpStatus.TOO_MANY_REQUESTS);
+        if(prepared!=null) assignments.acceptance(prepared);
         String snapshot=UUID.randomUUID().toString(),id=UUID.randomUUID().toString(),event=UUID.randomUUID().toString();
         long limit=Math.min(v.outputLimitBytes(),1048576),bytes=input.getBytes(StandardCharsets.UTF_8).length;
         String digest=hash(framed(Long.toString(owner),Long.toString(v.problemId()),slug,Long.toString(v.judgeVersionId()),language,sourceHash,inputHash,Long.toString(bytes),Integer.toString(v.timeLimitMs()),Integer.toString(v.memoryLimitMb()),Long.toString(limit),v.javaImageDigest(),v.comparisonRuleVersion(),v.sandboxPolicyVersion()));
         one(mapper.snapshot(new SelfTestMapper.Snapshot(snapshot,owner,v.problemId(),slug,v.judgeVersionId(),language,sourceHash,inputHash,bytes,v.timeLimitMs(),v.memoryLimitMb(),limit,v.javaImageDigest(),v.comparisonRuleVersion(),v.sandboxPolicyVersion(),digest)));
         one(mapper.insertPayload(snapshot,code,input));one(mapper.job(id,snapshot,owner,request));
+        if(prepared!=null) assignments.linkSelfTest(owner,prepared,id);
         one(mapper.outbox(event,id,json.writeValueAsString(Map.of("taskId",id,"snapshotId",snapshot,"taskType","SELF_TEST","contractVersion",1))));
         TransactionSynchronizationManager.registerSynchronization(new TransactionSynchronization(){@Override public void afterCommit(){try{LoggerFactory.getLogger(SelfTestService.class).atInfo().addKeyValue("event","selftest.created").addKeyValue("selfTestRunId",id).addKeyValue("outboxEventId",event).log("Self-test creation committed");}catch(RuntimeException ignored){}}});
         return mapper.run(owner,id).orElseThrow(()->new IllegalStateException("Missing self-test"));

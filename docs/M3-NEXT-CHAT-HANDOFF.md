@@ -1,5 +1,9 @@
 # ForgeOJ：M2 已验收，转入 M3 的新对话交接
 
+> 2026-10-08 当前接续：作业单元 **VERIFIED**，见 [设计](M3-ASSIGNMENTS-DESIGN.md)、[验收及失败轮次](M3-ASSIGNMENTS-VALIDATION.md)、[机器关联](evidence/m3-assignments/verification.json)。实现基线05d63b0，当前功能分支feat/m2-accounts须实际核对HEAD。V17/生命周期/冻结题目及成员/真实PRECOMPLETED/本人提交、自测、成绩/共同题解策略完成。最终独立Linux API218、Worker133、前端92及检查通过；251后端/65前端输入匹配，161HTTP、真实跨截止AC、三账号页面及权限/队列/清理通过。主回放漏存运行输入后单独补充采集和真实页面AC，不伪造原轮次。两个临时栈08:57 +08均零残留，旧交接和SMTP字节保留。本轮到作业为止，下一单元为教师全员成绩/源码关联查询，须待用户继续；完整M3仍IN_PROGRESS、四项总门禁未完成，不创建PR/主分支合并/Release或RESUME_READY。以下带日期段落保留历史。
+>
+> Codex连续性：已确认两次关闭最后一个内置浏览器自动化标签页紧接主进程崩溃。遵守AGENTS.md顶部约束：不关闭/重启/终止Codex，不自动更新；内置标签页改为about:blank并markDeliverable保留，不再关闭或复现。只清理精确任务所属容器。此规避不代表客户端缺陷已修复。
+
 > 2026-10-06 最新接续：班级私有题单元已VERIFIED，完整M3仍IN_PROGRESS。先读 [私有题设计](M3-PRIVATE-PROBLEMS-DESIGN.md)、[最终验收](M3-PRIVATE-PROBLEMS-VALIDATION.md)、[输入/JAR/测试关联](evidence/m3-private-problems/verification.json)，再核对当前Git。基线089d777上的V16/私有题页面/真实共享执行链路完成；API203、Worker133、前端82、155HTTP、实际两账号页面、13私有SQL拒绝和公共38拒绝、7空队列、所有测试资源清理通过。默认AFTER_AC且未AC可提醒后再次确认，作业策略不能被自由练习绕过。作业/教师关联/完整四门禁尚未开始或完成；用户要求本轮只完成这一步，下一步另说。旧交接与SMTP文件保留。下方两段及正文均为先前日期的历史快照，不能再沿用“下一步私有题”作为当前事实。
 
 > 2026-10-06 接续更新：本交接下方为2026-10-05起点快照。班级成员首单元现已VERIFIED，完整M3 IN_PROGRESS；下一步班级私有题。请在本交接后读 [最新设计](M3-CLASSROOM-DESIGN.md)、[实际验收/构件/失败轮次](M3-CLASSROOM-VALIDATION.md) 和 [证据](evidence/m3-classroom/README.md)，再核对当前Git HEAD，不沿用d228e3a或M3 PLANNED作为当前事实。私有题写路径前须补真实引用/外键和删除保护；作业、教师关联、完整四门禁仍待完成。

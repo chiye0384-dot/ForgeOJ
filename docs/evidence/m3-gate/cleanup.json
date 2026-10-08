@@ -1,0 +1,15 @@
+{
+  "checkedAt": "2026-10-08T05:49:54.4853937+00:00",
+  "dockerAvailable": true,
+  "readOnlyInspection": true,
+  "counts": {
+    "builders": 0,
+    "testcontainers": 0,
+    "managedSandboxes": 0,
+    "replayContainers": 0,
+    "replayVolumes": 0,
+    "replayNetworks": 0,
+    "ownedImages": 0
+  },
+  "collectorSha256": "351e3a93cf9c67a37b927f828d7718a9c469416dec4986311d100ca8fb64d0cb"
+}

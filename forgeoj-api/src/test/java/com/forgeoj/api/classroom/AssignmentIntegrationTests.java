@@ -187,6 +187,73 @@ class AssignmentIntegrationTests {
         String scheduled=id(create(room,UUID.randomUUID().toString(),definition(false,true,"AFTER_AC",future(120))));code(publish(room,scheduled,1,future(2)),200);advanceVersion();Thread.sleep(2300);lifecycle.refresh(room);
         assertThat(db().queryForObject("SELECT status FROM classroom_assignment WHERE id=?",String.class,scheduled)).isEqualTo("STOPPED");assertThat(db().queryForObject("SELECT COUNT(*) FROM assignment_participant WHERE assignment_id=?",Integer.class,scheduled)).isZero();
     }
+    @Test void removedParticipantKeepsMaskedOwnHistoryAndOwnerRestoreReusesParticipation() throws Exception {
+        String room=room();join(student,room);String invitation=invite(room);
+        String id=active(room,false,true,"AFTER_AC",future(120));
+        String formal=read(submit(student,room,id,SLUG,UUID.randomUUID().toString()),"$.submissionId");finish(formal,"AC");
+        Object originalGrade=read(get(student,path(room,id)),"$.problems[0].grade");
+        code(roomAction(owner,room,"members/"+studentId+"/remove",Map.of()),200);
+        var history=get(student,path(room,id));code(history,200);
+        assertThat((Object)read(history,"$.member")).isEqualTo(false);
+        assertThat((Object)read(history,"$.problems[0].grade")).isEqualTo(originalGrade);
+        assertThat((Object)read(history,"$.problems[0].metadata")).isNull();
+        assertThat((Object)read(history,"$.problems[0].slug")).isNull();
+        assertThat(history.body()).doesNotContain("original assignment description","sourceCode");
+        code(get(student,"/api/v1/submissions/"+formal),200);
+        code(submit(student,room,id,SLUG,UUID.randomUUID().toString()),404);
+        code(get(student,path(room,id)+"/problems/"+SLUG+"/solution"),404);
+        code(write(student,"POST",path(room,id)+"/problems/"+SLUG+"/self-tests",Map.of("requestId",UUID.randomUUID().toString(),"language","JAVA_21","sourceCode",CODE,"input","1 2\n")),404);
+        code(write(student,"POST","/api/v1/classrooms/join",Map.of("inviteCode",invitation)),404);
+        var roster=get(owner,path(room,id)+"/teaching/grades?page=2&size=1");code(roster,200);
+        assertThat((Object)read(roster,"$.items[0].memberStatus")).isEqualTo("REMOVED");
+        assertThat((Object)read(roster,"$.items[0].completed")).isEqualTo(1);
+        code(get(owner,path(room,id)+"/teaching/submissions/"+formal),200);
+        code(roomAction(owner,room,"members/"+studentId+"/restore",Map.of()),200);
+        var restored=get(student,path(room,id));code(restored,200);
+        assertThat((Object)read(restored,"$.member")).isEqualTo(true);
+        assertThat((Object)read(restored,"$.problems[0].grade")).isEqualTo(originalGrade);
+        assertThat(db().queryForObject("SELECT COUNT(*) FROM assignment_participant WHERE assignment_id=? AND user_id=?",Integer.class,id,studentId)).isEqualTo(1);
+        code(submit(student,room,id,SLUG,UUID.randomUUID().toString()),202);
+    }
+    @Test void allTeachingReadRoutesAndAssignmentWritesFollowCurrentRoleAcrossTransfer() throws Exception {
+        String room=room();join(student,room);String id=active(room,false,true,"AFTER_AC",future(180));
+        String formal=read(submit(student,room,id,SLUG,UUID.randomUUID().toString()),"$.submissionId");
+        String base=path(room,id),teaching=base+"/teaching";
+        var reads=List.of(teaching+"/grades",teaching+"/participants/"+studentId+"/problems/1/attempts",teaching+"/submissions/"+formal);
+        for(String route:reads) {code(get(owner,route),200);code(get(student,route),403);code(get(late,route),404);code(get(null,route),401);}
+        var definition=definition(false,true,"AFTER_AC",future(240));
+        code(write(student,"POST",path(room,null),Map.of("clientRequestId",UUID.randomUUID().toString(),"definition",definition)),403);
+        code(write(student,"PUT",base,Map.of("expectedVersion",assignmentVersion(id),"definition",definition)),403);
+        for(var mutation:Map.<String,Map<String,Object>>of(
+            "publish",Map.of(),"cancel",Map.of("reason","isolated matrix"),
+            "copy",Map.of("clientRequestId",UUID.randomUUID().toString(),"deadlineAt",future(240)),
+            "participants",Map.of("userId",studentId)).entrySet()) {
+            var body=new LinkedHashMap<>(mutation.getValue());if(!mutation.getKey().equals("copy"))body.put("expectedVersion",assignmentVersion(id));
+            if(mutation.getKey().equals("publish"))body.put("startsAt",null);
+            code(write(student,"POST",base+"/"+mutation.getKey(),body),403);
+        }
+        join(late,room);code(roomAction(owner,room,"members/"+lateId+"/role",Map.of("role","ASSISTANT")),200);
+        for(String route:reads)code(get(late,route),200);
+        String draft=id(write(late,"POST",path(room,null),Map.of("clientRequestId",UUID.randomUUID().toString(),"definition",definition)));
+        code(write(late,"PUT",path(room,draft),Map.of("expectedVersion",1,"definition",definition)),200);
+        var publishBody=new LinkedHashMap<String,Object>();publishBody.put("expectedVersion",2);publishBody.put("startsAt",null);
+        code(write(late,"POST",path(room,draft)+"/publish",publishBody),200);
+        code(write(late,"POST",base+"/participants",Map.of("expectedVersion",assignmentVersion(id),"userId",lateId)),200);
+        code(write(late,"POST",base+"/copy",Map.of("clientRequestId",UUID.randomUUID().toString(),"deadlineAt",future(240))),201);
+        code(write(late,"POST",path(room,draft)+"/cancel",Map.of("expectedVersion",assignmentVersion(draft),"reason","isolated matrix")),200);
+        String transfer=read(roomAction(owner,room,"transfers",Map.of("targetUserId",lateId,"clientRequestId",UUID.randomUUID().toString())),"$.id");
+        code(roomAction(late,room,"transfers/"+transfer+"/accept",Map.of()),200);
+        assertThat(db().queryForObject("SELECT role FROM classroom_member WHERE classroom_id=? AND user_id=1",String.class,room)).isEqualTo("ASSISTANT");
+        for(String route:reads) {code(get(owner,route),200);code(get(late,route),200);}
+        code(roomAction(late,room,"members/1/role",Map.of("role","MEMBER")),200);
+        for(String route:reads)code(get(owner,route),403);
+        code(roomAction(late,room,"archive",Map.of()),204);
+        for(String route:reads) {code(get(late,route),200);code(get(owner,route),403);}
+        code(roomAction(owner,room,"leave",Map.of()),204);
+        for(String route:reads)code(get(owner,route),404);
+        db().update("UPDATE user_account SET status='DISABLED' WHERE id=?",lateId);
+        for(String route:reads)code(get(late,route),401);
+    }
     // Direct terminal fixtures above test relational/permission/time predicates only.
     // Delivery acceptance must obtain actual AC/PASSED from the real Worker.
     private void finish(String id,String verdict) {db().update("UPDATE submission SET processing_status='FINISHED',verdict=?,status_version=2,finished_at=CURRENT_TIMESTAMP(6) WHERE id=?",verdict,id);db().update("UPDATE judge_task SET task_status='FINISHED',status_version=2,finished_at=CURRENT_TIMESTAMP(6) WHERE submission_id=?",id);}

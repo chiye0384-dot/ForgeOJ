@@ -1,0 +1,232 @@
+{
+  "checkedAt": "2026-10-08T05:51:40.239177+00:00",
+  "allPassed": true,
+  "milestone": "M3",
+  "baseline": "4afce92f1933c5ea305b15e8c2f3eddc211189c2",
+  "apiBuild": "target/forgeoj-linux-20261008-122009-e2b2ab16",
+  "api": {
+    "suites": 42,
+    "tests": 223,
+    "failures": 0,
+    "errors": 0,
+    "skipped": 0,
+    "jarSha256": "02c4ef6034341e7c0c7681000a91c0c74b9db2c1f2c7f8cd6e1b05200968141c"
+  },
+  "apiLogObservations": {
+    "sha256": "e0b0fc8458cdaef5b4a6975ef76a5725cb2b12959bf777b18ddde42737794baf",
+    "surefireForkExitTimeout": true,
+    "assignmentScanWarnings": 38
+  },
+  "worker": {
+    "suites": 23,
+    "tests": 133,
+    "failures": 0,
+    "errors": 0,
+    "skipped": 0,
+    "jarSha256": "58da20d24421b4c7c28065b64d2b424212f1ffa98cac24de6d14096ab79510dd"
+  },
+  "workerBuild": "target/forgeoj-linux-20261008-110105-55b90a88",
+  "frontendTests": 97,
+  "frontendBuild": "target/forgeoj-linux-20261008-112857-b4f26f08",
+  "sourceInputs": {
+    "backend": 254,
+    "runtimeProduction": 187,
+    "workerAndShared": 112,
+    "frontend": 68,
+    "allMatch": true,
+    "changedTestInputs": [
+      "forgeoj-api/src/test/java/com/forgeoj/api/classroom/AssignmentIntegrationTests.java"
+    ]
+  },
+  "apiRuntimeEntries": 333,
+  "apiRuntimeIdentical": true,
+  "runtimeReplay": "target/forgeoj-e2e-20261008-113310-17b0a2af",
+  "replayApiSha256": "1fce68604e3845fbf7e8b3ea3bebcad4d4abaa0c1fa6e0cbcf1f467751ef0f16",
+  "freshBrowserOrWorkerReplayThisAudit": false,
+  "reusedWorkerAndFrontendTests": true,
+  "allM3TestCases": [
+    "AssignmentIntegrationTests.teacherGradesAndAttemptsRequireExplicitFormalScopeWithoutPrivateOrPrecompletedLeak",
+    "AssignmentIntegrationTests.teacherBatchGradesMatchOwnGradesAndHistoricalMembershipSurvivesArchive",
+    "AssignmentIntegrationTests.teacherCurrentRoleAndSessionAreRecheckedForEverySourceRead",
+    "AssignmentIntegrationTests.strictDraftCasRolesAndCreationReplay",
+    "AssignmentIntegrationTests.scheduledStartSnapshotsOnlyCurrentMembersAndAddsLateMemberExplicitly",
+    "AssignmentIntegrationTests.precompletedIsRealOwnerVersionProofAndDoesNotCreateFakeAttemptOrTeacherAccess",
+    "AssignmentIntegrationTests.formalReplayLinksExactlyOneSnapshotAndHalfwayFailureRollsBack",
+    "AssignmentIntegrationTests.acceptedBeforeDeadlineAcFinishedAfterDeadlineIsOnTimeAndHardCutoffRejectsNew",
+    "AssignmentIntegrationTests.lateAcUpgradesAfterExtensionAndLaterFailedAttemptNeverErasesCompletion",
+    "AssignmentIntegrationTests.publicFreePracticeEarlyRecordAndUnrelatedAcCannotBypassAllAssignmentPolicies",
+    "AssignmentIntegrationTests.exitKeepsOnlyOwnSummaryAndRejoinPreservesOriginalParticipant",
+    "AssignmentIntegrationTests.archiveStopsScheduledAndEndsActiveWithoutResurrectionAndCopyGetsFreshDraft",
+    "AssignmentIntegrationTests.currentVersionChangeRequiresDraftReviewAndStartedFormalUsesFrozenVersion",
+    "AssignmentIntegrationTests.actualSqlDenialsKeepPublicationAndParticipantsImmutableAndWorkerUnaware",
+    "AssignmentIntegrationTests.assignmentSelfTestIsScopedAndNeverCreatesFormalGradeOrAttempt",
+    "AssignmentIntegrationTests.changingScheduledAssignmentToImmediateUpdatesPlannedStartAndSnapshotsNow",
+    "AssignmentIntegrationTests.oldVersionAcDoesNotPrecompleteAndScheduledInvalidBasisStopsWithoutParticipants",
+    "AssignmentIntegrationTests.removedParticipantKeepsMaskedOwnHistoryAndOwnerRestoreReusesParticipation",
+    "AssignmentIntegrationTests.allTeachingReadRoutesAndAssignmentWritesFollowCurrentRoleAcrossTransfer",
+    "AssignmentMigrationIntegrationTests.v17PreservesAllExistingBytesAndClassroomPrivateFacts",
+    "ClassroomIntegrationTests.createReplayJoinRaceAndRoleScope",
+    "ClassroomIntegrationTests.invitationRotationLeftAndRemovedCannotSelfRestore",
+    "ClassroomIntegrationTests.transferAcceptWithdrawAndExitRacesKeepSingleOwner",
+    "ClassroomIntegrationTests.archiveOwnerExitRestoreAndEmptyDeletionDoNotEraseHistory",
+    "ClassroomIntegrationTests.ownershipMissingResponsesCsrfRevocationAndDatabaseGrants",
+    "ClassroomIntegrationTests.currentSessionIsRecheckedAndPartialTransferRollsBack",
+    "ClassroomIntegrationTests.joinRotationAndSameVersionChangesSerializeWithoutStaleReads",
+    "ClassroomIntegrationTests.strictFieldsSafeVersionsBoundsAndCreationReplayPayload",
+    "ClassroomIntegrationTests.targetAccountForeignKeyLockIsAcquiredBeforeClassroom",
+    "ClassroomMigrationIntegrationTests.v15PreservesAllExistingTablesAndAddsOnlyEmptyClassroomTables",
+    "ClassroomProblemIntegrationTests.dualValidationVersionAndPublicationReplayAreMandatory",
+    "ClassroomProblemIntegrationTests.roleAndRoomIsolationClosePublicLibraryListSolutionAndJudgeBypasses",
+    "ClassroomProblemIntegrationTests.assistantExitKeepsClassOwnershipAndCurrentMembershipRevokesAllPrivateReads",
+    "ClassroomProblemIntegrationTests.copyRequiresTeachingAndRevalidationAndArchiveIsReadOnlyAndBlocksDeletion",
+    "ClassroomProblemIntegrationTests.formalQuotaIdempotencyAndOwnerHistoryRemainIndependentFromMembership",
+    "ClassroomProblemIntegrationTests.columnGrantsAndWorkerBoundaryRetainImmutablePublishedInputs",
+    "ClassroomProblemIntegrationTests.publicationArchiveRaceAndTransactionFailureCannotCreateHalfPublishedProblem",
+    "ClassroomProblemIntegrationTests.earlySolutionConfirmationIsExplicitPersonalIdempotentAndRevocable",
+    "ClassroomProblemIntegrationTests.privateSelfTestUsesSharedQuotaAndCannotGrantAcOrExpandTeacherAccess",
+    "ClassroomProblemIntegrationTests.currentSessionIsRecheckedInsidePrivatePublicationTransaction",
+    "ClassroomProblemMigrationIntegrationTests.v16PreservesAllExistingFactsAndClassroomAndDefaultsToPublic"
+  ],
+  "gates": [
+    {
+      "id": "G1",
+      "status": "PASS",
+      "requiredCases": [
+        "AssignmentIntegrationTests.formalReplayLinksExactlyOneSnapshotAndHalfwayFailureRollsBack",
+        "AssignmentIntegrationTests.acceptedBeforeDeadlineAcFinishedAfterDeadlineIsOnTimeAndHardCutoffRejectsNew",
+        "AssignmentIntegrationTests.currentVersionChangeRequiresDraftReviewAndStartedFormalUsesFrozenVersion",
+        "AssignmentIntegrationTests.assignmentSelfTestIsScopedAndNeverCreatesFormalGradeOrAttempt"
+      ]
+    },
+    {
+      "id": "G2",
+      "status": "PASS",
+      "requiredCases": [
+        "AssignmentIntegrationTests.allTeachingReadRoutesAndAssignmentWritesFollowCurrentRoleAcrossTransfer",
+        "ClassroomIntegrationTests.createReplayJoinRaceAndRoleScope",
+        "ClassroomIntegrationTests.currentSessionIsRecheckedAndPartialTransferRollsBack",
+        "ClassroomProblemIntegrationTests.roleAndRoomIsolationClosePublicLibraryListSolutionAndJudgeBypasses",
+        "AssignmentIntegrationTests.actualSqlDenialsKeepPublicationAndParticipantsImmutableAndWorkerUnaware"
+      ]
+    },
+    {
+      "id": "G3",
+      "status": "PASS",
+      "requiredCases": [
+        "AssignmentIntegrationTests.scheduledStartSnapshotsOnlyCurrentMembersAndAddsLateMemberExplicitly",
+        "AssignmentIntegrationTests.exitKeepsOnlyOwnSummaryAndRejoinPreservesOriginalParticipant",
+        "AssignmentIntegrationTests.removedParticipantKeepsMaskedOwnHistoryAndOwnerRestoreReusesParticipation",
+        "AssignmentIntegrationTests.archiveStopsScheduledAndEndsActiveWithoutResurrectionAndCopyGetsFreshDraft",
+        "ClassroomIntegrationTests.transferAcceptWithdrawAndExitRacesKeepSingleOwner"
+      ]
+    },
+    {
+      "id": "G4",
+      "status": "PASS",
+      "requiredCases": [
+        "AssignmentIntegrationTests.teacherGradesAndAttemptsRequireExplicitFormalScopeWithoutPrivateOrPrecompletedLeak",
+        "AssignmentIntegrationTests.precompletedIsRealOwnerVersionProofAndDoesNotCreateFakeAttemptOrTeacherAccess",
+        "AssignmentIntegrationTests.teacherCurrentRoleAndSessionAreRecheckedForEverySourceRead",
+        "ClassroomProblemIntegrationTests.privateSelfTestUsesSharedQuotaAndCannotGrantAcOrExpandTeacherAccess"
+      ]
+    }
+  ],
+  "historicalEvidence": [
+    {
+      "path": "docs/evidence/m3-classroom/classroom-audit.json",
+      "sha256": "1ca1b0898eca9d9b27c5d076bde8ab0389563a94018bc0fc8cb8f9afd8023b18"
+    },
+    {
+      "path": "docs/evidence/m3-private-problems/private-problems-audit.json",
+      "sha256": "79c7344cbc59e3b4e1fd49b2dfb63675b9a1b0228290deb6b6d30b6bf7939ffc"
+    },
+    {
+      "path": "docs/evidence/m3-assignments/assignments-audit.json",
+      "sha256": "da47e57dcdcd81456f66341d738d6aaccab30c9eb46395fb59c3376c038e0a92"
+    },
+    {
+      "path": "docs/evidence/m3-teacher-records/teacher-audit.json",
+      "sha256": "972ae7831b92fba37f53c659fc0e875755ca6c5f75c8fa2e0899918ca47ba5bc"
+    },
+    {
+      "path": "docs/evidence/m3-teacher-records/teacher-http.json",
+      "sha256": "c239bac58c73034b89f6e8e0eeb8ed60404234ce177a32d2f9e787812968141d"
+    },
+    {
+      "path": "docs/evidence/m3-teacher-records/teacher-browser.json",
+      "sha256": "34a31dfa3a3a642dd6dea39e3e3e6ef161821d78387f174ef4b2dbf561c7a807"
+    },
+    {
+      "path": "docs/evidence/m3-classroom/classroom-browser.json",
+      "sha256": "85ae4f5da3e64afc6820a26ba72960d9e41f7ea890218ba3b7a2e4f691347c34"
+    },
+    {
+      "path": "docs/evidence/m3-assignments/assignment-browser.json",
+      "sha256": "f8702de44241a7ae977b154ffcf11fd2083c3ebac55d2c67008c0a2a5e8b679c"
+    },
+    {
+      "path": "docs/evidence/m3-assignments/runtime-browser-proof.json",
+      "sha256": "1ddb607b8e5b8d9376cf528f9296242205feb128706fdb6492dbbf55c7b8ac46"
+    },
+    {
+      "path": "docs/evidence/m3-private-problems/private-problems-browser.json",
+      "sha256": "10f086d26dc5b3efd05a0f2507bca1679f38a04c31ecfa5f455f254feb0432fe"
+    },
+    {
+      "path": "docs/evidence/m3-teacher-records/teacher-runtime.json",
+      "sha256": "c3f1d52d9809adc63abedfd0cded00a24bc7effa4b135d1bc3a6e25b6f6e95f9"
+    },
+    {
+      "path": "docs/evidence/m3-teacher-records/verification.json",
+      "sha256": "19bf83c0868840783c555a32977f78f0328e537f312594dc6356c642fe99ab44"
+    },
+    {
+      "path": "docs/evidence/m3-teacher-records/audit.json",
+      "sha256": "94260c78e758fccadc8285706cf2419c5a65516b9f2927d5e99cfbcd3c62ae0a"
+    },
+    {
+      "path": "docs/evidence/m3-teacher-records/privilege-denials.json",
+      "sha256": "0511f09d495a80c866ab40337e5cf95710d96f27f4e75bbffd6194d5a54181b8"
+    },
+    {
+      "path": "docs/evidence/m3-classroom/cleanup.json",
+      "sha256": "02019b86fe3ec611d5aeba325bc5b3b319383df63b71eb41f805e62203cebfa4"
+    },
+    {
+      "path": "docs/evidence/m3-private-problems/private-cleanup.json",
+      "sha256": "7f32476e3a9c69ffd562b89096c0886d518fb4cec9e6d32a2d64fa3ffa948fd9"
+    },
+    {
+      "path": "docs/evidence/m3-assignments/assignment-cleanup.json",
+      "sha256": "f7cce89cb74970d80c07c4e5607dd232e803dd50867b0eeb0fb3dda121e24fb9"
+    },
+    {
+      "path": "docs/evidence/m3-assignments/runtime-cleanup.json",
+      "sha256": "db01d829b3b72546628992ba4f52058d2b1526a6a4a11b39d2ed0a5f0d5bac38"
+    },
+    {
+      "path": "docs/evidence/m3-teacher-records/teacher-cleanup.json",
+      "sha256": "ebcea9486ce9367c3de7e95cc81e22c52f5731f0ad9c44fb20735c98211917fe"
+    },
+    {
+      "path": "docs/evidence/m3-teacher-records/first-replay-cleanup.json",
+      "sha256": "0bfb362af05f8771ac2d7d13fa2a4150e0488dd0f50204116f7e4845aafbbf95"
+    }
+  ],
+  "cleanup": {
+    "checkedAt": "2026-10-08T05:49:54.4853937+00:00",
+    "dockerAvailable": true,
+    "readOnlyInspection": true,
+    "counts": {
+      "builders": 0,
+      "testcontainers": 0,
+      "managedSandboxes": 0,
+      "replayContainers": 0,
+      "replayVolumes": 0,
+      "replayNetworks": 0,
+      "ownedImages": 0
+    },
+    "collectorSha256": "351e3a93cf9c67a37b927f828d7718a9c469416dec4986311d100ca8fb64d0cb"
+  },
+  "auditorSha256": "bdb5e22a97f1184c9e8f25e68fd3e2f4a275245eab8306f54a8892ec7026fd16"
+}

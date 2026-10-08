@@ -1,5 +1,7 @@
 # ForgeOJ 版本路线图
 
+2026-10-08 最终状态：完整M3 **VERIFIED，4/4总门禁通过**，见 [审计](M3-GATE-AUDIT.md)。本轮新增2项权限/历史直接回归，最新固定LinuxAPI223/41项M3均通过；未改Worker133/前端97按输入相等核对，运行构件和原真实判题/多账号证据关联通过。M-1至M3均VERIFIED；下一步M4最小管理员认证与角色设计，M4实施尚未开始。本轮到M3为止，不创建PR/main合并/Release/RESUME_READY；下方日期段落保留历史。
+
 2026-10-08 最新：M3成员、私有题、作业和 [教学记录单元](M3-TEACHER-RECORDS-VALIDATION.md) 均VERIFIED，完整M3仍IN_PROGRESS。教学记录151HTTP、真实Worker及三账号/撤权/归档历史、Linux API221/Worker133/前端97和输入/构件关联通过。下一步完整M3四项总门禁汇总，本轮停止于教学记录；下方日期记录为历史。
 
 2026-10-08 最新：M3成员、班级私有题及 [作业单元](M3-ASSIGNMENTS-VALIDATION.md) 均VERIFIED；完整M3 IN_PROGRESS，教师关联查询及四项总门禁留后续。本轮到作业验收为止，不启动下一单元。完整M2 VERIFIED保持，以下日期记录为历史。
@@ -14,7 +16,7 @@
 
 2026-10-04 不可变送审/撤回单元已 VERIFIED：V12 精确绑定本人当前双 PASSED 的不可变快照，唯一待审、owner/CAS/幂等、待审禁改、撤回后修改与历史保留完成。全新固定 Linux API169 + Worker120 = **289**、前端 **56** 及全部检查通过；相同构件真实页面两轮送审/撤回/归档、HTTP 六类待审写409、旧撤回不影响新待审、冻结题面不变、正常与轮询回退 AC、六空队列、30 项实际数据库权限拒绝及精确清理通过。见 [验收](M2-CONTENT-REVIEW-VALIDATION.md)。本轮未重复 Worker SIGKILL，117 个运行文件逐字节等同上轮真实故障验收；截图接口不可用，保存真实 DOM 观察，不提供合成截图。完整内容与 M2 仍 IN_PROGRESS；下一步为输出生成预览、独立自测，外部 SMTP 仍需服务商和授权收件箱配置；受控审核身份/批准发布保持 M4。
 
-> 当前阶段：M-1、M0、M1、M2 均 VERIFIED；M3成员、私有题、作业、教学记录四个单元VERIFIED，完整M3 IN_PROGRESS。下一步完整M3四项门禁汇总，待用户继续。下方带日期阶段段落保留历史。
+> 当前阶段：M-1、M0、M1、M2、M3均VERIFIED；M3四项总门禁已PASS。下一步M4最小管理员认证与角色设计，待用户继续；M4/M5仍PLANNED。下方带日期阶段段落保留历史。
 > 路线图描述先后顺序，不代表完成状态。
 
 ## 1. 状态规则
@@ -27,7 +29,7 @@
 - `DEFERRED`：明确推迟到以后。
 - `BACKLOG`：只有候选想法，尚未承诺进入版本。
 
-当前 M-1、M0、M1、M2 均为 `VERIFIED`；完整M3 `IN_PROGRESS`（成员、私有题、作业、教学记录四个单元VERIFIED，总门禁待审计）；M4 至 V1.1 仍为 `PLANNED`；V2.0 仅为 `BACKLOG` 候选，不是承诺的里程碑。
+当前 M-1、M0、M1、M2、M3 均为 `VERIFIED`（M3 4/4总门禁通过）；M4 至 V1.1 仍为 `PLANNED`；V2.0 仅为 `BACKLOG` 候选，不是承诺的里程碑。
 
 ## 2. 总体顺序
 
@@ -209,7 +211,7 @@ M0 的登录只用于打通受保护提交链路，可使用预置账号和最�
 
 ## 7. M3：班级与作业
 
-状态 `IN_PROGRESS`（2026-10-08）。成员、私有题、作业、教学记录四个单元均VERIFIED，分别见 [成员验收](M3-CLASSROOM-VALIDATION.md)、[私有题验收](M3-PRIVATE-PROBLEMS-VALIDATION.md)、[作业验收](M3-ASSIGNMENTS-VALIDATION.md)、[教学记录验收](M3-TEACHER-RECORDS-VALIDATION.md)。自由练习默认AC后开放，未AC可提醒后再次确认，仅个人解锁且必须服从共同作业策略。教师只读严格作业关联，私人练习/自测/预完成原代码隔离。下一步汇总下列四项总门禁，本轮到教学记录验收为止，不把单元通过直接作为完整M3通过。
+状态 `VERIFIED`（2026-10-08），4/4总门禁PASS，见 [最终审计](M3-GATE-AUDIT.md)。成员、私有题、作业、教学记录四单元分别见 [成员](M3-CLASSROOM-VALIDATION.md)、[私有题](M3-PRIVATE-PROBLEMS-VALIDATION.md)、[作业](M3-ASSIGNMENTS-VALIDATION.md)、[教学记录](M3-TEACHER-RECORDS-VALIDATION.md)。当前角色资源授权、永久快照/历史、冻结真实判题、共同题解和严格正式源码作用域完成。下列四门禁已由最新测试、运行输入和分别记录日期的真实证据审计通过；VERIFIED不等于生产Release。下一阶段M4，本轮不启动其实施。
 
 目标：形成区别于纯刷题站的教学闭环。
 

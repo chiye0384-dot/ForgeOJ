@@ -1,5 +1,7 @@
 # M3 班级私有题设计
 
+2026-10-08 总门禁补充：完整M3现已 [VERIFIED，4/4 PASS](M3-GATE-AUDIT.md)。本文件以下保留该单元执行时的范围、结果及失败轮次；最终整体状态以总门禁为准，不将各轮次重新描述为同一次运行。
+
 2026-10-06，本单元 VERIFIED；起点 `feat/m2-accounts / 089d777`。实际结果见 [验收](M3-PRIVATE-PROBLEMS-VALIDATION.md)。完整 M3 仍需作业及教师关联查询，保持 IN_PROGRESS。本单元不包含 M4 公共审核发布。
 
 ## 归属和不可变依据

@@ -31,7 +31,7 @@ public class SubmissionQueryService {
                 stored.processingStatus(),
                 stored.statusVersion(),
                 verdict,
-                publicDiagnostic(stored));
+                publicDiagnostic(stored),stored.judgeDataWarning());
     }
 
     private String publicDiagnostic(SubmissionStatus stored) {

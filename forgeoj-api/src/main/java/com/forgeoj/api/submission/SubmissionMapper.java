@@ -115,14 +115,15 @@ interface SubmissionMapper {
 
     @Select(
             """
-            SELECT id AS submissionId,
-                   processing_status AS processingStatus,
-                   status_version AS statusVersion,
-                   verdict,
-                   diagnostic_message AS diagnosticMessage
-            FROM submission
-            WHERE id = #{submissionId}
-              AND user_id = #{userId}
+            SELECT s.id AS submissionId,
+                   s.processing_status AS processingStatus,
+                   s.status_version AS statusVersion,
+                   s.verdict,
+                   s.diagnostic_message AS diagnosticMessage,
+                   CASE WHEN g.data_invalid=TRUE THEN '判题数据存在问题，此历史结果来自作废版本' END AS judgeDataWarning
+            FROM submission s LEFT JOIN public_problem_governance g ON g.problem_id=s.problem_id
+            WHERE s.id = #{submissionId}
+              AND s.user_id = #{userId}
             LIMIT 1
             """)
     Optional<SubmissionStatus> findStatusByOwner(
@@ -144,7 +145,7 @@ interface SubmissionMapper {
             JOIN problem_judge_version jv ON jv.id = p.current_judge_version_id
             WHERE p.slug = #{slug}
               AND p.status = 'ACTIVE' AND p.scope = 'PUBLIC'
-            LIMIT 1
+            LIMIT 1 FOR SHARE
             """)
     Optional<JudgeVersionSnapshot> findActiveJudgeVersion(@Param("slug") String slug);
 

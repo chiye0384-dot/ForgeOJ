@@ -29,6 +29,9 @@ public class AdminService {
     }
     public void rate(String key,int count,long seconds){limits.check("admin:"+key,count,seconds);}
     private <T>T work(Supplier<T> body){try{return transaction.execute(s->{mapper.fence();return body.get();});}catch(ResponseStatusException e){if(e.getStatusCode().value()==401||e.getStatusCode().value()==403||e.getStatusCode().value()==409)audit.denied(e.getStatusCode().value());throw e;}}
+    <T>T contentWork(java.util.function.Function<AdminMapper.Account,T> body){
+        return work(()->{var a=actor(false,false);if(!Set.of("CONTENT_REVIEWER","SUPER_ADMIN").contains(a.role()))throw error(403);return body.apply(a);});
+    }
     public Login login(String name,String password){
         boolean valid=name!=null&&name.matches("[A-Za-z0-9_]{3,32}")&&password!=null&&password.getBytes(java.nio.charset.StandardCharsets.UTF_8).length<=72;
         if(!valid){passwords.matches("invalid",dummy);audit.denied(401);throw error(401);}

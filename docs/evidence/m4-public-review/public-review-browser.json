@@ -1,0 +1,32 @@
+{
+  "checkedAt": "2026-10-08T12:51:25.107Z",
+  "reviewerFrozenCase": true,
+  "explicitReference": true,
+  "opsDenied": true,
+  "ordinaryDenied": true,
+  "authorRevisionEntry": true,
+  "authorCopySubmitted": true,
+  "feedbackPrivate": true,
+  "invalidHistoryWarning": true,
+  "revokedCleared": true,
+  "tabRetained": true,
+  "tabId": "5",
+  "frontendUrl": "http://127.0.0.1:63960",
+  "snapshots": [
+    "public-review-browser-reviewer.dom.txt",
+    "public-review-browser-reference.dom.txt",
+    "public-review-browser-ops.dom.txt",
+    "public-review-browser-ordinary.dom.txt",
+    "public-review-browser-author.dom.txt",
+    "public-review-browser-author-copy.dom.txt",
+    "public-review-browser-feedback.dom.txt",
+    "public-review-browser-invalid.dom.txt",
+    "public-review-browser-before-revoke.dom.txt",
+    "public-review-browser-revoked.dom.txt"
+  ],
+  "notes": [
+    "Existing fixture passwords used for login; new passwords prepared by HTTP, no UI credential change claimed.",
+    "Archived slug filter returned 404; unfiltered own history preserves old AC and invalid warning.",
+    "Original-author copy performed in the real UI; fresh draft version1, no inherited PASSED."
+  ]
+}

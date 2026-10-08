@@ -64,7 +64,7 @@ public class ContentService {
     @Transactional
     public void delete(long owner,String id,long version) {
         lock(owner,id,version);
-        if(mapper.validationReferences(id)>0 || mapper.reviewReferences(id)>0) throw conflict();
+        if(mapper.validationReferences(id)>0 || mapper.reviewReferences(id)>0 || mapper.revisionReferences(id)>0) throw conflict();
         mapper.clearTests(owner,id);changed(mapper.delete(owner,id,version));
     }
     private ContentMapper.Row lock(long owner,String id,long version) {
@@ -93,9 +93,9 @@ public class ContentService {
         try(var stream=new GZIPInputStream(new ByteArrayInputStream(bytes))) {byte[] data=stream.readNBytes(TestDatasetArchive.MAX_FILE_BYTES+1);if(data.length!=expected || stream.read()!=-1 || !hash(data).equals(digest)) throw new IllegalStateException("Invalid private test integrity");return new String(data,StandardCharsets.UTF_8);}catch(IOException e) {throw new IllegalStateException("Invalid private test integrity");}
     }
     private static String hash(byte[] bytes) {try{return HexFormat.of().formatHex(MessageDigest.getInstance("SHA-256").digest(bytes));}catch(java.security.NoSuchAlgorithmException e) {throw new IllegalStateException("SHA-256 unavailable");}}
-    private static void uuid(String id) {try {if(!UUID.fromString(id).toString().equals(id)) throw missing();}catch(IllegalArgumentException e) {throw missing();}}
+    static void uuid(String id) {if(id==null) throw missing();try {if(!UUID.fromString(id).toString().equals(id)) throw missing();}catch(IllegalArgumentException e) {throw missing();}}
     private static void changed(int count) {if(count!=1) throw conflict();}
-    private static ResponseStatusException bad() {return new ResponseStatusException(HttpStatus.BAD_REQUEST);}
-    private static ResponseStatusException missing() {return new ResponseStatusException(HttpStatus.NOT_FOUND);}
-    private static ResponseStatusException conflict() {return new ResponseStatusException(HttpStatus.CONFLICT);}
+    static ResponseStatusException bad() {return new ResponseStatusException(HttpStatus.BAD_REQUEST);}
+    static ResponseStatusException missing() {return new ResponseStatusException(HttpStatus.NOT_FOUND);}
+    static ResponseStatusException conflict() {return new ResponseStatusException(HttpStatus.CONFLICT);}
 }

@@ -21,9 +21,19 @@ public interface ProblemMapper {
                    jv.version_no AS judgeVersion,
                    jv.time_limit_ms AS timeLimitMs,
                    jv.memory_limit_mb AS memoryLimitMb,
-                   jv.output_limit_bytes AS outputLimitBytes
+                   jv.output_limit_bytes AS outputLimitBytes,
+                   CAST(p.public_samples_json AS CHAR CHARACTER SET utf8mb4) AS publicSamplesJson,
+                   u.username AS authorName,
+                   JSON_UNQUOTE(JSON_EXTRACT(s.metadata_text,'$.originType')) AS originType,
+                   NULLIF(JSON_UNQUOTE(JSON_EXTRACT(s.metadata_text,'$.sourceUrl')),'null') AS sourceUrl,
+                   JSON_UNQUOTE(JSON_EXTRACT(s.metadata_text,'$.licenseStatement')) AS licenseStatement,
+                   corrected.slug AS correctionOfSlug
             FROM problem p
             JOIN problem_judge_version jv ON jv.id = p.current_judge_version_id
+            LEFT JOIN public_problem_governance g ON g.problem_id=p.id
+            LEFT JOIN content_validation_snapshot s ON s.id=g.snapshot_id
+            LEFT JOIN user_account u ON u.id=g.author_id
+            LEFT JOIN problem corrected ON corrected.id=g.correction_of_id
             WHERE p.slug = #{slug}
               AND p.status = 'ACTIVE' AND p.scope = 'PUBLIC'
             LIMIT 1

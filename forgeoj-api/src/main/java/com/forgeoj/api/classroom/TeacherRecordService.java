@@ -25,7 +25,7 @@ public class TeacherRecordService {
         var grouped=new HashMap<Long,List<Grade>>();
         if(!people.isEmpty()) for(var row:mapper.grades(id,people.stream().map(TeacherRecordMapper.Participant::userId).toList())) {
             var cutoff=assignment.endedAt()==null||assignment.deadlineAt().isBefore(assignment.endedAt())?assignment.deadlineAt():assignment.endedAt();
-            String state=row.precompleted()?"PRECOMPLETED":row.acceptedAt()!=null?(row.acceptedAt().isBefore(cutoff)?"ON_TIME_AC":"LATE_AC"):row.attempts()==0?"NOT_STARTED":"ATTEMPTING";
+            String state=row.dataInvalid()?"INVALID":row.precompleted()?"PRECOMPLETED":row.acceptedAt()!=null?(row.acceptedAt().isBefore(cutoff)?"ON_TIME_AC":"LATE_AC"):row.attempts()==0?"NOT_STARTED":"ATTEMPTING";
             grouped.computeIfAbsent(row.userId(),unused->new ArrayList<>()).add(new Grade(row.ordinal(),row.slug(),row.title(),row.judgeVersionId(),state,row.attempts(),row.precompleted()?null:time(row.firstAcAt())));
         }
         var items=people.stream().map(p->{var grades=List.copyOf(grouped.getOrDefault(p.userId(),List.of()));int completed=(int)grades.stream().filter(g->Set.of("PRECOMPLETED","ON_TIME_AC","LATE_AC").contains(g.state())).count();return new Participant(p.userId(),p.username(),p.memberStatus(),p.role(),completed,grades);}).toList();

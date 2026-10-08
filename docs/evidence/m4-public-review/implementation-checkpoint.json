@@ -1,0 +1,310 @@
+{
+  "state": "VERIFIED",
+  "recordedAt": "2026-10-08T20:57:14.980305+08:00",
+  "baselineHead": "0f983988aa27841c8d110e9f821adbe6494c90f0",
+  "branch": "feat/m2-accounts",
+  "checks": [
+    {
+      "log": "target/m4-review-contract-third.log",
+      "sha256": "d7e23a441e7ed6f219d95b9550b0c0d80d1633741a361dca686a219c8a9ce681",
+      "tests": 45,
+      "failures": 0,
+      "errors": 0,
+      "skipped": 0,
+      "buildSuccess": true
+    },
+    {
+      "log": "target/m4-review-migration-role.log",
+      "sha256": "1e5ff6bd299d5eacf79fee57b5da475e01af1d611fb36df779247d78a5d54a3d",
+      "tests": 17,
+      "failures": 0,
+      "errors": 0,
+      "skipped": 0,
+      "buildSuccess": true
+    },
+    {
+      "log": "target/m4-review-admin-revocation.log",
+      "sha256": "e8e068bd3020a1631f70066f05f4ab7bc0e9f25c585115e5748c2fdd1eb5d11e",
+      "tests": 1,
+      "failures": 0,
+      "errors": 0,
+      "skipped": 0,
+      "buildSuccess": true
+    },
+    {
+      "log": "target/m4-review-concurrency-execution-final.log",
+      "sha256": "ea874c5decc8f256ecde6bc7e12e142ac39bf53bb5f5b40043482cb2e38dfefc",
+      "tests": 39,
+      "failures": 0,
+      "errors": 0,
+      "skipped": 0,
+      "buildSuccess": true
+    },
+    {
+      "log": "target/m4-review-frontend-final-115.log",
+      "sha256": "5eb2a1b4b701ba90906e38a601d8c7db331da1b52cb8c27740179e168eab6122",
+      "tests": 115,
+      "typeCheck": true,
+      "lint": true,
+      "format": true,
+      "unitTests": true,
+      "build": true
+    },
+    {
+      "log": "target/m4-review-revision-final.log",
+      "sha256": "4d810c2526214c8bf2a94dfb57aa94f3c02026ff4f0747765e47be282eb031d3",
+      "note": "15 review tests: 14 pass, 1 failed incorrect ordinary CSRF setup; upgrade test passed. Fixture PASSED only."
+    },
+    {
+      "log": "target/m4-review-revision-owner-final.log",
+      "sha256": "0f2d5391198cd73868f0da760204483577b589a24ce4ced78e6343a47d7a1c0f",
+      "note": "Single original-author case passed with correct ordinary-domain CSRF and composite owner FK denial."
+    },
+    {
+      "log": "target/m4-review-frontend-revision-final.log",
+      "sha256": "c730ea33cdd4bb5bd3f1926e2775a3eb42461136f5f427caa879441032669433",
+      "note": "118 tests / 23 suites and all checks passed; later admin revision-context presentation needs current full gate."
+    },
+    {
+      "log": "target/m4-review-solution-grants.log",
+      "sha256": "a890d7a5ac0cfd4f3f24f72b6683f021b1c9c18f8b366151a7e136ddd915834c",
+      "tests": 1,
+      "buildSuccess": true,
+      "note": "V19 minimal solution content columns allowed; identity columns/delete denied, FK refuses invalid insertion; early view insertion failure rollback preserved."
+    }
+  ],
+  "changedInputs": [
+    {
+      "path": "forgeoj-api/src/main/java/com/forgeoj/api/admin/AdminAudit.java",
+      "sha256": "7cae5631fec23b6e31be1c9ae6ad30b79027f3d37d4de8db5d9854762fd06de4"
+    },
+    {
+      "path": "forgeoj-api/src/main/java/com/forgeoj/api/admin/AdminService.java",
+      "sha256": "1516808d70c2d7b1c6951b67a0151b25ec7a7f518ec4828ca00a327ce1c6f0bd"
+    },
+    {
+      "path": "forgeoj-api/src/main/java/com/forgeoj/api/admin/PublicContentInput.java",
+      "sha256": "dd0d574895d8fb12337771a40beae0fcf00a177e51e5f7219620747c59dc9c89"
+    },
+    {
+      "path": "forgeoj-api/src/main/java/com/forgeoj/api/admin/PublicFeedbackAdminController.java",
+      "sha256": "39a178f0b9f2ecc71733b45a5e5cb84df906ede76cc2f4ee0405201f415bec80"
+    },
+    {
+      "path": "forgeoj-api/src/main/java/com/forgeoj/api/admin/PublicFeedbackMapper.java",
+      "sha256": "998865adedb62dc61a090d5d323dac5f497cd9b277ff3635ed89779e3d0114ad"
+    },
+    {
+      "path": "forgeoj-api/src/main/java/com/forgeoj/api/admin/PublicFeedbackService.java",
+      "sha256": "7098630bb91e472c6f8a35bc3179200be33c2f13f93993890cfc450ac5667d35"
+    },
+    {
+      "path": "forgeoj-api/src/main/java/com/forgeoj/api/admin/PublicReviewController.java",
+      "sha256": "fe9798432471a23f3363aad3a962fb00c4af5f0ae9224e6509c5e26b2d0e7e9c"
+    },
+    {
+      "path": "forgeoj-api/src/main/java/com/forgeoj/api/admin/PublicReviewMapper.java",
+      "sha256": "0fa8cd3a425cd1bded403f8dffbbad093aa6d8d38e27cc14baf7dfc63c926b13"
+    },
+    {
+      "path": "forgeoj-api/src/main/java/com/forgeoj/api/admin/PublicReviewService.java",
+      "sha256": "f6a990de0c4e70cdcf18db637adace875923db2cd66e54ceb47763aa4abe916f"
+    },
+    {
+      "path": "forgeoj-api/src/main/java/com/forgeoj/api/classroom/AssignmentMapper.java",
+      "sha256": "e657f77dee3fa3d67f0fb82517fe41e89f3b9b64c22c4e3bedfeb895e6889244"
+    },
+    {
+      "path": "forgeoj-api/src/main/java/com/forgeoj/api/classroom/AssignmentService.java",
+      "sha256": "75f43d47342b87cca0905aad0682c3111378ad306ffcd018579f5eab47ff7ee4"
+    },
+    {
+      "path": "forgeoj-api/src/main/java/com/forgeoj/api/classroom/TeacherRecordMapper.java",
+      "sha256": "30cde6e662fe7b518c6c5dd75a669461bddedbda8d3a29daa1db64a217e7f622"
+    },
+    {
+      "path": "forgeoj-api/src/main/java/com/forgeoj/api/classroom/TeacherRecordService.java",
+      "sha256": "150ec6f626b658f9c39f21770d4f751a014b7cc1ef4bbcecc6ae460129eeee95"
+    },
+    {
+      "path": "forgeoj-api/src/main/java/com/forgeoj/api/content/ContentReviewMapper.java",
+      "sha256": "9b6edce2a58a0b7921855d2a307929b2e1f82acafed8bae268f847c2fd46c516"
+    },
+    {
+      "path": "forgeoj-api/src/main/java/com/forgeoj/api/learning/LearningMapper.java",
+      "sha256": "c7e4b5f024cbfa0ea75d04e04ae137687c94004c78cd102d27858367947d23d2"
+    },
+    {
+      "path": "forgeoj-api/src/main/java/com/forgeoj/api/learning/LearningRecords.java",
+      "sha256": "18a00cce8b7808283bf6527e99a31ea58a2ecee3d9a99c91bb25167d44b5931a"
+    },
+    {
+      "path": "forgeoj-api/src/main/java/com/forgeoj/api/learning/LearningService.java",
+      "sha256": "e7da4cfb826af47ea0ed9e5c42bc405ccee9d7e7512977b16782f5decba16d9b"
+    },
+    {
+      "path": "forgeoj-api/src/main/java/com/forgeoj/api/problem/ProblemController.java",
+      "sha256": "a52c6b9dc5ef408e8d68187356a889a212ef72c7d6e89d3f8f3059e900e6fe5b"
+    },
+    {
+      "path": "forgeoj-api/src/main/java/com/forgeoj/api/problem/ProblemDetailsRow.java",
+      "sha256": "c4174ecc8a1ac8cfbfdf6392d518948092a709a8c1c1e47aabc850f4a56eb46d"
+    },
+    {
+      "path": "forgeoj-api/src/main/java/com/forgeoj/api/problem/ProblemFeedbackController.java",
+      "sha256": "8ce77f4acc10f020352e5fdec0bbd3788473f0a63c4276ff58a3e04e13f0b035"
+    },
+    {
+      "path": "forgeoj-api/src/main/java/com/forgeoj/api/problem/ProblemMapper.java",
+      "sha256": "fa1c052c40b28a1175acde09fee2262a52a8504292c8d119e90f63969017a88f"
+    },
+    {
+      "path": "forgeoj-api/src/main/java/com/forgeoj/api/selftest/SelfTestMapper.java",
+      "sha256": "f8cfe2094e0b53a184f954c37b3af1ae46bf4876b2d4ca44cf96a48692d6b286"
+    },
+    {
+      "path": "forgeoj-api/src/main/java/com/forgeoj/api/submission/SubmissionMapper.java",
+      "sha256": "7526b8ddafbe0286bbabc1673cb8dcc107ef36ba1780f296f7c51383ac99af1b"
+    },
+    {
+      "path": "forgeoj-api/src/main/java/com/forgeoj/api/submission/SubmissionQueryService.java",
+      "sha256": "fc7ea44dd2d7f3ab080ac60c03e8649db4b8d99bf0966d9168f516489b84dac5"
+    },
+    {
+      "path": "forgeoj-api/src/main/java/com/forgeoj/api/submission/SubmissionStatus.java",
+      "sha256": "1782e518caa7d783ae52928130180759b29fe6f3348fbb89619523bfa4243cdc"
+    },
+    {
+      "path": "forgeoj-api/src/main/resources/db/migration/V19__public_review_governance.sql",
+      "sha256": "7485f78fdebd3f7c511de93e985d694dbfcf57bc87ba675a42aff52c448ecfdb"
+    },
+    {
+      "path": "forgeoj-api/src/test/java/com/forgeoj/api/admin/AdminIdentityIntegrationTests.java",
+      "sha256": "b92c5c7e773f2ba338f4ed4212a40b135a3f1aeaa5b08930ac74d47c3d9a721e"
+    },
+    {
+      "path": "forgeoj-api/src/test/java/com/forgeoj/api/admin/PublicReviewIntegrationTests.java",
+      "sha256": "51aeae54c6ba68de7051b2064a26e1a29443e33f18af60a803e26fd5464a9976"
+    },
+    {
+      "path": "forgeoj-api/src/test/java/com/forgeoj/api/admin/PublicReviewMigrationIntegrationTests.java",
+      "sha256": "1f06ecae4e2945d8571ec5d037f32e07bc12cd9ddf1dc22327244611a7882ac0"
+    },
+    {
+      "path": "forgeoj-api/src/test/java/com/forgeoj/api/classroom/AssignmentIntegrationTests.java",
+      "sha256": "01b139577f2e7c384c9f94cee8bc4b85e0bae03b9d85bc4e990fe97bec4fad41"
+    },
+    {
+      "path": "frontend/src/__tests__/AdminContentView.spec.ts",
+      "sha256": "08ba13c6792fd3045d1323dee5058bb035d0d9ed9756eda3d27873fd9b4c9e15"
+    },
+    {
+      "path": "frontend/src/__tests__/App.spec.ts",
+      "sha256": "1054e57d229d8e372f32de330e31af9053e97944cf921d78b50c16d7167e573b"
+    },
+    {
+      "path": "frontend/src/__tests__/ProblemFeedback.spec.ts",
+      "sha256": "451ef4bf49b6e1317b1c147f904a029d08b602ad770e34c48ecb9748a8d5473c"
+    },
+    {
+      "path": "frontend/src/components/ContentReview.vue",
+      "sha256": "7dbf96130ae5cc9762e20e6421856b922b23257affa9077968f208f134cbffb5"
+    },
+    {
+      "path": "frontend/src/components/ProblemFeedback.vue",
+      "sha256": "c73d90f39c5183ff70d8299b32adac1ecba3449248619fdcb212f75f252d21d5"
+    },
+    {
+      "path": "frontend/src/router/index.ts",
+      "sha256": "46d0f2a935615c488791d1cfec63b3c37160fbbd206165a70550943ca89b9799"
+    },
+    {
+      "path": "frontend/src/services/assignmentApi.ts",
+      "sha256": "aa71edd9b3287bb3ce7ddc36c195625877518ec67d4466bcf59152bd9e71a0ba"
+    },
+    {
+      "path": "frontend/src/services/forgeojApi.ts",
+      "sha256": "e727689652e1a7cdbfd0c63a06fb068f8b89d12f6052bb1045a900e36351b3b4"
+    },
+    {
+      "path": "frontend/src/services/learningApi.ts",
+      "sha256": "45f0ce7ca86a77fbcee8853e57dd65292b0e95c85071e815781d08481a6ce21c"
+    },
+    {
+      "path": "frontend/src/services/reviewApi.ts",
+      "sha256": "5424a3a54636c367acc082942f379414228c679225630660718fde3f9d1b1f6a"
+    },
+    {
+      "path": "frontend/src/views/AdminContentView.vue",
+      "sha256": "e8afe0c4532ec6f0a90d8b8e70712709131d5440317ffbacc00d39cbdaf3dab0"
+    },
+    {
+      "path": "frontend/src/views/AdminView.vue",
+      "sha256": "e78ccbd1c62b63d2ee27bd5d66d9fd3f6699379ff0c4566ca26de24399e2a041"
+    },
+    {
+      "path": "frontend/src/views/AssignmentsView.vue",
+      "sha256": "231a775a1e39cf417977bab5fe869f2f2dae77243381a5adb3d332ca194e55a1"
+    },
+    {
+      "path": "frontend/src/views/JudgeWorkspaceView.vue",
+      "sha256": "0b9f2213f687ff7a9f751cced1ecd931768c83f6bee34961b24f8ae60b7d45a3"
+    },
+    {
+      "path": "frontend/src/views/LearningView.vue",
+      "sha256": "2eccb2fc8e409a2a013e41e25a82ba0cea788a03ae373663d2fce91847a473f2"
+    },
+    {
+      "path": "frontend/src/views/TeacherRecordsView.vue",
+      "sha256": "b47548658ade0c1b01e5324133676c65ecc675a2a33d36d30f4d5e9a3a0e724a"
+    }
+  ],
+  "validationTerminalRows": "Focused contract checks use explicit SQL fixtures; final verification separately proves six real Worker dual-PASSED jobs and actual formal AC.",
+  "notYetVerified": [
+    "full M4 beyond step3"
+  ],
+  "pendingUserDecision": null,
+  "committed": false,
+  "pushed": false,
+  "dockerContainersRemaining": 0,
+  "desktopCloseRestartOrUpdatePerformed": false,
+  "preservedFiles": {
+    "docs/M2-NEXT-CHAT-HANDOFF.md": "e08acd3d26a8cd27aca394bdac91828e13b9455a86f62133c5bafc038b18c054",
+    ".smtp.qq.local": "6df348a6404786791eb57c0dce9c9fb8968f7f0737de304f17d52c3900a03907"
+  },
+  "revisionPermission": {
+    "decision": "D-044",
+    "accepted": true,
+    "originalAuthorOnly": true,
+    "otherUsers": "feedback",
+    "reviewer": "approve or reject"
+  },
+  "pending": [],
+  "currentFullGate": {
+    "directory": "target/forgeoj-linux-20261008-201146-a1bd1a95",
+    "state": "PASSED",
+    "apiTests": 263,
+    "workerTests": 133,
+    "frontendTests": 118,
+    "frontendSuites": 23,
+    "apiSha256": "004391da1f75b8d0751738a3d1f4f87a784e6995cb735b8580fa5d5a5375b43f",
+    "workerSha256": "8653b386c9fb3f010d7398d891ec87a3edfacd1e4c38416ba155407b7cc39182"
+  },
+  "cleanupStatus": "all owned resources zero",
+  "changedInputsNote": "Earlier focused checkpoint hashes are historical. Current final source-inputs.json supersedes them.",
+  "failedFullGate": {
+    "path": "target/forgeoj-linux-20261008-193850-4023adf1",
+    "apiTests": 263,
+    "failures": 1,
+    "errors": 0,
+    "skipped": 0,
+    "reviewTestsPassed": 15,
+    "reason": "Legacy solution test expected no API solution UPDATE before M4; assertion now checks permitted content vs immutable identity columns and FK with rollback."
+  },
+  "activeExecSession": null,
+  "currentReplay": "target/forgeoj-e2e-20261008-204157-6a542650",
+  "finalVerification": "docs/evidence/m4-public-review/verification.json",
+  "delivery": "Verified unit ready for commit/push; actual delivery hash and remote consistency are Git facts.",
+  "failedFirstBackendLogSha256": "9c0597268d3b413064ec00e2d32489255315edd418b33c9d68e3e0b8f245183d",
+  "deliveryNote": "committed/pushed flags describe the verification checkpoint before delivery; actual commit and remote status must be read from Git."
+}

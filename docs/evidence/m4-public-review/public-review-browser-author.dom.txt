@@ -1,0 +1,51 @@
+- banner:
+  - generic: F
+  - heading "ForgeOJ" [level=1]
+  - paragraph: Java 21 在线练习与判题
+  - navigation "主导航":
+    - link "题库":
+      - /url: /problems
+    - link "学习记录":
+      - /url: /learning
+    - link "班级":
+      - /url: /classrooms
+    - link "我的题目":
+      - /url: /authoring
+    - link "做题":
+      - /url: /
+    - link "账号":
+      - /url: /account
+    - link "管理后台":
+      - /url: /admin/login
+- main:
+  - heading "我的题目草稿" [level=2]
+  - paragraph: 草稿、参考程序和测试数据仅本人可见。保存草稿后可继续完善内容。
+  - region "公开题修订":
+    - button "修订已公开题"
+    - paragraph: 仅显示本人已发布的题目。文案修订须保持判题依据一致；关联新题会暂停旧题，旧 AC 不算新题完成。复制后需要重新验证并送审。
+    - status
+    - list:
+      - text: M4 原创公共求和验收 · 版本 1 · 公开
+      - button "复制文案修订"
+      - button "复制关联新题"
+      - text: M4 原创公共求和验收 · 版本 6 · 已下架 · 判题数据存在问题
+      - button "复制文案修订" [disabled]
+      - button "复制关联新题"
+    - button "上一页公开题" [disabled]
+    - button "下一页公开题" [disabled]
+  - text: 新题目标题
+  - textbox "新题目标题"
+  - button "创建内容草稿"
+  - list:
+    - button "M4 原创公共求和验收"
+    - text: · UNDER_REVIEW · 3 组测试
+    - button "M4 原创公共求和验收"
+    - text: · DRAFT · 3 组测试
+    - button "M4 原创公共求和验收"
+    - text: · DRAFT · 2 组测试
+    - button "M4 原创公共求和验收"
+    - text: · DRAFT · 2 组测试
+  - button "上一页" [disabled]
+  - text: 1 / 1
+  - button "下一页" [disabled]
+  - status

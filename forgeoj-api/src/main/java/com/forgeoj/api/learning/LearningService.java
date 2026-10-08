@@ -165,7 +165,7 @@ public class LearningService {
         if(slug!=null) publicProblem(slug,false);
         long total=mapper.historyCount(userId,slug);
         var rows=offset>=total ? List.<LearningMapper.HistoryRow>of() : mapper.history(userId,slug,size,offset);
-        return new Page<>(rows.stream().map(r -> new History(r.submissionId(),r.createdAt(),r.language(),r.processingStatus(),r.statusVersion(),r.verdict(),r.judgeVersion(),r.slug()==null ? null : new HistoryProblem(r.slug(),r.title()))).toList(),page,size,total);
+        return new Page<>(rows.stream().map(r -> new History(r.submissionId(),r.createdAt(),r.language(),r.processingStatus(),r.statusVersion(),r.verdict(),r.judgeVersion(),r.slug()==null ? null : new HistoryProblem(r.slug(),r.title()),r.judgeDataWarning())).toList(),page,size,total);
     }
     private LearningMapper.ProblemRow publicProblem(String slug,boolean locking) {
         slug(slug);

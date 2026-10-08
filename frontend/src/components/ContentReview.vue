@@ -201,7 +201,15 @@ onBeforeUnmount(() => {
     <ul>
       <li v-for="r in reviews" :key="r.reviewId">
         第 {{ r.reviewNo }} 次送审 · 冻结草稿版本 {{ r.draftVersion }} ·
-        {{ r.status === 'PENDING' ? '待审核' : '已撤回' }}
+        {{
+          { PENDING: '待审核', WITHDRAWN: '已撤回', APPROVED: '已批准', REJECTED: '已驳回' }[
+            r.status
+          ]
+        }}
+        <p v-if="r.decisionReason">审核说明：{{ r.decisionReason }}</p>
+        <RouterLink v-if="r.publishedSlug" :to="`/problems/${encodeURIComponent(r.publishedSlug)}`"
+          >查看公开题目</RouterLink
+        >
         <button :disabled="busy || editingBusy" @click="inspect(r)">
           查看第 {{ r.reviewNo }} 次冻结快照
         </button>

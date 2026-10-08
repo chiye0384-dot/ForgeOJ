@@ -1,0 +1,92 @@
+{
+  "verifiedAt": "2026-10-08T12:54:57.624Z",
+  "allPassed": true,
+  "backend": "target\\forgeoj-linux-20261008-201146-a1bd1a95",
+  "frontend": "target\\forgeoj-linux-20261008-201146-a1bd1a95",
+  "replay": "target\\forgeoj-e2e-20261008-204157-6a542650",
+  "api": {
+    "suites": 47,
+    "tests": 263,
+    "failures": 0,
+    "errors": 0,
+    "skipped": 0
+  },
+  "worker": {
+    "suites": 23,
+    "tests": 133,
+    "failures": 0,
+    "errors": 0,
+    "skipped": 0
+  },
+  "frontendTests": 118,
+  "apiSha256": "004391da1f75b8d0751738a3d1f4f87a784e6995cb735b8580fa5d5a5375b43f",
+  "workerSha256": "8653b386c9fb3f010d7398d891ec87a3edfacd1e4c38416ba155407b7cc39182",
+  "backendLogSha256": "ab8fe24fd773f16ff2429f584b0087d6a0ecf5a3b67001023bb5e716cb801112",
+  "frontendLogSha256": "393764fe2c496b18fa255c06cbf4d54b380de290f70ea9e2c21c636400712a86",
+  "verifierSha256": "f5f91163a383eea40f0547dc06518cfff36af1dbb08a63c07570bf02cd77907f",
+  "httpChecks": 102,
+  "browser": {
+    "checkedAt": "2026-10-08T12:51:25.107Z",
+    "reviewerFrozenCase": true,
+    "explicitReference": true,
+    "opsDenied": true,
+    "ordinaryDenied": true,
+    "authorRevisionEntry": true,
+    "authorCopySubmitted": true,
+    "feedbackPrivate": true,
+    "invalidHistoryWarning": true,
+    "revokedCleared": true,
+    "tabRetained": true,
+    "tabId": "5",
+    "frontendUrl": "http://127.0.0.1:63960",
+    "snapshots": [
+      "public-review-browser-reviewer.dom.txt",
+      "public-review-browser-reference.dom.txt",
+      "public-review-browser-ops.dom.txt",
+      "public-review-browser-ordinary.dom.txt",
+      "public-review-browser-author.dom.txt",
+      "public-review-browser-author-copy.dom.txt",
+      "public-review-browser-feedback.dom.txt",
+      "public-review-browser-invalid.dom.txt",
+      "public-review-browser-before-revoke.dom.txt",
+      "public-review-browser-revoked.dom.txt"
+    ],
+    "notes": [
+      "Existing fixture passwords used for login; new passwords prepared by HTTP, no UI credential change claimed.",
+      "Archived slug filter returned 404; unfiltered own history preserves old AC and invalid warning.",
+      "Original-author copy performed in the real UI; fresh draft version1, no inherited PASSED."
+    ]
+  },
+  "runtime": {
+    "capturedAt": "2026-10-08T12:51:58.911Z",
+    "readOnlySourceMount": true,
+    "files": 79
+  },
+  "acceptance": {
+    "checkedAt": "2026-10-08T12:52:14.042Z",
+    "allPassed": true,
+    "httpChecks": 102,
+    "realDualPassed": 6,
+    "reviewCases": 5,
+    "publishedProblems": 2,
+    "formal": 13,
+    "governanceFormal": 3,
+    "auditEvents": 98,
+    "emptyQueues": 7,
+    "sqlDenials": 14,
+    "baselineSqlDenials": 8,
+    "classroomChecks": 62,
+    "commitBeforeAck": true
+  },
+  "cleanup": {
+    "checkedAt": "2026-10-08T20:53:14.3615297+08:00",
+    "ownedVolumes": 0,
+    "ownedContainers": 0,
+    "testcontainers": 0,
+    "ownedNetworks": 0,
+    "builders": 0,
+    "ownedImages": 0,
+    "managedSandboxes": 0
+  },
+  "scope": "M4 step3 public review governance only; full M4 IN_PROGRESS"
+}

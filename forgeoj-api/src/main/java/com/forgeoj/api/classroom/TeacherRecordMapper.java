@@ -8,7 +8,7 @@ import org.apache.ibatis.annotations.*;
 @Mapper
 interface TeacherRecordMapper {
     record Participant(long userId,String username,String memberStatus,String role) {}
-    record GradeRow(long userId,int ordinal,String slug,String title,long judgeVersionId,int attempts,boolean precompleted,LocalDateTime acceptedAt,LocalDateTime firstAcAt) {}
+    record GradeRow(long userId,int ordinal,String slug,String title,long judgeVersionId,int attempts,boolean precompleted,LocalDateTime acceptedAt,LocalDateTime firstAcAt,boolean dataInvalid) {}
     record Attempt(String submissionId,long userId,int ordinal,String problemSlug,long judgeVersionId,String language,String processingStatus,String verdict,LocalDateTime acceptedAt,LocalDateTime finishedAt) {}
     record Source(String submissionId,long userId,int ordinal,String problemSlug,long judgeVersionId,String language,String processingStatus,String verdict,LocalDateTime acceptedAt,LocalDateTime finishedAt,String sourceCode,String sourceSha256) {}
     @Select("SELECT COUNT(*) FROM assignment_participant WHERE assignment_id=#{id}") long participantCount(String id);
@@ -31,7 +31,8 @@ interface TeacherRecordMapper {
         )
         SELECT m.user_id,p.ordinal,p.problem_slug slug,JSON_UNQUOTE(JSON_EXTRACT(p.metadata_text,'$.title')) title,
           p.judge_version_id,COALESCE(c.attempts,0) attempts,(pre.submission_id IS NOT NULL) precompleted,
-          a.accepted_at,TIMESTAMPADD(SECOND,-TIMESTAMPDIFF(SECOND,UTC_TIMESTAMP(6),CURRENT_TIMESTAMP(6)),f.finished_at) first_ac_at
+          a.accepted_at,TIMESTAMPADD(SECOND,-TIMESTAMPDIFF(SECOND,UTC_TIMESTAMP(6),CURRENT_TIMESTAMP(6)),f.finished_at) first_ac_at,
+          EXISTS(SELECT 1 FROM public_problem_governance g WHERE g.problem_id=p.problem_id AND g.data_invalid=TRUE) data_invalid
         FROM assignment_participant m JOIN assignment_problem p ON p.assignment_id=m.assignment_id
         LEFT JOIN counts c ON c.user_id=m.user_id AND c.problem_id=p.problem_id
         LEFT JOIN ac a ON a.user_id=m.user_id AND a.problem_id=p.problem_id AND a.accepted_rank=1

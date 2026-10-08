@@ -102,7 +102,13 @@ class SolutionIntegrationTests {
     @Test void actualGrantDenialsAndInsertFailureRollback() throws Exception {
         var api=database("forgeoj_api","m0-api-test-secret");var worker=database("forgeoj_worker","m0-worker-test-secret");
         for(String table:List.of("official_problem_solution","user_solution_early_view")) assertThatThrownBy(()->worker.queryForList("SELECT * FROM "+table+" LIMIT 0")).isInstanceOf(DataAccessException.class);
-        for(String sql:List.of("UPDATE official_problem_solution SET source_code=source_code WHERE 1=0","DELETE FROM official_problem_solution WHERE 1=0","INSERT INTO official_problem_solution(judge_version_id,idea,language,source_code) VALUES(9,'x','JAVA_21','x')","UPDATE user_solution_early_view SET user_id=user_id WHERE 1=0","DELETE FROM user_solution_early_view WHERE 1=0")) assertThatThrownBy(()->api.execute(sql)).isInstanceOf(DataAccessException.class);
+        // V19 reviewed publication/revision needs only these content columns.
+        // Ordinary solution access has no publication endpoint; M4 role tests
+        // separately prove that every review mutation rejects ordinary/OPS actors.
+        for(String sql:List.of("UPDATE official_problem_solution SET source_code=source_code WHERE 1=0","UPDATE official_problem_solution SET idea=idea WHERE 1=0","UPDATE official_problem_solution SET published_at=published_at WHERE 1=0")) assertThat(api.update(sql)).isZero();
+        for(String sql:List.of("UPDATE official_problem_solution SET judge_version_id=judge_version_id WHERE 1=0","UPDATE official_problem_solution SET language=language WHERE 1=0","DELETE FROM official_problem_solution WHERE 1=0","UPDATE user_solution_early_view SET user_id=user_id WHERE 1=0","DELETE FROM user_solution_early_view WHERE 1=0")) assertThatThrownBy(()->api.execute(sql)).isInstanceOf(DataAccessException.class).hasCauseInstanceOf(java.sql.SQLSyntaxErrorException.class);
+        assertThatThrownBy(()->api.execute("INSERT INTO official_problem_solution(judge_version_id,idea,language,source_code) VALUES(9,'x','JAVA_21','x')")).isInstanceOf(DataAccessException.class).hasCauseInstanceOf(java.sql.SQLIntegrityConstraintViolationException.class);
+        assertThat(db().queryForObject("SELECT COUNT(*) FROM official_problem_solution WHERE judge_version_id=9",Integer.class)).isZero();
         db().execute("REVOKE INSERT ON forgeoj.user_solution_early_view FROM 'forgeoj_api'@'%'");
         try {code(confirm(owner,1),503);} finally {db().execute("GRANT INSERT ON forgeoj.user_solution_early_view TO 'forgeoj_api'@'%'");}
         assertThat(db().queryForObject("SELECT COUNT(*) FROM user_solution_early_view",Integer.class)).isZero();

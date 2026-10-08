@@ -67,6 +67,7 @@ public class AssignmentService {
     }
     private Grade grade(long user,AssignmentMapper.Row r,AssignmentMapper.Problem p) {
         int count=mapper.attempts(r.id(),user,p.problemId());var pre=mapper.precompleted(r.id(),user,p.problemId());
+        if(mapper.invalid(p.problemId())) return new Grade("INVALID",count,null,null,null);
         if(pre.isPresent()) return new Grade("PRECOMPLETED",count,pre.get(),null,null);
         var proof=mapper.ac(r.id(),user,p.problemId());
         if(proof.isEmpty()) return new Grade(count==0?"NOT_STARTED":"ATTEMPTING",count,null,null,null);

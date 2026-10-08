@@ -17,6 +17,7 @@ import { monitorSubmission } from '@/services/submissionMonitor'
 import { useCodeDraft } from '@/composables/useCodeDraft'
 import OfficialSolution from '@/components/OfficialSolution.vue'
 import SelfTest from '@/components/SelfTest.vue'
+import ProblemFeedback from '@/components/ProblemFeedback.vue'
 
 const props = withDefaults(defineProps<{ slug?: string }>(), { slug: 'sum-two-integers' })
 
@@ -290,6 +291,15 @@ onBeforeUnmount(() => {
           {{ problem.resourceLimits.memoryLimitMb }} MB · 输出上限
           {{ problem.resourceLimits.outputLimitBytes }} bytes
         </p>
+        <section v-if="problem.attribution">
+          <h3>题目来源与许可</h3>
+          <p>作者：{{ problem.attribution.authorName }} · {{ problem.attribution.originType }}</p>
+          <p v-if="problem.attribution.sourceUrl">来源：{{ problem.attribution.sourceUrl }}</p>
+          <p>许可：{{ problem.attribution.licenseStatement }}</p>
+          <p v-if="problem.attribution.correctionOfSlug">
+            修正自 {{ problem.attribution.correctionOfSlug }}，旧题完成记录不代表本题已完成。
+          </p>
+        </section>
         <OfficialSolution
           v-if="session?.user"
           :slug="problem.slug"
@@ -352,10 +362,17 @@ onBeforeUnmount(() => {
             <strong v-if="submission.verdict" class="verdict">{{ submission.verdict }}</strong>
           </div>
           <p>状态版本：{{ submission.statusVersion }}</p>
+          <p v-if="submission.judgeDataWarning" role="alert">{{ submission.judgeDataWarning }}</p>
           <p v-if="submission.diagnosticMessage" class="diagnostic">
             {{ submission.diagnosticMessage }}
           </p>
         </section>
+        <ProblemFeedback
+          v-if="session?.user"
+          :slug="problem.slug"
+          :user-id="session.user.id"
+          :csrf="session.csrf"
+        />
       </section>
     </div>
 

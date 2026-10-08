@@ -397,12 +397,16 @@ onBeforeUnmount(() => {
           }}</a
           ><span v-else>题目暂不可用</span> · 判题版本 {{ item.judgeVersion }} ·
           {{ item.processingStatus }} {{ item.verdict ?? '' }} · {{ item.createdAt }}
+          <span v-if="item.judgeDataWarning">{{ item.judgeDataWarning }}</span>
           <button type="button" @click="inspect(item.submissionId)">查看本次状态</button>
         </li>
       </ul>
       <div v-if="selectedSubmission" class="detail">
         <p>提交 {{ selectedSubmission.submissionId }}</p>
         <strong>{{ selectedSubmission.processingStatus }} {{ selectedSubmission.verdict }}</strong>
+        <p v-if="selectedSubmission.judgeDataWarning" role="alert">
+          {{ selectedSubmission.judgeDataWarning }}
+        </p>
         <pre v-if="selectedSubmission.diagnosticMessage">{{
           selectedSubmission.diagnosticMessage
         }}</pre>

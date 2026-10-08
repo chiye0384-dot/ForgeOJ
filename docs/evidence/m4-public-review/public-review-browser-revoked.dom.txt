@@ -1,0 +1,39 @@
+- banner:
+  - generic: F
+  - heading "ForgeOJ" [level=1]
+  - paragraph: Java 21 在线练习与判题
+  - navigation "主导航":
+    - link "题库":
+      - /url: /problems
+    - link "学习记录":
+      - /url: /learning
+    - link "班级":
+      - /url: /classrooms
+    - link "我的题目":
+      - /url: /authoring
+    - link "做题":
+      - /url: /
+    - link "账号":
+      - /url: /account
+    - link "管理后台":
+      - /url: /admin/login
+- main:
+  - main:
+    - navigation:
+      - link "管理首页":
+        - /url: /admin
+      - text: ·
+      - link "公共题审核":
+        - /url: /admin/reviews
+      - text: ·
+      - link "公共题维护":
+        - /url: /admin/problems
+      - text: ·
+      - link "题目反馈":
+        - /url: /admin/feedback
+    - heading "公共题审核" [level=1]
+    - paragraph:
+      - text: 需要已完成初始改密的内容审核员或超级管理员账号。
+      - link "前往管理登录":
+        - /url: /admin/login
+    - status: 登录或审核权限已失效，请重新登录。

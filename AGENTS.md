@@ -1,5 +1,81 @@
 # ForgeOJ agent instructions
 
+## Current handoff — 2026-10-08
+
+Read `docs/M4-STEP4-NEW-CHAT-START.md` first with this file, then the documents in its reading order. This is the authoritative new-chat startup entry. M-1 through M3 are VERIFIED. M4 steps1/2/3 are completed; step3 is VERIFIED and delivered/pushed as c60b75d60bfe210944a9cefde17cade92bb8a71f on feat/m2-accounts to chiye0384-dot/ForgeOJ. Full M4 remains IN_PROGRESS. A subsequent documentation-only handoff commit may be HEAD; inspect Git rather than mistaking the implementation baseline for the delivery commit.
+
+The next unit is M4 step4 operations queries and bounded audited manual retries; it has NOT started. The fresh chat must read the handoff, perform read-only site/Git/protected-file checks and report readiness, then WAIT for the user's continuation before business implementation. On continuation, finish and verify step4 only, commit/push the existing authorized feature branch, and stop. Do not start Redis/ES/monitoring, M5/V1.1, production initialization, PR/main/tag/release or RESUME_READY. Previously confirmed user choices are listed in the startup document and must not be asked again.
+
+Preserve untracked docs/M2-NEXT-CHAT-HANDOFF.md and ignored .smtp.qq.local exactly; hash-only checks, no secret reads/output/copy/staging. All checkpoints in the historical section below describe dated completed work. Their old next-step instructions and exec/session IDs are NOT active work and must not be resumed.
+
+## Desktop application continuity — explicit user instruction, 2026-10-08
+
+Never close, quit, restart or terminate Codex/ChatGPT as a cleanup, diagnostic or recovery step. Do not install/apply an update or trigger an app restart autonomously; an unavoidable update restart requires explaining the need and waiting for the user. Never use broad process-name kills, WSL shutdown, or service shutdown that could stop the app or its runtime. Stop only exact task-owned process IDs/containers after verifying ownership.
+
+Local logs correlate two browser-process crashes with closing the last in-app browser automation tab (2026-10-07 18:48 and 2026-10-08 08:02, Asia/Shanghai). This is a strong trigger correlation, not a repaired client defect. Do not call `tab.close()` for Codex in-app browser tabs or close them through the UI; do not deliberately reproduce it. Reuse a tab. At cleanup, navigate temporary pages to `about:blank` and mark them to survive automatic end-of-turn cleanup (`markDeliverable()` or a genuinely pending `markHandoff()`). Container cleanup remains allowed. Do not promise that instructions can prevent an operating-system/client crash.
+
+## Decision boundary
+
+- Inspect files, commands, versions, licenses, logs, and official documentation instead of asking the user for discoverable facts.
+- Ask before choosing when the answer would materially change product scope, public behavior, persistent data, security boundaries, license obligations, recurring cost, or external state.
+- Make routine implementation choices inside confirmed boundaries and explain important tradeoffs.
+- Never silently invent a requirement or implement a later Roadmap item early.
+- Explicit user instructions override repository guidance.
+
+## Confirmed engineering boundaries
+
+- Use JDK 21 for the backend and the V1 user-code runtime.
+- Use Spring Boot 4.1.1 for the current backend baseline.
+- Use the official MyBatis Spring Boot Starter 4.1.0, not MyBatis-Plus. PageHelper is deferred until real list-query requirements exist.
+- License ForgeOJ-authored source under Apache-2.0 with `Copyright 2026 池也`. Do not relicense generated files, retained upstream code, dependencies, or user/problem content; preserve their original notices and license records.
+- Keep the root Maven project as an aggregator/parent with separate executable `forgeoj-api` and `forgeoj-judge-worker` modules. Neither module may depend on the other.
+- V1 supports one `Main.java`, the JDK standard library, and standard input/output problems.
+- Keep the API service and Judge Worker as separate processes. The API must not control Docker.
+- Use MySQL as the final business fact source. Redis is cache/session/rate-limit support; Elasticsearch is rebuildable public search; RabbitMQ transports at-least-once tasks; WebSocket is notification only.
+- Distinguish platform failures from user verdicts.
+- Do not expose hidden tests, private reference programs, credentials, or unrelated user code.
+- Treat ordinary Docker as a constrained boundary for controlled small-scale use, not as absolute isolation for arbitrary hostile internet code.
+
+## Upstream and dependency rules
+
+- Do not copy code, UI, problem statements, tests, or assets without a clear compatible license and recorded source.
+- Record repository URL, immutable commit/tag, license, retained files, modifications, and ForgeOJ-owned modules before importing a scaffold.
+- Prefer a minimal official scaffold when a large starter adds more unrelated business code than useful infrastructure.
+- Do not describe third-party capabilities as personally implemented.
+- Do not add a dependency only to display another technology on the resume.
+
+## Change workflow
+
+- Identify the current Roadmap milestone and relevant requirement before editing.
+- Preserve unrelated user changes and keep the patch scoped.
+- Use tests for state machines, permissions, idempotency, consistency, and recovery. Use observable validation for build and configuration changes.
+- Use disposable test data. Do not mutate real databases or external services without explicit authorization.
+- Never commit secrets. Store only safe examples such as `.env.example`.
+- If a requested result still fails in the IDE, browser, Docker, or target Linux environment, continue diagnosis; a partial command-line success is not completion.
+
+Use the repository-pinned commands for the M-1 baseline:
+
+- backend on Windows: `.\mvnw.cmd --batch-mode clean verify`;
+- backend on Linux/macOS before the first commit records executable metadata: `bash ./mvnw --batch-mode clean verify`;
+- frontend install: run `npm ci` inside `frontend`;
+- frontend verification: run `npm run verify` inside `frontend`.
+
+`mvnw.cmd` contains a documented null guard for an Apache Maven Wrapper 3.3.4 Windows bug. Keep the patch and `distributionSha256Sum` aligned with `docs/UPSTREAM-AND-LICENSE.md`; re-evaluate the patch when upgrading the Wrapper.
+
+Linux/macOS environments running the script-only Maven Wrapper must provide `bash` and `unzip`. Without `unzip`, Wrapper 3.3.4 falls back from the configured ZIP URL to a tarball, which cannot match the recorded ZIP SHA-256.
+
+Historical M-1/M0 acceptance detail (later current counts are in the latest validation documents): the H2 dependency is test-scoped and only proves that the empty application contexts can start. M0 also has disposable MySQL 8.4.12 tests for the V1/V2 Flyway migrations, API/Worker database boundaries, dev seed, server-side session login/logout, CSRF enforcement, the public-problem response whitelist, atomic Submission/JudgeTask/Outbox creation, rollback, sequential/concurrent request replay, and owner-only submission result reads. The query tests verify anonymous rejection, identical 404 behavior for another owner/missing/malformed IDs, an exact response-field whitelist, and diagnostic redaction. Fixed MySQL 8.4.12 and RabbitMQ 4.3.6 Testcontainers verify durable routing, persistent four-field JSON, publisher confirm, leaving unroutable events unpublished, strict Worker contract parsing, manual ACK, task/submission cross-checking, atomic state transitions, rollback, and single-winner duplicate/concurrent claims. Restricted Worker tests verify running-task-only snapshot loading, ordered bounded gzip expansion, source/test/dataset hashes, fail-closed tamper handling, all M0 terminal verdict mappings including OLE, atomic dual-table completion, and SYSTEM_ERROR without a user verdict. A real RabbitMQ/MySQL/Docker test verifies message-to-terminal execution and ACK after the terminal state becomes durable. A frontend Vitest flow verifies login, public-problem rendering, CSRF and Idempotency-Key submission headers, status polling to a terminal result, polling stop, and non-rendering of undeclared hidden fields against mocked API responses. On 2026-09-29, a disposable Windows + Docker Desktop stack verified a real browser AC flow. On 2026-09-30, fixed Linux/amd64 builds and a real separated-process replay verified all six M0 verdicts, the API-without-Docker boundary, four-field Outbox payloads, drained queues, redacted logs, and sandbox cleanup. These checks still do not prove the wider malicious-code matrix, M5 fixed-Linux-host security/performance acceptance, or M1 crash recovery.
+
+## Completion and evidence
+
+Use these states accurately: `PLANNED`, `IN_PROGRESS`, `IMPLEMENTED`, `VERIFIED`, `RELEASED`, `DEFERRED`, and `BACKLOG`.
+
+Do not claim completion without fresh relevant verification. Report commands run, outcomes, skipped checks, and remaining limitations. Update the evidence matrix before promoting a capability into the resume, and never reuse performance numbers from another project.
+
+## Historical delivery checkpoints — dated evidence only
+
+These records preserve the execution history. Current state and instructions are above and in docs/M4-STEP4-NEW-CHAT-START.md. Do not execute old session IDs or follow historical stopping/next-step instructions.
+
 Current verified checkpoint (2026-10-08): M4 step3 public review governance VERIFIED; full M4 remains IN_PROGRESS. D-044 original-author revision is accepted and implemented. Read docs/M4-PUBLIC-REVIEW-VALIDATION.md, docs/evidence/m4-public-review/verification.json and docs/M4-NEXT-CHAT-HANDOFF.md first. Fixed Linux All API263/47, Worker133/23, frontend118/23/all gates passed. Same-JAR real Worker: 102 governance HTTP checks, 6 dualPASSED, 13 formal tasks, one self-test, 98 audits, 62 classroom checks, 22 SQL denials, real multirole browser/copy/revocation and seven empty queues passed; all owned resources zero. API197/Worker111/frontend79 inputs and runtime hashes linked. Tab5 is about:blank and marked deliverable; never close any IAB tab or Codex. Deliver this verified unit on existing feat/m2-accounts under prior push authorization; inspect Git for actual commit/remote status. Stop at step3. On a fresh user continuation, next is M4 step4 OPS/manual retries, beginning from approved plan/design; no Redis/ES/monitoring or real DB/admin/SMTP until its own scope. No required user choice remains. All dated checkpoints below are historical and do not describe current unfinished work.
 
 Current execution checkpoint (2026-10-08 20:43 +08): fixed Linux All target/forgeoj-linux-20261008-201146-a1bd1a95 PASSED API263, Worker133, frontend118/23 and all gates. Replay startup uses those exact reviewed hashes in target/forgeoj-e2e-20261008-204157-6a542650 (exec session71519). Unit remains IN_PROGRESS; run baseline Matrix/Permissions/Library/Learning/Classroom then disposable admin bootstrap/Setup/ReadyBrowsers, public-review Http, actual browser, RevokeReviewer, CaptureRuntime/Audit, exact Stop/CleanupSnapshot and final evidence verification. Do not call generic legacy Audit: it requires unrelated prior browser fixtures; the new public-review auditor directly checks actual matrix, permissions, library, learning, classroom and 14 new +8 existing SQL denials. No pending user decision, no step4, no real DB/admin/SMTP, no Codex/tab closing. Older snapshots below are historical.
@@ -13,12 +89,6 @@ Current M4 entry (2026-10-08): full M4 IN_PROGRESS; step1 design and step2 indep
 Current full M3 final gate audit (2026-10-08): VERIFIED, 4/4 PASS, implementation baseline4afce92 on feat/m2-accounts. Read docs/M3-GATE-AUDIT.md and docs/evidence/m3-gate/verification.json. This audit adds only two direct real-MySQL integration tests (REMOVED masked own history/owner restoration, three teaching GET routes and assignment writes across current roles/transfer/archive/disabled session), read-only auditors and docs. Native2 passed after correcting one missing required startsAt field in a test request; no business fix or deleted assertion. Fresh fixed Linux Api223/42 suites zero failures/errors/skips BUILD SUCCESS; all41 M3 cases pass. Existing Worker133/23 suites and frontend97/all checks reused only after exact input equality; all254 backend,187 runtime production,68 frontend and112 Worker/shared inputs match. New API JAR runtime classes/resources/dependencies all333 entries equal the accepted replayed JAR. Classroom/private/assignment/teacher actual multi-account Worker evidence remains separately dated, not a fresh browser/Worker/SMTP/SIGKILL replay. Live read-only Docker check at2026-10-08T05:49:54.4853937+00:00 is zero for builders/Testcontainers/managed sandboxes/all forgeoj-e2e containers/volumes/networks/owned images. Full M-1/M0/M1/M2/M3 now VERIFIED; no release or RESUME_READY. Stop after M3 closure; next is M4 smallest administrator authentication/role design only when user continues. Existing verified-unit feature-branch commit/push remains authorized; no PR/main/tag/release. Preserve old untracked handoff/ignored SMTP bytes, never close/restart/update Codex or close last IAB tabs. Earlier records are dated history.
 
 Current teaching-record unit (2026-10-08): VERIFIED, implementation baseline82afd00 on feat/m2-accounts. Read docs/M3-TEACHER-RECORDS-DESIGN.md, docs/M3-TEACHER-RECORDS-VALIDATION.md and docs/evidence/m3-teacher-records/verification.json. Current OWNER/ASSISTANT-only roster/grades/formal attempts/scoped readonly source and UI passed native3 permission/consistency tests and5 frontend tests; final single fixed-Linux Backend driver succeeded API221/Worker133, final frontend97/all checks. All254 backend/68 frontend inputs match; actual read-only browser container68 inputs and exact replay JARs match. Same JAR replay passed151 teacher HTTP checks,5 real formal results (WA/AC/AC/AC/AC),2 real PRECOMPLETED,1 self-test,3-account UI/current role demotion/archived LEFT history,8 scoped Worker SQL denials/API boundary,commit-before-ACK,7 empty queues and original public regression11/10 finished/1 cancelled/38 denials. First replay missed initial browser QUEUED capture and was discarded without weakening assertions; both replay stacks verified zero, final at11:48:51 +08. No new schema/grants/Worker production/dependencies. PRECOMPLETED/private practice/self-test never confer teacher source access. Full M3 remains IN_PROGRESS; only its four final gates are next, do not begin them in this unit. Existing feature-branch verified-unit commit/push remains authorized; no PR/main/tag/release/RESUME_READY. Preserve old untracked handoff and SMTP bytes, obey desktop continuity below. Earlier dated stopping instructions refer to completed units.
-
-## Desktop application continuity — explicit user instruction, 2026-10-08
-
-Never close, quit, restart or terminate Codex/ChatGPT as a cleanup, diagnostic or recovery step. Do not install/apply an update or trigger an app restart autonomously; an unavoidable update restart requires explaining the need and waiting for the user. Never use broad process-name kills, WSL shutdown, or service shutdown that could stop the app or its runtime. Stop only exact task-owned process IDs/containers after verifying ownership.
-
-Local logs correlate two browser-process crashes with closing the last in-app browser automation tab (2026-10-07 18:48 and 2026-10-08 08:02, Asia/Shanghai). This is a strong trigger correlation, not a repaired client defect. Do not call `tab.close()` for Codex in-app browser tabs or close them through the UI; do not deliberately reproduce it. Reuse a tab. At cleanup, navigate temporary pages to `about:blank` and mark them to survive automatic end-of-turn cleanup (`markDeliverable()` or a genuinely pending `markHandoff()`). Container cleanup remains allowed. Do not promise that instructions can prevent an operating-system/client crash.
 
 Current assignment unit (2026-10-08): VERIFIED on feat/m2-accounts, implementation baseline 05d63b0. Read docs/M3-ASSIGNMENTS-DESIGN.md, docs/M3-ASSIGNMENTS-VALIDATION.md and docs/evidence/m3-assignments/verification.json. V17, permanent participants/frozen versions/real PRECOMPLETED, lifecycle, own attempts/grades/self-tests and shared solution guards passed. Server acceptance before cutoff plus eventual real AC is on time; LEFT/REMOVED retain own masked history/results without private content/new execution. Final separate Linux API218, Worker133 and frontend92/all gates passed; 251 backend and65 frontend inputs match. Exact JAR replay passed161 assignment HTTP checks,6 real formal results (5AC/1WA),2 self-tests,2 PRECOMPLETED,17 SQL denials,three-account browser,7 empty queues and public regression11/10 finished/1 cancelled/38 SQL denials. Preserve the Surefire shutdown warning, earlier failed replay, and separately dated supplemental runtime-input capture; do not describe them as one All driver green. Both disposable stacks were verified zero by08:57 +08. Stop at this unit: teacher all-member/source query and full M3 four gates remain later, full M3 IN_PROGRESS. Preserve old untracked handoff and ignored SMTP bytes. Verified-unit commit/push to chiye0384-dot/ForgeOJ feat/m2-accounts remains authorized; no PR/main/tag/release/RESUME_READY. Following milestone records are historical.
 
@@ -79,61 +149,3 @@ Use these documents as authoritative sources:
 - `docs/Performance-Test-Plan.md` for any performance claim.
 
 Read only the documents relevant to the current task. Keep them consistent when a confirmed decision changes.
-
-## Decision boundary
-
-- Inspect files, commands, versions, licenses, logs, and official documentation instead of asking the user for discoverable facts.
-- Ask before choosing when the answer would materially change product scope, public behavior, persistent data, security boundaries, license obligations, recurring cost, or external state.
-- Make routine implementation choices inside confirmed boundaries and explain important tradeoffs.
-- Never silently invent a requirement or implement a later Roadmap item early.
-- Explicit user instructions override repository guidance.
-
-## Confirmed engineering boundaries
-
-- Use JDK 21 for the backend and the V1 user-code runtime.
-- Use Spring Boot 4.1.1 for the current backend baseline.
-- Use the official MyBatis Spring Boot Starter 4.1.0, not MyBatis-Plus. PageHelper is deferred until real list-query requirements exist.
-- License ForgeOJ-authored source under Apache-2.0 with `Copyright 2026 池也`. Do not relicense generated files, retained upstream code, dependencies, or user/problem content; preserve their original notices and license records.
-- Keep the root Maven project as an aggregator/parent with separate executable `forgeoj-api` and `forgeoj-judge-worker` modules. Neither module may depend on the other.
-- V1 supports one `Main.java`, the JDK standard library, and standard input/output problems.
-- Keep the API service and Judge Worker as separate processes. The API must not control Docker.
-- Use MySQL as the final business fact source. Redis is cache/session/rate-limit support; Elasticsearch is rebuildable public search; RabbitMQ transports at-least-once tasks; WebSocket is notification only.
-- Distinguish platform failures from user verdicts.
-- Do not expose hidden tests, private reference programs, credentials, or unrelated user code.
-- Treat ordinary Docker as a constrained boundary for controlled small-scale use, not as absolute isolation for arbitrary hostile internet code.
-
-## Upstream and dependency rules
-
-- Do not copy code, UI, problem statements, tests, or assets without a clear compatible license and recorded source.
-- Record repository URL, immutable commit/tag, license, retained files, modifications, and ForgeOJ-owned modules before importing a scaffold.
-- Prefer a minimal official scaffold when a large starter adds more unrelated business code than useful infrastructure.
-- Do not describe third-party capabilities as personally implemented.
-- Do not add a dependency only to display another technology on the resume.
-
-## Change workflow
-
-- Identify the current Roadmap milestone and relevant requirement before editing.
-- Preserve unrelated user changes and keep the patch scoped.
-- Use tests for state machines, permissions, idempotency, consistency, and recovery. Use observable validation for build and configuration changes.
-- Use disposable test data. Do not mutate real databases or external services without explicit authorization.
-- Never commit secrets. Store only safe examples such as `.env.example`.
-- If a requested result still fails in the IDE, browser, Docker, or target Linux environment, continue diagnosis; a partial command-line success is not completion.
-
-Use the repository-pinned commands for the M-1 baseline:
-
-- backend on Windows: `.\mvnw.cmd --batch-mode clean verify`;
-- backend on Linux/macOS before the first commit records executable metadata: `bash ./mvnw --batch-mode clean verify`;
-- frontend install: run `npm ci` inside `frontend`;
-- frontend verification: run `npm run verify` inside `frontend`.
-
-`mvnw.cmd` contains a documented null guard for an Apache Maven Wrapper 3.3.4 Windows bug. Keep the patch and `distributionSha256Sum` aligned with `docs/UPSTREAM-AND-LICENSE.md`; re-evaluate the patch when upgrading the Wrapper.
-
-Linux/macOS environments running the script-only Maven Wrapper must provide `bash` and `unzip`. Without `unzip`, Wrapper 3.3.4 falls back from the configured ZIP URL to a tarball, which cannot match the recorded ZIP SHA-256.
-
-The current H2 dependency is test-scoped and only proves that the empty application contexts can start. M0 also has disposable MySQL 8.4.12 tests for the V1/V2 Flyway migrations, API/Worker database boundaries, dev seed, server-side session login/logout, CSRF enforcement, the public-problem response whitelist, atomic Submission/JudgeTask/Outbox creation, rollback, sequential/concurrent request replay, and owner-only submission result reads. The query tests verify anonymous rejection, identical 404 behavior for another owner/missing/malformed IDs, an exact response-field whitelist, and diagnostic redaction. Fixed MySQL 8.4.12 and RabbitMQ 4.3.6 Testcontainers verify durable routing, persistent four-field JSON, publisher confirm, leaving unroutable events unpublished, strict Worker contract parsing, manual ACK, task/submission cross-checking, atomic state transitions, rollback, and single-winner duplicate/concurrent claims. Restricted Worker tests verify running-task-only snapshot loading, ordered bounded gzip expansion, source/test/dataset hashes, fail-closed tamper handling, all M0 terminal verdict mappings including OLE, atomic dual-table completion, and SYSTEM_ERROR without a user verdict. A real RabbitMQ/MySQL/Docker test verifies message-to-terminal execution and ACK after the terminal state becomes durable. A frontend Vitest flow verifies login, public-problem rendering, CSRF and Idempotency-Key submission headers, status polling to a terminal result, polling stop, and non-rendering of undeclared hidden fields against mocked API responses. On 2026-09-29, a disposable Windows + Docker Desktop stack verified a real browser AC flow. On 2026-09-30, fixed Linux/amd64 builds and a real separated-process replay verified all six M0 verdicts, the API-without-Docker boundary, four-field Outbox payloads, drained queues, redacted logs, and sandbox cleanup. These checks still do not prove the wider malicious-code matrix, M5 fixed-Linux-host security/performance acceptance, or M1 crash recovery.
-
-## Completion and evidence
-
-Use these states accurately: `PLANNED`, `IN_PROGRESS`, `IMPLEMENTED`, `VERIFIED`, `RELEASED`, `DEFERRED`, and `BACKLOG`.
-
-Do not claim completion without fresh relevant verification. Report commands run, outcomes, skipped checks, and remaining limitations. Update the evidence matrix before promoting a capability into the resume, and never reuse performance numbers from another project.

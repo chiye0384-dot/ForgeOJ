@@ -1,5 +1,7 @@
 # ForgeOJ：M4 第3步已完成
 
+新对话统一从 [M4 第4步启动说明](M4-STEP4-NEW-CHAT-START.md) 开始，包含完整状态、必读顺序、已确认规则、下一单元步骤及验收/保护要求。第3步已提交并推送：`c60b75d60bfe210944a9cefde17cade92bb8a71f`，分支 `feat/m2-accounts`，远端 `chiye0384-dot/ForgeOJ`。2026-10-08 本次交接已核对本地/远端一致，后续可有纯文档交接提交。新对话首次只读核对并报告准备情况，等用户“继续”后实施第4步；本次交接不启动业务实现。
+
 2026-10-08：**公共题审核治理单元 VERIFIED，完整 M4 IN_PROGRESS**。目录 `D:\Java项目\ForgeOJ`，分支 `feat/m2-accounts`，第3步实施基线 `0f983988aa27841c8d110e9f821adbe6494c90f0`。实现、设计和证据组成此单元交付；实际交付hash及推送结果核对 `git log -1`、`git status` 和 `origin/feat/m2-accounts`，不把实施基线误认为最终提交。用户授权推送 `chiye0384-dot/ForgeOJ` 的既有分支，无PR/main/tag/release授权。
 
 先读 [本单元验收](M4-PUBLIC-REVIEW-VALIDATION.md)、[机器证据](evidence/m4-public-review/verification.json)、[设计](M4-PUBLIC-REVIEW-DESIGN.md)、[7步计划](M4-IMPLEMENTATION-PLAN.md)、Requirements及D-043/D-044。D-044已确认：仅原作者复制当前公开冻结内容到本人新草稿，再验证送审；他人反馈、审核员批准或驳回。不重新问管理员、题解、班级、作业或修订选择。

@@ -1,5 +1,7 @@
 # ForgeOJ
 
+2026-10-08 最新：M3教学作业记录单元 **VERIFIED**。负责人、助教可分页查看本班作业全员成绩、正式尝试和单条只读源码，每次请求复核当前角色；普通成员、私人练习、预完成原代码及自测均不开放。Linux API221、Worker133、前端97及全部检查，151HTTP、真实判题与三账号页面、撤权/归档历史、权限与精确清理通过；254后端/68前端输入与实际运行构件一致。见 [设计](docs/M3-TEACHER-RECORDS-DESIGN.md)、[验收](docs/M3-TEACHER-RECORDS-VALIDATION.md)、[证据](docs/evidence/m3-teacher-records/README.md)。完整M3仍IN_PROGRESS，下一步四项总门禁审计，本轮不开始；下方日期段落为历史。
+
 2026-10-08 最新：M3作业单元 **VERIFIED**。V17作业生命周期、冻结题目/成员、真实历史AC预完成、本人提交/自测/成绩、截止与共同题解策略完成。最终Linux API218、Worker133、前端92及全检查通过；161项作业HTTP、真实Worker跨截止AC、三账号页面、权限/队列和精确清理通过。见 [设计](docs/M3-ASSIGNMENTS-DESIGN.md)、[验收](docs/M3-ASSIGNMENTS-VALIDATION.md)、[证据](docs/evidence/m3-assignments/README.md)。构建及运行输入的分轮次核对如实记录。完整M3仍IN_PROGRESS，教师关联查询及总门禁留后续，本轮到作业为止。下方带日期段落为历史。
 
 2026-10-06 最新：班级私有题单元 **VERIFIED**。V16真实班级引用/FK、双通过快照发布、班级归属、隔离学习/教学维护、正式提交和独立自测已完成；自由练习默认AC后开放，未AC可提醒后再次确认，仅本人解锁。Linux API203+Worker133、前端82及全检查通过；155项真实HTTP、真实页面发布/取消/确认/自测/AC/成员撤销、快照/权限/日志/七空队列/精确清理通过。见 [设计](docs/M3-PRIVATE-PROBLEMS-DESIGN.md)、[验收](docs/M3-PRIVATE-PROBLEMS-VALIDATION.md)、[证据](docs/evidence/m3-private-problems/README.md)。完整M3仍IN_PROGRESS，作业及教师关联未开始；本轮到此为止。下方段落保留各自历史事实。

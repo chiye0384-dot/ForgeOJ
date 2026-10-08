@@ -1,5 +1,7 @@
 # ForgeOJ 简历证据矩阵
 
+2026-10-08 最新：教学记录单元VERIFIED，见 [验收](M3-TEACHER-RECORDS-VALIDATION.md)：API221/Worker133/前端97，151HTTP、真实5正式判题/2预完成/1自测，三账号页面/降级清空/归档LEFT历史，8教学SQL拒绝和严格源码作用域均有证据。完整M3四项总门禁尚未汇总，E-03完整候选保持PLANNED；未Release或RESUME_READY，不把本单元功能直接用作已发布简历结论。下方日期段落为历史。
+
 2026-10-08 最新：M3作业单元VERIFIED，见 [验收](M3-ASSIGNMENTS-VALIDATION.md)：最终API218/Worker133/前端92、161HTTP、真实PRECOMPLETED及跨截止AC、三账号页面、17作业SQL拒绝和共同题解策略有证据。完整M3仍IN_PROGRESS，教师全员查询/源码权限和总门禁未完成，E-03完整候选仍PLANNED；不新增RESUME_READY或Release。各分轮次输入/构件及补充运行采集见验收，以下日期段落保留历史。
 
 2026-10-06 最新：M3班级私有题单元VERIFIED，见 [验收](M3-PRIVATE-PROBLEMS-VALIDATION.md)：真实双PASSED冻结发布/班级归属、155HTTP、真实页面确认与AC、私有13权限拒绝、共享链路及精确清理有证据。完整M3 IN_PROGRESS，作业和教师关联未开始；独立新题修订不代表关联纠错系统完成，不新增RESUME_READY或Release。下方段落保留历史。

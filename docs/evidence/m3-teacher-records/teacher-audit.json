@@ -1,0 +1,22 @@
+{
+  "checkedAt": "2026-10-08T03:48:30.699Z",
+  "allPassed": true,
+  "httpChecks": 151,
+  "realFormal": 5,
+  "verdicts": [
+    "WA",
+    "AC",
+    "AC",
+    "AC",
+    "AC"
+  ],
+  "participants": 9,
+  "precompleted": 2,
+  "realSelfTests": 1,
+  "emptyQueues": 7,
+  "sqlDenials": 8,
+  "sourceDigestMatches": true,
+  "commitBeforeAck": true,
+  "readOnlyRuntime": true,
+  "browser": true
+}

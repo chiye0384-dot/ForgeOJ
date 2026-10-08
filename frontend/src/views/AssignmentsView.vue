@@ -564,6 +564,11 @@ onBeforeUnmount(() => {
       </form>
       <article v-if="detail && !editing">
         <h3>{{ detail.assignment.title }}</h3>
+        <RouterLink
+          v-if="detail.teaching"
+          :to="`/classrooms/${id}/assignments/${detail.assignment.id}/records`"
+          >查看全员成绩与正式提交</RouterLink
+        >
         <p>
           {{ statusNames[detail.assignment.status] }} · 版本 {{ detail.assignment.version }} · 截止
           {{ display(detail.assignment.deadlineAt) }}
@@ -577,6 +582,9 @@ onBeforeUnmount(() => {
         <p v-if="detail.participating">
           本人完成 {{ completed }}/{{ detail.problems.length }}
           题。按服务器接受提交的时间判断按时，最终必须 AC；自测不计次数和完成。
+        </p>
+        <p v-if="detail.participating">
+          本作业正式提交的记录和代码可由本班负责人、助教查看；自测和私人练习代码不进入教学记录。
         </p>
         <table>
           <thead>

@@ -1,0 +1,9 @@
+{"role": "OWNER", "userId": 1, "assignmentId": "63317987-f2f7-4d22-acd9-a7ebea1ad9f7", "memberStatus": "ACTIVE", "classroomStatus": "ARCHIVED"}
+{"role": "MEMBER", "userId": 2, "assignmentId": "63317987-f2f7-4d22-acd9-a7ebea1ad9f7", "memberStatus": "LEFT", "classroomStatus": "ARCHIVED"}
+{"role": "ASSISTANT", "userId": 3, "assignmentId": "63317987-f2f7-4d22-acd9-a7ebea1ad9f7", "memberStatus": "ACTIVE", "classroomStatus": "ARCHIVED"}
+{"role": "OWNER", "userId": 1, "assignmentId": "99170c63-b317-4164-b031-76296ed2186f", "memberStatus": "ACTIVE", "classroomStatus": "ARCHIVED"}
+{"role": "MEMBER", "userId": 2, "assignmentId": "99170c63-b317-4164-b031-76296ed2186f", "memberStatus": "LEFT", "classroomStatus": "ARCHIVED"}
+{"role": "ASSISTANT", "userId": 3, "assignmentId": "99170c63-b317-4164-b031-76296ed2186f", "memberStatus": "ACTIVE", "classroomStatus": "ARCHIVED"}
+{"role": "OWNER", "userId": 1, "assignmentId": "f0bb6da0-44e4-486e-a59a-87f7676034c8", "memberStatus": "ACTIVE", "classroomStatus": "ARCHIVED"}
+{"role": "MEMBER", "userId": 2, "assignmentId": "f0bb6da0-44e4-486e-a59a-87f7676034c8", "memberStatus": "LEFT", "classroomStatus": "ARCHIVED"}
+{"role": "ASSISTANT", "userId": 3, "assignmentId": "f0bb6da0-44e4-486e-a59a-87f7676034c8", "memberStatus": "ACTIVE", "classroomStatus": "ARCHIVED"}

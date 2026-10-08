@@ -1,0 +1,784 @@
+{
+  "classroomId": "955846e8-3ae3-481a-88dc-8f91ff11a4c9",
+  "assignmentId": "99170c63-b317-4164-b031-76296ed2186f",
+  "preAssignmentId": "f0bb6da0-44e4-486e-a59a-87f7676034c8",
+  "lateAssignmentId": "63317987-f2f7-4d22-acd9-a7ebea1ad9f7",
+  "privateSlug": "class-27caebfb-9f82-40cb-a86d-49883541c3f9",
+  "sourceSubmissionId": "7bddb409-8c3a-4b58-9fb3-4b044778eae9",
+  "sourceSha256": "f6583afbd484a8633a645092bfdf44241bc21d85d9c99edc4a5e0cababf58afc",
+  "formalIds": [
+    "71e7c2ea-6155-40ba-9707-a07e69f9f0fb",
+    "7bddb409-8c3a-4b58-9fb3-4b044778eae9",
+    "cf358de1-aebf-4975-80de-27e54ed6cf7e",
+    "0c45e789-f00e-484a-b0e8-6da21ab018dd",
+    "5cd256c9-5ef7-4f4e-b1da-718417423040"
+  ],
+  "unrelatedPrivateId": "4cd85e87-85e3-4312-811a-dedbf7697009",
+  "unrelatedFreeId": "26e1e02f-a6e4-4ed5-88cf-7b62fe69d1b2",
+  "selfTestId": "24eaa2e3-33bc-411c-8593-0e8970d0c9bd",
+  "gradesMatchOwn": true,
+  "lateExtensionConsistent": true,
+  "privateAndPreSourceDenied": true,
+  "assistantAllowed": true,
+  "checks": [
+    {
+      "method": "GET",
+      "path": "/api/v1/auth/session",
+      "status": 200
+    },
+    {
+      "method": "POST",
+      "path": "/api/v1/auth/login",
+      "status": 200
+    },
+    {
+      "method": "GET",
+      "path": "/api/v1/auth/session",
+      "status": 200
+    },
+    {
+      "method": "POST",
+      "path": "/api/v1/auth/login",
+      "status": 200
+    },
+    {
+      "method": "GET",
+      "path": "/api/v1/auth/session",
+      "status": 200
+    },
+    {
+      "method": "POST",
+      "path": "/api/v1/auth/login",
+      "status": 200
+    },
+    {
+      "method": "GET",
+      "path": "/api/v1/classrooms/:id",
+      "status": 200
+    },
+    {
+      "method": "POST",
+      "path": "/api/v1/classrooms/:id/invite",
+      "status": 200
+    },
+    {
+      "method": "POST",
+      "path": "/api/v1/classrooms/join",
+      "status": 200
+    },
+    {
+      "method": "GET",
+      "path": "/api/v1/classrooms/:id",
+      "status": 200
+    },
+    {
+      "method": "POST",
+      "path": "/api/v1/classrooms/:id/members/3/role",
+      "status": 200
+    },
+    {
+      "method": "POST",
+      "path": "/api/v1/classrooms/:id/assignments",
+      "status": 201
+    },
+    {
+      "method": "POST",
+      "path": "/api/v1/classrooms/:id/assignments/:id/publish",
+      "status": 200
+    },
+    {
+      "method": "POST",
+      "path": "/api/v1/classrooms/:id/assignments",
+      "status": 201
+    },
+    {
+      "method": "POST",
+      "path": "/api/v1/classrooms/:id/assignments/:id/publish",
+      "status": 200
+    },
+    {
+      "method": "GET",
+      "path": "/api/v1/classrooms/:id/assignments/:id/teaching/grades",
+      "status": 200
+    },
+    {
+      "method": "GET",
+      "path": "/api/v1/classrooms/:id/assignments/:id/teaching/submissions/:id",
+      "status": 404
+    },
+    {
+      "method": "POST",
+      "path": "/api/v1/classrooms/:id/assignments/:id/problems/class-:id/submissions",
+      "status": 202
+    },
+    {
+      "method": "GET",
+      "path": "/api/v1/submissions/:id",
+      "status": 200
+    },
+    {
+      "method": "GET",
+      "path": "/api/v1/submissions/:id",
+      "status": 200
+    },
+    {
+      "method": "GET",
+      "path": "/api/v1/submissions/:id",
+      "status": 200
+    },
+    {
+      "method": "GET",
+      "path": "/api/v1/submissions/:id",
+      "status": 200
+    },
+    {
+      "method": "GET",
+      "path": "/api/v1/submissions/:id",
+      "status": 200
+    },
+    {
+      "method": "GET",
+      "path": "/api/v1/submissions/:id",
+      "status": 200
+    },
+    {
+      "method": "GET",
+      "path": "/api/v1/submissions/:id",
+      "status": 200
+    },
+    {
+      "method": "GET",
+      "path": "/api/v1/submissions/:id",
+      "status": 200
+    },
+    {
+      "method": "POST",
+      "path": "/api/v1/classrooms/:id/assignments/:id/problems/class-:id/submissions",
+      "status": 202
+    },
+    {
+      "method": "GET",
+      "path": "/api/v1/submissions/:id",
+      "status": 200
+    },
+    {
+      "method": "GET",
+      "path": "/api/v1/submissions/:id",
+      "status": 200
+    },
+    {
+      "method": "GET",
+      "path": "/api/v1/submissions/:id",
+      "status": 200
+    },
+    {
+      "method": "GET",
+      "path": "/api/v1/submissions/:id",
+      "status": 200
+    },
+    {
+      "method": "GET",
+      "path": "/api/v1/submissions/:id",
+      "status": 200
+    },
+    {
+      "method": "GET",
+      "path": "/api/v1/submissions/:id",
+      "status": 200
+    },
+    {
+      "method": "GET",
+      "path": "/api/v1/submissions/:id",
+      "status": 200
+    },
+    {
+      "method": "GET",
+      "path": "/api/v1/submissions/:id",
+      "status": 200
+    },
+    {
+      "method": "GET",
+      "path": "/api/v1/submissions/:id",
+      "status": 200
+    },
+    {
+      "method": "GET",
+      "path": "/api/v1/submissions/:id",
+      "status": 200
+    },
+    {
+      "method": "POST",
+      "path": "/api/v1/classrooms/:id/assignments/:id/problems/sum-two-integers/submissions",
+      "status": 202
+    },
+    {
+      "method": "GET",
+      "path": "/api/v1/submissions/:id",
+      "status": 200
+    },
+    {
+      "method": "GET",
+      "path": "/api/v1/submissions/:id",
+      "status": 200
+    },
+    {
+      "method": "GET",
+      "path": "/api/v1/submissions/:id",
+      "status": 200
+    },
+    {
+      "method": "GET",
+      "path": "/api/v1/submissions/:id",
+      "status": 200
+    },
+    {
+      "method": "GET",
+      "path": "/api/v1/submissions/:id",
+      "status": 200
+    },
+    {
+      "method": "GET",
+      "path": "/api/v1/submissions/:id",
+      "status": 200
+    },
+    {
+      "method": "GET",
+      "path": "/api/v1/submissions/:id",
+      "status": 200
+    },
+    {
+      "method": "GET",
+      "path": "/api/v1/submissions/:id",
+      "status": 200
+    },
+    {
+      "method": "GET",
+      "path": "/api/v1/submissions/:id",
+      "status": 200
+    },
+    {
+      "method": "GET",
+      "path": "/api/v1/submissions/:id",
+      "status": 200
+    },
+    {
+      "method": "GET",
+      "path": "/api/v1/submissions/:id",
+      "status": 200
+    },
+    {
+      "method": "GET",
+      "path": "/api/v1/submissions/:id",
+      "status": 200
+    },
+    {
+      "method": "POST",
+      "path": "/api/v1/classrooms/:id/assignments/:id/problems/sum-two-integers/submissions",
+      "status": 202
+    },
+    {
+      "method": "GET",
+      "path": "/api/v1/submissions/:id",
+      "status": 200
+    },
+    {
+      "method": "GET",
+      "path": "/api/v1/submissions/:id",
+      "status": 200
+    },
+    {
+      "method": "GET",
+      "path": "/api/v1/submissions/:id",
+      "status": 200
+    },
+    {
+      "method": "GET",
+      "path": "/api/v1/submissions/:id",
+      "status": 200
+    },
+    {
+      "method": "GET",
+      "path": "/api/v1/submissions/:id",
+      "status": 200
+    },
+    {
+      "method": "GET",
+      "path": "/api/v1/submissions/:id",
+      "status": 200
+    },
+    {
+      "method": "GET",
+      "path": "/api/v1/submissions/:id",
+      "status": 200
+    },
+    {
+      "method": "GET",
+      "path": "/api/v1/submissions/:id",
+      "status": 200
+    },
+    {
+      "method": "GET",
+      "path": "/api/v1/submissions/:id",
+      "status": 200
+    },
+    {
+      "method": "GET",
+      "path": "/api/v1/submissions/:id",
+      "status": 200
+    },
+    {
+      "method": "GET",
+      "path": "/api/v1/submissions/:id",
+      "status": 200
+    },
+    {
+      "method": "GET",
+      "path": "/api/v1/classrooms/:id/assignments/:id/teaching/submissions/:id",
+      "status": 404
+    },
+    {
+      "method": "POST",
+      "path": "/api/v1/problems/sum-two-integers/submissions",
+      "status": 202
+    },
+    {
+      "method": "GET",
+      "path": "/api/v1/submissions/:id",
+      "status": 200
+    },
+    {
+      "method": "GET",
+      "path": "/api/v1/submissions/:id",
+      "status": 200
+    },
+    {
+      "method": "GET",
+      "path": "/api/v1/submissions/:id",
+      "status": 200
+    },
+    {
+      "method": "GET",
+      "path": "/api/v1/submissions/:id",
+      "status": 200
+    },
+    {
+      "method": "GET",
+      "path": "/api/v1/submissions/:id",
+      "status": 200
+    },
+    {
+      "method": "GET",
+      "path": "/api/v1/submissions/:id",
+      "status": 200
+    },
+    {
+      "method": "GET",
+      "path": "/api/v1/submissions/:id",
+      "status": 200
+    },
+    {
+      "method": "GET",
+      "path": "/api/v1/submissions/:id",
+      "status": 200
+    },
+    {
+      "method": "GET",
+      "path": "/api/v1/submissions/:id",
+      "status": 200
+    },
+    {
+      "method": "GET",
+      "path": "/api/v1/submissions/:id",
+      "status": 200
+    },
+    {
+      "method": "GET",
+      "path": "/api/v1/submissions/:id",
+      "status": 200
+    },
+    {
+      "method": "GET",
+      "path": "/api/v1/submissions/:id",
+      "status": 200
+    },
+    {
+      "method": "GET",
+      "path": "/api/v1/submissions/:id",
+      "status": 200
+    },
+    {
+      "method": "GET",
+      "path": "/api/v1/classrooms/:id/assignments/:id/teaching/submissions/:id",
+      "status": 404
+    },
+    {
+      "method": "POST",
+      "path": "/api/v1/classrooms/:id/assignments/:id/problems/class-:id/self-tests",
+      "status": 202
+    },
+    {
+      "method": "GET",
+      "path": "/api/v1/self-tests/:id",
+      "status": 200
+    },
+    {
+      "method": "GET",
+      "path": "/api/v1/self-tests/:id",
+      "status": 200
+    },
+    {
+      "method": "GET",
+      "path": "/api/v1/self-tests/:id",
+      "status": 200
+    },
+    {
+      "method": "GET",
+      "path": "/api/v1/self-tests/:id",
+      "status": 200
+    },
+    {
+      "method": "GET",
+      "path": "/api/v1/self-tests/:id",
+      "status": 200
+    },
+    {
+      "method": "GET",
+      "path": "/api/v1/self-tests/:id",
+      "status": 200
+    },
+    {
+      "method": "GET",
+      "path": "/api/v1/self-tests/:id",
+      "status": 200
+    },
+    {
+      "method": "GET",
+      "path": "/api/v1/self-tests/:id",
+      "status": 200
+    },
+    {
+      "method": "GET",
+      "path": "/api/v1/classrooms/:id/assignments/:id/teaching/submissions/:id",
+      "status": 404
+    },
+    {
+      "method": "GET",
+      "path": "/api/v1/classrooms/:id/assignments/:id/teaching/grades",
+      "status": 200
+    },
+    {
+      "method": "GET",
+      "path": "/api/v1/classrooms/:id/assignments/:id",
+      "status": 200
+    },
+    {
+      "method": "GET",
+      "path": "/api/v1/classrooms/:id/assignments/:id/teaching/participants/2/problems/1/attempts?size=1",
+      "status": 200
+    },
+    {
+      "method": "GET",
+      "path": "/api/v1/classrooms/:id/assignments/:id/teaching/participants/2/problems/1/attempts?page=2&size=1",
+      "status": 200
+    },
+    {
+      "method": "GET",
+      "path": "/api/v1/classrooms/:id/assignments/:id/teaching/submissions/:id",
+      "status": 200
+    },
+    {
+      "method": "GET",
+      "path": "/api/v1/classrooms/:id/assignments/:id/teaching/submissions/:id",
+      "status": 200
+    },
+    {
+      "method": "GET",
+      "path": "/api/v1/submissions/:id",
+      "status": 404
+    },
+    {
+      "method": "GET",
+      "path": "/api/v1/classrooms/:id/assignments/:id/teaching/grades",
+      "status": 403
+    },
+    {
+      "method": "GET",
+      "path": "/api/v1/classrooms/:id/assignments/:id/teaching/submissions/:id",
+      "status": 403
+    },
+    {
+      "method": "GET",
+      "path": "/api/v1/classrooms/:id/assignments/:id/teaching/submissions/:id",
+      "status": 404
+    },
+    {
+      "method": "GET",
+      "path": "/api/v1/classrooms/:id/assignments/:id/teaching/submissions/:id",
+      "status": 404
+    },
+    {
+      "method": "GET",
+      "path": "/api/v1/classrooms/:id/assignments/:id/teaching/submissions/not-an-id",
+      "status": 404
+    },
+    {
+      "method": "GET",
+      "path": "/api/v1/classrooms/:id/assignments/:id/teaching/grades?size=51",
+      "status": 400
+    },
+    {
+      "method": "GET",
+      "path": "/api/v1/classrooms/:id/assignments/:id/teaching/grades?page=0",
+      "status": 400
+    },
+    {
+      "method": "GET",
+      "path": "/api/v1/classrooms/:id/assignments/:id/teaching/grades?page=100&size=50",
+      "status": 200
+    },
+    {
+      "method": "GET",
+      "path": "/api/v1/classrooms/:id/assignments/:id/teaching/grades?page=2&size=1",
+      "status": 200
+    },
+    {
+      "method": "GET",
+      "path": "/api/v1/classrooms/:id/assignments/:id/teaching/participants/2/problems/3/attempts",
+      "status": 404
+    },
+    {
+      "method": "GET",
+      "path": "/api/v1/classrooms/:id/assignments/:id/teaching/participants/99999/problems/1/attempts",
+      "status": 404
+    },
+    {
+      "method": "GET",
+      "path": "/api/v1/classrooms/:id/assignments/:id/teaching/submissions/:id",
+      "status": 404
+    },
+    {
+      "method": "POST",
+      "path": "/api/v1/classrooms/:id/assignments",
+      "status": 201
+    },
+    {
+      "method": "POST",
+      "path": "/api/v1/classrooms/:id/assignments/:id/publish",
+      "status": 200
+    },
+    {
+      "method": "POST",
+      "path": "/api/v1/classrooms/:id/assignments/:id/problems/class-:id/submissions",
+      "status": 202
+    },
+    {
+      "method": "GET",
+      "path": "/api/v1/submissions/:id",
+      "status": 200
+    },
+    {
+      "method": "GET",
+      "path": "/api/v1/submissions/:id",
+      "status": 200
+    },
+    {
+      "method": "GET",
+      "path": "/api/v1/submissions/:id",
+      "status": 200
+    },
+    {
+      "method": "GET",
+      "path": "/api/v1/submissions/:id",
+      "status": 200
+    },
+    {
+      "method": "GET",
+      "path": "/api/v1/submissions/:id",
+      "status": 200
+    },
+    {
+      "method": "GET",
+      "path": "/api/v1/submissions/:id",
+      "status": 200
+    },
+    {
+      "method": "GET",
+      "path": "/api/v1/submissions/:id",
+      "status": 200
+    },
+    {
+      "method": "GET",
+      "path": "/api/v1/submissions/:id",
+      "status": 200
+    },
+    {
+      "method": "GET",
+      "path": "/api/v1/submissions/:id",
+      "status": 200
+    },
+    {
+      "method": "GET",
+      "path": "/api/v1/submissions/:id",
+      "status": 200
+    },
+    {
+      "method": "GET",
+      "path": "/api/v1/classrooms/:id/assignments/:id/teaching/grades",
+      "status": 200
+    },
+    {
+      "method": "GET",
+      "path": "/api/v1/classrooms/:id/assignments/:id",
+      "status": 200
+    },
+    {
+      "method": "PUT",
+      "path": "/api/v1/classrooms/:id/assignments/:id",
+      "status": 200
+    },
+    {
+      "method": "GET",
+      "path": "/api/v1/classrooms/:id/assignments/:id/teaching/grades",
+      "status": 200
+    },
+    {
+      "method": "GET",
+      "path": "/api/v1/auth/session",
+      "status": 200
+    },
+    {
+      "method": "POST",
+      "path": "/api/v1/auth/login",
+      "status": 200
+    },
+    {
+      "method": "GET",
+      "path": "/api/v1/auth/session",
+      "status": 200
+    },
+    {
+      "method": "POST",
+      "path": "/api/v1/auth/login",
+      "status": 200
+    },
+    {
+      "method": "GET",
+      "path": "/api/v1/auth/session",
+      "status": 200
+    },
+    {
+      "method": "POST",
+      "path": "/api/v1/auth/login",
+      "status": 200
+    },
+    {
+      "method": "GET",
+      "path": "/api/v1/classrooms/:id",
+      "status": 200
+    },
+    {
+      "method": "POST",
+      "path": "/api/v1/classrooms/:id/members/3/role",
+      "status": 200
+    },
+    {
+      "method": "GET",
+      "path": "/api/v1/classrooms/:id/assignments/:id/teaching/grades",
+      "status": 403
+    },
+    {
+      "method": "GET",
+      "path": "/api/v1/classrooms/:id/assignments/:id/teaching/submissions/:id",
+      "status": 403
+    },
+    {
+      "method": "GET",
+      "path": "/api/v1/classrooms/:id",
+      "status": 200
+    },
+    {
+      "method": "POST",
+      "path": "/api/v1/classrooms/:id/leave",
+      "status": 204
+    },
+    {
+      "method": "GET",
+      "path": "/api/v1/classrooms/:id/assignments/:id/teaching/grades",
+      "status": 404
+    },
+    {
+      "method": "GET",
+      "path": "/api/v1/classrooms/:id/assignments/:id/teaching/grades",
+      "status": 200
+    },
+    {
+      "method": "GET",
+      "path": "/api/v1/auth/session",
+      "status": 200
+    },
+    {
+      "method": "POST",
+      "path": "/api/v1/auth/login",
+      "status": 200
+    },
+    {
+      "method": "GET",
+      "path": "/api/v1/auth/session",
+      "status": 200
+    },
+    {
+      "method": "POST",
+      "path": "/api/v1/auth/login",
+      "status": 200
+    },
+    {
+      "method": "GET",
+      "path": "/api/v1/auth/session",
+      "status": 200
+    },
+    {
+      "method": "POST",
+      "path": "/api/v1/auth/login",
+      "status": 200
+    },
+    {
+      "method": "GET",
+      "path": "/api/v1/classrooms/:id",
+      "status": 200
+    },
+    {
+      "method": "POST",
+      "path": "/api/v1/classrooms/:id/members/3/role",
+      "status": 200
+    },
+    {
+      "method": "GET",
+      "path": "/api/v1/classrooms/:id",
+      "status": 200
+    },
+    {
+      "method": "POST",
+      "path": "/api/v1/classrooms/:id/archive",
+      "status": 204
+    },
+    {
+      "method": "GET",
+      "path": "/api/v1/classrooms/:id/assignments/:id/teaching/grades",
+      "status": 200
+    },
+    {
+      "method": "GET",
+      "path": "/api/v1/classrooms/:id/assignments/:id/teaching/submissions/:id",
+      "status": 200
+    },
+    {
+      "method": "GET",
+      "path": "/api/v1/classrooms/:id/assignments/:id/teaching/submissions/:id",
+      "status": 200
+    }
+  ],
+  "checkedAt": "2026-10-08T03:47:24.134Z",
+  "revokedImmediately": true,
+  "historicalParticipant": true,
+  "archivedReadOnly": true
+}

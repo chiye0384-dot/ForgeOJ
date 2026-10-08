@@ -1,0 +1,19 @@
+// Copyright 2026 池也; SPDX-License-Identifier: Apache-2.0
+import assert from 'node:assert/strict'
+import { readFile, writeFile } from 'node:fs/promises'
+const read=async name=>(await readFile('/reports/'+name,'utf8')).replace(/^\uFEFF/,''),json=async name=>JSON.parse(await read(name))
+const facts=(await read('teacher-attempt-facts.jsonl')).split(/\r?\n/).filter(Boolean).map(JSON.parse),http=await json('teacher-http.json'),browser=await json('teacher-browser.json'),denials=await json('teacher-denials.json'),runtime=await json('teacher-runtime.json')
+for(const key of ['gradesMatchOwn','lateExtensionConsistent','privateAndPreSourceDenied','assistantAllowed','revokedImmediately','historicalParticipant','archivedReadOnly'])assert.equal(http[key],true)
+assert.equal(facts.length,5);assert.deepEqual(facts.map(f=>f.verdict),['WA','AC','AC','AC','AC']);const truth=v=>v===true||v===1
+const worker=(await read('teacher-worker.log')).split(/\r?\n/).filter(l=>l.startsWith('{')).map(JSON.parse)
+for(const f of facts){assert.equal(f.status,'FINISHED');assert.equal(f.taskStatus,'FINISHED');assert.equal(f.attemptCount,1);for(const key of ['sourceDigestMatches','bindingsMatch','resourcesMatch','leaseCleared'])assert.ok(truth(f[key]));assert.equal(f.attempts.length,1);assert.equal(f.attempts[0].status,'SUCCEEDED');assert.ok(truth(f.attempts[0].finished));assert.equal(f.events.length,1);assert.ok(truth(f.events[0].published));assert.equal(f.events[0].failed,false);const logs=worker.filter(l=>l.submissionId===f.submissionId&&l.attemptId===f.attempts[0].id),commit=logs.find(l=>l.event==='attempt.finished'&&l.outcome===f.verdict),ack=logs.find(l=>l.event==='delivery.ack_sent');assert.ok(commit&&ack);assert.ok(commit['@timestamp']<=ack['@timestamp'])}
+assert.equal(facts.find(f=>f.submissionId===http.sourceSubmissionId).sourceSha256,http.sourceSha256)
+for(const key of ['ownerSource','memberDenied','assistantSource','demotionCleared','archivedLeftHistory'])assert.equal(browser[key],true)
+assert.equal(browser.submissionId,http.sourceSubmissionId);assert.equal(runtime.readOnlySourceMount,true);assert.equal(denials.allDenied,true);assert.equal(denials.denials,8);assert.equal(denials.apiBoundary,true)
+const queues=(await read('teacher-queues.tsv')).split(/\r?\n/).filter(l=>/^forgeoj\.(judge|content|self-test)\./.test(l));assert.equal(queues.length,7);for(const line of queues){const parts=line.trim().split(/\s+/);assert.equal(parts[1],'0');assert.equal(parts[2],'0')}
+const participants=(await read('teacher-participant-facts.jsonl')).split(/\r?\n/).filter(Boolean).map(JSON.parse);assert.equal(participants.length,9);assert.equal(participants.filter(p=>p.memberStatus==='LEFT').length,3);assert.ok(participants.every(p=>p.classroomStatus==='ARCHIVED'))
+const pre=(await read('teacher-pre-facts.jsonl')).split(/\r?\n/).filter(Boolean).map(JSON.parse);assert.equal(pre.length,2);assert.ok(pre.every(p=>truth(p.realOwnerVersionAc)))
+const self=(await read('teacher-self-facts.jsonl')).split(/\r?\n/).filter(Boolean).map(JSON.parse);assert.equal(self.length,1);assert.equal(self[0].runId,http.selfTestId);assert.equal(self[0].result,'SUCCESS');assert.equal(self[0].status,'FINISHED');assert.ok(truth(self[0].basisMatches))
+const apiText=await read('teacher-api.log');for(const sentinel of ['password_hash','forgeoj-dev-only','m1-e2e-api-test-secret','M3_REFERENCE_PRIVATE_SENTINEL','M3_INDEPENDENT_SOLUTION_SENTINEL','import java.util.Scanner; public class Main'])assert.ok(!apiText.includes(sentinel))
+const report={checkedAt:new Date().toISOString(),allPassed:true,httpChecks:http.checks.length,realFormal:5,verdicts:facts.map(f=>f.verdict),participants:9,precompleted:2,realSelfTests:1,emptyQueues:7,sqlDenials:8,sourceDigestMatches:true,commitBeforeAck:true,readOnlyRuntime:true,browser:true}
+await writeFile('/reports/teacher-audit.json',JSON.stringify(report,null,2)+'\n');console.log(JSON.stringify(report))

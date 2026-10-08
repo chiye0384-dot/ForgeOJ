@@ -1,0 +1,36 @@
+{
+  "consoleProof": [
+    "Administrator 1 updated with durable audit. First-login password change is required.",
+    "Administrator maintenance refused or unavailable; no credential details are logged.",
+    "Administrator 5 updated with durable audit. First-login password change is required.",
+    "Interactive console required; no Web services were started."
+  ],
+  "checkedAt": "2026-10-08T17:17:16.6933324+08:00",
+  "beforeBootstrapped": 0,
+  "beforeAccountCount": 0,
+  "apiProcess": "aefff78375522a843027c40c1b5a19db47d5009a4dbd9c905fbbabacd2df6aab 6141",
+  "targetId": 5,
+  "noWebStartup": true,
+  "apiSha256": "45fb87b26526b9ff32ff3a0b1cc1c13096aaa2b69bfb37271cd4d0892ad56e8e",
+  "after": {
+    "role": "SUPER_ADMIN",
+    "status": "ACTIVE",
+    "version": 4,
+    "targetId": 5,
+    "accountCount": 7,
+    "bootstrapped": 1,
+    "recoveryAudits": 1,
+    "bootstrapAudits": 1,
+    "unrevokedSessions": 0,
+    "mustChangePassword": 1
+  },
+  "bootstrap": true,
+  "repeatExit": 1,
+  "repeatRefused": true,
+  "recover": true,
+  "recoveryExit": 0,
+  "nonInteractiveRefused": true,
+  "bootstrapExit": 0,
+  "nonInteractiveExit": 2,
+  "scope": "Disposable interactive CLI rehearsal; not real loss of all SUPER access"
+}

@@ -14,6 +14,8 @@ x-api-env: &api-env
   FORGEOJ_OUTBOX_PUBLISHER_FIXED_DELAY_MS: "200"
   # Public fixture key and loopback-only development mail, never production configuration.
   FORGEOJ_AUTH_JWT_SECRET: m2-public-fixture-signing-key-only-2026
+  FORGEOJ_ADMIN_JWT_SECRET: m4-public-fixture-independent-admin-key-2026
+  FORGEOJ_ADMIN_COOKIE_SECURE: "false"
   FORGEOJ_AUTH_COOKIE_SECURE: "false"
   SPRING_PROFILES_ACTIVE: test
   FORGEOJ_AUTH_MAIL_MODE: local

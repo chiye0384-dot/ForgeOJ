@@ -1,0 +1,121 @@
+{
+  "verifiedAt": "2026-10-08T09:20:16.717Z",
+  "allPassed": true,
+  "apiRun": "target\\forgeoj-linux-20261008-153916-11d8804d",
+  "fullRun": "target\\forgeoj-linux-20261008-153916-11d8804d",
+  "frontRun": "target\\forgeoj-linux-20261008-144420-e6317968",
+  "replay": "target\\forgeoj-e2e-20261008-170446-46f5ab43",
+  "api": {
+    "suites": 45,
+    "tests": 245,
+    "failures": 0,
+    "errors": 0,
+    "skipped": 0
+  },
+  "worker": {
+    "suites": 23,
+    "tests": 133,
+    "failures": 0,
+    "errors": 0,
+    "skipped": 0
+  },
+  "frontendTests": 107,
+  "apiSha256": "45fb87b26526b9ff32ff3a0b1cc1c13096aaa2b69bfb37271cd4d0892ad56e8e",
+  "workerSha256": "a0a63dc74444269ae0b9dbc9184e6c9344577505a0a2c30488842f9fa0621055",
+  "httpChecks": 86,
+  "browser": {
+    "checkedAt": "2026-10-08T09:14:38.427Z",
+    "firstChangeGate": true,
+    "superAccounts": true,
+    "creationFormVisible": true,
+    "reviewerDenied": true,
+    "opsDenied": true,
+    "revokedCleared": true,
+    "auditVisible": true,
+    "auditFilterAndDetails": true,
+    "tabRetained": true,
+    "tabId": "4",
+    "passwordChangeMethod": "actual HTTP; browser observed gate and re-login; no UI password submission",
+    "creationObservation": "single-role create form visible; backend creation checked with actual HTTP; no UI credential entry",
+    "snapshots": [
+      "admin-browser-first-change.dom.txt",
+      "admin-browser-super.dom.txt",
+      "admin-browser-revoked.dom.txt",
+      "admin-browser-reviewer.dom.txt",
+      "admin-browser-reviewer-audit.dom.txt",
+      "admin-browser-ops.dom.txt",
+      "admin-browser-ops-audit.dom.txt",
+      "admin-browser-audit.dom.txt"
+    ]
+  },
+  "cli": {
+    "consoleProof": [
+      "Administrator 1 updated with durable audit. First-login password change is required.",
+      "Administrator maintenance refused or unavailable; no credential details are logged.",
+      "Administrator 5 updated with durable audit. First-login password change is required.",
+      "Interactive console required; no Web services were started."
+    ],
+    "checkedAt": "2026-10-08T17:17:16.6933324+08:00",
+    "beforeBootstrapped": 0,
+    "beforeAccountCount": 0,
+    "apiProcess": "aefff78375522a843027c40c1b5a19db47d5009a4dbd9c905fbbabacd2df6aab 6141",
+    "targetId": 5,
+    "noWebStartup": true,
+    "apiSha256": "45fb87b26526b9ff32ff3a0b1cc1c13096aaa2b69bfb37271cd4d0892ad56e8e",
+    "after": {
+      "role": "SUPER_ADMIN",
+      "status": "ACTIVE",
+      "version": 4,
+      "targetId": 5,
+      "accountCount": 7,
+      "bootstrapped": 1,
+      "recoveryAudits": 1,
+      "bootstrapAudits": 1,
+      "unrevokedSessions": 0,
+      "mustChangePassword": 1
+    },
+    "bootstrap": true,
+    "repeatExit": 1,
+    "repeatRefused": true,
+    "recover": true,
+    "recoveryExit": 0,
+    "nonInteractiveRefused": true,
+    "bootstrapExit": 0,
+    "nonInteractiveExit": 2,
+    "scope": "Disposable interactive CLI rehearsal; not real loss of all SUPER access"
+  },
+  "runtime": {
+    "capturedAt": "2026-10-08T09:13:39.318Z",
+    "readOnlySourceMount": true,
+    "files": 72
+  },
+  "denials": {
+    "allDenied": true,
+    "apiBoundary": true,
+    "checkedAt": "2026-10-08T17:16:43.1732982+08:00",
+    "denials": 10
+  },
+  "cleanup": {
+    "builders": 0,
+    "checkedAt": "2026-10-08T17:17:57.2866946+08:00",
+    "ownedNetworks": 0,
+    "ownedVolumes": 0,
+    "ownedContainers": 0,
+    "managedSandboxes": 0,
+    "ownedImages": 0,
+    "testcontainers": 0
+  },
+  "publicRegression": {
+    "checkedAt": "2026-10-08T09:16:45.579Z",
+    "allPassed": true,
+    "submissions": 10,
+    "finished": 9,
+    "cancelled": 1,
+    "emptyQueues": 7,
+    "classroomChecks": 62,
+    "ordinaryAc": "7ea96160-4833-421c-96ca-d13ceb61a14b",
+    "scope": "actual HTTP/WS protocol verdict matrix and classroom regression; no new ordinary browser fallback claim"
+  },
+  "auditEvents": 67,
+  "scope": "M4 step2 independent admin identity only; full M4 IN_PROGRESS"
+}

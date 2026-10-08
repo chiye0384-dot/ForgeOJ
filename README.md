@@ -1,5 +1,7 @@
 # ForgeOJ
 
+2026-10-08：M4第2步独立管理员身份单元 **VERIFIED**。V18、独立后台登录/刷新/改密/撤销、单角色账号维护、持久审计与显式初始化/恢复CLI已交付；固定Linux API245、Worker133零失败/错误/跳过，前端107及所有检查通过。相同JAR/前端输入的真实HTTP86、三角色页面/撤权清空、交互CLI、SQL隔离、判题与班级回归及精确清理均关联通过。见 [验收](docs/M4-ADMIN-IDENTITY-VALIDATION.md)、[证据](docs/evidence/m4-admin-identity/README.md)、[CLI](docs/M4-ADMIN-CLI.md) 和 [最新交接](docs/M4-NEXT-CHAT-HANDOFF.md)。仅第2步完成，完整M4仍IN_PROGRESS；下一单元公共题审核治理本轮不开始。M-1至M3保持VERIFIED，下方日期记录保留历史。
+
 2026-10-08 最终状态：**完整M3 VERIFIED，4/4总门禁通过**，见 [最终审计](docs/M3-GATE-AUDIT.md) 和 [机器证据](docs/evidence/m3-gate/verification.json)。班级成员/私有题/作业/教学记录闭环已验收；本轮补齐REMOVED历史与恢复、教学接口和转让权限的直接回归，Linux API223全部通过，未改业务实现。Worker133/前端97按相同输入复核复用，实际运行构件及多账号证据按原轮次关联。本轮停止于M3；下一步M4最小管理员认证与角色设计，尚未开始。M-1至M3均VERIFIED，未Release或RESUME_READY，下方日期段落保留历史。
 
 2026-10-08 最新：M3教学作业记录单元 **VERIFIED**。负责人、助教可分页查看本班作业全员成绩、正式尝试和单条只读源码，每次请求复核当前角色；普通成员、私人练习、预完成原代码及自测均不开放。Linux API221、Worker133、前端97及全部检查，151HTTP、真实判题与三账号页面、撤权/归档历史、权限与精确清理通过；254后端/68前端输入与实际运行构件一致。见 [设计](docs/M3-TEACHER-RECORDS-DESIGN.md)、[验收](docs/M3-TEACHER-RECORDS-VALIDATION.md)、[证据](docs/evidence/m3-teacher-records/README.md)。完整M3仍IN_PROGRESS，下一步四项总门禁审计，本轮不开始；下方日期段落为历史。
@@ -10,11 +12,11 @@
 
 2026-10-06 班级与成员首单元 **VERIFIED**，完整 M3 `IN_PROGRESS`：V15、班级作用域权限、邀请码、退出/移除/恢复、接受转让、归档及 `/classrooms` 页面完成。最终 Linux API192、Worker133（分开构建，首轮包装脚本异常如实保留）、前端75；62项真实HTTP、三账号真实页面/SQL、正常与回退AC、38项权限拒绝、日志/Outbox/队列及精确清理通过。[设计](docs/M3-CLASSROOM-DESIGN.md)、[验收](docs/M3-CLASSROOM-VALIDATION.md) 和 [脱敏证据](docs/evidence/m3-classroom/README.md) 记录实际结果；班级私有题、作业及教师关联查询尚未实现。完整M2保持VERIFIED，以下日期段落保留历史，M4/M5仍PLANNED，没有Release或RESUME_READY。
 
-接续开发请先读 [M2 完成后进入 M3 的最新交接](docs/M3-NEXT-CHAT-HANDOFF.md)：当前基线、已完成能力、必读文档、班级与作业拆分、运行/验收要求及历史入口说明均在其中。
+接续开发请先读 [M4最新交接](docs/M4-NEXT-CHAT-HANDOFF.md)：已完成边界、证据、后续第3步和保留文件说明均在其中；M3交接已作为历史入口保留。
 
 2026-10-05 最终门禁：完整 M2 已 VERIFIED，5/5 门禁通过，见 [最终审计](docs/M2-GATE-AUDIT.md)。本轮补齐历史版本两项直接回归，固定 Linux API182+Worker133=315 零失败/错误/跳过；原前端69及其全部输入保持一致，已接受运行时的全部生产源码与 JAR 重新核对一致。真实浏览器/Worker故障/QQ邮件沿用各自原验收记录，本轮未重新回放或发送邮件。受控审核发布和 Redis/ES 仍属 M4；下一步 M3 班级与作业，尚未正式发布或新增 RESUME_READY。下方单元段落保留历史，当前完整状态以本段为准。
 
-> 当前状态：M-1、M0、M1、完整M2均 `VERIFIED`（见 [M1门禁](docs/M1-GATE-AUDIT.md)、[M2门禁](docs/M2-GATE-AUDIT.md)及各单元记录）；M3班级成员、班级私有题、作业三个单元 `VERIFIED`，完整M3 `IN_PROGRESS`；M4/M5 `PLANNED`，尚未发布。
+> 当前状态：M-1、M0、M1、完整M2、完整M3均 `VERIFIED`；M4第2步管理身份单元 `VERIFIED`，完整M4 `IN_PROGRESS`；M5/V1.1仍 `PLANNED`，尚未发布。
 >
 > 需求基线：2026-09-24；工程基线：2026-09-28
 

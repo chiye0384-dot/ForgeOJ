@@ -1,5 +1,7 @@
 # ForgeOJ 简历证据矩阵
 
+2026-10-08：M4第2步管理身份单元 [VERIFIED](M4-ADMIN-IDENTITY-VALIDATION.md)，独立三角色认证/账号维护、初始化/恢复和持久审计有Linux245+133/107、实际CLI/HTTP/页面/SQL隔离/清理证据。E-05仅该子范围已验证，完整运维闭环及公共题审核未实现，候选总状态仍PLANNED；E-04仍PLANNED，E-03保持VERIFIED。不新增Release或RESUME_READY结论，下方日期记录为历史。
+
 2026-10-08：完整M3四门禁通过，E-03提升为 **VERIFIED**，证据见 [总门禁](M3-GATE-AUDIT.md) 与 [机器关联](evidence/m3-gate/verification.json)。负责人/助教作用域、真实作业和PRECOMPLETED、角色撤销/转让/离班历史及私人代码隔离有直接测试和分别日期的实际运行证据。本轮API223全部通过，运行条目/Worker/前端保持相同；不冒充新一次浏览器或故障恢复验收。尚未Release、用户面试解释/独立修改等简历准入仍需完成，不标RESUME_READY。下方日期记录为历史。
 
 2026-10-08 最新：教学记录单元VERIFIED，见 [验收](M3-TEACHER-RECORDS-VALIDATION.md)：API221/Worker133/前端97，151HTTP、真实5正式判题/2预完成/1自测，三账号页面/降级清空/归档LEFT历史，8教学SQL拒绝和严格源码作用域均有证据。完整M3四项总门禁尚未汇总，E-03完整候选保持PLANNED；未Release或RESUME_READY，不把本单元功能直接用作已发布简历结论。下方日期段落为历史。
@@ -63,7 +65,7 @@
 | E-02 | Docker 代码沙箱 | `IMPLEMENTED` | M1 实际限制/恶意程序/故障清理证据已具备；完整候选仍需 M5 独立 Linux 主机安全验收与发布 | 普通 Docker 非绝对安全边界；受控小范围使用 |
 | E-03 | 班级与作业权限模型 | `VERIFIED` | [M3 4/4门禁](M3-GATE-AUDIT.md)；41项M3集成测试、当前角色/转让/成员历史、永久作业快照、真实判题和多账号源码隔离证据 | 不验证真实教师；教师只见本班正式作业数据；未Release/RESUME_READY |
 | E-04 | Redis/ES 可降级数据架构 | `PLANNED` | MySQL 权威数据、Outbox 同步、版本幂等、缓存和索引重建；Redis/ES 故障演练 | 降级时性能或搜索能力下降 |
-| E-05 | 独立管理员与运维闭环 | `PLANNED` | 三类后台角色权限测试；公共题审核；DLQ 幂等重试；审计记录 | 单人项目仍需用测试证明职责隔离 |
+| E-05 | 独立管理员与运维闭环 | `PLANNED`（身份子范围VERIFIED） | [身份/CLI/维护/审计证据](M4-ADMIN-IDENTITY-VALIDATION.md)已通过；公共题审核、DLQ幂等重试及完整业务权限仍待实现 | 身份单元不等同运维闭环或已发布简历能力 |
 | E-06 | Linux 云端交付与恢复 | `PLANNED` | Compose、HTTPS、Flyway、备份恢复、回滚、监控和真实试运行记录 | 单机，不承诺高可用和 SLA |
 | E-07 | 可复现性能优化 | `PLANNED` | 相同环境下的基线、瓶颈证据、改动、回归报告及原始数据 | 未压测前没有任何可信 QPS/P95 数字 |
 

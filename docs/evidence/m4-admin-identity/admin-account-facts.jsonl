@@ -1,0 +1,7 @@
+{"id": 1, "role": "SUPER_ADMIN", "status": "ACTIVE", "version": 2, "username": "m4_super", "mustChangePassword": 0}
+{"id": 2, "role": "CONTENT_REVIEWER", "status": "ACTIVE", "version": 2, "username": "http_reviewer", "mustChangePassword": 0}
+{"id": 3, "role": "OPS_ADMIN", "status": "ACTIVE", "version": 2, "username": "http_ops", "mustChangePassword": 0}
+{"id": 4, "role": "SUPER_ADMIN", "status": "ACTIVE", "version": 1, "username": "http_second_super", "mustChangePassword": 1}
+{"id": 5, "role": "SUPER_ADMIN", "status": "ACTIVE", "version": 4, "username": "browser_super", "mustChangePassword": 1}
+{"id": 6, "role": "CONTENT_REVIEWER", "status": "ACTIVE", "version": 2, "username": "browser_reviewer", "mustChangePassword": 0}
+{"id": 7, "role": "OPS_ADMIN", "status": "ACTIVE", "version": 2, "username": "browser_ops", "mustChangePassword": 0}

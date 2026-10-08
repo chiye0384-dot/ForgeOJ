@@ -9,10 +9,30 @@ import ClassroomView from '@/views/ClassroomView.vue'
 import ClassroomProblemsView from '@/views/ClassroomProblemsView.vue'
 import AssignmentsView from '@/views/AssignmentsView.vue'
 import TeacherRecordsView from '@/views/TeacherRecordsView.vue'
+import AdminView from '@/views/AdminView.vue'
 
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
   routes: [
+    {
+      path: '/admin/login',
+      name: 'admin-login',
+      component: AdminView,
+      props: { section: 'login' },
+    },
+    {
+      path: '/admin/accounts',
+      name: 'admin-accounts',
+      component: AdminView,
+      props: { section: 'accounts' },
+    },
+    {
+      path: '/admin/audit',
+      name: 'admin-audit',
+      component: AdminView,
+      props: { section: 'audit' },
+    },
+    { path: '/admin', name: 'admin-home', component: AdminView, props: { section: 'home' } },
     {
       path: '/classrooms/:id/assignments/:assignmentId/records',
       name: 'teacher-records',

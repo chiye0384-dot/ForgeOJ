@@ -1,0 +1,119 @@
+- banner:
+  - generic: F
+  - heading "ForgeOJ" [level=1]
+  - paragraph: Java 21 在线练习与判题
+  - navigation "主导航":
+    - link "题库":
+      - /url: /problems
+    - link "学习记录":
+      - /url: /learning
+    - link "班级":
+      - /url: /classrooms
+    - link "我的题目":
+      - /url: /authoring
+    - link "做题":
+      - /url: /
+    - link "账号":
+      - /url: /account
+    - link "管理后台":
+      - /url: /admin/login
+- main:
+  - heading "管理后台" [level=2]
+  - navigation "后台导航":
+    - link "管理首页":
+      - /url: /admin
+    - link "管理员账号":
+      - /url: /admin/accounts
+    - link "操作审计":
+      - /url: /admin/audit
+    - button "刷新"
+  - status
+  - paragraph: 当前账号：browser_super · 超级管理员
+  - text: 当前密码
+  - textbox "当前密码"
+  - text: 新密码
+  - textbox "新密码"
+  - button "修改密码"
+  - button "退出当前会话"
+  - button "退出全部会话"
+  - heading "管理员账号" [level=3]
+  - text: 新账号用户名
+  - textbox "新账号用户名"
+  - text: 角色
+  - combobox "角色":
+    - option "内容审核员" [selected]
+    - option "运维管理员"
+    - option "超级管理员"
+  - text: 初始或重置密码
+  - textbox "初始或重置密码"
+  - text: 操作原因
+  - textbox "操作原因"
+  - button "创建管理员"
+  - paragraph: 修改现有账号时，使用上方所选角色、重置密码和操作原因。新建或重置后首次登录必须改密。
+  - table:
+    - rowgroup:
+      - row "账号 角色 状态 操作":
+        - columnheader "账号"
+        - columnheader "角色"
+        - columnheader "状态"
+        - columnheader "操作"
+    - rowgroup:
+      - row "m4_super 超级管理员 有效 调整角色 停用 重置密码":
+        - cell "m4_super"
+        - cell "超级管理员"
+        - cell "有效"
+        - cell "调整角色 停用 重置密码":
+          - button "调整角色"
+          - button "停用"
+          - button "重置密码"
+      - row "http_reviewer 内容审核员 有效 调整角色 停用 重置密码":
+        - cell "http_reviewer"
+        - cell "内容审核员"
+        - cell "有效"
+        - cell "调整角色 停用 重置密码":
+          - button "调整角色"
+          - button "停用"
+          - button "重置密码"
+      - row "http_ops 运维管理员 有效 调整角色 停用 重置密码":
+        - cell "http_ops"
+        - cell "运维管理员"
+        - cell "有效"
+        - cell "调整角色 停用 重置密码":
+          - button "调整角色"
+          - button "停用"
+          - button "重置密码"
+      - row "http_second_super 超级管理员 有效，需改密 调整角色 停用 重置密码":
+        - cell "http_second_super"
+        - cell "超级管理员"
+        - cell "有效，需改密"
+        - cell "调整角色 停用 重置密码":
+          - button "调整角色"
+          - button "停用"
+          - button "重置密码"
+      - row "browser_super 超级管理员 有效 调整角色 停用 重置密码":
+        - cell "browser_super"
+        - cell "超级管理员"
+        - cell "有效"
+        - cell "调整角色 停用 重置密码":
+          - button "调整角色"
+          - button "停用"
+          - button "重置密码" [disabled]
+      - row "browser_reviewer 内容审核员 有效 调整角色 停用 重置密码":
+        - cell "browser_reviewer"
+        - cell "内容审核员"
+        - cell "有效"
+        - cell "调整角色 停用 重置密码":
+          - button "调整角色"
+          - button "停用"
+          - button "重置密码"
+      - row "browser_ops 运维管理员 有效 调整角色 停用 重置密码":
+        - cell "browser_ops"
+        - cell "运维管理员"
+        - cell "有效"
+        - cell "调整角色 停用 重置密码":
+          - button "调整角色"
+          - button "停用"
+          - button "重置密码"
+  - paragraph: 第 1 页，共 7 条
+  - button "上一页" [disabled]
+  - button "下一页" [disabled]

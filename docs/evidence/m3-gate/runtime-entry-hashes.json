@@ -1,0 +1,1672 @@
+{
+  "freshApiSha256": "02c4ef6034341e7c0c7681000a91c0c74b9db2c1f2c7f8cd6e1b05200968141c",
+  "acceptedApiSha256": "1fce68604e3845fbf7e8b3ea3bebcad4d4abaa0c1fa6e0cbcf1f467751ef0f16",
+  "allEqual": true,
+  "entries": [
+    {
+      "path": "BOOT-INF/classes/application-dev.properties",
+      "freshSha256": "b5d2739a0b5e4f82feb4d1e6d285ca47792381da2283857d5628a843f3768e9a",
+      "acceptedSha256": "b5d2739a0b5e4f82feb4d1e6d285ca47792381da2283857d5628a843f3768e9a"
+    },
+    {
+      "path": "BOOT-INF/classes/application.properties",
+      "freshSha256": "726c3e238f9972ba533e22dbf43e992e252082aa27aef5e27cad3baa273136eb",
+      "acceptedSha256": "726c3e238f9972ba533e22dbf43e992e252082aa27aef5e27cad3baa273136eb"
+    },
+    {
+      "path": "BOOT-INF/classes/com/forgeoj/api/ForgeojApiApplication.class",
+      "freshSha256": "d2b0837aea75d2acbd51b7313d5c30e79d1e22e9500b6985a6900f4d4a9b75f0",
+      "acceptedSha256": "d2b0837aea75d2acbd51b7313d5c30e79d1e22e9500b6985a6900f4d4a9b75f0"
+    },
+    {
+      "path": "BOOT-INF/classes/com/forgeoj/api/auth/AccountAuthenticationFilter.class",
+      "freshSha256": "5bc5820eb043cf5fd960d17c04209fbf8e90209574f8dcabb00866c7bcf35b86",
+      "acceptedSha256": "5bc5820eb043cf5fd960d17c04209fbf8e90209574f8dcabb00866c7bcf35b86"
+    },
+    {
+      "path": "BOOT-INF/classes/com/forgeoj/api/auth/AccountCookies.class",
+      "freshSha256": "5bb450e26590c385e71461104b45401202bfc597f18af4fa4e0b3c673e8df89b",
+      "acceptedSha256": "5bb450e26590c385e71461104b45401202bfc597f18af4fa4e0b3c673e8df89b"
+    },
+    {
+      "path": "BOOT-INF/classes/com/forgeoj/api/auth/AccountCsrfRepository.class",
+      "freshSha256": "17fa01b31fb2d7d39076cd0fb10719dfb59209f210f651c970726042c4b7fb9d",
+      "acceptedSha256": "17fa01b31fb2d7d39076cd0fb10719dfb59209f210f651c970726042c4b7fb9d"
+    },
+    {
+      "path": "BOOT-INF/classes/com/forgeoj/api/auth/AccountInput.class",
+      "freshSha256": "fa9f73a041c1a2613c4cdaad966774d3c382b6531f635785cf6e4f2af7f30960",
+      "acceptedSha256": "fa9f73a041c1a2613c4cdaad966774d3c382b6531f635785cf6e4f2af7f30960"
+    },
+    {
+      "path": "BOOT-INF/classes/com/forgeoj/api/auth/AccountJwt.class",
+      "freshSha256": "9d26f159f2da5aaa057781e5915fef321ebd6a688f020a6b9b59a50776f35421",
+      "acceptedSha256": "9d26f159f2da5aaa057781e5915fef321ebd6a688f020a6b9b59a50776f35421"
+    },
+    {
+      "path": "BOOT-INF/classes/com/forgeoj/api/auth/AccountMailContent.class",
+      "freshSha256": "fb48a34552465a0b728e8996607e98ac655afce32004d1559ad75e4374daebd0",
+      "acceptedSha256": "fb48a34552465a0b728e8996607e98ac655afce32004d1559ad75e4374daebd0"
+    },
+    {
+      "path": "BOOT-INF/classes/com/forgeoj/api/auth/AccountMailDelivery.class",
+      "freshSha256": "c64a54c74adcd7ed4a1143696c0da9fe4a39696a7f6b8f063dbec96589b40ce7",
+      "acceptedSha256": "c64a54c74adcd7ed4a1143696c0da9fe4a39696a7f6b8f063dbec96589b40ce7"
+    },
+    {
+      "path": "BOOT-INF/classes/com/forgeoj/api/auth/AccountMapper$Account.class",
+      "freshSha256": "6808916bbbf30c10c96a8607271b682f39dd699be3856d4624e80dca96b3a989",
+      "acceptedSha256": "6808916bbbf30c10c96a8607271b682f39dd699be3856d4624e80dca96b3a989"
+    },
+    {
+      "path": "BOOT-INF/classes/com/forgeoj/api/auth/AccountMapper$Action.class",
+      "freshSha256": "003b457976157b78343e102b5d0291b0a73ea1914dba8cdce821e6c716a8eb3a",
+      "acceptedSha256": "003b457976157b78343e102b5d0291b0a73ea1914dba8cdce821e6c716a8eb3a"
+    },
+    {
+      "path": "BOOT-INF/classes/com/forgeoj/api/auth/AccountMapper$Refresh.class",
+      "freshSha256": "a21e94a73b8336593fd3e7e61b3a55de09b19baa683dfebff90ac3a3c6eb1c67",
+      "acceptedSha256": "a21e94a73b8336593fd3e7e61b3a55de09b19baa683dfebff90ac3a3c6eb1c67"
+    },
+    {
+      "path": "BOOT-INF/classes/com/forgeoj/api/auth/AccountMapper$Session.class",
+      "freshSha256": "ec70122707fb8bed223d1c2266b5dc178f86102f6d03eeffff9363576b94eec1",
+      "acceptedSha256": "ec70122707fb8bed223d1c2266b5dc178f86102f6d03eeffff9363576b94eec1"
+    },
+    {
+      "path": "BOOT-INF/classes/com/forgeoj/api/auth/AccountMapper.class",
+      "freshSha256": "03410a0393334ab613e944d09453645d4428d33bec7475e9d68d59158f5db983",
+      "acceptedSha256": "03410a0393334ab613e944d09453645d4428d33bec7475e9d68d59158f5db983"
+    },
+    {
+      "path": "BOOT-INF/classes/com/forgeoj/api/auth/AccountRateLimiter$Window.class",
+      "freshSha256": "7bac44f740c4e017b830450d7656e1f66e8d9626a980bb941e7b71bf17cad583",
+      "acceptedSha256": "7bac44f740c4e017b830450d7656e1f66e8d9626a980bb941e7b71bf17cad583"
+    },
+    {
+      "path": "BOOT-INF/classes/com/forgeoj/api/auth/AccountRateLimiter.class",
+      "freshSha256": "7276b9e81aec6000aa451ab720ac4bb540843e77a929cf046d43bffa0074b70b",
+      "acceptedSha256": "7276b9e81aec6000aa451ab720ac4bb540843e77a929cf046d43bffa0074b70b"
+    },
+    {
+      "path": "BOOT-INF/classes/com/forgeoj/api/auth/AccountSecrets.class",
+      "freshSha256": "7c6a84d065c3ed3d78defaf2a935d88c0851dd4bf2ddb116d9ed59baa7ff2d25",
+      "acceptedSha256": "7c6a84d065c3ed3d78defaf2a935d88c0851dd4bf2ddb116d9ed59baa7ff2d25"
+    },
+    {
+      "path": "BOOT-INF/classes/com/forgeoj/api/auth/AccountService$1.class",
+      "freshSha256": "f5719f20bfd0f812a62feec76beae2c1cfbf40dfb5f094b619dd3b65d6fe3141",
+      "acceptedSha256": "f5719f20bfd0f812a62feec76beae2c1cfbf40dfb5f094b619dd3b65d6fe3141"
+    },
+    {
+      "path": "BOOT-INF/classes/com/forgeoj/api/auth/AccountService$2.class",
+      "freshSha256": "0d836c3252975cebcc4d3987957f17059b8bfd33b1ac4cd3a74258756614c706",
+      "acceptedSha256": "0d836c3252975cebcc4d3987957f17059b8bfd33b1ac4cd3a74258756614c706"
+    },
+    {
+      "path": "BOOT-INF/classes/com/forgeoj/api/auth/AccountService$Delivery.class",
+      "freshSha256": "b578554d6269afa8d63c1f399b2015a49743fc4c551cca0dd312966ceb5a211d",
+      "acceptedSha256": "b578554d6269afa8d63c1f399b2015a49743fc4c551cca0dd312966ceb5a211d"
+    },
+    {
+      "path": "BOOT-INF/classes/com/forgeoj/api/auth/AccountService$Login.class",
+      "freshSha256": "27f4e53e9d7f0cd88f0a97814af55072b7918b562040acd82ccb900f4dc7ada7",
+      "acceptedSha256": "27f4e53e9d7f0cd88f0a97814af55072b7918b562040acd82ccb900f4dc7ada7"
+    },
+    {
+      "path": "BOOT-INF/classes/com/forgeoj/api/auth/AccountService.class",
+      "freshSha256": "f8ded1ae4f8dcf920a52d214709bb1afd5bc8e4a0aa1a97a05c023c53025f77f",
+      "acceptedSha256": "f8ded1ae4f8dcf920a52d214709bb1afd5bc8e4a0aa1a97a05c023c53025f77f"
+    },
+    {
+      "path": "BOOT-INF/classes/com/forgeoj/api/auth/AccountSessionsRevoked.class",
+      "freshSha256": "6c813f86820328d93048210fe09d1b1ce5ddcb84636e8ced2fe764fc455caef4",
+      "acceptedSha256": "6c813f86820328d93048210fe09d1b1ce5ddcb84636e8ced2fe764fc455caef4"
+    },
+    {
+      "path": "BOOT-INF/classes/com/forgeoj/api/auth/AuthController$Binding.class",
+      "freshSha256": "aa9359a4dbffe5bb618a87b0a510174d9034c91c8e2d34165dae352cc1c2922d",
+      "acceptedSha256": "aa9359a4dbffe5bb618a87b0a510174d9034c91c8e2d34165dae352cc1c2922d"
+    },
+    {
+      "path": "BOOT-INF/classes/com/forgeoj/api/auth/AuthController$Change.class",
+      "freshSha256": "08cd7b82896ee18e9bf702d16647adb01eee99cf4199b0609ea271c09721125c",
+      "acceptedSha256": "08cd7b82896ee18e9bf702d16647adb01eee99cf4199b0609ea271c09721125c"
+    },
+    {
+      "path": "BOOT-INF/classes/com/forgeoj/api/auth/AuthController$CsrfResponse.class",
+      "freshSha256": "38c7893865b3aed85a7e2498428f61fcbef2628da6acff84ac054d28342e6db9",
+      "acceptedSha256": "38c7893865b3aed85a7e2498428f61fcbef2628da6acff84ac054d28342e6db9"
+    },
+    {
+      "path": "BOOT-INF/classes/com/forgeoj/api/auth/AuthController$Email.class",
+      "freshSha256": "ae01366b3a4462a5a590e0a4d9eb2005288eddcaca8305de245d22f7f82734d8",
+      "acceptedSha256": "ae01366b3a4462a5a590e0a4d9eb2005288eddcaca8305de245d22f7f82734d8"
+    },
+    {
+      "path": "BOOT-INF/classes/com/forgeoj/api/auth/AuthController$LoginRequest.class",
+      "freshSha256": "7ab5d7d8c49a3db2dd3bbb632a33efe154cb0e870efa74736a2733c1ac9ab1da",
+      "acceptedSha256": "7ab5d7d8c49a3db2dd3bbb632a33efe154cb0e870efa74736a2733c1ac9ab1da"
+    },
+    {
+      "path": "BOOT-INF/classes/com/forgeoj/api/auth/AuthController$Message.class",
+      "freshSha256": "7d1dc666b7da35585e8a02bd9471fd832811b549a210625bb2bd1d5080ee25d2",
+      "acceptedSha256": "7d1dc666b7da35585e8a02bd9471fd832811b549a210625bb2bd1d5080ee25d2"
+    },
+    {
+      "path": "BOOT-INF/classes/com/forgeoj/api/auth/AuthController$Registration.class",
+      "freshSha256": "b52772fcc86dc1eee31ddad9f6df074e25dcca89bf02e94ded3c3e40dfd80b90",
+      "acceptedSha256": "b52772fcc86dc1eee31ddad9f6df074e25dcca89bf02e94ded3c3e40dfd80b90"
+    },
+    {
+      "path": "BOOT-INF/classes/com/forgeoj/api/auth/AuthController$Reset.class",
+      "freshSha256": "7c9c292d09a019997aa859c8bc739f078bd2929cd5c634629162090fb03b5c4b",
+      "acceptedSha256": "7c9c292d09a019997aa859c8bc739f078bd2929cd5c634629162090fb03b5c4b"
+    },
+    {
+      "path": "BOOT-INF/classes/com/forgeoj/api/auth/AuthController$SessionResponse.class",
+      "freshSha256": "23a9d840a2698908b690b460113f43ad4d7b7ceecee052f2c209562d34a275b7",
+      "acceptedSha256": "23a9d840a2698908b690b460113f43ad4d7b7ceecee052f2c209562d34a275b7"
+    },
+    {
+      "path": "BOOT-INF/classes/com/forgeoj/api/auth/AuthController$SessionUserResponse.class",
+      "freshSha256": "98cea30e7c0e57667b03922f3858dc89eee4a687e92f3fda3cc2bc10879f0bc8",
+      "acceptedSha256": "98cea30e7c0e57667b03922f3858dc89eee4a687e92f3fda3cc2bc10879f0bc8"
+    },
+    {
+      "path": "BOOT-INF/classes/com/forgeoj/api/auth/AuthController$Token.class",
+      "freshSha256": "2323a1cab82b921938a6a2cb438c54a150558179890118bdd6b6fc2601d28bf7",
+      "acceptedSha256": "2323a1cab82b921938a6a2cb438c54a150558179890118bdd6b6fc2601d28bf7"
+    },
+    {
+      "path": "BOOT-INF/classes/com/forgeoj/api/auth/AuthController.class",
+      "freshSha256": "7628076af173058c632c9c7f1f1b811c7c9872d08c229529f492e461c82439fe",
+      "acceptedSha256": "7628076af173058c632c9c7f1f1b811c7c9872d08c229529f492e461c82439fe"
+    },
+    {
+      "path": "BOOT-INF/classes/com/forgeoj/api/auth/DatabaseUserDetailsService.class",
+      "freshSha256": "816abdc146d732bf8769797119876451554cb26399bae7514e13291059977139",
+      "acceptedSha256": "816abdc146d732bf8769797119876451554cb26399bae7514e13291059977139"
+    },
+    {
+      "path": "BOOT-INF/classes/com/forgeoj/api/auth/DisabledAccountMail.class",
+      "freshSha256": "491078585d78cb8e0a7c59f94c6f8d6a5b12e947525f976c7c9ef58b4d50e815",
+      "acceptedSha256": "491078585d78cb8e0a7c59f94c6f8d6a5b12e947525f976c7c9ef58b4d50e815"
+    },
+    {
+      "path": "BOOT-INF/classes/com/forgeoj/api/auth/ForgeOjPrincipal.class",
+      "freshSha256": "aeab259409b43e891fe04a3bbc8c6af26a7cfdb364fa23fb93abbae4c1738aa7",
+      "acceptedSha256": "aeab259409b43e891fe04a3bbc8c6af26a7cfdb364fa23fb93abbae4c1738aa7"
+    },
+    {
+      "path": "BOOT-INF/classes/com/forgeoj/api/auth/LocalAccountMail$Mail.class",
+      "freshSha256": "c411ee75fe7cfb8e62531d61686d69cd2f8018a6f4e5f5aee2542efb75fd7227",
+      "acceptedSha256": "c411ee75fe7cfb8e62531d61686d69cd2f8018a6f4e5f5aee2542efb75fd7227"
+    },
+    {
+      "path": "BOOT-INF/classes/com/forgeoj/api/auth/LocalAccountMail.class",
+      "freshSha256": "8b88fc0c19de28f51064700c70b9da1a803260868226db7364b014e8a8e11fcf",
+      "acceptedSha256": "8b88fc0c19de28f51064700c70b9da1a803260868226db7364b014e8a8e11fcf"
+    },
+    {
+      "path": "BOOT-INF/classes/com/forgeoj/api/auth/SameOriginFilter.class",
+      "freshSha256": "e795db77277086abe05827ec490497ca2b96ba13b5af855bf59967d5e4c7f416",
+      "acceptedSha256": "e795db77277086abe05827ec490497ca2b96ba13b5af855bf59967d5e4c7f416"
+    },
+    {
+      "path": "BOOT-INF/classes/com/forgeoj/api/auth/SmtpAccountMail.class",
+      "freshSha256": "7d2b1ef6a1de1ecf4aea3e3d8f656c0c750e61e76c52724e9da93c605cc768db",
+      "acceptedSha256": "7d2b1ef6a1de1ecf4aea3e3d8f656c0c750e61e76c52724e9da93c605cc768db"
+    },
+    {
+      "path": "BOOT-INF/classes/com/forgeoj/api/classroom/AssignmentController.class",
+      "freshSha256": "bff98324ca4a5a78a85e18d84544acf8e887e789a144f1324f075dd5941bdb32",
+      "acceptedSha256": "bff98324ca4a5a78a85e18d84544acf8e887e789a144f1324f075dd5941bdb32"
+    },
+    {
+      "path": "BOOT-INF/classes/com/forgeoj/api/classroom/AssignmentLifecycle.class",
+      "freshSha256": "ce28af62a1acee60d262e2f9a956e069d62d6239bccfb7b05a4e3fd1770f7e62",
+      "acceptedSha256": "ce28af62a1acee60d262e2f9a956e069d62d6239bccfb7b05a4e3fd1770f7e62"
+    },
+    {
+      "path": "BOOT-INF/classes/com/forgeoj/api/classroom/AssignmentMapper$Candidate.class",
+      "freshSha256": "c1eb49ebb98ba106c7f2c3a09dd66b4db95e8f0fce4cc1a7ebd082fb66a9972a",
+      "acceptedSha256": "c1eb49ebb98ba106c7f2c3a09dd66b4db95e8f0fce4cc1a7ebd082fb66a9972a"
+    },
+    {
+      "path": "BOOT-INF/classes/com/forgeoj/api/classroom/AssignmentMapper$Problem.class",
+      "freshSha256": "add690c7da1619d2027a6fb5275f64a2e66f8dad0c8c12f55e5e29aeb31e4227",
+      "acceptedSha256": "add690c7da1619d2027a6fb5275f64a2e66f8dad0c8c12f55e5e29aeb31e4227"
+    },
+    {
+      "path": "BOOT-INF/classes/com/forgeoj/api/classroom/AssignmentMapper$Proof.class",
+      "freshSha256": "77cba7809acfabe7700bdb9f6a26d216162af37524ccf069f17cb821d435bae2",
+      "acceptedSha256": "77cba7809acfabe7700bdb9f6a26d216162af37524ccf069f17cb821d435bae2"
+    },
+    {
+      "path": "BOOT-INF/classes/com/forgeoj/api/classroom/AssignmentMapper$Row.class",
+      "freshSha256": "44cf4715fc54d616881fff22f777df12d4b6c0c8f0b3266b05601677a7375d3c",
+      "acceptedSha256": "44cf4715fc54d616881fff22f777df12d4b6c0c8f0b3266b05601677a7375d3c"
+    },
+    {
+      "path": "BOOT-INF/classes/com/forgeoj/api/classroom/AssignmentMapper.class",
+      "freshSha256": "40c3f2a8143661416c4ec4437247f9608144b66fa32d4b901b8e8ac75f534dd1",
+      "acceptedSha256": "40c3f2a8143661416c4ec4437247f9608144b66fa32d4b901b8e8ac75f534dd1"
+    },
+    {
+      "path": "BOOT-INF/classes/com/forgeoj/api/classroom/AssignmentScheduler.class",
+      "freshSha256": "2a66ac3246aad66d11ec2b0e4d3e73247d2166160caa312dc67a34db18d7aac9",
+      "acceptedSha256": "2a66ac3246aad66d11ec2b0e4d3e73247d2166160caa312dc67a34db18d7aac9"
+    },
+    {
+      "path": "BOOT-INF/classes/com/forgeoj/api/classroom/AssignmentService$Definition.class",
+      "freshSha256": "fe13e97623cf9987dd953af27aaa9c5aac6fa7808b6f59106019cdc049eb5739",
+      "acceptedSha256": "fe13e97623cf9987dd953af27aaa9c5aac6fa7808b6f59106019cdc049eb5739"
+    },
+    {
+      "path": "BOOT-INF/classes/com/forgeoj/api/classroom/AssignmentService$Detail.class",
+      "freshSha256": "ce4de53200d2944b65af2f1d2109b6fad80c7f773285a7715ecc2e5b177e048a",
+      "acceptedSha256": "ce4de53200d2944b65af2f1d2109b6fad80c7f773285a7715ecc2e5b177e048a"
+    },
+    {
+      "path": "BOOT-INF/classes/com/forgeoj/api/classroom/AssignmentService$Grade.class",
+      "freshSha256": "68cdd1fd316539cc603f0128428aaa64f3afc65090b530dc3dfec95d97536dd2",
+      "acceptedSha256": "68cdd1fd316539cc603f0128428aaa64f3afc65090b530dc3dfec95d97536dd2"
+    },
+    {
+      "path": "BOOT-INF/classes/com/forgeoj/api/classroom/AssignmentService$Identity.class",
+      "freshSha256": "a8329d1368d3b0dfc1694d71c6f2ba277e6fbd951d480770129e9a34a2fe71ef",
+      "acceptedSha256": "a8329d1368d3b0dfc1694d71c6f2ba277e6fbd951d480770129e9a34a2fe71ef"
+    },
+    {
+      "path": "BOOT-INF/classes/com/forgeoj/api/classroom/AssignmentService$Item.class",
+      "freshSha256": "96f07dfb42eeeb8465b65edb832a2f69d9d9ccc2e7d44491bdaa3459e331e868",
+      "acceptedSha256": "96f07dfb42eeeb8465b65edb832a2f69d9d9ccc2e7d44491bdaa3459e331e868"
+    },
+    {
+      "path": "BOOT-INF/classes/com/forgeoj/api/classroom/AssignmentService$Page.class",
+      "freshSha256": "db04f013b70948bce28438c8a7e300c63ef23b40e02a72c997369df666f7d1bd",
+      "acceptedSha256": "db04f013b70948bce28438c8a7e300c63ef23b40e02a72c997369df666f7d1bd"
+    },
+    {
+      "path": "BOOT-INF/classes/com/forgeoj/api/classroom/AssignmentService$Prepared.class",
+      "freshSha256": "2506e552a349a5855be844b9f12a2d73428d6aee36538a9a4e7306a84a135683",
+      "acceptedSha256": "2506e552a349a5855be844b9f12a2d73428d6aee36538a9a4e7306a84a135683"
+    },
+    {
+      "path": "BOOT-INF/classes/com/forgeoj/api/classroom/AssignmentService$Summary.class",
+      "freshSha256": "d9cf8d7736a5e640a3e3e7bb3aef530fa777121f524df4fd31187c585c486c78",
+      "acceptedSha256": "d9cf8d7736a5e640a3e3e7bb3aef530fa777121f524df4fd31187c585c486c78"
+    },
+    {
+      "path": "BOOT-INF/classes/com/forgeoj/api/classroom/AssignmentService$TeachingContext.class",
+      "freshSha256": "b1873cf0dfb2f4be66dda3323474d88df97652b7dd80d88883e820713d5e1a1d",
+      "acceptedSha256": "b1873cf0dfb2f4be66dda3323474d88df97652b7dd80d88883e820713d5e1a1d"
+    },
+    {
+      "path": "BOOT-INF/classes/com/forgeoj/api/classroom/AssignmentService.class",
+      "freshSha256": "ead7de10c198ffcaf4fb81d21d8b398688c3377412acf2a8c7e02ba9a4418620",
+      "acceptedSha256": "ead7de10c198ffcaf4fb81d21d8b398688c3377412acf2a8c7e02ba9a4418620"
+    },
+    {
+      "path": "BOOT-INF/classes/com/forgeoj/api/classroom/AssignmentSolutionGuard.class",
+      "freshSha256": "770f0e24b9ce04547642e5680c04969659efc081813151e9e45584e57cae663c",
+      "acceptedSha256": "770f0e24b9ce04547642e5680c04969659efc081813151e9e45584e57cae663c"
+    },
+    {
+      "path": "BOOT-INF/classes/com/forgeoj/api/classroom/ClassroomController.class",
+      "freshSha256": "bf188cd32840c4df472b6740b46a1de83f2434d7f557784e8b474fcdb6f05049",
+      "acceptedSha256": "bf188cd32840c4df472b6740b46a1de83f2434d7f557784e8b474fcdb6f05049"
+    },
+    {
+      "path": "BOOT-INF/classes/com/forgeoj/api/classroom/ClassroomMapper$Creation.class",
+      "freshSha256": "a1cc0253390a6fdf548b94a8c09653fe3d5559c82c7f5e85c0765ec130fca095",
+      "acceptedSha256": "a1cc0253390a6fdf548b94a8c09653fe3d5559c82c7f5e85c0765ec130fca095"
+    },
+    {
+      "path": "BOOT-INF/classes/com/forgeoj/api/classroom/ClassroomMapper$Member.class",
+      "freshSha256": "1a52baa4bcf91471b0e8eb966cedd25243ccee4e85fbd94999d8b2ac2e9c0abd",
+      "acceptedSha256": "1a52baa4bcf91471b0e8eb966cedd25243ccee4e85fbd94999d8b2ac2e9c0abd"
+    },
+    {
+      "path": "BOOT-INF/classes/com/forgeoj/api/classroom/ClassroomMapper$Room.class",
+      "freshSha256": "5b712d11a7f2bb8eea81164ee6de0195c5c75b04524890b43b3c1aca0c966502",
+      "acceptedSha256": "5b712d11a7f2bb8eea81164ee6de0195c5c75b04524890b43b3c1aca0c966502"
+    },
+    {
+      "path": "BOOT-INF/classes/com/forgeoj/api/classroom/ClassroomMapper$Summary.class",
+      "freshSha256": "f2230bb6996f86d706fb34adf20a4a164169a571c203a08486bf68cf3a9621f8",
+      "acceptedSha256": "f2230bb6996f86d706fb34adf20a4a164169a571c203a08486bf68cf3a9621f8"
+    },
+    {
+      "path": "BOOT-INF/classes/com/forgeoj/api/classroom/ClassroomMapper$Transfer.class",
+      "freshSha256": "9dd66dec5252cef4525908d0e632f6ee87a5b5cd39aa40d920fc39323be864ba",
+      "acceptedSha256": "9dd66dec5252cef4525908d0e632f6ee87a5b5cd39aa40d920fc39323be864ba"
+    },
+    {
+      "path": "BOOT-INF/classes/com/forgeoj/api/classroom/ClassroomMapper.class",
+      "freshSha256": "364fcbdc3151897acfbcb6b86aa9b3b9e790f22382c4ee75cc0af92aa2eae08e",
+      "acceptedSha256": "364fcbdc3151897acfbcb6b86aa9b3b9e790f22382c4ee75cc0af92aa2eae08e"
+    },
+    {
+      "path": "BOOT-INF/classes/com/forgeoj/api/classroom/ClassroomProblemController.class",
+      "freshSha256": "d6f753a8a3e18dbb08b591ae4854e08b33a02fdf42fb7e5666b543c5ad5daba3",
+      "acceptedSha256": "d6f753a8a3e18dbb08b591ae4854e08b33a02fdf42fb7e5666b543c5ad5daba3"
+    },
+    {
+      "path": "BOOT-INF/classes/com/forgeoj/api/classroom/ClassroomProblemMapper$Frozen.class",
+      "freshSha256": "72e20d578182e6aea3f919f0538f3b56c5f34bcc8e37ff22804cdc15b8f136a6",
+      "acceptedSha256": "72e20d578182e6aea3f919f0538f3b56c5f34bcc8e37ff22804cdc15b8f136a6"
+    },
+    {
+      "path": "BOOT-INF/classes/com/forgeoj/api/classroom/ClassroomProblemMapper$Row.class",
+      "freshSha256": "ceeef9c9420f1233712a4d75bba361ac4a3b211929557972f88f6d1fef9df81e",
+      "acceptedSha256": "ceeef9c9420f1233712a4d75bba361ac4a3b211929557972f88f6d1fef9df81e"
+    },
+    {
+      "path": "BOOT-INF/classes/com/forgeoj/api/classroom/ClassroomProblemMapper$Solution.class",
+      "freshSha256": "ea1b94c905affaab843b8b8da4b289f38db3785a6e77e512bb991f2425dcf1f4",
+      "acceptedSha256": "ea1b94c905affaab843b8b8da4b289f38db3785a6e77e512bb991f2425dcf1f4"
+    },
+    {
+      "path": "BOOT-INF/classes/com/forgeoj/api/classroom/ClassroomProblemMapper.class",
+      "freshSha256": "d49ee094aafe88536bfd5a5aeb673cd0a59a6a7277c51cfb7f055e721c8b49df",
+      "acceptedSha256": "d49ee094aafe88536bfd5a5aeb673cd0a59a6a7277c51cfb7f055e721c8b49df"
+    },
+    {
+      "path": "BOOT-INF/classes/com/forgeoj/api/classroom/ClassroomProblemService$Detail.class",
+      "freshSha256": "1276acab9dbee1ee1f72a16277e1d8a04483d457d2b14b423376c72f24450491",
+      "acceptedSha256": "1276acab9dbee1ee1f72a16277e1d8a04483d457d2b14b423376c72f24450491"
+    },
+    {
+      "path": "BOOT-INF/classes/com/forgeoj/api/classroom/ClassroomProblemService$Maintenance.class",
+      "freshSha256": "e989a3f6c670aaa862b69bf582559a554bf0f5068e86aa4ec76b20acf3eb0620",
+      "acceptedSha256": "e989a3f6c670aaa862b69bf582559a554bf0f5068e86aa4ec76b20acf3eb0620"
+    },
+    {
+      "path": "BOOT-INF/classes/com/forgeoj/api/classroom/ClassroomProblemService$Page.class",
+      "freshSha256": "be859ab7ba2656486f236265fa103888f27f76cb398e8b9e53d6d478c437bec5",
+      "acceptedSha256": "be859ab7ba2656486f236265fa103888f27f76cb398e8b9e53d6d478c437bec5"
+    },
+    {
+      "path": "BOOT-INF/classes/com/forgeoj/api/classroom/ClassroomProblemService$Solution.class",
+      "freshSha256": "67366129c459b459809ec513da32f5300975cba33fbc273ccb0d8a57f4d834dc",
+      "acceptedSha256": "67366129c459b459809ec513da32f5300975cba33fbc273ccb0d8a57f4d834dc"
+    },
+    {
+      "path": "BOOT-INF/classes/com/forgeoj/api/classroom/ClassroomProblemService$Summary.class",
+      "freshSha256": "88140518f93d6c3ffe4c247acc5401a04336b2c41fff5321d8955805da9def7f",
+      "acceptedSha256": "88140518f93d6c3ffe4c247acc5401a04336b2c41fff5321d8955805da9def7f"
+    },
+    {
+      "path": "BOOT-INF/classes/com/forgeoj/api/classroom/ClassroomProblemService.class",
+      "freshSha256": "48f84306ef1fff10622f7d0f57388a39f4f9e4442e8eeb409fc10b90ec181f3e",
+      "acceptedSha256": "48f84306ef1fff10622f7d0f57388a39f4f9e4442e8eeb409fc10b90ec181f3e"
+    },
+    {
+      "path": "BOOT-INF/classes/com/forgeoj/api/classroom/ClassroomService$Detail.class",
+      "freshSha256": "0f84bd97cf73f296e7088410c8a86e126c74e18acd21d072ff51388d047f7c79",
+      "acceptedSha256": "0f84bd97cf73f296e7088410c8a86e126c74e18acd21d072ff51388d047f7c79"
+    },
+    {
+      "path": "BOOT-INF/classes/com/forgeoj/api/classroom/ClassroomService$Invite.class",
+      "freshSha256": "d05b34cd77b9a0e5c17c05b9a5eb2888c65ac72c7c91918be7ecf6d33067b50f",
+      "acceptedSha256": "d05b34cd77b9a0e5c17c05b9a5eb2888c65ac72c7c91918be7ecf6d33067b50f"
+    },
+    {
+      "path": "BOOT-INF/classes/com/forgeoj/api/classroom/ClassroomService$Page.class",
+      "freshSha256": "a69f3641a6373ee5763c972cb5d21bd9238de6cdcb9f3df589034e2489df861e",
+      "acceptedSha256": "a69f3641a6373ee5763c972cb5d21bd9238de6cdcb9f3df589034e2489df861e"
+    },
+    {
+      "path": "BOOT-INF/classes/com/forgeoj/api/classroom/ClassroomService.class",
+      "freshSha256": "f6f06758f5bf009395c229587ee4c41734138ef0f3a4d9330d9d75876e70bdad",
+      "acceptedSha256": "f6f06758f5bf009395c229587ee4c41734138ef0f3a4d9330d9d75876e70bdad"
+    },
+    {
+      "path": "BOOT-INF/classes/com/forgeoj/api/classroom/TeacherRecordController.class",
+      "freshSha256": "f75458d60211050d6f8146c8c66dafcd6d21028803563393c7904bce6d655ce7",
+      "acceptedSha256": "f75458d60211050d6f8146c8c66dafcd6d21028803563393c7904bce6d655ce7"
+    },
+    {
+      "path": "BOOT-INF/classes/com/forgeoj/api/classroom/TeacherRecordMapper$Attempt.class",
+      "freshSha256": "5615319caa0a44a8f1838d399c972789e9dbaa3aafa7bb23480ed160cd6abcb5",
+      "acceptedSha256": "5615319caa0a44a8f1838d399c972789e9dbaa3aafa7bb23480ed160cd6abcb5"
+    },
+    {
+      "path": "BOOT-INF/classes/com/forgeoj/api/classroom/TeacherRecordMapper$GradeRow.class",
+      "freshSha256": "05dcb20a212d88e9417c9bcbdedc0c9221ffd05065384d2b254b575da1b7b5f1",
+      "acceptedSha256": "05dcb20a212d88e9417c9bcbdedc0c9221ffd05065384d2b254b575da1b7b5f1"
+    },
+    {
+      "path": "BOOT-INF/classes/com/forgeoj/api/classroom/TeacherRecordMapper$Participant.class",
+      "freshSha256": "09fa1134d3311beff7ac975e2ee646ce5f1cf3852b5526f022adac02843d24d4",
+      "acceptedSha256": "09fa1134d3311beff7ac975e2ee646ce5f1cf3852b5526f022adac02843d24d4"
+    },
+    {
+      "path": "BOOT-INF/classes/com/forgeoj/api/classroom/TeacherRecordMapper$Source.class",
+      "freshSha256": "3959f78bb965da96cfd7ecef4efe5fd0558560efe40047664e2bb76dc3e2fa89",
+      "acceptedSha256": "3959f78bb965da96cfd7ecef4efe5fd0558560efe40047664e2bb76dc3e2fa89"
+    },
+    {
+      "path": "BOOT-INF/classes/com/forgeoj/api/classroom/TeacherRecordMapper.class",
+      "freshSha256": "7b3ba6f8b4c51311da735e8e269db407d376616f1db32b2a4d9e7119c096939e",
+      "acceptedSha256": "7b3ba6f8b4c51311da735e8e269db407d376616f1db32b2a4d9e7119c096939e"
+    },
+    {
+      "path": "BOOT-INF/classes/com/forgeoj/api/classroom/TeacherRecordService$Attempt.class",
+      "freshSha256": "9d4cc65c86f258859cedef9ec06f79216528fb3467a40bc83b5d35e855fdb842",
+      "acceptedSha256": "9d4cc65c86f258859cedef9ec06f79216528fb3467a40bc83b5d35e855fdb842"
+    },
+    {
+      "path": "BOOT-INF/classes/com/forgeoj/api/classroom/TeacherRecordService$Attempts.class",
+      "freshSha256": "d095ac6e79ebc52a7dab671fc1e8363197b5cf418d898f5e4fb0832478690490",
+      "acceptedSha256": "d095ac6e79ebc52a7dab671fc1e8363197b5cf418d898f5e4fb0832478690490"
+    },
+    {
+      "path": "BOOT-INF/classes/com/forgeoj/api/classroom/TeacherRecordService$Grade.class",
+      "freshSha256": "a84642a0fbd86116f68df5898ff9a4deb7f0ed1fabc73036dbdd30286fe50b72",
+      "acceptedSha256": "a84642a0fbd86116f68df5898ff9a4deb7f0ed1fabc73036dbdd30286fe50b72"
+    },
+    {
+      "path": "BOOT-INF/classes/com/forgeoj/api/classroom/TeacherRecordService$Grades.class",
+      "freshSha256": "4210a12a60d2a734495701b00b7f02a7ebf45ce32c96ea23b047a63d7ca9de6f",
+      "acceptedSha256": "4210a12a60d2a734495701b00b7f02a7ebf45ce32c96ea23b047a63d7ca9de6f"
+    },
+    {
+      "path": "BOOT-INF/classes/com/forgeoj/api/classroom/TeacherRecordService$Participant.class",
+      "freshSha256": "6b3d0a36eca0073523cd1ea00716efb2bef9747a421f0581067fdde5c484fffb",
+      "acceptedSha256": "6b3d0a36eca0073523cd1ea00716efb2bef9747a421f0581067fdde5c484fffb"
+    },
+    {
+      "path": "BOOT-INF/classes/com/forgeoj/api/classroom/TeacherRecordService$Source.class",
+      "freshSha256": "ab7e834a1f3a4c7c5a7ce4192e27cf7d470c0042565aa2e382af03b627e160a7",
+      "acceptedSha256": "ab7e834a1f3a4c7c5a7ce4192e27cf7d470c0042565aa2e382af03b627e160a7"
+    },
+    {
+      "path": "BOOT-INF/classes/com/forgeoj/api/classroom/TeacherRecordService.class",
+      "freshSha256": "4baf8bca980e5998ea7a7ef8d0b0661ca02523711686cea1c1fd5fc7e67d88bf",
+      "acceptedSha256": "4baf8bca980e5998ea7a7ef8d0b0661ca02523711686cea1c1fd5fc7e67d88bf"
+    },
+    {
+      "path": "BOOT-INF/classes/com/forgeoj/api/config/ApiErrorHandler.class",
+      "freshSha256": "6e92e2b91c34c79b44bfd52860c9f390f43706e05bebca7f2f3bf2b4913fbc59",
+      "acceptedSha256": "6e92e2b91c34c79b44bfd52860c9f390f43706e05bebca7f2f3bf2b4913fbc59"
+    },
+    {
+      "path": "BOOT-INF/classes/com/forgeoj/api/config/SecurityConfig.class",
+      "freshSha256": "6d835feae07a8f2c6184eedff1eb9891a8ccd2ed753793db028c776ac92235ec",
+      "acceptedSha256": "6d835feae07a8f2c6184eedff1eb9891a8ccd2ed753793db028c776ac92235ec"
+    },
+    {
+      "path": "BOOT-INF/classes/com/forgeoj/api/content/ContentController.class",
+      "freshSha256": "98b39f2d830d7e0e37b2924e3cdde44de1d657f4ac7d4dfe0f2496a7023fbe25",
+      "acceptedSha256": "98b39f2d830d7e0e37b2924e3cdde44de1d657f4ac7d4dfe0f2496a7023fbe25"
+    },
+    {
+      "path": "BOOT-INF/classes/com/forgeoj/api/content/ContentMapper$Row.class",
+      "freshSha256": "236324d54a111e10a6cc6b66df972a5deced34d575875b149d7dfd032f70cd62",
+      "acceptedSha256": "236324d54a111e10a6cc6b66df972a5deced34d575875b149d7dfd032f70cd62"
+    },
+    {
+      "path": "BOOT-INF/classes/com/forgeoj/api/content/ContentMapper$TestRow.class",
+      "freshSha256": "9ab5a358dbedf3b9715b8ad1a8452c1a8ee2aa13119c2022a1c4e3384030d6f5",
+      "acceptedSha256": "9ab5a358dbedf3b9715b8ad1a8452c1a8ee2aa13119c2022a1c4e3384030d6f5"
+    },
+    {
+      "path": "BOOT-INF/classes/com/forgeoj/api/content/ContentMapper.class",
+      "freshSha256": "7c6012b5553e2e51945bf30cf87a0fdda64fe821206e8591dcefe5701bb69c91",
+      "acceptedSha256": "7c6012b5553e2e51945bf30cf87a0fdda64fe821206e8591dcefe5701bb69c91"
+    },
+    {
+      "path": "BOOT-INF/classes/com/forgeoj/api/content/ContentOutputController.class",
+      "freshSha256": "8769fed1826f9fbc29f9fa19fd9195e295caae8e2321ad7fff4e438f61dc4a34",
+      "acceptedSha256": "8769fed1826f9fbc29f9fa19fd9195e295caae8e2321ad7fff4e438f61dc4a34"
+    },
+    {
+      "path": "BOOT-INF/classes/com/forgeoj/api/content/ContentOutputMapper$Case.class",
+      "freshSha256": "3167075ab38cc14ab806be66d89c193a4016c7a5c09b6961f3f46d562e9f5648",
+      "acceptedSha256": "3167075ab38cc14ab806be66d89c193a4016c7a5c09b6961f3f46d562e9f5648"
+    },
+    {
+      "path": "BOOT-INF/classes/com/forgeoj/api/content/ContentOutputMapper$Detail.class",
+      "freshSha256": "df7de86f94e818030b65af289ffb74a576981d69f2ea12e9b0df4805e0893b2d",
+      "acceptedSha256": "df7de86f94e818030b65af289ffb74a576981d69f2ea12e9b0df4805e0893b2d"
+    },
+    {
+      "path": "BOOT-INF/classes/com/forgeoj/api/content/ContentOutputMapper$OutputRow.class",
+      "freshSha256": "727bd1f1fecb39b1ef6f4a6184f2819cc6d2c4ef0ce16e95bb00e1ea6377eccd",
+      "acceptedSha256": "727bd1f1fecb39b1ef6f4a6184f2819cc6d2c4ef0ce16e95bb00e1ea6377eccd"
+    },
+    {
+      "path": "BOOT-INF/classes/com/forgeoj/api/content/ContentOutputMapper$Page.class",
+      "freshSha256": "5c529df5779f16d492bfe95cef88b6ee81027e749ac84f925de81e1b26e2c69f",
+      "acceptedSha256": "5c529df5779f16d492bfe95cef88b6ee81027e749ac84f925de81e1b26e2c69f"
+    },
+    {
+      "path": "BOOT-INF/classes/com/forgeoj/api/content/ContentOutputMapper$Preview.class",
+      "freshSha256": "21ee2e9f57b6f02e2b8d3fca5b4bd21e1979a50987cd39cba0be3095dc736245",
+      "acceptedSha256": "21ee2e9f57b6f02e2b8d3fca5b4bd21e1979a50987cd39cba0be3095dc736245"
+    },
+    {
+      "path": "BOOT-INF/classes/com/forgeoj/api/content/ContentOutputMapper$Receipt.class",
+      "freshSha256": "9ee1481d92b6732bbf56dbb232c085d675d2dd63631319b70d8bce316ca24a20",
+      "acceptedSha256": "9ee1481d92b6732bbf56dbb232c085d675d2dd63631319b70d8bce316ca24a20"
+    },
+    {
+      "path": "BOOT-INF/classes/com/forgeoj/api/content/ContentOutputMapper.class",
+      "freshSha256": "f9089ad38dac2569ed1d41fad8f7433c779df066ea79c466f636795e60a5395e",
+      "acceptedSha256": "f9089ad38dac2569ed1d41fad8f7433c779df066ea79c466f636795e60a5395e"
+    },
+    {
+      "path": "BOOT-INF/classes/com/forgeoj/api/content/ContentOutputService$1.class",
+      "freshSha256": "fdaa90433bffe7bae09e2091b7a17e620e62c0aa62b74299b8b2ff35a4b9de14",
+      "acceptedSha256": "fdaa90433bffe7bae09e2091b7a17e620e62c0aa62b74299b8b2ff35a4b9de14"
+    },
+    {
+      "path": "BOOT-INF/classes/com/forgeoj/api/content/ContentOutputService.class",
+      "freshSha256": "da11e3fb72946e90df29c2427e426902f8693b1c0c46cae3d7efe7aae43e81ec",
+      "acceptedSha256": "da11e3fb72946e90df29c2427e426902f8693b1c0c46cae3d7efe7aae43e81ec"
+    },
+    {
+      "path": "BOOT-INF/classes/com/forgeoj/api/content/ContentRecords$Content.class",
+      "freshSha256": "0f151f486f6ff06ecbdd8bd743dbf3bfaa437a87729b297556a771179ca1da8a",
+      "acceptedSha256": "0f151f486f6ff06ecbdd8bd743dbf3bfaa437a87729b297556a771179ca1da8a"
+    },
+    {
+      "path": "BOOT-INF/classes/com/forgeoj/api/content/ContentRecords$Detail.class",
+      "freshSha256": "20037bcf77e05d17e2254d97a1a2e8e9f48e74330d486f15e5b3b73f699a8404",
+      "acceptedSha256": "20037bcf77e05d17e2254d97a1a2e8e9f48e74330d486f15e5b3b73f699a8404"
+    },
+    {
+      "path": "BOOT-INF/classes/com/forgeoj/api/content/ContentRecords$Metadata.class",
+      "freshSha256": "2030492fc4f6ef5535a92d68056f7ea0ccf531a0a2ecf125bac8e51366efefe6",
+      "acceptedSha256": "2030492fc4f6ef5535a92d68056f7ea0ccf531a0a2ecf125bac8e51366efefe6"
+    },
+    {
+      "path": "BOOT-INF/classes/com/forgeoj/api/content/ContentRecords$Page.class",
+      "freshSha256": "fb46454505b0cab00d4f059048babccbd64628593c3df61b10cb5277f831c80a",
+      "acceptedSha256": "fb46454505b0cab00d4f059048babccbd64628593c3df61b10cb5277f831c80a"
+    },
+    {
+      "path": "BOOT-INF/classes/com/forgeoj/api/content/ContentRecords$Sample.class",
+      "freshSha256": "c74a6651a16550be1291a053f63300030838f1bb7bdb6a3ba0e915be98d2b026",
+      "acceptedSha256": "c74a6651a16550be1291a053f63300030838f1bb7bdb6a3ba0e915be98d2b026"
+    },
+    {
+      "path": "BOOT-INF/classes/com/forgeoj/api/content/ContentRecords$Summary.class",
+      "freshSha256": "b496a1a28d0f99d86979c411a3408454ff7695bb0939964360f56596bb4984e0",
+      "acceptedSha256": "b496a1a28d0f99d86979c411a3408454ff7695bb0939964360f56596bb4984e0"
+    },
+    {
+      "path": "BOOT-INF/classes/com/forgeoj/api/content/ContentRecords$TestCase.class",
+      "freshSha256": "1afebe479d323b044d0d4039485373c85d85b2b44606ac53b9bd7a9704273bcb",
+      "acceptedSha256": "1afebe479d323b044d0d4039485373c85d85b2b44606ac53b9bd7a9704273bcb"
+    },
+    {
+      "path": "BOOT-INF/classes/com/forgeoj/api/content/ContentRecords.class",
+      "freshSha256": "ded3116876c952095668cb037839c5e1d258b3923c531ad574536c8ccb96b35d",
+      "acceptedSha256": "ded3116876c952095668cb037839c5e1d258b3923c531ad574536c8ccb96b35d"
+    },
+    {
+      "path": "BOOT-INF/classes/com/forgeoj/api/content/ContentRequestSizeFilter$1.class",
+      "freshSha256": "80c5d9d64f0a1b06ec3bf9097801d37d11083db7f53a547594ba167189f614ed",
+      "acceptedSha256": "80c5d9d64f0a1b06ec3bf9097801d37d11083db7f53a547594ba167189f614ed"
+    },
+    {
+      "path": "BOOT-INF/classes/com/forgeoj/api/content/ContentRequestSizeFilter$LimitedInput.class",
+      "freshSha256": "4deb935cd14c663764c75c6fc71581672a649c49def681cfe2688737d4052dfd",
+      "acceptedSha256": "4deb935cd14c663764c75c6fc71581672a649c49def681cfe2688737d4052dfd"
+    },
+    {
+      "path": "BOOT-INF/classes/com/forgeoj/api/content/ContentRequestSizeFilter.class",
+      "freshSha256": "95742c4c5efec836c7e8c6d4345bb75158cad158c252a74a5e5a33a434475e68",
+      "acceptedSha256": "95742c4c5efec836c7e8c6d4345bb75158cad158c252a74a5e5a33a434475e68"
+    },
+    {
+      "path": "BOOT-INF/classes/com/forgeoj/api/content/ContentReviewController.class",
+      "freshSha256": "c7733ec60c037194e5072caa46d41c14fef683297d9ea43284aa6b7f2fbd8ea6",
+      "acceptedSha256": "c7733ec60c037194e5072caa46d41c14fef683297d9ea43284aa6b7f2fbd8ea6"
+    },
+    {
+      "path": "BOOT-INF/classes/com/forgeoj/api/content/ContentReviewMapper$Binding.class",
+      "freshSha256": "791a4bb0d667c2c3104d2a08f9a2c4821b585fcd7e9336710a9a4951053fbbf6",
+      "acceptedSha256": "791a4bb0d667c2c3104d2a08f9a2c4821b585fcd7e9336710a9a4951053fbbf6"
+    },
+    {
+      "path": "BOOT-INF/classes/com/forgeoj/api/content/ContentReviewMapper$Detail.class",
+      "freshSha256": "da994599bce44aa043bc5b970dd6fd27f481bab357ae3380da751fb84a905817",
+      "acceptedSha256": "da994599bce44aa043bc5b970dd6fd27f481bab357ae3380da751fb84a905817"
+    },
+    {
+      "path": "BOOT-INF/classes/com/forgeoj/api/content/ContentReviewMapper$Frozen.class",
+      "freshSha256": "fd059b8925e670ef420ad3582fb95ba79506ccadada18345ac9fd983c39944df",
+      "acceptedSha256": "fd059b8925e670ef420ad3582fb95ba79506ccadada18345ac9fd983c39944df"
+    },
+    {
+      "path": "BOOT-INF/classes/com/forgeoj/api/content/ContentReviewMapper$Page.class",
+      "freshSha256": "aa9d0e61af3649c19d03668c0251dc7ccefabb4b9c488a2dd5ecbec2d141928b",
+      "acceptedSha256": "aa9d0e61af3649c19d03668c0251dc7ccefabb4b9c488a2dd5ecbec2d141928b"
+    },
+    {
+      "path": "BOOT-INF/classes/com/forgeoj/api/content/ContentReviewMapper$Review.class",
+      "freshSha256": "7415bc06afdbe915db6a728442636a8a3173e1d8f8247d8162e78b97d83b26f6",
+      "acceptedSha256": "7415bc06afdbe915db6a728442636a8a3173e1d8f8247d8162e78b97d83b26f6"
+    },
+    {
+      "path": "BOOT-INF/classes/com/forgeoj/api/content/ContentReviewMapper.class",
+      "freshSha256": "6a06639118b82e2c313ee056119356b45e5a7818af884c9bb6b2ef6b69fd167e",
+      "acceptedSha256": "6a06639118b82e2c313ee056119356b45e5a7818af884c9bb6b2ef6b69fd167e"
+    },
+    {
+      "path": "BOOT-INF/classes/com/forgeoj/api/content/ContentReviewService$1.class",
+      "freshSha256": "275003681836b800ffd1378a8fe70203101cb81b2c75ee905f4028d369fc841a",
+      "acceptedSha256": "275003681836b800ffd1378a8fe70203101cb81b2c75ee905f4028d369fc841a"
+    },
+    {
+      "path": "BOOT-INF/classes/com/forgeoj/api/content/ContentReviewService.class",
+      "freshSha256": "f69ff3ec00072bd75ca426c8af125c512a8bb6f9c593a591a7d4f37e208b8499",
+      "acceptedSha256": "f69ff3ec00072bd75ca426c8af125c512a8bb6f9c593a591a7d4f37e208b8499"
+    },
+    {
+      "path": "BOOT-INF/classes/com/forgeoj/api/content/ContentService.class",
+      "freshSha256": "fd89434ddddb8b2145050fa9486797869d5a995f8b850872aa2745c1cc64bd1e",
+      "acceptedSha256": "fd89434ddddb8b2145050fa9486797869d5a995f8b850872aa2745c1cc64bd1e"
+    },
+    {
+      "path": "BOOT-INF/classes/com/forgeoj/api/content/ContentValidationController.class",
+      "freshSha256": "26b1dac194fcce88db035e4c145c8663e7d83c469c6180d72a83036486c8c9b3",
+      "acceptedSha256": "26b1dac194fcce88db035e4c145c8663e7d83c469c6180d72a83036486c8c9b3"
+    },
+    {
+      "path": "BOOT-INF/classes/com/forgeoj/api/content/ContentValidationMapper$Page.class",
+      "freshSha256": "42508c8bb9ad7568b8dc9aa19c7adda0dd59098cad23bc88f55e67a11d34b5ad",
+      "acceptedSha256": "42508c8bb9ad7568b8dc9aa19c7adda0dd59098cad23bc88f55e67a11d34b5ad"
+    },
+    {
+      "path": "BOOT-INF/classes/com/forgeoj/api/content/ContentValidationMapper$Result.class",
+      "freshSha256": "d8b9f2e5c82cabbfb36eb0b33a4c24850bff8802e4b87003b861acb73a6af61c",
+      "acceptedSha256": "d8b9f2e5c82cabbfb36eb0b33a4c24850bff8802e4b87003b861acb73a6af61c"
+    },
+    {
+      "path": "BOOT-INF/classes/com/forgeoj/api/content/ContentValidationMapper$Snapshot.class",
+      "freshSha256": "0ee97a73aeb7b4792a91151cd29a6010d298d289ef40ba3c709e96d85f011d50",
+      "acceptedSha256": "0ee97a73aeb7b4792a91151cd29a6010d298d289ef40ba3c709e96d85f011d50"
+    },
+    {
+      "path": "BOOT-INF/classes/com/forgeoj/api/content/ContentValidationMapper.class",
+      "freshSha256": "2db292b83363870360ae321f59ab9e07b270aa3d878c95bbd0c03798ee660a2f",
+      "acceptedSha256": "2db292b83363870360ae321f59ab9e07b270aa3d878c95bbd0c03798ee660a2f"
+    },
+    {
+      "path": "BOOT-INF/classes/com/forgeoj/api/content/ContentValidationService$1.class",
+      "freshSha256": "034f29aba8c190df6a043dbeb933d40aa886db00fbba7ae3405535d8f9cd2843",
+      "acceptedSha256": "034f29aba8c190df6a043dbeb933d40aa886db00fbba7ae3405535d8f9cd2843"
+    },
+    {
+      "path": "BOOT-INF/classes/com/forgeoj/api/content/ContentValidationService.class",
+      "freshSha256": "3ac52c3eb8084547fdc7b1f4fa3a387ff853f3603ee3c51b4c804c9bc7ed8786",
+      "acceptedSha256": "3ac52c3eb8084547fdc7b1f4fa3a387ff853f3603ee3c51b4c804c9bc7ed8786"
+    },
+    {
+      "path": "BOOT-INF/classes/com/forgeoj/api/content/TestDatasetArchive$TestPair.class",
+      "freshSha256": "0ae02e662c873a60f8560f647f5cbaf1293b552954c6678ac66700f37f957521",
+      "acceptedSha256": "0ae02e662c873a60f8560f647f5cbaf1293b552954c6678ac66700f37f957521"
+    },
+    {
+      "path": "BOOT-INF/classes/com/forgeoj/api/content/TestDatasetArchive.class",
+      "freshSha256": "ed9d0957f097d13ad2ac66065863e1f75c6875d1a3501f5508e8b8a0ddb0d7d2",
+      "acceptedSha256": "ed9d0957f097d13ad2ac66065863e1f75c6875d1a3501f5508e8b8a0ddb0d7d2"
+    },
+    {
+      "path": "BOOT-INF/classes/com/forgeoj/api/learning/LearningController.class",
+      "freshSha256": "e4c403ec891ee3c15bb0fb5508dde51ab78ab2d0d5c1ad6581e221fa1537e47a",
+      "acceptedSha256": "e4c403ec891ee3c15bb0fb5508dde51ab78ab2d0d5c1ad6581e221fa1537e47a"
+    },
+    {
+      "path": "BOOT-INF/classes/com/forgeoj/api/learning/LearningMapper$DraftRow.class",
+      "freshSha256": "989ed61c170b1db0c854c28d2e260b3ff3dbf6398c437b5c66aed0b2046e6d8a",
+      "acceptedSha256": "989ed61c170b1db0c854c28d2e260b3ff3dbf6398c437b5c66aed0b2046e6d8a"
+    },
+    {
+      "path": "BOOT-INF/classes/com/forgeoj/api/learning/LearningMapper$EntryRow.class",
+      "freshSha256": "5c9ee240eab74abc40948e27397b2acbc2946b1c925d33feec7fc42cd0cbcc34",
+      "acceptedSha256": "5c9ee240eab74abc40948e27397b2acbc2946b1c925d33feec7fc42cd0cbcc34"
+    },
+    {
+      "path": "BOOT-INF/classes/com/forgeoj/api/learning/LearningMapper$HistoryRow.class",
+      "freshSha256": "5069560bd74f717bdb022e4a8ff85781c8a816e9b63655d5fb21eda122779c05",
+      "acceptedSha256": "5069560bd74f717bdb022e4a8ff85781c8a816e9b63655d5fb21eda122779c05"
+    },
+    {
+      "path": "BOOT-INF/classes/com/forgeoj/api/learning/LearningMapper$ListRow.class",
+      "freshSha256": "9f5c7a77fa28881afdba01eff8b415b00944aff9e89a8d3baffe7c1d6b41f103",
+      "acceptedSha256": "9f5c7a77fa28881afdba01eff8b415b00944aff9e89a8d3baffe7c1d6b41f103"
+    },
+    {
+      "path": "BOOT-INF/classes/com/forgeoj/api/learning/LearningMapper$ProblemRow.class",
+      "freshSha256": "3e841c6c7f80090699aebc340a0f370579e2c6edcdd6a1f578f863c61f978f5a",
+      "acceptedSha256": "3e841c6c7f80090699aebc340a0f370579e2c6edcdd6a1f578f863c61f978f5a"
+    },
+    {
+      "path": "BOOT-INF/classes/com/forgeoj/api/learning/LearningMapper$Stats.class",
+      "freshSha256": "f52470cf15f9a3a98e72f7c7042db12d712daca335481c37b5a110ac9741038a",
+      "acceptedSha256": "f52470cf15f9a3a98e72f7c7042db12d712daca335481c37b5a110ac9741038a"
+    },
+    {
+      "path": "BOOT-INF/classes/com/forgeoj/api/learning/LearningMapper$StatsRow.class",
+      "freshSha256": "2e4ebe06be7ed9005392b88b7b935a176ad30cef0feef6c854ade7ef2b2e7b76",
+      "acceptedSha256": "2e4ebe06be7ed9005392b88b7b935a176ad30cef0feef6c854ade7ef2b2e7b76"
+    },
+    {
+      "path": "BOOT-INF/classes/com/forgeoj/api/learning/LearningMapper.class",
+      "freshSha256": "be06626674523e473f17dca10a25690395a7f0c737062cf672306c7ba374c004",
+      "acceptedSha256": "be06626674523e473f17dca10a25690395a7f0c737062cf672306c7ba374c004"
+    },
+    {
+      "path": "BOOT-INF/classes/com/forgeoj/api/learning/LearningRecords$AddBody.class",
+      "freshSha256": "cc510352b1bbc32c0ceeee5b50b38395a884fa8a8712f3c7121859792a370f1e",
+      "acceptedSha256": "cc510352b1bbc32c0ceeee5b50b38395a884fa8a8712f3c7121859792a370f1e"
+    },
+    {
+      "path": "BOOT-INF/classes/com/forgeoj/api/learning/LearningRecords$Draft.class",
+      "freshSha256": "6b0af7b021f6b91159fde67b68fa078a258da8df14318384bae1633a25543624",
+      "acceptedSha256": "6b0af7b021f6b91159fde67b68fa078a258da8df14318384bae1633a25543624"
+    },
+    {
+      "path": "BOOT-INF/classes/com/forgeoj/api/learning/LearningRecords$DraftBody.class",
+      "freshSha256": "6d1d431f8d2b4c203bd40cec7e58f4884455a84814e1953bdbb6ccc35c28db5b",
+      "acceptedSha256": "6d1d431f8d2b4c203bd40cec7e58f4884455a84814e1953bdbb6ccc35c28db5b"
+    },
+    {
+      "path": "BOOT-INF/classes/com/forgeoj/api/learning/LearningRecords$Entry.class",
+      "freshSha256": "af8b4695c6c2eace294e679164f1a29d30f621a186a722a0217fabc606197396",
+      "acceptedSha256": "af8b4695c6c2eace294e679164f1a29d30f621a186a722a0217fabc606197396"
+    },
+    {
+      "path": "BOOT-INF/classes/com/forgeoj/api/learning/LearningRecords$History.class",
+      "freshSha256": "41429fbebf72df4c71b84a71d8538b35b907f55a8df4c43dec85c6b049b4d75e",
+      "acceptedSha256": "41429fbebf72df4c71b84a71d8538b35b907f55a8df4c43dec85c6b049b4d75e"
+    },
+    {
+      "path": "BOOT-INF/classes/com/forgeoj/api/learning/LearningRecords$HistoryProblem.class",
+      "freshSha256": "f8a8fa701bbee6ab0a9b23875096a25a659f5601b5b16cb0a7f1b9260520abdf",
+      "acceptedSha256": "f8a8fa701bbee6ab0a9b23875096a25a659f5601b5b16cb0a7f1b9260520abdf"
+    },
+    {
+      "path": "BOOT-INF/classes/com/forgeoj/api/learning/LearningRecords$ListDetail.class",
+      "freshSha256": "859026f753e545710d6f4090bd67cd25ff166edd77883401aeed8a1a7d3af789",
+      "acceptedSha256": "859026f753e545710d6f4090bd67cd25ff166edd77883401aeed8a1a7d3af789"
+    },
+    {
+      "path": "BOOT-INF/classes/com/forgeoj/api/learning/LearningRecords$ListSummary.class",
+      "freshSha256": "3ab58828fe5bfed223acd733ba6cdc5b71d98bc71f5a3b6d5469308d32921f1b",
+      "acceptedSha256": "3ab58828fe5bfed223acd733ba6cdc5b71d98bc71f5a3b6d5469308d32921f1b"
+    },
+    {
+      "path": "BOOT-INF/classes/com/forgeoj/api/learning/LearningRecords$OrderBody.class",
+      "freshSha256": "0304279c942d99ff04b2fcf4654e4ba928cfb913b2be0c5931171bc2fb450e0c",
+      "acceptedSha256": "0304279c942d99ff04b2fcf4654e4ba928cfb913b2be0c5931171bc2fb450e0c"
+    },
+    {
+      "path": "BOOT-INF/classes/com/forgeoj/api/learning/LearningRecords$Page.class",
+      "freshSha256": "8f71eeca1136caf209b7e90dc036d0ed6a2601bccc9207843ecdee2b07e263de",
+      "acceptedSha256": "8f71eeca1136caf209b7e90dc036d0ed6a2601bccc9207843ecdee2b07e263de"
+    },
+    {
+      "path": "BOOT-INF/classes/com/forgeoj/api/learning/LearningRecords$PublicProblem.class",
+      "freshSha256": "9d4b7095c6f23559f701879abc5c1f8d22ef4e5c8f9bcee6a4a8bc56817b4ad7",
+      "acceptedSha256": "9d4b7095c6f23559f701879abc5c1f8d22ef4e5c8f9bcee6a4a8bc56817b4ad7"
+    },
+    {
+      "path": "BOOT-INF/classes/com/forgeoj/api/learning/LearningRecords$TitleBody.class",
+      "freshSha256": "dad75b2117d2b726b79d6f298683e50af51b3961ca3e1a9bd0e95b63b26b1ee0",
+      "acceptedSha256": "dad75b2117d2b726b79d6f298683e50af51b3961ca3e1a9bd0e95b63b26b1ee0"
+    },
+    {
+      "path": "BOOT-INF/classes/com/forgeoj/api/learning/LearningRecords.class",
+      "freshSha256": "0511c652d06202c67036cb96e87d66ad10370dcd60023e9f5d75f0dcd61af2eb",
+      "acceptedSha256": "0511c652d06202c67036cb96e87d66ad10370dcd60023e9f5d75f0dcd61af2eb"
+    },
+    {
+      "path": "BOOT-INF/classes/com/forgeoj/api/learning/LearningService.class",
+      "freshSha256": "a7c893d467990e0fbad7bc318fe031ea88bde749fef68b25b9e9dba2c033653a",
+      "acceptedSha256": "a7c893d467990e0fbad7bc318fe031ea88bde749fef68b25b9e9dba2c033653a"
+    },
+    {
+      "path": "BOOT-INF/classes/com/forgeoj/api/messaging/OutboxEventRow.class",
+      "freshSha256": "dab56fa9eb7c257ec366896395061e27d386d10fb90e4706aa6ba4930d189ea8",
+      "acceptedSha256": "dab56fa9eb7c257ec366896395061e27d386d10fb90e4706aa6ba4930d189ea8"
+    },
+    {
+      "path": "BOOT-INF/classes/com/forgeoj/api/messaging/OutboxMapper.class",
+      "freshSha256": "ec415770d4a702b35dd1718052a550d6f9ecb1f22a5ef2648fd4a6356f98ad9d",
+      "acceptedSha256": "ec415770d4a702b35dd1718052a550d6f9ecb1f22a5ef2648fd4a6356f98ad9d"
+    },
+    {
+      "path": "BOOT-INF/classes/com/forgeoj/api/messaging/OutboxPublisher$PublishAttempt.class",
+      "freshSha256": "ba20b476d54746ef56886de2e177debb1684a4538d7c6acf5d59f211b1411162",
+      "acceptedSha256": "ba20b476d54746ef56886de2e177debb1684a4538d7c6acf5d59f211b1411162"
+    },
+    {
+      "path": "BOOT-INF/classes/com/forgeoj/api/messaging/OutboxPublisher.class",
+      "freshSha256": "a130ead3ae80417d4c1b04870254d4ed803c78ace644e0da97d2565612adf755",
+      "acceptedSha256": "a130ead3ae80417d4c1b04870254d4ed803c78ace644e0da97d2565612adf755"
+    },
+    {
+      "path": "BOOT-INF/classes/com/forgeoj/api/messaging/RabbitTopology.class",
+      "freshSha256": "e56751af564ef691dea75b1be64a2e9bfe022b4dbd31b1236df507272f223b00",
+      "acceptedSha256": "e56751af564ef691dea75b1be64a2e9bfe022b4dbd31b1236df507272f223b00"
+    },
+    {
+      "path": "BOOT-INF/classes/com/forgeoj/api/observability/CommittedJudgingEvents$1.class",
+      "freshSha256": "76b4305c2da59648c5d628129c92cd9eac85185484ae42fb441712f5deb351bb",
+      "acceptedSha256": "76b4305c2da59648c5d628129c92cd9eac85185484ae42fb441712f5deb351bb"
+    },
+    {
+      "path": "BOOT-INF/classes/com/forgeoj/api/observability/CommittedJudgingEvents.class",
+      "freshSha256": "c093ad86ee4711347bbe177f9ffd89377370f1079acd10a9be2d6fb56b6bf18e",
+      "acceptedSha256": "c093ad86ee4711347bbe177f9ffd89377370f1079acd10a9be2d6fb56b6bf18e"
+    },
+    {
+      "path": "BOOT-INF/classes/com/forgeoj/api/observability/RequestCorrelationFilter.class",
+      "freshSha256": "99b0b401822220de9875991653a5d55de1856256c4d644bd6443a63e4725791a",
+      "acceptedSha256": "99b0b401822220de9875991653a5d55de1856256c4d644bd6443a63e4725791a"
+    },
+    {
+      "path": "BOOT-INF/classes/com/forgeoj/api/problem/ProblemController$ProblemResponse.class",
+      "freshSha256": "cc66501a18c505388b90d90b71ee8c16be5edb416e4c10e17483b065276aea46",
+      "acceptedSha256": "cc66501a18c505388b90d90b71ee8c16be5edb416e4c10e17483b065276aea46"
+    },
+    {
+      "path": "BOOT-INF/classes/com/forgeoj/api/problem/ProblemController$PublicSampleResponse.class",
+      "freshSha256": "40541f525dcb6a1a25217069394069d86a0cfbce6c2bd2c20b48389f16d5c6f6",
+      "acceptedSha256": "40541f525dcb6a1a25217069394069d86a0cfbce6c2bd2c20b48389f16d5c6f6"
+    },
+    {
+      "path": "BOOT-INF/classes/com/forgeoj/api/problem/ProblemController$ResourceLimitsResponse.class",
+      "freshSha256": "4412840b32449d16d2d0d11511bc28c8a60924b308f6a76849bf1fea41004ca7",
+      "acceptedSha256": "4412840b32449d16d2d0d11511bc28c8a60924b308f6a76849bf1fea41004ca7"
+    },
+    {
+      "path": "BOOT-INF/classes/com/forgeoj/api/problem/ProblemController.class",
+      "freshSha256": "d289624ec4179d9e42115b5f4f8e12fb6bfed8005e6e4afb57c48868e62a6234",
+      "acceptedSha256": "d289624ec4179d9e42115b5f4f8e12fb6bfed8005e6e4afb57c48868e62a6234"
+    },
+    {
+      "path": "BOOT-INF/classes/com/forgeoj/api/problem/ProblemDetailsRow.class",
+      "freshSha256": "bc6a92a99ebed500f00e3cc42b2a597e9e7c8d2315cd4308a1b800df1ef795c9",
+      "acceptedSha256": "bc6a92a99ebed500f00e3cc42b2a597e9e7c8d2315cd4308a1b800df1ef795c9"
+    },
+    {
+      "path": "BOOT-INF/classes/com/forgeoj/api/problem/ProblemLibraryController.class",
+      "freshSha256": "b3f1cf4eccf40a51dd4abfca963953e0d1769d49b8746b5893d15cd3adcef395",
+      "acceptedSha256": "b3f1cf4eccf40a51dd4abfca963953e0d1769d49b8746b5893d15cd3adcef395"
+    },
+    {
+      "path": "BOOT-INF/classes/com/forgeoj/api/problem/ProblemLibraryMapper$ProblemSummaryRow.class",
+      "freshSha256": "9d316428869df8fb37858ca3fb7539158de4210040f19ed8c8b4154d5bd3335c",
+      "acceptedSha256": "9d316428869df8fb37858ca3fb7539158de4210040f19ed8c8b4154d5bd3335c"
+    },
+    {
+      "path": "BOOT-INF/classes/com/forgeoj/api/problem/ProblemLibraryMapper$ProblemTagRow.class",
+      "freshSha256": "4d2ef407b8cefff1f2038d7e9ff0e9cbff5be64d5fc5fda24b2d68e03744cbf9",
+      "acceptedSha256": "4d2ef407b8cefff1f2038d7e9ff0e9cbff5be64d5fc5fda24b2d68e03744cbf9"
+    },
+    {
+      "path": "BOOT-INF/classes/com/forgeoj/api/problem/ProblemLibraryMapper.class",
+      "freshSha256": "02311eb8931bb3b819ea83fe20ae18b8e2b8739af013b319fae1f7910cc55b41",
+      "acceptedSha256": "02311eb8931bb3b819ea83fe20ae18b8e2b8739af013b319fae1f7910cc55b41"
+    },
+    {
+      "path": "BOOT-INF/classes/com/forgeoj/api/problem/ProblemLibraryService$ProblemPage.class",
+      "freshSha256": "ec371cb34059849778d4cff48daef25e5f04c4bbcbd8d7f296daa67cbbc01b67",
+      "acceptedSha256": "ec371cb34059849778d4cff48daef25e5f04c4bbcbd8d7f296daa67cbbc01b67"
+    },
+    {
+      "path": "BOOT-INF/classes/com/forgeoj/api/problem/ProblemLibraryService$ProblemSummary.class",
+      "freshSha256": "5d2c569993e871db46270c697081c80d34d2b5e81a994fa46089ef5de18f7703",
+      "acceptedSha256": "5d2c569993e871db46270c697081c80d34d2b5e81a994fa46089ef5de18f7703"
+    },
+    {
+      "path": "BOOT-INF/classes/com/forgeoj/api/problem/ProblemLibraryService$ProblemTags.class",
+      "freshSha256": "d2628f93cd14611bafb35c34d94dbaa5eeeb6493526d185d7bc738d684211ac1",
+      "acceptedSha256": "d2628f93cd14611bafb35c34d94dbaa5eeeb6493526d185d7bc738d684211ac1"
+    },
+    {
+      "path": "BOOT-INF/classes/com/forgeoj/api/problem/ProblemLibraryService.class",
+      "freshSha256": "bf50cda94d9d1523fd3c5361520ea1f6e25eb220a342be67c20269354f228727",
+      "acceptedSha256": "bf50cda94d9d1523fd3c5361520ea1f6e25eb220a342be67c20269354f228727"
+    },
+    {
+      "path": "BOOT-INF/classes/com/forgeoj/api/problem/ProblemMapper.class",
+      "freshSha256": "f0584d924296270f691922c432e0b3aa639e353ab54a206bd87be0eabaf52bea",
+      "acceptedSha256": "f0584d924296270f691922c432e0b3aa639e353ab54a206bd87be0eabaf52bea"
+    },
+    {
+      "path": "BOOT-INF/classes/com/forgeoj/api/selftest/SelfTestCleanup.class",
+      "freshSha256": "c300a21ae733bbeb9185a40cceb69603ba034a1f9aff222d42feffb566f6abbe",
+      "acceptedSha256": "c300a21ae733bbeb9185a40cceb69603ba034a1f9aff222d42feffb566f6abbe"
+    },
+    {
+      "path": "BOOT-INF/classes/com/forgeoj/api/selftest/SelfTestController.class",
+      "freshSha256": "ecb36a452926f7057f25f9978208f7fccaa5ad2da6de9336fc4e96b1378a4d02",
+      "acceptedSha256": "ecb36a452926f7057f25f9978208f7fccaa5ad2da6de9336fc4e96b1378a4d02"
+    },
+    {
+      "path": "BOOT-INF/classes/com/forgeoj/api/selftest/SelfTestMapper$Detail.class",
+      "freshSha256": "51a18b894b961f65e6bc41e1ea2a9e9e67264df8b3c87da8cf4432a3e16d3c86",
+      "acceptedSha256": "51a18b894b961f65e6bc41e1ea2a9e9e67264df8b3c87da8cf4432a3e16d3c86"
+    },
+    {
+      "path": "BOOT-INF/classes/com/forgeoj/api/selftest/SelfTestMapper$Output.class",
+      "freshSha256": "1d1c9ccbf1e581f3919c1e864d7998c1353dcd524dd22fcf0b58b605cc13a2ff",
+      "acceptedSha256": "1d1c9ccbf1e581f3919c1e864d7998c1353dcd524dd22fcf0b58b605cc13a2ff"
+    },
+    {
+      "path": "BOOT-INF/classes/com/forgeoj/api/selftest/SelfTestMapper$Page.class",
+      "freshSha256": "77fbe8ba9a999cce14b4c52714db06f151e20e14018b730393ff2ca9ef33713f",
+      "acceptedSha256": "77fbe8ba9a999cce14b4c52714db06f151e20e14018b730393ff2ca9ef33713f"
+    },
+    {
+      "path": "BOOT-INF/classes/com/forgeoj/api/selftest/SelfTestMapper$Payload.class",
+      "freshSha256": "f239e0d40f2fff034d346805799dcbea20352c5b4f9bf9ee68c817905e7164ff",
+      "acceptedSha256": "f239e0d40f2fff034d346805799dcbea20352c5b4f9bf9ee68c817905e7164ff"
+    },
+    {
+      "path": "BOOT-INF/classes/com/forgeoj/api/selftest/SelfTestMapper$Request.class",
+      "freshSha256": "ff9488f24d4c04f0ea6bfc7931ba30edaf0a1cf0a7625f27d52f6b2e957bd7c3",
+      "acceptedSha256": "ff9488f24d4c04f0ea6bfc7931ba30edaf0a1cf0a7625f27d52f6b2e957bd7c3"
+    },
+    {
+      "path": "BOOT-INF/classes/com/forgeoj/api/selftest/SelfTestMapper$Run.class",
+      "freshSha256": "881b06c3658135e7ffa2d003a3d059977ae4bf9b8641471b657a5213bd3ac921",
+      "acceptedSha256": "881b06c3658135e7ffa2d003a3d059977ae4bf9b8641471b657a5213bd3ac921"
+    },
+    {
+      "path": "BOOT-INF/classes/com/forgeoj/api/selftest/SelfTestMapper$Snapshot.class",
+      "freshSha256": "7f52aff60dfd0a86ac0202bf8f66485750dfe985f78b92bb9ab84e77bd1f57ed",
+      "acceptedSha256": "7f52aff60dfd0a86ac0202bf8f66485750dfe985f78b92bb9ab84e77bd1f57ed"
+    },
+    {
+      "path": "BOOT-INF/classes/com/forgeoj/api/selftest/SelfTestMapper$Version.class",
+      "freshSha256": "742c62ad49dd46a64c3aef52c1e871e7e281f0fe6d14391d10f1085d41addedc",
+      "acceptedSha256": "742c62ad49dd46a64c3aef52c1e871e7e281f0fe6d14391d10f1085d41addedc"
+    },
+    {
+      "path": "BOOT-INF/classes/com/forgeoj/api/selftest/SelfTestMapper.class",
+      "freshSha256": "0116529a3c3714ecb36533b288d53e2bfbe9096f4a83639c2b21369a1850ec66",
+      "acceptedSha256": "0116529a3c3714ecb36533b288d53e2bfbe9096f4a83639c2b21369a1850ec66"
+    },
+    {
+      "path": "BOOT-INF/classes/com/forgeoj/api/selftest/SelfTestService$1.class",
+      "freshSha256": "df8d04191ad621afcf38608dbfa2908c98a6ecc5afb75956f3bf65a0a399f0c5",
+      "acceptedSha256": "df8d04191ad621afcf38608dbfa2908c98a6ecc5afb75956f3bf65a0a399f0c5"
+    },
+    {
+      "path": "BOOT-INF/classes/com/forgeoj/api/selftest/SelfTestService.class",
+      "freshSha256": "0ac84d5d25b430adff18d634bba59aff24eac7458ac26fd53bcf37e778d09fbc",
+      "acceptedSha256": "0ac84d5d25b430adff18d634bba59aff24eac7458ac26fd53bcf37e778d09fbc"
+    },
+    {
+      "path": "BOOT-INF/classes/com/forgeoj/api/solution/SolutionController.class",
+      "freshSha256": "d350df254b829ac8733a1c49805a520ef82aab89954f2f0e6c652062107864e8",
+      "acceptedSha256": "d350df254b829ac8733a1c49805a520ef82aab89954f2f0e6c652062107864e8"
+    },
+    {
+      "path": "BOOT-INF/classes/com/forgeoj/api/solution/SolutionMapper$Solution.class",
+      "freshSha256": "82095d7a4d9780c2709656463fe26f0e92586210b3f714b06d5e1f765d638270",
+      "acceptedSha256": "82095d7a4d9780c2709656463fe26f0e92586210b3f714b06d5e1f765d638270"
+    },
+    {
+      "path": "BOOT-INF/classes/com/forgeoj/api/solution/SolutionMapper$Version.class",
+      "freshSha256": "c89bfb806ba5e52d3d5d3772449ba8b773e0eb3cf7bb3415d2154a179d443d85",
+      "acceptedSha256": "c89bfb806ba5e52d3d5d3772449ba8b773e0eb3cf7bb3415d2154a179d443d85"
+    },
+    {
+      "path": "BOOT-INF/classes/com/forgeoj/api/solution/SolutionMapper.class",
+      "freshSha256": "e768bbf50fcb8270a4af9635c364412ed069bed880eafe05b1ef060f63145c1f",
+      "acceptedSha256": "e768bbf50fcb8270a4af9635c364412ed069bed880eafe05b1ef060f63145c1f"
+    },
+    {
+      "path": "BOOT-INF/classes/com/forgeoj/api/solution/SolutionService$Access.class",
+      "freshSha256": "6a2d99aea2ff6a437f67d4c67d812d6c018628ca7d3ebfcad62b72cd9518e2ad",
+      "acceptedSha256": "6a2d99aea2ff6a437f67d4c67d812d6c018628ca7d3ebfcad62b72cd9518e2ad"
+    },
+    {
+      "path": "BOOT-INF/classes/com/forgeoj/api/solution/SolutionService.class",
+      "freshSha256": "6f8b01f5a47d47dbd441a0b7abecc394711e8f8c6bfbb04ff6367ad153a7c8ce",
+      "acceptedSha256": "6f8b01f5a47d47dbd441a0b7abecc394711e8f8c6bfbb04ff6367ad153a7c8ce"
+    },
+    {
+      "path": "BOOT-INF/classes/com/forgeoj/api/submission/AssignmentSubmissionController.class",
+      "freshSha256": "f531a1b1c26744465879d843a22743f5d6fc6b5e8ce0e8c754249a929a5a1900",
+      "acceptedSha256": "f531a1b1c26744465879d843a22743f5d6fc6b5e8ce0e8c754249a929a5a1900"
+    },
+    {
+      "path": "BOOT-INF/classes/com/forgeoj/api/submission/AssignmentSubmissionService.class",
+      "freshSha256": "750a22ae1c704c128551e1f0c2a7f6ec8a60acaaad3189d5667eaec3cd728a8e",
+      "acceptedSha256": "750a22ae1c704c128551e1f0c2a7f6ec8a60acaaad3189d5667eaec3cd728a8e"
+    },
+    {
+      "path": "BOOT-INF/classes/com/forgeoj/api/submission/ClassroomSubmissionController.class",
+      "freshSha256": "bd09c5a7a70367f1d500062f1b85299413760f00cba6443cd8a0c015c7591152",
+      "acceptedSha256": "bd09c5a7a70367f1d500062f1b85299413760f00cba6443cd8a0c015c7591152"
+    },
+    {
+      "path": "BOOT-INF/classes/com/forgeoj/api/submission/ClassroomSubmissionService.class",
+      "freshSha256": "3ddfbaa23a016892073c30c0af3339112a516b828c0757817d9775fb41104e55",
+      "acceptedSha256": "3ddfbaa23a016892073c30c0af3339112a516b828c0757817d9775fb41104e55"
+    },
+    {
+      "path": "BOOT-INF/classes/com/forgeoj/api/submission/JudgeVersionSnapshot.class",
+      "freshSha256": "6005b87bd4a6a9758f4cddbf1823d0fa141f4bc0329efb4edc7a2603d302de01",
+      "acceptedSha256": "6005b87bd4a6a9758f4cddbf1823d0fa141f4bc0329efb4edc7a2603d302de01"
+    },
+    {
+      "path": "BOOT-INF/classes/com/forgeoj/api/submission/NewSubmissionRow.class",
+      "freshSha256": "161b11ad473c0bcdc0d994ccd7c49ef9a14c2ac53a910bd9347f0face8c27ee5",
+      "acceptedSha256": "161b11ad473c0bcdc0d994ccd7c49ef9a14c2ac53a910bd9347f0face8c27ee5"
+    },
+    {
+      "path": "BOOT-INF/classes/com/forgeoj/api/submission/SubmissionCancellationController.class",
+      "freshSha256": "5f0711a9bbdd70b21f7a65e880338c34e5a471c586be2c2246b863c28eee6ff1",
+      "acceptedSha256": "5f0711a9bbdd70b21f7a65e880338c34e5a471c586be2c2246b863c28eee6ff1"
+    },
+    {
+      "path": "BOOT-INF/classes/com/forgeoj/api/submission/SubmissionCancellationRow.class",
+      "freshSha256": "c18104292d79474565116165709c50d8cd9d30c5e71e4639c64f576e23eeb35e",
+      "acceptedSha256": "c18104292d79474565116165709c50d8cd9d30c5e71e4639c64f576e23eeb35e"
+    },
+    {
+      "path": "BOOT-INF/classes/com/forgeoj/api/submission/SubmissionCancellationService.class",
+      "freshSha256": "16aa297dd7e559d5ba6e242942e0966cee00ebd0ed1d3630735ec1d9be50f139",
+      "acceptedSha256": "16aa297dd7e559d5ba6e242942e0966cee00ebd0ed1d3630735ec1d9be50f139"
+    },
+    {
+      "path": "BOOT-INF/classes/com/forgeoj/api/submission/SubmissionController$SubmissionRequest.class",
+      "freshSha256": "42d9d5b04a5406fef3c6a4073f2500f8df6d3d258eee09a9a7ba7ac7bd16adc6",
+      "acceptedSha256": "42d9d5b04a5406fef3c6a4073f2500f8df6d3d258eee09a9a7ba7ac7bd16adc6"
+    },
+    {
+      "path": "BOOT-INF/classes/com/forgeoj/api/submission/SubmissionController.class",
+      "freshSha256": "ee801dad39ea017dc642cc8395f2e10d4601cecbd2020418c2a526966fcd12ce",
+      "acceptedSha256": "ee801dad39ea017dc642cc8395f2e10d4601cecbd2020418c2a526966fcd12ce"
+    },
+    {
+      "path": "BOOT-INF/classes/com/forgeoj/api/submission/SubmissionHandshakeInterceptor.class",
+      "freshSha256": "7096a72d1bbd106150d540e185655f7377ffdbf0ff8e524fca6146580228d295",
+      "acceptedSha256": "7096a72d1bbd106150d540e185655f7377ffdbf0ff8e524fca6146580228d295"
+    },
+    {
+      "path": "BOOT-INF/classes/com/forgeoj/api/submission/SubmissionMapper.class",
+      "freshSha256": "0f51085ca253088aca2362d905a1091806aefcce9ca1c9bbe4902129ef16b864",
+      "acceptedSha256": "0f51085ca253088aca2362d905a1091806aefcce9ca1c9bbe4902129ef16b864"
+    },
+    {
+      "path": "BOOT-INF/classes/com/forgeoj/api/submission/SubmissionNotificationHandler$Connection.class",
+      "freshSha256": "6395493a11ab4eacc875804e89ddd036e86e7fbab9cd2e1bf2d98a2bd6d1c2fe",
+      "acceptedSha256": "6395493a11ab4eacc875804e89ddd036e86e7fbab9cd2e1bf2d98a2bd6d1c2fe"
+    },
+    {
+      "path": "BOOT-INF/classes/com/forgeoj/api/submission/SubmissionNotificationHandler.class",
+      "freshSha256": "61d5f5147ea676f86cbee01eb4f31d072b2cc50e68b5684a350d665eeac532d0",
+      "acceptedSha256": "61d5f5147ea676f86cbee01eb4f31d072b2cc50e68b5684a350d665eeac532d0"
+    },
+    {
+      "path": "BOOT-INF/classes/com/forgeoj/api/submission/SubmissionQueryController.class",
+      "freshSha256": "b933694327eba8803f0a84cdbdb68b93c248f483e9fc9944f36007447ce980c6",
+      "acceptedSha256": "b933694327eba8803f0a84cdbdb68b93c248f483e9fc9944f36007447ce980c6"
+    },
+    {
+      "path": "BOOT-INF/classes/com/forgeoj/api/submission/SubmissionQueryService.class",
+      "freshSha256": "d7fb2e5bf5bd88aa4c843a14376eee2822269318ca408ee468ccfcbc944f2683",
+      "acceptedSha256": "d7fb2e5bf5bd88aa4c843a14376eee2822269318ca408ee468ccfcbc944f2683"
+    },
+    {
+      "path": "BOOT-INF/classes/com/forgeoj/api/submission/SubmissionResult.class",
+      "freshSha256": "5205d75de628c139bdd1875c3932c3c5e6075707ad508aba93ffe7f12a160ca9",
+      "acceptedSha256": "5205d75de628c139bdd1875c3932c3c5e6075707ad508aba93ffe7f12a160ca9"
+    },
+    {
+      "path": "BOOT-INF/classes/com/forgeoj/api/submission/SubmissionService$ScanState.class",
+      "freshSha256": "1fe6af2b60a264a63f8d5f59b706c25aa3b18c19265d974d7a66a10d4dfa8377",
+      "acceptedSha256": "1fe6af2b60a264a63f8d5f59b706c25aa3b18c19265d974d7a66a10d4dfa8377"
+    },
+    {
+      "path": "BOOT-INF/classes/com/forgeoj/api/submission/SubmissionService.class",
+      "freshSha256": "6e67a775dcc4338276d31c5d2b8e4ddbcf0ede5b505486b88c8983bdc57836a2",
+      "acceptedSha256": "6e67a775dcc4338276d31c5d2b8e4ddbcf0ede5b505486b88c8983bdc57836a2"
+    },
+    {
+      "path": "BOOT-INF/classes/com/forgeoj/api/submission/SubmissionStatus.class",
+      "freshSha256": "39bad46c5789d0b61f1534a64116e07ef0d3300c3f8ae590595e4c763b905d09",
+      "acceptedSha256": "39bad46c5789d0b61f1534a64116e07ef0d3300c3f8ae590595e4c763b905d09"
+    },
+    {
+      "path": "BOOT-INF/classes/com/forgeoj/api/submission/SubmissionTransactionService.class",
+      "freshSha256": "0ba268107025f21e7318f2852760088cd32014158c18eaf9563aa29c87754847",
+      "acceptedSha256": "0ba268107025f21e7318f2852760088cd32014158c18eaf9563aa29c87754847"
+    },
+    {
+      "path": "BOOT-INF/classes/com/forgeoj/api/submission/SubmissionWatch.class",
+      "freshSha256": "4123e84d29869a6564489fc7c92b45b02f4df2be071f2178e6d8e08763cf9d3e",
+      "acceptedSha256": "4123e84d29869a6564489fc7c92b45b02f4df2be071f2178e6d8e08763cf9d3e"
+    },
+    {
+      "path": "BOOT-INF/classes/com/forgeoj/api/submission/SubmissionWebSocketConfig.class",
+      "freshSha256": "b6edaa284c3ef2a5d151d8629a47f2895b3f03e94b96cd1da3f1e366ecb31aa9",
+      "acceptedSha256": "b6edaa284c3ef2a5d151d8629a47f2895b3f03e94b96cd1da3f1e366ecb31aa9"
+    },
+    {
+      "path": "BOOT-INF/classes/com/forgeoj/api/user/UserAccountCredentials.class",
+      "freshSha256": "cab6e93d518c74b36d41582384d2b4eb73de45416a2f36330b61e40410ec987e",
+      "acceptedSha256": "cab6e93d518c74b36d41582384d2b4eb73de45416a2f36330b61e40410ec987e"
+    },
+    {
+      "path": "BOOT-INF/classes/com/forgeoj/api/user/UserAccountMapper.class",
+      "freshSha256": "a974172a51f29a44240abdefac0f9d4b4a68be31d719725b001022673b245943",
+      "acceptedSha256": "a974172a51f29a44240abdefac0f9d4b4a68be31d719725b001022673b245943"
+    },
+    {
+      "path": "BOOT-INF/classes/db/devdata/R__seed_m0_development_data.sql",
+      "freshSha256": "4b2b43b57cbcd1e5b44bf71076fbe5bb5c619a8e18c8383a6fee5caa43af19ac",
+      "acceptedSha256": "4b2b43b57cbcd1e5b44bf71076fbe5bb5c619a8e18c8383a6fee5caa43af19ac"
+    },
+    {
+      "path": "BOOT-INF/classes/db/devdata/R__seed_m2_library_metadata.sql",
+      "freshSha256": "f0d4f4c06dc58f2a5d39572817fc59d6778a14ca2b1df3f3cd67c10d2ff20caf",
+      "acceptedSha256": "f0d4f4c06dc58f2a5d39572817fc59d6778a14ca2b1df3f3cd67c10d2ff20caf"
+    },
+    {
+      "path": "BOOT-INF/classes/db/migration/V10__official_solution_access.sql",
+      "freshSha256": "5a7ac47cc4d71f9b01127d58327567e88346ad3ad10ec21d31328b3f1c7364db",
+      "acceptedSha256": "5a7ac47cc4d71f9b01127d58327567e88346ad3ad10ec21d31328b3f1c7364db"
+    },
+    {
+      "path": "BOOT-INF/classes/db/migration/V11__content_validation_jobs.sql",
+      "freshSha256": "1274f6206df3ace6356a2097de30559b732f77bc18ca69e974607b2a05fb9c2f",
+      "acceptedSha256": "1274f6206df3ace6356a2097de30559b732f77bc18ca69e974607b2a05fb9c2f"
+    },
+    {
+      "path": "BOOT-INF/classes/db/migration/V12__immutable_content_reviews.sql",
+      "freshSha256": "99cd01a92daf23463920320a19baf2665de60ba1a82fe843d82c5fd526b0d858",
+      "acceptedSha256": "99cd01a92daf23463920320a19baf2665de60ba1a82fe843d82c5fd526b0d858"
+    },
+    {
+      "path": "BOOT-INF/classes/db/migration/V13__content_output_previews.sql",
+      "freshSha256": "610f8799f2659de6adaacffc3d79fe48a8a70d103a4092c321ee524bfb7a53d7",
+      "acceptedSha256": "610f8799f2659de6adaacffc3d79fe48a8a70d103a4092c321ee524bfb7a53d7"
+    },
+    {
+      "path": "BOOT-INF/classes/db/migration/V14__independent_self_test.sql",
+      "freshSha256": "32e32023c8f0a4747f638f05b26a216557b12260fc66be2f1a539f7f5e904861",
+      "acceptedSha256": "32e32023c8f0a4747f638f05b26a216557b12260fc66be2f1a539f7f5e904861"
+    },
+    {
+      "path": "BOOT-INF/classes/db/migration/V15__classrooms_and_members.sql",
+      "freshSha256": "1c848ba4cc872822caaf6388117215866f262b2f653357c628f0ca88c0d01814",
+      "acceptedSha256": "1c848ba4cc872822caaf6388117215866f262b2f653357c628f0ca88c0d01814"
+    },
+    {
+      "path": "BOOT-INF/classes/db/migration/V16__classroom_private_problems.sql",
+      "freshSha256": "1d1864ef3f06cb996c78c09219093a08afd327652b677d210a3d167bd5a19ce2",
+      "acceptedSha256": "1d1864ef3f06cb996c78c09219093a08afd327652b677d210a3d167bd5a19ce2"
+    },
+    {
+      "path": "BOOT-INF/classes/db/migration/V17__classroom_assignments.sql",
+      "freshSha256": "e02d349aa9f5654b9b7d598f7536fb347d5443c61e7ade1cafebbd06d8a111b0",
+      "acceptedSha256": "e02d349aa9f5654b9b7d598f7536fb347d5443c61e7ade1cafebbd06d8a111b0"
+    },
+    {
+      "path": "BOOT-INF/classes/db/migration/V1__create_m0_core_schema.sql",
+      "freshSha256": "312e21a7fb1732f86a13a2f1bda65538376633b618959d11ea5d39b0479a7793",
+      "acceptedSha256": "312e21a7fb1732f86a13a2f1bda65538376633b618959d11ea5d39b0479a7793"
+    },
+    {
+      "path": "BOOT-INF/classes/db/migration/V2__allow_ole_verdict.sql",
+      "freshSha256": "4c1875a89399411bbb29b3d463caa74d929ed68065ecafc75e921c1d04243a5f",
+      "acceptedSha256": "4c1875a89399411bbb29b3d463caa74d929ed68065ecafc75e921c1d04243a5f"
+    },
+    {
+      "path": "BOOT-INF/classes/db/migration/V3__add_m1_attempt_lease_and_retry.sql",
+      "freshSha256": "ddc5c646fde04cc714f311bd349097a0cadd12f64e89f53740c3b63200151569",
+      "acceptedSha256": "ddc5c646fde04cc714f311bd349097a0cadd12f64e89f53740c3b63200151569"
+    },
+    {
+      "path": "BOOT-INF/classes/db/migration/V4__add_user_judge_quota_lock.sql",
+      "freshSha256": "2e32a34ba154f5096c64e3f5141c3460e3faf491f264d6148270177a4c45b44e",
+      "acceptedSha256": "2e32a34ba154f5096c64e3f5141c3460e3faf491f264d6148270177a4c45b44e"
+    },
+    {
+      "path": "BOOT-INF/classes/db/migration/V5__widen_submission_verdict.sql",
+      "freshSha256": "312decbba0564cc467ff994dbba1cb1eb07e3d2768a665a359b8de34de14e01b",
+      "acceptedSha256": "312decbba0564cc467ff994dbba1cb1eb07e3d2768a665a359b8de34de14e01b"
+    },
+    {
+      "path": "BOOT-INF/classes/db/migration/V6__ordinary_accounts.sql",
+      "freshSha256": "ab0c7bbd2f3e6adef6e319514397df581eeb2d9cb001bbedd613314ea9c7c80f",
+      "acceptedSha256": "ab0c7bbd2f3e6adef6e319514397df581eeb2d9cb001bbedd613314ea9c7c80f"
+    },
+    {
+      "path": "BOOT-INF/classes/db/migration/V7__public_problem_library.sql",
+      "freshSha256": "b7d91d0b8252e5518ee397717a9f691647276180a0e6a73338ab60f94fcf2aae",
+      "acceptedSha256": "b7d91d0b8252e5518ee397717a9f691647276180a0e6a73338ab60f94fcf2aae"
+    },
+    {
+      "path": "BOOT-INF/classes/db/migration/V8__personal_learning_records.sql",
+      "freshSha256": "4ce88b89de43ccf85beb9da06c9e9c48d8bab3aba0e442a03feadebd896a127c",
+      "acceptedSha256": "4ce88b89de43ccf85beb9da06c9e9c48d8bab3aba0e442a03feadebd896a127c"
+    },
+    {
+      "path": "BOOT-INF/classes/db/migration/V9__authored_problem_drafts.sql",
+      "freshSha256": "7e7fbab1c4588aec98ff4c17c6413eab6d0234bfdfa4bb60f175d79d0b2f5429",
+      "acceptedSha256": "7e7fbab1c4588aec98ff4c17c6413eab6d0234bfdfa4bb60f175d79d0b2f5429"
+    },
+    {
+      "path": "BOOT-INF/lib/HikariCP-7.0.2.jar",
+      "freshSha256": "f1e612fa27345be3107a85431e8a8aeb205c15364ab2f2d411e40a9d7bb08095",
+      "acceptedSha256": "f1e612fa27345be3107a85431e8a8aeb205c15364ab2f2d411e40a9d7bb08095"
+    },
+    {
+      "path": "BOOT-INF/lib/amqp-client-5.30.0.jar",
+      "freshSha256": "277803f85febc790c29a0ec9c203b81adb1e9e68998da3b48384712f4e7aa52d",
+      "acceptedSha256": "277803f85febc790c29a0ec9c203b81adb1e9e68998da3b48384712f4e7aa52d"
+    },
+    {
+      "path": "BOOT-INF/lib/angus-activation-2.0.3.jar",
+      "freshSha256": "a6bd35c538cf90fff941ad6258c40c08fca0b5c9c3f536c657114f27ce0527a7",
+      "acceptedSha256": "a6bd35c538cf90fff941ad6258c40c08fca0b5c9c3f536c657114f27ce0527a7"
+    },
+    {
+      "path": "BOOT-INF/lib/angus-mail-2.0.5.jar",
+      "freshSha256": "b4d8c30d35f455def6c7a05fe595a1e62ea2b80cac3efec1e9ccf4118b23168a",
+      "acceptedSha256": "b4d8c30d35f455def6c7a05fe595a1e62ea2b80cac3efec1e9ccf4118b23168a"
+    },
+    {
+      "path": "BOOT-INF/lib/commons-logging-1.3.6.jar",
+      "freshSha256": "f8ead8943401081dea0aa824b5b1ba40a0e4ed297a572a0f02258150a0b62357",
+      "acceptedSha256": "f8ead8943401081dea0aa824b5b1ba40a0e4ed297a572a0f02258150a0b62357"
+    },
+    {
+      "path": "BOOT-INF/lib/flyway-core-12.4.0.jar",
+      "freshSha256": "c3f93df1f3e0c9d14652adb5ade97401f2ede503859ac693c2af5c06e2797799",
+      "acceptedSha256": "c3f93df1f3e0c9d14652adb5ade97401f2ede503859ac693c2af5c06e2797799"
+    },
+    {
+      "path": "BOOT-INF/lib/flyway-mysql-12.4.0.jar",
+      "freshSha256": "de0eac641b3d0104e4ebe3d6340fb25f49cbd154a636b4d2d13b98115f60b055",
+      "acceptedSha256": "de0eac641b3d0104e4ebe3d6340fb25f49cbd154a636b4d2d13b98115f60b055"
+    },
+    {
+      "path": "BOOT-INF/lib/jackson-annotations-2.21.jar",
+      "freshSha256": "53ca085f4a150f703f49e1aabd935bd03b43e1ea3d55d135438292af22cef56b",
+      "acceptedSha256": "53ca085f4a150f703f49e1aabd935bd03b43e1ea3d55d135438292af22cef56b"
+    },
+    {
+      "path": "BOOT-INF/lib/jackson-core-3.1.5.jar",
+      "freshSha256": "9431b7fa2673bbb618c11d865fe15e13222fd182a214ff998cb7e56afd8f35d2",
+      "acceptedSha256": "9431b7fa2673bbb618c11d865fe15e13222fd182a214ff998cb7e56afd8f35d2"
+    },
+    {
+      "path": "BOOT-INF/lib/jackson-databind-3.1.5.jar",
+      "freshSha256": "3a2338d996fd3056791df8d335fa9ba8a62a706ed4245ecf81b3e583df37d08a",
+      "acceptedSha256": "3a2338d996fd3056791df8d335fa9ba8a62a706ed4245ecf81b3e583df37d08a"
+    },
+    {
+      "path": "BOOT-INF/lib/jakarta.activation-api-2.1.4.jar",
+      "freshSha256": "c9db52100ce6c8aac95cc39075f95720d2e561b11f8051b81c121ad4effd7004",
+      "acceptedSha256": "c9db52100ce6c8aac95cc39075f95720d2e561b11f8051b81c121ad4effd7004"
+    },
+    {
+      "path": "BOOT-INF/lib/jakarta.annotation-api-3.0.0.jar",
+      "freshSha256": "b01f55552284cfb149411e64eabca75e942d26d2e1786b32914250e4330afaa2",
+      "acceptedSha256": "b01f55552284cfb149411e64eabca75e942d26d2e1786b32914250e4330afaa2"
+    },
+    {
+      "path": "BOOT-INF/lib/jakarta.mail-api-2.1.5.jar",
+      "freshSha256": "aa493753acb7a8c45ba8f4c9cf1230a74e20237056dd5b5c8bc86c583e8cfa0e",
+      "acceptedSha256": "aa493753acb7a8c45ba8f4c9cf1230a74e20237056dd5b5c8bc86c583e8cfa0e"
+    },
+    {
+      "path": "BOOT-INF/lib/jspecify-1.0.1.jar",
+      "freshSha256": "070d75f261fe4c5b8202508366715f7f2d4660f88c8ef7e6d3575e48c9683b66",
+      "acceptedSha256": "070d75f261fe4c5b8202508366715f7f2d4660f88c8ef7e6d3575e48c9683b66"
+    },
+    {
+      "path": "BOOT-INF/lib/jul-to-slf4j-2.0.18.jar",
+      "freshSha256": "cbb7d1aaaa9e871eb1a06594abd911bf97027152976edf1edc315be75239204e",
+      "acceptedSha256": "cbb7d1aaaa9e871eb1a06594abd911bf97027152976edf1edc315be75239204e"
+    },
+    {
+      "path": "BOOT-INF/lib/log4j-api-2.25.5.jar",
+      "freshSha256": "64777f73ea0b3104c04eb82befbdccc30a425a19e83ad06cb2f93aa303511863",
+      "acceptedSha256": "64777f73ea0b3104c04eb82befbdccc30a425a19e83ad06cb2f93aa303511863"
+    },
+    {
+      "path": "BOOT-INF/lib/log4j-to-slf4j-2.25.5.jar",
+      "freshSha256": "b68e8b47342dbc9b35644a14fe2efc0b7bf18da703910cd05ad5501ffe07bba1",
+      "acceptedSha256": "b68e8b47342dbc9b35644a14fe2efc0b7bf18da703910cd05ad5501ffe07bba1"
+    },
+    {
+      "path": "BOOT-INF/lib/logback-classic-1.5.38.jar",
+      "freshSha256": "afb439c61fa287c9e1925523b13baab03617e724406a389d48b61c2c3e46b700",
+      "acceptedSha256": "afb439c61fa287c9e1925523b13baab03617e724406a389d48b61c2c3e46b700"
+    },
+    {
+      "path": "BOOT-INF/lib/logback-core-1.5.38.jar",
+      "freshSha256": "a855a0fc97b1d06f4efb1c3bba5ebd0eb508d8b58e68e89e4bbc23a85135c883",
+      "acceptedSha256": "a855a0fc97b1d06f4efb1c3bba5ebd0eb508d8b58e68e89e4bbc23a85135c883"
+    },
+    {
+      "path": "BOOT-INF/lib/micrometer-commons-1.17.1.jar",
+      "freshSha256": "f2cee6ef046e72eec8128474c7f58c6217173b45ae373c30de0289f2a56ab0fd",
+      "acceptedSha256": "f2cee6ef046e72eec8128474c7f58c6217173b45ae373c30de0289f2a56ab0fd"
+    },
+    {
+      "path": "BOOT-INF/lib/micrometer-observation-1.17.1.jar",
+      "freshSha256": "eb34f0cd84a879393ae5c21160fc06385ccdc74f36a4d1e31b199f59acfdaf71",
+      "acceptedSha256": "eb34f0cd84a879393ae5c21160fc06385ccdc74f36a4d1e31b199f59acfdaf71"
+    },
+    {
+      "path": "BOOT-INF/lib/mybatis-3.5.19.jar",
+      "freshSha256": "93eea616ae355751bd5fbabb57f0732713fbe79f3196f33c51a0aeeb4255862a",
+      "acceptedSha256": "93eea616ae355751bd5fbabb57f0732713fbe79f3196f33c51a0aeeb4255862a"
+    },
+    {
+      "path": "BOOT-INF/lib/mybatis-spring-4.1.0.jar",
+      "freshSha256": "d4669e53cabc2d63ef76f6ce22681cd8c5e3576566d6dd66011acef64c8730bf",
+      "acceptedSha256": "d4669e53cabc2d63ef76f6ce22681cd8c5e3576566d6dd66011acef64c8730bf"
+    },
+    {
+      "path": "BOOT-INF/lib/mybatis-spring-boot-autoconfigure-4.1.0.jar",
+      "freshSha256": "ad2ed27234e0c8779b7396abcdd29e5a0136faa64bdadd919fc56ab1c295ec49",
+      "acceptedSha256": "ad2ed27234e0c8779b7396abcdd29e5a0136faa64bdadd919fc56ab1c295ec49"
+    },
+    {
+      "path": "BOOT-INF/lib/mybatis-spring-boot-starter-4.1.0.jar",
+      "freshSha256": "174b6fe2e1b05c66678cb10764898ab3527e0fbcf13695ecffce6ec0233741bf",
+      "acceptedSha256": "174b6fe2e1b05c66678cb10764898ab3527e0fbcf13695ecffce6ec0233741bf"
+    },
+    {
+      "path": "BOOT-INF/lib/mysql-connector-j-9.7.0.jar",
+      "freshSha256": "0353648eaa1c91e0f4020c959abf756bc866ffd583df22ae6b6f6e0cbd43eb44",
+      "acceptedSha256": "0353648eaa1c91e0f4020c959abf756bc866ffd583df22ae6b6f6e0cbd43eb44"
+    },
+    {
+      "path": "BOOT-INF/lib/netty-buffer-4.2.17.Final.jar",
+      "freshSha256": "0d249178ec0204b35a6ad3e5ac8a6c2ecb3eb496c6cdae40b8eca4fa3cb6a0c7",
+      "acceptedSha256": "0d249178ec0204b35a6ad3e5ac8a6c2ecb3eb496c6cdae40b8eca4fa3cb6a0c7"
+    },
+    {
+      "path": "BOOT-INF/lib/netty-codec-4.2.17.Final.jar",
+      "freshSha256": "ac76f972446a2f72818441f746d0e73c58519a4687bf680d2b687d7dc5e28e2e",
+      "acceptedSha256": "ac76f972446a2f72818441f746d0e73c58519a4687bf680d2b687d7dc5e28e2e"
+    },
+    {
+      "path": "BOOT-INF/lib/netty-codec-base-4.2.17.Final.jar",
+      "freshSha256": "3b92bc3b7d231fa6f4889b2b9281cae6b634428b8121fb1b9b5fccba1543d352",
+      "acceptedSha256": "3b92bc3b7d231fa6f4889b2b9281cae6b634428b8121fb1b9b5fccba1543d352"
+    },
+    {
+      "path": "BOOT-INF/lib/netty-codec-compression-4.2.17.Final.jar",
+      "freshSha256": "425b287a1f36986a5c8edd76379a49decdf99d284f3454f3fa607a073bfb2c18",
+      "acceptedSha256": "425b287a1f36986a5c8edd76379a49decdf99d284f3454f3fa607a073bfb2c18"
+    },
+    {
+      "path": "BOOT-INF/lib/netty-codec-marshalling-4.2.17.Final.jar",
+      "freshSha256": "ee5ffed638da6b7e2b4567559bd5f78b18f635cdaa4f3b6d23aa27ccf6cb57c2",
+      "acceptedSha256": "ee5ffed638da6b7e2b4567559bd5f78b18f635cdaa4f3b6d23aa27ccf6cb57c2"
+    },
+    {
+      "path": "BOOT-INF/lib/netty-codec-protobuf-4.2.17.Final.jar",
+      "freshSha256": "44b2fcc4bc1d6c01edafe6ae6c8a7de7c3c5bad59697a93b6b879a45a78a5387",
+      "acceptedSha256": "44b2fcc4bc1d6c01edafe6ae6c8a7de7c3c5bad59697a93b6b879a45a78a5387"
+    },
+    {
+      "path": "BOOT-INF/lib/netty-common-4.2.17.Final.jar",
+      "freshSha256": "502aae2a6680e9bca3558a3fa098f06dc4d87340b8b714e925a6d690871c092a",
+      "acceptedSha256": "502aae2a6680e9bca3558a3fa098f06dc4d87340b8b714e925a6d690871c092a"
+    },
+    {
+      "path": "BOOT-INF/lib/netty-handler-4.2.17.Final.jar",
+      "freshSha256": "4df11c7520b556c5e2c84b939182699d48fcbb09e97a6bb5e1c0b6835227d126",
+      "acceptedSha256": "4df11c7520b556c5e2c84b939182699d48fcbb09e97a6bb5e1c0b6835227d126"
+    },
+    {
+      "path": "BOOT-INF/lib/netty-resolver-4.2.17.Final.jar",
+      "freshSha256": "7a4b599b9c0c29a505d3b7311f142df883fb27d0f67495a7cbaf533b0e456623",
+      "acceptedSha256": "7a4b599b9c0c29a505d3b7311f142df883fb27d0f67495a7cbaf533b0e456623"
+    },
+    {
+      "path": "BOOT-INF/lib/netty-transport-4.2.17.Final.jar",
+      "freshSha256": "d2409ce3a735cbab4188d0ea5d82abed823a6a07a8389f49af4a9e1243a562bc",
+      "acceptedSha256": "d2409ce3a735cbab4188d0ea5d82abed823a6a07a8389f49af4a9e1243a562bc"
+    },
+    {
+      "path": "BOOT-INF/lib/netty-transport-native-unix-common-4.2.17.Final.jar",
+      "freshSha256": "e01aa467b9104de54a57c08c290f70b22e53ec97cf5583c87c112170ef5832cc",
+      "acceptedSha256": "e01aa467b9104de54a57c08c290f70b22e53ec97cf5583c87c112170ef5832cc"
+    },
+    {
+      "path": "BOOT-INF/lib/nimbus-jose-jwt-10.9.1.jar",
+      "freshSha256": "33152ea83ec50d22706fdaf3b07acbcd716f9a68edcabdd7c4d02843cbdcdcf6",
+      "acceptedSha256": "33152ea83ec50d22706fdaf3b07acbcd716f9a68edcabdd7c4d02843cbdcdcf6"
+    },
+    {
+      "path": "BOOT-INF/lib/slf4j-api-2.0.18.jar",
+      "freshSha256": "44508fd1576500688c790b190acdd16fec4f8c79a3e0b900afd70503cf055f55",
+      "acceptedSha256": "44508fd1576500688c790b190acdd16fec4f8c79a3e0b900afd70503cf055f55"
+    },
+    {
+      "path": "BOOT-INF/lib/snakeyaml-2.6.jar",
+      "freshSha256": "c8f7a98e7394adda02f6317249710e4d1b4c7a25aa8c7eace0c2eea52eb8bf85",
+      "acceptedSha256": "c8f7a98e7394adda02f6317249710e4d1b4c7a25aa8c7eace0c2eea52eb8bf85"
+    },
+    {
+      "path": "BOOT-INF/lib/spring-amqp-4.1.1.jar",
+      "freshSha256": "9393b306fc38ce1a2080d6cc686576edde1457d3b0756a03c36ae9c8ab201868",
+      "acceptedSha256": "9393b306fc38ce1a2080d6cc686576edde1457d3b0756a03c36ae9c8ab201868"
+    },
+    {
+      "path": "BOOT-INF/lib/spring-aop-7.0.9.jar",
+      "freshSha256": "b8c5d6bfcb1f4993f2cc124f7ab7fac40edf5256b9e43c2f7250a733cb5510e9",
+      "acceptedSha256": "b8c5d6bfcb1f4993f2cc124f7ab7fac40edf5256b9e43c2f7250a733cb5510e9"
+    },
+    {
+      "path": "BOOT-INF/lib/spring-beans-7.0.9.jar",
+      "freshSha256": "ff218b827a25c9e8929b0cd56dfb56916cea9d5b669ed97dc7cb262508ff548b",
+      "acceptedSha256": "ff218b827a25c9e8929b0cd56dfb56916cea9d5b669ed97dc7cb262508ff548b"
+    },
+    {
+      "path": "BOOT-INF/lib/spring-boot-4.1.1.jar",
+      "freshSha256": "0d92b532b1d4020640e72d78c31af175c23db8e0ddd45b81855b7fdf4c9c70f0",
+      "acceptedSha256": "0d92b532b1d4020640e72d78c31af175c23db8e0ddd45b81855b7fdf4c9c70f0"
+    },
+    {
+      "path": "BOOT-INF/lib/spring-boot-amqp-4.1.1.jar",
+      "freshSha256": "99f7c26619cbc82ec5a6635bfc827afc3d8bae187101e8c52a666cbbbfbfe04e",
+      "acceptedSha256": "99f7c26619cbc82ec5a6635bfc827afc3d8bae187101e8c52a666cbbbfbfe04e"
+    },
+    {
+      "path": "BOOT-INF/lib/spring-boot-autoconfigure-4.1.1.jar",
+      "freshSha256": "59228756ddd76cea050f95d86deff334789bc53b6688beaa673b1af2b9794592",
+      "acceptedSha256": "59228756ddd76cea050f95d86deff334789bc53b6688beaa673b1af2b9794592"
+    },
+    {
+      "path": "BOOT-INF/lib/spring-boot-flyway-4.1.1.jar",
+      "freshSha256": "61db32d08f2b1b04cf006e916575da22ecee0a2e0bb0604aca26c04f7bd4aa0e",
+      "acceptedSha256": "61db32d08f2b1b04cf006e916575da22ecee0a2e0bb0604aca26c04f7bd4aa0e"
+    },
+    {
+      "path": "BOOT-INF/lib/spring-boot-http-converter-4.1.1.jar",
+      "freshSha256": "52a167430a918c223b2ccd2eb62aff91a8e43e6daebe5a07caa37b9a04c61cb9",
+      "acceptedSha256": "52a167430a918c223b2ccd2eb62aff91a8e43e6daebe5a07caa37b9a04c61cb9"
+    },
+    {
+      "path": "BOOT-INF/lib/spring-boot-jackson-4.1.1.jar",
+      "freshSha256": "69a9b4d8850a0532a5e44ff7306a03621485b26596e7f9481de7d28e68a2dd42",
+      "acceptedSha256": "69a9b4d8850a0532a5e44ff7306a03621485b26596e7f9481de7d28e68a2dd42"
+    },
+    {
+      "path": "BOOT-INF/lib/spring-boot-jarmode-tools-4.1.1.jar",
+      "freshSha256": "062a9edf01809f4a2b48bfc2fe392fedd27448a3a57113bef510576673d4397f",
+      "acceptedSha256": "062a9edf01809f4a2b48bfc2fe392fedd27448a3a57113bef510576673d4397f"
+    },
+    {
+      "path": "BOOT-INF/lib/spring-boot-jdbc-4.1.1.jar",
+      "freshSha256": "30de56a06ccedb40245fd3a69a5107c7b3c0500447bb982a54a3b5da2859ae2c",
+      "acceptedSha256": "30de56a06ccedb40245fd3a69a5107c7b3c0500447bb982a54a3b5da2859ae2c"
+    },
+    {
+      "path": "BOOT-INF/lib/spring-boot-mail-4.1.1.jar",
+      "freshSha256": "0e85d4b551cbdd36387be53d31062b057b7d8914eee13255d5242a9078f4d25c",
+      "acceptedSha256": "0e85d4b551cbdd36387be53d31062b057b7d8914eee13255d5242a9078f4d25c"
+    },
+    {
+      "path": "BOOT-INF/lib/spring-boot-persistence-4.1.1.jar",
+      "freshSha256": "0f78d2556ac3ed75f9eaf3134a1fba94ad1ec3414b52aa279c1f690217e71e3c",
+      "acceptedSha256": "0f78d2556ac3ed75f9eaf3134a1fba94ad1ec3414b52aa279c1f690217e71e3c"
+    },
+    {
+      "path": "BOOT-INF/lib/spring-boot-security-4.1.1.jar",
+      "freshSha256": "c940697be9bc67820d5011b86d58105836b7cae7c8fb5d4e61d635b51b392cbe",
+      "acceptedSha256": "c940697be9bc67820d5011b86d58105836b7cae7c8fb5d4e61d635b51b392cbe"
+    },
+    {
+      "path": "BOOT-INF/lib/spring-boot-servlet-4.1.1.jar",
+      "freshSha256": "4dcb156e311a4c1ad5f1ed7eabd94a78ea74510b05c429a4fcfdcf8beb9d5882",
+      "acceptedSha256": "4dcb156e311a4c1ad5f1ed7eabd94a78ea74510b05c429a4fcfdcf8beb9d5882"
+    },
+    {
+      "path": "BOOT-INF/lib/spring-boot-sql-4.1.1.jar",
+      "freshSha256": "fa4f6ddded1bb3bbc496897686336d8433e34f1f22daa886872be2aa184def23",
+      "acceptedSha256": "fa4f6ddded1bb3bbc496897686336d8433e34f1f22daa886872be2aa184def23"
+    },
+    {
+      "path": "BOOT-INF/lib/spring-boot-tomcat-4.1.1.jar",
+      "freshSha256": "17f65629e4eb3c979c0572b69b57d630bb12e64869e9d7520adddaa6734256b6",
+      "acceptedSha256": "17f65629e4eb3c979c0572b69b57d630bb12e64869e9d7520adddaa6734256b6"
+    },
+    {
+      "path": "BOOT-INF/lib/spring-boot-transaction-4.1.1.jar",
+      "freshSha256": "e7f2fad4fe65bf6aaf1b1a538a68a1cf69988adb558f4a0fc0992a8be4fddf64",
+      "acceptedSha256": "e7f2fad4fe65bf6aaf1b1a538a68a1cf69988adb558f4a0fc0992a8be4fddf64"
+    },
+    {
+      "path": "BOOT-INF/lib/spring-boot-web-server-4.1.1.jar",
+      "freshSha256": "6912fb1fdf7f657a61ac050760fa835fb1e7496399291697e2901f82887a4fee",
+      "acceptedSha256": "6912fb1fdf7f657a61ac050760fa835fb1e7496399291697e2901f82887a4fee"
+    },
+    {
+      "path": "BOOT-INF/lib/spring-boot-webmvc-4.1.1.jar",
+      "freshSha256": "9f08c1fb938c45a8693fec5f3065be3aca203948a7ab4d56b06444986f75a6b2",
+      "acceptedSha256": "9f08c1fb938c45a8693fec5f3065be3aca203948a7ab4d56b06444986f75a6b2"
+    },
+    {
+      "path": "BOOT-INF/lib/spring-boot-websocket-4.1.1.jar",
+      "freshSha256": "37c3ffdfd78440176754a93eaf105d9e443de4a3cc1bc2a8d51cadf3fc6dcb0e",
+      "acceptedSha256": "37c3ffdfd78440176754a93eaf105d9e443de4a3cc1bc2a8d51cadf3fc6dcb0e"
+    },
+    {
+      "path": "BOOT-INF/lib/spring-context-7.0.9.jar",
+      "freshSha256": "7552a2fcfa30cea53eb14d7a65a7a8e1b1dd82e832a7164fb7e6fb105f438858",
+      "acceptedSha256": "7552a2fcfa30cea53eb14d7a65a7a8e1b1dd82e832a7164fb7e6fb105f438858"
+    },
+    {
+      "path": "BOOT-INF/lib/spring-context-support-7.0.9.jar",
+      "freshSha256": "3c0c35a0371539f5e7d4e9d0226b9a009a4109cd0e20e805e27132dd6ae0727d",
+      "acceptedSha256": "3c0c35a0371539f5e7d4e9d0226b9a009a4109cd0e20e805e27132dd6ae0727d"
+    },
+    {
+      "path": "BOOT-INF/lib/spring-core-7.0.9.jar",
+      "freshSha256": "5195f4722699b39878d99a832549fe65df2890b159d063b88fff31b1ca65ae36",
+      "acceptedSha256": "5195f4722699b39878d99a832549fe65df2890b159d063b88fff31b1ca65ae36"
+    },
+    {
+      "path": "BOOT-INF/lib/spring-expression-7.0.9.jar",
+      "freshSha256": "046434c40f43819729b9b1db0e6c659dfa68184c1c2c2efa5f7b3a5b27c4e2e2",
+      "acceptedSha256": "046434c40f43819729b9b1db0e6c659dfa68184c1c2c2efa5f7b3a5b27c4e2e2"
+    },
+    {
+      "path": "BOOT-INF/lib/spring-jdbc-7.0.9.jar",
+      "freshSha256": "ca0d9af1c5721eef8cac1f94c8b9d27a753248bc33c86e3472bd3d1dbd78f450",
+      "acceptedSha256": "ca0d9af1c5721eef8cac1f94c8b9d27a753248bc33c86e3472bd3d1dbd78f450"
+    },
+    {
+      "path": "BOOT-INF/lib/spring-messaging-7.0.9.jar",
+      "freshSha256": "19ea7561e5d61e19bee0c94733d03bbf9384c9356eea2d4e90cce7ba3c0ab01b",
+      "acceptedSha256": "19ea7561e5d61e19bee0c94733d03bbf9384c9356eea2d4e90cce7ba3c0ab01b"
+    },
+    {
+      "path": "BOOT-INF/lib/spring-rabbit-4.1.1.jar",
+      "freshSha256": "42787e5db35812183edab018bbc812423700caefcc86113ec92fe1dd487388f5",
+      "acceptedSha256": "42787e5db35812183edab018bbc812423700caefcc86113ec92fe1dd487388f5"
+    },
+    {
+      "path": "BOOT-INF/lib/spring-security-config-7.1.1.jar",
+      "freshSha256": "1f947c853f14cab76563464ee22e72f6672f3913db52647d2f5d1df5f2b1e5a5",
+      "acceptedSha256": "1f947c853f14cab76563464ee22e72f6672f3913db52647d2f5d1df5f2b1e5a5"
+    },
+    {
+      "path": "BOOT-INF/lib/spring-security-core-7.1.1.jar",
+      "freshSha256": "98a5011baa78df36fb184e6ce0e8e086ca9a64fcdd8f161c0a96475a3a0907bd",
+      "acceptedSha256": "98a5011baa78df36fb184e6ce0e8e086ca9a64fcdd8f161c0a96475a3a0907bd"
+    },
+    {
+      "path": "BOOT-INF/lib/spring-security-crypto-7.1.1.jar",
+      "freshSha256": "6e8bb2337faccabd30626f917ed1d2bfa9dde982229b6b373b644d1a01635403",
+      "acceptedSha256": "6e8bb2337faccabd30626f917ed1d2bfa9dde982229b6b373b644d1a01635403"
+    },
+    {
+      "path": "BOOT-INF/lib/spring-security-oauth2-core-7.1.1.jar",
+      "freshSha256": "29140d71b37cf1246bf16e33619e88e7baaa1c66bf5574e3c3e9a9f225f0ef6e",
+      "acceptedSha256": "29140d71b37cf1246bf16e33619e88e7baaa1c66bf5574e3c3e9a9f225f0ef6e"
+    },
+    {
+      "path": "BOOT-INF/lib/spring-security-oauth2-jose-7.1.1.jar",
+      "freshSha256": "e07d47cac04de4f01be6a6c3f8be249472444b24fd4fad8ff030b45bfe6c5b9c",
+      "acceptedSha256": "e07d47cac04de4f01be6a6c3f8be249472444b24fd4fad8ff030b45bfe6c5b9c"
+    },
+    {
+      "path": "BOOT-INF/lib/spring-security-web-7.1.1.jar",
+      "freshSha256": "dece134a2332c976a2c94ecf13f816c64e8ea7f2139795485afe655fba0408f3",
+      "acceptedSha256": "dece134a2332c976a2c94ecf13f816c64e8ea7f2139795485afe655fba0408f3"
+    },
+    {
+      "path": "BOOT-INF/lib/spring-tx-7.0.9.jar",
+      "freshSha256": "bfb15da6e096e2c0752e9db9987d2415bf0da1d744efc988535c10c6b6c2eedd",
+      "acceptedSha256": "bfb15da6e096e2c0752e9db9987d2415bf0da1d744efc988535c10c6b6c2eedd"
+    },
+    {
+      "path": "BOOT-INF/lib/spring-web-7.0.9.jar",
+      "freshSha256": "941ced476427bde2533872f293da535fd0258de3f3a650a7f1bfe01ed2927302",
+      "acceptedSha256": "941ced476427bde2533872f293da535fd0258de3f3a650a7f1bfe01ed2927302"
+    },
+    {
+      "path": "BOOT-INF/lib/spring-webmvc-7.0.9.jar",
+      "freshSha256": "8f114c1461692c5e534e82b27de23b7fb23370db8dee7ce0c92d5106906c9555",
+      "acceptedSha256": "8f114c1461692c5e534e82b27de23b7fb23370db8dee7ce0c92d5106906c9555"
+    },
+    {
+      "path": "BOOT-INF/lib/spring-websocket-7.0.9.jar",
+      "freshSha256": "4d77dfea1dd88cc823d9e7c6e08f77698c0296145666ab39b13ff1a9cff31252",
+      "acceptedSha256": "4d77dfea1dd88cc823d9e7c6e08f77698c0296145666ab39b13ff1a9cff31252"
+    },
+    {
+      "path": "BOOT-INF/lib/tomcat-embed-core-11.0.24.jar",
+      "freshSha256": "e7b966dcaac8c5ffa4f10e44031ebf5b71f2123560c08ac8b7120028615aea08",
+      "acceptedSha256": "e7b966dcaac8c5ffa4f10e44031ebf5b71f2123560c08ac8b7120028615aea08"
+    },
+    {
+      "path": "BOOT-INF/lib/tomcat-embed-el-11.0.24.jar",
+      "freshSha256": "ad0546f12dace008aacce18ba13222137760b310ca719e173d3e13021b9af6c6",
+      "acceptedSha256": "ad0546f12dace008aacce18ba13222137760b310ca719e173d3e13021b9af6c6"
+    },
+    {
+      "path": "BOOT-INF/lib/tomcat-embed-websocket-11.0.24.jar",
+      "freshSha256": "825160101f0da4a10e19b5730c2ae2f99f8c2c7a7211ac05562726c5e97ab91e",
+      "acceptedSha256": "825160101f0da4a10e19b5730c2ae2f99f8c2c7a7211ac05562726c5e97ab91e"
+    }
+  ]
+}

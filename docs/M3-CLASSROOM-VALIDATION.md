@@ -1,5 +1,7 @@
 # M3 班级与成员首单元验收
 
+2026-10-08 总门禁补充：完整M3现已 [VERIFIED，4/4 PASS](M3-GATE-AUDIT.md)。本文件以下保留该单元执行时的范围、结果及失败轮次；最终整体状态以总门禁为准，不将各轮次重新描述为同一次运行。
+
 状态 **VERIFIED（首单元）**；2026-10-06。起点 feat/m2-accounts / d228e3a；完整M2 VERIFIED保持，完整M3 IN_PROGRESS。设计见 [M3-CLASSROOM-DESIGN.md](M3-CLASSROOM-DESIGN.md)。班级私有题、作业、教师提交关联尚未实现；首单元验证不能替代完整四门禁。可提交事实见 [证据目录](evidence/m3-classroom/README.md)。
 
 ## 1. 实现范围

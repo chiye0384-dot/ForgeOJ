@@ -1,5 +1,7 @@
 # M3 班级私有题单元验收
 
+2026-10-08 总门禁补充：完整M3现已 [VERIFIED，4/4 PASS](M3-GATE-AUDIT.md)。本文件以下保留该单元执行时的范围、结果及失败轮次；最终整体状态以总门禁为准，不将各轮次重新描述为同一次运行。
+
 状态 **VERIFIED（班级私有题单元）**；2026-10-06；起点 `feat/m2-accounts / 089d777`。本单元验收与完整 M3 分开，完整 M3 保持 IN_PROGRESS。设计见 [M3-PRIVATE-PROBLEMS-DESIGN.md](M3-PRIVATE-PROBLEMS-DESIGN.md)，可提交证据见 [证据目录](evidence/m3-private-problems/README.md)。
 
 ## 实现和用户确认

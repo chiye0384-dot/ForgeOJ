@@ -1,5 +1,7 @@
 # M3 作业单元验收
 
+2026-10-08 总门禁补充：完整M3现已 [VERIFIED，4/4 PASS](M3-GATE-AUDIT.md)。本文件以下保留该单元执行时的范围、结果及失败轮次；最终整体状态以总门禁为准，不将各轮次重新描述为同一次运行。
+
 2026-10-08，`feat/m2-accounts`，实现起点 `05d63b08f51df9ca5c719ce3ade3a0757a813ed8`。**本作业单元 VERIFIED**，最终 [机器关联检查](evidence/m3-assignments/verification.json) 为 `allPassed:true`。完整 M3 保持 IN_PROGRESS，教师查询和四项总门禁留后续。
 
 ## 范围与产品规则

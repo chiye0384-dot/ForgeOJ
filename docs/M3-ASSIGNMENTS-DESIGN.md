@@ -1,5 +1,7 @@
 # M3 作业单元设计
 
+2026-10-08 总门禁补充：完整M3现已 [VERIFIED，4/4 PASS](M3-GATE-AUDIT.md)。本文件以下保留该单元执行时的范围、结果及失败轮次；最终整体状态以总门禁为准，不将各轮次重新描述为同一次运行。
+
 设计2026-10-07；验收2026-10-08；起点 feat/m2-accounts / 05d63b0；本作业单元VERIFIED，见 [验收](M3-ASSIGNMENTS-VALIDATION.md)。遵循 Requirements 9.1/9.2、D-014/D-042；本单元完成作业生命周期、本人参与和真实成绩，不提前扩大教师读取学生源码权限。完整M3保持IN_PROGRESS，教师查询和最终门禁为后续单元。
 
 V17追加作业、题目版本绑定、永久参与快照、PRECOMPLETED真实证据和正式尝试关系。Worker不读取新表，不增加任何grants；API复用原正式不可变submission/task/outbox及共享额度。

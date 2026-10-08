@@ -1,5 +1,7 @@
 # M3 教学作业记录验收
 
+2026-10-08 总门禁补充：完整M3现已 [VERIFIED，4/4 PASS](M3-GATE-AUDIT.md)。本文件以下保留该单元执行时的范围、结果及失败轮次；最终整体状态以总门禁为准，不将各轮次重新描述为同一次运行。
+
 2026-10-08，feat/m2-accounts / 实现起点82afd00。**本单元 VERIFIED**。完整M3仍IN_PROGRESS，四项总门禁尚未汇总；不声称Release或RESUME_READY。
 
 原生一次性MySQL新增3项测试先失败（缺失教学接口返回401），实现后全部通过，记录target/teacher-red.log及teacher-green.log。覆盖PRECOMPLETED原私人AC源码拒绝、正式关联读取、同题非作业/跨作业/跨班拒绝、OWNER/ASSISTANT/MEMBER/LEFT/REMOVED/无关/匿名/停用账号、降级即时失权、历史参与和归档、本人/教学成绩一致、分页边界与no-store。测试中受控终态fixture仅用于SQL/权限验证，不冒充真实Worker判题。

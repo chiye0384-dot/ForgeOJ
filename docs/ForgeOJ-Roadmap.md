@@ -240,7 +240,7 @@ M0 的登录只用于打通受保护提交链路，可使用预置账号和最�
 
 ## 8. M4：管理后台、搜索与降级
 
-状态 `IN_PROGRESS`（2026-10-08），第一步设计已完成，D-043决策及第2步独立管理员认证、账号维护、持久审计、CLI/最小页面已[验收](M4-ADMIN-IDENTITY-VALIDATION.md)。按 [7步计划](M4-IMPLEMENTATION-PLAN.md)逐单元交付；下一实现单元为公共题审核治理。审核、运维、Redis/ES和监控各自验收后才能汇总下列五门禁。
+状态 `IN_PROGRESS`（2026-10-08），第1步设计、第2步独立管理员身份和第3步公共题审核治理已完成，D-043/D-044已确认；[身份验收](M4-ADMIN-IDENTITY-VALIDATION.md)与[公共审核验收](M4-PUBLIC-REVIEW-VALIDATION.md)均 VERIFIED。按 [7步计划](M4-IMPLEMENTATION-PLAN.md)逐单元交付；下一实现单元是第4步运维查询/有限人工重试，尚未开始，接手按[启动说明](M4-STEP4-NEW-CHAT-START.md)。运维、Redis/ES和监控等各自验收后才能汇总下列五门禁，不将第2/3步验收当完整M4通过。
 
 目标：补足真实系统所需的治理和运维能力。
 

@@ -1,6 +1,6 @@
 # M4 实施步骤
 
-2026-10-08，状态 `IN_PROGRESS`，第1步设计已完成，第2步管理身份单元已VERIFIED（见[验收](M4-ADMIN-IDENTITY-VALIDATION.md)），用户已确认单账号单角色及首次改密/本机恢复规则（D-043）。实施起点 `0e213e1adc3ae04de7d9160622ea8442940dac28`，分支 `feat/m2-accounts`。M-1～M3仍为VERIFIED；完整M4未验收，M5/V1.1不启动。
+2026-10-08，状态 `IN_PROGRESS`，第1步设计、第2步管理身份与第3步公共题审核治理已完成，第2/3步均 VERIFIED（见[身份验收](M4-ADMIN-IDENTITY-VALIDATION.md)、[审核验收](M4-PUBLIC-REVIEW-VALIDATION.md)）。用户已确认 D-043/D-044。第3步交付 `c60b75d60bfe210944a9cefde17cade92bb8a71f`，分支 `feat/m2-accounts`；原 M4 实施起点 `0e213e1adc3ae04de7d9160622ea8442940dac28` 不是当前 HEAD。下一单元第4步尚未开始，新对话按[启动说明](M4-STEP4-NEW-CHAT-START.md)先只读准备、待用户继续。M-1～M3 VERIFIED；完整M4未验收，M5/V1.1不启动。
 
 依据 [Requirements 4.2/12/13/14](ForgeOJ-Requirements.md)、[Roadmap M4](ForgeOJ-Roadmap.md#8-m4管理后台搜索与降级)、D-016/D-022/D-023及E-04/E-05，按依赖拆分：
 
@@ -8,7 +8,7 @@
 |---|---|---|
 | 1 管理身份设计 | 独立账号、角色矩阵、一次性初始化、会话、撤销、管理员维护与持久审计；核对现有认证和数据库授权 | [首单元设计](M4-ADMIN-IDENTITY-DESIGN.md)可供实现，重要待选规则得到用户回答；不以文档代替验收 |
 | 2 管理身份实现与验收（VERIFIED） | V18追加迁移、初始化/恢复CLI、独立后台认证、本人改密与退出、SUPER_ADMIN账号维护、审计查询、后台最小页面 | 真实MySQL迁移/最小grants/事务/权限/并发测试，固定Linux全量检查及实际多身份页面；旧普通账号和M3流程无回归；无默认密码 |
-| 3 公共题审核治理 | 现有不可变送审版本的列表/案件阅读、批准发布、驳回重提、下架恢复及相关题目反馈案件 | 审核员仅看关联版本，OPS拒绝，双PASSED及版本/状态CAS、幂等发布、公开读取复核、敏感阅读和处置审计；旧快照和提交不改写 |
+| 3 公共题审核治理（VERIFIED） | 不可变案件阅读/重验、批准/驳回、原作者TEXT/关联CORRECTION、下架/恢复/作废和反馈案件 | [最终验收](M4-PUBLIC-REVIEW-VALIDATION.md)：关联版本权限、最新真实双PASSED、CAS/幂等、公开复核、敏感审计、旧事实不变及真实多角色页面通过 |
 | 4 运维闭环 | 正式判题、内容验证、自测的异常任务/attempt/死信查询，按用途限定的人工幂等重试与理由审计 | CONTENT_REVIEWER拒绝，OPS/SUPER允许；终态与重试资格复核、并发/重复/响应丢失、Outbox/ACK故障检查；不得改用户源码或把WA改AC |
 | 5 Redis与降级 | 公共题/官方题单Cache-Aside、可靠失效Outbox、普通和管理会话安全缓存、共享限流与短期幂等辅助 | 清空/故障回退MySQL，撤销与降级均不越权，保守单机限流及数据库配额保留，事件重放/TTL抖动/热点单重建和恢复验证 |
 | 6 公共搜索 | Elasticsearch公开题标题/题面纯文本/难度/标签检索、版本化Outbox同步、有界重试/死信、管理重建、MySQL回退 | 不索引私有题/源码/隐藏测试/题解；旧事件不覆盖新版本；候选ID经MySQL公开状态复核；清索引后重建和故障降级通过 |

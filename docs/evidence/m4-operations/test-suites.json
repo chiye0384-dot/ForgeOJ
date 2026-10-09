@@ -1,0 +1,518 @@
+{
+  "api": {
+    "tests": 278,
+    "suites": 49,
+    "details": [
+      {
+        "name": "TEST-com.forgeoj.api.AccountMigrationIntegrationTests.xml",
+        "tests": 1,
+        "failures": 0,
+        "errors": 0,
+        "skipped": 0
+      },
+      {
+        "name": "TEST-com.forgeoj.api.admin.AdminIdentityIntegrationTests.xml",
+        "tests": 16,
+        "failures": 0,
+        "errors": 0,
+        "skipped": 0
+      },
+      {
+        "name": "TEST-com.forgeoj.api.admin.AdminJwtTests.xml",
+        "tests": 6,
+        "failures": 0,
+        "errors": 0,
+        "skipped": 0
+      },
+      {
+        "name": "TEST-com.forgeoj.api.admin.AdminMigrationIntegrationTests.xml",
+        "tests": 1,
+        "failures": 0,
+        "errors": 0,
+        "skipped": 0
+      },
+      {
+        "name": "TEST-com.forgeoj.api.admin.OperationsIntegrationTests.xml",
+        "tests": 14,
+        "failures": 0,
+        "errors": 0,
+        "skipped": 0
+      },
+      {
+        "name": "TEST-com.forgeoj.api.admin.OperationsMigrationIntegrationTests.xml",
+        "tests": 1,
+        "failures": 0,
+        "errors": 0,
+        "skipped": 0
+      },
+      {
+        "name": "TEST-com.forgeoj.api.admin.PublicReviewIntegrationTests.xml",
+        "tests": 15,
+        "failures": 0,
+        "errors": 0,
+        "skipped": 0
+      },
+      {
+        "name": "TEST-com.forgeoj.api.admin.PublicReviewMigrationIntegrationTests.xml",
+        "tests": 1,
+        "failures": 0,
+        "errors": 0,
+        "skipped": 0
+      },
+      {
+        "name": "TEST-com.forgeoj.api.auth.AccountFlowIntegrationTests.xml",
+        "tests": 13,
+        "failures": 0,
+        "errors": 0,
+        "skipped": 0
+      },
+      {
+        "name": "TEST-com.forgeoj.api.auth.AccountHttpIntegrationTests.xml",
+        "tests": 14,
+        "failures": 0,
+        "errors": 0,
+        "skipped": 0
+      },
+      {
+        "name": "TEST-com.forgeoj.api.auth.AccountJwtTests.xml",
+        "tests": 15,
+        "failures": 0,
+        "errors": 0,
+        "skipped": 0
+      },
+      {
+        "name": "TEST-com.forgeoj.api.auth.AccountPolicyTests.xml",
+        "tests": 3,
+        "failures": 0,
+        "errors": 0,
+        "skipped": 0
+      },
+      {
+        "name": "TEST-com.forgeoj.api.auth.AccountRegistrationIntegrationTests.xml",
+        "tests": 3,
+        "failures": 0,
+        "errors": 0,
+        "skipped": 0
+      },
+      {
+        "name": "TEST-com.forgeoj.api.auth.AuthAndProblemIntegrationTests.xml",
+        "tests": 3,
+        "failures": 0,
+        "errors": 0,
+        "skipped": 0
+      },
+      {
+        "name": "TEST-com.forgeoj.api.auth.SmtpAccountMailTests.xml",
+        "tests": 11,
+        "failures": 0,
+        "errors": 0,
+        "skipped": 0
+      },
+      {
+        "name": "TEST-com.forgeoj.api.classroom.AssignmentIntegrationTests.xml",
+        "tests": 20,
+        "failures": 0,
+        "errors": 0,
+        "skipped": 0
+      },
+      {
+        "name": "TEST-com.forgeoj.api.classroom.AssignmentMigrationIntegrationTests.xml",
+        "tests": 1,
+        "failures": 0,
+        "errors": 0,
+        "skipped": 0
+      },
+      {
+        "name": "TEST-com.forgeoj.api.classroom.ClassroomIntegrationTests.xml",
+        "tests": 9,
+        "failures": 0,
+        "errors": 0,
+        "skipped": 0
+      },
+      {
+        "name": "TEST-com.forgeoj.api.classroom.ClassroomMigrationIntegrationTests.xml",
+        "tests": 1,
+        "failures": 0,
+        "errors": 0,
+        "skipped": 0
+      },
+      {
+        "name": "TEST-com.forgeoj.api.classroom.ClassroomProblemIntegrationTests.xml",
+        "tests": 10,
+        "failures": 0,
+        "errors": 0,
+        "skipped": 0
+      },
+      {
+        "name": "TEST-com.forgeoj.api.classroom.ClassroomProblemMigrationIntegrationTests.xml",
+        "tests": 1,
+        "failures": 0,
+        "errors": 0,
+        "skipped": 0
+      },
+      {
+        "name": "TEST-com.forgeoj.api.content.ContentIntegrationTests.xml",
+        "tests": 7,
+        "failures": 0,
+        "errors": 0,
+        "skipped": 0
+      },
+      {
+        "name": "TEST-com.forgeoj.api.content.ContentMigrationIntegrationTests.xml",
+        "tests": 1,
+        "failures": 0,
+        "errors": 0,
+        "skipped": 0
+      },
+      {
+        "name": "TEST-com.forgeoj.api.content.ContentOutputIntegrationTests.xml",
+        "tests": 4,
+        "failures": 0,
+        "errors": 0,
+        "skipped": 0
+      },
+      {
+        "name": "TEST-com.forgeoj.api.content.ContentOutputMigrationIntegrationTests.xml",
+        "tests": 1,
+        "failures": 0,
+        "errors": 0,
+        "skipped": 0
+      },
+      {
+        "name": "TEST-com.forgeoj.api.content.ContentRequestSizeFilterTests.xml",
+        "tests": 3,
+        "failures": 0,
+        "errors": 0,
+        "skipped": 0
+      },
+      {
+        "name": "TEST-com.forgeoj.api.content.ContentReviewIntegrationTests.xml",
+        "tests": 5,
+        "failures": 0,
+        "errors": 0,
+        "skipped": 0
+      },
+      {
+        "name": "TEST-com.forgeoj.api.content.ContentReviewMigrationIntegrationTests.xml",
+        "tests": 1,
+        "failures": 0,
+        "errors": 0,
+        "skipped": 0
+      },
+      {
+        "name": "TEST-com.forgeoj.api.content.ContentValidationIntegrationTests.xml",
+        "tests": 3,
+        "failures": 0,
+        "errors": 0,
+        "skipped": 0
+      },
+      {
+        "name": "TEST-com.forgeoj.api.content.ContentValidationMigrationIntegrationTests.xml",
+        "tests": 1,
+        "failures": 0,
+        "errors": 0,
+        "skipped": 0
+      },
+      {
+        "name": "TEST-com.forgeoj.api.content.TestDatasetArchiveTests.xml",
+        "tests": 9,
+        "failures": 0,
+        "errors": 0,
+        "skipped": 0
+      },
+      {
+        "name": "TEST-com.forgeoj.api.ForgeojApiApplicationTests.xml",
+        "tests": 1,
+        "failures": 0,
+        "errors": 0,
+        "skipped": 0
+      },
+      {
+        "name": "TEST-com.forgeoj.api.learning.LearningIntegrationTests.xml",
+        "tests": 11,
+        "failures": 0,
+        "errors": 0,
+        "skipped": 0
+      },
+      {
+        "name": "TEST-com.forgeoj.api.learning.LearningMigrationIntegrationTests.xml",
+        "tests": 1,
+        "failures": 0,
+        "errors": 0,
+        "skipped": 0
+      },
+      {
+        "name": "TEST-com.forgeoj.api.messaging.OutboxPublisherIntegrationTests.xml",
+        "tests": 3,
+        "failures": 0,
+        "errors": 0,
+        "skipped": 0
+      },
+      {
+        "name": "TEST-com.forgeoj.api.messaging.OutboxPublisherLoggingTests.xml",
+        "tests": 1,
+        "failures": 0,
+        "errors": 0,
+        "skipped": 0
+      },
+      {
+        "name": "TEST-com.forgeoj.api.MySqlMigrationIntegrationTests.xml",
+        "tests": 1,
+        "failures": 0,
+        "errors": 0,
+        "skipped": 0
+      },
+      {
+        "name": "TEST-com.forgeoj.api.observability.CommittedJudgingEventsTests.xml",
+        "tests": 3,
+        "failures": 0,
+        "errors": 0,
+        "skipped": 0
+      },
+      {
+        "name": "TEST-com.forgeoj.api.observability.RequestCorrelationFilterTests.xml",
+        "tests": 3,
+        "failures": 0,
+        "errors": 0,
+        "skipped": 0
+      },
+      {
+        "name": "TEST-com.forgeoj.api.problem.ProblemLibraryIntegrationTests.xml",
+        "tests": 6,
+        "failures": 0,
+        "errors": 0,
+        "skipped": 0
+      },
+      {
+        "name": "TEST-com.forgeoj.api.problem.ProblemLibraryMigrationIntegrationTests.xml",
+        "tests": 1,
+        "failures": 0,
+        "errors": 0,
+        "skipped": 0
+      },
+      {
+        "name": "TEST-com.forgeoj.api.QuotaMigrationUpgradeIntegrationTests.xml",
+        "tests": 1,
+        "failures": 0,
+        "errors": 0,
+        "skipped": 0
+      },
+      {
+        "name": "TEST-com.forgeoj.api.selftest.SelfTestIntegrationTests.xml",
+        "tests": 6,
+        "failures": 0,
+        "errors": 0,
+        "skipped": 0
+      },
+      {
+        "name": "TEST-com.forgeoj.api.selftest.SelfTestMigrationIntegrationTests.xml",
+        "tests": 1,
+        "failures": 0,
+        "errors": 0,
+        "skipped": 0
+      },
+      {
+        "name": "TEST-com.forgeoj.api.solution.SolutionIntegrationTests.xml",
+        "tests": 7,
+        "failures": 0,
+        "errors": 0,
+        "skipped": 0
+      },
+      {
+        "name": "TEST-com.forgeoj.api.solution.SolutionMigrationIntegrationTests.xml",
+        "tests": 1,
+        "failures": 0,
+        "errors": 0,
+        "skipped": 0
+      },
+      {
+        "name": "TEST-com.forgeoj.api.submission.SubmissionCreationIntegrationTests.xml",
+        "tests": 23,
+        "failures": 0,
+        "errors": 0,
+        "skipped": 0
+      },
+      {
+        "name": "TEST-com.forgeoj.api.submission.SubmissionNotificationHandlerTests.xml",
+        "tests": 6,
+        "failures": 0,
+        "errors": 0,
+        "skipped": 0
+      },
+      {
+        "name": "TEST-com.forgeoj.api.submission.SubmissionNotificationIntegrationTests.xml",
+        "tests": 8,
+        "failures": 0,
+        "errors": 0,
+        "skipped": 0
+      }
+    ]
+  },
+  "worker": {
+    "tests": 133,
+    "suites": 23,
+    "details": [
+      {
+        "name": "TEST-com.forgeoj.worker.content.ValidationExecutionIntegrationTests.xml",
+        "tests": 13,
+        "failures": 0,
+        "errors": 0,
+        "skipped": 0
+      },
+      {
+        "name": "TEST-com.forgeoj.worker.ForgeojJudgeWorkerApplicationTests.xml",
+        "tests": 1,
+        "failures": 0,
+        "errors": 0,
+        "skipped": 0
+      },
+      {
+        "name": "TEST-com.forgeoj.worker.messaging.JudgeTaskExecutionIntegrationTests.xml",
+        "tests": 4,
+        "failures": 0,
+        "errors": 0,
+        "skipped": 0
+      },
+      {
+        "name": "TEST-com.forgeoj.worker.messaging.JudgeTaskListenerLoggingTests.xml",
+        "tests": 6,
+        "failures": 0,
+        "errors": 0,
+        "skipped": 0
+      },
+      {
+        "name": "TEST-com.forgeoj.worker.messaging.JudgeTaskMessageParserTests.xml",
+        "tests": 2,
+        "failures": 0,
+        "errors": 0,
+        "skipped": 0
+      },
+      {
+        "name": "TEST-com.forgeoj.worker.messaging.M0JudgeTaskRunnerTests.xml",
+        "tests": 4,
+        "failures": 0,
+        "errors": 0,
+        "skipped": 0
+      },
+      {
+        "name": "TEST-com.forgeoj.worker.messaging.WorkerProcessFaultIntegrationTests.xml",
+        "tests": 5,
+        "failures": 0,
+        "errors": 0,
+        "skipped": 0
+      },
+      {
+        "name": "TEST-com.forgeoj.worker.observability.JudgingEventsTests.xml",
+        "tests": 3,
+        "failures": 0,
+        "errors": 0,
+        "skipped": 0
+      },
+      {
+        "name": "TEST-com.forgeoj.worker.sandbox.DockerCliSandboxRuntimeIntegrationTests.xml",
+        "tests": 1,
+        "failures": 0,
+        "errors": 0,
+        "skipped": 0
+      },
+      {
+        "name": "TEST-com.forgeoj.worker.sandbox.DockerCliSandboxRuntimeTests.xml",
+        "tests": 13,
+        "failures": 0,
+        "errors": 0,
+        "skipped": 0
+      },
+      {
+        "name": "TEST-com.forgeoj.worker.sandbox.DockerSandboxExecutionIntegrationTests.xml",
+        "tests": 1,
+        "failures": 0,
+        "errors": 0,
+        "skipped": 0
+      },
+      {
+        "name": "TEST-com.forgeoj.worker.sandbox.DockerSandboxSecurityIntegrationTests.xml",
+        "tests": 16,
+        "failures": 0,
+        "errors": 0,
+        "skipped": 0
+      },
+      {
+        "name": "TEST-com.forgeoj.worker.sandbox.ExecutionBudgetTests.xml",
+        "tests": 2,
+        "failures": 0,
+        "errors": 0,
+        "skipped": 0
+      },
+      {
+        "name": "TEST-com.forgeoj.worker.sandbox.M0OutputComparatorTests.xml",
+        "tests": 2,
+        "failures": 0,
+        "errors": 0,
+        "skipped": 0
+      },
+      {
+        "name": "TEST-com.forgeoj.worker.sandbox.SandboxRecoveryCleanerTests.xml",
+        "tests": 2,
+        "failures": 0,
+        "errors": 0,
+        "skipped": 0
+      },
+      {
+        "name": "TEST-com.forgeoj.worker.sandbox.SandboxResourceEventsTests.xml",
+        "tests": 6,
+        "failures": 0,
+        "errors": 0,
+        "skipped": 0
+      },
+      {
+        "name": "TEST-com.forgeoj.worker.selftest.SelfTestExecutionIntegrationTests.xml",
+        "tests": 8,
+        "failures": 0,
+        "errors": 0,
+        "skipped": 0
+      },
+      {
+        "name": "TEST-com.forgeoj.worker.snapshot.JudgeTaskSnapshotLoaderIntegrationTests.xml",
+        "tests": 5,
+        "failures": 0,
+        "errors": 0,
+        "skipped": 0
+      },
+      {
+        "name": "TEST-com.forgeoj.worker.task.JudgeTaskClaimIntegrationTests.xml",
+        "tests": 18,
+        "failures": 0,
+        "errors": 0,
+        "skipped": 0
+      },
+      {
+        "name": "TEST-com.forgeoj.worker.task.JudgeTaskCompletionIntegrationTests.xml",
+        "tests": 15,
+        "failures": 0,
+        "errors": 0,
+        "skipped": 0
+      },
+      {
+        "name": "TEST-com.forgeoj.worker.task.JudgeTaskHeartbeatCoordinatorTests.xml",
+        "tests": 2,
+        "failures": 0,
+        "errors": 0,
+        "skipped": 0
+      },
+      {
+        "name": "TEST-com.forgeoj.worker.task.JudgeTaskRecoveryScannerTests.xml",
+        "tests": 2,
+        "failures": 0,
+        "errors": 0,
+        "skipped": 0
+      },
+      {
+        "name": "TEST-com.forgeoj.worker.task.RetryBackoffPolicyTests.xml",
+        "tests": 2,
+        "failures": 0,
+        "errors": 0,
+        "skipped": 0
+      }
+    ]
+  }
+}

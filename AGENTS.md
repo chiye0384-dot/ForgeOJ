@@ -1,5 +1,11 @@
 # ForgeOJ agent instructions
 
+## Current M4 step4 verified checkpoint — 2026-10-09
+
+M4 step4 is VERIFIED; full M4 remains IN_PROGRESS. Read docs/M4-STEP4-NEW-CHAT-START.md, docs/M4-OPERATIONS-VALIDATION.md, docs/evidence/m4-operations/verification.json and the current section of docs/M4-NEXT-CHAT-HANDOFF.md. D-045's three choices are accepted and implemented; do not ask again. Current fixed Linux All API278/49, Worker133/23, frontend124/24 passed all gates. Same-JAR real replay verified six lifetime execution recoveries, one same-event delivery recovery, 122 HTTP checks, original assignment acceptance grading, actual role browsers/revocation, 14 SQL denials, frozen/old history preservation, commit before ACK and exact cleanup. Four active queues were empty, all seven unacked zero, and six old dead letters retained. The accepted build is target/forgeoj-linux-20261009-112325-efec5cc0; replay target/forgeoj-e2e-20261009-140259-41c05bc4 is cleaned. No old session remains active. Tab1 is retained on about:blank; never close it or Codex/ChatGPT.
+
+Complete this verified unit's authorized feature-branch delivery, inspect Git/remote for its actual commit, then stop at step4. Step5 Redis remains unstarted and requires a new continuation for that unit; do not start ES/monitoring/M5, real DB/SMTP/admin initialization, PR/main/tag/release or RESUME_READY. Earlier handoffs and historical checkpoints below are dated history, superseded by this current section and the rewritten startup document. All protection and desktop rules remain active.
+
 ## Current handoff — 2026-10-08
 
 Read `docs/M4-STEP4-NEW-CHAT-START.md` first with this file, then the documents in its reading order. This is the authoritative new-chat startup entry. M-1 through M3 are VERIFIED. M4 steps1/2/3 are completed; step3 is VERIFIED and delivered/pushed as c60b75d60bfe210944a9cefde17cade92bb8a71f on feat/m2-accounts to chiye0384-dot/ForgeOJ. Full M4 remains IN_PROGRESS. A subsequent documentation-only handoff commit may be HEAD; inspect Git rather than mistaking the implementation baseline for the delivery commit.

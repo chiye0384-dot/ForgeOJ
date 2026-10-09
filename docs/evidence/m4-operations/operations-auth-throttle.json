@@ -1,0 +1,9 @@
+{
+  "httpStatus": 429,
+  "phase": "delivery-recover",
+  "status": "RETRY_AFTER_AUTH_LIMIT_WINDOW",
+  "productionLimitsUnchanged": true,
+  "note": "Sequential baseline and phase setup logins exhausted learner 10/300sec limit. Keep task/event unchanged, wait for the existing window, and restore only identities used by each helper phase.",
+  "apiPreserved": true,
+  "at": "2026-10-09T14:08:41.9261484+08:00"
+}

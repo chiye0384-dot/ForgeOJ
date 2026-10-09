@@ -1,0 +1,48 @@
+{
+  "status": "IN_PROGRESS",
+  "publicAssignmentFix": {
+    "observed": 200,
+    "expected": 409,
+    "red": "public-assignment-red.txt",
+    "currentFormalAndSelfRoomChecks": true
+  },
+  "nativeFrontend": {
+    "allGatesPassed": true,
+    "suites": 24,
+    "log": "target/m4-operations-frontend-final-exact-query.log",
+    "tests": 124
+  },
+  "decisionsAccepted": "D-045",
+  "remaining": [
+    "Current Linux All",
+    "Same-JAR real faults and recovery",
+    "Actual role browsers and revocation",
+    "Evidence/runtime/cleanup",
+    "Documentation and authorized branch commit/push"
+  ],
+  "nativeOperations": {
+    "failures": 0,
+    "log": "target/m4-operations-public-assignment-final-focused.log",
+    "errors": 0,
+    "skipped": 0,
+    "tests": 14
+  },
+  "currentLinux": {
+    "session": 54518,
+    "status": "PASSED",
+    "console": "target/m4-operations-linux-accepted-console.log"
+  },
+  "committed": false,
+  "at": "2026-10-09T11:23:50.3931534+08:00",
+  "nativeMigrationAndSelf": {
+    "skipped": 0,
+    "log": "target/m4-operations-assignment-and-grants-focused.log",
+    "errors": 0,
+    "scope": "Only the two migration and six self-test suites; the operations suite in that earlier run had a fixture error, preserved separately",
+    "failures": 0,
+    "tests": 8
+  },
+  "pushed": false,
+  "historical": true,
+  "supersededBy": "verification.json"
+}

@@ -1,0 +1,9 @@
+{
+  "accepted": false,
+  "status": "INCOMPLETE_EVIDENCE",
+  "replay": "target/forgeoj-e2e-20261009-135518-e3557f75",
+  "deliveryRecoveryPassed": true,
+  "at": "2026-10-09T14:02:27.3289799+08:00",
+  "reason": "DeliveryRecover compose up recreated its API dependency because the helper omitted the assigned mail URL; first API logs and transient CSRF state were discarded. Use no-deps/no-recreate for Worker and independently replay.",
+  "realRecoveries": 6
+}

@@ -1,0 +1,31 @@
+{
+  "checkedAt": "2026-10-09T06:11:18.518Z",
+  "url": "http://127.0.0.1:61271",
+  "tabId": "1",
+  "taskId": "b0f86bd0-aefe-49ea-bd6d-cc674a0fd34e",
+  "receiptId": "0c5925ec-f344-4b61-b763-537a532911e1",
+  "opsRecovery": true,
+  "superQuery": true,
+  "reviewerDenied": true,
+  "ordinaryDenied": true,
+  "revokedCleared": true,
+  "oldAttemptsVisible": true,
+  "tabRetained": true,
+  "cleanupUrl": "about:blank",
+  "screenshots": [
+    "browser-ops-after.png"
+  ],
+  "snapshots": [
+    "browser-ops-before.dom.txt",
+    "browser-ops-receipt.dom.txt",
+    "browser-ops-after.dom.txt",
+    "browser-reviewer-identity.dom.txt",
+    "browser-reviewer-denied.dom.txt",
+    "browser-ordinary-identity.dom.txt",
+    "browser-ordinary-denied.dom.txt",
+    "browser-super-query.dom.txt",
+    "browser-revoked.dom.txt",
+    "browser-retained.ax.txt"
+  ],
+  "notes": "Actual UI sign-in with prepared fixture accounts; ordinary learner and admin identity independent. Browser OPS recovered the original task once, fourth real attempt succeeded, immutable old failures/receipt visible. Privileged metadata/receipt cleared after HTTP SUPER disabled OPS and UI refresh. Tab retained on about:blank; no UI credential changes."
+}

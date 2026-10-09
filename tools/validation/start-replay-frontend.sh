@@ -5,7 +5,7 @@ set -euo pipefail
 mkdir -p /workspace/ForgeOJ
 tar -C /source --exclude='.git' --exclude='target' --exclude='node_modules' \
   --exclude='dist' --exclude='.idea' --exclude='.env' --exclude='.env.*' \
-  --exclude='*.local' --exclude='NEXT-CHAT-HANDOFF.md' -cf - . \
+  --exclude='*.local' --exclude='NEXT-CHAT-HANDOFF.md' --exclude='docs/M2-NEXT-CHAT-HANDOFF.md' -cf - . \
   | tar -C /workspace/ForgeOJ -xf -
 cd /workspace/ForgeOJ/frontend
 npm ci

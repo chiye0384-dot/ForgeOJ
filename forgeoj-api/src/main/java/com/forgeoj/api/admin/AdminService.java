@@ -32,6 +32,9 @@ public class AdminService {
     <T>T contentWork(java.util.function.Function<AdminMapper.Account,T> body){
         return work(()->{var a=actor(false,false);if(!Set.of("CONTENT_REVIEWER","SUPER_ADMIN").contains(a.role()))throw error(403);return body.apply(a);});
     }
+    <T>T operationsWork(java.util.function.Function<AdminMapper.Account,T> body){
+        return work(()->{var a=actor(false,false);if(!Set.of("OPS_ADMIN","SUPER_ADMIN").contains(a.role()))throw error(403);return body.apply(a);});
+    }
     public Login login(String name,String password){
         boolean valid=name!=null&&name.matches("[A-Za-z0-9_]{3,32}")&&password!=null&&password.getBytes(java.nio.charset.StandardCharsets.UTF_8).length<=72;
         if(!valid){passwords.matches("invalid",dummy);audit.denied(401);throw error(401);}

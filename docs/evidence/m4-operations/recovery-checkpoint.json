@@ -1,0 +1,102 @@
+{
+  "currentLinux": {
+    "execSession": 18527,
+    "console": "target/m4-operations-linux-all-final-console.log",
+    "status": "FAILED",
+    "directory": "target/forgeoj-linux-20261009-103041-d0117d2c"
+  },
+  "capturedAt": "2026-10-09T10:32:23.0802243+08:00",
+  "pushed": false,
+  "nativeFocused": {
+    "errors": 0,
+    "failures": 0,
+    "tests": 20,
+    "skipped": 0,
+    "log": "target/m4-operations-column-grants-focused.log",
+    "scope": "V22 column grants, recovery/upgrade/self-test; final strict HTTP JSON contract uses current-input Linux verification"
+  },
+  "status": "IN_PROGRESS",
+  "nativeFrontend": {
+    "allVerifyGates": true,
+    "tests": 123,
+    "suites": 24,
+    "log": "target/m4-operations-frontend-final-auth-clear.log"
+  },
+  "inputs": [
+    {
+      "sha256": "30229d9eb0db1949346f3aac6e8929c81195840e6d19039c738fec837e646ed1",
+      "path": "forgeoj-api/src/main/java/com/forgeoj/api/admin/OperationsController.java"
+    },
+    {
+      "sha256": "fb2be02eae2c2e4ed5ba26fe50e62f902f2a473a672bfdad1c8181cc39f9aa47",
+      "path": "forgeoj-api/src/main/java/com/forgeoj/api/admin/OperationsMapper.java"
+    },
+    {
+      "sha256": "c0f4a591fdcd2e1b4bfb99bc1c3f6e247394992fa6bfaae2c08a5d4b8dee56ac",
+      "path": "forgeoj-api/src/main/java/com/forgeoj/api/admin/OperationsService.java"
+    },
+    {
+      "sha256": "fba84f4e14545177d9fb2e3565e35c1499e4eb1ca4899ace1c5e40eb97ce2592",
+      "path": "forgeoj-api/src/main/java/com/forgeoj/api/admin/OperationsRecoveryMapper.java"
+    },
+    {
+      "sha256": "552dd2fdce3e05851dd511731b231eb4a40dbcc17fb7c6a560cae8f2db56586e",
+      "path": "forgeoj-api/src/main/java/com/forgeoj/api/admin/OperationsRecoveryService.java"
+    },
+    {
+      "sha256": "ce98b8ab3bb25682ef2d698c0fe6ed21133e5ce21d24327b5e3411901350546c",
+      "path": "forgeoj-api/src/main/resources/db/migration/V20__bounded_operations_recovery.sql"
+    },
+    {
+      "sha256": "52b2596c877b1940f9ae9f04a7ec691919286725c83e8ff0a3c6f2d43217c211",
+      "path": "forgeoj-api/src/main/resources/db/migration/V21__operations_recovery_receipts.sql"
+    },
+    {
+      "sha256": "d546a3554aee08c3e50cc522595b4fed418f9c0cfa303a511fbe6d22623f016e",
+      "path": "forgeoj-api/src/main/resources/db/migration/V22__restrict_operations_attempt_reads.sql"
+    },
+    {
+      "sha256": "2a73ac30273de12f2936006675d711ca909ca3fa61aacf87d9c456aeeb287fb5",
+      "path": "forgeoj-api/src/test/java/com/forgeoj/api/admin/OperationsIntegrationTests.java"
+    },
+    {
+      "sha256": "8f5a085591baa770ea76a2e60badd296b90a82ec4c965fd6e96bda77a415f4ee",
+      "path": "forgeoj-api/src/test/java/com/forgeoj/api/admin/OperationsMigrationIntegrationTests.java"
+    },
+    {
+      "sha256": "fbab3c3da83320f90a603a934d6cf925a56efce813cebf2623848df4a39676a0",
+      "path": "frontend/src/views/AdminOperationsView.vue"
+    },
+    {
+      "sha256": "cc1e9d56093b5b8c1b60f0dd99dae1c0431d6c9a74098209c0d6327b16b6a319",
+      "path": "frontend/src/services/operationsApi.ts"
+    },
+    {
+      "sha256": "42335b43fc9aaee88bd33957e4f26e07fd3f24bcd5d4f707140894dd9eab11ba",
+      "path": "frontend/src/__tests__/AdminOperationsView.spec.ts"
+    },
+    {
+      "sha256": "ee858f87c3b78c50d3630c188e39cc8549a15b7c740ba768d02272f2a681361a",
+      "path": "forgeoj-judge-worker/src/test/java/com/forgeoj/worker/testinfra/ContentTestSchema.java"
+    }
+  ],
+  "previousLinux": {
+    "directory": "target/forgeoj-linux-20261009-101551-f07dfe63",
+    "exit": 143,
+    "exactBuilderStopped": "66da6911453fd428480416ba537e8d349b22bb3c10010d254561eff3d641a214",
+    "reportsPreserved": true,
+    "reason": "Table-wide attempt SELECT contradicted existing self-test SQL denial. V22 narrows to metadata columns; original assertion kept.",
+    "status": "FAILED_AND_INTERRUPTED_AFTER_DIAGNOSIS"
+  },
+  "decision": "D-045 accepted by explicit user instruction",
+  "committed": false,
+  "pending": [
+    "Final fixed-Linux All",
+    "Same-JAR Worker fault and recovery plus original deadline grade",
+    "OPS/SUPER/reviewer/ordinary browser and current revocation",
+    "Source/runtime/evidence linkage and exact cleanup",
+    "Final docs and authorized feature-branch commit/push"
+  ],
+  "historical": true,
+  "supersededBy": "target/forgeoj-linux-20261009-105622-9674c668; final verification.json required"
+}

@@ -1,5 +1,7 @@
 # ForgeOJ 上游与许可证策略
 
+2026-10-09 M4运维单元：任务/attempt/投递/恢复历史查询、有限执行及投递恢复、V20～V22、不可变凭证、页面和验收工具为ForgeOJ自有实现，池也/Apache-2.0。复用既有Spring/MyBatis/Jackson和Java/Node/PowerShell标准能力，没有新增依赖或复制外部后台模板。故障包装脚本及Java求和程序为原创一次性fixture，只在已核对的测试栈运行；保护文件未进入构建副本。
+
 2026-10-08 M4独立管理身份单元：新增管理账号/会话/事务审计/CLI、V18、独立后台页面和验收工具为ForgeOJ自有实现，池也/Apache-2.0。复用既有 Spring Security/BCrypt、MyBatis、JDBC、Nimbus 与标准库，没有新增第三方依赖或复制外部管理模板。公开密码、账号和源码只属于一次性fixture；生产没有默认管理员、普通邮件找回或Web初始化。
 
 2026-10-08 M3总门禁闭环：只新增ForgeOJ自有集成测试及只读证据/清理核查脚本，池也/Apache-2.0。Python汇总只用标准库，没有新第三方依赖或复制题目/程序；生产实现、迁移和grants未变。完整M-1至M3 VERIFIED，未正式发布，以下日期记录保留历史。

@@ -1,0 +1,99 @@
+{
+  "checkedAt": "2026-10-09T07:57:45.4737894+08:00",
+  "nativeApiQuery": {
+    "failures": 0,
+    "errors": 0,
+    "skipped": 0,
+    "tests": 3
+  },
+  "pushed": false,
+  "status": "IN_PROGRESS",
+  "committed": false,
+  "failures": [
+    "Initial absent-route red test: 2 failures kept in m4-operations-red.log",
+    "Native sandbox frontend Vite rename EPERM: tool output preserved, authorized repo-temp rerun passed"
+  ],
+  "nativeFrontend": {
+    "typeCheck": true,
+    "build": true,
+    "tests": 122,
+    "lint": true,
+    "format": true,
+    "suites": 24
+  },
+  "pending": [
+    "User answers to three product choices in design section3",
+    "Execution recovery and delivery recovery implementation",
+    "Complete retry authorization gate and real MySQL concurrency/rollback/budget/eligibility tests",
+    "Fixed Linux current-input verification",
+    "Same-artifact real Worker and multi-role browser/fault acceptance",
+    "Final source/JAR/browser/evidence linkage and exact owned cleanup",
+    "Final documents and authorized feature-branch commit/push"
+  ],
+  "scope": "M4 step4 query subset; execution and delivery recovery NOT implemented",
+  "inputs": [
+    {
+      "sha256": "fda55f944e25b20e8629a0d06d2b0c5b41d11797b705d61a09ef3653e2110463",
+      "path": "forgeoj-api/src/main/java/com/forgeoj/api/admin/AdminService.java"
+    },
+    {
+      "sha256": "2024f7a85b6b14eec46bfa3413e0c253132b6e896d12d42d892e6e1eae6600e2",
+      "path": "forgeoj-api/src/main/java/com/forgeoj/api/admin/OperationsController.java"
+    },
+    {
+      "sha256": "882201c68e0d54b230471a98c3bbb708a42b727aaf2c65ddbe60b1f1e1f493f9",
+      "path": "forgeoj-api/src/main/java/com/forgeoj/api/admin/OperationsMapper.java"
+    },
+    {
+      "sha256": "bad8b48ae19a05d1b4ecab9350e33bb3bc25d16add1ae915ba657add6ccf79b0",
+      "path": "forgeoj-api/src/main/java/com/forgeoj/api/admin/OperationsService.java"
+    },
+    {
+      "sha256": "ce98b8ab3bb25682ef2d698c0fe6ed21133e5ce21d24327b5e3411901350546c",
+      "path": "forgeoj-api/src/main/resources/db/migration/V20__bounded_operations_recovery.sql"
+    },
+    {
+      "sha256": "6b88563a8b8c933f77afa90432afb62a8549bbe620877ee9e544800933f72e48",
+      "path": "forgeoj-api/src/test/java/com/forgeoj/api/admin/OperationsIntegrationTests.java"
+    },
+    {
+      "sha256": "ee632d5142c2c4f0cd6543dbb72e27ca5077a5f32b966b3e6534252195082750",
+      "path": "frontend/src/services/operationsApi.ts"
+    },
+    {
+      "sha256": "27a62c84c15897206f6e52a57bdd5920034523a9da528fe649c6c7154edf1575",
+      "path": "frontend/src/views/AdminOperationsView.vue"
+    },
+    {
+      "sha256": "8948e6aae86cbc04399fb3ccffd1fa520a9d170c448a00b1d725f7e129ed1df6",
+      "path": "frontend/src/views/AdminView.vue"
+    },
+    {
+      "sha256": "dacec9ce3ed8044669ec035994166285aa7292d11d8e1769ce7fba3c1e362489",
+      "path": "frontend/src/router/index.ts"
+    },
+    {
+      "sha256": "2f80e6c24423d34880f06bc171779c3ca583848dfaa191e52a150de832b1a024",
+      "path": "frontend/src/__tests__/AdminOperationsView.spec.ts"
+    }
+  ],
+  "logs": [
+    {
+      "sha256": "fb7259452106704207c488ca5f997b4c9b0982c77364b302203b650d1f108b70",
+      "path": "target/m4-operations-red.log"
+    },
+    {
+      "sha256": "83c4359dabb87ce8bc049428f8155bac295d71ab691295eebeb633354b9e2972",
+      "path": "target/m4-operations-read-focused.log"
+    },
+    {
+      "sha256": "5eaede4d1b04ac660954fea8517c084172ebc8f1dad649188977930f29ae5e25",
+      "path": "target/m4-operations-query-final-focused.log"
+    },
+    {
+      "sha256": "bb6b3c4caa7efb80d4936d5b94a7e7c6b02edf17f6a65e05716b2cb6669767b0",
+      "path": "target/m4-operations-frontend-query.log"
+    }
+  ],
+  "baseline": "02b18fed1ba1c8da9da128f12acba0617c7efcba"
+}

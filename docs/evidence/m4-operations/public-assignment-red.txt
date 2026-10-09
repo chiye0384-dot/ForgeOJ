@@ -1,0 +1,11 @@
+-------------------------------------------------------------------------------
+Test set: com.forgeoj.api.admin.OperationsIntegrationTests
+-------------------------------------------------------------------------------
+Tests run: 1, Failures: 1, Errors: 0, Skipped: 0, Time elapsed: 35.06 s <<< FAILURE! -- in com.forgeoj.api.admin.OperationsIntegrationTests
+com.forgeoj.api.admin.OperationsIntegrationTests.publicAssignmentRecoveryStillRequiresItsCurrentRoomAndMemberForFormalAndSelf -- Time elapsed: 1.959 s <<< FAILURE!
+org.opentest4j.AssertionFailedError:
+[HTTP body {"id":"7c9a10b9-0930-4156-93e5-5b16b0b95cc4","scope":"EXECUTION","kind":"FORMAL","taskId":"0e978406-34db-4edc-a948-5d836aa52107","targetId":"0e978406-34db-4edc-a948-5d836aa52107","eventId":"c468ad23-8d17-4032-a68e-013e7a4dcd90","version":1,"createdAt":"2026-10-09 03:16:57.819197"}]
+expected: 409
+ but was: 200
+	at com.forgeoj.api.admin.OperationsIntegrationTests.code(OperationsIntegrationTests.java:277)
+	at com.forgeoj.api.admin.OperationsIntegrationTests.publicAssignmentRecoveryStillRequiresItsCurrentRoomAndMemberForFormalAndSelf(OperationsIntegrationTests.java:223)

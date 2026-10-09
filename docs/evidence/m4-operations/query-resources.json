@@ -1,0 +1,7 @@
+{
+  "scope": "Read-only post native query tests; not step4 acceptance cleanup",
+  "testcontainers": 0,
+  "checkedAt": "2026-10-09T07:58:09.9869574+08:00",
+  "managedSandboxes": 0,
+  "builders": 0
+}

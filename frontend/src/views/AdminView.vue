@@ -269,6 +269,14 @@ onUnmounted(() => {
       <nav
         v-if="
           !session.admin.mustChangePassword &&
+          ['OPS_ADMIN', 'SUPER_ADMIN'].includes(session.admin.role)
+        "
+      >
+        <RouterLink to="/admin/operations">任务运维</RouterLink>
+      </nav>
+      <nav
+        v-if="
+          !session.admin.mustChangePassword &&
           ['CONTENT_REVIEWER', 'SUPER_ADMIN'].includes(session.admin.role)
         "
       >

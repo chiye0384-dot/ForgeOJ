@@ -1,0 +1,16 @@
+[
+  {
+    "originalSha256": "915b50a09645d7b676d9ffc512044dfd3874ab357772d652965f399463d39c05",
+    "presentationSha256": "a629930c0124ec6b39fa5afeb90f75305908a7afa24dca8acaa26550654c4f0a",
+    "presentation": "Trailing whitespace normalized only",
+    "originalGzip": "public-assignment-red.txt.gz",
+    "name": "public-assignment-red.txt"
+  },
+  {
+    "originalSha256": "c890308ff9e33fb89024816fc69247155afee58e793ce4c484efbb5a3d256b18",
+    "presentationSha256": "96996f216f4494c14aef52ca9bb433c3e2cbe54aad6ac1a9c1d2dacceedf46c0",
+    "presentation": "Trailing whitespace normalized only",
+    "originalGzip": "public-assignment-fixture-error.txt.gz",
+    "name": "public-assignment-fixture-error.txt"
+  }
+]

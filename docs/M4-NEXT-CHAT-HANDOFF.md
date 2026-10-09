@@ -1,4 +1,22 @@
-# ForgeOJ：M4 第3步已完成
+# ForgeOJ：M4 第4步已完成
+
+## 当前交接：第4步 VERIFIED，完整M4 IN_PROGRESS（2026-10-09）
+
+实际仓库 `D:\Java项目\ForgeOJ`，分支 `feat/m2-accounts`，远端 `https://github.com/chiye0384-dot/ForgeOJ.git`。第4步实施基线 `02b18fed1ba1c8da9da128f12acba0617c7efcba`，最终交付包含当前代码、验收与本文；核对 `git log -1` 和远端同名分支取得实际交付提交，不把实施基线误作交付SHA。用户已授权本单元功能分支提交/推送，没有PR/main/tag/release/部署授权。
+
+先读[统一接手说明](M4-STEP4-NEW-CHAT-START.md)、[本单元验收](M4-OPERATIONS-VALIDATION.md)、[当前机器证据](evidence/m4-operations/verification.json)、[设计](M4-OPERATIONS-DESIGN.md)、[七步计划](M4-IMPLEMENTATION-PLAN.md)。D-045三项推荐已由用户确认，不能再次问选项。M-1～M3和M4第2/3/4步VERIFIED；完整M4仍IN_PROGRESS。
+
+本单元已完成白名单查询、原任务终身人工追加一次、同事件有限投递恢复、不可变凭证/理由审计和最小页面，V20～V22追加迁移。固定Linux All API278/49、Worker133/23、前端124/24全过；同JAR6次真实执行恢复、1次投递恢复、122项HTTP、截止后原接受时间判成绩、四身份浏览器和撤权清空、14 SQL拒绝、冻结/旧尝试不变、提交后ACK、运行输入一致及精确清理通过。4活动队列空、7队列unacked为0，保留6旧死信；没有新增死信清理接口。
+
+唯一接受构建 `target/forgeoj-linux-20261009-112325-efec5cc0`；重放 `target/forgeoj-e2e-20261009-140259-41c05bc4` 已删除全部拥有者资源。旧exec全部结束，旧URL失效，不继续旧session或以旧失败构件启动。首次日志不完整重放和429等待记录为历史，最终证据完整。浏览器tab1保留在about:blank并markDeliverable，永远不要关闭标签或Codex/ChatGPT；新turn重新标记保留。
+
+保护文件 `docs/M2-NEXT-CHAT-HANDOFF.md` 未跟踪SHA256 `e08acd3d26a8cd27aca394bdac91828e13b9455a86f62133c5bafc038b18c054`、`.smtp.qq.local` 忽略SHA256 `6df348a6404786791eb57c0dce9c9fb8968f7f0737de304f17d52c3900a03907`。仅Get-FileHash，不读内容/复制/暂存/重置/删除。新接手核对Git和保护摘要，不执行真实数据库/SMTP或真实管理员初始化。
+
+本轮到第4步停止。后续用户明确继续的下一单元才是第5步Redis与降级：先按七步计划阅读并细化缓存/会话/限流/失效与回退设计，再进入该单元。Redis、ES、监控、M5/V1.1、Release/RESUME_READY均未开始或未完成，不能把本单元结论推广成完整M4通过。下方第3步交接保留历史；其“下一步第4步”“先等继续”不再描述当前待完成工作。
+
+---
+
+以下第3步记录为已验收历史。
 
 新对话统一从 [M4 第4步启动说明](M4-STEP4-NEW-CHAT-START.md) 开始，包含完整状态、必读顺序、已确认规则、下一单元步骤及验收/保护要求。第3步已提交并推送：`c60b75d60bfe210944a9cefde17cade92bb8a71f`，分支 `feat/m2-accounts`，远端 `chiye0384-dot/ForgeOJ`。2026-10-08 本次交接已核对本地/远端一致，后续可有纯文档交接提交。新对话首次只读核对并报告准备情况，等用户“继续”后实施第4步；本次交接不启动业务实现。
 

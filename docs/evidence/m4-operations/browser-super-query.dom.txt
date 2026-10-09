@@ -1,0 +1,200 @@
+- banner:
+  - generic: F
+  - heading "ForgeOJ" [level=1]
+  - paragraph: Java 21 在线练习与判题
+  - navigation "主导航":
+    - link "题库":
+      - /url: /problems
+    - link "学习记录":
+      - /url: /learning
+    - link "班级":
+      - /url: /classrooms
+    - link "我的题目":
+      - /url: /authoring
+    - link "做题":
+      - /url: /
+    - link "账号":
+      - /url: /account
+    - link "管理后台":
+      - /url: /admin/login
+- main:
+  - heading "任务运维" [level=2]
+  - navigation:
+    - link "管理首页":
+      - /url: /admin
+    - text: ·
+    - link "后台登录":
+      - /url: /admin/login
+    - button "刷新"
+  - paragraph: 当前账号：browser_super。查询仅展示执行和投递元数据。
+  - text: 用途
+  - combobox "用途":
+    - option "全部"
+    - option "正式判题" [selected]
+    - option "双程序验证"
+    - option "参考输出预览"
+    - option "独立自测"
+  - text: 任务ID
+  - textbox "任务ID": 9b55d256-cc73-474e-9248-375f9ef7c427
+  - text: 状态
+  - combobox "状态":
+    - option "全部异常" [selected]
+    - option "QUEUED"
+    - option "RUNNING"
+    - option "RETRYING"
+    - option "WAITING_RETRY"
+    - option "SYSTEM_ERROR"
+    - option "DEAD_LETTER"
+  - button "查询"
+  - paragraph: 异常任务 1 条 · 第 1 页
+  - table:
+    - rowgroup:
+      - row "用途 / 任务 状态 执行次数 平台失败码 创建时间（数据库时间） 详情":
+        - columnheader "用途 / 任务"
+        - columnheader "状态"
+        - columnheader "执行次数"
+        - columnheader "平台失败码"
+        - columnheader "创建时间（数据库时间）"
+        - columnheader "详情"
+    - rowgroup:
+      - row "正式判题 9b55d256-cc73-474e-9248-375f9ef7c427 FINISHED 版本 9 4 / 4 PLATFORM_FAILURE 2026-10-09 06:06:12.595774 查看元数据":
+        - cell "正式判题 9b55d256-cc73-474e-9248-375f9ef7c427":
+          - text: 正式判题
+          - text: 9b55d256-cc73-474e-9248-375f9ef7c427
+        - cell "FINISHED 版本 9":
+          - text: FINISHED
+          - text: 版本 9
+        - cell "4 / 4"
+        - cell "PLATFORM_FAILURE"
+        - cell "2026-10-09 06:06:12.595774"
+        - cell "查看元数据":
+          - button "查看元数据"
+  - navigation:
+    - button "上一页" [disabled]
+    - button "下一页" [disabled]
+  - article:
+    - heading "正式判题 · 9b55d256-cc73-474e-9248-375f9ef7c427" [level=3]
+    - paragraph: 状态 FINISHED · 版本 9 · 执行 4/4 · 所属用户ID 1
+    - paragraph: 正式提交 bcd1506b-9852-49fc-9691-82e4f1196eaf · 冻结快照 —
+    - paragraph: 开始 2026-10-09 06:06:12.815160 · 完成 2026-10-09 06:06:47.767021 · 下次尝试 — · 租约已过期 否
+    - paragraph: 人工执行恢复：已使用（每任务最多一次）。资格由服务器复核。
+    - text: 恢复理由
+    - textbox "恢复理由"
+    - checkbox "已核对任务与失败原因，确认恢复。原代码、测试和提交时间保留。"
+    - text: 已核对任务与失败原因，确认恢复。原代码、测试和提交时间保留。
+    - heading "执行尝试（4）" [level=4]
+    - table:
+      - rowgroup:
+        - row "序号 / ID 状态 / 失败码 开始 / 完成 心跳 / 租约截止":
+          - columnheader "序号 / ID"
+          - columnheader "状态 / 失败码"
+          - columnheader "开始 / 完成"
+          - columnheader "心跳 / 租约截止"
+      - rowgroup:
+        - row "4 · e9e49db9-7202-4f1f-82c7-ff57caf5518c SUCCEEDED · — 2026-10-09 06:06:44.405139 2026-10-09 06:06:47.768298 2026-10-09 06:06:47.768298 2026-10-09 06:06:59.418197":
+          - cell "4 · e9e49db9-7202-4f1f-82c7-ff57caf5518c"
+          - cell "SUCCEEDED · —"
+          - cell "2026-10-09 06:06:44.405139 2026-10-09 06:06:47.768298":
+            - text: 2026-10-09 06:06:44.405139
+            - text: 2026-10-09 06:06:47.768298
+          - cell "2026-10-09 06:06:47.768298 2026-10-09 06:06:59.418197":
+            - text: 2026-10-09 06:06:47.768298
+            - text: 2026-10-09 06:06:59.418197
+        - row "3 · 269b0dfb-ee6c-4ca5-b401-c7b3357636b3 DEAD_LETTERED · PLATFORM_FAILURE 2026-10-09 06:06:15.098069 2026-10-09 06:06:15.118733 2026-10-09 06:06:15.118733 2026-10-09 06:06:27.096284":
+          - cell "3 · 269b0dfb-ee6c-4ca5-b401-c7b3357636b3"
+          - cell "DEAD_LETTERED · PLATFORM_FAILURE"
+          - cell "2026-10-09 06:06:15.098069 2026-10-09 06:06:15.118733":
+            - text: 2026-10-09 06:06:15.098069
+            - text: 2026-10-09 06:06:15.118733
+          - cell "2026-10-09 06:06:15.118733 2026-10-09 06:06:27.096284":
+            - text: 2026-10-09 06:06:15.118733
+            - text: 2026-10-09 06:06:27.096284
+        - row "2 · 58dd2c90-6c80-4569-9a9c-60c12a3150e8 RETRYABLE_FAILURE · PLATFORM_FAILURE 2026-10-09 06:06:14.043478 2026-10-09 06:06:14.071526 2026-10-09 06:06:14.071526 2026-10-09 06:06:26.041819":
+          - cell "2 · 58dd2c90-6c80-4569-9a9c-60c12a3150e8"
+          - cell "RETRYABLE_FAILURE · PLATFORM_FAILURE"
+          - cell "2026-10-09 06:06:14.043478 2026-10-09 06:06:14.071526":
+            - text: 2026-10-09 06:06:14.043478
+            - text: 2026-10-09 06:06:14.071526
+          - cell "2026-10-09 06:06:14.071526 2026-10-09 06:06:26.041819":
+            - text: 2026-10-09 06:06:14.071526
+            - text: 2026-10-09 06:06:26.041819
+        - row "1 · 3e2d9bb8-92d4-4e66-8ff9-3408e90747c4 RETRYABLE_FAILURE · PLATFORM_FAILURE 2026-10-09 06:06:12.818287 2026-10-09 06:06:12.841129 2026-10-09 06:06:12.841129 2026-10-09 06:06:24.815160":
+          - cell "1 · 3e2d9bb8-92d4-4e66-8ff9-3408e90747c4"
+          - cell "RETRYABLE_FAILURE · PLATFORM_FAILURE"
+          - cell "2026-10-09 06:06:12.818287 2026-10-09 06:06:12.841129":
+            - text: 2026-10-09 06:06:12.818287
+            - text: 2026-10-09 06:06:12.841129
+          - cell "2026-10-09 06:06:12.841129 2026-10-09 06:06:24.815160":
+            - text: 2026-10-09 06:06:12.841129
+            - text: 2026-10-09 06:06:24.815160
+    - navigation:
+      - button "尝试上一页" [disabled]
+      - button "尝试下一页" [disabled]
+    - heading "投递与死信事件（5）" [level=4]
+    - table:
+      - rowgroup:
+        - row "类型 / ID 序号 / 投递次数 失败码 失败 / 发布 恢复":
+          - columnheader "类型 / ID"
+          - columnheader "序号 / 投递次数"
+          - columnheader "失败码"
+          - columnheader "失败 / 发布"
+          - columnheader "恢复"
+      - rowgroup:
+        - row "JUDGE_TASK_QUEUED cab957e0-0d83-4fb8-b434-73b53b291820 4 / 1 — — 2026-10-09 06:06:44.401064":
+          - cell "JUDGE_TASK_QUEUED cab957e0-0d83-4fb8-b434-73b53b291820":
+            - text: JUDGE_TASK_QUEUED
+            - text: cab957e0-0d83-4fb8-b434-73b53b291820
+          - cell "4 / 1"
+          - cell "—"
+          - cell "— 2026-10-09 06:06:44.401064":
+            - text: —
+            - text: 2026-10-09 06:06:44.401064
+          - cell
+        - row "JUDGE_TASK_DEAD_LETTERED bec618c3-a3d4-4a25-a004-810cc9941d8d 3 / 1 — — 2026-10-09 06:06:15.276279":
+          - cell "JUDGE_TASK_DEAD_LETTERED bec618c3-a3d4-4a25-a004-810cc9941d8d":
+            - text: JUDGE_TASK_DEAD_LETTERED
+            - text: bec618c3-a3d4-4a25-a004-810cc9941d8d
+          - cell "3 / 1"
+          - cell "—"
+          - cell "— 2026-10-09 06:06:15.276279":
+            - text: —
+            - text: 2026-10-09 06:06:15.276279
+          - cell
+        - row "JUDGE_TASK_QUEUED 991fc8ef-6f52-461c-9b6b-a1ef2b04be9c 2 / 1 — — 2026-10-09 06:06:15.260668":
+          - cell "JUDGE_TASK_QUEUED 991fc8ef-6f52-461c-9b6b-a1ef2b04be9c":
+            - text: JUDGE_TASK_QUEUED
+            - text: 991fc8ef-6f52-461c-9b6b-a1ef2b04be9c
+          - cell "2 / 1"
+          - cell "—"
+          - cell "— 2026-10-09 06:06:15.260668":
+            - text: —
+            - text: 2026-10-09 06:06:15.260668
+          - cell
+        - row "JUDGE_TASK_QUEUED 3b5a163c-39b6-48b3-8dd1-c3514593e6c8 1 / 1 — — 2026-10-09 06:06:14.036328":
+          - cell "JUDGE_TASK_QUEUED 3b5a163c-39b6-48b3-8dd1-c3514593e6c8":
+            - text: JUDGE_TASK_QUEUED
+            - text: 3b5a163c-39b6-48b3-8dd1-c3514593e6c8
+          - cell "1 / 1"
+          - cell "—"
+          - cell "— 2026-10-09 06:06:14.036328":
+            - text: —
+            - text: 2026-10-09 06:06:14.036328
+          - cell
+        - row "JUDGE_TASK_QUEUED 277dd652-722e-44e1-98a3-656851b9c4ec 0 / 1 — — 2026-10-09 06:06:12.807453":
+          - cell "JUDGE_TASK_QUEUED 277dd652-722e-44e1-98a3-656851b9c4ec":
+            - text: JUDGE_TASK_QUEUED
+            - text: 277dd652-722e-44e1-98a3-656851b9c4ec
+          - cell "0 / 1"
+          - cell "—"
+          - cell "— 2026-10-09 06:06:12.807453":
+            - text: —
+            - text: 2026-10-09 06:06:12.807453
+          - cell
+    - navigation:
+      - button "事件上一页" [disabled]
+      - button "事件下一页" [disabled]
+    - heading "人工恢复记录（1）" [level=4]
+    - paragraph: 凭证 2c9410d4-ce47-4234-bee5-6800da71dcd8 · EXECUTION · 原状态 DEAD_LETTER / 版本 6 · 原次数 3/3 · 原失败 PLATFORM_FAILURE / 2026-10-09 06:06:15.117449 · 恢复时间 2026-10-09 06:06:44.214011 · 事件 cab957e0-0d83-4fb8-b434-73b53b291820
+    - navigation:
+      - button "恢复记录上一页" [disabled]
+      - button "恢复记录下一页" [disabled]

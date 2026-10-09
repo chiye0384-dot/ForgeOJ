@@ -1,5 +1,7 @@
 # ForgeOJ 版本路线图
 
+2026-10-09：M4第4步运维与有限人工恢复 **[VERIFIED](M4-OPERATIONS-VALIDATION.md)**，D-045三项规则已确认并落实。固定Linux API278/Worker133/前端124全部通过，同JAR真实6次执行恢复、1次投递恢复、122项HTTP、多身份浏览器/撤权、不可变事实/审计、提交后ACK和零资源残留完整关联。本轮完成第4步交付后停止，第5～7步尚未开始，完整M4仍IN_PROGRESS。下方带日期段落描述历史，以本段及当前M4章节为准。
+
 2026-10-08：M4第3步公共题审核治理 **[VERIFIED](M4-PUBLIC-REVIEW-VALIDATION.md)**。D-044原作者修订、冻结审核/重验/发布/反馈/作废及M3历史关联已通过Linux263+133/118和实际Worker/浏览器验收。完整M4仍IN_PROGRESS，第4步运维及后续总门禁尚未开始。本轮到第3步为止；下方带日期段落为历史。
 
 2026-10-08：用户接续M4第3步公共题审核治理，当前 **IN_PROGRESS**，见[设计](M4-PUBLIC-REVIEW-DESIGN.md)与[当前交接](M4-NEXT-CHAT-HANDOFF.md)。冻结审核/反馈/维护API和最小页面已编写，正在测试；公开修订权限已确认D-044，原作者复制/重新验证送审已实现，真实构件/Worker/浏览器及固定Linux全量门禁尚未完成，不能标VERIFIED或声称本单元已推送。第4步及Redis/ES/监控暂不开始。以下M4第2步及更早段落为历史，其各自验收仍有效。
@@ -22,7 +24,7 @@
 
 2026-10-04 不可变送审/撤回单元已 VERIFIED：V12 精确绑定本人当前双 PASSED 的不可变快照，唯一待审、owner/CAS/幂等、待审禁改、撤回后修改与历史保留完成。全新固定 Linux API169 + Worker120 = **289**、前端 **56** 及全部检查通过；相同构件真实页面两轮送审/撤回/归档、HTTP 六类待审写409、旧撤回不影响新待审、冻结题面不变、正常与轮询回退 AC、六空队列、30 项实际数据库权限拒绝及精确清理通过。见 [验收](M2-CONTENT-REVIEW-VALIDATION.md)。本轮未重复 Worker SIGKILL，117 个运行文件逐字节等同上轮真实故障验收；截图接口不可用，保存真实 DOM 观察，不提供合成截图。完整内容与 M2 仍 IN_PROGRESS；下一步为输出生成预览、独立自测，外部 SMTP 仍需服务商和授权收件箱配置；受控审核身份/批准发布保持 M4。
 
-> 当前阶段：M-1、M0、M1、M2、M3均VERIFIED；M4为IN_PROGRESS，第一步设计及第2/3步管理身份、公共审核治理单元已完成，下一步第4步运维；M5/V1.1仍PLANNED。下方带日期阶段段落保留历史。
+> 当前阶段：M-1、M0、M1、M2、M3均VERIFIED；M4为IN_PROGRESS，第一步设计及第2/3/4步管理身份、公共审核治理、运维恢复单元已完成，后续第5步Redis尚未开始；M5/V1.1仍PLANNED。下方带日期阶段段落保留历史。
 > 路线图描述先后顺序，不代表完成状态。
 
 ## 1. 状态规则
@@ -240,7 +242,7 @@ M0 的登录只用于打通受保护提交链路，可使用预置账号和最�
 
 ## 8. M4：管理后台、搜索与降级
 
-状态 `IN_PROGRESS`（2026-10-08），第1步设计、第2步独立管理员身份和第3步公共题审核治理已完成，D-043/D-044已确认；[身份验收](M4-ADMIN-IDENTITY-VALIDATION.md)与[公共审核验收](M4-PUBLIC-REVIEW-VALIDATION.md)均 VERIFIED。按 [7步计划](M4-IMPLEMENTATION-PLAN.md)逐单元交付；下一实现单元是第4步运维查询/有限人工重试，尚未开始，接手按[启动说明](M4-STEP4-NEW-CHAT-START.md)。运维、Redis/ES和监控等各自验收后才能汇总下列五门禁，不将第2/3步验收当完整M4通过。
+状态 `IN_PROGRESS`（2026-10-09），第1步设计、第2步管理身份、第3步公共题审核和第4步运维恢复已完成，D-043/D-044/D-045已确认；[身份验收](M4-ADMIN-IDENTITY-VALIDATION.md)、[公共审核验收](M4-PUBLIC-REVIEW-VALIDATION.md)、[运维验收](M4-OPERATIONS-VALIDATION.md)子范围均VERIFIED。按[7步计划](M4-IMPLEMENTATION-PLAN.md)逐单元交付；本轮停止于第4步，后续第5步Redis尚未开始，接手按[启动说明](M4-STEP4-NEW-CHAT-START.md)先核对现状。Redis/ES/监控及完整M4五门禁仍待后续，不把三个后台子单元验收当完整M4通过。
 
 目标：补足真实系统所需的治理和运维能力。
 

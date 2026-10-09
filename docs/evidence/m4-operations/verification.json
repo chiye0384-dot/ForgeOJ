@@ -1,0 +1,74 @@
+{
+  "verifiedAt": "2026-10-09T06:31:16.521Z",
+  "allPassed": true,
+  "scope": "M4 step4 operations and bounded recovery only; full M4 IN_PROGRESS",
+  "backend": "target\\forgeoj-linux-20261009-112325-efec5cc0",
+  "frontend": "target\\forgeoj-linux-20261009-112325-efec5cc0",
+  "replay": "target\\forgeoj-e2e-20261009-140259-41c05bc4",
+  "api": {
+    "tests": 278,
+    "suites": 49
+  },
+  "worker": {
+    "tests": 133,
+    "suites": 23
+  },
+  "frontendTests": 124,
+  "frontendSuites": 24,
+  "apiSha256": "0c4ffb2cff2f405c078dd5fc78eed4205a2dfdc1f8a213f750e66da0beb06019",
+  "workerSha256": "f86b269316fb8b779050b6d2dd003b6aceb2907c22522ca48ea358a6cb194942",
+  "httpChecks": 122,
+  "realExecutionRecoveries": 6,
+  "deliveryRecoveries": 1,
+  "originalAcceptanceGradeVerified": true,
+  "commitBeforeAck": true,
+  "apiPreservedDuringDelivery": true,
+  "queueCount": 7,
+  "emptyExecutionQueues": 4,
+  "retainedDeadLetters": 6,
+  "sqlDenials": 14,
+  "browser": {
+    "checkedAt": "2026-10-09T06:11:18.518Z",
+    "url": "http://127.0.0.1:61271",
+    "tabId": "1",
+    "taskId": "b0f86bd0-aefe-49ea-bd6d-cc674a0fd34e",
+    "receiptId": "0c5925ec-f344-4b61-b763-537a532911e1",
+    "opsRecovery": true,
+    "superQuery": true,
+    "reviewerDenied": true,
+    "ordinaryDenied": true,
+    "revokedCleared": true,
+    "oldAttemptsVisible": true,
+    "tabRetained": true,
+    "cleanupUrl": "about:blank",
+    "screenshots": [
+      "browser-ops-after.png"
+    ],
+    "snapshots": [
+      "browser-ops-before.dom.txt",
+      "browser-ops-receipt.dom.txt",
+      "browser-ops-after.dom.txt",
+      "browser-reviewer-identity.dom.txt",
+      "browser-reviewer-denied.dom.txt",
+      "browser-ordinary-identity.dom.txt",
+      "browser-ordinary-denied.dom.txt",
+      "browser-super-query.dom.txt",
+      "browser-revoked.dom.txt",
+      "browser-retained.ax.txt"
+    ],
+    "notes": "Actual UI sign-in with prepared fixture accounts; ordinary learner and admin identity independent. Browser OPS recovered the original task once, fourth real attempt succeeded, immutable old failures/receipt visible. Privileged metadata/receipt cleared after HTTP SUPER disabled OPS and UI refresh. Tab retained on about:blank; no UI credential changes."
+  },
+  "cleanup": {
+    "ownedContainers": 0,
+    "managedSandboxes": 0,
+    "builders": 0,
+    "ownedVolumes": 0,
+    "ownedNetworks": 0,
+    "testcontainers": 0,
+    "checkedAt": "2026-10-09T14:13:15.7309478+08:00",
+    "ownedImages": 0
+  },
+  "verifierSha256": "f4871f4c7673b8deb801535d1ae8bdf94e1a44979eccd688ef97adda202129ba",
+  "backendLogSha256": "ae2819dfa8122b62d0973b37dcf9db768ae0daf8346888ea309525fb886c6a5b",
+  "frontendLogSha256": "a0fc00d90343b2ebf536d759ee69f822e4223b22563e5eff755b6943a17f7971"
+}

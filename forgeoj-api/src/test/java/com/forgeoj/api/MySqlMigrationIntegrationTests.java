@@ -171,11 +171,18 @@ class MySqlMigrationIntegrationTests {
                                 api.queryForObject(
                                         "SELECT COUNT(*) FROM problem_test_case", Integer.class))
                 .isInstanceOf(DataAccessException.class);
-        assertThatThrownBy(
-                        () ->
-                                api.queryForObject(
-                                        "SELECT COUNT(*) FROM judge_task_attempt", Integer.class))
-                .isInstanceOf(DataAccessException.class);
+        // V22 deliberately permits audited operations metadata and its pagination count.
+        // Preserve the original private-attempt boundary at the column level.
+        assertThat(api.queryForObject("SELECT COUNT(*) FROM judge_task_attempt", Integer.class))
+                .isZero();
+        assertThat(api.queryForList(
+                        "SELECT id,judge_task_id,attempt_no,attempt_status,failure_code FROM judge_task_attempt LIMIT 0"))
+                .isEmpty();
+        for (String privateProjection : List.of("*", "lease_token", "worker_id", "failure_message")) {
+            assertThatThrownBy(() -> api.queryForList(
+                            "SELECT " + privateProjection + " FROM judge_task_attempt LIMIT 0"))
+                    .isInstanceOf(DataAccessException.class);
+        }
         assertThatThrownBy(() -> api.update("UPDATE user_account SET username = 'tampered'"))
                 .isInstanceOf(DataAccessException.class);
         assertThatThrownBy(() -> api.update("DELETE FROM user_account"))

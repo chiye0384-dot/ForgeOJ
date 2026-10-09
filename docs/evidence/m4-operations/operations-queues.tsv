@@ -1,0 +1,9 @@
+Timeout: 60.0 seconds ...
+Listing queues for vhost /forgeoj ...
+forgeoj.content.validation.dead.v1	2	0
+forgeoj.judge.retry.v1	0	0
+forgeoj.judge.self-test.dead.v1	1	0
+forgeoj.judge.self-test.v1	0	0
+forgeoj.judge.submission.dead.v1	3	0
+forgeoj.judge.submission.v1	0	0
+forgeoj.content.validation.v1	0	0

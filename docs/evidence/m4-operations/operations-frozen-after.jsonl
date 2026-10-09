@@ -1,0 +1,17 @@
+{"kind": "FORMAL", "taskId": "ecf06230-92ed-4bf2-8a24-56e52a58d050", "binding": "3591129f-a315-424c-9606-7e870a6aeec2", "fingerprint": "6f9960b1d61e052eafd135ba7d88f0e770b2f0d64f19f0b0182a569b7e3bf259"}
+{"kind": "FORMAL", "taskId": "074962a2-793e-4205-9d80-96f5c0bf2bd8", "binding": "3a748620-97f3-45b2-808b-58296428755e", "fingerprint": "d851d09dc6b66e0710664d0be464a5449df7dcd1937675f9193477b2d8d04cd3"}
+{"kind": "FORMAL", "taskId": "7ff0a25b-9638-4b71-a372-9e0422e3cd0a", "binding": "4ef2cf13-b314-489e-8018-d679c700da1b", "fingerprint": "67d2d45b26311af332a20eb7bc399a9af5c64a63f6d21298560d4e331389f3c8"}
+{"kind": "FORMAL", "taskId": "336305f1-62fc-4964-b569-5cb991c9f6dc", "binding": "70e22f65-45db-4c0b-9a5f-fce8afe448a3", "fingerprint": "ef7afbb22702da1118c7b823f17c0f4411432f7fb6dff45227c1759c1fa32a88"}
+{"kind": "FORMAL", "taskId": "b0f86bd0-aefe-49ea-bd6d-cc674a0fd34e", "binding": "75b1bbfe-ca70-438b-999f-5d8eaa4068c9", "fingerprint": "431c434eb41546f955e06b46fc318f78883d798303723ab91103eec88dd57128"}
+{"kind": "FORMAL", "taskId": "c67103b0-624f-4c09-b603-a16b29df6747", "binding": "765ffd68-dd6a-4d4d-bb82-f0bc0247e9a6", "fingerprint": "cb6b12f1aec8983b261a6e2fd80795fc7892dc1529f9824063adf30da21e5821"}
+{"kind": "FORMAL", "taskId": "88be817d-aff5-4d89-b664-499b7dd7f15a", "binding": "8870259c-2603-4e4f-ac4e-d41e0ea9c2c4", "fingerprint": "30be081df98608c2c9526972f7736232035a367ce1de7e7d7536417fac558443"}
+{"kind": "FORMAL", "taskId": "468b6e7c-b4fd-4a35-ad71-060c5c5f217f", "binding": "97bfbdb6-2e4f-4697-9438-cecd9a376a03", "fingerprint": "ac8816f708ed221a1f632b92fee588ab1001fb633b4024ffe0cec8b63eea8fb1"}
+{"kind": "FORMAL", "taskId": "12755581-8e62-4fb8-a381-20d5452daa5e", "binding": "b66c0345-3f68-4b27-95ac-172af644d0c7", "fingerprint": "0aa30c0e8503db9cf2b2fe8a1a9773bd72e8cb3013074c6a981a6fc8119b4909"}
+{"kind": "FORMAL", "taskId": "9b55d256-cc73-474e-9248-375f9ef7c427", "binding": "bcd1506b-9852-49fc-9691-82e4f1196eaf", "fingerprint": "5af2a707a708d2f3131f9bf8745c6246d4b8342f909711ed4a67b60bced63f4e"}
+{"kind": "FORMAL", "taskId": "af17de79-2298-414d-8b33-d8554123fc58", "binding": "d19520ca-ad84-4f04-b636-8ba54ab33158", "fingerprint": "96601060ea3886090bb4abffc96bfa217fecadd0033fbc434eb4bcf38fcee06d"}
+{"kind": "FORMAL", "taskId": "2eb82e5f-6987-4554-b409-4f1cd3a984aa", "binding": "d78d9bc5-0410-4e1d-9592-be33b6e49796", "fingerprint": "998dd0ec097b55f2c7c729b154d97889c970fbc7e33e8eba619dc878883706df"}
+{"kind": "FORMAL", "taskId": "4b4c06f1-51c7-4ad0-adf4-a4ceccd5f640", "binding": "f4a47925-63d5-4eb3-b7a1-dbac01bdf33c", "fingerprint": "b2f9a564fe2fb5e9cd7f782b72c5a6b5030e02dee275cb08707a385075b3adbb"}
+{"kind": "FORMAL", "taskId": "507adf7a-9631-4b28-af43-70de0fb4b6df", "binding": "f95807c4-5313-4d1c-b2de-d32d6620b1bd", "fingerprint": "7cc0176a0bee803c77bf93da3b5105d80280efbfa4f454b8faeac9d86edf4b29"}
+{"kind": "OUTPUT_PREVIEW", "taskId": "7952f888-48b3-4a25-898f-016746286b2f", "binding": "1e024123-a788-4998-9d94-696db5801888", "fingerprint": "2d875c9f4e7614bee2a49a58df6b537815f5e3b1019228919a22f2a64d4c0b48"}
+{"kind": "VALIDATE", "taskId": "67e0881d-3bc8-4312-a0c5-44572739a7d9", "binding": "2809c39e-946a-4245-9921-d0c7c299bc1c", "fingerprint": "9aae97307e472154db05edb4bd3939c5d47ba71e7c08db963ec9aac99f7a51e2"}
+{"kind": "SELF_TEST", "taskId": "089cfdf5-9f53-4237-a0b4-9823d2632ed2", "binding": "b597d44c-2969-4857-b396-4ff466fae4d8", "fingerprint": "54609424edb78c920f4150b2914138ca4a512923142fef5235ac9362cc19442a"}

@@ -1,0 +1,9 @@
+{
+  "logSha256": "b05e24ddf77b4b8ed3d05dc3b704f2fb5d35dec688582e8bf1c74cf77447249a",
+  "builder": "31f09b8b27434b20dd41f3c7ad42fcac7134dfb8e4d39e9ce9c7bc49d4695ed9",
+  "exitCode": 143,
+  "run": "target/forgeoj-linux-20261009-105622-9674c668",
+  "accepted": false,
+  "reason": "Code review found public assignment room/member eligibility omitted because problem.classroom_id is null; new formal/self regression added before final artifact",
+  "ownershipVerified": true
+}

@@ -1,0 +1,20 @@
+{
+  "allMatch": true,
+  "jars": [
+    {
+      "readOnly": true,
+      "path": "/app/api.jar",
+      "service": "api",
+      "containerId": "8c19905b91a8d9fd460e90d75d082081725a0aba0970d84f5fc15a8e01c0a808",
+      "sha256": "0c4ffb2cff2f405c078dd5fc78eed4205a2dfdc1f8a213f750e66da0beb06019"
+    },
+    {
+      "readOnly": true,
+      "path": "/app/worker.jar",
+      "service": "worker",
+      "containerId": "7751b33367d77e619b6dadd1fb298ee7e1920dfef7adac4e7062d226ab7a8057",
+      "sha256": "f86b269316fb8b779050b6d2dd003b6aceb2907c22522ca48ea358a6cb194942"
+    }
+  ],
+  "capturedAt": "2026-10-09T14:10:15.4094514+08:00"
+}

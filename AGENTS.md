@@ -1,6 +1,8 @@
 # ForgeOJ agent instructions
 
-2026-10-10当前检查点：用户明确授权推送并完成下一步；第5步实现3abd1d9及70042f87b6c79ff3a73c7d9c0b3032afb9ff22be已推送，远端已核验一致，原自动审批外传授权阻断已解除。第6步公共搜索为IN_PROGRESS（具体设计/上游评估），见docs/M4-SEARCH-DESIGN.md；只有设计和官方镜像元数据核验，没有业务实现、V24、ES镜像拉取/容器或新验收。官方ES9.5.3默认发行ELv2尚待用户明确确认，技能许可门禁前不引入该外部组件。最新5小时额度已用83%（约剩17%）；完整第6步仍需迁移/消息/客户端/管理重建/前端/真实故障及Linux同JAR验收，按用户额度不足及时停止规则停在设计检查点，不启动这套大实现。下一次用户继续且额度足够时先核验许可答复和Git，再按设计实施，仅完成第6步后交付并停；第7步监控/M5/Release不开始。第5步VERIFIED、完整M4/E-04仍IN_PROGRESS。
+2026-10-10交付事实：第5步实现3abd1d9及检查点70042f87b6c79ff3a73c7d9c0b3032afb9ff22be已推送到chiye0384-dot/ForgeOJ的feat/m2-accounts，远端已核验；搜索设计a6d6295为本地文档检查点，交付SHA以当前Git/远端为准。
+
+2026-10-10许可确认：在解释Elasticsearch/OpenSearch及ELv2影响后，用户明确回复“按推荐来”，已批准官方Elasticsearch9.5.3默认发行ELv2、免费Basic、仅ForgeOJ内部公共题搜索、保留原许可告知；ForgeOJ自有源码保持Apache-2.0。D-047已接受，不再询问该选择。许可阻断解除，尚未拉取/运行镜像、增加业务代码或V24。最新五小时额度已用85%（剩约15%），按照用户额度不足及时停止规则，停在已批准设计检查点；不是新的自动审批拒绝。下一次额度足够且用户继续时直接按M4-SEARCH-DESIGN的实施顺序，从V24公开版本/Outbox与真实MySQL合约测试开始，只完成第6步后交付并停。既有第5步VERIFIED、完整M4/E-04 IN_PROGRESS、第7步/M5/Release未开始。
 
 ## Current M4 step5 verified checkpoint — 2026-10-10
 
@@ -12,7 +14,7 @@ M4 step5 is VERIFIED; full M4 remains IN_PROGRESS. Read docs/M4-STEP4-NEW-CHAT-S
 
 所有拥有者容器/卷/网络/镜像、builder、Testcontainers和managed sandbox精确清理全0。旧URL不可用，tab1保留在about:blank并标记deliverable，不能关闭它或Codex/ChatGPT。实际22个嵌套依赖JAR摘要匹配23项解析依赖目录（空starter不打包）。最终机器证据 `docs/evidence/m4-redis/verification.json`。仅证据审计器在回放后修正published标量子查询的数值1类型，原冻结脚本与当前摘要均保留；其余运行辅助及全部业务输入未变化。首次健康页只有截图，缺失文本未列入交付，未补造页面事实。
 
-本单元起点4eb49c0e4c88bd6624bdc1a63995953d8405fa09，分支feat/m2-accounts，远端https://github.com/chiye0384-dot/ForgeOJ.git。验收完成后按既有授权提交/推送这个功能分支，然后停止；交付SHA以当前Git/远端核验，不把起点当当前提交。用户本轮已授权第6步，当前停在额度/许可检查点；第7步监控、M5、PR/main/tag/Release/RESUME_READY、真实数据库/SMTP/管理员初始化均不启动。用户额度不足及时停止的规则继续有效。
+本单元起点4eb49c0e4c88bd6624bdc1a63995953d8405fa09，分支feat/m2-accounts，远端https://github.com/chiye0384-dot/ForgeOJ.git。验收完成后按既有授权提交/推送这个功能分支，然后停止；交付SHA以当前Git/远端核验，不把起点当当前提交。用户本轮已授权第6步，许可已确认，当前仅停在额度检查点；第7步监控、M5、PR/main/tag/Release/RESUME_READY、真实数据库/SMTP/管理员初始化均不启动。用户额度不足及时停止的规则继续有效。
 
 保护文件只能Get-FileHash：docs/M2-NEXT-CHAT-HANDOFF.md e08acd3d26a8cd27aca394bdac91828e13b9455a86f62133c5bafc038b18c054；.smtp.qq.local 6df348a6404786791eb57c0dce9c9fb8968f7f0737de304f17d52c3900a03907。不读/输出/复制/暂存/覆盖/删除，禁止git add .、reset、clean。桌面连续性规则始终有效。
 

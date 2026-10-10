@@ -4,9 +4,9 @@
 
 需求依据：Requirements 6.1/6.6/13.2，D-008/D-023，M4七步计划第6步。MySQL权威、ES只返回候选ID/排序；第7步监控、M5、Release、真实数据库/SMTP/管理员初始化不在本单元。设计参数为待实现工程规则，不是验收事实。
 
-## 外部组件与唯一待确认事项
+## 已确认的外部组件与许可
 
-推荐官方Elasticsearch 9.5.3默认发行镜像，以免费Basic功能实现搜索；不复制其源码、不引入Kibana/付费功能/云服务。先采用JDK21 HttpClient和现有Jackson3的有限REST适配，不增加Maven ES客户端依赖，避免Boot4/Jackson3与客户端JSON栈额外装配。协议、分词和索引属于Elastic；事务、版本、重建、复核、降级和测试为ForgeOJ自有实现。
+用户已批准官方Elasticsearch 9.5.3默认发行镜像，以免费Basic功能实现搜索；不复制其源码、不引入Kibana/付费功能/云服务。先采用JDK21 HttpClient和现有Jackson3的有限REST适配，不增加Maven ES客户端依赖，避免Boot4/Jackson3与客户端JSON栈额外装配。协议、分词和索引属于Elastic；事务、版本、重建、复核、降级和测试为ForgeOJ自有实现。
 
 已只读核验[官方镜像](https://www.docker.elastic.co/r/elasticsearch/elasticsearch:9.5.3)的registry元数据：
 
@@ -14,16 +14,16 @@
 - 多平台摘要：sha256:f456578fc2a620a8a4f4c21d070fff1f6070345adb2be5e5626b65be72aea350。
 - linux/amd64摘要：sha256:7b69d47de433699d6df59ef2d14d82d1b0f5a14ed48cf0244a6b20cc4222484e。
 - linux/arm64摘要：sha256:39ab4eab40cae7031ce82cdf7919fef0c425a5019d28e7385a2aa77440b87dd8。
-- 只执行imagetools inspect；尚未拉取/运行镜像或接受发行许可证。9.3.2旧候选已放弃，最终候选以本节9.5.3为准；首次引入仍须保留实际镜像LICENSE/NOTICE和版本事实。
+- 只执行imagetools inspect；许可采用已获用户明确确认，尚未拉取/运行镜像。9.3.2旧候选已放弃，最终候选以本节9.5.3为准；首次引入仍须保留实际镜像LICENSE/NOTICE和版本事实。
 
 官方默认发行版采用Elastic License 2.0（ELv2），并非Apache-2.0。官方FAQ说明可在自己的应用中免费使用，但不得把ES本身作为托管搜索服务提供、绕过许可限制或删除告知。ForgeOJ自有源码保持Apache-2.0；用户只访问题库搜索，不访问ES管理API。本次不分发镜像归档或派生服务端，首次Release仍需完整分发审计。依据：[官方ELv2 FAQ](https://www.elastic.co/licensing/elastic-license/faq/)、[v9.5.3原始许可记录](https://github.com/elastic/elasticsearch/blob/v9.5.3/LICENSE.txt)。
 
 | 选项 | 对ForgeOJ的影响 | 建议 |
 |---|---|---|
-| 官方ES9.5.3，ELv2，免费Basic | 符合已批准ES架构；保留告知，只作题库内部搜索服务；无新付费服务 | 推荐。须明确确认这项新发行许可后才拉取/运行/接入 |
+| 官方ES9.5.3，ELv2，免费Basic | 符合已批准ES架构；保留告知，只作题库内部搜索服务；无新付费服务 | 已确认采用；首次引入仍须核验实际告知与版本 |
 | 改用Apache-2.0的OpenSearch | 需变更D-023/需求中的ES选择，重新核验协议、服务端及客户端，不是直接替换版本号 | 仅在用户坚持外部搜索服务也必须Apache-2.0时另行评估，本轮未选择 |
 
-现有D-023批准了ES用途，尚未批准具体默认发行版的ELv2义务。适用技能明确要求在接受尚未批准的许可证义务前确认；因此不把一般“继续”当该许可已批准。可先推进不引入外部组件的设计/数据库合约，确认前不启动ES服务。
+2026-10-10许可确认：在解释Elasticsearch/OpenSearch及ELv2影响后，用户明确回复“按推荐来”，已批准官方Elasticsearch9.5.3默认发行ELv2、免费Basic、仅ForgeOJ内部公共题搜索、保留原许可告知；ForgeOJ自有源码保持Apache-2.0。D-047已接受，不再询问该选择。许可阻断解除，尚未拉取/运行镜像、增加业务代码或V24。最新五小时额度已用85%（剩约15%），按照用户额度不足及时停止规则，停在已批准设计检查点；不是新的自动审批拒绝。下一次额度足够且用户继续时直接按M4-SEARCH-DESIGN的实施顺序，从V24公开版本/Outbox与真实MySQL合约测试开始，只完成第6步后交付并停。既有第5步VERIFIED、完整M4/E-04 IN_PROGRESS、第7步/M5/Release未开始。
 
 ## 数据与同步合约
 
@@ -75,7 +75,7 @@ OPS_ADMIN/SUPER_ADMIN允许；CONTENT_REVIEWER/普通账号拒绝，仍复用Adm
 
 ## 实施与验收顺序
 
-1. 明确ELv2采用确认；保存镜像摘要/实际LICENSE/NOTICE/来源、固定版本及免费Basic/no-plugin边界。
+1. ELv2采用已确认（D-047）；首次拉取时保存实际LICENSE/NOTICE/来源、运行版本，核验本节镜像摘要及免费Basic/no-plugin边界。
 2. V24公开版本/Outbox/消费状态/重建表和最小grants；真实MySQL验证公共/私有隔离、原子回滚、并发版本与幂等、Worker/API SQL拒绝。
 3. 有界REST适配及真实固定ES：strict白名单、中文正文检索、排序/难度/标签、高亮安全、重复/乱序/墓碑、暂停/恢复/清空、超时/损坏/候选注入/计数复核。
 4. 管理重建/死信可观测与真实Rabbit确认/有限尝试/manual ACK/进程故障/lease恢复；切换窗口崩溃、角色撤销、并发重建、删除索引后的完整重建。
@@ -86,4 +86,6 @@ OPS_ADMIN/SUPER_ADMIN允许；CONTENT_REVIEWER/普通账号拒绝，仍复用Adm
 
 ## 本次停止检查点
 
-第5步推送已成功核验。5小时额度已用83%，剩约17%，不足以稳妥覆盖本设计的完整实现、真实多服务故障及全量验收；按用户明确额度规则在业务实现前停止。许可确认已通过界面询问，当前尚无答复。恢复时先核验许可答复、额度、Git与保护文件；无需重新询问既有D-043～D-046或已授权推送目的地。不要把剩余额度估计当服务硬性拒绝；本次未发生新的审批拒绝。
+2026-10-10许可确认：在解释Elasticsearch/OpenSearch及ELv2影响后，用户明确回复“按推荐来”，已批准官方Elasticsearch9.5.3默认发行ELv2、免费Basic、仅ForgeOJ内部公共题搜索、保留原许可告知；ForgeOJ自有源码保持Apache-2.0。D-047已接受，不再询问该选择。许可阻断解除，尚未拉取/运行镜像、增加业务代码或V24。最新五小时额度已用85%（剩约15%），按照用户额度不足及时停止规则，停在已批准设计检查点；不是新的自动审批拒绝。下一次额度足够且用户继续时直接按M4-SEARCH-DESIGN的实施顺序，从V24公开版本/Outbox与真实MySQL合约测试开始，只完成第6步后交付并停。既有第5步VERIFIED、完整M4/E-04 IN_PROGRESS、第7步/M5/Release未开始。
+
+第5步推送已成功核验。当前无V24/搜索实现或新测试，不能将已批准设计标为VERIFIED。恢复时保留保护文件、重新核验现场Git/额度和实际Docker可用性，沿用已确认ELv2，不重问。

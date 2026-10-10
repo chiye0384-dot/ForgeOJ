@@ -1,0 +1,52 @@
+{
+  "status": "VERIFIED",
+  "scope": "M4 step6 public search only",
+  "checkedAt": "2026-10-10T12:34:24.383Z",
+  "build": "target\\forgeoj-linux-20261010-154710-14efe696",
+  "replay": "target\\forgeoj-e2e-20261010-192354-eaaa4bc7",
+  "api": {
+    "tests": 321,
+    "suites": 54,
+    "sha256": "df19b0564c886c9f195454880f616a62f789b8984c0f07a5d2416d6757721c9c"
+  },
+  "worker": {
+    "tests": 133,
+    "suites": 23,
+    "sha256": "87ed560123d3338bb6df0570f932712e3e384eb9a8bc3d6e57c149a0ba3ee430"
+  },
+  "frontend": {
+    "tests": 129,
+    "suites": 25,
+    "allChecksPassed": true
+  },
+  "httpChecks": 73,
+  "indexDeletion": {
+    "status": "VERIFIED",
+    "replay": "target\\forgeoj-e2e-20261010-200754-1690c514",
+    "httpChecks": 11,
+    "cleanup": {
+      "ownedNetworks": 0,
+      "ownedImages": 0,
+      "ownedContainers": 0,
+      "testcontainers": 0,
+      "builders": 0,
+      "managedSandboxes": 0,
+      "ownedVolumes": 0,
+      "checkedAt": "2026-10-10T20:29:26.3946349+08:00"
+    }
+  },
+  "dependenciesCompared": 22,
+  "sqlDenials": 14,
+  "cleanup": {
+    "testcontainers": 0,
+    "ownedVolumes": 0,
+    "builders": 0,
+    "ownedNetworks": 0,
+    "ownedImages": 0,
+    "checkedAt": "2026-10-10T20:00:03.2859018+08:00",
+    "managedSandboxes": 0,
+    "ownedContainers": 0,
+    "oldFrontendUrlUnavailable": true
+  },
+  "fullM4": "IN_PROGRESS"
+}

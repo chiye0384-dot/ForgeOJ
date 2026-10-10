@@ -1,0 +1,72 @@
+[
+  {
+    "account": "forgeoj_worker",
+    "denied": true,
+    "table": "public_search_version"
+  },
+  {
+    "account": "forgeoj_api",
+    "denied": true,
+    "table": "public_search_version"
+  },
+  {
+    "account": "forgeoj_worker",
+    "denied": true,
+    "table": "public_search_outbox"
+  },
+  {
+    "account": "forgeoj_api",
+    "denied": true,
+    "table": "public_search_outbox"
+  },
+  {
+    "account": "forgeoj_worker",
+    "denied": true,
+    "table": "public_search_delivery"
+  },
+  {
+    "account": "forgeoj_api",
+    "denied": true,
+    "table": "public_search_delivery"
+  },
+  {
+    "account": "forgeoj_worker",
+    "denied": true,
+    "table": "public_search_dead_outbox"
+  },
+  {
+    "account": "forgeoj_api",
+    "denied": true,
+    "table": "public_search_dead_outbox"
+  },
+  {
+    "account": "forgeoj_worker",
+    "denied": true,
+    "table": "public_search_dead_recovery"
+  },
+  {
+    "account": "forgeoj_api",
+    "denied": true,
+    "table": "public_search_dead_recovery"
+  },
+  {
+    "account": "forgeoj_worker",
+    "denied": true,
+    "table": "public_search_control"
+  },
+  {
+    "account": "forgeoj_api",
+    "denied": true,
+    "table": "public_search_control"
+  },
+  {
+    "account": "forgeoj_worker",
+    "denied": true,
+    "table": "public_search_rebuild"
+  },
+  {
+    "account": "forgeoj_api",
+    "denied": true,
+    "table": "public_search_rebuild"
+  }
+]

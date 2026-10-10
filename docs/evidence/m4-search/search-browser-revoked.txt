@@ -1,0 +1,31 @@
+- banner:
+  - generic: F
+  - heading "ForgeOJ" [level=1]
+  - paragraph: Java 21 在线练习与判题
+  - navigation "主导航":
+    - link "题库":
+      - /url: /problems
+    - link "学习记录":
+      - /url: /learning
+    - link "班级":
+      - /url: /classrooms
+    - link "我的题目":
+      - /url: /authoring
+    - link "做题":
+      - /url: /
+    - link "账号":
+      - /url: /account
+    - link "管理后台":
+      - /url: /admin/login
+- main:
+  - main:
+    - heading "公共题搜索运维" [level=1]
+    - paragraph:
+      - link "后台账号":
+        - /url: /admin/login
+      - text: ·
+      - link "任务运维":
+        - /url: /admin/operations
+    - paragraph: 重建公开题目的搜索索引，并为本次覆盖的补发失败死信安排一次有限补发。原失败记录保留。 请输入原因，提交后刷新查看作业进度。
+    - button "刷新状态"
+    - alert: 后台登录已失效，请重新登录。

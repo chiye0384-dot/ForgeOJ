@@ -1,0 +1,11 @@
+{
+  "testcontainers": 0,
+  "ownedVolumes": 0,
+  "builders": 0,
+  "ownedNetworks": 0,
+  "ownedImages": 0,
+  "checkedAt": "2026-10-10T20:00:03.2859018+08:00",
+  "managedSandboxes": 0,
+  "ownedContainers": 0,
+  "oldFrontendUrlUnavailable": true
+}

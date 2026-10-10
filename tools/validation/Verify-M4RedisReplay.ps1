@@ -9,7 +9,7 @@ if(-not $RunDirectory.StartsWith((Join-Path $repository 'target')+[IO.Path]::Dir
 $env:FORGEOJ_E2E_SOURCE=$repository;$env:FORGEOJ_E2E_PROJECT=$state.Project;$env:FORGEOJ_E2E_ARTIFACTS=$state.BuildDirectory;$env:FORGEOJ_E2E_REPORTS=$RunDirectory;$env:FORGEOJ_E2E_REDIS_ENABLED='true'
 $compose=Join-Path $PSScriptRoot 'compose.replay.yml'
 function Docker([string[]]$Arguments){$result=& $DockerCommand @Arguments;if($LASTEXITCODE -ne 0){throw 'Owned Redis replay Docker command failed'};return $result}
-function Compose([string[]]$Arguments){Docker (@('compose','--project-name',$state.Project,'-f',$compose)+$Arguments)}
+function Compose([string[]]$Arguments){$files=@('-f',$compose);if($state.PSObject.Properties.Name -contains 'SearchEnabled' -and $state.SearchEnabled){$files+=@('-f',(Join-Path $PSScriptRoot 'compose.search-replay.yml'))};Docker (@('compose','--project-name',$state.Project)+$files+$Arguments)}
 function Save-Lines([string]$Name,[object]$Lines){[IO.File]::WriteAllText((Join-Path $RunDirectory $Name),(@($Lines)-join "`n"),[Text.UTF8Encoding]::new($false))}
 function Save-Json([string]$Name,[object]$Value){Save-Lines $Name ($Value | ConvertTo-Json -Depth 12)}
 function Sql([string]$Statement){$result=$Statement | & $DockerCommand compose --project-name $state.Project -f $compose exec -T mysql sh -c 'exec mysql -uroot --password="$MYSQL_ROOT_PASSWORD" --default-character-set=utf8mb4 --batch --skip-column-names forgeoj';if($LASTEXITCODE -ne 0){throw 'Owned Redis fixture SQL failed'};return $result}

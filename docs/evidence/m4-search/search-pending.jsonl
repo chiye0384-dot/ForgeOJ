@@ -1,0 +1,2 @@
+{"status": "DEAD_LETTER", "eventId": "3c87549e-3d77-4952-9843-d067269746de", "attempts": 5, "errorCode": "INDEX_UNAVAILABLE", "deadPublished": 1}
+{"status": "DEAD_LETTER", "eventId": "9aa9e19d-bea6-42c3-961e-0d94a3b22632", "attempts": 5, "errorCode": "INDEX_UNAVAILABLE", "deadPublished": 1}

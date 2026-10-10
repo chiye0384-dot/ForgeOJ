@@ -149,14 +149,14 @@ onBeforeUnmount(() => {
       <div>
         <p class="eyebrow">ForgeOJ</p>
         <h2 id="library-title">公共题库</h2>
-        <p class="muted">按标题、难度与标签查找题目，选择后开始练习。</p>
+        <p class="muted">搜索公开题目标题和正文，或按难度与标签筛选。</p>
       </div>
       <RouterLink to="/account">账号与登录</RouterLink>
     </div>
 
     <form class="filters" data-testid="problem-filters" @submit.prevent="applyFilters">
       <label class="keyword-field">
-        标题关键词
+        搜索关键词
         <input v-model="keyword" data-testid="problem-keyword" maxlength="100" />
       </label>
       <label>
@@ -193,6 +193,9 @@ onBeforeUnmount(() => {
         <button type="button" @click="loadProblems()">重新读取</button>
       </div>
       <template v-else-if="pageResult">
+        <p v-if="pageResult.mode === 'TITLE_FALLBACK'" role="status" data-testid="search-degraded">
+          正文搜索暂不可用，已按标题搜索；难度和标签筛选仍可使用。
+        </p>
         <p class="muted">共 {{ pageResult.total }} 题 · 每页 {{ pageResult.size }} 题</p>
         <p v-if="pageResult.items.length === 0" class="empty">暂无符合条件的题目。</p>
         <ul v-else>
@@ -202,6 +205,12 @@ onBeforeUnmount(() => {
                 {{ problem.title }}
               </RouterLink>
               <p class="muted">版本 {{ problem.judgeVersion }}</p>
+              <p v-for="(snippet, index) in problem.highlights" :key="index" class="search-snippet">
+                <template v-for="(segment, segmentIndex) in snippet" :key="segmentIndex">
+                  <mark v-if="segment.matched">{{ segment.text }}</mark>
+                  <span v-else>{{ segment.text }}</span>
+                </template>
+              </p>
             </div>
             <div class="metadata">
               <span class="difficulty">

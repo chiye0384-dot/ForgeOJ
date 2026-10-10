@@ -11,6 +11,7 @@ param(
     [string]$ApiSha256 = '',
     [string]$WorkerSha256 = '',
     [switch]$EnableRedis,
+    [switch]$EnableSearch,
     [string]$DockerCommand = 'docker'
 )
 $ErrorActionPreference = 'Stop'
@@ -25,7 +26,9 @@ function Docker-Checked([string[]]$Arguments) {
     return $output
 }
 function Compose-Checked([string[]]$Arguments) {
-    Docker-Checked (@('compose','--project-name',$state.Project,'-f',$composeFile) + $Arguments)
+    $files=@('-f',$composeFile)
+    if($state.PSObject.Properties.Name -contains 'SearchEnabled' -and $state.SearchEnabled){$files+=@('-f',(Join-Path $PSScriptRoot 'compose.search-replay.yml'))}
+    Docker-Checked (@('compose','--project-name',$state.Project)+$files+$Arguments)
 }
 function Set-ReplayEnvironment {
     $env:FORGEOJ_E2E_SOURCE = $repository
@@ -60,10 +63,19 @@ if ($Action -eq 'Start') {
     if (Docker-Checked @('ps','-aq','--filter','label=com.forgeoj.managed=true')) { throw 'Another managed sandbox exists; do not remove it or run concurrently.' }
     $project = 'forgeoj-e2e-' + (Get-Date -Format 'yyyyMMdd-HHmmss') + '-' + [guid]::NewGuid().ToString('N').Substring(0,8)
     $RunDirectory = (New-Item -ItemType Directory -Path (Join-Path $repository "target/$project")).FullName
-    $state = [pscustomobject]@{Project=$project;BuildDirectory=$build;ApiHash=$apiHash;WorkerHash=$workerHash;SourceCommit=(git -C $repository rev-parse HEAD);StartedAt=(Get-Date -Format o);FrontendUrl='';FallbackUrl='';RedisEnabled=[bool]$EnableRedis}
+    $state = [pscustomobject]@{Project=$project;BuildDirectory=$build;ApiHash=$apiHash;WorkerHash=$workerHash;SourceCommit=(git -C $repository rev-parse HEAD);StartedAt=(Get-Date -Format o);FrontendUrl='';FallbackUrl='';RedisEnabled=[bool]$EnableRedis;SearchEnabled=[bool]$EnableSearch}
     Set-ReplayEnvironment
     Save-State
     Write-Host "Replay state: $RunDirectory"
+    if($EnableSearch){
+        & (Join-Path $PSScriptRoot 'New-SearchReplayCertificates.ps1') -RunDirectory $RunDirectory
+        Compose-Checked @('up','--detach','--wait','--wait-timeout','180','search')
+        $role='{"cluster":[],"indices":[{"names":["forgeoj-public-*"],"privileges":["manage","read","write","create_index","view_index_metadata"]}]}'
+        $user='{"password":"m4-search-public-fixture-only","roles":["forgeoj_search"]}'
+        foreach($entry in @(@('role/forgeoj_search',$role),@('user/forgeoj_search',$user))){
+            Compose-Checked @('exec','-T','search','curl','--fail','--silent','--cacert','/usr/share/elasticsearch/config/certs/server.crt','--user','elastic:m4-search-admin-fixture-only','-X','PUT',('-H'),'Content-Type: application/json','--data-binary',$entry[1],('https://localhost:9200/_security/'+$entry[0])) | Out-Null
+        }
+    }
     if ($EnableRedis) { Compose-Checked @('up','--detach','--wait','--wait-timeout','60','redis') }
     Compose-Checked @('up','--detach','--wait','--wait-timeout','180','mysql','rabbitmq','bootstrap')
     # All versioned migrations + dev seed, then remove the migrator-credential process.

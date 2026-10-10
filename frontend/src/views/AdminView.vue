@@ -273,6 +273,7 @@ onUnmounted(() => {
         "
       >
         <RouterLink to="/admin/operations">任务运维</RouterLink>
+        <RouterLink to="/admin/search">搜索运维</RouterLink>
       </nav>
       <nav
         v-if="

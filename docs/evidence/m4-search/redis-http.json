@@ -1,0 +1,704 @@
+{
+  "checks": [
+    {
+      "method": "GET",
+      "path": "/api/v1/problems/sum-two-integers",
+      "status": 200,
+      "instance": "frontend"
+    },
+    {
+      "method": "GET",
+      "path": "/api/v1/problems/sum-two-integers",
+      "status": 200,
+      "instance": "frontend"
+    },
+    {
+      "method": "GET",
+      "path": "/api/v1/official-problem-lists",
+      "status": 200,
+      "instance": "frontend"
+    },
+    {
+      "method": "GET",
+      "path": "/api/v1/official-problem-lists/00000000-0000-0000-0000-000000000101",
+      "status": 200,
+      "instance": "frontend"
+    },
+    {
+      "method": "GET",
+      "path": "/api/v1/official-problem-lists/00000000-0000-0000-0000-000000000101",
+      "status": 200,
+      "instance": "frontend"
+    },
+    {
+      "method": "GET",
+      "path": "/api/v1/auth/session",
+      "status": 200,
+      "instance": "frontend"
+    },
+    {
+      "method": "POST",
+      "path": "/api/v1/auth/login",
+      "status": 200,
+      "instance": "frontend"
+    },
+    {
+      "method": "POST",
+      "path": "/api/v1/problems/sum-two-integers/submissions",
+      "status": 202,
+      "instance": "frontend"
+    },
+    {
+      "method": "POST",
+      "path": "/api/v1/problems/sum-two-integers/submissions",
+      "status": 202,
+      "instance": "frontend"
+    },
+    {
+      "method": "POST",
+      "path": "/api/v1/problems/sum-two-integers/submissions",
+      "status": 202,
+      "instance": "frontend"
+    },
+    {
+      "method": "POST",
+      "path": "/api/v1/problems/sum-two-integers/submissions",
+      "status": 202,
+      "instance": "frontend"
+    },
+    {
+      "method": "POST",
+      "path": "/api/v1/problems/sum-two-integers/submissions",
+      "status": 202,
+      "instance": "frontend"
+    },
+    {
+      "method": "POST",
+      "path": "/api/v1/problems/sum-two-integers/submissions",
+      "status": 202,
+      "instance": "frontend"
+    },
+    {
+      "method": "POST",
+      "path": "/api/v1/problems/sum-two-integers/submissions",
+      "status": 202,
+      "instance": "frontend"
+    },
+    {
+      "method": "GET",
+      "path": "/api/v1/submissions/20724cf0-af9e-4607-85a4-e3f6ce353460",
+      "status": 200,
+      "instance": "frontend"
+    },
+    {
+      "method": "GET",
+      "path": "/api/v1/submissions/20724cf0-af9e-4607-85a4-e3f6ce353460",
+      "status": 200,
+      "instance": "frontend"
+    },
+    {
+      "method": "GET",
+      "path": "/api/v1/submissions/20724cf0-af9e-4607-85a4-e3f6ce353460",
+      "status": 200,
+      "instance": "frontend"
+    },
+    {
+      "method": "GET",
+      "path": "/api/v1/submissions/20724cf0-af9e-4607-85a4-e3f6ce353460",
+      "status": 200,
+      "instance": "frontend"
+    },
+    {
+      "method": "GET",
+      "path": "/api/v1/submissions/20724cf0-af9e-4607-85a4-e3f6ce353460",
+      "status": 200,
+      "instance": "frontend"
+    },
+    {
+      "method": "GET",
+      "path": "/api/v1/submissions/20724cf0-af9e-4607-85a4-e3f6ce353460",
+      "status": 200,
+      "instance": "frontend"
+    },
+    {
+      "method": "GET",
+      "path": "/api/v1/submissions/20724cf0-af9e-4607-85a4-e3f6ce353460",
+      "status": 200,
+      "instance": "frontend"
+    },
+    {
+      "method": "GET",
+      "path": "/api/v1/submissions/20724cf0-af9e-4607-85a4-e3f6ce353460",
+      "status": 200,
+      "instance": "frontend"
+    },
+    {
+      "method": "GET",
+      "path": "/api/v1/admin/auth/session",
+      "status": 200,
+      "instance": "frontend"
+    },
+    {
+      "method": "POST",
+      "path": "/api/v1/admin/auth/login",
+      "status": 200,
+      "instance": "frontend"
+    },
+    {
+      "method": "POST",
+      "path": "/api/v1/admin/accounts",
+      "status": 201,
+      "instance": "frontend"
+    },
+    {
+      "method": "GET",
+      "path": "/api/v1/admin/auth/session",
+      "status": 200,
+      "instance": "frontend"
+    },
+    {
+      "method": "POST",
+      "path": "/api/v1/admin/auth/login",
+      "status": 200,
+      "instance": "frontend"
+    },
+    {
+      "method": "POST",
+      "path": "/api/v1/admin/auth/password/change",
+      "status": 204,
+      "instance": "frontend"
+    },
+    {
+      "method": "GET",
+      "path": "/api/v1/admin/auth/session",
+      "status": 200,
+      "instance": "frontend"
+    },
+    {
+      "method": "POST",
+      "path": "/api/v1/admin/auth/login",
+      "status": 200,
+      "instance": "frontend"
+    },
+    {
+      "method": "POST",
+      "path": "/api/v1/admin/accounts",
+      "status": 201,
+      "instance": "frontend"
+    },
+    {
+      "method": "GET",
+      "path": "/api/v1/admin/auth/session",
+      "status": 200,
+      "instance": "frontend"
+    },
+    {
+      "method": "POST",
+      "path": "/api/v1/admin/auth/login",
+      "status": 200,
+      "instance": "frontend"
+    },
+    {
+      "method": "POST",
+      "path": "/api/v1/admin/auth/password/change",
+      "status": 204,
+      "instance": "frontend"
+    },
+    {
+      "method": "GET",
+      "path": "/api/v1/admin/auth/session",
+      "status": 200,
+      "instance": "frontend"
+    },
+    {
+      "method": "POST",
+      "path": "/api/v1/admin/auth/login",
+      "status": 200,
+      "instance": "frontend"
+    },
+    {
+      "method": "GET",
+      "path": "/api/v1/admin/operations/tasks",
+      "status": 200,
+      "instance": "frontend"
+    },
+    {
+      "method": "GET",
+      "path": "/api/v1/admin/content-reviews",
+      "status": 200,
+      "instance": "frontend"
+    },
+    {
+      "method": "GET",
+      "path": "/api/v1/auth/session",
+      "status": 200,
+      "instance": "primary-direct"
+    },
+    {
+      "method": "GET",
+      "path": "/api/v1/auth/session",
+      "status": 200,
+      "instance": "replica"
+    },
+    {
+      "method": "POST",
+      "path": "/api/v1/auth/login",
+      "status": 401,
+      "instance": "primary-direct"
+    },
+    {
+      "method": "POST",
+      "path": "/api/v1/auth/login",
+      "status": 401,
+      "instance": "replica"
+    },
+    {
+      "method": "POST",
+      "path": "/api/v1/auth/login",
+      "status": 401,
+      "instance": "primary-direct"
+    },
+    {
+      "method": "POST",
+      "path": "/api/v1/auth/login",
+      "status": 401,
+      "instance": "replica"
+    },
+    {
+      "method": "POST",
+      "path": "/api/v1/auth/login",
+      "status": 401,
+      "instance": "primary-direct"
+    },
+    {
+      "method": "POST",
+      "path": "/api/v1/auth/login",
+      "status": 401,
+      "instance": "replica"
+    },
+    {
+      "method": "POST",
+      "path": "/api/v1/auth/login",
+      "status": 401,
+      "instance": "primary-direct"
+    },
+    {
+      "method": "POST",
+      "path": "/api/v1/auth/login",
+      "status": 401,
+      "instance": "replica"
+    },
+    {
+      "method": "POST",
+      "path": "/api/v1/auth/login",
+      "status": 401,
+      "instance": "primary-direct"
+    },
+    {
+      "method": "POST",
+      "path": "/api/v1/auth/login",
+      "status": 401,
+      "instance": "replica"
+    },
+    {
+      "method": "POST",
+      "path": "/api/v1/auth/login",
+      "status": 429,
+      "instance": "primary-direct"
+    },
+    {
+      "method": "GET",
+      "path": "/api/v1/submissions/20724cf0-af9e-4607-85a4-e3f6ce353460",
+      "status": 503,
+      "instance": "frontend"
+    },
+    {
+      "method": "GET",
+      "path": "/api/v1/problems/sum-two-integers",
+      "status": 200,
+      "instance": "frontend"
+    },
+    {
+      "method": "GET",
+      "path": "/api/v1/problems/sum-two-integers",
+      "status": 200,
+      "instance": "frontend"
+    },
+    {
+      "method": "GET",
+      "path": "/api/v1/official-problem-lists/00000000-0000-0000-0000-000000000101",
+      "status": 200,
+      "instance": "frontend"
+    },
+    {
+      "method": "POST",
+      "path": "/api/v1/problems/sum-two-integers/submissions",
+      "status": 202,
+      "instance": "frontend"
+    },
+    {
+      "method": "POST",
+      "path": "/api/v1/problems/sum-two-integers/submissions",
+      "status": 202,
+      "instance": "frontend"
+    },
+    {
+      "method": "GET",
+      "path": "/api/v1/submissions/38f8a69d-f6a7-48b4-ba6f-0a4109ed3b9c",
+      "status": 200,
+      "instance": "frontend"
+    },
+    {
+      "method": "GET",
+      "path": "/api/v1/submissions/38f8a69d-f6a7-48b4-ba6f-0a4109ed3b9c",
+      "status": 200,
+      "instance": "frontend"
+    },
+    {
+      "method": "GET",
+      "path": "/api/v1/submissions/38f8a69d-f6a7-48b4-ba6f-0a4109ed3b9c",
+      "status": 200,
+      "instance": "frontend"
+    },
+    {
+      "method": "GET",
+      "path": "/api/v1/submissions/38f8a69d-f6a7-48b4-ba6f-0a4109ed3b9c",
+      "status": 200,
+      "instance": "frontend"
+    },
+    {
+      "method": "GET",
+      "path": "/api/v1/submissions/38f8a69d-f6a7-48b4-ba6f-0a4109ed3b9c",
+      "status": 200,
+      "instance": "frontend"
+    },
+    {
+      "method": "GET",
+      "path": "/api/v1/submissions/38f8a69d-f6a7-48b4-ba6f-0a4109ed3b9c",
+      "status": 200,
+      "instance": "frontend"
+    },
+    {
+      "method": "GET",
+      "path": "/api/v1/submissions/38f8a69d-f6a7-48b4-ba6f-0a4109ed3b9c",
+      "status": 200,
+      "instance": "frontend"
+    },
+    {
+      "method": "GET",
+      "path": "/api/v1/admin/operations/tasks",
+      "status": 200,
+      "instance": "frontend"
+    },
+    {
+      "method": "GET",
+      "path": "/api/v1/admin/content-reviews",
+      "status": 200,
+      "instance": "frontend"
+    },
+    {
+      "method": "POST",
+      "path": "/api/v1/auth/logout",
+      "status": 204,
+      "instance": "frontend"
+    },
+    {
+      "method": "GET",
+      "path": "/api/v1/submissions/20724cf0-af9e-4607-85a4-e3f6ce353460",
+      "status": 401,
+      "instance": "frontend"
+    },
+    {
+      "method": "GET",
+      "path": "/api/v1/admin/accounts",
+      "status": 200,
+      "instance": "frontend"
+    },
+    {
+      "method": "PUT",
+      "path": "/api/v1/admin/accounts/8/role",
+      "status": 200,
+      "instance": "frontend"
+    },
+    {
+      "method": "GET",
+      "path": "/api/v1/admin/operations/tasks",
+      "status": 401,
+      "instance": "frontend"
+    },
+    {
+      "method": "POST",
+      "path": "/api/v1/admin/accounts/9/disable",
+      "status": 200,
+      "instance": "frontend"
+    },
+    {
+      "method": "GET",
+      "path": "/api/v1/admin/content-reviews",
+      "status": 401,
+      "instance": "frontend"
+    },
+    {
+      "method": "GET",
+      "path": "/api/v1/admin/public-problems",
+      "status": 200,
+      "instance": "frontend"
+    },
+    {
+      "method": "POST",
+      "path": "/api/v1/admin/public-problems/1/archive",
+      "status": 200,
+      "instance": "frontend"
+    },
+    {
+      "method": "GET",
+      "path": "/api/v1/problems/sum-two-integers",
+      "status": 404,
+      "instance": "frontend"
+    },
+    {
+      "method": "POST",
+      "path": "/api/v1/admin/public-problems/1/restore",
+      "status": 200,
+      "instance": "frontend"
+    },
+    {
+      "method": "GET",
+      "path": "/api/v1/problems/sum-two-integers",
+      "status": 200,
+      "instance": "frontend"
+    },
+    {
+      "method": "POST",
+      "path": "/api/v1/auth/login",
+      "status": 401,
+      "instance": "primary-direct"
+    },
+    {
+      "method": "POST",
+      "path": "/api/v1/auth/login",
+      "status": 401,
+      "instance": "primary-direct"
+    },
+    {
+      "method": "POST",
+      "path": "/api/v1/auth/login",
+      "status": 401,
+      "instance": "primary-direct"
+    },
+    {
+      "method": "POST",
+      "path": "/api/v1/auth/login",
+      "status": 401,
+      "instance": "primary-direct"
+    },
+    {
+      "method": "POST",
+      "path": "/api/v1/auth/login",
+      "status": 429,
+      "instance": "primary-direct"
+    },
+    {
+      "method": "POST",
+      "path": "/api/v1/auth/login",
+      "status": 401,
+      "instance": "replica"
+    },
+    {
+      "method": "POST",
+      "path": "/api/v1/auth/login",
+      "status": 401,
+      "instance": "replica"
+    },
+    {
+      "method": "POST",
+      "path": "/api/v1/auth/login",
+      "status": 401,
+      "instance": "replica"
+    },
+    {
+      "method": "POST",
+      "path": "/api/v1/auth/login",
+      "status": 401,
+      "instance": "replica"
+    },
+    {
+      "method": "POST",
+      "path": "/api/v1/auth/login",
+      "status": 401,
+      "instance": "replica"
+    },
+    {
+      "method": "POST",
+      "path": "/api/v1/auth/login",
+      "status": 429,
+      "instance": "replica"
+    },
+    {
+      "method": "GET",
+      "path": "/api/v1/problems/sum-two-integers",
+      "status": 200,
+      "instance": "frontend"
+    },
+    {
+      "method": "GET",
+      "path": "/api/v1/problems/sum-two-integers",
+      "status": 200,
+      "instance": "frontend"
+    },
+    {
+      "method": "GET",
+      "path": "/api/v1/official-problem-lists/00000000-0000-0000-0000-000000000101",
+      "status": 200,
+      "instance": "frontend"
+    },
+    {
+      "method": "GET",
+      "path": "/api/v1/submissions/20724cf0-af9e-4607-85a4-e3f6ce353460",
+      "status": 401,
+      "instance": "frontend"
+    },
+    {
+      "method": "GET",
+      "path": "/api/v1/auth/session",
+      "status": 200,
+      "instance": "frontend"
+    },
+    {
+      "method": "POST",
+      "path": "/api/v1/auth/login",
+      "status": 200,
+      "instance": "frontend"
+    },
+    {
+      "method": "POST",
+      "path": "/api/v1/problems/sum-two-integers/submissions",
+      "status": 202,
+      "instance": "frontend"
+    },
+    {
+      "method": "GET",
+      "path": "/api/v1/admin/auth/session",
+      "status": 200,
+      "instance": "frontend"
+    },
+    {
+      "method": "POST",
+      "path": "/api/v1/admin/auth/login",
+      "status": 200,
+      "instance": "frontend"
+    },
+    {
+      "method": "GET",
+      "path": "/api/v1/admin/operations/tasks",
+      "status": 403,
+      "instance": "frontend"
+    },
+    {
+      "method": "GET",
+      "path": "/api/v1/admin/content-reviews",
+      "status": 200,
+      "instance": "frontend"
+    },
+    {
+      "method": "GET",
+      "path": "/api/v1/admin/content-reviews",
+      "status": 401,
+      "instance": "frontend"
+    },
+    {
+      "method": "POST",
+      "path": "/api/v1/auth/login",
+      "status": 429,
+      "instance": "primary-direct"
+    },
+    {
+      "method": "POST",
+      "path": "/api/v1/auth/login",
+      "status": 429,
+      "instance": "replica"
+    },
+    {
+      "method": "GET",
+      "path": "/api/v1/problems/sum-two-integers",
+      "status": 200,
+      "instance": "frontend"
+    },
+    {
+      "method": "GET",
+      "path": "/api/v1/official-problem-lists/00000000-0000-0000-0000-000000000101",
+      "status": 200,
+      "instance": "frontend"
+    },
+    {
+      "method": "GET",
+      "path": "/api/v1/submissions/20724cf0-af9e-4607-85a4-e3f6ce353460",
+      "status": 200,
+      "instance": "frontend"
+    },
+    {
+      "method": "GET",
+      "path": "/api/v1/admin/content-reviews",
+      "status": 200,
+      "instance": "frontend"
+    }
+  ],
+  "phaseFacts": {
+    "healthy": {
+      "sameKeyResponses": 7,
+      "realAc": true,
+      "sharedLoginBudget": 10,
+      "twoApiInstances": true,
+      "checkedAt": "2026-10-10T11:42:41.210Z"
+    },
+    "guard-failure": {
+      "positiveSessionCacheDidNotBypassMysqlFailure": true,
+      "anonymousPublicStillAvailable": true,
+      "checkedAt": "2026-10-10T11:42:43.662Z"
+    },
+    "outage": {
+      "realAcDuringOutage": true,
+      "ordinaryOldJwtRejected": true,
+      "adminDowngradeRejected": true,
+      "disabledAdminRejected": true,
+      "archivedPublicRejected": true,
+      "unexpiredRevocationProbes": true,
+      "retainedLocalBudgets": {
+        "primaryRemaining": 4,
+        "replicaRemaining": 5
+      },
+      "checkedAt": "2026-10-10T11:43:36.811Z"
+    },
+    "recovered": {
+      "oldSessionStillRejected": true,
+      "currentDowngradedRole": true,
+      "sameOriginalReceipt": true,
+      "flushDidNotResetLocalLimits": true,
+      "publicCacheRebuilt": true,
+      "checkedAt": "2026-10-10T11:43:41.233Z"
+    },
+    "warm": {
+      "currentClientsRecheckedWithoutNewLogin": true,
+      "checkedAt": "2026-10-10T11:43:43.048Z"
+    }
+  },
+  "accepted": {
+    "request": "7ebbf48a-9506-4760-9c05-84ffac12cea3",
+    "submissionId": "20724cf0-af9e-4607-85a4-e3f6ce353460",
+    "status": "FINISHED",
+    "verdict": "AC"
+  },
+  "officialId": "00000000-0000-0000-0000-000000000101",
+  "created": {
+    "redis_ops": {
+      "id": 8,
+      "role": "OPS_ADMIN"
+    },
+    "redis_reviewer": {
+      "id": 9,
+      "role": "CONTENT_REVIEWER"
+    }
+  },
+  "limitedName": "redis_limit_e42bc850",
+  "outageAccepted": "38f8a69d-f6a7-48b4-ba6f-0a4109ed3b9c"
+}

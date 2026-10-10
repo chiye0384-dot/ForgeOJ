@@ -16,7 +16,10 @@ tar -C /source --exclude='.git' --exclude='target' --exclude='node_modules' \
 cd /workspace/ForgeOJ
 
 # A stable hash manifest ties the dirty/committed source snapshot to this run.
-find . -type f -print0 | LC_ALL=C sort -z | xargs -0 sha256sum > /artifacts/source-files.sha256
+snapshot_manifest="/artifacts/source-files.${1:-unknown}.sha256"
+find . -type f -print0 | LC_ALL=C sort -z | xargs -0 sha256sum > "$snapshot_manifest"
+# All uses two isolated copies. Never replace the backend manifest with a later frontend copy.
+if test ! -e /artifacts/source-files.sha256; then cp "$snapshot_manifest" /artifacts/source-files.sha256; fi
 sha256sum /artifacts/source-files.sha256
 uname -a
 

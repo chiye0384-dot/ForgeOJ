@@ -1,0 +1,99 @@
+{
+  "allPassed": true,
+  "initialRebuildId": "65b87b1a-7433-4fe4-b9a8-3f78b9804051",
+  "initialFullTextVerified": true,
+  "firstPasswordGatesUsedRealHttp": true,
+  "checks": [
+    {
+      "method": "GET",
+      "path": "/api/v1/admin/auth/session",
+      "status": 200
+    },
+    {
+      "method": "POST",
+      "path": "/api/v1/admin/auth/login",
+      "status": 200
+    },
+    {
+      "method": "POST",
+      "path": "/api/v1/admin/auth/password/change",
+      "status": 204
+    },
+    {
+      "method": "GET",
+      "path": "/api/v1/admin/auth/session",
+      "status": 200
+    },
+    {
+      "method": "POST",
+      "path": "/api/v1/admin/auth/login",
+      "status": 200
+    },
+    {
+      "method": "POST",
+      "path": "/api/v1/admin/accounts",
+      "status": 201
+    },
+    {
+      "method": "GET",
+      "path": "/api/v1/admin/auth/session",
+      "status": 200
+    },
+    {
+      "method": "POST",
+      "path": "/api/v1/admin/auth/login",
+      "status": 200
+    },
+    {
+      "method": "POST",
+      "path": "/api/v1/admin/auth/password/change",
+      "status": 204
+    },
+    {
+      "method": "GET",
+      "path": "/api/v1/admin/auth/session",
+      "status": 200
+    },
+    {
+      "method": "POST",
+      "path": "/api/v1/admin/auth/login",
+      "status": 200
+    },
+    {
+      "method": "GET",
+      "path": "/api/v1/admin/search/status",
+      "status": 200
+    },
+    {
+      "method": "POST",
+      "path": "/api/v1/admin/search/rebuilds",
+      "status": 200
+    },
+    {
+      "method": "POST",
+      "path": "/api/v1/admin/search/rebuilds",
+      "status": 200
+    },
+    {
+      "method": "GET",
+      "path": "/api/v1/admin/search/rebuilds",
+      "status": 200
+    },
+    {
+      "method": "GET",
+      "path": "/api/v1/admin/search/rebuilds",
+      "status": 200
+    },
+    {
+      "method": "GET",
+      "path": "/api/v1/admin/search/rebuilds",
+      "status": 200
+    },
+    {
+      "method": "GET",
+      "path": "/api/v1/problems/search?keyword=%E6%9C%89%E7%AC%A6%E5%8F%B7%E6%95%B4%E6%95%B0",
+      "status": 200
+    }
+  ],
+  "checkedAt": "2026-10-10T12:20:52.603Z"
+}

@@ -12,10 +12,12 @@ import TeacherRecordsView from '@/views/TeacherRecordsView.vue'
 import AdminView from '@/views/AdminView.vue'
 import AdminContentView from '@/views/AdminContentView.vue'
 import AdminOperationsView from '@/views/AdminOperationsView.vue'
+import AdminSearchView from '@/views/AdminSearchView.vue'
 
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
   routes: [
+    { path: '/admin/search', component: AdminSearchView },
     { path: '/admin/operations', component: AdminOperationsView },
     { path: '/admin/reviews', component: AdminContentView, props: { section: 'reviews' } },
     { path: '/admin/problems', component: AdminContentView, props: { section: 'problems' } },

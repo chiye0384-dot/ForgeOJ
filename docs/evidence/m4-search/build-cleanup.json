@@ -1,0 +1,8 @@
+{
+  "checkedAt": "2026-10-10T08:24:54.2814653Z",
+  "ownedBuilderContainers": 0,
+  "testcontainers": 0,
+  "managedSandboxes": 0,
+  "ownedBuilderImages": 0,
+  "volumesOrNetworksCreatedByBuild": false
+}

@@ -1,0 +1,47 @@
+[
+  {
+    "name": "forgeoj.search.public.dlq",
+    "messages_unacknowledged": 0,
+    "messages_ready": 0
+  },
+  {
+    "name": "forgeoj.content.validation.dead.v1",
+    "messages_unacknowledged": 0,
+    "messages_ready": 0
+  },
+  {
+    "name": "forgeoj.judge.retry.v1",
+    "messages_unacknowledged": 0,
+    "messages_ready": 0
+  },
+  {
+    "name": "forgeoj.judge.self-test.dead.v1",
+    "messages_unacknowledged": 0,
+    "messages_ready": 0
+  },
+  {
+    "name": "forgeoj.judge.self-test.v1",
+    "messages_unacknowledged": 0,
+    "messages_ready": 0
+  },
+  {
+    "name": "forgeoj.search.public",
+    "messages_unacknowledged": 0,
+    "messages_ready": 0
+  },
+  {
+    "name": "forgeoj.judge.submission.dead.v1",
+    "messages_unacknowledged": 0,
+    "messages_ready": 0
+  },
+  {
+    "name": "forgeoj.judge.submission.v1",
+    "messages_unacknowledged": 0,
+    "messages_ready": 0
+  },
+  {
+    "name": "forgeoj.content.validation.v1",
+    "messages_unacknowledged": 0,
+    "messages_ready": 0
+  }
+]

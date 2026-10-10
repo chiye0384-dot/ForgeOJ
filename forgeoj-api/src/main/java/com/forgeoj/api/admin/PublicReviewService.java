@@ -23,12 +23,14 @@ public class PublicReviewService {
     private final com.forgeoj.api.classroom.AssignmentSolutionGuard assignmentGuard;
     private final com.forgeoj.api.auth.AccountMapper authors;
     private final com.forgeoj.api.cache.CacheInvalidations cacheInvalidations;
+    private final com.forgeoj.api.search.SearchChanges searchChanges;
     public PublicReviewService(PublicReviewMapper mapper,AdminService admins,AdminAudit audit,ContentMapper drafts,
-            ContentValidationMapper jobs,ClassroomProblemMapper copies,ObjectMapper json,com.forgeoj.api.classroom.AssignmentSolutionGuard assignmentGuard,com.forgeoj.api.auth.AccountMapper authors,com.forgeoj.api.cache.CacheInvalidations cacheInvalidations){
+            ContentValidationMapper jobs,ClassroomProblemMapper copies,ObjectMapper json,com.forgeoj.api.classroom.AssignmentSolutionGuard assignmentGuard,com.forgeoj.api.auth.AccountMapper authors,com.forgeoj.api.cache.CacheInvalidations cacheInvalidations,com.forgeoj.api.search.SearchChanges searchChanges){
         this.mapper=mapper;this.admins=admins;this.audit=audit;this.drafts=drafts;this.jobs=jobs;this.copies=copies;this.json=json;
         this.assignmentGuard=assignmentGuard;
         this.authors=authors;
         this.cacheInvalidations=cacheInvalidations;
+        this.searchChanges=searchChanges;
     }
     public AdminService.Page<PublicReviewMapper.Review> list(int page,int size,String status){
         page(page,size);filter(status,Set.of("PENDING","APPROVED","REJECTED","WITHDRAWN"));
@@ -59,6 +61,9 @@ public class PublicReviewService {
                 if(!Boolean.TRUE.equals(mapper.passed(r.jobId(),r.snapshotId())))throw error(409);
                 problem=publish(r,frozen(r),why);
                 cacheInvalidations.publicChanged();
+                searchChanges.changed(problem);
+                mapper.revision(r.draftId()).filter(v->v.revisionKind().equals("CORRECTION"))
+                    .ifPresent(v->searchChanges.changed(v.problemId()));
             }
             one(mapper.finish(id,expected,action));one(mapper.insertDecision(id,a.id(),request,hash,action,why,problem));
             audit.content(action.equals("APPROVED")?"REVIEW_APPROVED":"REVIEW_REJECTED",a.id(),"CONTENT_REVIEW",id,why,"PENDING;version="+expected,action+";version="+(expected+1)+";problem="+problem);
@@ -96,6 +101,7 @@ public class PublicReviewService {
             if(action.equals("RESTORE")&&(p.dataInvalid()||!p.status().equals("ARCHIVED"))||action.equals("ARCHIVE")&&!p.status().equals("ACTIVE")||action.equals("INVALIDATE")&&p.dataInvalid())throw error(409);
             if(action.equals("INVALIDATE"))one(mapper.invalidate(id,expected,why));else one(mapper.bump(id,expected,why));one(mapper.status(id,next));
             cacheInvalidations.publicChanged();
+            searchChanges.changed(id);
             audit.content("PUBLIC_"+action,a.id(),"PUBLIC_PROBLEM",Long.toString(id),why,p.status()+";invalid="+p.dataInvalid()+";version="+p.version(),next+";invalid="+(p.dataInvalid()||action.equals("INVALIDATE"))+";version="+(p.version()+1));return mapper.lockProblem(id).orElseThrow();});
     }
     private long publish(PublicReviewMapper.Review r,PublicReviewMapper.Frozen f,String reason){

@@ -1,0 +1,60 @@
+- banner:
+  - generic: F
+  - heading "ForgeOJ" [level=1]
+  - paragraph: Java 21 在线练习与判题
+  - navigation "主导航":
+    - link "题库":
+      - /url: /problems
+    - link "学习记录":
+      - /url: /learning
+    - link "班级":
+      - /url: /classrooms
+    - link "我的题目":
+      - /url: /authoring
+    - link "做题":
+      - /url: /
+    - link "账号":
+      - /url: /account
+    - link "管理后台":
+      - /url: /admin/login
+- main:
+  - region "公共题库":
+    - paragraph: ForgeOJ
+    - heading "公共题库" [level=2]
+    - paragraph: 搜索公开题目标题和正文，或按难度与标签筛选。
+    - link "账号与登录":
+      - /url: /account
+    - text: 搜索关键词
+    - textbox "搜索关键词": 有符号整数
+    - text: 难度
+    - combobox "难度":
+      - option "全部难度" [selected]
+      - option "简单"
+      - option "中等"
+      - option "困难"
+    - text: 标签
+    - combobox "标签":
+      - option "全部标签" [selected]
+      - option "入门"
+      - option "数学"
+      - option "比较"
+    - button "查找题目" [active]
+    - paragraph: 共 1 题 · 每页 20 题
+    - list:
+      - link "两数之和":
+        - /url: /problems/sum-two-integers
+      - paragraph: 版本 1
+      - paragraph: 两数之和
+      - paragraph:
+        - text: 读入两个
+        - mark: 有符号整数
+        - text: ，输出它们的和。输入和结果均在 64 位
+        - mark: 有符号整数
+        - text: 范围内。
+      - generic: 简单
+      - generic: 入门
+      - generic: 数学
+    - navigation "题库分页":
+      - button "上一页" [disabled]
+      - generic: 第 1 / 1 页
+      - button "下一页" [disabled]

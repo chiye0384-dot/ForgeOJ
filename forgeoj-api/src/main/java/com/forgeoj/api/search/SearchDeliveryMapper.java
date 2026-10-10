@@ -1,0 +1,37 @@
+/* Copyright 2026 池也; SPDX-License-Identifier: Apache-2.0 */
+package com.forgeoj.api.search;
+import java.util.*;
+import org.apache.ibatis.annotations.*;
+@Mapper
+public interface SearchDeliveryMapper {
+    String EVENT="id,problem_id AS problemId,data_version AS dataVersion,public_epoch AS publicEpoch,publish_attempts AS publishAttempts";
+    @Select("SELECT "+EVENT+" FROM public_search_outbox WHERE published_at IS NULL AND failed_at IS NULL AND next_publish_at<=UTC_TIMESTAMP(6) ORDER BY created_at,id LIMIT 20") List<SearchMapper.Event> pending();
+    @Select("SELECT "+EVENT+" FROM public_search_outbox WHERE id=#{id}") Optional<SearchMapper.Event> event(String id);
+    @Update("UPDATE public_search_outbox SET published_at=UTC_TIMESTAMP(6),error_code=NULL WHERE id=#{id} AND published_at IS NULL AND failed_at IS NULL AND publish_attempts=#{attempt}") int published(@Param("id")String id,@Param("attempt")int attempt);
+    @Update("UPDATE public_search_outbox SET publish_attempts=publish_attempts+1,error_code='PUBLISH_UNAVAILABLE',next_publish_at=TIMESTAMPADD(SECOND,#{delay},UTC_TIMESTAMP(6)),failed_at=IF(publish_attempts>=5,UTC_TIMESTAMP(6),NULL) WHERE id=#{id} AND published_at IS NULL AND failed_at IS NULL AND publish_attempts=#{attempt}") int publishFailed(@Param("id")String id,@Param("attempt")int attempt,@Param("delay")int delay);
+    record Delivery(String eventId,String status,int attempts,String leaseToken,boolean due,boolean expired) {}
+    @Insert("INSERT INTO public_search_delivery(event_id) VALUES(#{id}) ON DUPLICATE KEY UPDATE attempts=attempts") void initialize(String id);
+    @Select("SELECT event_id AS eventId,status,attempts,lease_token AS leaseToken,next_attempt_at<=UTC_TIMESTAMP(6) AS due,(lease_expires_at IS NULL OR lease_expires_at<=UTC_TIMESTAMP(6)) AS expired FROM public_search_delivery WHERE event_id=#{id} FOR UPDATE") Delivery lock(String id);
+    @Update("UPDATE public_search_delivery SET status='RUNNING',attempts=attempts+1,lease_token=#{token},lease_expires_at=TIMESTAMPADD(SECOND,30,UTC_TIMESTAMP(6)),error_code=NULL WHERE event_id=#{id} AND attempts<5 AND status IN ('QUEUED','RUNNING')") int claim(@Param("id")String id,@Param("token")String token);
+    @Update("UPDATE public_search_delivery SET status=#{status},lease_token=NULL,lease_expires_at=NULL,error_code=#{error},finished_at=IF(#{status} IN ('SUCCEEDED','DEAD_LETTER'),UTC_TIMESTAMP(6),NULL),next_attempt_at=TIMESTAMPADD(SECOND,#{delay},UTC_TIMESTAMP(6)) WHERE event_id=#{id} AND status='RUNNING' AND lease_token=#{token} AND lease_expires_at>UTC_TIMESTAMP(6)") int finish(@Param("id")String id,@Param("token")String token,@Param("status")String status,@Param("error")String error,@Param("delay")int delay);
+    @Update("UPDATE public_search_delivery SET status='DEAD_LETTER',lease_token=NULL,lease_expires_at=NULL,error_code='LEASE_EXHAUSTED',finished_at=UTC_TIMESTAMP(6) WHERE event_id=#{id} AND status='RUNNING' AND attempts=5 AND lease_expires_at<=UTC_TIMESTAMP(6)") int exhausted(String id);
+    @Insert("INSERT INTO public_search_dead_outbox(event_id) VALUES(#{id}) ON DUPLICATE KEY UPDATE attempts=attempts") void dead(String id);
+    @Select("SELECT d.event_id FROM public_search_delivery d WHERE d.status IN ('QUEUED','RUNNING') AND d.next_attempt_at<=UTC_TIMESTAMP(6) AND (d.lease_expires_at IS NULL OR d.lease_expires_at<=UTC_TIMESTAMP(6)) ORDER BY d.next_attempt_at LIMIT 20") List<String> due();
+    @Select("SELECT status FROM public_search_delivery WHERE event_id=#{id}") Optional<String> status(String id);
+    @Select("SELECT EXISTS(SELECT 1 FROM public_search_dead_outbox WHERE event_id=#{id} AND published_at IS NOT NULL) OR EXISTS(SELECT 1 FROM public_search_dead_recovery WHERE event_id=#{id} AND published_at IS NOT NULL)") boolean deadPublished(String id);
+    record Dead(String eventId,int attempts) {}
+    @Select("SELECT event_id AS eventId,attempts FROM public_search_dead_outbox WHERE published_at IS NULL AND failed_at IS NULL AND next_attempt_at<=UTC_TIMESTAMP(6) LIMIT 20") List<Dead> pendingDead();
+    @Update("UPDATE public_search_dead_outbox SET published_at=UTC_TIMESTAMP(6),error_code=NULL WHERE event_id=#{id} AND published_at IS NULL AND failed_at IS NULL AND attempts=#{attempt}") int deadConfirmed(@Param("id")String id,@Param("attempt")int attempt);
+    @Update("UPDATE public_search_dead_outbox SET attempts=attempts+1,error_code='PUBLISH_UNAVAILABLE',next_attempt_at=TIMESTAMPADD(SECOND,#{delay},UTC_TIMESTAMP(6)),failed_at=IF(attempts>=5,UTC_TIMESTAMP(6),NULL) WHERE event_id=#{id} AND published_at IS NULL AND failed_at IS NULL AND attempts=#{attempt}") int deadFailed(@Param("id")String id,@Param("attempt")int attempt,@Param("delay")int delay);
+    @Select("SELECT COUNT(*) FROM public_search_outbox e LEFT JOIN public_search_delivery d ON d.event_id=e.id WHERE e.public_epoch>#{covered} AND e.public_epoch<=#{epoch} AND (e.published_at IS NULL OR d.status IS NULL OR d.status<>'SUCCEEDED')") long outstanding(@Param("covered")long covered,@Param("epoch")long epoch);
+    @Select("SELECT COUNT(*) FROM public_search_outbox WHERE published_at IS NULL AND failed_at IS NULL") long pendingCount();
+    @Select("SELECT COUNT(*) FROM public_search_delivery WHERE status='DEAD_LETTER'") long deadCount();
+    @Select("SELECT COUNT(*) FROM public_search_outbox WHERE failed_at IS NOT NULL") long failedPublications();
+    @Select("SELECT (SELECT COUNT(*) FROM public_search_dead_outbox WHERE failed_at IS NOT NULL)+(SELECT COUNT(*) FROM public_search_dead_recovery WHERE failed_at IS NOT NULL)") long failedDeadPublications();
+    @Select("SELECT COUNT(*) FROM public_search_delivery d WHERE d.status='DEAD_LETTER' AND NOT EXISTS(SELECT 1 FROM public_search_dead_outbox o WHERE o.event_id=d.event_id AND o.published_at IS NOT NULL) AND NOT EXISTS(SELECT 1 FROM public_search_dead_recovery r WHERE r.event_id=d.event_id AND r.published_at IS NOT NULL)") long blockedDeadLetters();
+    @Insert("INSERT INTO public_search_dead_recovery(event_id,rebuild_id) SELECT o.event_id,j.id FROM public_search_dead_outbox o JOIN public_search_outbox e ON e.id=o.event_id JOIN public_search_rebuild j ON j.id=#{job} WHERE j.status='SUCCEEDED' AND o.failed_at IS NOT NULL AND e.public_epoch<=j.target_epoch AND NOT EXISTS(SELECT 1 FROM public_search_dead_recovery r WHERE r.event_id=o.event_id AND r.published_at IS NOT NULL)") int recoverDead(String job);
+    record Recovery(String eventId,String rebuildId,int attempts) {}
+    @Select("SELECT event_id AS eventId,rebuild_id AS rebuildId,attempts FROM public_search_dead_recovery WHERE published_at IS NULL AND failed_at IS NULL AND next_attempt_at<=UTC_TIMESTAMP(6) LIMIT 20") List<Recovery> pendingRecovery();
+    @Update("UPDATE public_search_dead_recovery SET published_at=UTC_TIMESTAMP(6),error_code=NULL WHERE event_id=#{id} AND rebuild_id=#{job} AND attempts=#{attempt} AND published_at IS NULL AND failed_at IS NULL") int recovered(@Param("id")String id,@Param("job")String job,@Param("attempt")int attempt);
+    @Update("UPDATE public_search_dead_recovery SET attempts=attempts+1,error_code='PUBLISH_UNAVAILABLE',next_attempt_at=TIMESTAMPADD(SECOND,#{delay},UTC_TIMESTAMP(6)),failed_at=IF(attempts>=5,UTC_TIMESTAMP(6),NULL) WHERE event_id=#{id} AND rebuild_id=#{job} AND attempts=#{attempt} AND published_at IS NULL AND failed_at IS NULL") int recoveryFailed(@Param("id")String id,@Param("job")String job,@Param("attempt")int attempt,@Param("delay")int delay);
+}

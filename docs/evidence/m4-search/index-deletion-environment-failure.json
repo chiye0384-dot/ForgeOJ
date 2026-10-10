@@ -1,0 +1,20 @@
+{
+  "scope": "supplemental backend index deletion only",
+  "replay": "forgeoj-e2e-20261010-200754-1690c514",
+  "frontendAccepted": false,
+  "failures": [
+    {
+      "stage": "supplemental frontend startup",
+      "observed": "registry.npmjs.org ECONNRESET; npm Exit handler never called",
+      "log": "target/search-delete-replay-start.log",
+      "resolution": "No frontend claim for this environment. Cached pinned Node image with pull=never ran private-network API-only proof. Primary served frontend/browser gate remains independently accepted."
+    },
+    {
+      "stage": "first direct API prepare",
+      "observed": "403 with mismatched Origin before login/first-password change",
+      "resolution": "Set Origin to actual direct request origin api:8080; unchanged API same-origin/CSRF checks then accepted real fixture login and rebuild."
+    }
+  ],
+  "businessOrFrontendChanged": false,
+  "acceptedJarsChanged": false
+}

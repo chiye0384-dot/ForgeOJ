@@ -1,0 +1,618 @@
+{
+  "checkedAt": "2026-10-10T11:42:33.934Z",
+  "allPassed": true,
+  "checks": [
+    {
+      "method": "GET",
+      "path": "/api/v1/auth/session",
+      "status": 200
+    },
+    {
+      "method": "POST",
+      "path": "/api/v1/auth/login",
+      "status": 200
+    },
+    {
+      "method": "GET",
+      "path": "/api/v1/auth/session",
+      "status": 200
+    },
+    {
+      "method": "POST",
+      "path": "/api/v1/auth/login",
+      "status": 200
+    },
+    {
+      "method": "GET",
+      "path": "/api/v1/admin/auth/session",
+      "status": 200
+    },
+    {
+      "method": "POST",
+      "path": "/api/v1/admin/auth/login",
+      "status": 200
+    },
+    {
+      "method": "GET",
+      "path": "/api/v1/admin/auth/session",
+      "status": 200
+    },
+    {
+      "method": "POST",
+      "path": "/api/v1/admin/auth/login",
+      "status": 200
+    },
+    {
+      "method": "GET",
+      "path": "/api/v1/admin/auth/session",
+      "status": 200
+    },
+    {
+      "method": "POST",
+      "path": "/api/v1/admin/auth/login",
+      "status": 200
+    },
+    {
+      "method": "POST",
+      "path": "/api/v1/me/authored-problems",
+      "status": 201
+    },
+    {
+      "method": "PUT",
+      "path": "/api/v1/me/authored-problems/dd99ceae-5b80-46f6-9209-c0b7ace5ba14",
+      "status": 200
+    },
+    {
+      "method": "PUT",
+      "path": "/api/v1/me/authored-problems/dd99ceae-5b80-46f6-9209-c0b7ace5ba14/tests",
+      "status": 200
+    },
+    {
+      "method": "POST",
+      "path": "/api/v1/me/authored-problems/dd99ceae-5b80-46f6-9209-c0b7ace5ba14/validations",
+      "status": 202
+    },
+    {
+      "method": "POST",
+      "path": "/api/v1/me/authored-problems/dd99ceae-5b80-46f6-9209-c0b7ace5ba14/reviews",
+      "status": 202
+    },
+    {
+      "method": "POST",
+      "path": "/api/v1/admin/content-reviews/f9aef26a-bc06-4528-9fc9-cd98b4bdd8bc/reject",
+      "status": 200
+    },
+    {
+      "method": "GET",
+      "path": "/api/v1/me/authored-problems/dd99ceae-5b80-46f6-9209-c0b7ace5ba14/reviews",
+      "status": 200
+    },
+    {
+      "method": "GET",
+      "path": "/api/v1/me/authored-problems/dd99ceae-5b80-46f6-9209-c0b7ace5ba14",
+      "status": 200
+    },
+    {
+      "method": "PUT",
+      "path": "/api/v1/me/authored-problems/dd99ceae-5b80-46f6-9209-c0b7ace5ba14",
+      "status": 200
+    },
+    {
+      "method": "POST",
+      "path": "/api/v1/me/authored-problems/dd99ceae-5b80-46f6-9209-c0b7ace5ba14/validations",
+      "status": 202
+    },
+    {
+      "method": "POST",
+      "path": "/api/v1/me/authored-problems/dd99ceae-5b80-46f6-9209-c0b7ace5ba14/reviews",
+      "status": 202
+    },
+    {
+      "method": "GET",
+      "path": "/api/v1/admin/content-reviews/53697a56-f763-45fb-b447-392bc9c67c79",
+      "status": 200
+    },
+    {
+      "method": "GET",
+      "path": "/api/v1/admin/content-reviews/53697a56-f763-45fb-b447-392bc9c67c79/reference",
+      "status": 200
+    },
+    {
+      "method": "GET",
+      "path": "/api/v1/admin/content-reviews",
+      "status": 403
+    },
+    {
+      "method": "GET",
+      "path": "/api/v1/admin/content-reviews/53697a56-f763-45fb-b447-392bc9c67c79",
+      "status": 403
+    },
+    {
+      "method": "GET",
+      "path": "/api/v1/admin/content-reviews/53697a56-f763-45fb-b447-392bc9c67c79/reference",
+      "status": 403
+    },
+    {
+      "method": "GET",
+      "path": "/api/v1/admin/public-problems",
+      "status": 403
+    },
+    {
+      "method": "GET",
+      "path": "/api/v1/admin/feedback-cases",
+      "status": 403
+    },
+    {
+      "method": "GET",
+      "path": "/api/v1/admin/content-reviews",
+      "status": 403
+    },
+    {
+      "method": "GET",
+      "path": "/api/v1/admin/content-reviews/53697a56-f763-45fb-b447-392bc9c67c79",
+      "status": 403
+    },
+    {
+      "method": "GET",
+      "path": "/api/v1/admin/content-reviews/53697a56-f763-45fb-b447-392bc9c67c79/reference",
+      "status": 403
+    },
+    {
+      "method": "GET",
+      "path": "/api/v1/admin/public-problems",
+      "status": 403
+    },
+    {
+      "method": "GET",
+      "path": "/api/v1/admin/feedback-cases",
+      "status": 403
+    },
+    {
+      "method": "POST",
+      "path": "/api/v1/admin/content-reviews/53697a56-f763-45fb-b447-392bc9c67c79/recheck",
+      "status": 202
+    },
+    {
+      "method": "POST",
+      "path": "/api/v1/admin/content-reviews/53697a56-f763-45fb-b447-392bc9c67c79/recheck",
+      "status": 202
+    },
+    {
+      "method": "POST",
+      "path": "/api/v1/admin/content-reviews/53697a56-f763-45fb-b447-392bc9c67c79/approve",
+      "status": 409
+    },
+    {
+      "method": "POST",
+      "path": "/api/v1/admin/content-reviews/53697a56-f763-45fb-b447-392bc9c67c79/approve",
+      "status": 200
+    },
+    {
+      "method": "POST",
+      "path": "/api/v1/admin/content-reviews/53697a56-f763-45fb-b447-392bc9c67c79/approve",
+      "status": 200
+    },
+    {
+      "method": "GET",
+      "path": "/api/v1/problems/public-24aff609-6327-4df2-bf8d-dc7828710dc4",
+      "status": 200
+    },
+    {
+      "method": "POST",
+      "path": "/api/v1/me/public-problems/public-24aff609-6327-4df2-bf8d-dc7828710dc4/revisions",
+      "status": 201
+    },
+    {
+      "method": "POST",
+      "path": "/api/v1/me/public-problems/public-24aff609-6327-4df2-bf8d-dc7828710dc4/revisions",
+      "status": 201
+    },
+    {
+      "method": "GET",
+      "path": "/api/v1/me/authored-problems/64aae26f-6d44-44f9-877a-edd16e40da8b/validations",
+      "status": 200
+    },
+    {
+      "method": "POST",
+      "path": "/api/v1/me/public-problems/public-24aff609-6327-4df2-bf8d-dc7828710dc4/revisions",
+      "status": 404
+    },
+    {
+      "method": "PUT",
+      "path": "/api/v1/me/authored-problems/64aae26f-6d44-44f9-877a-edd16e40da8b",
+      "status": 200
+    },
+    {
+      "method": "POST",
+      "path": "/api/v1/me/authored-problems/64aae26f-6d44-44f9-877a-edd16e40da8b/validations",
+      "status": 202
+    },
+    {
+      "method": "POST",
+      "path": "/api/v1/me/authored-problems/64aae26f-6d44-44f9-877a-edd16e40da8b/reviews",
+      "status": 202
+    },
+    {
+      "method": "GET",
+      "path": "/api/v1/admin/content-reviews/ee550425-cfd2-4e21-ada0-c373073e6e73",
+      "status": 200
+    },
+    {
+      "method": "POST",
+      "path": "/api/v1/admin/content-reviews/ee550425-cfd2-4e21-ada0-c373073e6e73/approve",
+      "status": 200
+    },
+    {
+      "method": "POST",
+      "path": "/api/v1/admin/content-reviews/ee550425-cfd2-4e21-ada0-c373073e6e73/approve",
+      "status": 200
+    },
+    {
+      "method": "GET",
+      "path": "/api/v1/problems/public-24aff609-6327-4df2-bf8d-dc7828710dc4",
+      "status": 200
+    },
+    {
+      "method": "POST",
+      "path": "/api/v1/problems/public-24aff609-6327-4df2-bf8d-dc7828710dc4/feedbacks",
+      "status": 201
+    },
+    {
+      "method": "POST",
+      "path": "/api/v1/problems/public-24aff609-6327-4df2-bf8d-dc7828710dc4/feedbacks",
+      "status": 201
+    },
+    {
+      "method": "GET",
+      "path": "/api/v1/problems/public-24aff609-6327-4df2-bf8d-dc7828710dc4/feedbacks",
+      "status": 200
+    },
+    {
+      "method": "GET",
+      "path": "/api/v1/admin/feedback-cases/a5d0ded1-894b-4686-bef0-05107b0921cd",
+      "status": 200
+    },
+    {
+      "method": "POST",
+      "path": "/api/v1/admin/feedback-cases/a5d0ded1-894b-4686-bef0-05107b0921cd/close",
+      "status": 200
+    },
+    {
+      "method": "POST",
+      "path": "/api/v1/problems/public-24aff609-6327-4df2-bf8d-dc7828710dc4/feedbacks",
+      "status": 201
+    },
+    {
+      "method": "POST",
+      "path": "/api/v1/problems/public-24aff609-6327-4df2-bf8d-dc7828710dc4/feedbacks",
+      "status": 201
+    },
+    {
+      "method": "POST",
+      "path": "/api/v1/classrooms",
+      "status": 201
+    },
+    {
+      "method": "POST",
+      "path": "/api/v1/classrooms/50222e15-9e65-4089-8014-bbd777906fe3/invite",
+      "status": 200
+    },
+    {
+      "method": "POST",
+      "path": "/api/v1/classrooms/join",
+      "status": 200
+    },
+    {
+      "method": "POST",
+      "path": "/api/v1/classrooms/50222e15-9e65-4089-8014-bbd777906fe3/assignments",
+      "status": 201
+    },
+    {
+      "method": "POST",
+      "path": "/api/v1/classrooms/50222e15-9e65-4089-8014-bbd777906fe3/assignments/6b693a61-0a05-4f6e-98c7-747289d5a115/publish",
+      "status": 200
+    },
+    {
+      "method": "POST",
+      "path": "/api/v1/classrooms/50222e15-9e65-4089-8014-bbd777906fe3/assignments/6b693a61-0a05-4f6e-98c7-747289d5a115/problems/public-24aff609-6327-4df2-bf8d-dc7828710dc4/submissions",
+      "status": 202
+    },
+    {
+      "method": "GET",
+      "path": "/api/v1/classrooms/50222e15-9e65-4089-8014-bbd777906fe3/assignments/6b693a61-0a05-4f6e-98c7-747289d5a115",
+      "status": 200
+    },
+    {
+      "method": "GET",
+      "path": "/api/v1/admin/public-problems",
+      "status": 200
+    },
+    {
+      "method": "POST",
+      "path": "/api/v1/admin/public-problems/103/archive",
+      "status": 200
+    },
+    {
+      "method": "POST",
+      "path": "/api/v1/problems/public-24aff609-6327-4df2-bf8d-dc7828710dc4/submissions",
+      "status": 404
+    },
+    {
+      "method": "POST",
+      "path": "/api/v1/problems/public-24aff609-6327-4df2-bf8d-dc7828710dc4/self-tests",
+      "status": 404
+    },
+    {
+      "method": "POST",
+      "path": "/api/v1/admin/public-problems/103/restore",
+      "status": 200
+    },
+    {
+      "method": "POST",
+      "path": "/api/v1/admin/public-problems/103/invalidate",
+      "status": 200
+    },
+    {
+      "method": "POST",
+      "path": "/api/v1/admin/public-problems/103/restore",
+      "status": 409
+    },
+    {
+      "method": "GET",
+      "path": "/api/v1/submissions/407a6a07-efd1-4d85-b86c-b6ce4b96aa3f",
+      "status": 200
+    },
+    {
+      "method": "GET",
+      "path": "/api/v1/classrooms/50222e15-9e65-4089-8014-bbd777906fe3/assignments/6b693a61-0a05-4f6e-98c7-747289d5a115",
+      "status": 200
+    },
+    {
+      "method": "GET",
+      "path": "/api/v1/classrooms/50222e15-9e65-4089-8014-bbd777906fe3/assignments/6b693a61-0a05-4f6e-98c7-747289d5a115/teaching/grades",
+      "status": 200
+    },
+    {
+      "method": "POST",
+      "path": "/api/v1/me/public-problems/public-24aff609-6327-4df2-bf8d-dc7828710dc4/revisions",
+      "status": 201
+    },
+    {
+      "method": "POST",
+      "path": "/api/v1/me/public-problems/public-24aff609-6327-4df2-bf8d-dc7828710dc4/revisions",
+      "status": 201
+    },
+    {
+      "method": "GET",
+      "path": "/api/v1/me/authored-problems/35755e2d-efc6-4091-b5e7-5edf8b9cd812/validations",
+      "status": 200
+    },
+    {
+      "method": "POST",
+      "path": "/api/v1/me/public-problems/public-24aff609-6327-4df2-bf8d-dc7828710dc4/revisions",
+      "status": 404
+    },
+    {
+      "method": "PUT",
+      "path": "/api/v1/me/authored-problems/35755e2d-efc6-4091-b5e7-5edf8b9cd812",
+      "status": 200
+    },
+    {
+      "method": "PUT",
+      "path": "/api/v1/me/authored-problems/35755e2d-efc6-4091-b5e7-5edf8b9cd812/tests",
+      "status": 200
+    },
+    {
+      "method": "POST",
+      "path": "/api/v1/me/authored-problems/35755e2d-efc6-4091-b5e7-5edf8b9cd812/validations",
+      "status": 202
+    },
+    {
+      "method": "POST",
+      "path": "/api/v1/me/authored-problems/35755e2d-efc6-4091-b5e7-5edf8b9cd812/reviews",
+      "status": 202
+    },
+    {
+      "method": "POST",
+      "path": "/api/v1/admin/content-reviews/b6d2d346-802e-4825-839f-f908c163a3b0/approve",
+      "status": 200
+    },
+    {
+      "method": "POST",
+      "path": "/api/v1/admin/content-reviews/b6d2d346-802e-4825-839f-f908c163a3b0/approve",
+      "status": 200
+    },
+    {
+      "method": "GET",
+      "path": "/api/v1/problems/public-d1d4418c-d291-4116-b855-bfb911f32d74",
+      "status": 200
+    },
+    {
+      "method": "GET",
+      "path": "/api/v1/me/problems/public-d1d4418c-d291-4116-b855-bfb911f32d74/solution",
+      "status": 200
+    },
+    {
+      "method": "GET",
+      "path": "/api/v1/me/submissions",
+      "status": 200
+    },
+    {
+      "method": "POST",
+      "path": "/api/v1/problems/public-d1d4418c-d291-4116-b855-bfb911f32d74/self-tests",
+      "status": 202
+    },
+    {
+      "method": "GET",
+      "path": "/api/v1/me/submissions",
+      "status": 200
+    },
+    {
+      "method": "GET",
+      "path": "/api/v1/me/problems/public-d1d4418c-d291-4116-b855-bfb911f32d74/solution",
+      "status": 200
+    },
+    {
+      "method": "POST",
+      "path": "/api/v1/problems/public-d1d4418c-d291-4116-b855-bfb911f32d74/submissions",
+      "status": 202
+    },
+    {
+      "method": "POST",
+      "path": "/api/v1/problems/public-d1d4418c-d291-4116-b855-bfb911f32d74/submissions",
+      "status": 202
+    },
+    {
+      "method": "GET",
+      "path": "/api/v1/me/problems/public-d1d4418c-d291-4116-b855-bfb911f32d74/solution",
+      "status": 200
+    },
+    {
+      "method": "POST",
+      "path": "/api/v1/problems/public-d1d4418c-d291-4116-b855-bfb911f32d74/feedbacks",
+      "status": 201
+    },
+    {
+      "method": "POST",
+      "path": "/api/v1/problems/public-d1d4418c-d291-4116-b855-bfb911f32d74/feedbacks",
+      "status": 201
+    },
+    {
+      "method": "GET",
+      "path": "/api/v1/problems/public-d1d4418c-d291-4116-b855-bfb911f32d74/feedbacks",
+      "status": 200
+    },
+    {
+      "method": "POST",
+      "path": "/api/v1/me/public-problems/public-d1d4418c-d291-4116-b855-bfb911f32d74/revisions",
+      "status": 201
+    },
+    {
+      "method": "POST",
+      "path": "/api/v1/me/public-problems/public-d1d4418c-d291-4116-b855-bfb911f32d74/revisions",
+      "status": 201
+    },
+    {
+      "method": "GET",
+      "path": "/api/v1/me/authored-problems/21843dc2-df4a-4356-a13e-aab9e68ce292/validations",
+      "status": 200
+    },
+    {
+      "method": "POST",
+      "path": "/api/v1/me/public-problems/public-d1d4418c-d291-4116-b855-bfb911f32d74/revisions",
+      "status": 404
+    },
+    {
+      "method": "POST",
+      "path": "/api/v1/me/authored-problems/21843dc2-df4a-4356-a13e-aab9e68ce292/validations",
+      "status": 202
+    },
+    {
+      "method": "POST",
+      "path": "/api/v1/me/authored-problems/21843dc2-df4a-4356-a13e-aab9e68ce292/reviews",
+      "status": 202
+    }
+  ],
+  "jobs": [
+    {
+      "id": "8aadcd09-441a-494f-8824-267f568771dc",
+      "draftId": "dd99ceae-5b80-46f6-9209-c0b7ace5ba14",
+      "version": 3,
+      "processingStatus": "FINISHED",
+      "validationStatus": "PASSED"
+    },
+    {
+      "id": "3c69e611-12a6-43ed-87a0-7c11a2912479",
+      "draftId": "dd99ceae-5b80-46f6-9209-c0b7ace5ba14",
+      "version": 4,
+      "processingStatus": "FINISHED",
+      "validationStatus": "PASSED"
+    },
+    {
+      "id": "d44206d9-c2da-4d33-b83d-ee1c8987d4f4",
+      "draftId": "dd99ceae-5b80-46f6-9209-c0b7ace5ba14",
+      "version": 4,
+      "processingStatus": "FINISHED",
+      "validationStatus": "PASSED"
+    },
+    {
+      "id": "16a76f4b-13f0-46ee-9f5c-687085e76f47",
+      "draftId": "64aae26f-6d44-44f9-877a-edd16e40da8b",
+      "version": 2,
+      "processingStatus": "FINISHED",
+      "validationStatus": "PASSED"
+    },
+    {
+      "id": "104ed8f8-4f1e-4005-8e59-56136767bbc4",
+      "draftId": "35755e2d-efc6-4091-b5e7-5edf8b9cd812",
+      "version": 3,
+      "processingStatus": "FINISHED",
+      "validationStatus": "PASSED"
+    },
+    {
+      "id": "cacc82a7-b659-4ae0-a291-fcfc90d98a76",
+      "draftId": "21843dc2-df4a-4356-a13e-aab9e68ce292",
+      "version": 1,
+      "processingStatus": "FINISHED",
+      "validationStatus": "PASSED"
+    }
+  ],
+  "formal": [
+    {
+      "id": "407a6a07-efd1-4d85-b86c-b6ce4b96aa3f",
+      "verdict": "AC"
+    },
+    {
+      "id": "8337589c-669d-43af-b875-c58348ca666e",
+      "verdict": "WA"
+    },
+    {
+      "id": "1ee00654-a555-4091-b633-c800c650f9d8",
+      "verdict": "AC"
+    }
+  ],
+  "reviews": [
+    {
+      "id": "f9aef26a-bc06-4528-9fc9-cd98b4bdd8bc",
+      "draftId": "dd99ceae-5b80-46f6-9209-c0b7ace5ba14",
+      "validationId": "8aadcd09-441a-494f-8824-267f568771dc"
+    },
+    {
+      "id": "53697a56-f763-45fb-b447-392bc9c67c79",
+      "draftId": "dd99ceae-5b80-46f6-9209-c0b7ace5ba14",
+      "validationId": "3c69e611-12a6-43ed-87a0-7c11a2912479"
+    },
+    {
+      "id": "ee550425-cfd2-4e21-ada0-c373073e6e73",
+      "draftId": "64aae26f-6d44-44f9-877a-edd16e40da8b",
+      "validationId": "16a76f4b-13f0-46ee-9f5c-687085e76f47"
+    },
+    {
+      "id": "b6d2d346-802e-4825-839f-f908c163a3b0",
+      "draftId": "35755e2d-efc6-4091-b5e7-5edf8b9cd812",
+      "validationId": "104ed8f8-4f1e-4005-8e59-56136767bbc4"
+    },
+    {
+      "id": "b4b1c0dd-5e45-430a-bad5-0cc1b5240611",
+      "draftId": "21843dc2-df4a-4356-a13e-aab9e68ce292",
+      "validationId": "cacc82a7-b659-4ae0-a291-fcfc90d98a76"
+    }
+  ],
+  "initialReview": "53697a56-f763-45fb-b447-392bc9c67c79",
+  "recheckId": "d44206d9-c2da-4d33-b83d-ee1c8987d4f4",
+  "oldSlug": "public-24aff609-6327-4df2-bf8d-dc7828710dc4",
+  "correctedSlug": "public-d1d4418c-d291-4116-b855-bfb911f32d74",
+  "oldProblemId": 103,
+  "oldSubmissionId": "407a6a07-efd1-4d85-b86c-b6ce4b96aa3f",
+  "selfTestId": "9794ba72-29c0-4e0f-855f-6a77897fd448",
+  "classroomId": "50222e15-9e65-4089-8014-bbd777906fe3",
+  "assignmentId": "6b693a61-0a05-4f6e-98c7-747289d5a115",
+  "feedbackCaseId": "a5d0ded1-894b-4686-bef0-05107b0921cd",
+  "browserFeedbackCaseId": "bfcbd831-b95b-4eb7-90e8-e18f9912d5f6",
+  "browserReviewId": "b4b1c0dd-5e45-430a-bad5-0cc1b5240611",
+  "browserDraftId": "21843dc2-df4a-4356-a13e-aab9e68ce292",
+  "copyDoesNotInheritPassed": true,
+  "textJudgePreserved": true,
+  "oldAcIsolated": true,
+  "invalidAssignmentPreservesAttempts": true
+}

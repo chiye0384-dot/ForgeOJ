@@ -1,0 +1,11 @@
+{"id": "c9de7628-77bb-4316-96bd-a804b9d04922", "status": "FINISHED", "verdict": "AC", "taskCount": 1, "sourceDigestMatches": true}
+{"id": "a94cc6b1-2d36-4168-a2a4-11faa3a27a4a", "status": "FINISHED", "verdict": "WA", "taskCount": 1, "sourceDigestMatches": true}
+{"id": "c6166ecf-8cb1-4320-88c4-debf6e609012", "status": "FINISHED", "verdict": "CE", "taskCount": 1, "sourceDigestMatches": true}
+{"id": "97190a10-9238-4bd5-b896-3aa339664a22", "status": "FINISHED", "verdict": "RE", "taskCount": 1, "sourceDigestMatches": true}
+{"id": "44390261-b98a-4eea-af26-13e05b08d6bc", "status": "FINISHED", "verdict": "TLE", "taskCount": 1, "sourceDigestMatches": true}
+{"id": "ac3c5324-a25c-43d2-b79d-c4345804a53f", "status": "FINISHED", "verdict": "OLE", "taskCount": 1, "sourceDigestMatches": true}
+{"id": "2c0e5b8e-7d7a-4179-8e6a-34b370d25b87", "status": "FINISHED", "verdict": "MLE", "taskCount": 1, "sourceDigestMatches": true}
+{"id": "04ee865d-ae60-4765-8f2a-4bc20993c63f", "status": "FINISHED", "verdict": "SECURITY_VIOLATION", "taskCount": 1, "sourceDigestMatches": true}
+{"id": "ade177fe-4a9c-4be5-8650-c83f188c66a8", "status": "CANCELLED", "verdict": null, "taskCount": 1, "sourceDigestMatches": true}
+{"id": "9bbafb79-1ef1-4577-ac5f-c6817b42dcd0", "status": "FINISHED", "verdict": "AC", "taskCount": 1, "sourceDigestMatches": true}
+{"id": "a993f304-1d02-40f3-83d8-e2fa6c1ffb5c", "status": "FINISHED", "verdict": "AC", "taskCount": 1, "sourceDigestMatches": true}

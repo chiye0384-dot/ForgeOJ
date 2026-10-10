@@ -29,9 +29,15 @@
   },
   "sameJarReplay": "VERIFIED",
   "nextActionExecuted": true,
-  "block": "Push rejected by automatic approval: exact GitHub repository/branch upload requires explicit trusted user authorization; not bypassed.",
-  "unitCommit": "3abd1d9482fd905df386a0c4c709b2b0a5b813c5 (local only)",
+  "block": null,
+  "unitCommit": "3abd1d9482fd905df386a0c4c709b2b0a5b813c5 (pushed; checkpoint 70042f87b6c79ff3a73c7d9c0b3032afb9ff22be)",
   "fullM4": "IN_PROGRESS",
   "replay": "target/forgeoj-e2e-20261010-090029-fb7dc71a",
-  "cleanup": "ALL_ZERO"
+  "cleanup": "ALL_ZERO",
+  "delivery": {
+    "verifiedRemote": "70042f87b6c79ff3a73c7d9c0b3032afb9ff22be",
+    "repository": "https://github.com/chiye0384-dot/ForgeOJ.git",
+    "branch": "feat/m2-accounts",
+    "checkedAt": "2026-10-10T01:35:23.332Z"
+  }
 }

@@ -1,6 +1,8 @@
 # ForgeOJ
 
-2026-10-10 当前：M4第5步 Redis 与故障降级已 **[VERIFIED](docs/M4-REDIS-VALIDATION.md)**。固定Linux API289+Worker133=422、前端124项及全部检查通过；同JAR双API、真实Redis故障/清空、108项HTTP、两次真实AC、浏览器撤权/降级、数据库事实及精确清理通过。完整M4仍IN_PROGRESS，第6步ES/第7步监控尚未开始。下方带日期记录为历史，以本段和最终机器证据为准。
+2026-10-10增量：第5步已推送并核验70042f8；用户授权第6步公共搜索，当前IN_PROGRESS（设计/上游评估），见[公共搜索设计](docs/M4-SEARCH-DESIGN.md)。暂无业务实现或新验收；ELv2待确认，额度约剩17%，按用户要求停在检查点。第7步未开始。以下第5步验收记录继续有效。
+
+2026-10-10 当前：M4第5步 Redis 与故障降级已 **[VERIFIED](docs/M4-REDIS-VALIDATION.md)**。固定Linux API289+Worker133=422、前端124项及全部检查通过；同JAR双API、真实Redis故障/清空、108项HTTP、两次真实AC、浏览器撤权/降级、数据库事实及精确清理通过。完整M4仍IN_PROGRESS，第6步搜索已进入设计/上游评估，第7步监控未开始。下方带日期记录为历史，以本段和最终机器证据为准。
 
 2026-10-08：M4第2步独立管理员身份单元 **VERIFIED**。V18、独立后台登录/刷新/改密/撤销、单角色账号维护、持久审计与显式初始化/恢复CLI已交付；固定Linux API245、Worker133零失败/错误/跳过，前端107及所有检查通过。相同JAR/前端输入的真实HTTP86、三角色页面/撤权清空、交互CLI、SQL隔离、判题与班级回归及精确清理均关联通过。见 [验收](docs/M4-ADMIN-IDENTITY-VALIDATION.md)、[证据](docs/evidence/m4-admin-identity/README.md)、[CLI](docs/M4-ADMIN-CLI.md) 和 [最新交接](docs/M4-NEXT-CHAT-HANDOFF.md)。仅第2步完成，完整M4仍IN_PROGRESS；下一单元公共题审核治理本轮不开始。M-1至M3保持VERIFIED，下方日期记录保留历史。
 

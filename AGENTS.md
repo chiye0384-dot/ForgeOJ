@@ -1,5 +1,7 @@
 # ForgeOJ agent instructions
 
+2026-10-10交付检查点：实现及验收已本地提交为3abd1d9482fd905df386a0c4c709b2b0a5b813c5；尚未推送。自动审批拒绝向https://github.com/chiye0384-dot/ForgeOJ.git的feat/m2-accounts上传代码/文档/证据，理由是当前可见可信用户内容未明确授权该具体目的地与外传。命令未执行，未绕过；本地提交已完成。用户明确批准推送该仓库和分支后才重试，远端最后核验仍4eb49c0。本段之后可能有记录检查点的文档提交，以git log为准。第5步VERIFIED不受此交付阻断影响，完整M4仍IN_PROGRESS；不要开始ES/监控。
+
 ## Current M4 step5 verified checkpoint — 2026-10-10
 
 M4 step5 is VERIFIED; full M4 remains IN_PROGRESS. Read docs/M4-STEP4-NEW-CHAT-START.md, docs/M4-REDIS-DESIGN.md, docs/M4-REDIS-VALIDATION.md and docs/evidence/m4-redis/verification.json. D-043～D-046 accepted choices must not be asked again.

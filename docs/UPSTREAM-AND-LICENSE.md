@@ -292,3 +292,7 @@ Maven、npm、Docker 镜像和操作系统包都属于第三方组成。Release 
 > 基于经许可证核验的通用工程骨架，保留基础页面与通用设施；自行设计并实现 ForgeOJ 的判题任务、Outbox、Judge Worker、沙箱、班级权限和故障恢复链路。
 
 最终表述必须以实际采用记录为准。M-1 阶段只证明官方最小生成骨架；当前 M0/M1 及普通账号单元的自有业务实现与验证入口见 `OWNERSHIP.md`、`M0-E2E-VALIDATION.md`、`M1-GATE-AUDIT.md` 和 [账号验收](M2-ACCOUNTS-VALIDATION.md)，不能把框架/内核能力、其余 M2～M5 计划或未发布能力写成本人已完成的发布成果。
+
+### U-012：Elasticsearch第6步候选（尚未引入）
+
+2026-10-10，仅上游/许可/registry元数据评估，无源码复制、依赖引入、镜像拉取/运行或Release。官方ES9.5.3候选及多平台/amd64/arm64不可变摘要、原始许可链接和复用/原创边界见[M4-SEARCH-DESIGN](M4-SEARCH-DESIGN.md)。默认发行ELv2，免费Basic，ForgeOJ自有源码保持Apache-2.0；尚待用户明确许可确认后才采用，实际镜像LICENSE/NOTICE和运行版本留首次接入核验。已读取官方索引external版本、DELETE版本清理、alias和内置CJK文档用于设计，不把这些协议/分词能力记为自研。不新增云费用，不扩展为ES托管服务。

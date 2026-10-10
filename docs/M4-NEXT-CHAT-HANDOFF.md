@@ -1,5 +1,7 @@
 # ForgeOJ：M4 第5步已验收
 
+2026-10-10交付检查点：实现及验收已本地提交为3abd1d9482fd905df386a0c4c709b2b0a5b813c5；尚未推送。自动审批拒绝向https://github.com/chiye0384-dot/ForgeOJ.git的feat/m2-accounts上传代码/文档/证据，理由是当前可见可信用户内容未明确授权该具体目的地与外传。命令未执行，未绕过；本地提交已完成。用户明确批准推送该仓库和分支后才重试，远端最后核验仍4eb49c0。本段之后可能有记录检查点的文档提交，以git log为准。第5步VERIFIED不受此交付阻断影响，完整M4仍IN_PROGRESS；不要开始ES/监控。
+
 ## 当前权威检查点：第5步VERIFIED（2026-10-10）
 
 固定Linux接受构建：`target/forgeoj-linux-20261010-081555-deb02bb5`，API289/50 suites、Worker133/23 suites，零失败/错误/跳过；前端124/24及全部检查通过。390业务/前端输入匹配，82个前端输入同时匹配挂载和实际提供内容。API SHA256 `4a13a56a97d531ef3457216e10fabfdaa3f903e0027563b1f009faa54188959d`；Worker `e142de6b117ad1edc0a1554c4c71db0a720d4e5100930b0379240a0985f9e3e2`。

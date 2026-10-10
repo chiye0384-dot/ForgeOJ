@@ -1,5 +1,7 @@
 # ForgeOJ 接手说明：M4 第5步已验收
 
+2026-10-10交付检查点：实现及验收已本地提交为3abd1d9482fd905df386a0c4c709b2b0a5b813c5；尚未推送。自动审批拒绝向https://github.com/chiye0384-dot/ForgeOJ.git的feat/m2-accounts上传代码/文档/证据，理由是当前可见可信用户内容未明确授权该具体目的地与外传。命令未执行，未绕过；本地提交已完成。用户明确批准推送该仓库和分支后才重试，远端最后核验仍4eb49c0。本段之后可能有记录检查点的文档提交，以git log为准。第5步VERIFIED不受此交付阻断影响，完整M4仍IN_PROGRESS；不要开始ES/监控。
+
 2026-10-10，Asia/Shanghai。本文件名保留以维护既有入口；当前只读启动事实是第5步VERIFIED、完整M4 IN_PROGRESS。此前“第4步未开始”“第5步进行中”和运行中session都已过时，不恢复旧栈/URL。
 
 实际仓库D:\Java项目\ForgeOJ，父目录D:\Java项目。先核验git status/branch/log、远端同名分支与保护文件摘要，保留无关文件。不得把旧构建通过当当前输入一致。

@@ -16,10 +16,12 @@ class SubmissionTransactionService {
 
     private final SubmissionMapper submissionMapper;
     private final com.forgeoj.api.auth.AccountService accounts;
+    private final com.forgeoj.api.auth.AccountRateLimiter limits;
 
-    SubmissionTransactionService(SubmissionMapper submissionMapper, com.forgeoj.api.auth.AccountService accounts) {
+    SubmissionTransactionService(SubmissionMapper submissionMapper, com.forgeoj.api.auth.AccountService accounts,com.forgeoj.api.auth.AccountRateLimiter limits) {
         this.submissionMapper = submissionMapper;
         this.accounts = accounts;
+        this.limits=limits;
     }
 
     @Transactional
@@ -62,6 +64,7 @@ class SubmissionTransactionService {
     // Called only within an authorized, quota-locked creation transaction.
     SubmissionResult enqueue(long userId,JudgeVersionSnapshot judgeVersion,UUID clientRequestId,
             String language,String sourceCode,String sourceSha256) {
+        limits.check("submit-account:"+userId,60,60);
         String submissionId = UUID.randomUUID().toString();
         String taskId = UUID.randomUUID().toString();
         String eventId = UUID.randomUUID().toString();

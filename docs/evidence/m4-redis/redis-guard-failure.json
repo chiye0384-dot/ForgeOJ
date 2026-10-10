@@ -1,0 +1,6 @@
+{
+  "scope": "only-owned-test-db-login_session-table-select",
+  "positiveIdentityCacheKeys": 1,
+  "restored": true,
+  "at": "2026-10-10T09:11:29.5997089+08:00"
+}

@@ -1,0 +1,39 @@
+{
+  "status": "VERIFIED",
+  "scope": "M4 step5 Redis/degradation only",
+  "checkedAt": "2026-10-10T01:23:35.473Z",
+  "build": "target\\forgeoj-linux-20261010-081555-deb02bb5",
+  "replay": "target\\forgeoj-e2e-20261010-090029-fb7dc71a",
+  "api": {
+    "tests": 289,
+    "suites": 50,
+    "sha256": "4a13a56a97d531ef3457216e10fabfdaa3f903e0027563b1f009faa54188959d"
+  },
+  "worker": {
+    "tests": 133,
+    "suites": 23,
+    "sha256": "e142de6b117ad1edc0a1554c4c71db0a720d4e5100930b0379240a0985f9e3e2"
+  },
+  "frontend": {
+    "tests": 124,
+    "suites": 24,
+    "allChecksPassed": true
+  },
+  "httpChecks": 108,
+  "redisRealAc": 2,
+  "sharedApiInstances": 2,
+  "pendingInvalidationsReplayed": 2,
+  "sqlDenials": 4,
+  "cleanup": {
+    "ownedContainers": 0,
+    "managedSandboxes": 0,
+    "builders": 0,
+    "testcontainers": 0,
+    "checkedAt": "2026-10-10T09:19:14.5676470+08:00",
+    "ownedNetworks": 0,
+    "ownedImages": 0,
+    "ownedVolumes": 0
+  },
+  "dependenciesCompared": 22,
+  "fullM4": "IN_PROGRESS"
+}

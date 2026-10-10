@@ -1,10 +1,11 @@
 # Copyright 2026 池也; SPDX-License-Identifier: Apache-2.0
 [CmdletBinding()]
-param([ValidateSet('Setup','Revoke','Archive','CaptureRuntime','Audit','CleanupSnapshot')][string]$Action,[Parameter(Mandatory)][string]$RunDirectory,[string]$DockerCommand='docker')
+param([ValidateSet('Setup','ResetAssistant','Revoke','Archive','CaptureRuntime','Audit','CleanupSnapshot')][string]$Action,[Parameter(Mandatory)][string]$RunDirectory,[string]$DockerCommand='docker')
 $ErrorActionPreference='Stop'
 $repository=(Resolve-Path (Join-Path $PSScriptRoot '../..')).Path
 $RunDirectory=(Resolve-Path -LiteralPath $RunDirectory).Path
 $state=Get-Content (Join-Path $RunDirectory 'state.json') -Raw | ConvertFrom-Json
+$env:FORGEOJ_E2E_REDIS_ENABLED = $(if ($state.PSObject.Properties.Name -contains 'RedisEnabled' -and $state.RedisEnabled) { 'true' } else { 'false' })
 if(-not $RunDirectory.StartsWith((Join-Path $repository 'target')+[IO.Path]::DirectorySeparatorChar) -or (Split-Path -Leaf $RunDirectory) -ne $state.Project -or $state.Project -notmatch '^forgeoj-e2e-[0-9-]+-[a-f0-9]{8}$'){throw 'Owned replay directory mismatch'}
 $env:FORGEOJ_E2E_SOURCE=$repository;$env:FORGEOJ_E2E_PROJECT=$state.Project;$env:FORGEOJ_E2E_ARTIFACTS=$state.BuildDirectory;$env:FORGEOJ_E2E_REPORTS=$RunDirectory
 $compose=Join-Path $PSScriptRoot 'compose.replay.yml'
@@ -17,12 +18,13 @@ if($Action -eq 'CleanupSnapshot'){
   Copy-Item -LiteralPath (Join-Path $RunDirectory 'assignment-cleanup.json') -Destination (Join-Path $RunDirectory 'teacher-cleanup.json')
   exit
 }
-if($Action -in @('Setup','Revoke','Archive')){
+if($Action -in @('Setup','ResetAssistant','Revoke','Archive')){
   if($Action -eq 'Setup'){
     $lines=foreach($name in @('tools/validation/Verify-M3TeacherReplay.ps1','tools/validation/replay-teacher-records.mjs','tools/validation/replay-teacher-audit.mjs')){(Get-FileHash (Join-Path $repository $name)).Hash.ToLower()+'  '+$name}
     Save 'teacher-tool-inputs.sha256' $lines
   }
-  Compose @('exec','-T','frontend','node','/source/tools/validation/replay-teacher-records.mjs',$Action.ToLower()) | Out-Host
+  $phase=if($Action -eq 'ResetAssistant'){'reset-assistant'}else{$Action.ToLower()}
+  Compose @('exec','-T','frontend','node','/source/tools/validation/replay-teacher-records.mjs',$phase) | Out-Host
   exit
 }
 if($Action -eq 'CaptureRuntime'){

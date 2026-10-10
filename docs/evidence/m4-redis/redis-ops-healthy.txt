@@ -1,0 +1,62 @@
+- banner:
+  - generic: F
+  - heading "ForgeOJ" [level=1]
+  - paragraph: Java 21 在线练习与判题
+  - navigation "主导航":
+    - link "题库":
+      - /url: /problems
+    - link "学习记录":
+      - /url: /learning
+    - link "班级":
+      - /url: /classrooms
+    - link "我的题目":
+      - /url: /authoring
+    - link "做题":
+      - /url: /
+    - link "账号":
+      - /url: /account
+    - link "管理后台":
+      - /url: /admin/login
+- main:
+  - heading "任务运维" [level=2]
+  - navigation:
+    - link "管理首页":
+      - /url: /admin
+    - text: ·
+    - link "后台登录":
+      - /url: /admin/login
+    - button "刷新"
+  - paragraph: 当前账号：redis_ops。查询仅展示执行和投递元数据。
+  - text: 用途
+  - combobox "用途":
+    - option "全部" [selected]
+    - option "正式判题"
+    - option "双程序验证"
+    - option "参考输出预览"
+    - option "独立自测"
+  - text: 任务ID
+  - textbox "任务ID"
+  - text: 状态
+  - combobox "状态":
+    - option "全部异常" [selected]
+    - option "QUEUED"
+    - option "RUNNING"
+    - option "RETRYING"
+    - option "WAITING_RETRY"
+    - option "SYSTEM_ERROR"
+    - option "DEAD_LETTER"
+  - button "查询"
+  - paragraph: 异常任务 0 条 · 第 1 页
+  - table:
+    - rowgroup:
+      - row "用途 / 任务 状态 执行次数 平台失败码 创建时间（数据库时间） 详情":
+        - columnheader "用途 / 任务"
+        - columnheader "状态"
+        - columnheader "执行次数"
+        - columnheader "平台失败码"
+        - columnheader "创建时间（数据库时间）"
+        - columnheader "详情"
+    - rowgroup
+  - navigation:
+    - button "上一页" [disabled]
+    - button "下一页" [disabled]

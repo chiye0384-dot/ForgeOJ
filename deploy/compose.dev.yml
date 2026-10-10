@@ -1,6 +1,22 @@
 name: forgeoj-dev
 
 services:
+  redis:
+    profiles: [redis]
+    image: redis:7.2.16-alpine@sha256:29e8589c3f9ba699b5f7aa4b3c7733c58852a3626439e619aa0ee78de08c6ca0
+    platform: linux/amd64
+    environment:
+      REDIS_PASSWORD: ${FORGEOJ_REDIS_PASSWORD:-}
+    # Interpolation happens even for inactive profiles; require the password only at Redis startup.
+    command: [sh, -c, 'if [ -z "$$REDIS_PASSWORD" ]; then echo "Set a private Redis password before enabling the redis profile" >&2; exit 1; fi; exec redis-server --requirepass "$$REDIS_PASSWORD" --maxmemory 128mb --maxmemory-policy noeviction --save "" --appendonly no']
+    ports: ["127.0.0.1:${FORGEOJ_REDIS_PORT:-6379}:6379"]
+    healthcheck:
+      test: [CMD-SHELL, 'REDISCLI_AUTH="$$REDIS_PASSWORD" redis-cli ping | test "$$(cat)" = PONG']
+      interval: 5s
+      timeout: 2s
+      retries: 10
+    restart: unless-stopped
+
   mysql:
     image: container-registry.oracle.com/mysql/community-server:8.4.12@sha256:7dcc4add9183664de3a214daf85a50c3ba6cccfd7534f700b6561bf5b41885be
     platform: linux/amd64

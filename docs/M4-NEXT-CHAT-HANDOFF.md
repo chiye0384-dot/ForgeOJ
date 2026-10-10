@@ -1,4 +1,38 @@
-# ForgeOJ：M4 第4步已完成
+# ForgeOJ：M4 第5步已验收
+
+## 当前权威检查点：第5步VERIFIED（2026-10-10）
+
+固定Linux接受构建：`target/forgeoj-linux-20261010-081555-deb02bb5`，API289/50 suites、Worker133/23 suites，零失败/错误/跳过；前端124/24及全部检查通过。390业务/前端输入匹配，82个前端输入同时匹配挂载和实际提供内容。API SHA256 `4a13a56a97d531ef3457216e10fabfdaa3f903e0027563b1f009faa54188959d`；Worker `e142de6b117ad1edc0a1554c4c71db0a720d4e5100930b0379240a0985f9e3e2`。
+
+接受同JAR重放：`target/forgeoj-e2e-20261010-090029-fb7dc71a`。Redis专项108项HTTP、双API共享预算、7个同键回执仅1个Submission/task/event、Redis健康及暂停期间各一次真实AC、撤销/降级/停用时旧JWT仍未过期但均被拒绝、暂停期间至少2个失败失效事件恢复后全部交付、清空后旧回执保持且本机预算不重置。权限DB失败真实503空body/no-store且finally恢复授权。4项SQL拒绝、7队列全空、原作业截止前接受/截止后完成、Worker提交后ACK通过。浏览器6张截图/5份页面快照：OPS表、撤权后账号/表清空、暂停期间匿名题库、降级审核页可用及运维页拒绝；原异常列表为空，没有选中任务详情，不宣称详情清空。
+
+所有拥有者容器/卷/网络/镜像、builder、Testcontainers和managed sandbox精确清理全0。旧URL不可用，tab1保留在about:blank并标记deliverable，不能关闭它或Codex/ChatGPT。实际22个嵌套依赖JAR摘要匹配23项解析依赖目录（空starter不打包）。最终机器证据 `docs/evidence/m4-redis/verification.json`。仅证据审计器在回放后修正published标量子查询的数值1类型，原冻结脚本与当前摘要均保留；其余运行辅助及全部业务输入未变化。首次健康页只有截图，缺失文本未列入交付，未补造页面事实。
+
+本单元起点4eb49c0e4c88bd6624bdc1a63995953d8405fa09，分支feat/m2-accounts，远端https://github.com/chiye0384-dot/ForgeOJ.git。验收完成后按既有授权提交/推送这个功能分支，然后停止；交付SHA以当前Git/远端核验，不把起点当当前提交。下一单元第6步ES必须等新继续指令；第7步监控、M5、PR/main/tag/Release/RESUME_READY、真实数据库/SMTP/管理员初始化均不启动。用户额度不足及时停止的规则继续有效。
+
+保护文件只能Get-FileHash：docs/M2-NEXT-CHAT-HANDOFF.md e08acd3d26a8cd27aca394bdac91828e13b9455a86f62133c5bafc038b18c054；.smtp.qq.local 6df348a6404786791eb57c0dce9c9fb8968f7f0737de304f17d52c3900a03907。不读/输出/复制/暂存/覆盖/删除，禁止git add .、reset、clean。桌面连续性规则始终有效。
+
+## 历史检查点（仅追溯，以下旧接续步骤不再有效）
+
+## 最新检查点：响应头修复后重新全量构建（2026-10-10）
+
+审批已恢复。旧同JAR回放`target/forgeoj-e2e-20261010-080112-15ffe30c`通过基础回归、教师131项、作业161项、管理61项及Redis Healthy50项；GuardFailure正向缓存下返回503但无no-store，按原断言判失败。普通认证过滤器补no-store并清空上下文，原Redis专项补真实HTTP回归。业务输入变化后，20261009构建只属历史，不能用于最终交付；新完整Linux All目录`target/forgeoj-linux-20261010-081555-deb02bb5`，日志`target/m4-redis-linux-all-header-final.log`，须检查真实完成及新摘要。两旧栈已精确清理全0，tab1在about:blank且保留。没有step5交付提交。下方额度检查点是历史；额度不足及时停止仍是用户要求。
+
+下一次干净回放顺序：Matrix→WorkerStop→Permissions→WorkerStart→Library→Learning→Classroom→PrivateProblems→Assignment Setup/Queue/原UTC截止后Finish→Teacher Setup→Redis Bootstrap交互CLI→Admin Setup→Redis Setup→必要时等待真实登录预算→Healthy→立即GuardFailure→OPS浏览器→Pause/Outage/Pending→ResumeFlush/Recovered→浏览器撤权清空和审核角色/运维拒绝→Audit/CaptureRuntime→about:blank保留→Stop/CleanupSnapshot→证据审计→文档/功能分支交付→停止。Teacher先运行会把第三人变助教，影响Assignment晚加入前提，现有ResetAssistant可通过真实leave接口恢复LEFT，但干净重放采用前述顺序。Bootstrap使用已存在的公开fixture迁移维护账号，root仅允许本地连接，不给它加远程授权。辅助工具已修正UTC DateTime转换、Redis profile清理和重复夹具准备；任何失败仍须检查实际结果，不把工具预期当事实。
+
+## 最新检查点：额度阻断后停止（2026-10-09）
+
+用户最新要求“继续，如果额度不够做下一件事就及时停下来”。完整固定Linux All已完成、退出0：`target/forgeoj-linux-20261009-155402-e3d3bd3f`，API289/50 suites、Worker133/23 suites，零失败/错误/跳过；前端124/24及type/lint/format/build全通过。最新专项 `target/m4-redis-null-fallback.log` 11项通过。业务源码从最终构建后未再改动，之后仅调整文档/开发Compose/验收辅助工具；接续仍须按构建manifest逐字节复核输入。
+
+API SHA256 `bda76c023ffb0010fb7bcc633a8fc57e012672772b7602e3f04c0fd97545e984`；Worker `c13ce6bbcd913bdac46e0809f9d602c416e3c5fca2b858feecc09f2a06e6c565`。下一条独立重放启动的提权请求因自动审批服务提示额度不足而未执行；不是安全性否定，不绕过审批。启动动作没有创建本次Redis栈，也没有新浏览器tab；完整测试结束后builders/Testcontainers/managed sandbox已检查为空。旧step4重放目录均为已清理历史。未完成新单元，不提交/推送半成品，HEAD仍`4eb49c0`。
+
+下次正常审批可用后，用上述目录和两摘要执行`Replay-FixedLinux.ps1 -Action Start -EnableRedis`，Docker绝对路径仍`C:/Users/Lenovo/AppData/Local/Programs/DockerDesktop/resources/bin/docker.exe`。然后执行原Matrix/Permissions/Library/Learning/Classroom/PrivateProblems回归、Teacher Setup及Assignment Setup/Queue/真实截止后Finish；`Verify-M4RedisReplay Bootstrap`在唯一fixture里使用交互CLI创建`m4_super`（公开初始测试密码`m4-public-initial-admin-password`），`Verify-M4AdminReplay Setup`通过HTTP改密并准备隔离角色。禁止真实管理员初始化。
+
+Redis专项顺序：Setup启动第二API/普通fixture → 沿用真实300秒登录窗口，必要时等待，不能调高上限 → Healthy → 立即GuardFailure（必须已有正向缓存；临时REVOKE会话SELECT后503，finally恢复） → 实际OPS浏览器 → Pause → Outage（真实AC、旧普通会话拒绝、OPS降级/审核员停用、公共题归档/恢复） → Pending（至少两条真实失败失效事件） → ResumeFlush → Recovered → 旧OPS页面清空/当前审核角色及运维拒绝 → Audit（待失效全交付、暖缓存TTL/白名单、实际SQL拒绝、队列/冻结作业事实） → CaptureRuntime → 浏览器about:blank并markDeliverable → Replay Stop → CleanupSnapshot → Verify-M4RedisEvidence。
+
+新增`Verify-M4RedisEvidence.mjs`已语法检查，但尚未以真实重放运行，不能把预期字段当事实；遇到夹具/类型错误核对实际SQL/JSON修复，保留业务断言，不伪造浏览器结果或放松权限/幂等。Cua已选IAB浏览器ID2，目前无本次tab，不能拿旧tab1当有效句柄；需要时先重新读取文档/库存，只创建一次fixture tab并立即保留。私有Cookie文件`redis-private-clients.json`只留target，禁止复制/提交；证据只复制白名单安全文件。全部完成后更新VERIFIED、验收/限制/路线图/接手说明，按既有授权commit/push功能分支，然后停在第5步；ES/监控/M5不开始。
+
+2026-10-09 第4步已交付并推送 4eb49c0 后，用户授权继续第5步 Redis/降级；当前 IN_PROGRESS，设计见 M4-REDIS-DESIGN.md。先检查实际工作区和最新测试日志；完成第5步实现、固定环境验证、证据和既有分支交付后停止。第6/7步与完整 M4/M5 尚未完成。下方第4步是历史验收，旧等待第5步授权的文字已被本次继续取代；不恢复旧运行 session。
 
 ## 当前交接：第4步 VERIFIED，完整M4 IN_PROGRESS（2026-10-09）
 

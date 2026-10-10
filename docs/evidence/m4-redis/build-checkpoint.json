@@ -1,0 +1,37 @@
+{
+  "status": "VERIFIED",
+  "checkedAt": "2026-10-10T01:22:44.743Z",
+  "scope": "M4 step5 Redis/degradation",
+  "baseline": "4eb49c0e4c88bd6624bdc1a63995953d8405fa09",
+  "build": "target/forgeoj-linux-20261010-081555-deb02bb5",
+  "buildExitCode": 0,
+  "sourceInputsMatched": 390,
+  "api": {
+    "skipped": 0,
+    "tests": 289,
+    "failures": 0,
+    "suites": 50,
+    "errors": 0,
+    "sha256": "4a13a56a97d531ef3457216e10fabfdaa3f903e0027563b1f009faa54188959d"
+  },
+  "worker": {
+    "skipped": 0,
+    "tests": 133,
+    "failures": 0,
+    "suites": 23,
+    "errors": 0,
+    "sha256": "e142de6b117ad1edc0a1554c4c71db0a720d4e5100930b0379240a0985f9e3e2"
+  },
+  "frontend": {
+    "tests": 124,
+    "allChecksPassed": true,
+    "suites": 24
+  },
+  "sameJarReplay": "VERIFIED",
+  "nextActionExecuted": true,
+  "block": null,
+  "unitCommit": "Inspect current Git/remote for delivered feature commit",
+  "fullM4": "IN_PROGRESS",
+  "replay": "target/forgeoj-e2e-20261010-090029-fb7dc71a",
+  "cleanup": "ALL_ZERO"
+}

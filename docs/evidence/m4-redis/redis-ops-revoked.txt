@@ -1,0 +1,29 @@
+- banner:
+  - generic: F
+  - heading "ForgeOJ" [level=1]
+  - paragraph: Java 21 在线练习与判题
+  - navigation "主导航":
+    - link "题库":
+      - /url: /problems
+    - link "学习记录":
+      - /url: /learning
+    - link "班级":
+      - /url: /classrooms
+    - link "我的题目":
+      - /url: /authoring
+    - link "做题":
+      - /url: /
+    - link "账号":
+      - /url: /account
+    - link "管理后台":
+      - /url: /admin/login
+- main:
+  - heading "任务运维" [level=2]
+  - navigation:
+    - link "管理首页":
+      - /url: /admin
+    - text: ·
+    - link "后台登录":
+      - /url: /admin/login
+    - button "刷新"
+  - paragraph: 请使用运维管理员或超级管理员账号，完成初始改密后访问。

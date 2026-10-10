@@ -1,5 +1,7 @@
 # ForgeOJ
 
+2026-10-10 当前：M4第5步 Redis 与故障降级已 **[VERIFIED](docs/M4-REDIS-VALIDATION.md)**。固定Linux API289+Worker133=422、前端124项及全部检查通过；同JAR双API、真实Redis故障/清空、108项HTTP、两次真实AC、浏览器撤权/降级、数据库事实及精确清理通过。完整M4仍IN_PROGRESS，第6步ES/第7步监控尚未开始。下方带日期记录为历史，以本段和最终机器证据为准。
+
 2026-10-08：M4第2步独立管理员身份单元 **VERIFIED**。V18、独立后台登录/刷新/改密/撤销、单角色账号维护、持久审计与显式初始化/恢复CLI已交付；固定Linux API245、Worker133零失败/错误/跳过，前端107及所有检查通过。相同JAR/前端输入的真实HTTP86、三角色页面/撤权清空、交互CLI、SQL隔离、判题与班级回归及精确清理均关联通过。见 [验收](docs/M4-ADMIN-IDENTITY-VALIDATION.md)、[证据](docs/evidence/m4-admin-identity/README.md)、[CLI](docs/M4-ADMIN-CLI.md) 和 [最新交接](docs/M4-NEXT-CHAT-HANDOFF.md)。仅第2步完成，完整M4仍IN_PROGRESS；下一单元公共题审核治理本轮不开始。M-1至M3保持VERIFIED，下方日期记录保留历史。
 
 2026-10-08 最终状态：**完整M3 VERIFIED，4/4总门禁通过**，见 [最终审计](docs/M3-GATE-AUDIT.md) 和 [机器证据](docs/evidence/m3-gate/verification.json)。班级成员/私有题/作业/教学记录闭环已验收；本轮补齐REMOVED历史与恢复、教学接口和转让权限的直接回归，Linux API223全部通过，未改业务实现。Worker133/前端97按相同输入复核复用，实际运行构件及多账号证据按原轮次关联。本轮停止于M3；下一步M4最小管理员认证与角色设计，尚未开始。M-1至M3均VERIFIED，未Release或RESUME_READY，下方日期段落保留历史。
@@ -100,7 +102,7 @@ npm run verify
 
 在隔离开发数据库启动 API 的 `dev` profile 后，打开 [账号页](http://localhost:5173/account)注册，再到 [本地邮件模拟器](http://127.0.0.1:2525/)打开激活链接并明确确认。前端需独立运行 `npm run dev`，API 数据库/MQ 环境变量与完整步骤见 [开发部署说明](deploy/README.md)。模拟器仅 dev/test、loopback、内存最多 100 条，进程关闭后清空；若前端地址或端口不同，需要用 `FORGEOJ_AUTH_MAIL_APP_URL` 配成实际浏览器地址。
 
-当前实现使用最长 5 分钟的访问 JWT 和 MySQL 中绝对期限 7 天的独立 session，不再以 HttpSession 作为认证事实。每个受保护请求复核数据库，旧会话撤销即使 JWT 未过期也不再放行。访问/refresh Cookie 为 HttpOnly、host-only、SameSite=Strict；所有写仍须精确同源 Origin 与 CSRF。升级后旧进程会话需重新登录。Redis 缓存和分布式限流属于 M4。
+当前实现使用最长 5 分钟的访问 JWT 和 MySQL 中绝对期限 7 天的独立 session，不再以 HttpSession 作为认证事实。每个受保护请求复核数据库，旧会话撤销即使 JWT 未过期也不再放行。访问/refresh Cookie 为 HttpOnly、host-only、SameSite=Strict；所有写仍须精确同源 Origin 与 CSRF。升级后旧进程会话需重新登录。Redis 缓存和分布式限流已在 M4 第5步验证；故障时保留各实例预算。
 
 默认 `forgeoj.auth.mail.mode=disabled`，不连接真实 SMTP。2026-10-03 已新增显式 `smtp` 适配，要求 STARTTLS/implicit TLS、信任链/主机校验及 socket 超时，配置见 [SMTP 设计](docs/M2-SMTP-DESIGN.md)和 `.env.example`；dev 默认 local，可由邮件模式环境变量覆盖。真实服务商配置与邮箱投递仍待验收，开发协议测试不能代替实际送达。生产必须通过 `FORGEOJ_AUTH_JWT_SECRET` 提供至少 32 字节的私有随机签名密钥并保留 Secure Cookie；只有隔离 HTTP dev/test 可关闭 Secure。缺省 dev 临时签名密钥重启会变化，公开测试密钥不得用于真实部署。相关边界见 [已知限制 L-033～L-035](docs/KNOWN_LIMITATIONS.md)。
 
@@ -111,7 +113,7 @@ npm run verify
 - 计划使用 RabbitMQ、事务 Outbox、幂等消费和死信处理保证异步任务可靠性。
 - 计划使用一次性 Docker 沙箱执行不可信代码，并明确其安全边界。
 - 计划支持公共题库、官方题解、班级作业、题目审核和独立管理后台。
-- Redis 计划用于缓存、会话、限流和短期幂等；MySQL 作为最终事实来源。
+- Redis 第5步已验证公开缓存、安全身份显示缓存、共享限流和短连点辅助；MySQL 仍决定当前权限、正式提交幂等、队列/运行配额和业务事实，实际状态见[验收](docs/M4-REDIS-VALIDATION.md)。
 - Elasticsearch 计划只索引公共题目，并支持 MySQL 降级查询。
 - 最终在固定 Linux 环境验收，优先部署到阿里云 Linux ECS 做小范围试运行。
 - 不制造故意缺陷；使用真实范围限制和工程权衡作为面试讨论点。

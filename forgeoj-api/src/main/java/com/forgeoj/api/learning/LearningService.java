@@ -19,12 +19,18 @@ public class LearningService {
     private final LearningMapper mapper;
     private final ProblemLibraryMapper tags;
     private final AccountService accounts;
-    public LearningService(LearningMapper mapper, ProblemLibraryMapper tags, AccountService accounts) {
-        this.mapper=mapper; this.tags=tags; this.accounts=accounts;
+    private final com.forgeoj.api.cache.PublicCache cache;
+    private final tools.jackson.databind.ObjectMapper json;
+    public LearningService(LearningMapper mapper, ProblemLibraryMapper tags, AccountService accounts,com.forgeoj.api.cache.PublicCache cache,tools.jackson.databind.ObjectMapper json) {
+        this.mapper=mapper; this.tags=tags; this.accounts=accounts;this.cache=cache;this.json=json;
     }
     @Transactional(readOnly=true,isolation=Isolation.REPEATABLE_READ)
     public Page<ListSummary> lists(long userId,boolean official,int page,int size) {
         long offset=offset(page,size);
+        if(official&&userId==0)return cache.read("official-lists:"+page+":"+size,json.getTypeFactory().constructParametricType(Page.class,ListSummary.class),()->loadLists(userId,official,page,size,offset));
+        return loadLists(userId,official,page,size,offset);
+    }
+    private Page<ListSummary> loadLists(long userId,boolean official,int page,int size,long offset) {
         long total=mapper.countLists(userId,official);
         var rows=offset>=total ? List.<LearningMapper.ListRow>of() : mapper.lists(userId,official,size,offset);
         Map<String,LearningMapper.Stats> stats=new HashMap<>();
@@ -37,6 +43,10 @@ public class LearningService {
     public ListDetail detail(long userId,String id,boolean official,int page,int size) {
         long offset=offset(page,size);
         uuid(id);
+        if(official&&userId==0)return cache.read("official-list:"+id+":"+page+":"+size,ListDetail.class,()->loadDetail(userId,id,official,page,size,offset));
+        return loadDetail(userId,id,official,page,size,offset);
+    }
+    private ListDetail loadDetail(long userId,String id,boolean official,int page,int size,long offset) {
         var row=mapper.list(userId,id,official).orElseThrow(LearningService::missing);
         var summary=summary(row,official,userId);
         var rows=offset>=summary.entryCount() ? List.<LearningMapper.EntryRow>of() : mapper.entries(userId,id,official,size,offset);

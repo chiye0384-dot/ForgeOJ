@@ -10,6 +10,7 @@ param(
     [string]$BuildDirectory = '',
     [string]$ApiSha256 = '',
     [string]$WorkerSha256 = '',
+    [switch]$EnableRedis,
     [string]$DockerCommand = 'docker'
 )
 $ErrorActionPreference = 'Stop'
@@ -32,6 +33,7 @@ function Set-ReplayEnvironment {
     $env:FORGEOJ_E2E_ARTIFACTS = $state.BuildDirectory
     $env:FORGEOJ_E2E_REPORTS = $RunDirectory
     $env:FORGEOJ_E2E_MAIL_APP_URL = $(if ($state.FrontendUrl) { $state.FrontendUrl } else { 'http://localhost:5173' })
+    $env:FORGEOJ_E2E_REDIS_ENABLED = $(if ($state.PSObject.Properties.Name -contains 'RedisEnabled' -and $state.RedisEnabled) { 'true' } else { 'false' })
 }
 function Save-State { $state | ConvertTo-Json -Depth 5 | Set-Content -LiteralPath (Join-Path $RunDirectory 'state.json') -Encoding utf8 }
 function Sql-Fixture([string]$Sql) {
@@ -58,10 +60,11 @@ if ($Action -eq 'Start') {
     if (Docker-Checked @('ps','-aq','--filter','label=com.forgeoj.managed=true')) { throw 'Another managed sandbox exists; do not remove it or run concurrently.' }
     $project = 'forgeoj-e2e-' + (Get-Date -Format 'yyyyMMdd-HHmmss') + '-' + [guid]::NewGuid().ToString('N').Substring(0,8)
     $RunDirectory = (New-Item -ItemType Directory -Path (Join-Path $repository "target/$project")).FullName
-    $state = [pscustomobject]@{Project=$project;BuildDirectory=$build;ApiHash=$apiHash;WorkerHash=$workerHash;SourceCommit=(git -C $repository rev-parse HEAD);StartedAt=(Get-Date -Format o);FrontendUrl='';FallbackUrl=''}
+    $state = [pscustomobject]@{Project=$project;BuildDirectory=$build;ApiHash=$apiHash;WorkerHash=$workerHash;SourceCommit=(git -C $repository rev-parse HEAD);StartedAt=(Get-Date -Format o);FrontendUrl='';FallbackUrl='';RedisEnabled=[bool]$EnableRedis}
     Set-ReplayEnvironment
     Save-State
     Write-Host "Replay state: $RunDirectory"
+    if ($EnableRedis) { Compose-Checked @('up','--detach','--wait','--wait-timeout','60','redis') }
     Compose-Checked @('up','--detach','--wait','--wait-timeout','180','mysql','rabbitmq','bootstrap')
     # All versioned migrations + dev seed, then remove the migrator-credential process.
     Compose-Checked @('stop','-t','10','bootstrap')
@@ -336,7 +339,7 @@ FROM classroom c ORDER BY c.id;
             if ($owned.Config.Labels.'com.docker.compose.project' -ne $state.Project) { throw 'Project ownership mismatch' }
         }
         if (Docker-Checked @('ps','-aq','--filter','label=com.forgeoj.managed=true')) { throw 'Managed sandboxes remain; resolve exact ownership before removing the database.' }
-        Compose-Checked @('--profile','worker','--profile','bootstrap','down','--volumes','--remove-orphans')
+        Compose-Checked @('--profile','worker','--profile','bootstrap','--profile','redis','down','--volumes','--remove-orphans')
         $image = Docker-Checked @('image','ls','-q',"$($state.Project)-worker")
         if ($image) { Docker-Checked @('image','rm',"$($state.Project)-worker") }
         if (Docker-Checked @('ps','-aq','--filter',"label=com.docker.compose.project=$($state.Project)")) { throw 'Owned containers remain' }

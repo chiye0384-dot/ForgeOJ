@@ -195,9 +195,19 @@
 
 ## 5. 引入记录模板
 
+### U-011：M4 Redis 客户端与可销毁服务端
+
+2026-10-09；M4第5步 IN_PROGRESS，依赖核验不等于业务验收。API 新增 Boot 管理的 spring-boot-starter-data-redis:4.1.1；实际 Spring Data Redis/KeyValue/Commons 为4.1.1、Lettuce为7.5.2.RELEASE、Redis Authx为0.1.1-beta2、Reactor为3.8.7、Netty为4.2.17.Final。未向Worker引入Redis客户端或凭据，不复制外部源码。固定POM/JAR/原始告知资源摘要见[23项构件事实](evidence/m4-redis/redis-dependencies.json)及[可读表](evidence/m4-redis/redis-dependencies.md)。
+
+本版本实际POM：Spring/Reactor/Netty为Apache-2.0；Lettuce和Redis Authx为MIT；Reactive Streams为MIT-0。保留JAR内原始LICENSE/NOTICE，根Apache-2.0不重新许可依赖。官方服务端固定[Redis7.2.16归档](https://download.redis.io/releases/)，依据[官方许可](https://redis.io/legal/licenses/)7.2系列为BSD-3-Clause；镜像为redis:7.2.16-alpine@sha256:29e8589c3f9ba699b5f7aa4b3c7733c58852a3626439e619aa0ee78de08c6ca0，实际redis-server --version为7.2.16。它是开发/可销毁验证服务，不内嵌API JAR，没有云服务、费用或生产部署。
+
+复用连接、Redis命令/Lua执行、JSON框架与容器服务端能力；ForgeOJ自有实现为数据库权限复核、缓存代数/事务失效Outbox、白名单Cache-Aside/热点租约fencing、共享限流/保守本机预算、短租约辅助与故障验证。不能把Redis/Lettuce/Spring协议实现记为自研，也不将本次依赖记录当作整个发布物审计。
+
 2026-10-02 的原创 `tools/validation/` 仅编排已登记的固定 Maven/Node/Temurin/Docker CLI/MySQL/RabbitMQ 镜像，digest 与复现证据见 `M1-FIXED-LINUX-VALIDATION.md` 和 `M0-E2E-VALIDATION.md`。Docker CLI 二进制只在一次性测试镜像内从官方固定镜像复制，不存入仓库或新增生产发布物；未复制外部脚本，未新增 Maven/npm 依赖或变更根许可证。
 
 同日独立重放工具沿用这些固定镜像，仅使用既有 Node 内置模块编写原创有界 HTTP/WebSocket 探针。协议格式参考 [RFC 6455](https://www.rfc-editor.org/rfc/rfc6455.html)，不复制 RFC 实现代码；第三方生产 WebSocket 仍由既有 Spring/Tomcat 提供。原创故障代理、SQL fixture、事实/日志审计及 MySQL 初始化子 shell 修复均不新增依赖、grants 或镜像分发；细节见 `M1-E2E-VALIDATION.md`。
+
+## 5. 引入记录模板
 
 ~~~markdown
 ### U-XXX：组件或脚手架名称

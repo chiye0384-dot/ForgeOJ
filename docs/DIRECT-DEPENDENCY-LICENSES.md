@@ -1,5 +1,7 @@
 # ForgeOJ 直接依赖许可证清单
 
+2026-10-09增量：M4 Redis客户端的实际23项POM/JAR及告知资源已登记[U-011](UPSTREAM-AND-LICENSE.md#u-011m4-redis-客户端与可销毁服务端)与[构件事实](evidence/m4-redis/redis-dependencies.md)。业务仍IN_PROGRESS；不提前宣称Redis验收、完整M4或Release完成。
+
 > 核验日期：2026-10-02（M2 JOSE/Nimbus 增量；其他项保留既有核验记录）
 > 2026-10-03 增量：SMTP starter 与关键传递项的实际解析、固定构件和 JAR 内 LICENSE/NOTICE 已登记，见 U-010 和 [构件事实](evidence/m2-library/smtp-dependencies.md)。SMTP 服务商投递尚未验收。
 > 范围：已验证的 M-1/M0/M1、已 `VERIFIED` 的 M2 普通账号单元及已声明的直接 Maven/npm 依赖和构建工具；完整 M2 为 `IN_PROGRESS`，账号事实见 [验收记录](M2-ACCOUNTS-VALIDATION.md)。此清单不是法律意见，也不替代发布前的完整传递/内嵌依赖报告。
@@ -16,6 +18,7 @@
 | 直接项 | 解析版本 | 作用域/用途 | 上游声明许可证 | 当前判断 |
 |---|---:|---|---|---|
 | Spring Boot parent/BOM、`spring-boot-starter-webmvc`、测试 starter、Maven Plugin | 4.1.1 | 编译、API 运行、测试和打包 | Apache-2.0 | 可采用；保留上游版权与 NOTICE 义务 |
+| `org.springframework.boot:spring-boot-starter-data-redis` | 4.1.1（Spring Data Redis 4.1.1、Lettuce 7.5.2.RELEASE） | API运行；缓存/限流辅助 | Starter/Spring Data为Apache-2.0，实际Lettuce为MIT | Boot管理版本；传递Authx MIT/Reactive Streams MIT-0等各自保留，见U-011；Worker无Redis依赖 |
 | `org.springframework.boot:spring-boot-starter-security` | 4.1.1（Security 7.1.1） | API 运行 | Apache-2.0 | 可采用；依赖存在不等于认证功能已经实现 |
 | `org.springframework.security:spring-security-oauth2-jose` | 7.1.1 | API 运行；M2 JWT 编解码 | Apache-2.0 | 可采用；Boot BOM 管理版本；签名与解析是第三方能力，账号状态/会话与撤销流程为 ForgeOJ 实现，见 U-009 |
 | `org.springframework.boot:spring-boot-starter-mail` | 4.1.1 | API 运行；显式 SMTP 适配 | Apache-2.0 | Boot BOM 管理；关键 Mail/Activation 传递项保持各自许可证，见 U-010 |

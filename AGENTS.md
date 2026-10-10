@@ -1,18 +1,18 @@
 # ForgeOJ agent instructions
 
-## Current M4 step4 verified checkpoint — 2026-10-09
+## Current M4 step5 verified checkpoint — 2026-10-10
 
-M4 step4 is VERIFIED; full M4 remains IN_PROGRESS. Read docs/M4-STEP4-NEW-CHAT-START.md, docs/M4-OPERATIONS-VALIDATION.md, docs/evidence/m4-operations/verification.json and the current section of docs/M4-NEXT-CHAT-HANDOFF.md. D-045's three choices are accepted and implemented; do not ask again. Current fixed Linux All API278/49, Worker133/23, frontend124/24 passed all gates. Same-JAR real replay verified six lifetime execution recoveries, one same-event delivery recovery, 122 HTTP checks, original assignment acceptance grading, actual role browsers/revocation, 14 SQL denials, frozen/old history preservation, commit before ACK and exact cleanup. Four active queues were empty, all seven unacked zero, and six old dead letters retained. The accepted build is target/forgeoj-linux-20261009-112325-efec5cc0; replay target/forgeoj-e2e-20261009-140259-41c05bc4 is cleaned. No old session remains active. Tab1 is retained on about:blank; never close it or Codex/ChatGPT.
+M4 step5 is VERIFIED; full M4 remains IN_PROGRESS. Read docs/M4-STEP4-NEW-CHAT-START.md, docs/M4-REDIS-DESIGN.md, docs/M4-REDIS-VALIDATION.md and docs/evidence/m4-redis/verification.json. D-043～D-046 accepted choices must not be asked again.
 
-Complete this verified unit's authorized feature-branch delivery, inspect Git/remote for its actual commit, then stop at step4. Step5 Redis remains unstarted and requires a new continuation for that unit; do not start ES/monitoring/M5, real DB/SMTP/admin initialization, PR/main/tag/release or RESUME_READY. Earlier handoffs and historical checkpoints below are dated history, superseded by this current section and the rewritten startup document. All protection and desktop rules remain active.
+固定Linux接受构建：`target/forgeoj-linux-20261010-081555-deb02bb5`，API289/50 suites、Worker133/23 suites，零失败/错误/跳过；前端124/24及全部检查通过。390业务/前端输入匹配，82个前端输入同时匹配挂载和实际提供内容。API SHA256 `4a13a56a97d531ef3457216e10fabfdaa3f903e0027563b1f009faa54188959d`；Worker `e142de6b117ad1edc0a1554c4c71db0a720d4e5100930b0379240a0985f9e3e2`。
 
-## Current handoff — 2026-10-08
+接受同JAR重放：`target/forgeoj-e2e-20261010-090029-fb7dc71a`。Redis专项108项HTTP、双API共享预算、7个同键回执仅1个Submission/task/event、Redis健康及暂停期间各一次真实AC、撤销/降级/停用时旧JWT仍未过期但均被拒绝、暂停期间至少2个失败失效事件恢复后全部交付、清空后旧回执保持且本机预算不重置。权限DB失败真实503空body/no-store且finally恢复授权。4项SQL拒绝、7队列全空、原作业截止前接受/截止后完成、Worker提交后ACK通过。浏览器6张截图/5份页面快照：OPS表、撤权后账号/表清空、暂停期间匿名题库、降级审核页可用及运维页拒绝；原异常列表为空，没有选中任务详情，不宣称详情清空。
 
-Read `docs/M4-STEP4-NEW-CHAT-START.md` first with this file, then the documents in its reading order. This is the authoritative new-chat startup entry. M-1 through M3 are VERIFIED. M4 steps1/2/3 are completed; step3 is VERIFIED and delivered/pushed as c60b75d60bfe210944a9cefde17cade92bb8a71f on feat/m2-accounts to chiye0384-dot/ForgeOJ. Full M4 remains IN_PROGRESS. A subsequent documentation-only handoff commit may be HEAD; inspect Git rather than mistaking the implementation baseline for the delivery commit.
+所有拥有者容器/卷/网络/镜像、builder、Testcontainers和managed sandbox精确清理全0。旧URL不可用，tab1保留在about:blank并标记deliverable，不能关闭它或Codex/ChatGPT。实际22个嵌套依赖JAR摘要匹配23项解析依赖目录（空starter不打包）。最终机器证据 `docs/evidence/m4-redis/verification.json`。仅证据审计器在回放后修正published标量子查询的数值1类型，原冻结脚本与当前摘要均保留；其余运行辅助及全部业务输入未变化。首次健康页只有截图，缺失文本未列入交付，未补造页面事实。
 
-The next unit is M4 step4 operations queries and bounded audited manual retries; it has NOT started. The fresh chat must read the handoff, perform read-only site/Git/protected-file checks and report readiness, then WAIT for the user's continuation before business implementation. On continuation, finish and verify step4 only, commit/push the existing authorized feature branch, and stop. Do not start Redis/ES/monitoring, M5/V1.1, production initialization, PR/main/tag/release or RESUME_READY. Previously confirmed user choices are listed in the startup document and must not be asked again.
+本单元起点4eb49c0e4c88bd6624bdc1a63995953d8405fa09，分支feat/m2-accounts，远端https://github.com/chiye0384-dot/ForgeOJ.git。验收完成后按既有授权提交/推送这个功能分支，然后停止；交付SHA以当前Git/远端核验，不把起点当当前提交。下一单元第6步ES必须等新继续指令；第7步监控、M5、PR/main/tag/Release/RESUME_READY、真实数据库/SMTP/管理员初始化均不启动。用户额度不足及时停止的规则继续有效。
 
-Preserve untracked docs/M2-NEXT-CHAT-HANDOFF.md and ignored .smtp.qq.local exactly; hash-only checks, no secret reads/output/copy/staging. All checkpoints in the historical section below describe dated completed work. Their old next-step instructions and exec/session IDs are NOT active work and must not be resumed.
+保护文件只能Get-FileHash：docs/M2-NEXT-CHAT-HANDOFF.md e08acd3d26a8cd27aca394bdac91828e13b9455a86f62133c5bafc038b18c054；.smtp.qq.local 6df348a6404786791eb57c0dce9c9fb8968f7f0737de304f17d52c3900a03907。不读/输出/复制/暂存/覆盖/删除，禁止git add .、reset、clean。桌面连续性规则始终有效。
 
 ## Desktop application continuity — explicit user instruction, 2026-10-08
 

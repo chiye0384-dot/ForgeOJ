@@ -1,0 +1,30 @@
+{
+  "snapshots": [
+    "redis-ops-healthy.txt",
+    "redis-ops-revoked.txt",
+    "redis-public-outage.txt",
+    "redis-reviewer-recovered.txt",
+    "redis-reviewer-ops-denied.txt"
+  ],
+  "screenshots": [
+    "redis-public-healthy.png",
+    "redis-ops-healthy.png",
+    "redis-ops-revoked.png",
+    "redis-public-outage.png",
+    "redis-reviewer-recovered.png",
+    "redis-reviewer-ops-denied.png"
+  ],
+  "healthyOps": true,
+  "healthyOpsScope": "Current OPS account and metadata table loaded with zero anomalous tasks; no selected task detail existed.",
+  "revokedCleared": true,
+  "revokedClearedScope": "Previously visible current OPS account and task table cleared after refresh; no task detail was claimed.",
+  "outagePublic": true,
+  "outagePublicScope": "Anonymous public library loaded while owned Redis was paused; anonymous detail and official list cache fallbacks were independently checked by HTTP.",
+  "downgradedReviewer": true,
+  "opsDenied": true,
+  "downgradedRoleObserved": "redis_ops · 内容审核员",
+  "tabRetained": true,
+  "tabId": "1",
+  "finalUrl": "about:blank",
+  "checkedAt": "2026-10-10T01:16:18.140Z"
+}

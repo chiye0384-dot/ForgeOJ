@@ -54,7 +54,7 @@ public class SecurityConfig {
             HttpSecurity http,
             SecurityContextRepository securityContextRepository,
             AuthenticationEntryPoint authenticationEntryPoint,
-            AccountCsrfRepository csrfRepository, AccountJwt jwt, AccountMapper mapper)
+            AccountCsrfRepository csrfRepository, AccountJwt jwt, com.forgeoj.api.cache.SessionCache sessions)
             throws Exception {
         http.authorizeHttpRequests(
                         authorization ->
@@ -87,7 +87,7 @@ public class SecurityConfig {
                 .csrf(csrf -> csrf.csrfTokenRepository(csrfRepository)
                         .csrfTokenRequestHandler(new CsrfTokenRequestAttributeHandler()))
                 .addFilterBefore(new SameOriginFilter(), CsrfFilter.class)
-                .addFilterAfter(new AccountAuthenticationFilter(jwt, mapper), SecurityContextHolderFilter.class)
+                .addFilterAfter(new AccountAuthenticationFilter(jwt, sessions), SecurityContextHolderFilter.class)
                 .requestCache(AbstractHttpConfigurer::disable)
                 .exceptionHandling(
                         exceptions ->

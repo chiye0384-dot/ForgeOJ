@@ -1,0 +1,27 @@
+{
+  "checkedAt": "2026-10-10T09:14:43.5129202+08:00",
+  "keyCount": 14,
+  "pendingInvalidations": 0,
+  "facts": [
+    {
+      "ttlMs": 57956,
+      "kind": "session"
+    },
+    {
+      "ttlMs": 169599,
+      "kind": "public",
+      "bodySha256": "6d97f62d0b1998b52c1556ba89962b5c0b961277802d133ef45e2cbd6c050098",
+      "key": "forgeoj:v1:public:3:0d3aa37333a6c4826a367501a1eff5ebf2e3251557de1041e0f7702ef3096e63"
+    },
+    {
+      "ttlMs": 203786,
+      "kind": "public",
+      "bodySha256": "d6460e622902b7c2b78f0f1f1799d4fc25134608795f0c7bd8ba339caf14cc6d",
+      "key": "forgeoj:v1:public:3:a08f26f9f1c7380d4ab6d9865311421b2dddbeecf63f4d05c3245e9baa872a7d"
+    },
+    {
+      "ttlMs": 52123,
+      "kind": "session"
+    }
+  ]
+}

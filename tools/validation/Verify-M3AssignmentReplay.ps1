@@ -5,6 +5,7 @@ $ErrorActionPreference='Stop'
 $repository=(Resolve-Path (Join-Path $PSScriptRoot '../..')).Path
 $RunDirectory=(Resolve-Path -LiteralPath $RunDirectory).Path
 $state=Get-Content (Join-Path $RunDirectory 'state.json') -Raw | ConvertFrom-Json
+$env:FORGEOJ_E2E_REDIS_ENABLED = $(if ($state.PSObject.Properties.Name -contains 'RedisEnabled' -and $state.RedisEnabled) { 'true' } else { 'false' })
 if((Split-Path -Leaf $RunDirectory) -ne $state.Project -or $state.Project -notmatch '^forgeoj-e2e-[0-9-]+-[a-f0-9]{8}$'){throw 'Owned replay directory mismatch'}
 $env:FORGEOJ_E2E_SOURCE=$repository;$env:FORGEOJ_E2E_PROJECT=$state.Project;$env:FORGEOJ_E2E_ARTIFACTS=$state.BuildDirectory;$env:FORGEOJ_E2E_REPORTS=$RunDirectory
 $compose=Join-Path $PSScriptRoot 'compose.replay.yml'
@@ -28,7 +29,8 @@ if($Action -eq 'CleanupSnapshot'){
 if($Action -eq 'Queue'){Compose @('stop','-t','10','worker') | Out-Host}
 if($Action -eq 'Finish'){
   $report=Get-Content (Join-Path $RunDirectory 'assignments-http.json') -Raw | ConvertFrom-Json
-  if([DateTimeOffset]::UtcNow -le [DateTimeOffset]::Parse($report.hard.deadlineAt)){throw 'Restart only after actual deadline'}
+  $deadline=if($report.hard.deadlineAt -is [DateTime]){[DateTimeOffset]::new($report.hard.deadlineAt)}else{[DateTimeOffset]::Parse($report.hard.deadlineAt)}
+  if([DateTimeOffset]::UtcNow -le $deadline){throw 'Restart only after actual deadline'}
   Compose @('up','--detach','--no-recreate','worker') | Out-Host
 }
 if($Action -in @('Setup','Queue','Finish')){Compose @('exec','-T','frontend','node','/source/tools/validation/replay-assignments.mjs',$Action.ToLower()) | Out-Host;exit}

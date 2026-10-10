@@ -1,0 +1,378 @@
+{
+  "allPassed": true,
+  "firstPasswordGate": true,
+  "ordinaryDenied": true,
+  "limitedRolesDenied": true,
+  "refreshReuseRevoked": true,
+  "cookieContract": true,
+  "sameIdDomainsIndependent": true,
+  "ordinaryAc": "5eff26c3-0516-4505-bb24-7cc1dd2a4769",
+  "accounts": [
+    {
+      "id": 2,
+      "username": "http_reviewer",
+      "status": "ACTIVE",
+      "role": "CONTENT_REVIEWER",
+      "mustChangePassword": true,
+      "version": 1
+    },
+    {
+      "id": 3,
+      "username": "http_ops",
+      "status": "ACTIVE",
+      "role": "OPS_ADMIN",
+      "mustChangePassword": true,
+      "version": 1
+    },
+    {
+      "id": 4,
+      "username": "http_second_super",
+      "status": "ACTIVE",
+      "role": "SUPER_ADMIN",
+      "mustChangePassword": true,
+      "version": 1
+    },
+    {
+      "id": 5,
+      "username": "browser_super",
+      "status": "ACTIVE",
+      "role": "SUPER_ADMIN",
+      "mustChangePassword": true,
+      "version": 1
+    },
+    {
+      "id": 6,
+      "username": "browser_reviewer",
+      "status": "ACTIVE",
+      "role": "CONTENT_REVIEWER",
+      "mustChangePassword": true,
+      "version": 1
+    },
+    {
+      "id": 7,
+      "username": "browser_ops",
+      "status": "ACTIVE",
+      "role": "OPS_ADMIN",
+      "mustChangePassword": true,
+      "version": 1
+    }
+  ],
+  "checks": [
+    {
+      "method": "GET",
+      "path": "/api/v1/admin/auth/session",
+      "status": 200
+    },
+    {
+      "method": "POST",
+      "path": "/api/v1/admin/auth/login",
+      "status": 200
+    },
+    {
+      "method": "GET",
+      "path": "/api/v1/admin/accounts",
+      "status": 403
+    },
+    {
+      "method": "POST",
+      "path": "/api/v1/admin/auth/password/change",
+      "status": 204
+    },
+    {
+      "method": "GET",
+      "path": "/api/v1/admin/auth/session",
+      "status": 200
+    },
+    {
+      "method": "GET",
+      "path": "/api/v1/admin/auth/session",
+      "status": 200
+    },
+    {
+      "method": "POST",
+      "path": "/api/v1/admin/auth/login",
+      "status": 200
+    },
+    {
+      "method": "POST",
+      "path": "/api/v1/admin/accounts",
+      "status": 201
+    },
+    {
+      "method": "POST",
+      "path": "/api/v1/admin/accounts",
+      "status": 201
+    },
+    {
+      "method": "POST",
+      "path": "/api/v1/admin/accounts",
+      "status": 201
+    },
+    {
+      "method": "POST",
+      "path": "/api/v1/admin/accounts",
+      "status": 201
+    },
+    {
+      "method": "POST",
+      "path": "/api/v1/admin/accounts",
+      "status": 201
+    },
+    {
+      "method": "POST",
+      "path": "/api/v1/admin/accounts",
+      "status": 201
+    },
+    {
+      "method": "POST",
+      "path": "/api/v1/admin/accounts",
+      "status": 201
+    },
+    {
+      "method": "POST",
+      "path": "/api/v1/admin/accounts",
+      "status": 201
+    },
+    {
+      "method": "POST",
+      "path": "/api/v1/admin/accounts",
+      "status": 201
+    },
+    {
+      "method": "POST",
+      "path": "/api/v1/admin/accounts",
+      "status": 201
+    },
+    {
+      "method": "POST",
+      "path": "/api/v1/admin/accounts",
+      "status": 201
+    },
+    {
+      "method": "POST",
+      "path": "/api/v1/admin/accounts",
+      "status": 201
+    },
+    {
+      "method": "GET",
+      "path": "/api/v1/admin/auth/session",
+      "status": 200
+    },
+    {
+      "method": "POST",
+      "path": "/api/v1/admin/auth/login",
+      "status": 200
+    },
+    {
+      "method": "POST",
+      "path": "/api/v1/admin/auth/password/change",
+      "status": 204
+    },
+    {
+      "method": "GET",
+      "path": "/api/v1/admin/auth/session",
+      "status": 200
+    },
+    {
+      "method": "POST",
+      "path": "/api/v1/admin/auth/login",
+      "status": 200
+    },
+    {
+      "method": "GET",
+      "path": "/api/v1/admin/accounts",
+      "status": 403
+    },
+    {
+      "method": "GET",
+      "path": "/api/v1/admin/audit-events",
+      "status": 403
+    },
+    {
+      "method": "POST",
+      "path": "/api/v1/admin/accounts",
+      "status": 403
+    },
+    {
+      "method": "GET",
+      "path": "/api/v1/admin/auth/session",
+      "status": 200
+    },
+    {
+      "method": "POST",
+      "path": "/api/v1/admin/auth/login",
+      "status": 200
+    },
+    {
+      "method": "POST",
+      "path": "/api/v1/admin/auth/password/change",
+      "status": 204
+    },
+    {
+      "method": "GET",
+      "path": "/api/v1/admin/auth/session",
+      "status": 200
+    },
+    {
+      "method": "POST",
+      "path": "/api/v1/admin/auth/login",
+      "status": 200
+    },
+    {
+      "method": "GET",
+      "path": "/api/v1/admin/accounts",
+      "status": 403
+    },
+    {
+      "method": "GET",
+      "path": "/api/v1/admin/audit-events",
+      "status": 403
+    },
+    {
+      "method": "POST",
+      "path": "/api/v1/admin/accounts",
+      "status": 403
+    },
+    {
+      "method": "GET",
+      "path": "/api/v1/auth/session",
+      "status": 200
+    },
+    {
+      "method": "POST",
+      "path": "/api/v1/auth/login",
+      "status": 200
+    },
+    {
+      "method": "GET",
+      "path": "/api/v1/admin/accounts",
+      "status": 403
+    },
+    {
+      "method": "GET",
+      "path": "/api/v1/admin/auth/session",
+      "status": 200
+    },
+    {
+      "method": "GET",
+      "path": "/api/v1/admin/auth/session",
+      "status": 200
+    },
+    {
+      "method": "POST",
+      "path": "/api/v1/admin/auth/login",
+      "status": 200
+    },
+    {
+      "method": "GET",
+      "path": "/api/v1/admin/accounts",
+      "status": 200
+    },
+    {
+      "method": "GET",
+      "path": "/api/v1/auth/session",
+      "status": 200
+    },
+    {
+      "method": "POST",
+      "path": "/api/v1/problems/sum-two-integers/submissions",
+      "status": 202
+    },
+    {
+      "method": "GET",
+      "path": "/api/v1/submissions/:uuid",
+      "status": 200
+    },
+    {
+      "method": "GET",
+      "path": "/api/v1/submissions/:uuid",
+      "status": 200
+    },
+    {
+      "method": "GET",
+      "path": "/api/v1/submissions/:uuid",
+      "status": 200
+    },
+    {
+      "method": "GET",
+      "path": "/api/v1/submissions/:uuid",
+      "status": 200
+    },
+    {
+      "method": "GET",
+      "path": "/api/v1/submissions/:uuid",
+      "status": 200
+    },
+    {
+      "method": "GET",
+      "path": "/api/v1/submissions/:uuid",
+      "status": 200
+    },
+    {
+      "method": "GET",
+      "path": "/api/v1/submissions/:uuid",
+      "status": 200
+    },
+    {
+      "method": "GET",
+      "path": "/api/v1/submissions/:uuid",
+      "status": 200
+    },
+    {
+      "method": "GET",
+      "path": "/api/v1/submissions/:uuid",
+      "status": 200
+    },
+    {
+      "method": "GET",
+      "path": "/api/v1/submissions/:uuid",
+      "status": 200
+    },
+    {
+      "method": "GET",
+      "path": "/api/v1/submissions/:uuid",
+      "status": 200
+    },
+    {
+      "method": "GET",
+      "path": "/api/v1/submissions/:uuid",
+      "status": 200
+    },
+    {
+      "method": "GET",
+      "path": "/api/v1/submissions/:uuid",
+      "status": 200
+    },
+    {
+      "method": "POST",
+      "path": "/api/v1/admin/auth/refresh",
+      "status": 200
+    },
+    {
+      "method": "POST",
+      "path": "/api/v1/admin/auth/refresh",
+      "status": 401
+    },
+    {
+      "method": "GET",
+      "path": "/api/v1/admin/auth/session",
+      "status": 200
+    },
+    {
+      "method": "GET",
+      "path": "/api/v1/admin/auth/session",
+      "status": 200
+    },
+    {
+      "method": "POST",
+      "path": "/api/v1/admin/auth/login",
+      "status": 200
+    },
+    {
+      "method": "GET",
+      "path": "/api/v1/admin/audit-events?action=ADMIN_REFRESH_REUSE_REVOKED",
+      "status": 200
+    }
+  ],
+  "checkedAt": "2026-10-10T01:11:17.694Z"
+}

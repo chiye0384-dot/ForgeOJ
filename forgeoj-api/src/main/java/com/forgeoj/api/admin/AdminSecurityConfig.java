@@ -14,14 +14,14 @@ import com.forgeoj.api.auth.*;
 @Configuration
 public class AdminSecurityConfig {
     @Bean @Order(1)
-    SecurityFilterChain adminSecurity(HttpSecurity http,AdminCsrfRepository csrf,AdminJwt jwt,AdminMapper mapper,AccountJwt userJwt,AccountMapper users,AdminAudit audit,AdminService service)throws Exception{
+    SecurityFilterChain adminSecurity(HttpSecurity http,AdminCsrfRepository csrf,AdminJwt jwt,AccountJwt userJwt,com.forgeoj.api.cache.SessionCache sessions,AdminAudit audit,AdminService service)throws Exception{
         http.securityMatcher("/api/v1/admin/**")
             .authorizeHttpRequests(a->a.requestMatchers(HttpMethod.GET,"/api/v1/admin/auth/session").permitAll().requestMatchers(HttpMethod.POST,"/api/v1/admin/auth/login","/api/v1/admin/auth/refresh","/api/v1/admin/auth/logout").permitAll().anyRequest().hasAuthority("ADMIN"))
             .securityContext(s->s.securityContextRepository(new NullSecurityContextRepository()).requireExplicitSave(true))
             .sessionManagement(AbstractHttpConfigurer::disable)
             .csrf(c->c.csrfTokenRepository(csrf).csrfTokenRequestHandler(new CsrfTokenRequestAttributeHandler()))
             .addFilterBefore(new AdminOriginFilter(audit,service),CsrfFilter.class)
-            .addFilterAfter(new AdminAuthenticationFilter(jwt,mapper,userJwt,users),SecurityContextHolderFilter.class)
+            .addFilterAfter(new AdminAuthenticationFilter(jwt,userJwt,sessions),SecurityContextHolderFilter.class)
             .exceptionHandling(e->e.authenticationEntryPoint((r,s,x)->deny(r,s,401,audit,service)).accessDeniedHandler((r,s,x)->deny(r,s,403,audit,service)))
             .requestCache(AbstractHttpConfigurer::disable).logout(AbstractHttpConfigurer::disable).formLogin(AbstractHttpConfigurer::disable).httpBasic(AbstractHttpConfigurer::disable);
         return http.build();

@@ -1,0 +1,26 @@
+[
+  {
+    "user": "forgeoj_api",
+    "denied": true,
+    "exitCode": 1,
+    "sql": "DELETE FROM cache_epoch"
+  },
+  {
+    "user": "forgeoj_api",
+    "denied": true,
+    "exitCode": 1,
+    "sql": "DELETE FROM cache_invalidation_outbox"
+  },
+  {
+    "user": "forgeoj_worker",
+    "denied": true,
+    "exitCode": 1,
+    "sql": "SELECT * FROM cache_epoch"
+  },
+  {
+    "user": "forgeoj_worker",
+    "denied": true,
+    "exitCode": 1,
+    "sql": "SELECT * FROM cache_invalidation_outbox"
+  }
+]

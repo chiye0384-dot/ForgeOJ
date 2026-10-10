@@ -18,14 +18,21 @@ public class ProblemController {
 
     private final ProblemMapper problemMapper;
     private final tools.jackson.databind.ObjectMapper json;
+    private final com.forgeoj.api.cache.PublicCache cache;
 
-    public ProblemController(ProblemMapper problemMapper,tools.jackson.databind.ObjectMapper json) {
+    public ProblemController(ProblemMapper problemMapper,tools.jackson.databind.ObjectMapper json,com.forgeoj.api.cache.PublicCache cache) {
         this.problemMapper = problemMapper;
         this.json=json;
+        this.cache=cache;
     }
 
     @GetMapping("/{slug}")
+    @org.springframework.transaction.annotation.Transactional(readOnly=true,isolation=org.springframework.transaction.annotation.Isolation.REPEATABLE_READ)
     ProblemResponse getProblem(@PathVariable String slug) {
+        if(slug.length()>128)throw new ResponseStatusException(HttpStatus.NOT_FOUND);
+        return cache.read("problem:"+slug,ProblemResponse.class,()->load(slug));
+    }
+    private ProblemResponse load(String slug) {
         ProblemDetailsRow problem =
                 problemMapper
                         .findActiveBySlug(slug)

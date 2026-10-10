@@ -24,8 +24,8 @@ public class AdminService {
     private final TransactionTemplate transaction;
     private final AccountRateLimiter limits;
     private final String dummy;
-    public AdminService(AdminMapper mapper,PasswordEncoder passwords,AdminAudit audit,PlatformTransactionManager manager,@Value("${forgeoj.auth.limits.multiplier:1}")int multiplier){
-        this.mapper=mapper;this.passwords=passwords;this.audit=audit;transaction=new TransactionTemplate(manager);transaction.setIsolationLevel(TransactionDefinition.ISOLATION_READ_COMMITTED);limits=new AccountRateLimiter(multiplier);dummy=passwords.encode("unusable-admin-dummy-"+token());
+    public AdminService(AdminMapper mapper,PasswordEncoder passwords,AdminAudit audit,PlatformTransactionManager manager,AccountRateLimiter limits){
+        this.mapper=mapper;this.passwords=passwords;this.audit=audit;transaction=new TransactionTemplate(manager);transaction.setIsolationLevel(TransactionDefinition.ISOLATION_READ_COMMITTED);this.limits=limits;dummy=passwords.encode("unusable-admin-dummy-"+token());
     }
     public void rate(String key,int count,long seconds){limits.check("admin:"+key,count,seconds);}
     private <T>T work(Supplier<T> body){try{return transaction.execute(s->{mapper.fence();return body.get();});}catch(ResponseStatusException e){if(e.getStatusCode().value()==401||e.getStatusCode().value()==403||e.getStatusCode().value()==409)audit.denied(e.getStatusCode().value());throw e;}}

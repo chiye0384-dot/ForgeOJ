@@ -1,3 +1,5 @@
+2026-10-10 当前：M4第5步 Redis 与故障降级已 **[VERIFIED](M4-REDIS-VALIDATION.md)**。固定Linux API289+Worker133=422、前端124项及全部检查通过；同JAR双API、真实Redis故障/清空、108项HTTP、两次真实AC、浏览器撤权/降级、数据库事实及精确清理通过。完整M4仍IN_PROGRESS，第6步ES/第7步监控尚未开始。下方带日期记录为历史，以本段和最终机器证据为准。
+
 # ForgeOJ 简历证据矩阵
 
 2026-10-09：M4第4步运维子范围 **[VERIFIED](M4-OPERATIONS-VALIDATION.md)**，D-045规则、固定Linux278+133/124、真实6+1恢复、122项HTTP、当前授权/浏览器/不可变事实/ACK和清理均有完整证据。E-05完整候选保持IMPLEMENTED，身份/公共审核/运维三个子范围已VERIFIED；E-01管理重试审计缺口已补齐，broker暂停/部署发布等原后续证据未据此完成。不新增RELEASED或RESUME_READY，完整M4仍IN_PROGRESS，下方日期记录为历史。
@@ -26,7 +28,7 @@
 
 2026-10-04 作者双程序正式验证单元 VERIFIED：V11 独立不可变快照、owner/CAS/幂等、共享额度、双结果、租约隔离与私有历史，固定 Linux API163 + Worker120 =283、前端50及全检查通过。同一产物真实参考AC/题解WA、双AC、编辑失效/归档、实际Worker SIGKILL自然恢复、六队列/20实际数据库拒绝/日志链审计和精确清理见 [验收](M2-CONTENT-VALIDATION-JOBS-VALIDATION.md)与[安全事实](evidence/m2-content-validation/README.md)。完整内容与M2保持IN_PROGRESS，尚未受控审核发布、未新增RESUME_READY或性能结论；这些证据不替代发布和用户自己的项目讲解能力。下面阶段记录保留历史。
 
-> 当前候选状态：E-01/E-02 为 `IMPLEMENTED`，E-03 为 `VERIFIED`，E-04为 `PLANNED`，E-05完整候选为 `IMPLEMENTED`（身份/公共审核/运维子范围已VERIFIED）；完整V1准入未闭环。没有任何 `RESUME_READY`，不能以候选文案宣称已发布能力。
+> 当前候选状态：E-01/E-02 为 `IMPLEMENTED`，E-03 为 `VERIFIED`，E-04为 `IN_PROGRESS`（Redis子范围VERIFIED，ES未实现），E-05完整候选为 `IMPLEMENTED`（身份/公共审核/运维子范围已VERIFIED）；完整V1准入未闭环。没有任何 `RESUME_READY`，不能以候选文案宣称已发布能力。
 > 本文不是简历文案，而是决定一条文案是否有资格进入简历的证据清单。
 
 2026-10-02 M2 普通账号单元已在 `feat/m2-accounts` 验证通过，设计见 D-041 / `M2-ACCOUNTS-DESIGN.md`，实际命令、源码/JAR 哈希、固定 Linux 后端 211 / 前端 13 项、相同产物的真实注册到 AC/旧账号轮询兜底、独立审计和精确清理见 [账号验收](M2-ACCOUNTS-VALIDATION.md)和[脱敏事实](evidence/m2-accounts/README.md)。这不改变下面候选项的准入状态，没有新增 `RESUME_READY`；完整 M2 仍 `IN_PROGRESS`，真实 SMTP、Redis、多节点、云上试运行、性能与发布尚未完成。M1 的 160/8 仍只描述其历史阶段，不充当新账号证据。
@@ -68,7 +70,7 @@
 | E-01 | 可靠异步判题链路 | `IMPLEMENTED` | M1自动恢复/幂等及[M4管理恢复审计](M4-OPERATIONS-VALIDATION.md)证据已具备；完整候选仍需broker暂停恢复演练与部署发布 | 至少一次投递；最终一致窗口；单机 MQ |
 | E-02 | Docker 代码沙箱 | `IMPLEMENTED` | M1 实际限制/恶意程序/故障清理证据已具备；完整候选仍需 M5 独立 Linux 主机安全验收与发布 | 普通 Docker 非绝对安全边界；受控小范围使用 |
 | E-03 | 班级与作业权限模型 | `VERIFIED` | [M3 4/4门禁](M3-GATE-AUDIT.md)；41项M3集成测试、当前角色/转让/成员历史、永久作业快照、真实判题和多账号源码隔离证据 | 不验证真实教师；教师只见本班正式作业数据；未Release/RESUME_READY |
-| E-04 | Redis/ES 可降级数据架构 | `PLANNED` | MySQL 权威数据、Outbox 同步、版本幂等、缓存和索引重建；Redis/ES 故障演练 | 降级时性能或搜索能力下降 |
+| E-04 | Redis/ES 可降级数据架构 | `IN_PROGRESS`（Redis子范围VERIFIED） | MySQL 权威数据、Outbox 同步、版本幂等、缓存和索引重建；Redis/ES 故障演练 | 降级时性能或搜索能力下降 |
 | E-05 | 独立管理员与运维闭环 | `IMPLEMENTED`（身份/公共审核/运维子范围VERIFIED） | [身份/CLI/维护/审计证据](M4-ADMIN-IDENTITY-VALIDATION.md)、[公共审核证据](M4-PUBLIC-REVIEW-VALIDATION.md)已通过；[运维恢复验收](M4-OPERATIONS-VALIDATION.md)已通过；完整候选仍需总证据汇总、发布及个人解释验收 | 子单元不等同已发布或简历就绪能力 |
 | E-06 | Linux 云端交付与恢复 | `PLANNED` | Compose、HTTPS、Flyway、备份恢复、回滚、监控和真实试运行记录 | 单机，不承诺高可用和 SLA |
 | E-07 | 可复现性能优化 | `PLANNED` | 相同环境下的基线、瓶颈证据、改动、回归报告及原始数据 | 未压测前没有任何可信 QPS/P95 数字 |
@@ -176,6 +178,8 @@
 建议证据文件：权限矩阵、接口集成测试、资源归属攻击测试、相关 commit。
 
 ### E-04：Redis/ES 可降级数据架构
+
+2026-10-10：Redis子范围VERIFIED，见[M4第5步验收](M4-REDIS-VALIDATION.md)及[机器证据](evidence/m4-redis/verification.json)。缓存、共享限流、双实例故障保守预算、会话撤销及MySQL幂等/配额已有真实证据。ES尚未实现，因此完整E-04仍IN_PROGRESS，无Release或RESUME_READY。
 
 必须证明：
 

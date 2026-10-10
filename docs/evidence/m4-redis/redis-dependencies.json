@@ -1,0 +1,392 @@
+{
+  "artifacts": [
+    {
+      "pomSha256": "c982e2562dcc00b75afbd4161a57178e95e994f100c67080e2cba2266a42e504",
+      "version": "4.1.1",
+      "jarSha256": "98b8367cff4cc11005e43452c45dafd0ce9c7f66d20411e6f0850c99bc79575d",
+      "group": "org.springframework.boot",
+      "resources": [
+        {
+          "path": "META-INF/LICENSE.txt",
+          "sha256": "7200000367e0e8b47822d563a5ddd2dd3a97cc05b32bd7dbcc7b4eeb92b76628"
+        },
+        {
+          "path": "META-INF/NOTICE.txt",
+          "sha256": "64e8c092d64ccaecac2d81d324c84a4dff29fdc2cb777f3b1abd910ac2e8555d"
+        }
+      ],
+      "licenses": [
+        {
+          "name": "Apache License, Version 2.0",
+          "url": "https://www.apache.org/licenses/LICENSE-2.0"
+        }
+      ],
+      "artifact": "spring-boot-starter-data-redis"
+    },
+    {
+      "pomSha256": "96858ee5e374560fa0767505795d0cbf5873d7326a728f6000c1cbed5fed6626",
+      "version": "4.1.1",
+      "jarSha256": "8df7709a73616c85f12fbee0476a2856a766cda70c6ad87c9a24062b8fe34c91",
+      "group": "org.springframework.boot",
+      "resources": [
+        {
+          "path": "META-INF/LICENSE.txt",
+          "sha256": "7200000367e0e8b47822d563a5ddd2dd3a97cc05b32bd7dbcc7b4eeb92b76628"
+        },
+        {
+          "path": "META-INF/NOTICE.txt",
+          "sha256": "64e8c092d64ccaecac2d81d324c84a4dff29fdc2cb777f3b1abd910ac2e8555d"
+        }
+      ],
+      "licenses": [
+        {
+          "name": "Apache License, Version 2.0",
+          "url": "https://www.apache.org/licenses/LICENSE-2.0"
+        }
+      ],
+      "artifact": "spring-boot-data-redis"
+    },
+    {
+      "pomSha256": "4fcf3ba63908fdf1a645f2452e647f7a0fcfa9ebc4fd4550491d46a3eb7834fc",
+      "version": "4.1.1",
+      "jarSha256": "e9911b99825ea5650827ec1e2d2fc1890c7e63b6f048c1f4dba2c8e85ff6d354",
+      "group": "org.springframework.boot",
+      "resources": [
+        {
+          "path": "META-INF/LICENSE.txt",
+          "sha256": "7200000367e0e8b47822d563a5ddd2dd3a97cc05b32bd7dbcc7b4eeb92b76628"
+        },
+        {
+          "path": "META-INF/NOTICE.txt",
+          "sha256": "64e8c092d64ccaecac2d81d324c84a4dff29fdc2cb777f3b1abd910ac2e8555d"
+        }
+      ],
+      "licenses": [
+        {
+          "name": "Apache License, Version 2.0",
+          "url": "https://www.apache.org/licenses/LICENSE-2.0"
+        }
+      ],
+      "artifact": "spring-boot-data-commons"
+    },
+    {
+      "pomSha256": "d56769de5b0c150d380f10b575a1dedf7caece0507d4aff5b846e880eea26a80",
+      "version": "4.1.1",
+      "jarSha256": "ad609b5a51bb8591cd923d358125a65d9bea193f79480a37ae60a1d0d5ae55b2",
+      "group": "org.springframework.data",
+      "resources": [
+        {
+          "path": "META-INF/license.txt",
+          "sha256": "56dfc19e0dc836e30177332f73e8e6fbc297941acf3d906eec6eaaa46c2c452a"
+        },
+        {
+          "path": "META-INF/notice.txt",
+          "sha256": "21214dfbf6fe1bbccb3abd7a1ab3bea365480374a5fabd0f6507d5cd90ee1994"
+        }
+      ],
+      "licenses": [
+        {
+          "name": "Apache License, Version 2.0",
+          "url": "https://www.apache.org/licenses/LICENSE-2.0"
+        }
+      ],
+      "artifact": "spring-data-redis"
+    },
+    {
+      "pomSha256": "3e1e268b57d891d893768fbed1654c004e8654c1dde3c7178cbd3218f59b1d40",
+      "version": "4.1.1",
+      "jarSha256": "e8986c8e2577d271096266335a798c8fb5df91fd2fdf85607252056884fb554d",
+      "group": "org.springframework.data",
+      "resources": [
+        {
+          "path": "META-INF/license.txt",
+          "sha256": "56dfc19e0dc836e30177332f73e8e6fbc297941acf3d906eec6eaaa46c2c452a"
+        },
+        {
+          "path": "META-INF/notice.txt",
+          "sha256": "5e89815ce5326d11cc96c21c8a7e8402dd82ed13ceb017964c13faa4b246a851"
+        }
+      ],
+      "licenses": [
+        {
+          "name": "Apache License, Version 2.0",
+          "url": "https://www.apache.org/licenses/LICENSE-2.0"
+        }
+      ],
+      "artifact": "spring-data-keyvalue"
+    },
+    {
+      "pomSha256": "7a78343a1c62827ffeaf5696814e844128ba5462d95cf78838f6f4a98007ee57",
+      "version": "4.1.1",
+      "jarSha256": "cf2a3f9bfabefca1a8c2c0f0a65c393d9ff83b0cb1cf7b705accac18a6ed0ee4",
+      "group": "org.springframework.data",
+      "resources": [
+        {
+          "path": "META-INF/license.txt",
+          "sha256": "56dfc19e0dc836e30177332f73e8e6fbc297941acf3d906eec6eaaa46c2c452a"
+        },
+        {
+          "path": "META-INF/notice.txt",
+          "sha256": "04e3f2155ff57165aee0eb40f672d4770ecd291867a4bfbb595f9b709a2fac62"
+        }
+      ],
+      "licenses": [
+        {
+          "name": "Apache License, Version 2.0",
+          "url": "https://www.apache.org/licenses/LICENSE-2.0"
+        }
+      ],
+      "artifact": "spring-data-commons"
+    },
+    {
+      "pomSha256": "780b5f73515baa55e0ba26cea8e87b22e9ce2e5befba3eed011cfadcdf249434",
+      "version": "7.5.2.RELEASE",
+      "jarSha256": "86e245a6cfc36a40aaa1f54027e639a70cb4008d12717164041aefe9bbd072c1",
+      "group": "io.lettuce",
+      "resources": [
+        {
+          "path": "META-INF/LICENSE",
+          "sha256": "e93e373bdee8dc03b8441d7f7158006109271970def3a78ef20b30f0d870d9ad"
+        }
+      ],
+      "licenses": [
+        {
+          "name": "MIT",
+          "url": "https://github.com/redis/lettuce/blob/main/LICENSE"
+        }
+      ],
+      "artifact": "lettuce-core"
+    },
+    {
+      "pomSha256": "b6ce929d8a3cb9a3acb9ab9ea908a83b20ef3156d54dd3589f1924322afffb25",
+      "version": "0.1.1-beta2",
+      "jarSha256": "cc56edb08b3df8562cddac108dca61907d21cc4ad04de05e9f5d1b01058390af",
+      "group": "redis.clients.authentication",
+      "resources": [],
+      "licenses": [
+        {
+          "name": "MIT",
+          "url": "https://github.com/redis/redis-authx-core/blob/master/LICENSE"
+        }
+      ],
+      "artifact": "redis-authx-core"
+    },
+    {
+      "pomSha256": "541645b4d1967d1ee3db5360984bafe9a4338fb3295e383dda3ac1358499e3ba",
+      "version": "3.8.7",
+      "jarSha256": "9a5f1bfc5ad0416a410ff63beaa279cc30c2da3ae9b111a678c83c99298a1551",
+      "group": "io.projectreactor",
+      "resources": [
+        {
+          "path": "META-INF/LICENSE",
+          "sha256": "6b9522191b8cb7126b2d214edd7f782d2ccd83c467e9c03b8af9e0bf903b49b4"
+        }
+      ],
+      "licenses": [
+        {
+          "name": "Apache License, Version 2.0",
+          "url": "https://www.apache.org/licenses/LICENSE-2.0.txt"
+        }
+      ],
+      "artifact": "reactor-core"
+    },
+    {
+      "pomSha256": "54ba23d87a2d438540c99ef8794a0856fc573a256b498678283c3c67ef18ada8",
+      "version": "1.0.4",
+      "jarSha256": "f75ca597789b3dac58f61857b9ac2e1034a68fa672db35055a8fb4509e325f28",
+      "group": "org.reactivestreams",
+      "resources": [],
+      "licenses": [
+        {
+          "name": "MIT-0",
+          "url": "https://spdx.org/licenses/MIT-0.html"
+        }
+      ],
+      "artifact": "reactive-streams"
+    },
+    {
+      "pomSha256": "0100816f2f163d16d0c035181d6fb46d745f6deed759c25767afe61bebd785f4",
+      "version": "4.2.17.Final",
+      "jarSha256": "502aae2a6680e9bca3558a3fa098f06dc4d87340b8b714e925a6d690871c092a",
+      "group": "io.netty",
+      "resources": [],
+      "licenses": [
+        {
+          "name": "Apache License, Version 2.0",
+          "url": "https://www.apache.org/licenses/LICENSE-2.0"
+        }
+      ],
+      "artifact": "netty-common"
+    },
+    {
+      "pomSha256": "b8f8e974cc83284f400b58f43db5d94640476012765e4e9c46f8ef14dd5c9a04",
+      "version": "4.2.17.Final",
+      "jarSha256": "4df11c7520b556c5e2c84b939182699d48fcbb09e97a6bb5e1c0b6835227d126",
+      "group": "io.netty",
+      "resources": [],
+      "licenses": [
+        {
+          "name": "Apache License, Version 2.0",
+          "url": "https://www.apache.org/licenses/LICENSE-2.0"
+        }
+      ],
+      "artifact": "netty-handler"
+    },
+    {
+      "pomSha256": "cca19deede9c4bc13e0def80067c472ca1db8da26a2ce3ac650b20766a886478",
+      "version": "4.2.17.Final",
+      "jarSha256": "7a4b599b9c0c29a505d3b7311f142df883fb27d0f67495a7cbaf533b0e456623",
+      "group": "io.netty",
+      "resources": [],
+      "licenses": [
+        {
+          "name": "Apache License, Version 2.0",
+          "url": "https://www.apache.org/licenses/LICENSE-2.0"
+        }
+      ],
+      "artifact": "netty-resolver"
+    },
+    {
+      "pomSha256": "658f517dd49e6d39c1bed350096d781a25cc0f252d1e3e90f63a3ba0bedd2f5d",
+      "version": "4.2.17.Final",
+      "jarSha256": "0d249178ec0204b35a6ad3e5ac8a6c2ecb3eb496c6cdae40b8eca4fa3cb6a0c7",
+      "group": "io.netty",
+      "resources": [],
+      "licenses": [
+        {
+          "name": "Apache License, Version 2.0",
+          "url": "https://www.apache.org/licenses/LICENSE-2.0"
+        }
+      ],
+      "artifact": "netty-buffer"
+    },
+    {
+      "pomSha256": "afe43ce6d01aa3a915beffe69671496e416e19917b25f66c3e75d1f6fb5d1fd1",
+      "version": "4.2.17.Final",
+      "jarSha256": "e01aa467b9104de54a57c08c290f70b22e53ec97cf5583c87c112170ef5832cc",
+      "group": "io.netty",
+      "resources": [],
+      "licenses": [
+        {
+          "name": "Apache License, Version 2.0",
+          "url": "https://www.apache.org/licenses/LICENSE-2.0"
+        }
+      ],
+      "artifact": "netty-transport-native-unix-common"
+    },
+    {
+      "pomSha256": "34a8f75ee8a66d574c4710ca20567887ba812cdf596954f4f838bc38c2592c8f",
+      "version": "4.2.17.Final",
+      "jarSha256": "3b92bc3b7d231fa6f4889b2b9281cae6b634428b8121fb1b9b5fccba1543d352",
+      "group": "io.netty",
+      "resources": [],
+      "licenses": [
+        {
+          "name": "Apache License, Version 2.0",
+          "url": "https://www.apache.org/licenses/LICENSE-2.0"
+        }
+      ],
+      "artifact": "netty-codec-base"
+    },
+    {
+      "pomSha256": "992f79d9be5a15f2ef05250c457b44678da1659dea5d6fca6e25da19fb0449a2",
+      "version": "4.2.17.Final",
+      "jarSha256": "d2409ce3a735cbab4188d0ea5d82abed823a6a07a8389f49af4a9e1243a562bc",
+      "group": "io.netty",
+      "resources": [],
+      "licenses": [
+        {
+          "name": "Apache License, Version 2.0",
+          "url": "https://www.apache.org/licenses/LICENSE-2.0"
+        }
+      ],
+      "artifact": "netty-transport"
+    },
+    {
+      "pomSha256": "e838e1a992c373f8500350dfd1fceb67671759e9e3e0b1ae295ca1483785ff2a",
+      "version": "4.2.17.Final",
+      "jarSha256": "d332481c22136a68c2ee9e45e86212174932587d93a5dd4d201e196828bf9f91",
+      "group": "io.netty",
+      "resources": [],
+      "licenses": [
+        {
+          "name": "Apache License, Version 2.0",
+          "url": "https://www.apache.org/licenses/LICENSE-2.0"
+        }
+      ],
+      "artifact": "netty-resolver-dns"
+    },
+    {
+      "pomSha256": "e0d1bbcff3943aa57d930646f8f386834aced35831f0339700345af3cdfb8dd3",
+      "version": "4.2.17.Final",
+      "jarSha256": "394f4649a824683735f28b299d0a48caff059ae30e654e2abf8b3f392af4d374",
+      "group": "io.netty",
+      "resources": [],
+      "licenses": [
+        {
+          "name": "Apache License, Version 2.0",
+          "url": "https://www.apache.org/licenses/LICENSE-2.0"
+        }
+      ],
+      "artifact": "netty-codec-dns"
+    },
+    {
+      "pomSha256": "68973de9f9591c3a99d431a9fe1d3db9389110387a42c667b8a234652feb3d91",
+      "version": "4.2.17.Final",
+      "jarSha256": "ac76f972446a2f72818441f746d0e73c58519a4687bf680d2b687d7dc5e28e2e",
+      "group": "io.netty",
+      "resources": [],
+      "licenses": [
+        {
+          "name": "Apache License, Version 2.0",
+          "url": "https://www.apache.org/licenses/LICENSE-2.0"
+        }
+      ],
+      "artifact": "netty-codec"
+    },
+    {
+      "pomSha256": "b59a1f893c07961e775800a64ee9de87a2a0ab5680e728fdbe897378bc374b7f",
+      "version": "4.2.17.Final",
+      "jarSha256": "425b287a1f36986a5c8edd76379a49decdf99d284f3454f3fa607a073bfb2c18",
+      "group": "io.netty",
+      "resources": [],
+      "licenses": [
+        {
+          "name": "Apache License, Version 2.0",
+          "url": "https://www.apache.org/licenses/LICENSE-2.0"
+        }
+      ],
+      "artifact": "netty-codec-compression"
+    },
+    {
+      "pomSha256": "e4ca477a26c7880d062a61e36a37a70c8f9e6e603f008904b723e86b5b26ebe2",
+      "version": "4.2.17.Final",
+      "jarSha256": "44b2fcc4bc1d6c01edafe6ae6c8a7de7c3c5bad59697a93b6b879a45a78a5387",
+      "group": "io.netty",
+      "resources": [],
+      "licenses": [
+        {
+          "name": "Apache License, Version 2.0",
+          "url": "https://www.apache.org/licenses/LICENSE-2.0"
+        }
+      ],
+      "artifact": "netty-codec-protobuf"
+    },
+    {
+      "pomSha256": "a01769cafd58588102c23ee3a634becb449d5f416693e5e6c835889a7c58c998",
+      "version": "4.2.17.Final",
+      "jarSha256": "ee5ffed638da6b7e2b4567559bd5f78b18f635cdaa4f3b6d23aa27ccf6cb57c2",
+      "group": "io.netty",
+      "resources": [],
+      "licenses": [
+        {
+          "name": "Apache License, Version 2.0",
+          "url": "https://www.apache.org/licenses/LICENSE-2.0"
+        }
+      ],
+      "artifact": "netty-codec-marshalling"
+    }
+  ],
+  "checkedAt": "2026-10-09T15:30:17.8245398+08:00",
+  "basis": "Boot 4.1.1 managed runtime coordinates, actual resolved POM/JAR and retained resource digests"
+}

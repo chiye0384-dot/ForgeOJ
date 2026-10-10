@@ -1,0 +1,10 @@
+{
+  "ownedContainers": 0,
+  "managedSandboxes": 0,
+  "builders": 0,
+  "testcontainers": 0,
+  "checkedAt": "2026-10-10T09:19:14.5676470+08:00",
+  "ownedNetworks": 0,
+  "ownedImages": 0,
+  "ownedVolumes": 0
+}

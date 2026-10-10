@@ -59,7 +59,18 @@ if(phase==='setup'){
   await save({classroomId:room,assignmentId:id,preAssignmentId:pre.assignment.id,lateAssignmentId:lateId,privateSlug:slug,sourceSubmissionId:ac.submissionId,sourceSha256:digest(code),formalIds:[wa.submissionId,ac.submissionId,pub.submissionId,other.submissionId,lateAc.submissionId],unrelatedPrivateId:privateAc,unrelatedFreeId:free.submissionId,selfTestId:self.runId,gradesMatchOwn:true,lateExtensionConsistent:true,privateAndPreSourceDenied:true,assistantAllowed:true,checks:[]})
 } else {
   const report=await json('teacher-http.json'),t=`${assign}/${report.assignmentId}/teaching`
-  if(phase==='revoke'){
+  if(phase==='reset-assistant'){
+    // Restore Assignment replay's late-join prerequisite using the real leave API.
+    // Existing accepted grades and teacher observations remain historical facts.
+    const roomState=await owner.call(root)
+    const membership=roomState.members.find(m=>m.userId===3)
+    assert.ok(membership)
+    if(membership.status==='ACTIVE')await assistant.call(root+'/leave','POST',{expectedVersion:roomState.version},204)
+    else assert.equal(membership.status,'LEFT')
+    assert.equal((await owner.call(root)).members.find(m=>m.userId===3).status,'LEFT')
+    await assistant.call(t+'/grades','GET',undefined,404)
+    report.assistantResetForLateJoin=true
+  } else if(phase==='revoke'){
     await roomAction('members/3/role',{role:'MEMBER'});await assistant.call(t+'/grades','GET',undefined,403);await assistant.call(t+'/submissions/'+report.sourceSubmissionId,'GET',undefined,403)
     const r=await owner.call(root);await student.call(root+'/leave','POST',{expectedVersion:r.version},204);await student.call(t+'/grades','GET',undefined,404)
     const grades=await owner.call(t+'/grades');assert.equal(grades.items.find(p=>p.userId===2).memberStatus,'LEFT');report.revokedImmediately=true;report.historicalParticipant=true

@@ -1,0 +1,9 @@
+{
+  "initialProbe": "incorrectly ran serialized Compose command with unresolved $$; exact no-network container stopped and removed",
+  "defaultProfileWithoutRedisPassword": true,
+  "probeRemoved": true,
+  "network": "none",
+  "checkedAt": "2026-10-09T16:06:10.8902463+08:00",
+  "emptyPasswordRuntimeRefused": true,
+  "commandExpansion": "Compose $$ escape resolved to shell $"
+}

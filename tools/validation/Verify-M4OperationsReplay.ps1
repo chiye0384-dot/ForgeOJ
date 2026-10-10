@@ -5,6 +5,7 @@ $ErrorActionPreference='Stop'
 $repository=(Resolve-Path (Join-Path $PSScriptRoot '../..')).Path
 $RunDirectory=(Resolve-Path -LiteralPath $RunDirectory).Path
 $state=Get-Content (Join-Path $RunDirectory 'state.json') -Raw | ConvertFrom-Json
+$env:FORGEOJ_E2E_REDIS_ENABLED = $(if ($state.PSObject.Properties.Name -contains 'RedisEnabled' -and $state.RedisEnabled) { 'true' } else { 'false' })
 if(-not $RunDirectory.StartsWith((Join-Path $repository 'target')+[IO.Path]::DirectorySeparatorChar) -or (Split-Path -Leaf $RunDirectory) -ne $state.Project -or $state.Project -notmatch '^forgeoj-e2e-[0-9-]+-[a-f0-9]{8}$'){throw 'Owned disposable replay directory mismatch'}
 $env:FORGEOJ_E2E_SOURCE=$repository;$env:FORGEOJ_E2E_PROJECT=$state.Project;$env:FORGEOJ_E2E_ARTIFACTS=$state.BuildDirectory;$env:FORGEOJ_E2E_REPORTS=$RunDirectory
 $compose=Join-Path $PSScriptRoot 'compose.replay.yml'

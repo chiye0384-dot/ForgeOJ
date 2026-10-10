@@ -1,0 +1,2 @@
+{"id": 1, "attempts": 2, "delivered": false, "errorCode": "REDIS_UNAVAILABLE", "namespace": "public", "oldRevision": 1}
+{"id": 2, "attempts": 2, "delivered": false, "errorCode": "REDIS_UNAVAILABLE", "namespace": "public", "oldRevision": 2}

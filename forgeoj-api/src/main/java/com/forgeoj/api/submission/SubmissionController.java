@@ -16,9 +16,11 @@ import org.springframework.web.bind.annotation.RestController;
 public class SubmissionController {
 
     private final SubmissionService submissionService;
+    private final com.forgeoj.api.cache.RequestCoalescer coalescer;
 
-    public SubmissionController(SubmissionService submissionService) {
+    public SubmissionController(SubmissionService submissionService,com.forgeoj.api.cache.RequestCoalescer coalescer) {
         this.submissionService = submissionService;
+        this.coalescer=coalescer;
     }
 
     @PostMapping("/{slug}/submissions")
@@ -28,12 +30,12 @@ public class SubmissionController {
             @RequestBody SubmissionRequest request,
             @AuthenticationPrincipal ForgeOjPrincipal principal) {
         SubmissionResult result =
-                submissionService.create(
+                coalescer.execute(principal.userId(),idempotencyKey,()->submissionService.create(
                         principal.userId(),
                         slug,
                         idempotencyKey,
                         request.language(),
-                        request.sourceCode());
+                        request.sourceCode()));
         return ResponseEntity.accepted().body(result);
     }
 

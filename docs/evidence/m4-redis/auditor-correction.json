@@ -1,0 +1,5 @@
+{
+  "frozenSha256": "59042f7ea59ec9f0c3fd0a403f4d641acd6a513bc034221038d78e30b26120fd",
+  "currentSha256": "018e27d4421612596b96f9de596fd37bb9bfd75d0fa6558651462936e51a666e",
+  "reason": "Post-replay evidence-only correction: published scalar subquery is numeric 1; direct JSON logical expressions remain boolean true. Runtime helpers and business inputs unchanged."
+}

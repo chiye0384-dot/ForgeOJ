@@ -18,6 +18,9 @@ x-api-env: &api-env
   FORGEOJ_ADMIN_COOKIE_SECURE: "false"
   FORGEOJ_AUTH_COOKIE_SECURE: "false"
   SPRING_PROFILES_ACTIVE: test
+  FORGEOJ_REDIS_ENABLED: ${FORGEOJ_E2E_REDIS_ENABLED:-false}
+  FORGEOJ_REDIS_HOST: redis
+  FORGEOJ_REDIS_PASSWORD: m4-redis-public-fixture-only
   FORGEOJ_AUTH_MAIL_MODE: local
   FORGEOJ_AUTH_MAIL_APP_URL: ${FORGEOJ_E2E_MAIL_APP_URL:-http://localhost:5173}
 
@@ -40,6 +43,17 @@ x-api-base: &api-base
     retries: 60
 
 services:
+  redis:
+    profiles: [redis]
+    image: redis:7.2.16-alpine@sha256:29e8589c3f9ba699b5f7aa4b3c7733c58852a3626439e619aa0ee78de08c6ca0
+    platform: linux/amd64
+    command: [redis-server, --requirepass, m4-redis-public-fixture-only, --maxmemory, 128mb, --maxmemory-policy, noeviction, --save, "", --appendonly, "no"]
+    healthcheck:
+      test: [CMD, redis-cli, -a, m4-redis-public-fixture-only, --no-auth-warning, ping]
+      interval: 2s
+      timeout: 2s
+      retries: 20
+
   mysql:
     image: container-registry.oracle.com/mysql/community-server:8.4.12@sha256:7dcc4add9183664de3a214daf85a50c3ba6cccfd7534f700b6561bf5b41885be
     platform: linux/amd64
@@ -87,6 +101,10 @@ services:
       FORGEOJ_OUTBOX_PUBLISHER_ENABLED: "false"
   api:
     <<: *api-base
+    environment: *api-env
+  api-replica:
+    <<: *api-base
+    profiles: [redis]
     environment: *api-env
   mailbox:
     # This disposable bridge alone shares API networking to reach its loopback mailbox.

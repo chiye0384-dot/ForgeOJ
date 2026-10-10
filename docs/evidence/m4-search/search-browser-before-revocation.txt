@@ -1,0 +1,75 @@
+- banner:
+  - generic: F
+  - heading "ForgeOJ" [level=1]
+  - paragraph: Java 21 在线练习与判题
+  - navigation "主导航":
+    - link "题库":
+      - /url: /problems
+    - link "学习记录":
+      - /url: /learning
+    - link "班级":
+      - /url: /classrooms
+    - link "我的题目":
+      - /url: /authoring
+    - link "做题":
+      - /url: /
+    - link "账号":
+      - /url: /account
+    - link "管理后台":
+      - /url: /admin/login
+- main:
+  - main:
+    - heading "公共题搜索运维" [level=1]
+    - paragraph:
+      - link "后台账号":
+        - /url: /admin/login
+      - text: ·
+      - link "任务运维":
+        - /url: /admin/operations
+    - paragraph: 重建公开题目的搜索索引，并为本次覆盖的补发失败死信安排一次有限补发。原失败记录保留。 请输入原因，提交后刷新查看作业进度。
+    - button "刷新状态"
+    - term: 搜索开关
+    - definition: 已启用
+    - term: 公开数据版本 / 搜索可读版本
+    - definition: 12 / 12
+    - term: 待发布事件 / 累计死信
+    - definition: 0 / 2
+    - term: 发布失败 / 等待死信确认 / 死信补发失败
+    - definition: 0 / 0 / 0
+    - term: 进行中的重建
+    - definition: 无
+    - text: 重建原因
+    - textbox "重建原因" [active]: 浏览器撤权前待提交原因
+    - button "提交重建"
+    - table "重建记录":
+      - caption: 重建记录
+      - rowgroup:
+        - row "作业 状态 尝试次数 原因 错误码":
+          - columnheader "作业"
+          - columnheader "状态"
+          - columnheader "尝试次数"
+          - columnheader "原因"
+          - columnheader "错误码"
+      - rowgroup:
+        - row "d254f389-5e51-410f-b225-cb0f1ba00f22 SUCCEEDED 1 本项目索引清空后的受控重建 无":
+          - cell "d254f389-5e51-410f-b225-cb0f1ba00f22"
+          - cell "SUCCEEDED"
+          - cell "1"
+          - cell "本项目索引清空后的受控重建"
+          - cell "无"
+        - row "ddc2eccf-e6c2-411d-9a5e-2d9e6293034f SUCCEEDED 1 ES恢复后的公开投影追赶重建 无":
+          - cell "ddc2eccf-e6c2-411d-9a5e-2d9e6293034f"
+          - cell "SUCCEEDED"
+          - cell "1"
+          - cell "ES恢复后的公开投影追赶重建"
+          - cell "无"
+        - row "9bee45fc-411f-4592-8888-1bf1b84417ee SUCCEEDED 1 同JAR公共题搜索首次重建 无":
+          - cell "9bee45fc-411f-4592-8888-1bf1b84417ee"
+          - cell "SUCCEEDED"
+          - cell "1"
+          - cell "同JAR公共题搜索首次重建"
+          - cell "无"
+    - navigation "重建记录分页":
+      - button "上一页" [disabled]
+      - text: 第 1 页，共 3 项
+      - button "下一页" [disabled]

@@ -28,7 +28,7 @@ function deferred<T>(): { promise: Promise<T>; resolve: (value: T) => void } {
   return { promise, resolve }
 }
 
-function list(title: string, page = 1, size = 20, total = 1): unknown {
+function list(title: string, page = 1, size = 20, total = 1) {
   return {
     items: [
       {
@@ -75,11 +75,42 @@ afterEach(() => {
 })
 
 describe('public problem library', () => {
+  it('uses the search route and renders fallback notice and highlights as escaped text', async () => {
+    const unsafe = '<img src=x onerror=alert(1)>'
+    const fetchMock = vi.fn<FetchMock>(async (input: RequestInfo | URL) => {
+      if (String(input) === '/api/v1/problem-tags') return jsonResponse({ tags: [] })
+      expect(String(input)).toContain('/api/v1/problems/search?')
+      const result = list('安全题目')
+      return jsonResponse({
+        ...result,
+        mode: 'TITLE_FALLBACK',
+        notice: unsafe,
+        items: result.items.map((item) => ({
+          ...item,
+          highlights: [
+            [
+              { text: unsafe, matched: true },
+              { text: '普通文本', matched: false },
+            ],
+          ],
+        })),
+      })
+    })
+    vi.stubGlobal('fetch', fetchMock)
+    const { host } = await mountLibrary('/problems?keyword=安全')
+    expect(host.querySelector('[data-testid="search-degraded"]')?.textContent).toContain(
+      '正文搜索暂不可用',
+    )
+    expect(host.querySelector('mark')?.textContent).toBe(unsafe)
+    expect(host.querySelector('img')).toBeNull()
+    expect(host.textContent).toContain('普通文本')
+  })
   it('restores URL filters anonymously, preserves them while paging, and resets a search to page one', async () => {
     const fetchMock = vi.fn<FetchMock>(async (input: RequestInfo | URL) => {
       const url = new URL(String(input), 'http://localhost')
       if (url.pathname === '/api/v1/problem-tags') return jsonResponse({ tags: ['基础', '数学'] })
-      if (url.pathname !== '/api/v1/problems') throw new Error('Unexpected non-library request')
+      if (url.pathname !== '/api/v1/problems/search')
+        throw new Error('Unexpected non-library request')
       return jsonResponse(
         list(
           '两数较大值',

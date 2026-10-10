@@ -1,0 +1,122 @@
+{
+  "http": {
+    "allPassed": true,
+    "deletedIndexFallsBack": true,
+    "titleFallbackStillWorks": true,
+    "rebuildId": "2cac0b37-5100-48c4-a36d-fbb7ce3e4a2e",
+    "replayedSameId": true,
+    "rebuildSucceeded": true,
+    "fullTextRestored": true,
+    "checks": [
+      {
+        "method": "GET",
+        "path": "/api/v1/problems/search?keyword=%E6%9C%89%E7%AC%A6%E5%8F%B7%E6%95%B4%E6%95%B0",
+        "status": 200
+      },
+      {
+        "method": "GET",
+        "path": "/api/v1/problems/search?keyword=%E4%B8%A4%E6%95%B0",
+        "status": 200
+      },
+      {
+        "method": "GET",
+        "path": "/api/v1/admin/auth/session",
+        "status": 200
+      },
+      {
+        "method": "POST",
+        "path": "/api/v1/admin/auth/login",
+        "status": 200
+      },
+      {
+        "method": "GET",
+        "path": "/api/v1/admin/search/status",
+        "status": 200
+      },
+      {
+        "method": "POST",
+        "path": "/api/v1/admin/search/rebuilds",
+        "status": 200
+      },
+      {
+        "method": "POST",
+        "path": "/api/v1/admin/search/rebuilds",
+        "status": 200
+      },
+      {
+        "method": "GET",
+        "path": "/api/v1/admin/search/rebuilds",
+        "status": 200
+      },
+      {
+        "method": "GET",
+        "path": "/api/v1/admin/search/rebuilds",
+        "status": 200
+      },
+      {
+        "method": "GET",
+        "path": "/api/v1/admin/search/rebuilds",
+        "status": 200
+      },
+      {
+        "method": "GET",
+        "path": "/api/v1/problems/search?keyword=%E6%9C%89%E7%AC%A6%E5%8F%B7%E6%95%B4%E6%95%B0",
+        "status": 200
+      }
+    ],
+    "checkedAt": "2026-10-10T12:21:04.639Z"
+  },
+  "checkedAt": "2026-10-10T20:29:27.7681524+08:00",
+  "facts": {
+    "before": {
+      "job": "65b87b1a-7433-4fe4-b9a8-3f78b9804051",
+      "uuid": "3JLXgh4QSLWaeXHzPuDg6Q",
+      "status": "SUCCEEDED",
+      "indexName": "forgeoj-public-65b87b1a74334fe4b9a83f78b9804051",
+      "publicRows": 2,
+      "queuedAudit": 1,
+      "terminalAudit": 1
+    },
+    "deletedIndexStatus": "404",
+    "jars": [
+      {
+        "readOnly": true,
+        "service": "api",
+        "containerId": "576e07d80f2964361fed0fdbd196366774519c18a6fd0c767a653ae7a564be27",
+        "sha256": "df19b0564c886c9f195454880f616a62f789b8984c0f07a5d2416d6757721c9c"
+      },
+      {
+        "readOnly": true,
+        "service": "worker",
+        "containerId": "4a14a49e2d46c8b3ee4cb9d463c786340089a530c48b9d71ed228849cecaf248",
+        "sha256": "87ed560123d3338bb6df0570f932712e3e384eb9a8bc3d6e57c149a0ba3ee430"
+      }
+    ],
+    "deleteAcknowledged": true,
+    "after": {
+      "job": "2cac0b37-5100-48c4-a36d-fbb7ce3e4a2e",
+      "uuid": "PFyq_E-WQYuCU71oBMPUZA",
+      "status": "SUCCEEDED",
+      "indexName": "forgeoj-public-2cac0b37510048c4a36dfbb7ce3e4a2e",
+      "publicRows": 2,
+      "queuedAudit": 1,
+      "terminalAudit": 1
+    }
+  },
+  "apiSha256": "df19b0564c886c9f195454880f616a62f789b8984c0f07a5d2416d6757721c9c",
+  "cleanup": {
+    "ownedNetworks": 0,
+    "ownedImages": 0,
+    "ownedContainers": 0,
+    "testcontainers": 0,
+    "builders": 0,
+    "managedSandboxes": 0,
+    "ownedVolumes": 0,
+    "checkedAt": "2026-10-10T20:29:26.3946349+08:00"
+  },
+  "scope": "same-JAR whole owned index deletion and managed rebuild only",
+  "replay": "forgeoj-e2e-20261010-200754-1690c514",
+  "build": "D:\\Java项目\\ForgeOJ\\target\\forgeoj-linux-20261010-154710-14efe696",
+  "status": "VERIFIED",
+  "workerSha256": "87ed560123d3338bb6df0570f932712e3e384eb9a8bc3d6e57c149a0ba3ee430"
+}

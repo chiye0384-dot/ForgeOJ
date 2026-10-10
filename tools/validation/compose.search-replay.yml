@@ -1,0 +1,45 @@
+# Copyright 2026 池也; SPDX-License-Identifier: Apache-2.0
+# Overlay used only by a unique owned disposable replay. Public fixture credentials.
+x-search-env: &search-env
+  FORGEOJ_SEARCH_ENABLED: "true"
+  FORGEOJ_SEARCH_URL: https://search:9200
+  FORGEOJ_SEARCH_USERNAME: forgeoj_search
+  FORGEOJ_SEARCH_PASSWORD: m4-search-public-fixture-only
+  JAVA_TOOL_OPTIONS: -Djavax.net.ssl.trustStore=/run/search-trust.p12 -Djavax.net.ssl.trustStorePassword=m4-search-tls-fixture
+services:
+  search:
+    image: docker.elastic.co/elasticsearch/elasticsearch:9.5.3@sha256:f456578fc2a620a8a4f4c21d070fff1f6070345adb2be5e5626b65be72aea350
+    platform: linux/amd64
+    mem_limit: 1g
+    cap_drop: [ALL]
+    security_opt: [no-new-privileges:true]
+    environment:
+      discovery.type: single-node
+      xpack.security.enabled: "true"
+      xpack.security.autoconfiguration.enabled: "false"
+      xpack.security.http.ssl.enabled: "true"
+      xpack.security.http.ssl.keystore.path: certs/server.p12
+      xpack.security.http.ssl.keystore.password: m4-search-tls-fixture
+      xpack.license.self_generated.type: basic
+      xpack.ml.enabled: "false"
+      ES_JAVA_OPTS: -Xms512m -Xmx512m
+      ELASTIC_PASSWORD: m4-search-admin-fixture-only
+    volumes:
+      - search-data:/usr/share/elasticsearch/data
+      - ${FORGEOJ_E2E_REPORTS:?set report directory}/search-certs/server.p12:/usr/share/elasticsearch/config/certs/server.p12:ro
+      - ${FORGEOJ_E2E_REPORTS}/search-certs/server.crt:/usr/share/elasticsearch/config/certs/server.crt:ro
+    healthcheck:
+      test: [CMD-SHELL, 'curl --fail --silent --cacert /usr/share/elasticsearch/config/certs/server.crt -u "elastic:$$ELASTIC_PASSWORD" https://localhost:9200/ >/dev/null']
+      interval: 2s
+      timeout: 3s
+      retries: 60
+  api:
+    environment: *search-env
+    volumes:
+      - ${FORGEOJ_E2E_REPORTS}/search-certs/trust.p12:/run/search-trust.p12:ro
+  api-replica:
+    environment: *search-env
+    volumes:
+      - ${FORGEOJ_E2E_REPORTS}/search-certs/trust.p12:/run/search-trust.p12:ro
+volumes:
+  search-data:

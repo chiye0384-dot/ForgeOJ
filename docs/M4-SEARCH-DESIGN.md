@@ -1,8 +1,8 @@
 # M4 第6步：公共搜索、可靠同步与故障降级
 
-2026-10-10，IN_PROGRESS（设计及上游评估，尚无搜索实现/验收）。用户已授权推送第5步并接着完成下一步。第5步实现3abd1d9、检查点70042f87b6c79ff3a73c7d9c0b3032afb9ff22be已推送到chiye0384-dot/ForgeOJ的feat/m2-accounts并核验一致。原推送授权阻断已解除。
+2026-10-10 20:30最终验收：M4第6步公共搜索 **VERIFIED**，见[M4搜索验收](M4-SEARCH-VALIDATION.md)与[机器证据](evidence/m4-search/verification.json)。固定Linux API321/54 suites、Worker133/23 suites均零失败/错误/跳过，前端129/25及全部检查通过；412输入及84个实际提供的前端输入匹配准确构件。同JAR HTTPS/Basic、73项搜索HTTP、107项Redis回归、真实判题/权限/浏览器、有限死信及内容清空重建通过；另一个同JAR临时环境完成整个索引删除、标题降级和受审计重建（恢复阶段11项HTTP）。两个环境拥有者资源、builder、Testcontainers、沙箱全0。完整M4与E-04仍IN_PROGRESS，第7步/M5/Release未开始。按已授权交付feat/m2-accounts后停。下方旧日期记录只表示历史，当前状态以本段及最终机器证据为准。
 
-需求依据：Requirements 6.1/6.6/13.2，D-008/D-023，M4七步计划第6步。MySQL权威、ES只返回候选ID/排序；第7步监控、M5、Release、真实数据库/SMTP/管理员初始化不在本单元。设计参数为待实现工程规则，不是验收事实。
+需求依据：Requirements 6.1/6.6/13.2，D-008/D-023，M4七步计划第6步。MySQL权威、ES只返回候选ID/排序；第7步监控、M5、Release、真实数据库/SMTP/管理员初始化不在本单元。以下为批准的工程规则；实现结果及未覆盖边界以M4-SEARCH-VALIDATION和最终机器证据为准。
 
 ## 已确认的外部组件与许可
 
@@ -14,7 +14,7 @@
 - 多平台摘要：sha256:f456578fc2a620a8a4f4c21d070fff1f6070345adb2be5e5626b65be72aea350。
 - linux/amd64摘要：sha256:7b69d47de433699d6df59ef2d14d82d1b0f5a14ed48cf0244a6b20cc4222484e。
 - linux/arm64摘要：sha256:39ab4eab40cae7031ce82cdf7919fef0c425a5019d28e7385a2aa77440b87dd8。
-- 只执行imagetools inspect；许可采用已获用户明确确认，尚未拉取/运行镜像。9.3.2旧候选已放弃，最终候选以本节9.5.3为准；首次引入仍须保留实际镜像LICENSE/NOTICE和版本事实。
+- 最初仅执行imagetools inspect的记录已被实施事实取代：固定镜像已用于真实集成测试，Basic/9.5.3、无插件及认证/命名空间拒绝已验证，原LICENSE/NOTICE已保留并核验；同JAR HTTPS运行仍待验收。9.3.2旧候选已放弃，最终采用本节9.5.3。
 
 官方默认发行版采用Elastic License 2.0（ELv2），并非Apache-2.0。官方FAQ说明可在自己的应用中免费使用，但不得把ES本身作为托管搜索服务提供、绕过许可限制或删除告知。ForgeOJ自有源码保持Apache-2.0；用户只访问题库搜索，不访问ES管理API。本次不分发镜像归档或派生服务端，首次Release仍需完整分发审计。依据：[官方ELv2 FAQ](https://www.elastic.co/licensing/elastic-license/faq/)、[v9.5.3原始许可记录](https://github.com/elastic/elasticsearch/blob/v9.5.3/LICENSE.txt)。
 
@@ -23,13 +23,13 @@
 | 官方ES9.5.3，ELv2，免费Basic | 符合已批准ES架构；保留告知，只作题库内部搜索服务；无新付费服务 | 已确认采用；首次引入仍须核验实际告知与版本 |
 | 改用Apache-2.0的OpenSearch | 需变更D-023/需求中的ES选择，重新核验协议、服务端及客户端，不是直接替换版本号 | 仅在用户坚持外部搜索服务也必须Apache-2.0时另行评估，本轮未选择 |
 
-2026-10-10许可确认：在解释Elasticsearch/OpenSearch及ELv2影响后，用户明确回复“按推荐来”，已批准官方Elasticsearch9.5.3默认发行ELv2、免费Basic、仅ForgeOJ内部公共题搜索、保留原许可告知；ForgeOJ自有源码保持Apache-2.0。D-047已接受，不再询问该选择。许可阻断解除，尚未拉取/运行镜像、增加业务代码或V24。最新五小时额度已用85%（剩约15%），按照用户额度不足及时停止规则，停在已批准设计检查点；不是新的自动审批拒绝。下一次额度足够且用户继续时直接按M4-SEARCH-DESIGN的实施顺序，从V24公开版本/Outbox与真实MySQL合约测试开始，只完成第6步后交付并停。既有第5步VERIFIED、完整M4/E-04 IN_PROGRESS、第7步/M5/Release未开始。
+2026-10-10历史许可确认检查点（已由顶部最终验收覆盖）：在解释Elasticsearch/OpenSearch及ELv2影响后，用户明确回复“按推荐来”，已批准官方Elasticsearch9.5.3默认发行ELv2、免费Basic、仅ForgeOJ内部公共题搜索、保留原许可告知；ForgeOJ自有源码保持Apache-2.0。D-047已接受，不再询问该选择。许可阻断解除，尚未拉取/运行镜像、增加业务代码或V24。最新五小时额度已用85%（剩约15%），按照用户额度不足及时停止规则，停在已批准设计检查点；不是新的自动审批拒绝。下一次额度足够且用户继续时直接按M4-SEARCH-DESIGN的实施顺序，从V24公开版本/Outbox与真实MySQL合约测试开始，只完成第6步后交付并停。既有第5步VERIFIED、完整M4/E-04 IN_PROGRESS、第7步/M5/Release未开始。
 
 ## 数据与同步合约
 
 ### 公开投影与版本
 
-V24拟增加独立public_search_version（problem_id、data_version）和public_search_outbox；不改V1～V23。每个已存在PUBLIC题有一条版本，包括归档题；班级私有题/草稿永不初始化版本或进入消息。版本上限沿用9007199254740991，初始1，治理更改事务锁该题版本、增加一次、追加一个唯一事件；version、业务变更、现有缓存失效、审计一起提交或回滚。
+V24增加独立public_search_version（problem_id、data_version）和public_search_outbox；不改V1～V23。每个已存在PUBLIC题有一条版本，包括归档题；班级私有题/草稿永不初始化版本或进入消息。版本上限沿用9007199254740991，初始1，治理更改事务锁该题版本、增加一次、追加一个唯一事件；version、业务变更、现有缓存失效、审计一起提交或回滚。
 
 发布/文本修订/更正新题/归档/恢复/作废需要调用searchChanged(problemId)。当前接点在PublicReviewService.decide中已确定发布ID后，以及state完成公共状态变更后。不以普通详情访问或搜索请求补事件，不在授权前查询私有正文。官方题单不进入ES；题目的难度/标签维护SQL必须同连接事务更新搜索版本及追加事件，并按现有规约更新cache_epoch。任意直接SQL不承诺自动一致。
 
@@ -55,13 +55,17 @@ public_search_outbox保留publish_attempts、next_publish_at、published_at、fa
 
 关键字、难度和标签以结构化Query DSL构造，不接受调用者DSL/索引名/任意ES URL。高亮仅返回从当前MySQL公开标题/正文生成的纯文本segments（text/matched），每题最多2个片段、每片段160码点；Vue按文本节点与mark显示，不用v-html。不得利用高亮输出索引中旧版本或私有内容。
 
-使用现有cache_epoch.public作为读请求的公开内容代数。在ES候选查询前后以及MySQL快照中比较代数，内容变更则回退；记录搜索同步可读水位，只在该代数内全部事件已成功索引且refresh完成时前进。水位落后、dead-letter未解决、索引UUID变更/丢失、重建中均回退MySQL。即使缓存或ES声称健康，也不能跳过当前公开状态/版本复核。
+使用现有cache_epoch.public作为读请求的公开内容代数。在ES候选查询前后以及MySQL快照中比较代数，内容变更则回退；增量水位只在上次水位后的全部事件成功索引且refresh完成时前进。完整重建以稳定的MySQL快照覆盖此前全部版本，包括失败/死信事件涉及的当前公开投影；保留原失败事实，已覆盖的旧事件不再阻止水位追赶。水位落后、未覆盖死信、索引UUID变更/丢失、重建中均回退MySQL。当前alias UUID及文档总数还须匹配数据库投影数量，发现同UUID下清空/缺文档则回退。即使缓存或ES声称健康，也不能跳过当前公开状态/版本/全白名单内容复核。
+
+标签筛选先用MySQL现有排序规则取实际标签拼写，再向ES提交最多100种精确terms；超过上限回退，保留原大小写/重音筛选语义。ES响应限制256KiB，因此大正文候选即使不超过1000也可能触发标题降级。高亮只标出当前MySQL文本中与输入关键词字面相同的部分，不声称提供分词器的所有匹配位置。
+
+死信发布同样最多5次。发布预算耗尽后，成功的受审计重建可为其覆盖范围创建public_search_dead_recovery，以(event_id,rebuild_id)唯一，每条仍最多5次；同键重放不创建新预算，原失败尝试/时间继续保留。重建成功本身不允许ACK，必须等原死信或独立恢复补发收到Rabbit确认。后台展示发布失败、等待死信确认、补发失败的计数。
 
 ## 管理重建
 
 OPS_ADMIN/SUPER_ADMIN允许；CONTENT_REVIEWER/普通账号拒绝，仍复用AdminService.operationsWork、fence、当前版本/角色/首次改密检查、Origin/CSRF及既有管理预算。GET /api/v1/admin/search/status展示白名单水位/积压/固定错误码；GET /rebuilds分页元数据。POST /rebuilds只收expectedVersion/clientRequestId/reason，返回原唯一作业回执；同键重放不再重建，同键不同参数409，同时只允许一个活跃重建。
 
-持久重建记录QUEUED/RUNNING/READY/SUCCEEDED/FAILED，有限attempt及租约token；管理写只排队并原子审计，不在HTTP请求/管理fence锁内执行长ES操作。新索引名称由作业UUID生成，调用者不能指定。按MySQL公开ID键集分页每批100投影到新代数索引；墓碑同样投影，防止并发旧事件复活已归档题。扫描期间继续记录增量，切换前追赶到明确数据库代数，并核验该代数无待处理/死信、文档版本、mapping、refresh完成及目标UUID。失败保持旧索引/回退，不把半索引标记READY。
+持久重建记录QUEUED/RUNNING/READY/SUCCEEDED/FAILED，最多5次索引尝试及租约token；管理写只排队并原子审计，不在HTTP请求/管理fence锁内执行长ES操作。新索引名称由作业UUID生成，调用者不能指定。按MySQL公开ID键集分页每批100投影到新代数索引；墓碑同样投影，防止并发旧事件复活已归档题。扫描期间继续记录增量，切换前必须确认整次快照对应当前数据库代数；并发变更则在同作业/目标索引重试稳定扫描，不提前开放全文。核验mapping、refresh及目标UUID。第五次READY切换后进程中断可只核验实际alias和持久意图、完成同作业；不重置计数或开启第六次索引。失败保持旧索引/回退，不把半索引标记READY。
 
 切换使用[官方原子alias操作](https://www.elastic.co/docs/manage-data/data-store/aliases)，当前target/切换意图必须先持久化，ES切换后才CAS完成MySQL状态。若在两者之间崩溃，恢复扫描查询实际alias UUID并完成同一作业，不用猜测或创建新作业。查询只有MySQL记录UUID与alias实际UUID一致时才FULL_TEXT。该协议保护跨DB/ES非原子窗口，不宣称两个系统共同事务。
 
@@ -82,10 +86,10 @@ OPS_ADMIN/SUPER_ADMIN允许；CONTENT_REVIEWER/普通账号拒绝，仍复用Adm
 5. 最小前端完整检查；全部固定Linux门禁；相同JAR真实Worker/已验收账户、课堂/作业/审核/运维及Redis回归；多身份浏览器和降级提示。
 6. 源码/JAR/实际运行输入/DB/消息与队列/日志/截图事实关联，精确清理本次资源，更新证据与限制，再提交推送现有功能分支后停止第6步。
 
-当前没有V24文件、ES容器、搜索实现、测试或VERIFIED证据。第一次业务实现必须保持旧Redis单元证据为历史已验收，不沿用其422/124证明新源码通过。完整M4和E-04仍IN_PROGRESS；完整最终门禁、第7步监控及M5/Release不提前实现。
+历史实施前检查点：当时没有V24文件、ES容器、搜索实现、测试或VERIFIED证据。第一次业务实现必须保持旧Redis单元证据为历史已验收，不沿用其422/124证明新源码通过。完整M4和E-04仍IN_PROGRESS；完整最终门禁、第7步监控及M5/Release不提前实现。
 
 ## 本次停止检查点
 
-2026-10-10许可确认：在解释Elasticsearch/OpenSearch及ELv2影响后，用户明确回复“按推荐来”，已批准官方Elasticsearch9.5.3默认发行ELv2、免费Basic、仅ForgeOJ内部公共题搜索、保留原许可告知；ForgeOJ自有源码保持Apache-2.0。D-047已接受，不再询问该选择。许可阻断解除，尚未拉取/运行镜像、增加业务代码或V24。最新五小时额度已用85%（剩约15%），按照用户额度不足及时停止规则，停在已批准设计检查点；不是新的自动审批拒绝。下一次额度足够且用户继续时直接按M4-SEARCH-DESIGN的实施顺序，从V24公开版本/Outbox与真实MySQL合约测试开始，只完成第6步后交付并停。既有第5步VERIFIED、完整M4/E-04 IN_PROGRESS、第7步/M5/Release未开始。
+2026-10-10历史许可确认检查点（已由顶部最终验收覆盖）：在解释Elasticsearch/OpenSearch及ELv2影响后，用户明确回复“按推荐来”，已批准官方Elasticsearch9.5.3默认发行ELv2、免费Basic、仅ForgeOJ内部公共题搜索、保留原许可告知；ForgeOJ自有源码保持Apache-2.0。D-047已接受，不再询问该选择。许可阻断解除，尚未拉取/运行镜像、增加业务代码或V24。最新五小时额度已用85%（剩约15%），按照用户额度不足及时停止规则，停在已批准设计检查点；不是新的自动审批拒绝。下一次额度足够且用户继续时直接按M4-SEARCH-DESIGN的实施顺序，从V24公开版本/Outbox与真实MySQL合约测试开始，只完成第6步后交付并停。既有第5步VERIFIED、完整M4/E-04 IN_PROGRESS、第7步/M5/Release未开始。
 
-第5步推送已成功核验。当前无V24/搜索实现或新测试，不能将已批准设计标为VERIFIED。恢复时保留保护文件、重新核验现场Git/额度和实际Docker可用性，沿用已确认ELv2，不重问。
+历史设计交付检查点：第5步推送已成功核验。当时无V24/搜索实现或新测试，不能将已批准设计标为VERIFIED。恢复时保留保护文件、重新核验现场Git/额度和实际Docker可用性，沿用已确认ELv2，不重问。

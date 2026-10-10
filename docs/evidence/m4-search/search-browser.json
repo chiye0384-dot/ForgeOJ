@@ -1,0 +1,60 @@
+{
+  "snapshots": [
+    "search-browser-healthy-public.txt",
+    "search-browser-healthy-ops.txt",
+    "search-browser-outage-public.txt",
+    "search-browser-before-revocation.txt",
+    "search-browser-revoked.txt"
+  ],
+  "screenshots": [
+    "search-browser-healthy-public.jpg",
+    "search-browser-healthy-ops.jpg",
+    "search-browser-outage-public.jpg",
+    "search-browser-before-revocation.jpg",
+    "search-browser-revoked.jpg"
+  ],
+  "healthyPublic": true,
+  "healthyOps": true,
+  "outagePublic": true,
+  "revokedCleared": true,
+  "tabRetained": true,
+  "browserId": "2",
+  "tabId": "3",
+  "checkedAt": "2026-10-10T11:59:22.025Z",
+  "screenshotFileFormat": "JPEG",
+  "formatCorrection": {
+    "renames": [
+      {
+        "from": "search-browser-healthy-public.png",
+        "to": "search-browser-healthy-public.jpg",
+        "sha256": "6f529f4accfe0f082a9b482e7ab6097be8c1650aaa457d62a5ed3d0a6cd98e7f",
+        "bytesUnchanged": true
+      },
+      {
+        "from": "search-browser-healthy-ops.png",
+        "to": "search-browser-healthy-ops.jpg",
+        "sha256": "7ec6138e5ec176a6b9fac181d9e2aaf5b72ad7f95eb6c2c82f4649c1edf0fbfe",
+        "bytesUnchanged": true
+      },
+      {
+        "from": "search-browser-outage-public.png",
+        "to": "search-browser-outage-public.jpg",
+        "sha256": "37b92dfe2e50bcb312911c9f15b9b8095a684cea8aa162a8654b3a3b576a1943",
+        "bytesUnchanged": true
+      },
+      {
+        "from": "search-browser-before-revocation.png",
+        "to": "search-browser-before-revocation.jpg",
+        "sha256": "e5f696cddfdf98b3f4a9982d320bdd227f809165480eb98fb1a87bb06c0fefd5",
+        "bytesUnchanged": true
+      },
+      {
+        "from": "search-browser-revoked.png",
+        "to": "search-browser-revoked.jpg",
+        "sha256": "e9ec99a2c87c51ae4e4c89e113721a6596331557a27e9892d8ccb994236bcd35",
+        "bytesUnchanged": true
+      }
+    ],
+    "reason": "Actual browser screenshot API returned JPEG; names corrected without image editing"
+  }
+}

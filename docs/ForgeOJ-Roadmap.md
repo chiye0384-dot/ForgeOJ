@@ -1,6 +1,6 @@
-2026-10-10增量：第5步已推送并核验70042f8；用户授权第6步公共搜索，当前IN_PROGRESS（设计/上游评估），见[公共搜索设计](M4-SEARCH-DESIGN.md)。暂无业务实现或新验收；ELv2已获明确确认（D-047），额度约剩15%，按用户要求停在已批准设计检查点。第7步未开始。以下第5步验收记录继续有效。
+2026-10-10 20:30最终验收：M4第6步公共搜索 **VERIFIED**，见[M4搜索验收](M4-SEARCH-VALIDATION.md)与[机器证据](evidence/m4-search/verification.json)。固定Linux API321/54 suites、Worker133/23 suites均零失败/错误/跳过，前端129/25及全部检查通过；412输入及84个实际提供的前端输入匹配准确构件。同JAR HTTPS/Basic、73项搜索HTTP、107项Redis回归、真实判题/权限/浏览器、有限死信及内容清空重建通过；另一个同JAR临时环境完成整个索引删除、标题降级和受审计重建（恢复阶段11项HTTP）。两个环境拥有者资源、builder、Testcontainers、沙箱全0。完整M4与E-04仍IN_PROGRESS，第7步/M5/Release未开始。按已授权交付feat/m2-accounts后停。下方旧日期记录只表示历史，当前状态以本段及最终机器证据为准。
 
-2026-10-10 当前：M4第5步 Redis 与故障降级已 **[VERIFIED](M4-REDIS-VALIDATION.md)**。固定Linux API289+Worker133=422、前端124项及全部检查通过；同JAR双API、真实Redis故障/清空、108项HTTP、两次真实AC、浏览器撤权/降级、数据库事实及精确清理通过。完整M4仍IN_PROGRESS，第6步搜索已进入设计/上游评估，第7步监控未开始。下方带日期记录为历史，以本段和最终机器证据为准。
+2026-10-10 历史第5步检查点：M4第5步 Redis 与故障降级已 **[VERIFIED](M4-REDIS-VALIDATION.md)**。固定Linux API289+Worker133=422、前端124项及全部检查通过；同JAR双API、真实Redis故障/清空、108项HTTP、两次真实AC、浏览器撤权/降级、数据库事实及精确清理通过。完整M4仍IN_PROGRESS，第6步搜索已进入设计/上游评估，第7步监控未开始。下方带日期记录为历史，以本段和最终机器证据为准。
 
 # ForgeOJ 版本路线图
 
@@ -28,7 +28,7 @@
 
 2026-10-04 不可变送审/撤回单元已 VERIFIED：V12 精确绑定本人当前双 PASSED 的不可变快照，唯一待审、owner/CAS/幂等、待审禁改、撤回后修改与历史保留完成。全新固定 Linux API169 + Worker120 = **289**、前端 **56** 及全部检查通过；相同构件真实页面两轮送审/撤回/归档、HTTP 六类待审写409、旧撤回不影响新待审、冻结题面不变、正常与轮询回退 AC、六空队列、30 项实际数据库权限拒绝及精确清理通过。见 [验收](M2-CONTENT-REVIEW-VALIDATION.md)。本轮未重复 Worker SIGKILL，117 个运行文件逐字节等同上轮真实故障验收；截图接口不可用，保存真实 DOM 观察，不提供合成截图。完整内容与 M2 仍 IN_PROGRESS；下一步为输出生成预览、独立自测，外部 SMTP 仍需服务商和授权收件箱配置；受控审核身份/批准发布保持 M4。
 
-> 当前阶段：M-1、M0、M1、M2、M3均VERIFIED；M4为IN_PROGRESS，第一步设计及第2/3/4步管理身份、公共审核治理、运维恢复单元已完成，第5步Redis与降级VERIFIED，第6步搜索设计IN_PROGRESS，第7步未开始；M5/V1.1仍PLANNED。下方带日期阶段段落保留历史。
+> 当前阶段：M-1、M0、M1、M2、M3均VERIFIED；M4为IN_PROGRESS，第一步设计及第2/3/4步管理身份、公共审核治理、运维恢复单元已完成，第5步Redis与降级VERIFIED，第6步公共搜索VERIFIED，第7步未开始；M5/V1.1仍PLANNED。下方带日期阶段段落保留历史。
 > 路线图描述先后顺序，不代表完成状态。
 
 ## 1. 状态规则
@@ -246,7 +246,7 @@ M0 的登录只用于打通受保护提交链路，可使用预置账号和最�
 
 ## 8. M4：管理后台、搜索与降级
 
-状态 `IN_PROGRESS`（2026-10-10），第1步设计、第2～5步管理身份、公共审核、运维恢复及Redis降级已完成；D-043～D-046已确认。各子范围VERIFIED，见对应验收及[Redis验收](M4-REDIS-VALIDATION.md)。按[7步计划](M4-IMPLEMENTATION-PLAN.md)逐单元交付，第5步已交付，第6步搜索设计IN_PROGRESS；第7步监控及完整M4五门禁尚未完成，接手按[启动说明](M4-STEP4-NEW-CHAT-START.md)核对现状。
+状态 `IN_PROGRESS`（2026-10-10），第1步设计、第2～6步管理身份、公共审核、运维恢复、Redis降级及公共搜索已完成；D-043～D-047已确认。各子范围VERIFIED，见对应验收、[Redis验收](M4-REDIS-VALIDATION.md)及[搜索验收](M4-SEARCH-VALIDATION.md)。按[7步计划](M4-IMPLEMENTATION-PLAN.md)逐单元交付，第5步已交付，第6步公共搜索VERIFIED；第7步监控及完整M4五门禁尚未完成，接手优先按[搜索验收](M4-SEARCH-VALIDATION.md)核对最新状态；旧Step4启动说明保留历史。
 
 目标：补足真实系统所需的治理和运维能力。
 

@@ -58,6 +58,7 @@ export interface ProblemListItem {
   difficulty: ProblemDifficulty | null
   tags: string[]
   judgeVersion: number
+  highlights?: { text: string; matched: boolean }[][]
 }
 
 export interface ProblemListResponse {
@@ -65,6 +66,8 @@ export interface ProblemListResponse {
   page: number
   size: number
   total: number
+  mode?: 'FULL_TEXT' | 'TITLE_FALLBACK'
+  notice?: string | null
 }
 
 export interface SubmissionCreatedResponse {
@@ -188,7 +191,7 @@ export function getProblems(query: ProblemListQuery): Promise<ProblemListRespons
   if (query.keyword) parameters.set('keyword', query.keyword)
   if (query.difficulty) parameters.set('difficulty', query.difficulty)
   if (query.tag) parameters.set('tag', query.tag)
-  return requestJson(`/api/v1/problems?${parameters}`)
+  return requestJson(`/api/v1/problems${query.keyword?.trim() ? '/search' : ''}?${parameters}`)
 }
 
 export function getProblemTags(): Promise<{ tags: string[] }> {

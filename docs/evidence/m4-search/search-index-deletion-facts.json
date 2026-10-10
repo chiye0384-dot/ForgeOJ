@@ -1,0 +1,36 @@
+{
+  "before": {
+    "job": "65b87b1a-7433-4fe4-b9a8-3f78b9804051",
+    "uuid": "3JLXgh4QSLWaeXHzPuDg6Q",
+    "status": "SUCCEEDED",
+    "indexName": "forgeoj-public-65b87b1a74334fe4b9a83f78b9804051",
+    "publicRows": 2,
+    "queuedAudit": 1,
+    "terminalAudit": 1
+  },
+  "deletedIndexStatus": "404",
+  "jars": [
+    {
+      "readOnly": true,
+      "service": "api",
+      "containerId": "576e07d80f2964361fed0fdbd196366774519c18a6fd0c767a653ae7a564be27",
+      "sha256": "df19b0564c886c9f195454880f616a62f789b8984c0f07a5d2416d6757721c9c"
+    },
+    {
+      "readOnly": true,
+      "service": "worker",
+      "containerId": "4a14a49e2d46c8b3ee4cb9d463c786340089a530c48b9d71ed228849cecaf248",
+      "sha256": "87ed560123d3338bb6df0570f932712e3e384eb9a8bc3d6e57c149a0ba3ee430"
+    }
+  ],
+  "deleteAcknowledged": true,
+  "after": {
+    "job": "2cac0b37-5100-48c4-a36d-fbb7ce3e4a2e",
+    "uuid": "PFyq_E-WQYuCU71oBMPUZA",
+    "status": "SUCCEEDED",
+    "indexName": "forgeoj-public-2cac0b37510048c4a36dfbb7ce3e4a2e",
+    "publicRows": 2,
+    "queuedAudit": 1,
+    "terminalAudit": 1
+  }
+}

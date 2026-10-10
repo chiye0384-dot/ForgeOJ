@@ -293,6 +293,8 @@ Maven、npm、Docker 镜像和操作系统包都属于第三方组成。Release 
 
 最终表述必须以实际采用记录为准。M-1 阶段只证明官方最小生成骨架；当前 M0/M1 及普通账号单元的自有业务实现与验证入口见 `OWNERSHIP.md`、`M0-E2E-VALIDATION.md`、`M1-GATE-AUDIT.md` 和 [账号验收](M2-ACCOUNTS-VALIDATION.md)，不能把框架/内核能力、其余 M2～M5 计划或未发布能力写成本人已完成的发布成果。
 
-### U-012：Elasticsearch第6步已批准采用（尚未引入）
+### U-012：Elasticsearch第6步接入已VERIFIED
 
-2026-10-10，仅上游/许可/registry元数据评估，无源码复制、依赖引入、镜像拉取/运行或Release。官方ES9.5.3候选及多平台/amd64/arm64不可变摘要、原始许可链接和复用/原创边界见[M4-SEARCH-DESIGN](M4-SEARCH-DESIGN.md)。默认发行ELv2，免费Basic，ForgeOJ自有源码保持Apache-2.0；用户已于2026-10-10明确批准采用（D-047），不再重复确认；尚未拉取/运行，实际镜像LICENSE/NOTICE和运行版本留首次接入核验。已读取官方索引external版本、DELETE版本清理、alias和内置CJK文档用于设计，不把这些协议/分词能力记为自研。不新增云费用，不扩展为ES托管服务。
+2026-10-10，用户已批准D-047。官方9.5.3镜像已按多平台摘要sha256:f456578fc2a620a8a4f4c21d070fff1f6070345adb2be5e5626b65be72aea350拉取，原始[LICENSE](licenses/elasticsearch-9.5.3/LICENSE.txt)与[NOTICE](licenses/elasticsearch-9.5.3/NOTICE.txt)直接从/usr/share/elasticsearch提取、未修改，SHA256分别48255018b41fc0e965b1115af7e6779bc218bb8a6747d561da800d5022622aa2和e991cad8358b62fbba6443f08853a72d55d6cb7a49e5a3e36d3da31d13f0af76。镜像标签版本9.5.3、ELv2、源码revision367ec317ec5f668dd864d41be06052a567102fec；专用未启动提取容器已按所有者标签核验后移除。同准确JAR真实HTTPS重放已验证服务9.5.3、免费Basic、无插件、未认证401、运行账号无关索引403以及故障降级/重建；见[M4搜索验收](M4-SEARCH-VALIDATION.md)和[运行证据](evidence/m4-search/search-runtime.json)。技术单元VERIFIED，完整M4和首次正式分发审计未完成。
+
+只接入镜像服务及现有JDK21 HttpClient/Jackson3协议适配，无ES源码复制、ES客户端Maven依赖、Kibana、付费功能或Release。许可证及摘要来源与原创边界见[M4-SEARCH-DESIGN](M4-SEARCH-DESIGN.md)。ForgeOJ自有源码保持Apache-2.0。内置CJK、索引external版本、alias为Elastic能力；事务、白名单投影、复核、降级、重建、回执及测试为ForgeOJ实现。不新增云费用，不扩展为ES托管服务；首次分发仍需完整审计。

@@ -1,0 +1,88 @@
+{
+  "status": "IN_PROGRESS",
+  "scope": "M4 step6 fixed Linux build only",
+  "checkedAt": "2026-10-10T08:23:40.616Z",
+  "build": "target/forgeoj-linux-20261010-154710-14efe696",
+  "buildGatePassed": true,
+  "api": {
+    "tests": 321,
+    "suites": 54,
+    "failures": 0,
+    "errors": 0,
+    "skipped": 0,
+    "path": "forgeoj-api/forgeoj-api-0.0.1-SNAPSHOT.jar",
+    "sha256": "df19b0564c886c9f195454880f616a62f789b8984c0f07a5d2416d6757721c9c"
+  },
+  "worker": {
+    "tests": 133,
+    "suites": 23,
+    "failures": 0,
+    "errors": 0,
+    "skipped": 0,
+    "path": "forgeoj-judge-worker/forgeoj-judge-worker-0.0.1-SNAPSHOT.jar",
+    "sha256": "87ed560123d3338bb6df0570f932712e3e384eb9a8bc3d6e57c149a0ba3ee430"
+  },
+  "frontend": {
+    "tests": 129,
+    "suites": 25,
+    "allChecksPassed": true
+  },
+  "sourceInputsMatched": 412,
+  "frontendInputsMatched": 84,
+  "backendManifestRetained": true,
+  "licenseFacts": [
+    {
+      "path": "docs/licenses/elasticsearch-9.5.3/LICENSE.txt",
+      "sha256": "48255018b41fc0e965b1115af7e6779bc218bb8a6747d561da800d5022622aa2"
+    },
+    {
+      "path": "docs/licenses/elasticsearch-9.5.3/NOTICE.txt",
+      "sha256": "e991cad8358b62fbba6443f08853a72d55d6cb7a49e5a3e36d3da31d13f0af76"
+    }
+  ],
+  "sameJarReplayStarted": false,
+  "browserAcceptanceCompleted": false,
+  "step6RuntimePending": true,
+  "fullM4": "IN_PROGRESS",
+  "git": {
+    "branch": "feat/m2-accounts",
+    "head": "b90a21c8175cc17e6f6656888ab5483412ef88ff",
+    "implementationUncommitted": true,
+    "pushedThisTurn": false
+  },
+  "stopReason": "User quota rule: finish current build gate and checkpoint; do not start next replay/browser group",
+  "cleanup": {
+    "checkedAt": "2026-10-10T08:24:54.2814653Z",
+    "ownedBuilderContainers": 0,
+    "testcontainers": 0,
+    "managedSandboxes": 0,
+    "ownedBuilderImages": 0,
+    "volumesOrNetworksCreatedByBuild": false
+  },
+  "quota": {
+    "usedPercent": 87,
+    "remainingPercent": 13,
+    "ordinaryUsageAllowed": true,
+    "resetsAt": "2026-10-10T18:47:01+08:00",
+    "observedDuringCheckpoint": true
+  },
+  "protectedFiles": [
+    {
+      "path": "docs/M2-NEXT-CHAT-HANDOFF.md",
+      "sha256": "e08acd3d26a8cd27aca394bdac91828e13b9455a86f62133c5bafc038b18c054",
+      "hashOnly": true
+    },
+    {
+      "path": ".smtp.qq.local",
+      "sha256": "6df348a6404786791eb57c0dce9c9fb8968f7f0737de304f17d52c3900a03907",
+      "hashOnly": true
+    }
+  ],
+  "browser": {
+    "browserId": "2",
+    "tabId": "2",
+    "url": "about:blank",
+    "markedDeliverable": true,
+    "acceptanceNotStarted": true
+  }
+}

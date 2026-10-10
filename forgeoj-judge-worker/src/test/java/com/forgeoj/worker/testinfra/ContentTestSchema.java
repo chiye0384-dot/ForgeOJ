@@ -14,5 +14,6 @@ public final class ContentTestSchema {
             ScriptUtils.executeSqlScript(connection,new FileSystemResource(migrations.resolve(name)));
         }
         ScriptUtils.executeSqlScript(connection,new FileSystemResource(migrations.resolve("V23__reliable_redis_invalidation.sql")));
+        ScriptUtils.executeSqlScript(connection,new FileSystemResource(migrations.resolve("V24__public_search_projection.sql")));
     }
 }

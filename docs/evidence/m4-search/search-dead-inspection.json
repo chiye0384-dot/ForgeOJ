@@ -1,0 +1,33 @@
+{
+  "inspected": [
+    {
+      "eventId": "3c87549e-3d77-4952-9843-d067269746de",
+      "problemId": 1,
+      "dataVersion": 5,
+      "durable": true,
+      "confirmedBeforeInspection": true
+    },
+    {
+      "eventId": "3c87549e-3d77-4952-9843-d067269746de",
+      "problemId": 1,
+      "dataVersion": 5,
+      "durable": true,
+      "confirmedBeforeInspection": true
+    },
+    {
+      "eventId": "9aa9e19d-bea6-42c3-961e-0d94a3b22632",
+      "problemId": 1,
+      "dataVersion": 6,
+      "durable": true,
+      "confirmedBeforeInspection": true
+    },
+    {
+      "eventId": "9aa9e19d-bea6-42c3-961e-0d94a3b22632",
+      "problemId": 1,
+      "dataVersion": 6,
+      "durable": true,
+      "confirmedBeforeInspection": true
+    }
+  ],
+  "checkedAt": "2026-10-10T11:57:40.128Z"
+}

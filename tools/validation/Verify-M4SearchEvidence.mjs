@@ -1,0 +1,98 @@
+// Copyright 2026 池也; SPDX-License-Identifier: Apache-2.0
+import assert from 'node:assert/strict'
+import {createHash} from 'node:crypto'
+import {readFile,readdir,mkdir,writeFile,copyFile} from 'node:fs/promises'
+import {resolve,relative,join} from 'node:path'
+import {fileURLToPath} from 'node:url'
+import {gzipSync,inflateRawSync} from 'node:zlib'
+const root=resolve(fileURLToPath(new URL('../..',import.meta.url))),args=process.argv.slice(2)
+assert.equal(args.length,3,'Provide build/replay/output directories')
+const [build,replay,out]=args.map(p=>resolve(root,p))
+for(const p of [build,replay,out])assert.ok(!relative(root,p).startsWith('..'),'Outside repository')
+const sha=b=>createHash('sha256').update(b).digest('hex')
+const json=async(dir,name)=>JSON.parse((await readFile(join(dir,name),'utf8')).replace(/^\uFEFF/,''))
+const lines=async name=>(await readFile(join(replay,name),'utf8')).replace(/^\uFEFF/,'').trim().split(/\r?\n/).filter(Boolean)
+const jsonl=async name=>(await lines(name)).map(s=>JSON.parse(s))
+const manifest=text=>new Map(text.trim().split(/\r?\n/).map(line=>{const [hash,...name]=line.split(/\s+/);return [name.join(' ').replace(/^\.\//,''),hash]}))
+async function walk(path){const files=[];for(const e of await readdir(join(root,path),{withFileTypes:true})){if(['node_modules','dist','target','.git','.idea'].includes(e.name)||e.name.endsWith('.local')||e.name.startsWith('.env'))continue;const p=path+'/'+e.name;if(e.isDirectory())files.push(...await walk(p));else files.push(p)}return files.sort()}
+const bm=manifest(await readFile(join(build,'source-files.sha256'),'utf8')),fm=manifest(await readFile(join(build,'source-files.frontend.sha256'),'utf8')),rm=manifest(await readFile(join(replay,'frontend-runtime.sha256'),'utf8')),sm=manifest(await readFile(join(replay,'frontend-served-runtime.sha256'),'utf8')),hm=manifest(await readFile(join(replay,'search-tool-inputs.sha256'),'utf8'))
+const inputFacts=[]
+for(const p of [...new Set(['pom.xml','forgeoj-api/pom.xml','forgeoj-judge-worker/pom.xml',...await walk('forgeoj-api/src'),...await walk('forgeoj-judge-worker/src'),...await walk('frontend')])]){
+  const digest=sha(await readFile(join(root,p)));assert.equal(digest,bm.get(p),'Build input drift '+p)
+  if(p.startsWith('frontend/')){assert.equal(digest,fm.get(p),'Frontend gate input drift '+p);assert.equal(digest,rm.get(p),'Mounted frontend drift '+p);assert.equal(digest,sm.get(p),'Served frontend drift '+p)}inputFacts.push({path:p,sha256:digest})
+}
+const evidenceAdapterPath='tools/validation/Verify-M4SearchEvidence.mjs',evidenceAdapter={path:evidenceAdapterPath,capturedSha256:hm.get(evidenceAdapterPath),currentSha256:sha(await readFile(join(root,evidenceAdapterPath)))}
+for(const [p,digest]of hm)if(p!==evidenceAdapterPath)assert.equal(sha(await readFile(join(root,p))),digest,'Replay helper drift '+p)
+// This local evidence reader may be repaired after cleanup; it never ran in API/Worker.
+// Record both hashes rather than replacing the genuinely frozen runtime manifest.
+evidenceAdapter.changedAfterCapture=evidenceAdapter.capturedSha256!==evidenceAdapter.currentSha256
+// Preserve every actually frozen generation. Only these replay/evidence adapters were
+// corrected; no business, frontend, certificate or container configuration drift is allowed.
+const helperHistoryNames=['search-tool-inputs.initial.sha256','search-tool-inputs.healthy.sha256','search-tool-inputs.before-clear.sha256','search-tool-inputs.before-auth-renewal.sha256','search-tool-inputs.before-evidence-review.sha256']
+const helperHistory=[]
+for(const name of helperHistoryNames){
+  const bytes=await readFile(join(replay,name)),old=manifest(bytes.toString());assert.deepEqual([...old.keys()],[...hm.keys()],'Helper inventory changed '+name)
+  const changed=[];for(const [path,digest]of old)if(hm.get(path)!==digest){assert.ok(['tools/validation/replay-search.mjs','tools/validation/Verify-M4SearchReplay.ps1','tools/validation/Verify-M4SearchEvidence.mjs'].includes(path),'Unexplained helper drift '+path);changed.push({path,originalSha256:digest,currentSha256:hm.get(path)})}
+  helperHistory.push({manifest:name,sha256:sha(bytes),changed})
+}
+for(const p of ['tools/validation/replay-search.mjs','tools/validation/Verify-M4SearchReplay.ps1','tools/validation/compose.search-replay.yml','tools/validation/New-SearchReplayCertificates.ps1','tools/validation/Replay-FixedLinux.ps1','tools/validation/Verify-M4SearchEvidence.mjs'])assert.ok(hm.has(p),'Missing runtime helper '+p)
+async function suites(module){const details=[];for(const name of await readdir(join(build,module,'surefire-reports'))){if(!name.startsWith('TEST-')||!name.endsWith('.xml'))continue;const xml=await readFile(join(build,module,'surefire-reports',name),'utf8'),tag=xml.match(/<testsuite\b[^>]*>/)?.[0];assert.ok(tag);const attr=k=>Number(tag.match(new RegExp(`${k}="(\\d+)"`))?.[1]);const row={name,tests:attr('tests'),failures:attr('failures'),errors:attr('errors'),skipped:attr('skipped')};for(const k of ['failures','errors','skipped'])assert.equal(row[k],0,name+' '+k);details.push(row)}return {tests:details.reduce((n,r)=>n+r.tests,0),suites:details.length,details}}
+const api=await suites('forgeoj-api'),worker=await suites('forgeoj-judge-worker');assert.ok(api.tests>=321);assert.equal(worker.tests,133)
+for(const [name,count]of [['ElasticSearchIntegrationTests',19],['SearchProjectionIntegrationTests',4],['SearchMigrationIntegrationTests',1],['ElasticSearchClientTests',8]])assert.ok(api.details.some(r=>r.name.includes('.'+name+'.xml')&&r.tests===count),'Search suite missing '+name)
+const backendLog=await readFile(join(build,'backend.log')),frontLog=await readFile(join(build,'frontend.log'));assert.match(backendLog.toString(),/BUILD SUCCESS/)
+const fl=frontLog.toString().replace(/\u001b\[[0-9;]*m/g,'');assert.match(fl,/25 passed \(25\)/);assert.match(fl,/129 passed \(129\)/);assert.match(fl,/built in/)
+const apiJar=await readFile(join(build,'forgeoj-api/forgeoj-api-0.0.1-SNAPSHOT.jar')),apiSha256=sha(apiJar),workerSha256=sha(await readFile(join(build,'forgeoj-judge-worker/forgeoj-judge-worker-0.0.1-SNAPSHOT.jar')))
+const state=await json(replay,'state.json');assert.equal(state.SearchEnabled,true);assert.equal(state.RedisEnabled,true);assert.equal(state.ApiHash,apiSha256);assert.equal(state.WorkerHash,workerSha256)
+const runtime=await json(replay,'search-runtime.json');assert.equal(runtime.containers.length,5);assert.deepEqual(runtime.server,{version:'9.5.3',license:'basic',plugins:0,unauthenticatedStatus:'401',unrelatedIndexStatus:'403',tls:true})
+for(const service of ['api','api-replica','worker','search','redis']){const c=runtime.containers.find(c=>c.service===service);assert.ok(c);assert.equal(c.project,state.Project);if(['api','api-replica','worker'].includes(service))assert.equal(c.jarSha256,service==='worker'?workerSha256:apiSha256);if(service!=='worker')assert.equal(c.hasDockerSocket,false);if(service.startsWith('api')){assert.equal(c.publicTrustReadOnly,true);assert.equal(c.serverKeyMounted,false)}if(service==='worker')assert.ok(!c.envNames.some(e=>/SEARCH|ELASTIC|REDIS|MIGRATOR|ADMIN_CLI/.test(e)))}
+assert.notEqual(runtime.containers.find(c=>c.service==='api').id,runtime.containers.find(c=>c.service==='api-replica').id)
+const http=await json(replay,'search-http.json');for(const phase of ['healthy','outage','recovered','clear','revoke-browser'])assert.ok(http.phases[phase],phase+' missing')
+for(const [phase,names]of [['healthy',['fullTextBody','plainTextHighlights','filtersAndPaging','managementRoles','responseWhitelist']],['outage',['titleFallback','fixedNotice','realWorkerAc','archiveNotVisible']],['recovered',['fullTextRestored','managedRebuild']],['clear',['fullTextRestored','managedRebuild']],['revoke-browser',['browserOpsDisabled']]])for(const name of names)assert.equal(http.phases[phase][name],true)
+const events=await jsonl('search-events.jsonl');assert.ok(events.length>0);for(const e of events){assert.equal(e.scope,'PUBLIC');assert.ok(e.version>0&&e.publishAttempts<=5);assert.ok(e.attempts<=5);assert.equal(e.leaseCleared,true);assert.ok(['SUCCEEDED','DEAD_LETTER'].includes(e.status));if(e.status==='DEAD_LETTER')assert.ok(e.deadConfirmed===true||e.deadConfirmed===1)}
+const pending=await jsonl('search-pending.jsonl');assert.ok(pending.some(e=>e.status==='DEAD_LETTER'&&e.attempts===5),'Same-JAR outage must exhaust a real finite consumer')
+for(const p of pending.filter(p=>p.status==='DEAD_LETTER'))assert.ok(events.some(e=>e.id===p.eventId&&e.status==='DEAD_LETTER'&&e.attempts===5),'Original dead facts were changed')
+const control=await jsonl('search-control.jsonl');assert.equal(control.length,1);assert.equal(control[0].publicEpoch,control[0].readableEpoch);assert.equal(control[0].activeJob,null);assert.equal(control[0].privateVersions,0)
+const jobs=await jsonl('search-jobs.jsonl');for(const expected of http.jobs){const job=jobs.find(j=>j.id===expected.id);assert.ok(job);assert.equal(job.status,'SUCCEEDED');assert.equal(job.queueAudit,1);assert.equal(job.terminalAudit,1);assert.equal(job.leaseCleared,true);assert.ok(job.attempts>=1&&job.attempts<=5)}
+const submissions=await jsonl('search-outage-submission.jsonl'),s=submissions.find(s=>s.id===http.outageSubmission);assert.ok(s);assert.equal(s.status,'FINISHED');assert.equal(s.verdict,'AC');assert.equal(s.taskCount,1);assert.equal(s.sourceDigestMatches,true)
+const cleared=await json(replay,'search-clear.json');assert.ok(cleared.before>0);assert.equal(cleared.deleted,cleared.before);assert.equal(cleared.after,0)
+const queues=await json(replay,'search-queues.json');assert.equal(queues.length,9);for(const q of queues){assert.equal(q.messages_ready,0);assert.equal(q.messages_unacknowledged,0)}
+const denials=await json(replay,'search-sql-denials.json');assert.equal(denials.length,14);assert.ok(denials.every(d=>d.denied))
+const baseline=['matrix.json','permissions.json','library.json','learning.json','classroom-http.json','admin-http.json','public-review-http.json','redis-http.json'];for(const name of baseline)assert.ok((await json(replay,name)))
+const matrix=await json(replay,'matrix.json');assert.equal(matrix.length,8);assert.ok(matrix.every(r=>r.verdict===r.expected&&r.statusVersion===2&&r.closeCode===1000))
+const permissions=await json(replay,'permissions.json');for(const [k,v]of Object.entries({anonymous:401,otherOwner:404,missing:404,crossOrigin:403,logoutClose:1008}))assert.equal(permissions[k],v)
+for(const [name,fields]of [['library.json',['anonymous','exactListFields','exactDetailFields']],['learning.json',['ownerDenied','publicPersonalFactsAbsent','historyExactFields']]]){const result=await json(replay,name);for(const k of fields)assert.equal(result[k],true)}
+for(const name of ['classroom-http.json','admin-http.json','public-review-http.json'])assert.equal((await json(replay,name)).allPassed,true)
+const redis=await json(replay,'redis-http.json');for(const phase of ['healthy','guard-failure','outage','recovered'])assert.ok(redis.phaseFacts[phase]);assert.equal(redis.phaseFacts.healthy.realAc,true);assert.equal(redis.phaseFacts.outage.realAcDuringOutage,true)
+for(const k of ['ordinaryOldJwtRejected','adminDowngradeRejected','disabledAdminRejected','archivedPublicRejected','unexpiredRevocationProbes'])assert.equal(redis.phaseFacts.outage[k],true)
+const workerEvents=(await lines('search-worker.log')).filter(s=>s.startsWith('{')).map(s=>JSON.parse(s)),formal=await jsonl('search-formal-facts.jsonl')
+for(const id of [http.outageSubmission,redis.accepted.submissionId,redis.outageAccepted]){const f=formal.find(f=>f.id===id);assert.ok(f);assert.equal(f.taskStatus,'FINISHED');assert.equal(f.leaseCleared,true);assert.equal(f.closedAttempts,1);assert.equal(f.published,1);const commit=workerEvents.findIndex(e=>e.event==='attempt.finished'&&e.judgeTaskId===f.taskId);assert.ok(commit>=0);assert.ok(workerEvents.findIndex((e,i)=>i>commit&&e.event==='delivery.ack_sent'&&e.judgeTaskId===f.taskId)>commit)}
+const deadInspection=await json(replay,'search-dead-inspection.json');assert.ok(deadInspection.inspected.length>0);for(const d of deadInspection.inspected){assert.equal(d.durable,true);assert.equal(d.confirmedBeforeInspection,true);assert.ok(events.some(e=>e.id===d.eventId&&e.status==='DEAD_LETTER'))}
+const browser=await json(replay,'search-browser.json');for(const k of ['healthyPublic','healthyOps','outagePublic','revokedCleared','tabRetained'])assert.equal(browser[k],true,k);assert.ok(browser.snapshots.length>=4&&browser.screenshots.length>=4)
+for(const name of browser.snapshots){assert.match(name,/^search-browser-.*\.txt$/);assert.ok((await readFile(join(replay,name),'utf8')).length>30)}
+for(const name of browser.screenshots){assert.match(name,/^search-browser-.*\.(png|jpg)$/);const bytes=await readFile(join(replay,name));assert.ok(bytes.length>1000);if(name.endsWith('.png'))assert.equal(bytes.subarray(0,8).toString('hex'),'89504e470d0a1a0a');else{assert.equal(bytes.subarray(0,3).toString('hex'),'ffd8ff');assert.equal(bytes.subarray(-2).toString('hex'),'ffd9')}}
+const cleanup=await json(replay,'search-cleanup.json');for(const k of ['ownedContainers','ownedVolumes','ownedNetworks','ownedImages','builders','testcontainers','managedSandboxes'])assert.equal(cleanup[k],0)
+const deletion=await json(replay,'search-index-deletion-verification.json');assert.equal(deletion.status,'VERIFIED');assert.equal(deletion.apiSha256,apiSha256);assert.equal(deletion.workerSha256,workerSha256)
+assert.match(deletion.replay,/^forgeoj-e2e-\d{8}-\d{6}-[a-f0-9]{8}$/)
+const deletionDir=join(root,'target',deletion.replay),deletionFacts=await json(deletionDir,'search-index-deletion-facts.json'),deletionHttp=await json(deletionDir,'search-index-deletion-http.json'),deletionCleanup=await json(deletionDir,'search-cleanup.json')
+assert.deepEqual(deletion.facts,deletionFacts);assert.deepEqual(deletion.http,deletionHttp);assert.deepEqual(deletion.cleanup,deletionCleanup)
+assert.equal(deletionFacts.deleteAcknowledged,true);assert.equal(deletionFacts.deletedIndexStatus,'404');assert.notEqual(deletionFacts.before.indexName,deletionFacts.after.indexName);assert.notEqual(deletionFacts.before.uuid,deletionFacts.after.uuid);assert.equal(deletionFacts.before.publicRows,deletionFacts.after.publicRows)
+for(const f of [deletionFacts.before,deletionFacts.after]){assert.equal(f.status,'SUCCEEDED');assert.equal(f.queuedAudit,1);assert.equal(f.terminalAudit,1)}
+assert.equal(deletionFacts.after.job,deletionHttp.rebuildId)
+const deletionPrepare=await json(deletionDir,'search-index-deletion-prepare.json');assert.equal(deletionPrepare.allPassed,true);assert.equal(deletionPrepare.initialFullTextVerified,true);assert.equal(deletionPrepare.firstPasswordGatesUsedRealHttp,true);assert.equal(deletionPrepare.initialRebuildId,deletionFacts.before.job)
+for(const k of ['allPassed','deletedIndexFallsBack','titleFallbackStillWorks','replayedSameId','rebuildSucceeded','fullTextRestored'])assert.equal(deletionHttp[k],true)
+for(const k of ['ownedContainers','ownedVolumes','ownedNetworks','ownedImages','builders','testcontainers','managedSandboxes'])assert.equal(deletionCleanup[k],0)
+for(const service of ['api','worker']){const jar=deletionFacts.jars.find(j=>j.service===service);assert.equal(jar.readOnly,true);assert.equal(jar.sha256,service==='api'?apiSha256:workerSha256)}
+const deletionManifest=manifest(await readFile(join(deletionDir,'search-index-deletion-inputs.sha256'),'utf8'));assert.equal(deletionManifest.size,11)
+for(const [path,digest]of deletionManifest){assert.match(path,/^tools\/validation\/[^/]+$/);assert.equal(sha(await readFile(join(root,path))),digest,'Supplemental helper drift '+path)}
+function zipEntries(bytes){let end=bytes.length-22;while(end>=0&&bytes.readUInt32LE(end)!==0x06054b50)end--;assert.ok(end>=0);let offset=bytes.readUInt32LE(end+16);const entries=new Map();for(let i=0;i<bytes.readUInt16LE(end+10);i++){assert.equal(bytes.readUInt32LE(offset),0x02014b50);const method=bytes.readUInt16LE(offset+10),size=bytes.readUInt32LE(offset+20),n=bytes.readUInt16LE(offset+28),x=bytes.readUInt16LE(offset+30),c=bytes.readUInt16LE(offset+32),local=bytes.readUInt32LE(offset+42),name=bytes.subarray(offset+46,offset+46+n).toString(),start=local+30+bytes.readUInt16LE(local+26)+bytes.readUInt16LE(local+28),payload=bytes.subarray(start,start+size);entries.set(name,method===0?payload:method===8?inflateRawSync(payload):null);offset+=46+n+x+c}return entries}
+const entries=zipEntries(apiJar),catalog=await json(join(root,'docs/evidence/m4-redis'),'redis-dependencies.json'),dependencies=[]
+for(const a of catalog.artifacts){const name='BOOT-INF/lib/'+a.artifact+'-'+a.version+'.jar';if(a.artifact==='spring-boot-starter-data-redis'){assert.ok(!entries.has(name));continue}const bytes=entries.get(name);assert.ok(bytes);assert.equal(sha(bytes),a.jarSha256,'Dependency changed '+name);dependencies.push({path:name,sha256:a.jarSha256})}assert.equal(dependencies.length,22)
+await mkdir(out,{recursive:true})
+for(const name of ['search-index-deletion-verification.json','search-index-deletion-facts.json','search-index-deletion-http.json','search-index-deletion-prepare.json','search-index-deletion-inputs.sha256'])await copyFile(join(deletionDir,name),join(out,name))
+await copyFile(join(deletionDir,'search-cleanup.json'),join(out,'search-index-deletion-cleanup.json'))
+const safe=[...baseline,'redis-cache-facts.json','redis-outbox.jsonl','redis-submissions.jsonl','redis-formal-facts.jsonl','redis-assignment-facts.jsonl','redis-sql-denials.json','redis-queues.tsv','redis-tool-inputs.sha256','search-http.json','search-runtime.json','search-events.jsonl','search-pending.jsonl','search-jobs.jsonl','search-control.jsonl','search-outage-submission.jsonl','search-formal-facts.jsonl','search-dead-inspection.json','search-clear.json','search-sql-denials.json','search-queues.json','search-pause.json','search-tool-inputs.sha256',...helperHistoryNames,'replay-helper-corrections.json','search-cache-refill.json','search-browser.json','search-cleanup.json',...browser.snapshots,...browser.screenshots]
+for(const name of safe){assert.ok(!name.includes('private'));await copyFile(join(replay,name),join(out,name))}
+for(const name of ['search-api.log','search-api-replica.log','search-worker.log','search-search.log']){const bytes=await readFile(join(replay,name));assert.ok(!/FORGEOJ_(ADMIN_)?(ACCESS|REFRESH)=|passwordHash|"sourceCode"|"source_code"|"token"\s*:/i.test(bytes.toString()),'Private payload in logs');await writeFile(join(out,name+'.gz'),gzipSync(bytes))}
+await writeFile(join(out,'backend.log.gz'),gzipSync(backendLog));await writeFile(join(out,'frontend.log.gz'),gzipSync(frontLog));await writeFile(join(out,'test-suites.json'),JSON.stringify({api,worker},null,2)+'\n');await writeFile(join(out,'source-inputs.json'),JSON.stringify({inputs:inputFacts,dependencies,helperHistory,evidenceAdapter},null,2)+'\n')
+const verification={status:'VERIFIED',scope:'M4 step6 public search only',checkedAt:new Date().toISOString(),build:relative(root,build),replay:relative(root,replay),api:{tests:api.tests,suites:api.suites,sha256:apiSha256},worker:{tests:worker.tests,suites:worker.suites,sha256:workerSha256},frontend:{tests:129,suites:25,allChecksPassed:true},httpChecks:http.checks.length,indexDeletion:{status:deletion.status,replay:relative(root,deletionDir),httpChecks:deletionHttp.checks.length,cleanup:deletionCleanup},dependenciesCompared:22,sqlDenials:denials.length,cleanup,fullM4:'IN_PROGRESS'}
+await writeFile(join(out,'verification.json'),JSON.stringify(verification,null,2)+'\n');console.log(JSON.stringify(verification))

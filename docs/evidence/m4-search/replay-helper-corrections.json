@@ -1,0 +1,15 @@
+{
+  "businessOrFrontendChanged": false,
+  "acceptedJarsChanged": false,
+  "corrections": [
+    {"stage":"healthy first attempt","observed":"ordinary authenticated account returned 403 while helper expected 401","resolution":"Preserved existing authenticated-without-ADMIN contract; checked anonymous 401 separately and ordinary 403. Healthy stage passed."},
+    {"stage":"outage first attempt","observed":"title-only keyword 整数 did not match fixture title 两数之和","resolution":"Used literal 两数 in title and archive checks; no SQL data or product behavior changed. Outage stage passed with real AC."},
+    {"stage":"clear ownership precondition","observed":"helper expected mapping _meta.rebuildId; actual owned mapping has _meta.forgeojRebuildId","resolution":"Checked the exact mapping key/index name and original SQL job/UUID before clearing."},
+    {"stage":"clear after actual deletion","observed":"old restored management access credential returned 401 before requesting the rebuild","resolution":"Real fixture login at each later stage; resumed only when saved clear receipt, exact generation/job/UUID and actual zero count all matched. No second deletion or failure-history rewrite. Clear stage passed."},
+    {"stage":"final evidence adapter","observed":"runtime helpers had the above documented corrections","resolution":"Kept five original frozen manifests and validated that only the two replay adapters and evidence adapter differ; every other helper plus all 412 business/Worker/frontend inputs remain identical."}
+  ],
+  "additionalChecks": [
+    {"check":"legacy Admin HttpAudit","status":"NOT_APPLICABLE_TO_SEARCH_GATE","observedExpectedRecoveryEvents":1,"observedActualRecoveryEvents":0,"reason":"This disposable search fixture did not execute admin-recover. Existing assertion and helper were preserved; no recovery event manufactured. Admin identity Setup and ReadyBrowsers passed, and search queued/terminal audit is independently verified."},
+    {"check":"Redis Audit first late invocation","status":"RETEST_PASSED","observed":"normal public/session caches expired while browser steps ran","resolution":"Fresh real HTTP fixture login and public requests immediately before Audit; original TTL, local budgets and immutable receipts unchanged. Redis Audit and four SQL refusals passed."}
+  ]
+}

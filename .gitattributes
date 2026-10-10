@@ -2,5 +2,6 @@
 /LICENSE text eol=lf
 /NOTICE text eol=lf
 /licenses/*.txt text eol=lf
+/docs/licenses/elasticsearch-9.5.3/*.txt -text
 *.cmd text eol=crlf
 *.sh text eol=lf

@@ -1,0 +1,10 @@
+{"id": 1, "attempts": 0, "delivered": true, "errorCode": null, "namespace": "public", "oldRevision": 2}
+{"id": 2, "attempts": 0, "delivered": true, "errorCode": null, "namespace": "public", "oldRevision": 3}
+{"id": 3, "attempts": 0, "delivered": true, "errorCode": null, "namespace": "public", "oldRevision": 4}
+{"id": 4, "attempts": 0, "delivered": true, "errorCode": null, "namespace": "public", "oldRevision": 5}
+{"id": 5, "attempts": 0, "delivered": true, "errorCode": null, "namespace": "public", "oldRevision": 6}
+{"id": 6, "attempts": 0, "delivered": true, "errorCode": null, "namespace": "public", "oldRevision": 7}
+{"id": 7, "attempts": 2, "delivered": true, "errorCode": null, "namespace": "public", "oldRevision": 8}
+{"id": 8, "attempts": 2, "delivered": true, "errorCode": null, "namespace": "public", "oldRevision": 9}
+{"id": 9, "attempts": 0, "delivered": true, "errorCode": null, "namespace": "public", "oldRevision": 10}
+{"id": 10, "attempts": 0, "delivered": true, "errorCode": null, "namespace": "public", "oldRevision": 11}

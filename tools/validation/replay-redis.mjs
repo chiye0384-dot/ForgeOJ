@@ -66,6 +66,21 @@ if(phase==='healthy'){
   clients={...clients,anonymous,ordinary,superAdmin,one,two}
   data.accepted={request,submissionId:accepted.submissionId,status:terminal.processingStatus,verdict:terminal.verdict};data.officialId=officialId;data.created=created;data.limitedName=limitedName
   await save({sameKeyResponses:7,realAc:true,sharedLoginBudget:10,twoApiInstances:true})
+}else if(phase==='prepare-outage'){
+  // Long multi-feature replays may outlive access JWTs or the five-minute rate window.
+  // Authenticate through normal HTTP and create a new measured window, never reset counters.
+  // A second identity name still shares the source-IP budget. Wait out the complete
+  // existing window before measuring another one; retrying 429 cannot reset it.
+  const remaining=Math.max(0,310000-(Date.now()-Date.parse(data.phaseFacts.healthy.checkedAt)))
+  assert.ok(Number.isFinite(remaining));if(remaining)await new Promise(r=>setTimeout(r,remaining))
+  for(const [key,name,password,admin] of [['ordinary','redis_learner','forgeoj-dev-only',false],['superAdmin','m4_super','m4-public-super-changed-password',true],['redis_ops','redis_ops',changed,true],['redis_reviewer','redis_reviewer',changed,true]]){
+    const client=new Client();await client.login(name,password,admin);clients[key]=client;requireUnexpiredAccess(client,admin)
+  }
+  clients.one=new Client('http://api:8080');clients.two=new Client('http://api-replica:8080')
+  await clients.one.call('/api/v1/auth/session');await clients.two.call('/api/v1/auth/session')
+  data.limitedName='redis_limit_'+randomUUID().slice(0,8)
+  for(let i=0;i<11;i++)await (i%2?clients.two:clients.one).call('/api/v1/auth/login','POST',{username:data.limitedName,password:'invalid-public-fixture'},i<10?401:429)
+  await save({normalHttpReauthentication:true,newMeasuredRateWindow:true,waitedForExistingRateWindowMs:remaining,sharedLoginBudget:10,twoApiInstances:true})
 }else if(phase==='guard-failure'){
   await clients.ordinary.call('/api/v1/submissions/'+data.accepted.submissionId,'GET',undefined,503)
   await clients.anonymous.call('/api/v1/problems/sum-two-integers')
@@ -112,9 +127,14 @@ if(phase==='healthy'){
   await save({oldSessionStillRejected:true,currentDowngradedRole:true,sameOriginalReceipt:true,flushDidNotResetLocalLimits:true,publicCacheRebuilt:true})
 }else if(phase==='warm'){
   assert.equal(data.phaseFacts.recovered?.publicCacheRebuilt,true)
+  // The audit can follow a long broker timeout exercise. Renew the two current
+  // identities through normal login; stale/revoked credentials remain untouched.
+  clients.ordinary=new Client();await clients.ordinary.login('redis_learner','forgeoj-dev-only')
+  clients.downgraded=new Client();const current=await clients.downgraded.login('redis_ops',changed,true)
+  assert.equal(current.admin.role,'CONTENT_REVIEWER')
   await clients.anonymous.call('/api/v1/problems/sum-two-integers')
   await clients.anonymous.call('/api/v1/official-problem-lists/'+data.officialId)
   await clients.ordinary.call('/api/v1/submissions/'+data.accepted.submissionId)
   await clients.downgraded.call(root+'/content-reviews')
-  await save({currentClientsRecheckedWithoutNewLogin:true})
+  await save({currentClientsRecheckedAfterNormalHttpLogin:true})
 }else throw Error('Unsupported phase')

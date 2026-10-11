@@ -1,4 +1,18 @@
+2026-10-11当前验收：M4第7步及完整M4 **VERIFIED**，五项总门禁全部PASS。独立Grafana OSS许可已批准；固定Linux API335/59 suites、Worker139/26 suites、前端129/25零失败/错误/跳过，428业务/测试/前端输入、84实际提供前端与准确JAR一致。同JAR新回放覆盖Redis/ES/RabbitMQ中断恢复、真实AC、原事件受审计重送、整个索引删除重建、实际promtool及Grafana14面板/23表达式/只读浏览器登录退出。6个唯一原死信事件对应6份实测消息，每一份均匹配原事件ID和四字段契约；诊断前后数量不变，没有清空死信。本轮拥有者资源与沙箱清理全0。详见[M4总门禁](docs/M4-GATE-AUDIT.md)、[监控验收](docs/M4-MONITORING-VALIDATION.md)及[最终机器证据](docs/evidence/m4-monitoring/verification.json)。M5仍PLANNED，未PR/main/tag/Release/RESUME_READY；按授权交付feat/m2-accounts后停止。
+
+接续先核实际Git和docs/M4-MONITORING-VALIDATION.md；本单元已完成，没有当前运行中的演练。tab5保留about:blank/deliverable，不关闭内置标签页或Codex/ChatGPT。docs/M2-NEXT-CHAT-HANDOFF.md与.smtp.qq.local仍只允许核对摘要，禁止读取、暂存或改动。后续阶段须用户再次授权，并遵守额度不足下一组就停止。
+
+> 以下旧日期的阶段、额度、待许可、未完成和“下一步”文字为历史快照；实时状态以上方当前验收与对应最终证据为准。
+
 # ForgeOJ agent instructions
+
+2026-10-11 09:30当前：第7步及完整M4仍 **IN_PROGRESS**。Grafana OSS许可已明确批准，固定独立镜像/告知与14面板已落地；第一轮固定Linux335 API/139 Worker/129前端通过，真实Redis/ES故障恢复、整索引删除重建和Grafana只读登录/退出已验证，但Rabbit故障发现unsigned attempt_count=0聚合下溢。已以CASE先判断修复重试数及水位差，真实MySQL回归通过，正在以当前修复源码重新执行固定Linux全量；第一轮JAR/截图是[被替代的失败运行记录](docs/evidence/m4-monitoring/failed-20261011-085452/checkpoint.json)，不可当最终通过。首轮全部拥有者资源清理0，未提交/推送。当前恢复入口为[M4监控验证](docs/M4-MONITORING-VALIDATION.md)；下方旧日期/待许可/额度文字均为历史。按既有授权完成现有功能分支后停止，M5/PR/main/tag/Release/RESUME_READY不启动。
+
+2026-10-11当前授权：用户对第7步许可选择明确回复“按推荐，采用独立Grafana OSS”，批准官方Grafana OSS13.2.3/AGPLv3作为独立未修改的免费本地服务，保留告知，自有代码仍Apache-2.0。不重复询问。额度已重新核验五小时1%已用、周43%，可继续第7步与完整M4验收；此前78%停止点及待许可文字保留为历史。当前工作树仍未提交，HEAD cd2be91，先完成固定镜像/原许可、私有配置/面板、新固定Linux与同JAR故障/浏览器验证；全过程按额度规则及时检查。只交付现有feat/m2-accounts，不启动M5/PR/main/tag/Release。
+
+2026-10-10 22:26当前权威检查点：用户在cd2be91第6步推送后再次“继续”，已进入第7步监控，不再按下方历史“第7步不启动”执行。第7步与完整M4 IN_PROGRESS。先读docs/M4-MONITORING-DESIGN.md、docs/M4-MONITORING-VALIDATION.md、docs/evidence/m4-monitoring/native-checkpoint.json。监控指标、API只读聚合快照、默认关闭/专用Bearer/loopback/显式私网opt-in的独立JDK抓取、Worker真实原事件与清理计数已加入，未新增Maven依赖、schema/grants、API Docker或Worker Web应用。API45项真实Redis/ES/SQL/权限回归、最终格式7项及Worker17项通过；7项有5项重合，合并64唯一用例。428个最终输入冻结，84前端未变；回归421非隐藏输入冻结后仅两个API渲染类及两个测试调整同族连续分组，最终7项通过。不能将此本机检查点冒充固定Linux/当前JAR/面板/浏览器/三依赖故障或完整M4验收。源码已经改变，旧第6步JAR仅历史证据，不能直接用于新源码验收。
+
+Grafana OSS13.2.3的AGPLv3许可问题已发送等待用户实际答复，推荐独立未修改服务/保留告知、自有代码Apache-2.0；此前只明确批准ES ELv2。没有导入/运行Prometheus或Grafana，只有官方版本/许可证研究；同意后再按设计固定镜像摘要/原告知并完成面板。不把一般“继续”或等待时间当作该许可答复，不重复询问已批准的ES或普通工程参数。额度最新78%已用（约22%余量），预计不足下一组完整Linux+面板/故障重放，按用户规则本轮先停；当前监控实现/文档未暂存/提交/推送，HEAD cd2be91c4da523df7456778f87e1f7de3ba0fdbb，分支feat/m2-accounts。所有本轮命令结束，Testcontainers/managed sandbox实时0、保护文件hash未变，未操作浏览器/应用。恢复先重核Git/额度/保护hash及实际许可答复，再新构建与完整验收；第7步完成后按既有授权交付现有功能分支并停，不开始M5/PR/main/tag/Release。下方20:30和更早段落是历史。
 
 2026-10-10 20:30最新权威检查点：M4第6步公共搜索VERIFIED；完整M4/E-04保持IN_PROGRESS。用户已批准官方ES9.5.3/Basic/ELv2、推荐工程规则和现有功能分支提交推送，不重问。阅读docs/M4-SEARCH-VALIDATION.md与docs/evidence/m4-search/verification.json。接受构建target/forgeoj-linux-20261010-154710-14efe696：API321/54、Worker133/23零失败/错误/跳过，前端129/25全部检查；412输入及84实际提供前端一致。API SHA256 df19b0564c886c9f195454880f616a62f789b8984c0f07a5d2416d6757721c9c；Worker 87ed560123d3338bb6df0570f932712e3e384eb9a8bc3d6e57c149a0ba3ee430。主重放target/forgeoj-e2e-20261010-192354-eaaa4bc7：73搜索HTTP/107RedisHTTP、HTTPS/Basic无插件、双API、真实AC、权限/故障/有限死信/确认后ACK、14搜索SQL拒绝、9空队列及浏览器5张真实JPEG/5快照通过。补充target/forgeoj-e2e-20261010-200754-1690c514同JAR完成整个准确索引DELETE后404、标题降级、新索引受审计重建和正文恢复，恢复11HTTP；第二环境frontend npm ECONNRESET未通过，因此仅作后端补充证据，主环境真实前端验收仍完整。两环境精确清理全0、旧主URL不可用。tab3保留about:blank并markDeliverable，不关闭它或应用。保护文件、原LICENSE/NOTICE未变。
 

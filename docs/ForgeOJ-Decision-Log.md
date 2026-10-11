@@ -1,3 +1,7 @@
+2026-10-11当前验收：M4第7步及完整M4 **VERIFIED**，五项总门禁全部PASS。独立Grafana OSS许可已批准；固定Linux API335/59 suites、Worker139/26 suites、前端129/25零失败/错误/跳过，428业务/测试/前端输入、84实际提供前端与准确JAR一致。同JAR新回放覆盖Redis/ES/RabbitMQ中断恢复、真实AC、原事件受审计重送、整个索引删除重建、实际promtool及Grafana14面板/23表达式/只读浏览器登录退出。6个唯一原死信事件对应6份实测消息，每一份均匹配原事件ID和四字段契约；诊断前后数量不变，没有清空死信。本轮拥有者资源与沙箱清理全0。详见[M4总门禁](M4-GATE-AUDIT.md)、[监控验收](M4-MONITORING-VALIDATION.md)及[最终机器证据](evidence/m4-monitoring/verification.json)。M5仍PLANNED，未PR/main/tag/Release/RESUME_READY；按授权交付feat/m2-accounts后停止。
+
+> 以下旧日期的阶段、额度、待许可、未完成和“下一步”文字为历史快照；实时状态以上方当前验收与对应最终证据为准。
+
 # ForgeOJ 决策日志
 
 > 状态：已确认的架构与产品决策。  
@@ -366,4 +370,13 @@
 - 复用：ES协议/索引/内置CJK能力；JDK21 HttpClient与既有Jackson3，不新增ES Maven客户端或复制服务端源码。官方镜像不可变摘要及来源见[M4搜索设计](M4-SEARCH-DESIGN.md)。
 - 原因：延续已批准D-023和Requirements13.2，满足当前题库搜索用途，无新增付费服务；不改为OpenSearch。
 - 代价：外部ES发行许可与ForgeOJ根许可不同；原始告知需保留，实际镜像LICENSE/NOTICE/运行版本仍待首次接入核验，完整发布物审计仍为Release门禁。
-- 实施/验收：第6步IN_PROGRESS（已批准设计），尚无业务实现或VERIFIED证据；额度约剩15%，按用户规则停在检查点。第7步监控/M5/Release不提前实施。
+- 实施/验收：第6步已VERIFIED并以cd2be91交付；固定Linux、同JAR HTTPS/Basic、故障/浏览器/整个索引删除后重建与原告知核验见[M4搜索验收](M4-SEARCH-VALIDATION.md)。完整M4仍IN_PROGRESS，用户随后授权第7步；原已批准设计/额度记录保留为历史。
+
+### D-048：最小私有监控与独立监控服务（许可已接受）
+
+- 状态：`ACCEPTED`（2026-10-11，用户对原许可选择题明确回复“按推荐，采用独立Grafana OSS”）。批准固定Grafana OSS13.2.3/AGPLv3、独立未修改免费本地服务/保留告知；ForgeOJ自有代码Apache-2.0。不使用Cloud/付费功能/外部插件。2026-10-11实施与完整M4验收VERIFIED，固定镜像/原告知及准确构件/三故障/面板/消息关联见[M4最终验收](M4-MONITORING-VALIDATION.md)；下方待确认记录为历史。
+
+- 2026-10-10，第7步IN_PROGRESS。按已确认Requirements14.2及Roadmap执行自有聚合指标、默认关闭的独立私有抓取、固定label、只读快照/陈旧状态、独立采集线程；不改业务权限、schema/grants、判题/租约/ACK，不引入API Docker或Worker Web应用。[设计](M4-MONITORING-DESIGN.md)。
+- 版本候选：官方Prometheus3.15.0/Apache-2.0、Grafana OSS13.2.3/AGPLv3；原出处见[上游U-013](UPSTREAM-AND-LICENSE.md)。不采用云/收费/第三方插件，不复制其源码。镜像摘要、原告知与运行尚未引入。
+- Grafana新的AGPL义务尚未批准，已给用户独立未修改免费OSS服务的推荐与暂缓选项，待实际答复；不记为已采纳许可。ForgeOJ自有实现及标准HTTP连接保持Apache-2.0边界，未来修改/分发Grafana本体需重新核对义务。
+- 本机检查64唯一用例通过，只是当前进展；完整Linux/面板/故障/M4五门禁未执行。不将本记录提升为完整M4或Release/RESUME_READY。

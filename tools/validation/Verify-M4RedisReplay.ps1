@@ -1,6 +1,6 @@
 # Copyright 2026 池也; SPDX-License-Identifier: Apache-2.0
 [CmdletBinding()]
-param([ValidateSet('Bootstrap','Setup','Healthy','GuardFailure','Pause','Outage','Pending','ResumeFlush','Recovered','Warm','Audit','CaptureRuntime','CleanupSnapshot')][string]$Action,[Parameter(Mandatory)][string]$RunDirectory,[string]$DockerCommand='docker')
+param([ValidateSet('Bootstrap','Setup','Healthy','PrepareOutage','GuardFailure','Pause','Outage','Pending','ResumeFlush','Recovered','Warm','Audit','CaptureRuntime','CleanupSnapshot')][string]$Action,[Parameter(Mandatory)][string]$RunDirectory,[string]$DockerCommand='docker')
 $ErrorActionPreference='Stop'
 $repository=(Resolve-Path (Join-Path $PSScriptRoot '../..')).Path
 $RunDirectory=(Resolve-Path -LiteralPath $RunDirectory).Path
@@ -61,9 +61,10 @@ if($Action -eq 'ResumeFlush'){
   Save-Json 'redis-resume-flush.json' @{id=$owned.Id;at=(Get-Date -Format o);flush='only-owned-fixture'}
   exit
 }
-if($Action -in @('Healthy','Outage','Recovered','Warm')){
+if($Action -in @('Healthy','PrepareOutage','Outage','Recovered','Warm')){
   Owned 'api' | Out-Null;Owned 'api-replica' | Out-Null
-  Compose @('exec','-T','frontend','node','/source/tools/validation/replay-redis.mjs',$Action.ToLower()) | Out-Host
+  $phase=if($Action -eq 'PrepareOutage'){'prepare-outage'}else{$Action.ToLower()}
+  Compose @('exec','-T','frontend','node','/source/tools/validation/replay-redis.mjs',$phase) | Out-Host
   exit
 }
 if($Action -eq 'Pending'){

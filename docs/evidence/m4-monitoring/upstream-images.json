@@ -1,0 +1,63 @@
+{
+  "approvedAt": "2026-10-11",
+  "prometheusLicense": "Apache-2.0",
+  "images": [
+    {
+      "repoDigests": [
+        "prom/prometheus@sha256:efd719c99d83b060d9daefdcf00360461adf279f45ef5391f8d111892118753e"
+      ],
+      "architecture": "amd64",
+      "reference": "prom/prometheus:v3.15.0",
+      "source": "https://github.com/prometheus/prometheus",
+      "os": "linux",
+      "imageId": "sha256:efd719c99d83b060d9daefdcf00360461adf279f45ef5391f8d111892118753e"
+    },
+    {
+      "repoDigests": [
+        "grafana/grafana@sha256:b28bae15e219c998fb0e0424ed724930cc61b1f61fb404d47c862f9a23f9e572"
+      ],
+      "architecture": "amd64",
+      "reference": "grafana/grafana:13.2.3",
+      "source": "https://github.com/grafana/grafana",
+      "os": "linux",
+      "imageId": "sha256:b28bae15e219c998fb0e0424ed724930cc61b1f61fb404d47c862f9a23f9e572"
+    }
+  ],
+  "grafanaLicense": "AGPL-3.0",
+  "prometheusRevision": "5241a27fe3c6983549fccc32f6e65917408c63cd",
+  "grafanaRevision": "90ffed056f0884267356c12a0eeb72a022af53f1",
+  "scope": "Unmodified standalone official images; no copied server implementation; retained image legal files, not a full OS SBOM",
+  "notices": [
+    {
+      "bytes": 11357,
+      "sha256": "c71d239df91726fc519c6eb72d318ec65820627232b2f796219e87dcf35d0ab4",
+      "path": "docs/licenses/prometheus-3.15.0/LICENSE.txt"
+    },
+    {
+      "bytes": 4370,
+      "sha256": "ac9e304462a58a4d71b6488423d4447e614c8b31d517fe24345016522c102a78",
+      "path": "docs/licenses/prometheus-3.15.0/NOTICE.txt"
+    },
+    {
+      "bytes": 15195,
+      "sha256": "b3810aa97157ca685f5e7f96ceb4cdaf8a497826a53bf2081e605068dacf88c4",
+      "path": "docs/licenses/grafana-13.2.3/IMAGE-NOTICE-HASHES.txt"
+    },
+    {
+      "bytes": 6681,
+      "sha256": "7a39129acc20348c139fb765051409f308c5ac4992b8e609053372e1a8423056",
+      "path": "docs/licenses/grafana-13.2.3/IMAGE-NOTICE-PATHS.txt"
+    },
+    {
+      "bytes": 34523,
+      "sha256": "0d96a4ff68ad6d4b6f1f30f713b18d5184912ba8dd389f86aa7710db079abcb0",
+      "path": "docs/licenses/grafana-13.2.3/LICENSE.txt"
+    },
+    {
+      "bytes": 839168,
+      "sha256": "e7c2d72e84d13019a80973450909fad42adcbc57f07e501bc735f17b35773d5d",
+      "path": "docs/licenses/grafana-13.2.3/third-party-notices.tar"
+    }
+  ],
+  "grafanaSource": "https://github.com/grafana/grafana/tree/90ffed056f0884267356c12a0eeb72a022af53f1"
+}

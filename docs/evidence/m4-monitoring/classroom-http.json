@@ -1,0 +1,332 @@
+{
+  "checkedAt": "2026-10-11T04:58:04.699Z",
+  "classroomId": "dbe9ab93-8f70-4127-8bfb-ff43d76b0b34",
+  "secondClassroomId": "5861883d-edc8-4731-99e9-747a0c81807f",
+  "inviteDigests": [
+    "89a710c2e4e7c09a9f2c64d10b36a26debfad3e1330eebf9ba44c4031147f021",
+    "446a86f26356783bb58d29d6ae09fa3dece609c628c079a6550c1531e527e07f"
+  ],
+  "checks": [
+    {
+      "method": "POST",
+      "action": "/api/v1/classrooms",
+      "status": 201
+    },
+    {
+      "method": "POST",
+      "action": "/api/v1/classrooms",
+      "status": 201
+    },
+    {
+      "method": "GET",
+      "action": "/api/v1/classrooms/:id",
+      "status": 200
+    },
+    {
+      "method": "POST",
+      "action": "/api/v1/classrooms/:id/invite",
+      "status": 200
+    },
+    {
+      "method": "POST",
+      "action": "/api/v1/classrooms/join",
+      "status": 200
+    },
+    {
+      "method": "POST",
+      "action": "/api/v1/classrooms/join",
+      "status": 200
+    },
+    {
+      "method": "GET",
+      "action": "/api/v1/classrooms/:id",
+      "status": 200
+    },
+    {
+      "method": "POST",
+      "action": "/api/v1/classrooms/:id/members/2/role",
+      "status": 200
+    },
+    {
+      "method": "GET",
+      "action": "/api/v1/classrooms/:id",
+      "status": 200
+    },
+    {
+      "method": "POST",
+      "action": "/api/v1/classrooms/:id/invite",
+      "status": 403
+    },
+    {
+      "method": "GET",
+      "action": "/api/v1/classrooms/:id",
+      "status": 200
+    },
+    {
+      "method": "POST",
+      "action": "/api/v1/classrooms/:id/archive",
+      "status": 403
+    },
+    {
+      "method": "GET",
+      "action": "/api/v1/classrooms/:id",
+      "status": 200
+    },
+    {
+      "method": "POST",
+      "action": "/api/v1/classrooms/:id/members/3/role",
+      "status": 403
+    },
+    {
+      "method": "GET",
+      "action": "/api/v1/classrooms/:id",
+      "status": 200
+    },
+    {
+      "method": "POST",
+      "action": "/api/v1/classrooms/:id/invite",
+      "status": 403
+    },
+    {
+      "method": "GET",
+      "action": "/api/v1/classrooms/:id",
+      "status": 200
+    },
+    {
+      "method": "POST",
+      "action": "/api/v1/classrooms/:id/archive",
+      "status": 403
+    },
+    {
+      "method": "GET",
+      "action": "/api/v1/classrooms/:id",
+      "status": 200
+    },
+    {
+      "method": "POST",
+      "action": "/api/v1/classrooms/:id/members/3/role",
+      "status": 403
+    },
+    {
+      "method": "POST",
+      "action": "/api/v1/classrooms",
+      "status": 201
+    },
+    {
+      "method": "GET",
+      "action": "/api/v1/classrooms/:id",
+      "status": 200
+    },
+    {
+      "method": "GET",
+      "action": "/api/v1/classrooms/:id",
+      "status": 200
+    },
+    {
+      "method": "POST",
+      "action": "/api/v1/classrooms/:id/leave",
+      "status": 204
+    },
+    {
+      "method": "GET",
+      "action": "/api/v1/classrooms/:id",
+      "status": 404
+    },
+    {
+      "method": "POST",
+      "action": "/api/v1/classrooms/join",
+      "status": 200
+    },
+    {
+      "method": "GET",
+      "action": "/api/v1/classrooms/:id",
+      "status": 200
+    },
+    {
+      "method": "GET",
+      "action": "/api/v1/classrooms/:id",
+      "status": 200
+    },
+    {
+      "method": "POST",
+      "action": "/api/v1/classrooms/:id/members/2/remove",
+      "status": 200
+    },
+    {
+      "method": "POST",
+      "action": "/api/v1/classrooms/join",
+      "status": 404
+    },
+    {
+      "method": "GET",
+      "action": "/api/v1/classrooms/:id",
+      "status": 200
+    },
+    {
+      "method": "POST",
+      "action": "/api/v1/classrooms/:id/invite",
+      "status": 200
+    },
+    {
+      "method": "POST",
+      "action": "/api/v1/classrooms/join",
+      "status": 404
+    },
+    {
+      "method": "POST",
+      "action": "/api/v1/classrooms/join",
+      "status": 404
+    },
+    {
+      "method": "GET",
+      "action": "/api/v1/classrooms/:id",
+      "status": 200
+    },
+    {
+      "method": "POST",
+      "action": "/api/v1/classrooms/:id/members/2/restore",
+      "status": 200
+    },
+    {
+      "method": "GET",
+      "action": "/api/v1/classrooms/:id",
+      "status": 200
+    },
+    {
+      "method": "POST",
+      "action": "/api/v1/classrooms/:id/leave",
+      "status": 409
+    },
+    {
+      "method": "GET",
+      "action": "/api/v1/classrooms/:id",
+      "status": 200
+    },
+    {
+      "method": "POST",
+      "action": "/api/v1/classrooms/:id/transfers",
+      "status": 200
+    },
+    {
+      "method": "GET",
+      "action": "/api/v1/classrooms/:id",
+      "status": 200
+    },
+    {
+      "method": "POST",
+      "action": "/api/v1/classrooms/:id/transfers/:id/accept",
+      "status": 200
+    },
+    {
+      "method": "GET",
+      "action": "/api/v1/classrooms/:id",
+      "status": 200
+    },
+    {
+      "method": "GET",
+      "action": "/api/v1/classrooms/:id",
+      "status": 200
+    },
+    {
+      "method": "POST",
+      "action": "/api/v1/classrooms/:id/transfers/:id/accept",
+      "status": 200
+    },
+    {
+      "method": "GET",
+      "action": "/api/v1/classrooms/:id",
+      "status": 200
+    },
+    {
+      "method": "POST",
+      "action": "/api/v1/classrooms/:id/archive",
+      "status": 403
+    },
+    {
+      "method": "GET",
+      "action": "/api/v1/classrooms/:id",
+      "status": 200
+    },
+    {
+      "method": "POST",
+      "action": "/api/v1/classrooms/:id/archive",
+      "status": 204
+    },
+    {
+      "method": "POST",
+      "action": "/api/v1/classrooms/join",
+      "status": 404
+    },
+    {
+      "method": "GET",
+      "action": "/api/v1/classrooms/:id",
+      "status": 200
+    },
+    {
+      "method": "POST",
+      "action": "/api/v1/classrooms/:id/leave",
+      "status": 204
+    },
+    {
+      "method": "GET",
+      "action": "/api/v1/classrooms/:id",
+      "status": 404
+    },
+    {
+      "method": "GET",
+      "action": "/api/v1/me/classrooms",
+      "status": 200
+    },
+    {
+      "method": "POST",
+      "action": "/api/v1/classrooms/:id/restore",
+      "status": 204
+    },
+    {
+      "method": "GET",
+      "action": "/api/v1/classrooms/:id",
+      "status": 200
+    },
+    {
+      "method": "DELETE",
+      "action": "/api/v1/classrooms/:id?expectedVersion=15",
+      "status": 409
+    },
+    {
+      "method": "GET",
+      "action": "/api/v1/classrooms/:id",
+      "status": 404
+    },
+    {
+      "method": "GET",
+      "action": "/api/v1/classrooms/invalid",
+      "status": 404
+    },
+    {
+      "method": "POST",
+      "action": "/api/v1/classrooms",
+      "status": 201
+    },
+    {
+      "method": "DELETE",
+      "action": "/api/v1/classrooms/:id?expectedVersion=1",
+      "status": 204
+    },
+    {
+      "method": "POST",
+      "action": "/api/v1/classrooms",
+      "status": 404
+    }
+  ],
+  "allPassed": true,
+  "scopeRoles": true,
+  "leftRestoredAsMember": true,
+  "removedSelfRestoreDenied": true,
+  "transferAccepted": true,
+  "archivedOwnerRestored": true,
+  "emptyDeletionKeepsReplayTombstone": true,
+  "finalOwnerId": 2,
+  "finalVersion": 15,
+  "formalBefore": 10,
+  "formalAfter": 10
+}

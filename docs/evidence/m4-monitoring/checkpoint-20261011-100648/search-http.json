@@ -1,0 +1,345 @@
+{
+  "checks": [
+    {
+      "method": "GET",
+      "path": "/api/v1/admin/auth/session",
+      "status": 200
+    },
+    {
+      "method": "POST",
+      "path": "/api/v1/admin/auth/login",
+      "status": 200
+    },
+    {
+      "method": "GET",
+      "path": "/api/v1/admin/auth/session",
+      "status": 200
+    },
+    {
+      "method": "POST",
+      "path": "/api/v1/admin/auth/login",
+      "status": 200
+    },
+    {
+      "method": "GET",
+      "path": "/api/v1/admin/auth/session",
+      "status": 200
+    },
+    {
+      "method": "POST",
+      "path": "/api/v1/admin/auth/login",
+      "status": 200
+    },
+    {
+      "method": "GET",
+      "path": "/api/v1/auth/session",
+      "status": 200
+    },
+    {
+      "method": "POST",
+      "path": "/api/v1/auth/login",
+      "status": 200
+    },
+    {
+      "method": "GET",
+      "path": "/api/v1/admin/search/status",
+      "status": 401
+    },
+    {
+      "method": "GET",
+      "path": "/api/v1/admin/search/status",
+      "status": 403
+    },
+    {
+      "method": "GET",
+      "path": "/api/v1/admin/search/status",
+      "status": 403
+    },
+    {
+      "method": "GET",
+      "path": "/api/v1/admin/search/status",
+      "status": 200
+    },
+    {
+      "method": "POST",
+      "path": "/api/v1/admin/search/rebuilds",
+      "status": 200
+    },
+    {
+      "method": "POST",
+      "path": "/api/v1/admin/search/rebuilds",
+      "status": 200
+    },
+    {
+      "method": "POST",
+      "path": "/api/v1/admin/search/rebuilds",
+      "status": 409
+    },
+    {
+      "method": "GET",
+      "path": "/api/v1/admin/search/rebuilds",
+      "status": 200
+    },
+    {
+      "method": "GET",
+      "path": "/api/v1/admin/search/rebuilds",
+      "status": 200
+    },
+    {
+      "method": "GET",
+      "path": "/api/v1/admin/search/rebuilds",
+      "status": 200
+    },
+    {
+      "method": "GET",
+      "path": "/api/v1/problems/search?keyword=%E6%9C%89%E7%AC%A6%E5%8F%B7%E6%95%B4%E6%95%B0",
+      "status": 200
+    },
+    {
+      "method": "GET",
+      "path": "/api/v1/problems/search?keyword=%E6%9C%89%E7%AC%A6%E5%8F%B7%E6%95%B4%E6%95%B0&difficulty=EASY&tag=%E5%85%A5%E9%97%A8&page=1&size=1",
+      "status": 200
+    },
+    {
+      "method": "GET",
+      "path": "/api/v1/problems/search?keyword=",
+      "status": 400
+    },
+    {
+      "method": "GET",
+      "path": "/api/v1/problems/search?keyword=%E6%9C%89%E7%AC%A6%E5%8F%B7%E6%95%B4%E6%95%B0&size=51",
+      "status": 400
+    },
+    {
+      "method": "GET",
+      "path": "/api/v1/problems/search?keyword=%E6%9C%89%E7%AC%A6%E5%8F%B7%E6%95%B4%E6%95%B0&page=0",
+      "status": 400
+    },
+    {
+      "method": "GET",
+      "path": "/api/v1/problems/search?keyword=CLASSROOM_PRIVATE_BODY_SENTINEL",
+      "status": 200
+    },
+    {
+      "method": "GET",
+      "path": "/api/v1/admin/search/status",
+      "status": 200
+    },
+    {
+      "method": "GET",
+      "path": "/api/v1/admin/auth/session",
+      "status": 200
+    },
+    {
+      "method": "POST",
+      "path": "/api/v1/admin/auth/login",
+      "status": 200
+    },
+    {
+      "method": "GET",
+      "path": "/api/v1/admin/auth/session",
+      "status": 200
+    },
+    {
+      "method": "POST",
+      "path": "/api/v1/admin/auth/login",
+      "status": 200
+    },
+    {
+      "method": "GET",
+      "path": "/api/v1/auth/session",
+      "status": 200
+    },
+    {
+      "method": "POST",
+      "path": "/api/v1/auth/login",
+      "status": 200
+    },
+    {
+      "method": "GET",
+      "path": "/api/v1/problems/search?keyword=%E6%9C%89%E7%AC%A6%E5%8F%B7%E6%95%B4%E6%95%B0",
+      "status": 200
+    },
+    {
+      "method": "GET",
+      "path": "/api/v1/problems/search?keyword=%E4%B8%A4%E6%95%B0",
+      "status": 200
+    },
+    {
+      "method": "POST",
+      "path": "/api/v1/problems/sum-two-integers/submissions",
+      "status": 202
+    },
+    {
+      "method": "GET",
+      "path": "/api/v1/submissions/a0a399ef-e647-4540-b23c-d8ec0afacd6c",
+      "status": 200
+    },
+    {
+      "method": "GET",
+      "path": "/api/v1/submissions/a0a399ef-e647-4540-b23c-d8ec0afacd6c",
+      "status": 200
+    },
+    {
+      "method": "GET",
+      "path": "/api/v1/submissions/a0a399ef-e647-4540-b23c-d8ec0afacd6c",
+      "status": 200
+    },
+    {
+      "method": "GET",
+      "path": "/api/v1/submissions/a0a399ef-e647-4540-b23c-d8ec0afacd6c",
+      "status": 200
+    },
+    {
+      "method": "GET",
+      "path": "/api/v1/submissions/a0a399ef-e647-4540-b23c-d8ec0afacd6c",
+      "status": 200
+    },
+    {
+      "method": "GET",
+      "path": "/api/v1/submissions/a0a399ef-e647-4540-b23c-d8ec0afacd6c",
+      "status": 200
+    },
+    {
+      "method": "GET",
+      "path": "/api/v1/submissions/a0a399ef-e647-4540-b23c-d8ec0afacd6c",
+      "status": 200
+    },
+    {
+      "method": "GET",
+      "path": "/api/v1/submissions/a0a399ef-e647-4540-b23c-d8ec0afacd6c",
+      "status": 200
+    },
+    {
+      "method": "GET",
+      "path": "/api/v1/admin/public-problems",
+      "status": 200
+    },
+    {
+      "method": "POST",
+      "path": "/api/v1/admin/public-problems/1/archive",
+      "status": 200
+    },
+    {
+      "method": "GET",
+      "path": "/api/v1/problems/sum-two-integers",
+      "status": 404
+    },
+    {
+      "method": "GET",
+      "path": "/api/v1/problems/search?keyword=%E4%B8%A4%E6%95%B0",
+      "status": 200
+    },
+    {
+      "method": "POST",
+      "path": "/api/v1/admin/public-problems/1/restore",
+      "status": 200
+    },
+    {
+      "method": "GET",
+      "path": "/api/v1/admin/auth/session",
+      "status": 200
+    },
+    {
+      "method": "POST",
+      "path": "/api/v1/admin/auth/login",
+      "status": 200
+    },
+    {
+      "method": "GET",
+      "path": "/api/v1/admin/auth/session",
+      "status": 200
+    },
+    {
+      "method": "POST",
+      "path": "/api/v1/admin/auth/login",
+      "status": 200
+    },
+    {
+      "method": "GET",
+      "path": "/api/v1/admin/search/status",
+      "status": 200
+    },
+    {
+      "method": "POST",
+      "path": "/api/v1/admin/search/rebuilds",
+      "status": 200
+    },
+    {
+      "method": "POST",
+      "path": "/api/v1/admin/search/rebuilds",
+      "status": 200
+    },
+    {
+      "method": "POST",
+      "path": "/api/v1/admin/search/rebuilds",
+      "status": 409
+    },
+    {
+      "method": "GET",
+      "path": "/api/v1/admin/search/rebuilds",
+      "status": 200
+    },
+    {
+      "method": "GET",
+      "path": "/api/v1/admin/search/rebuilds",
+      "status": 200
+    },
+    {
+      "method": "GET",
+      "path": "/api/v1/admin/search/rebuilds",
+      "status": 200
+    },
+    {
+      "method": "GET",
+      "path": "/api/v1/admin/search/rebuilds",
+      "status": 200
+    },
+    {
+      "method": "GET",
+      "path": "/api/v1/admin/search/rebuilds",
+      "status": 200
+    },
+    {
+      "method": "GET",
+      "path": "/api/v1/problems/search?keyword=%E6%9C%89%E7%AC%A6%E5%8F%B7%E6%95%B4%E6%95%B0",
+      "status": 200
+    }
+  ],
+  "phases": {
+    "healthy": {
+      "fullTextBody": true,
+      "plainTextHighlights": true,
+      "filtersAndPaging": true,
+      "managementRoles": true,
+      "responseWhitelist": true,
+      "checkedAt": "2026-10-11T02:14:33.806Z"
+    },
+    "outage": {
+      "titleFallback": true,
+      "fixedNotice": true,
+      "realWorkerAc": true,
+      "archiveNotVisible": true,
+      "checkedAt": "2026-10-11T02:23:54.650Z"
+    },
+    "recovered": {
+      "fullTextRestored": true,
+      "managedRebuild": true,
+      "checkedAt": "2026-10-11T02:24:00.377Z"
+    }
+  },
+  "jobs": [
+    {
+      "id": "d5640144-14cd-4a5f-ae53-d52b8117da28",
+      "attempts": 1,
+      "reason": "同JAR公共题搜索首次重建"
+    },
+    {
+      "id": "7e8cafcf-3ca4-42b8-a989-4addb91d3b73",
+      "attempts": 1,
+      "reason": "ES恢复后的公开投影追赶重建"
+    }
+  ],
+  "initialJob": "d5640144-14cd-4a5f-ae53-d52b8117da28",
+  "outageSubmission": "a0a399ef-e647-4540-b23c-d8ec0afacd6c"
+}

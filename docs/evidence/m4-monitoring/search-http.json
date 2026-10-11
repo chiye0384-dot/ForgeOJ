@@ -1,0 +1,360 @@
+{
+  "checks": [
+    {
+      "method": "GET",
+      "path": "/api/v1/admin/auth/session",
+      "status": 200
+    },
+    {
+      "method": "POST",
+      "path": "/api/v1/admin/auth/login",
+      "status": 200
+    },
+    {
+      "method": "GET",
+      "path": "/api/v1/admin/auth/session",
+      "status": 200
+    },
+    {
+      "method": "POST",
+      "path": "/api/v1/admin/auth/login",
+      "status": 200
+    },
+    {
+      "method": "GET",
+      "path": "/api/v1/admin/auth/session",
+      "status": 200
+    },
+    {
+      "method": "POST",
+      "path": "/api/v1/admin/auth/login",
+      "status": 200
+    },
+    {
+      "method": "GET",
+      "path": "/api/v1/auth/session",
+      "status": 200
+    },
+    {
+      "method": "POST",
+      "path": "/api/v1/auth/login",
+      "status": 200
+    },
+    {
+      "method": "GET",
+      "path": "/api/v1/admin/search/status",
+      "status": 401
+    },
+    {
+      "method": "GET",
+      "path": "/api/v1/admin/search/status",
+      "status": 403
+    },
+    {
+      "method": "GET",
+      "path": "/api/v1/admin/search/status",
+      "status": 403
+    },
+    {
+      "method": "GET",
+      "path": "/api/v1/admin/search/status",
+      "status": 200
+    },
+    {
+      "method": "POST",
+      "path": "/api/v1/admin/search/rebuilds",
+      "status": 200
+    },
+    {
+      "method": "POST",
+      "path": "/api/v1/admin/search/rebuilds",
+      "status": 200
+    },
+    {
+      "method": "POST",
+      "path": "/api/v1/admin/search/rebuilds",
+      "status": 409
+    },
+    {
+      "method": "GET",
+      "path": "/api/v1/admin/search/rebuilds",
+      "status": 200
+    },
+    {
+      "method": "GET",
+      "path": "/api/v1/admin/search/rebuilds",
+      "status": 200
+    },
+    {
+      "method": "GET",
+      "path": "/api/v1/admin/search/rebuilds",
+      "status": 200
+    },
+    {
+      "method": "GET",
+      "path": "/api/v1/admin/search/rebuilds",
+      "status": 200
+    },
+    {
+      "method": "GET",
+      "path": "/api/v1/admin/search/rebuilds",
+      "status": 200
+    },
+    {
+      "method": "GET",
+      "path": "/api/v1/admin/search/rebuilds",
+      "status": 200
+    },
+    {
+      "method": "GET",
+      "path": "/api/v1/admin/search/rebuilds",
+      "status": 200
+    },
+    {
+      "method": "GET",
+      "path": "/api/v1/admin/search/rebuilds",
+      "status": 200
+    },
+    {
+      "method": "GET",
+      "path": "/api/v1/problems/search?keyword=%E6%9C%89%E7%AC%A6%E5%8F%B7%E6%95%B4%E6%95%B0",
+      "status": 200
+    },
+    {
+      "method": "GET",
+      "path": "/api/v1/problems/search?keyword=%E6%9C%89%E7%AC%A6%E5%8F%B7%E6%95%B4%E6%95%B0&difficulty=EASY&tag=%E5%85%A5%E9%97%A8&page=1&size=1",
+      "status": 200
+    },
+    {
+      "method": "GET",
+      "path": "/api/v1/problems/search?keyword=",
+      "status": 400
+    },
+    {
+      "method": "GET",
+      "path": "/api/v1/problems/search?keyword=%E6%9C%89%E7%AC%A6%E5%8F%B7%E6%95%B4%E6%95%B0&size=51",
+      "status": 400
+    },
+    {
+      "method": "GET",
+      "path": "/api/v1/problems/search?keyword=%E6%9C%89%E7%AC%A6%E5%8F%B7%E6%95%B4%E6%95%B0&page=0",
+      "status": 400
+    },
+    {
+      "method": "GET",
+      "path": "/api/v1/problems/search?keyword=CLASSROOM_PRIVATE_BODY_SENTINEL",
+      "status": 200
+    },
+    {
+      "method": "GET",
+      "path": "/api/v1/admin/search/status",
+      "status": 200
+    },
+    {
+      "method": "GET",
+      "path": "/api/v1/admin/auth/session",
+      "status": 200
+    },
+    {
+      "method": "POST",
+      "path": "/api/v1/admin/auth/login",
+      "status": 200
+    },
+    {
+      "method": "GET",
+      "path": "/api/v1/admin/auth/session",
+      "status": 200
+    },
+    {
+      "method": "POST",
+      "path": "/api/v1/admin/auth/login",
+      "status": 200
+    },
+    {
+      "method": "GET",
+      "path": "/api/v1/auth/session",
+      "status": 200
+    },
+    {
+      "method": "POST",
+      "path": "/api/v1/auth/login",
+      "status": 200
+    },
+    {
+      "method": "GET",
+      "path": "/api/v1/problems/search?keyword=%E6%9C%89%E7%AC%A6%E5%8F%B7%E6%95%B4%E6%95%B0",
+      "status": 200
+    },
+    {
+      "method": "GET",
+      "path": "/api/v1/problems/search?keyword=%E4%B8%A4%E6%95%B0",
+      "status": 200
+    },
+    {
+      "method": "POST",
+      "path": "/api/v1/problems/sum-two-integers/submissions",
+      "status": 202
+    },
+    {
+      "method": "GET",
+      "path": "/api/v1/submissions/8d5c01b7-3479-4335-8ed9-805ee45bad53",
+      "status": 200
+    },
+    {
+      "method": "GET",
+      "path": "/api/v1/submissions/8d5c01b7-3479-4335-8ed9-805ee45bad53",
+      "status": 200
+    },
+    {
+      "method": "GET",
+      "path": "/api/v1/submissions/8d5c01b7-3479-4335-8ed9-805ee45bad53",
+      "status": 200
+    },
+    {
+      "method": "GET",
+      "path": "/api/v1/submissions/8d5c01b7-3479-4335-8ed9-805ee45bad53",
+      "status": 200
+    },
+    {
+      "method": "GET",
+      "path": "/api/v1/submissions/8d5c01b7-3479-4335-8ed9-805ee45bad53",
+      "status": 200
+    },
+    {
+      "method": "GET",
+      "path": "/api/v1/submissions/8d5c01b7-3479-4335-8ed9-805ee45bad53",
+      "status": 200
+    },
+    {
+      "method": "GET",
+      "path": "/api/v1/submissions/8d5c01b7-3479-4335-8ed9-805ee45bad53",
+      "status": 200
+    },
+    {
+      "method": "GET",
+      "path": "/api/v1/submissions/8d5c01b7-3479-4335-8ed9-805ee45bad53",
+      "status": 200
+    },
+    {
+      "method": "GET",
+      "path": "/api/v1/admin/public-problems",
+      "status": 200
+    },
+    {
+      "method": "POST",
+      "path": "/api/v1/admin/public-problems/1/archive",
+      "status": 200
+    },
+    {
+      "method": "GET",
+      "path": "/api/v1/problems/sum-two-integers",
+      "status": 404
+    },
+    {
+      "method": "GET",
+      "path": "/api/v1/problems/search?keyword=%E4%B8%A4%E6%95%B0",
+      "status": 200
+    },
+    {
+      "method": "POST",
+      "path": "/api/v1/admin/public-problems/1/restore",
+      "status": 200
+    },
+    {
+      "method": "GET",
+      "path": "/api/v1/admin/auth/session",
+      "status": 200
+    },
+    {
+      "method": "POST",
+      "path": "/api/v1/admin/auth/login",
+      "status": 200
+    },
+    {
+      "method": "GET",
+      "path": "/api/v1/admin/auth/session",
+      "status": 200
+    },
+    {
+      "method": "POST",
+      "path": "/api/v1/admin/auth/login",
+      "status": 200
+    },
+    {
+      "method": "GET",
+      "path": "/api/v1/admin/search/status",
+      "status": 200
+    },
+    {
+      "method": "POST",
+      "path": "/api/v1/admin/search/rebuilds",
+      "status": 200
+    },
+    {
+      "method": "POST",
+      "path": "/api/v1/admin/search/rebuilds",
+      "status": 200
+    },
+    {
+      "method": "POST",
+      "path": "/api/v1/admin/search/rebuilds",
+      "status": 409
+    },
+    {
+      "method": "GET",
+      "path": "/api/v1/admin/search/rebuilds",
+      "status": 200
+    },
+    {
+      "method": "GET",
+      "path": "/api/v1/admin/search/rebuilds",
+      "status": 200
+    },
+    {
+      "method": "GET",
+      "path": "/api/v1/admin/search/rebuilds",
+      "status": 200
+    },
+    {
+      "method": "GET",
+      "path": "/api/v1/problems/search?keyword=%E6%9C%89%E7%AC%A6%E5%8F%B7%E6%95%B4%E6%95%B0",
+      "status": 200
+    }
+  ],
+  "phases": {
+    "healthy": {
+      "fullTextBody": true,
+      "plainTextHighlights": true,
+      "filtersAndPaging": true,
+      "managementRoles": true,
+      "responseWhitelist": true,
+      "checkedAt": "2026-10-11T05:00:26.282Z"
+    },
+    "outage": {
+      "titleFallback": true,
+      "fixedNotice": true,
+      "realWorkerAc": true,
+      "archiveNotVisible": true,
+      "checkedAt": "2026-10-11T05:06:06.712Z"
+    },
+    "recovered": {
+      "fullTextRestored": true,
+      "managedRebuild": true,
+      "checkedAt": "2026-10-11T05:06:11.275Z"
+    }
+  },
+  "jobs": [
+    {
+      "id": "4b0415e1-dace-421f-be44-9938cdb0e5a3",
+      "attempts": 1,
+      "reason": "同JAR公共题搜索首次重建"
+    },
+    {
+      "id": "0dd9194c-e3b2-4588-9ec3-b37d5165cfbc",
+      "attempts": 1,
+      "reason": "ES恢复后的公开投影追赶重建"
+    }
+  ],
+  "initialJob": "4b0415e1-dace-421f-be44-9938cdb0e5a3",
+  "outageSubmission": "8d5c01b7-3479-4335-8ed9-805ee45bad53"
+}

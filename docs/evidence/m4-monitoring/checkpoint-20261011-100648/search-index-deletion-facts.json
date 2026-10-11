@@ -1,0 +1,36 @@
+{
+  "jars": [
+    {
+      "service": "api",
+      "sha256": "f13c52ca61744d7c4983e2b98c6a68d05b17eb7fce77d637761e1b615dd32c4e",
+      "containerId": "d6df4898e28dab5eec15a12a844ebda8b4a5c904bdd7775eeb34f56422dde9e5",
+      "readOnly": true
+    },
+    {
+      "service": "worker",
+      "sha256": "ff4dd5abf4931a345dd3a94af8c07966aced3a91ebcd4cd6b4c600877b261d1f",
+      "containerId": "24ac49c1cd96e515fe461692fd9b6a096f9c088ff2d686d1e7570548114a5489",
+      "readOnly": true
+    }
+  ],
+  "deletedIndexStatus": "404",
+  "after": {
+    "job": "713d0eee-754f-4fd9-b782-b00f5d813ffe",
+    "uuid": "9QCI8MHIQwKRyH36eRV0dQ",
+    "status": "SUCCEEDED",
+    "indexName": "forgeoj-public-713d0eee754f4fd9b782b00f5d813ffe",
+    "publicRows": 4,
+    "queuedAudit": 1,
+    "terminalAudit": 1
+  },
+  "deleteAcknowledged": true,
+  "before": {
+    "job": "7e8cafcf-3ca4-42b8-a989-4addb91d3b73",
+    "uuid": "bNrlWvxhR6uveYa9wsUd4g",
+    "status": "SUCCEEDED",
+    "indexName": "forgeoj-public-7e8cafcf3ca442b8a9894addb91d3b73",
+    "publicRows": 4,
+    "queuedAudit": 1,
+    "terminalAudit": 1
+  }
+}

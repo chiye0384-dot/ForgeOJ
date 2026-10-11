@@ -1,0 +1,31 @@
+{
+  "task": "b27cbdbb-727b-4471-9771-de2cf1ffea47",
+  "events": [
+    {
+      "id": "9fd848ea-e84d-4d7d-adcf-5105b0907a6d",
+      "failed": false,
+      "attempts": 6,
+      "published": true
+    }
+  ],
+  "status": "FINISHED",
+  "verdict": "AC",
+  "attempts": 1,
+  "taskCount": 1,
+  "eventCount": 1,
+  "quotaSlots": 0,
+  "recoveries": [
+    {
+      "scope": "DELIVERY",
+      "reason": "Rabbit私有暂停演练已恢复，重送原持久化事件",
+      "target": "9fd848ea-e84d-4d7d-adcf-5105b0907a6d",
+      "attempts": 5
+    }
+  ],
+  "submission": "6bce4de5-1263-4ee9-b84b-9821304d203c",
+  "taskStatus": "FINISHED",
+  "sourceSha256": "f6583afbd484a8633a645092bfdf44241bc21d85d9c99edc4a5e0cababf58afc",
+  "digestMatches": true,
+  "closedAttempts": 1,
+  "submissionCount": 1
+}

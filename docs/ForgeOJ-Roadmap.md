@@ -1,3 +1,11 @@
+2026-10-11当前验收：M4第7步及完整M4 **VERIFIED**，五项总门禁全部PASS。独立Grafana OSS许可已批准；固定Linux API335/59 suites、Worker139/26 suites、前端129/25零失败/错误/跳过，428业务/测试/前端输入、84实际提供前端与准确JAR一致。同JAR新回放覆盖Redis/ES/RabbitMQ中断恢复、真实AC、原事件受审计重送、整个索引删除重建、实际promtool及Grafana14面板/23表达式/只读浏览器登录退出。6个唯一原死信事件对应6份实测消息，每一份均匹配原事件ID和四字段契约；诊断前后数量不变，没有清空死信。本轮拥有者资源与沙箱清理全0。详见[M4总门禁](M4-GATE-AUDIT.md)、[监控验收](M4-MONITORING-VALIDATION.md)及[最终机器证据](evidence/m4-monitoring/verification.json)。M5仍PLANNED，未PR/main/tag/Release/RESUME_READY；按授权交付feat/m2-accounts后停止。
+
+> 以下旧日期的阶段、额度、待许可、未完成和“下一步”文字为历史快照；实时状态以上方当前验收与对应最终证据为准。
+
+2026-10-11 09:30当前：第7步及完整M4仍 **IN_PROGRESS**。Grafana OSS许可已明确批准，固定独立镜像/告知与14面板已落地；第一轮固定Linux335 API/139 Worker/129前端通过，真实Redis/ES故障恢复、整索引删除重建和Grafana只读登录/退出已验证，但Rabbit故障发现unsigned attempt_count=0聚合下溢。已以CASE先判断修复重试数及水位差，真实MySQL回归通过，正在以当前修复源码重新执行固定Linux全量；第一轮JAR/截图是[被替代的失败运行记录](evidence/m4-monitoring/failed-20261011-085452/checkpoint.json)，不可当最终通过。首轮全部拥有者资源清理0，未提交/推送。当前恢复入口为[M4监控验证](M4-MONITORING-VALIDATION.md)；下方旧日期/待许可/额度文字均为历史。按既有授权完成现有功能分支后停止，M5/PR/main/tag/Release/RESUME_READY不启动。
+
+2026-10-10 22:26最新检查点：用户继续后第7步监控已 **IN_PROGRESS**。自有聚合指标、只读快照/陈旧状态、默认关闭的私有抓取及Worker接线已加入；API45项真实Redis/ES/SQL回归、最终格式7项和Worker17项通过，合并64唯一用例，428最终输入冻结、84前端未变。见[监控检查点](M4-MONITORING-VALIDATION.md)和[本机机器记录](evidence/m4-monitoring/native-checkpoint.json)。这是Windows/JDK21专项，不是当前固定Linux/JAR/Prometheus/Grafana/浏览器/三故障/M4总门禁。Grafana OSS13.2.3新AGPL许可待实际用户答复，未引入镜像；当前额度78%已用，不足下一组长验收，按用户规则停。工作树未暂存/提交/推送，HEAD为已交付搜索cd2be91；完整M4/E-04仍IN_PROGRESS，第6步历史VERIFIED保持，M5/PR/main/tag/Release未开始。下方旧日期中的“第7步未开始/不启动”仅为历史，不能覆盖本次继续授权。
+
 2026-10-10 20:30最终验收：M4第6步公共搜索 **VERIFIED**，见[M4搜索验收](M4-SEARCH-VALIDATION.md)与[机器证据](evidence/m4-search/verification.json)。固定Linux API321/54 suites、Worker133/23 suites均零失败/错误/跳过，前端129/25及全部检查通过；412输入及84个实际提供的前端输入匹配准确构件。同JAR HTTPS/Basic、73项搜索HTTP、107项Redis回归、真实判题/权限/浏览器、有限死信及内容清空重建通过；另一个同JAR临时环境完成整个索引删除、标题降级和受审计重建（恢复阶段11项HTTP）。两个环境拥有者资源、builder、Testcontainers、沙箱全0。完整M4与E-04仍IN_PROGRESS，第7步/M5/Release未开始。按已授权交付feat/m2-accounts后停。下方旧日期记录只表示历史，当前状态以本段及最终机器证据为准。
 
 2026-10-10 历史第5步检查点：M4第5步 Redis 与故障降级已 **[VERIFIED](M4-REDIS-VALIDATION.md)**。固定Linux API289+Worker133=422、前端124项及全部检查通过；同JAR双API、真实Redis故障/清空、108项HTTP、两次真实AC、浏览器撤权/降级、数据库事实及精确清理通过。完整M4仍IN_PROGRESS，第6步搜索已进入设计/上游评估，第7步监控未开始。下方带日期记录为历史，以本段和最终机器证据为准。
@@ -28,7 +36,7 @@
 
 2026-10-04 不可变送审/撤回单元已 VERIFIED：V12 精确绑定本人当前双 PASSED 的不可变快照，唯一待审、owner/CAS/幂等、待审禁改、撤回后修改与历史保留完成。全新固定 Linux API169 + Worker120 = **289**、前端 **56** 及全部检查通过；相同构件真实页面两轮送审/撤回/归档、HTTP 六类待审写409、旧撤回不影响新待审、冻结题面不变、正常与轮询回退 AC、六空队列、30 项实际数据库权限拒绝及精确清理通过。见 [验收](M2-CONTENT-REVIEW-VALIDATION.md)。本轮未重复 Worker SIGKILL，117 个运行文件逐字节等同上轮真实故障验收；截图接口不可用，保存真实 DOM 观察，不提供合成截图。完整内容与 M2 仍 IN_PROGRESS；下一步为输出生成预览、独立自测，外部 SMTP 仍需服务商和授权收件箱配置；受控审核身份/批准发布保持 M4。
 
-> 当前阶段：M-1、M0、M1、M2、M3均VERIFIED；M4为IN_PROGRESS，第一步设计及第2/3/4步管理身份、公共审核治理、运维恢复单元已完成，第5步Redis与降级VERIFIED，第6步公共搜索VERIFIED，第7步未开始；M5/V1.1仍PLANNED。下方带日期阶段段落保留历史。
+> 当前阶段：M-1～M4均VERIFIED；M4七步及五项总门禁完成，见[M4审计](M4-GATE-AUDIT.md)。M5/V1.1仍PLANNED。下方带日期的阶段段落保留历史。
 > 路线图描述先后顺序，不代表完成状态。
 
 ## 1. 状态规则
@@ -41,7 +49,7 @@
 - `DEFERRED`：明确推迟到以后。
 - `BACKLOG`：只有候选想法，尚未承诺进入版本。
 
-当前 M-1、M0、M1、M2、M3 均为 `VERIFIED`（M3 4/4总门禁通过）；M4为 `IN_PROGRESS`（第2/3步管理身份与公共审核治理单元VERIFIED，后续业务和五项总门禁未完成），M5与V1.1仍为 `PLANNED`；V2.0 仅为 `BACKLOG` 候选，不是承诺的里程碑。
+当前M-1～M4均为`VERIFIED`；M4五门禁见[M4审计](M4-GATE-AUDIT.md)。M5与V1.1仍为`PLANNED`，V2.0仅为`BACKLOG`候选；没有Release或RESUME_READY。
 
 ## 2. 总体顺序
 
@@ -246,7 +254,7 @@ M0 的登录只用于打通受保护提交链路，可使用预置账号和最�
 
 ## 8. M4：管理后台、搜索与降级
 
-状态 `IN_PROGRESS`（2026-10-10），第1步设计、第2～6步管理身份、公共审核、运维恢复、Redis降级及公共搜索已完成；D-043～D-047已确认。各子范围VERIFIED，见对应验收、[Redis验收](M4-REDIS-VALIDATION.md)及[搜索验收](M4-SEARCH-VALIDATION.md)。按[7步计划](M4-IMPLEMENTATION-PLAN.md)逐单元交付，第5步已交付，第6步公共搜索VERIFIED；第7步监控及完整M4五门禁尚未完成，接手优先按[搜索验收](M4-SEARCH-VALIDATION.md)核对最新状态；旧Step4启动说明保留历史。
+状态`VERIFIED`（2026-10-11）。D-043～D-048已接受，七步依赖范围和五项总门禁完成；准确固定Linux构件、私有监控、三依赖故障恢复、索引删除重建、消息副本关联、管理员审计及清理见[M4总审计](M4-GATE-AUDIT.md)和[监控验收](M4-MONITORING-VALIDATION.md)。旧Step4接续及搜索阶段启动说明为历史；按授权完成现有功能分支交付后停止，M5另行授权。
 
 目标：补足真实系统所需的治理和运维能力。
 

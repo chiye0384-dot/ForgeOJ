@@ -1,0 +1,192 @@
+Browser tab: 4, Title: "ForgeOJ 最小监控 - ForgeOJ - Dashboards - Grafana", URL: "http://127.0.0.1:53126/d/forgeoj-overview/forgeoj-e69c80-e5b08f-e79b91-e68ea7?from=now-30m&to=now&timezone=browser&refresh=30s".
+1 AXWebArea ForgeOJ 最小监控 - ForgeOJ - Dashboards - Grafana, URL: 127.0.0.1:53126/d/forgeoj-overview/forgeoj-e69c80-e5b08f-e79b91-e68ea7?from=now-30m&to=now&timezone=browser&refresh=30s
+	2 container reactRoot
+		3 container floating-boundary
+			4 link Description: Skip to main content, Value: 127.0.0.1:53126/#pageContent
+			5 container
+				6 link Description: Grafana, Help: Home, Value: 127.0.0.1:53126/
+				7 button (collapsed) Description: Main menu, ID: mega-menu-toggle, Secondary Actions: Expand
+				8 container Breadcrumbs
+					9 content list
+						10 link Description: ForgeOJ, Value: 127.0.0.1:53126/dashboards/f/eg0uwuwdlmc5ce/forgeoj
+						11 text ForgeOJ 最小监控
+				12 checkbox Description: Mark "ForgeOJ 最小监控" as favorite, Value: 0
+				13 button Search...
+				14 button (collapsed) Description: Help, Secondary Actions: Expand
+				15 button (collapsed) Description: Profile, Secondary Actions: Expand
+					16 image User avatar
+			17 container
+				18 container
+					19 button Move 15m backward
+					20 button (collapsed) Description: Time range selected: Last 30 minutes, Secondary Actions: Expand
+					21 button Move time range forwards
+					22 button Zoom out time range
+					98 button Refresh
+					24 button (collapsed) Description: Choose refresh time interval with current interval 30 seconds selected, Secondary Actions: Expand
+					25 button Copy link
+					26 button (collapsed) Description: Share, Secondary Actions: Expand
+				27 container Dashboard content
+					28 container
+						29 container 服务抓取成功（1=成功）
+							30 heading 服务抓取成功（1=成功）, Value: 2
+								31 text 服务抓取成功（1=成功）
+							32 container
+								33 container
+									34 text forgeoj-api api-replica:9091
+									35 text 1
+								36 container
+									37 text forgeoj-api api:9091
+									38 text 1
+								39 container
+									40 text rabbitmq rabbitmq:15692
+									41 text 1
+								42 container
+									43 text forgeoj-worker worker:9092
+									44 text 1
+						45 container 快照新鲜与Worker消费者
+							46 heading 快照新鲜与Worker消费者, Value: 2
+								47 text 快照新鲜与Worker消费者
+							48 container
+								49 container
+									50 text forgeoj-api api-replica:9091
+									51 text 1
+								52 container
+									53 text forgeoj-api api:9091
+									54 text 1
+								55 container
+									56 text forgeoj-worker worker:9092
+									57 text 1
+								58 container
+									59 text forgeoj-worker worker:9092
+									60 text 1
+						61 container 请求速率（实测，非容量结论）
+							62 heading 请求速率（实测，非容量结论）, Value: 2
+								63 text 请求速率（实测，非容量结论）
+						64 container 请求延迟分位数（固定桶估计）
+							65 heading 请求延迟分位数（固定桶估计）, Value: 2
+								66 text 请求延迟分位数（固定桶估计）
+						67 container Rabbit队列待处理与未确认
+							68 heading Rabbit队列待处理与未确认, Value: 2
+								69 text Rabbit队列待处理与未确认
+						70 container 任务库存（双API取max）
+							71 heading 任务库存（双API取max）, Value: 2
+								72 text 任务库存（双API取max）
+						73 container 最老排队时间
+							74 heading 最老排队时间, Value: 2
+								75 text 最老排队时间
+						76 container 正式执行平均耗时（含完成持久化）
+							77 heading 正式执行平均耗时（含完成持久化）, Value: 2
+								78 text 正式执行平均耗时（含完成持久化）
+							99 container
+								100 content list
+									101 container
+										102 pop up button (collapsed) Description: Edit color for forgeoj-worker worker:9092 , Secondary Actions: Expand
+										103 button All series selected
+						79 container 正式结果库存
+							80 heading 正式结果库存, Value: 2
+								81 text 正式结果库存
+							104 container
+								105 content list
+									106 container
+										107 pop up button (collapsed) Description: Edit color for AC , Secondary Actions: Expand
+										108 button All series selected
+									109 container
+										110 pop up button (collapsed) Description: Edit color for CE , Secondary Actions: Expand
+										111 button All series selected
+									112 container
+										113 pop up button (collapsed) Description: Edit color for MLE , Secondary Actions: Expand
+										114 button All series selected
+									115 container
+										116 pop up button (collapsed) Description: Edit color for OLE , Secondary Actions: Expand
+										117 button All series selected
+									118 container
+										119 pop up button (collapsed) Description: Edit color for RE , Secondary Actions: Expand
+										120 button All series selected
+									121 container
+										122 pop up button (collapsed) Description: Edit color for SECURITY_VIOLATION , Secondary Actions: Expand
+										123 button All series selected
+									124 container
+										125 pop up button (collapsed) Description: Edit color for SYSTEM_ERROR , Secondary Actions: Expand
+										126 button All series selected
+									127 container
+										128 pop up button (collapsed) Description: Edit color for TLE , Secondary Actions: Expand
+										129 button All series selected
+									130 container
+										131 pop up button (collapsed) Description: Edit color for WA , Secondary Actions: Expand
+										132 button All series selected
+						82 container 重试与死信
+							83 heading 重试与死信, Value: 2
+								84 text 重试与死信
+							133 container
+								134 content list
+									135 container
+										136 pop up button (collapsed) Description: Edit color for FORMAL , Secondary Actions: Expand
+										137 button All series selected
+									138 container
+										139 pop up button (collapsed) Description: Edit color for OUTPUT_PREVIEW , Secondary Actions: Expand
+										140 button All series selected
+									141 container
+										142 pop up button (collapsed) Description: Edit color for SELF_TEST , Secondary Actions: Expand
+										143 button All series selected
+									144 container
+										145 pop up button (collapsed) Description: Edit color for VALIDATE , Secondary Actions: Expand
+										146 button All series selected
+									147 container
+										148 pop up button (collapsed) Description: Edit color for FORMAL , Secondary Actions: Expand
+										149 button All series selected
+									150 container
+										151 pop up button (collapsed) Description: Edit color for OUTPUT_PREVIEW , Secondary Actions: Expand
+										152 button All series selected
+									153 container
+										154 pop up button (collapsed) Description: Edit color for SELF_TEST , Secondary Actions: Expand
+										155 button All series selected
+									156 container
+										157 pop up button (collapsed) Description: Edit color for VALIDATE , Secondary Actions: Expand
+										158 button All series selected
+									159 container
+										160 pop up button (collapsed) Description: Edit color for , Secondary Actions: Expand
+										161 button All series selected
+									162 container
+										163 pop up button (collapsed) Description: Edit color for , Secondary Actions: Expand
+										164 button All series selected
+						85 container 缓存与Redis事件
+							86 heading 缓存与Redis事件, Value: 2
+								87 text 缓存与Redis事件
+							165 container
+								166 content list
+									167 container
+										168 pop up button (collapsed) Description: Edit color for cache_bypass , Secondary Actions: Expand
+										169 button All series selected
+									170 container
+										171 pop up button (collapsed) Description: Edit color for cache_hit , Secondary Actions: Expand
+										172 button All series selected
+									173 container
+										174 pop up button (collapsed) Description: Edit color for cache_miss , Secondary Actions: Expand
+										175 button All series selected
+									176 container
+										177 pop up button (collapsed) Description: Edit color for redis_busy , Secondary Actions: Expand
+										178 button All series selected
+									179 container
+										180 pop up button (collapsed) Description: Edit color for redis_circuit_open , Secondary Actions: Expand
+										181 button All series selected
+									182 container
+										183 pop up button (collapsed) Description: Edit color for redis_disabled , Secondary Actions: Expand
+										184 button All series selected
+									185 container
+										186 pop up button (collapsed) Description: Edit color for redis_success , Secondary Actions: Expand
+										187 button All series selected
+									188 container
+										189 pop up button (collapsed) Description: Edit color for redis_unavailable , Secondary Actions: Expand
+										190 button All series selected
+						88 container 搜索全文与标题降级
+							89 heading 搜索全文与标题降级, Value: 2
+								90 text 搜索全文与标题降级
+						91 container Outbox、失效与搜索积压
+							92 heading Outbox、失效与搜索积压, Value: 2
+								93 text Outbox、失效与搜索积压
+						94 container 执行及恢复容器清理失败
+							95 heading 执行及恢复容器清理失败, Value: 2
+								96 text 执行及恢复容器清理失败
+				97 button Show
+
+The focused UI element is 1 AXWebArea ForgeOJ 最小监控 - ForgeOJ - Dashboards - Grafana, URL: 127.0.0.1:53126/d/forgeoj-overview/forgeoj-e69c80-e5b08f-e79b91-e68ea7?from=now-30m&to=now&timezone=browser&refresh=30s

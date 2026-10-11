@@ -1,0 +1,17 @@
+Browser tab: 4, Title: "Grafana", URL: "http://127.0.0.1:51028/login".
+1 AXWebArea Grafana, URL: 127.0.0.1:51028/login
+	2 container reactRoot
+		3 container
+			4 image Grafana
+			5 heading Welcome to Grafana, Value: 1
+				6 text Welcome to Grafana
+			7 text Email or username
+			8 text field (settable) Email or username
+			9 text Password
+			10 container
+				11 text field (settable) Password
+				12 switch Description: Show password, Value: 0
+			13 button Log in
+			14 link Description: Forgot your password?, Value: 127.0.0.1:51028/user/password/send-reset-email
+
+The focused UI element is 8 text field (settable) Email or username

@@ -58,9 +58,10 @@ public class PublicSearchService {
             });
             if(epochs.publicRevision()!=epoch)throw ElasticSearchClient.unavailable();
             var after=mapper.control();if(!Objects.equals(control,after))throw ElasticSearchClient.unavailable();
-            return result;
+            com.forgeoj.api.observability.MonitoringMetrics.PROCESS.increment(com.forgeoj.api.observability.MonitoringMetrics.Event.SEARCH_FULL_TEXT);return result;
         }catch(ElasticSearchClient.SearchUnavailable unavailable){
             var fallback=library.list(word,level,selected,page,size);
+            com.forgeoj.api.observability.MonitoringMetrics.PROCESS.increment(com.forgeoj.api.observability.MonitoringMetrics.Event.SEARCH_TITLE_FALLBACK);
             return new Page(fallback.items().stream().map(p->new Item(p.slug(),p.title(),p.difficulty(),p.tags(),p.judgeVersion(),highlights(p.title(),"",word))).toList(),page,size,fallback.total(),"TITLE_FALLBACK",NOTICE);
         }
     }

@@ -1,0 +1,24 @@
+{
+  "task": "c84f1761-943f-4468-be1b-2f09ed7da8ef",
+  "events": [
+    {
+      "id": "5aa16c7e-3778-4822-aae6-0ac85143630a",
+      "failed": true,
+      "attempts": 5,
+      "published": false
+    }
+  ],
+  "status": "QUEUED",
+  "verdict": null,
+  "attempts": 0,
+  "taskCount": 1,
+  "eventCount": 1,
+  "quotaSlots": 1,
+  "recoveries": [],
+  "submission": "c4ce1d63-dcd5-439f-808f-c581d8929cc9",
+  "taskStatus": "QUEUED",
+  "sourceSha256": "f6583afbd484a8633a645092bfdf44241bc21d85d9c99edc4a5e0cababf58afc",
+  "digestMatches": true,
+  "closedAttempts": 0,
+  "submissionCount": 1
+}

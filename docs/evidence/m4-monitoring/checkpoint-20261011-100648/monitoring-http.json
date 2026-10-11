@@ -1,0 +1,1033 @@
+{
+  "checks": [
+    {
+      "base": "http://api:9091",
+      "path": "/metrics",
+      "method": "GET",
+      "status": 401
+    },
+    {
+      "base": "http://api:9091",
+      "path": "/health/live",
+      "method": "GET",
+      "status": 401
+    },
+    {
+      "base": "http://api:9091",
+      "path": "/health/ready",
+      "method": "GET",
+      "status": 401
+    },
+    {
+      "base": "http://api:9091",
+      "path": "/metrics",
+      "method": "GET",
+      "status": 401
+    },
+    {
+      "base": "http://api:9091",
+      "path": "/metrics?keyword=private",
+      "method": "GET",
+      "status": 400
+    },
+    {
+      "base": "http://api:9091",
+      "path": "/metrics",
+      "method": "POST",
+      "status": 405
+    },
+    {
+      "base": "http://api:9091",
+      "path": "/health/ready",
+      "method": "GET",
+      "status": 200
+    },
+    {
+      "base": "http://api:9091",
+      "path": "/metrics",
+      "method": "GET",
+      "status": 200
+    },
+    {
+      "base": "http://api-replica:9091",
+      "path": "/metrics",
+      "method": "GET",
+      "status": 401
+    },
+    {
+      "base": "http://api-replica:9091",
+      "path": "/health/live",
+      "method": "GET",
+      "status": 401
+    },
+    {
+      "base": "http://api-replica:9091",
+      "path": "/health/ready",
+      "method": "GET",
+      "status": 401
+    },
+    {
+      "base": "http://api-replica:9091",
+      "path": "/metrics",
+      "method": "GET",
+      "status": 401
+    },
+    {
+      "base": "http://api-replica:9091",
+      "path": "/metrics?keyword=private",
+      "method": "GET",
+      "status": 400
+    },
+    {
+      "base": "http://api-replica:9091",
+      "path": "/metrics",
+      "method": "POST",
+      "status": 405
+    },
+    {
+      "base": "http://api-replica:9091",
+      "path": "/health/ready",
+      "method": "GET",
+      "status": 200
+    },
+    {
+      "base": "http://api-replica:9091",
+      "path": "/metrics",
+      "method": "GET",
+      "status": 200
+    },
+    {
+      "base": "http://worker:9092",
+      "path": "/metrics",
+      "method": "GET",
+      "status": 401
+    },
+    {
+      "base": "http://worker:9092",
+      "path": "/health/live",
+      "method": "GET",
+      "status": 401
+    },
+    {
+      "base": "http://worker:9092",
+      "path": "/health/ready",
+      "method": "GET",
+      "status": 401
+    },
+    {
+      "base": "http://worker:9092",
+      "path": "/metrics",
+      "method": "GET",
+      "status": 401
+    },
+    {
+      "base": "http://worker:9092",
+      "path": "/metrics?keyword=private",
+      "method": "GET",
+      "status": 400
+    },
+    {
+      "base": "http://worker:9092",
+      "path": "/metrics",
+      "method": "POST",
+      "status": 405
+    },
+    {
+      "base": "http://worker:9092",
+      "path": "/health/ready",
+      "method": "GET",
+      "status": 200
+    },
+    {
+      "base": "http://worker:9092",
+      "path": "/metrics",
+      "method": "GET",
+      "status": 200
+    },
+    {
+      "base": "http://api:8080",
+      "path": "/metrics",
+      "method": "GET",
+      "status": 401
+    },
+    {
+      "base": "http://api:8080",
+      "path": "/health/live",
+      "method": "GET",
+      "status": 401
+    },
+    {
+      "base": "http://api:8080",
+      "path": "/health/ready",
+      "method": "GET",
+      "status": 401
+    },
+    {
+      "base": "http://prometheus:9090",
+      "path": "/api/v1/query?query=up",
+      "method": "GET",
+      "status": 200
+    },
+    {
+      "base": "http://prometheus:9090",
+      "path": "/api/v1/query?query=up",
+      "method": "GET",
+      "status": 200
+    },
+    {
+      "base": "http://prometheus:9090",
+      "path": "/api/v1/query?query=up",
+      "method": "GET",
+      "status": 200
+    },
+    {
+      "base": "http://prometheus:9090",
+      "path": "/api/v1/query?query=up",
+      "method": "GET",
+      "status": 200
+    },
+    {
+      "base": "http://prometheus:9090",
+      "path": "/api/v1/query?query=up",
+      "method": "GET",
+      "status": 200
+    },
+    {
+      "base": "http://prometheus:9090",
+      "path": "/api/v1/query?query=up",
+      "method": "GET",
+      "status": 200
+    },
+    {
+      "base": "http://prometheus:9090",
+      "path": "/api/v1/query?query=up",
+      "method": "GET",
+      "status": 200
+    },
+    {
+      "base": "http://prometheus:9090",
+      "path": "/api/v1/query?query=up",
+      "method": "GET",
+      "status": 200
+    },
+    {
+      "base": "http://prometheus:9090",
+      "path": "/api/v1/query?query=up",
+      "method": "GET",
+      "status": 200
+    },
+    {
+      "base": "http://prometheus:9090",
+      "path": "/api/v1/query?query=up",
+      "method": "GET",
+      "status": 200
+    },
+    {
+      "base": "http://prometheus:9090",
+      "path": "/api/v1/query?query=up",
+      "method": "GET",
+      "status": 200
+    },
+    {
+      "base": "http://prometheus:9090",
+      "path": "/api/v1/query?query=up",
+      "method": "GET",
+      "status": 200
+    },
+    {
+      "base": "http://prometheus:9090",
+      "path": "/api/v1/query?query=up",
+      "method": "GET",
+      "status": 200
+    },
+    {
+      "base": "http://prometheus:9090",
+      "path": "/api/v1/query?query=up",
+      "method": "GET",
+      "status": 200
+    },
+    {
+      "base": "http://prometheus:9090",
+      "path": "/api/v1/query?query=up",
+      "method": "GET",
+      "status": 200
+    },
+    {
+      "base": "http://grafana:3000",
+      "path": "/api/health",
+      "method": "GET",
+      "status": 200
+    },
+    {
+      "base": "http://grafana:3000",
+      "path": "/api/dashboards/uid/forgeoj-overview",
+      "method": "GET",
+      "status": 401
+    },
+    {
+      "base": "http://grafana:3000",
+      "path": "/api/admin/users",
+      "method": "POST",
+      "status": 200
+    },
+    {
+      "base": "http://grafana:3000",
+      "path": "/api/user",
+      "method": "GET",
+      "status": 200
+    },
+    {
+      "base": "http://grafana:3000",
+      "path": "/api/dashboards/uid/forgeoj-overview",
+      "method": "GET",
+      "status": 200
+    },
+    {
+      "base": "http://grafana:3000",
+      "path": "/api/dashboards/db",
+      "method": "POST",
+      "status": 403
+    },
+    {
+      "base": "http://grafana:3000",
+      "path": "/api/admin/users",
+      "method": "POST",
+      "status": 403
+    },
+    {
+      "base": "http://prometheus:9090",
+      "path": "/api/v1/query?query=up",
+      "method": "GET",
+      "status": 200
+    },
+    {
+      "base": "http://prometheus:9090",
+      "path": "/api/v1/query?query=forgeoj_monitoring_snapshot_fresh",
+      "method": "GET",
+      "status": 200
+    },
+    {
+      "base": "http://prometheus:9090",
+      "path": "/api/v1/query?query=forgeoj_worker_consumers_ready",
+      "method": "GET",
+      "status": 200
+    },
+    {
+      "base": "http://prometheus:9090",
+      "path": "/api/v1/query?query=sum%20by(route%2Cstatus_class)%20(rate(forgeoj_http_requests_total%5B2m%5D))",
+      "method": "GET",
+      "status": 200
+    },
+    {
+      "base": "http://prometheus:9090",
+      "path": "/api/v1/query?query=histogram_quantile(0.95%2C%20sum%20by(le%2Croute)%20(rate(forgeoj_http_request_duration_seconds_bucket%5B2m%5D)))",
+      "method": "GET",
+      "status": 200
+    },
+    {
+      "base": "http://prometheus:9090",
+      "path": "/api/v1/query?query=rabbitmq_queue_messages_ready",
+      "method": "GET",
+      "status": 200
+    },
+    {
+      "base": "http://prometheus:9090",
+      "path": "/api/v1/query?query=rabbitmq_queue_messages_unacked",
+      "method": "GET",
+      "status": 200
+    },
+    {
+      "base": "http://prometheus:9090",
+      "path": "/api/v1/query?query=max%20by(kind%2Cstate)%20(forgeoj_tasks%20and%20on(instance)%20(forgeoj_monitoring_snapshot_fresh%7Bjob%3D%22forgeoj-api%22%7D%20%3D%3D%201))",
+      "method": "GET",
+      "status": 200
+    },
+    {
+      "base": "http://prometheus:9090",
+      "path": "/api/v1/query?query=max%20by(kind)%20(forgeoj_oldest_queue_seconds%20and%20on(instance)%20(forgeoj_monitoring_snapshot_fresh%7Bjob%3D%22forgeoj-api%22%7D%20%3D%3D%201))",
+      "method": "GET",
+      "status": 200
+    },
+    {
+      "base": "http://prometheus:9090",
+      "path": "/api/v1/query?query=rate(forgeoj_worker_execution_duration_seconds_sum%5B2m%5D)%20%2F%20rate(forgeoj_worker_execution_duration_seconds_count%5B2m%5D)",
+      "method": "GET",
+      "status": 200
+    },
+    {
+      "base": "http://prometheus:9090",
+      "path": "/api/v1/query?query=max%20by(verdict)%20(forgeoj_formal_results%20and%20on(instance)%20(forgeoj_monitoring_snapshot_fresh%7Bjob%3D%22forgeoj-api%22%7D%20%3D%3D%201))",
+      "method": "GET",
+      "status": 200
+    },
+    {
+      "base": "http://prometheus:9090",
+      "path": "/api/v1/query?query=max%20by(kind)%20(forgeoj_attempt_retries%20and%20on(instance)%20(forgeoj_monitoring_snapshot_fresh%7Bjob%3D%22forgeoj-api%22%7D%20%3D%3D%201))",
+      "method": "GET",
+      "status": 200
+    },
+    {
+      "base": "http://prometheus:9090",
+      "path": "/api/v1/query?query=max%20by(kind)%20(forgeoj_tasks%7Bstate%3D%22DEAD_LETTER%22%7D%20and%20on(instance)%20(forgeoj_monitoring_snapshot_fresh%7Bjob%3D%22forgeoj-api%22%7D%20%3D%3D%201))",
+      "method": "GET",
+      "status": 200
+    },
+    {
+      "base": "http://prometheus:9090",
+      "path": "/api/v1/query?query=max(forgeoj_outbox_failed%7Bjob%3D%22forgeoj-api%22%7D%20and%20on(instance)%20(forgeoj_monitoring_snapshot_fresh%7Bjob%3D%22forgeoj-api%22%7D%20%3D%3D%201))",
+      "method": "GET",
+      "status": 200
+    },
+    {
+      "base": "http://prometheus:9090",
+      "path": "/api/v1/query?query=max(forgeoj_search_dead%7Bjob%3D%22forgeoj-api%22%7D%20and%20on(instance)%20(forgeoj_monitoring_snapshot_fresh%7Bjob%3D%22forgeoj-api%22%7D%20%3D%3D%201))",
+      "method": "GET",
+      "status": 200
+    },
+    {
+      "base": "http://prometheus:9090",
+      "path": "/api/v1/query?query=sum%20by(event)%20(rate(forgeoj_api_events_total%7Bevent%3D~%22cache_.*%7Credis_.*%22%7D%5B2m%5D))",
+      "method": "GET",
+      "status": 200
+    },
+    {
+      "base": "http://prometheus:9090",
+      "path": "/api/v1/query?query=sum%20by(event)%20(rate(forgeoj_api_events_total%7Bevent%3D~%22search_.*%22%7D%5B2m%5D))",
+      "method": "GET",
+      "status": 200
+    },
+    {
+      "base": "http://prometheus:9090",
+      "path": "/api/v1/query?query=max(forgeoj_outbox_pending%7Bjob%3D%22forgeoj-api%22%7D%20and%20on(instance)%20(forgeoj_monitoring_snapshot_fresh%7Bjob%3D%22forgeoj-api%22%7D%20%3D%3D%201))",
+      "method": "GET",
+      "status": 200
+    },
+    {
+      "base": "http://prometheus:9090",
+      "path": "/api/v1/query?query=max(forgeoj_invalidation_pending%7Bjob%3D%22forgeoj-api%22%7D%20and%20on(instance)%20(forgeoj_monitoring_snapshot_fresh%7Bjob%3D%22forgeoj-api%22%7D%20%3D%3D%201))",
+      "method": "GET",
+      "status": 200
+    },
+    {
+      "base": "http://prometheus:9090",
+      "path": "/api/v1/query?query=max(forgeoj_invalidation_failed%7Bjob%3D%22forgeoj-api%22%7D%20and%20on(instance)%20(forgeoj_monitoring_snapshot_fresh%7Bjob%3D%22forgeoj-api%22%7D%20%3D%3D%201))",
+      "method": "GET",
+      "status": 200
+    },
+    {
+      "base": "http://prometheus:9090",
+      "path": "/api/v1/query?query=max(forgeoj_search_pending%7Bjob%3D%22forgeoj-api%22%7D%20and%20on(instance)%20(forgeoj_monitoring_snapshot_fresh%7Bjob%3D%22forgeoj-api%22%7D%20%3D%3D%201))",
+      "method": "GET",
+      "status": 200
+    },
+    {
+      "base": "http://prometheus:9090",
+      "path": "/api/v1/query?query=max(forgeoj_search_epoch_gap%7Bjob%3D%22forgeoj-api%22%7D%20and%20on(instance)%20(forgeoj_monitoring_snapshot_fresh%7Bjob%3D%22forgeoj-api%22%7D%20%3D%3D%201))",
+      "method": "GET",
+      "status": 200
+    },
+    {
+      "base": "http://prometheus:9090",
+      "path": "/api/v1/query?query=forgeoj_worker_events_total%7Bevent%3D~%22sandbox_.*cleanup_failed%22%7D",
+      "method": "GET",
+      "status": 200
+    },
+    {
+      "base": "http://grafana:3000",
+      "path": "/api/ds/query",
+      "method": "POST",
+      "status": 200
+    },
+    {
+      "base": "http://api:9091",
+      "path": "/metrics",
+      "method": "GET",
+      "status": 200
+    },
+    {
+      "base": "http://api-replica:9091",
+      "path": "/metrics",
+      "method": "GET",
+      "status": 200
+    },
+    {
+      "base": "http://worker:9092",
+      "path": "/metrics",
+      "method": "GET",
+      "status": 200
+    },
+    {
+      "base": "http://api:9091",
+      "path": "/metrics",
+      "method": "GET",
+      "status": 401
+    },
+    {
+      "base": "http://api:9091",
+      "path": "/health/live",
+      "method": "GET",
+      "status": 401
+    },
+    {
+      "base": "http://api:9091",
+      "path": "/health/ready",
+      "method": "GET",
+      "status": 401
+    },
+    {
+      "base": "http://api:9091",
+      "path": "/metrics",
+      "method": "GET",
+      "status": 401
+    },
+    {
+      "base": "http://api:9091",
+      "path": "/metrics?keyword=private",
+      "method": "GET",
+      "status": 400
+    },
+    {
+      "base": "http://api:9091",
+      "path": "/metrics",
+      "method": "POST",
+      "status": 405
+    },
+    {
+      "base": "http://api:9091",
+      "path": "/health/ready",
+      "method": "GET",
+      "status": 200
+    },
+    {
+      "base": "http://api:9091",
+      "path": "/metrics",
+      "method": "GET",
+      "status": 200
+    },
+    {
+      "base": "http://api-replica:9091",
+      "path": "/metrics",
+      "method": "GET",
+      "status": 401
+    },
+    {
+      "base": "http://api-replica:9091",
+      "path": "/health/live",
+      "method": "GET",
+      "status": 401
+    },
+    {
+      "base": "http://api-replica:9091",
+      "path": "/health/ready",
+      "method": "GET",
+      "status": 401
+    },
+    {
+      "base": "http://api-replica:9091",
+      "path": "/metrics",
+      "method": "GET",
+      "status": 401
+    },
+    {
+      "base": "http://api-replica:9091",
+      "path": "/metrics?keyword=private",
+      "method": "GET",
+      "status": 400
+    },
+    {
+      "base": "http://api-replica:9091",
+      "path": "/metrics",
+      "method": "POST",
+      "status": 405
+    },
+    {
+      "base": "http://api-replica:9091",
+      "path": "/health/ready",
+      "method": "GET",
+      "status": 200
+    },
+    {
+      "base": "http://api-replica:9091",
+      "path": "/metrics",
+      "method": "GET",
+      "status": 200
+    },
+    {
+      "base": "http://worker:9092",
+      "path": "/metrics",
+      "method": "GET",
+      "status": 401
+    },
+    {
+      "base": "http://worker:9092",
+      "path": "/health/live",
+      "method": "GET",
+      "status": 401
+    },
+    {
+      "base": "http://worker:9092",
+      "path": "/health/ready",
+      "method": "GET",
+      "status": 401
+    },
+    {
+      "base": "http://worker:9092",
+      "path": "/metrics",
+      "method": "GET",
+      "status": 401
+    },
+    {
+      "base": "http://worker:9092",
+      "path": "/metrics?keyword=private",
+      "method": "GET",
+      "status": 400
+    },
+    {
+      "base": "http://worker:9092",
+      "path": "/metrics",
+      "method": "POST",
+      "status": 405
+    },
+    {
+      "base": "http://worker:9092",
+      "path": "/health/ready",
+      "method": "GET",
+      "status": 200
+    },
+    {
+      "base": "http://worker:9092",
+      "path": "/metrics",
+      "method": "GET",
+      "status": 200
+    },
+    {
+      "base": "http://api:8080",
+      "path": "/metrics",
+      "method": "GET",
+      "status": 401
+    },
+    {
+      "base": "http://api:8080",
+      "path": "/health/live",
+      "method": "GET",
+      "status": 401
+    },
+    {
+      "base": "http://api:8080",
+      "path": "/health/ready",
+      "method": "GET",
+      "status": 401
+    },
+    {
+      "base": "http://prometheus:9090",
+      "path": "/api/v1/query?query=up",
+      "method": "GET",
+      "status": 200
+    },
+    {
+      "base": "http://grafana:3000",
+      "path": "/api/health",
+      "method": "GET",
+      "status": 200
+    },
+    {
+      "base": "http://grafana:3000",
+      "path": "/api/dashboards/uid/forgeoj-overview",
+      "method": "GET",
+      "status": 401
+    },
+    {
+      "base": "http://grafana:3000",
+      "path": "/api/user",
+      "method": "GET",
+      "status": 200
+    },
+    {
+      "base": "http://grafana:3000",
+      "path": "/api/dashboards/uid/forgeoj-overview",
+      "method": "GET",
+      "status": 200
+    },
+    {
+      "base": "http://grafana:3000",
+      "path": "/api/dashboards/db",
+      "method": "POST",
+      "status": 403
+    },
+    {
+      "base": "http://grafana:3000",
+      "path": "/api/admin/users",
+      "method": "POST",
+      "status": 403
+    },
+    {
+      "base": "http://prometheus:9090",
+      "path": "/api/v1/query?query=up",
+      "method": "GET",
+      "status": 200
+    },
+    {
+      "base": "http://prometheus:9090",
+      "path": "/api/v1/query?query=forgeoj_monitoring_snapshot_fresh",
+      "method": "GET",
+      "status": 200
+    },
+    {
+      "base": "http://prometheus:9090",
+      "path": "/api/v1/query?query=forgeoj_worker_consumers_ready",
+      "method": "GET",
+      "status": 200
+    },
+    {
+      "base": "http://prometheus:9090",
+      "path": "/api/v1/query?query=sum%20by(route%2Cstatus_class)%20(rate(forgeoj_http_requests_total%5B2m%5D))",
+      "method": "GET",
+      "status": 200
+    },
+    {
+      "base": "http://prometheus:9090",
+      "path": "/api/v1/query?query=histogram_quantile(0.95%2C%20sum%20by(le%2Croute)%20(rate(forgeoj_http_request_duration_seconds_bucket%5B2m%5D)))",
+      "method": "GET",
+      "status": 200
+    },
+    {
+      "base": "http://prometheus:9090",
+      "path": "/api/v1/query?query=rabbitmq_queue_messages_ready",
+      "method": "GET",
+      "status": 200
+    },
+    {
+      "base": "http://prometheus:9090",
+      "path": "/api/v1/query?query=rabbitmq_queue_messages_unacked",
+      "method": "GET",
+      "status": 200
+    },
+    {
+      "base": "http://prometheus:9090",
+      "path": "/api/v1/query?query=max%20by(kind%2Cstate)%20(forgeoj_tasks%20and%20on(instance)%20(forgeoj_monitoring_snapshot_fresh%7Bjob%3D%22forgeoj-api%22%7D%20%3D%3D%201))",
+      "method": "GET",
+      "status": 200
+    },
+    {
+      "base": "http://prometheus:9090",
+      "path": "/api/v1/query?query=max%20by(kind)%20(forgeoj_oldest_queue_seconds%20and%20on(instance)%20(forgeoj_monitoring_snapshot_fresh%7Bjob%3D%22forgeoj-api%22%7D%20%3D%3D%201))",
+      "method": "GET",
+      "status": 200
+    },
+    {
+      "base": "http://prometheus:9090",
+      "path": "/api/v1/query?query=rate(forgeoj_worker_execution_duration_seconds_sum%5B2m%5D)%20%2F%20rate(forgeoj_worker_execution_duration_seconds_count%5B2m%5D)",
+      "method": "GET",
+      "status": 200
+    },
+    {
+      "base": "http://prometheus:9090",
+      "path": "/api/v1/query?query=max%20by(verdict)%20(forgeoj_formal_results%20and%20on(instance)%20(forgeoj_monitoring_snapshot_fresh%7Bjob%3D%22forgeoj-api%22%7D%20%3D%3D%201))",
+      "method": "GET",
+      "status": 200
+    },
+    {
+      "base": "http://prometheus:9090",
+      "path": "/api/v1/query?query=max%20by(kind)%20(forgeoj_attempt_retries%20and%20on(instance)%20(forgeoj_monitoring_snapshot_fresh%7Bjob%3D%22forgeoj-api%22%7D%20%3D%3D%201))",
+      "method": "GET",
+      "status": 200
+    },
+    {
+      "base": "http://prometheus:9090",
+      "path": "/api/v1/query?query=max%20by(kind)%20(forgeoj_tasks%7Bstate%3D%22DEAD_LETTER%22%7D%20and%20on(instance)%20(forgeoj_monitoring_snapshot_fresh%7Bjob%3D%22forgeoj-api%22%7D%20%3D%3D%201))",
+      "method": "GET",
+      "status": 200
+    },
+    {
+      "base": "http://prometheus:9090",
+      "path": "/api/v1/query?query=max(forgeoj_outbox_failed%7Bjob%3D%22forgeoj-api%22%7D%20and%20on(instance)%20(forgeoj_monitoring_snapshot_fresh%7Bjob%3D%22forgeoj-api%22%7D%20%3D%3D%201))",
+      "method": "GET",
+      "status": 200
+    },
+    {
+      "base": "http://prometheus:9090",
+      "path": "/api/v1/query?query=max(forgeoj_search_dead%7Bjob%3D%22forgeoj-api%22%7D%20and%20on(instance)%20(forgeoj_monitoring_snapshot_fresh%7Bjob%3D%22forgeoj-api%22%7D%20%3D%3D%201))",
+      "method": "GET",
+      "status": 200
+    },
+    {
+      "base": "http://prometheus:9090",
+      "path": "/api/v1/query?query=sum%20by(event)%20(rate(forgeoj_api_events_total%7Bevent%3D~%22cache_.*%7Credis_.*%22%7D%5B2m%5D))",
+      "method": "GET",
+      "status": 200
+    },
+    {
+      "base": "http://prometheus:9090",
+      "path": "/api/v1/query?query=sum%20by(event)%20(rate(forgeoj_api_events_total%7Bevent%3D~%22search_.*%22%7D%5B2m%5D))",
+      "method": "GET",
+      "status": 200
+    },
+    {
+      "base": "http://prometheus:9090",
+      "path": "/api/v1/query?query=max(forgeoj_outbox_pending%7Bjob%3D%22forgeoj-api%22%7D%20and%20on(instance)%20(forgeoj_monitoring_snapshot_fresh%7Bjob%3D%22forgeoj-api%22%7D%20%3D%3D%201))",
+      "method": "GET",
+      "status": 200
+    },
+    {
+      "base": "http://prometheus:9090",
+      "path": "/api/v1/query?query=max(forgeoj_invalidation_pending%7Bjob%3D%22forgeoj-api%22%7D%20and%20on(instance)%20(forgeoj_monitoring_snapshot_fresh%7Bjob%3D%22forgeoj-api%22%7D%20%3D%3D%201))",
+      "method": "GET",
+      "status": 200
+    },
+    {
+      "base": "http://prometheus:9090",
+      "path": "/api/v1/query?query=max(forgeoj_invalidation_failed%7Bjob%3D%22forgeoj-api%22%7D%20and%20on(instance)%20(forgeoj_monitoring_snapshot_fresh%7Bjob%3D%22forgeoj-api%22%7D%20%3D%3D%201))",
+      "method": "GET",
+      "status": 200
+    },
+    {
+      "base": "http://prometheus:9090",
+      "path": "/api/v1/query?query=max(forgeoj_search_pending%7Bjob%3D%22forgeoj-api%22%7D%20and%20on(instance)%20(forgeoj_monitoring_snapshot_fresh%7Bjob%3D%22forgeoj-api%22%7D%20%3D%3D%201))",
+      "method": "GET",
+      "status": 200
+    },
+    {
+      "base": "http://prometheus:9090",
+      "path": "/api/v1/query?query=max(forgeoj_search_epoch_gap%7Bjob%3D%22forgeoj-api%22%7D%20and%20on(instance)%20(forgeoj_monitoring_snapshot_fresh%7Bjob%3D%22forgeoj-api%22%7D%20%3D%3D%201))",
+      "method": "GET",
+      "status": 200
+    },
+    {
+      "base": "http://prometheus:9090",
+      "path": "/api/v1/query?query=forgeoj_worker_events_total%7Bevent%3D~%22sandbox_.*cleanup_failed%22%7D",
+      "method": "GET",
+      "status": 200
+    },
+    {
+      "base": "http://grafana:3000",
+      "path": "/api/ds/query",
+      "method": "POST",
+      "status": 200
+    },
+    {
+      "base": "http://api:9091",
+      "path": "/metrics",
+      "method": "GET",
+      "status": 200
+    },
+    {
+      "base": "http://api-replica:9091",
+      "path": "/metrics",
+      "method": "GET",
+      "status": 200
+    },
+    {
+      "base": "http://worker:9092",
+      "path": "/metrics",
+      "method": "GET",
+      "status": 200
+    },
+    {
+      "base": "http://api:9091",
+      "path": "/metrics",
+      "method": "GET",
+      "status": 200
+    },
+    {
+      "base": "http://prometheus:9090",
+      "path": "/api/v1/query?query=sum(forgeoj_api_events_total%7Bevent%3D%22redis_unavailable%22%7D)",
+      "method": "GET",
+      "status": 200
+    },
+    {
+      "base": "http://api:9091",
+      "path": "/health/ready",
+      "method": "GET",
+      "status": 200
+    },
+    {
+      "base": "http://api-replica:9091",
+      "path": "/health/ready",
+      "method": "GET",
+      "status": 200
+    },
+    {
+      "base": "http://worker:9092",
+      "path": "/health/ready",
+      "method": "GET",
+      "status": 200
+    },
+    {
+      "base": "http://prometheus:9090",
+      "path": "/api/v1/query?query=up",
+      "method": "GET",
+      "status": 200
+    },
+    {
+      "base": "http://api:9091",
+      "path": "/health/ready",
+      "method": "GET",
+      "status": 200
+    },
+    {
+      "base": "http://api-replica:9091",
+      "path": "/health/ready",
+      "method": "GET",
+      "status": 200
+    },
+    {
+      "base": "http://worker:9092",
+      "path": "/health/ready",
+      "method": "GET",
+      "status": 200
+    },
+    {
+      "base": "http://api:9091",
+      "path": "/metrics",
+      "method": "GET",
+      "status": 200
+    },
+    {
+      "base": "http://prometheus:9090",
+      "path": "/api/v1/query?query=sum(forgeoj_api_events_total%7Bevent%3D%22search_title_fallback%22%7D)",
+      "method": "GET",
+      "status": 200
+    },
+    {
+      "base": "http://api:9091",
+      "path": "/health/ready",
+      "method": "GET",
+      "status": 200
+    },
+    {
+      "base": "http://api-replica:9091",
+      "path": "/health/ready",
+      "method": "GET",
+      "status": 200
+    },
+    {
+      "base": "http://worker:9092",
+      "path": "/health/ready",
+      "method": "GET",
+      "status": 200
+    },
+    {
+      "base": "http://prometheus:9090",
+      "path": "/api/v1/query?query=up",
+      "method": "GET",
+      "status": 200
+    },
+    {
+      "base": "http://api:9091",
+      "path": "/health/ready",
+      "method": "GET",
+      "status": 200
+    },
+    {
+      "base": "http://api-replica:9091",
+      "path": "/health/ready",
+      "method": "GET",
+      "status": 200
+    },
+    {
+      "base": "http://worker:9092",
+      "path": "/health/ready",
+      "method": "GET",
+      "status": 200
+    },
+    {
+      "base": "http://prometheus:9090",
+      "path": "/api/v1/query?query=up%7Bjob%3D%22rabbitmq%22%7D",
+      "method": "GET",
+      "status": 200
+    },
+    {
+      "base": "http://api:9091",
+      "path": "/health/ready",
+      "method": "GET",
+      "status": 200
+    },
+    {
+      "base": "http://api:9091",
+      "path": "/metrics",
+      "method": "GET",
+      "status": 200
+    },
+    {
+      "base": "http://worker:9092",
+      "path": "/health/ready",
+      "method": "GET",
+      "status": 503
+    },
+    {
+      "base": "http://prometheus:9090",
+      "path": "/api/v1/query?query=up",
+      "method": "GET",
+      "status": 200
+    },
+    {
+      "base": "http://api:9091",
+      "path": "/health/ready",
+      "method": "GET",
+      "status": 200
+    },
+    {
+      "base": "http://api-replica:9091",
+      "path": "/health/ready",
+      "method": "GET",
+      "status": 200
+    },
+    {
+      "base": "http://worker:9092",
+      "path": "/health/ready",
+      "method": "GET",
+      "status": 200
+    }
+  ],
+  "phases": {
+    "healthy": {
+      "allPassed": true,
+      "checkedAt": "2026-10-11T02:14:46.970Z",
+      "checks": 61
+    },
+    "redis-outage": {
+      "allPassed": true,
+      "checkedAt": "2026-10-11T02:23:01.777Z",
+      "checks": 5
+    },
+    "redis-recovered": {
+      "allPassed": true,
+      "checkedAt": "2026-10-11T02:23:06.465Z",
+      "checks": 4
+    },
+    "es-outage": {
+      "allPassed": true,
+      "checkedAt": "2026-10-11T02:23:56.543Z",
+      "checks": 5
+    },
+    "es-recovered": {
+      "allPassed": true,
+      "checkedAt": "2026-10-11T02:24:01.716Z",
+      "checks": 4
+    },
+    "rabbit-outage": {
+      "allPassed": true,
+      "checkedAt": "2026-10-11T02:27:36.914Z",
+      "checks": 4
+    },
+    "rabbit-recovered": {
+      "allPassed": true,
+      "checkedAt": "2026-10-11T02:27:53.488Z",
+      "checks": 4
+    }
+  },
+  "grafana": {
+    "version": "13.2.3",
+    "commit": "90ffed056f0884267356c12a0eeb72a022af53f1",
+    "panels": 14,
+    "validExpressions": 23,
+    "viewer": true,
+    "anonymousDenied": true,
+    "viewerWriteDenied": true
+  },
+  "baseline": {
+    "api": "# HELP forgeoj_api_events_total Process-local API events since start.\n# TYPE forgeoj_api_events_total counter\nforgeoj_api_events_total{event=\"cache_hit\"} 3\nforgeoj_api_events_total{event=\"cache_miss\"} 9\nforgeoj_api_events_total{event=\"cache_bypass\"} 0\nforgeoj_api_events_total{event=\"redis_success\"} 1058\nforgeoj_api_events_total{event=\"redis_unavailable\"} 0\nforgeoj_api_events_total{event=\"redis_disabled\"} 0\nforgeoj_api_events_total{event=\"redis_circuit_open\"} 0\nforgeoj_api_events_total{event=\"redis_busy\"} 0\nforgeoj_api_events_total{event=\"search_full_text\"} 3\nforgeoj_api_events_total{event=\"search_title_fallback\"} 0\n# HELP forgeoj_http_requests_total Requests by fixed route and response class.\n# TYPE forgeoj_http_requests_total counter\nforgeoj_http_requests_total{route=\"auth\",status_class=\"1xx\"} 0\nforgeoj_http_requests_total{route=\"auth\",status_class=\"2xx\"} 250\nforgeoj_http_requests_total{route=\"auth\",status_class=\"3xx\"} 0\nforgeoj_http_requests_total{route=\"auth\",status_class=\"4xx\"} 6\nforgeoj_http_requests_total{route=\"auth\",status_class=\"5xx\"} 0\nforgeoj_http_requests_total{route=\"auth\",status_class=\"other\"} 0\nforgeoj_http_requests_total{route=\"admin\",status_class=\"1xx\"} 0\nforgeoj_http_requests_total{route=\"admin\",status_class=\"2xx\"} 136\nforgeoj_http_requests_total{route=\"admin\",status_class=\"3xx\"} 0\nforgeoj_http_requests_total{route=\"admin\",status_class=\"4xx\"} 45\nforgeoj_http_requests_total{route=\"admin\",status_class=\"5xx\"} 0\nforgeoj_http_requests_total{route=\"admin\",status_class=\"other\"} 0\nforgeoj_http_requests_total{route=\"library\",status_class=\"1xx\"} 0\nforgeoj_http_requests_total{route=\"library\",status_class=\"2xx\"} 25\nforgeoj_http_requests_total{route=\"library\",status_class=\"3xx\"} 0\nforgeoj_http_requests_total{route=\"library\",status_class=\"4xx\"} 5\nforgeoj_http_requests_total{route=\"library\",status_class=\"5xx\"} 0\nforgeoj_http_requests_total{route=\"library\",status_class=\"other\"} 0\nforgeoj_http_requests_total{route=\"submission\",status_class=\"1xx\"} 9\nforgeoj_http_requests_total{route=\"submission\",status_class=\"2xx\"} 115\nforgeoj_http_requests_total{route=\"submission\",status_class=\"3xx\"} 0\nforgeoj_http_requests_total{route=\"submission\",status_class=\"4xx\"} 9\nforgeoj_http_requests_total{route=\"submission\",status_class=\"5xx\"} 1\nforgeoj_http_requests_total{route=\"submission\",status_class=\"other\"} 0\nforgeoj_http_requests_total{route=\"selftest\",status_class=\"1xx\"} 0\nforgeoj_http_requests_total{route=\"selftest\",status_class=\"2xx\"} 32\nforgeoj_http_requests_total{route=\"selftest\",status_class=\"3xx\"} 0\nforgeoj_http_requests_total{route=\"selftest\",status_class=\"4xx\"} 2\nforgeoj_http_requests_total{route=\"selftest\",status_class=\"5xx\"} 0\nforgeoj_http_requests_total{route=\"selftest\",status_class=\"other\"} 0\nforgeoj_http_requests_total{route=\"content\",status_class=\"1xx\"} 0\nforgeoj_http_requests_total{route=\"content\",status_class=\"2xx\"} 158\nforgeoj_http_requests_total{route=\"content\",status_class=\"3xx\"} 0\nforgeoj_http_requests_total{route=\"content\",status_class=\"4xx\"} 0\nforgeoj_http_requests_total{route=\"content\",status_class=\"5xx\"} 0\nforgeoj_http_requests_total{route=\"content\",status_class=\"other\"} 0\nforgeoj_http_requests_total{route=\"classroom\",status_class=\"1xx\"} 0\nforgeoj_http_requests_total{route=\"classroom\",status_class=\"2xx\"} 98\nforgeoj_http_requests_total{route=\"classroom\",status_class=\"3xx\"} 0\nforgeoj_http_requests_total{route=\"classroom\",status_class=\"4xx\"} 35\nforgeoj_http_requests_total{route=\"classroom\",status_class=\"5xx\"} 0\nforgeoj_http_requests_total{route=\"classroom\",status_class=\"other\"} 0\nforgeoj_http_requests_total{route=\"other\",status_class=\"1xx\"} 0\nforgeoj_http_requests_total{route=\"other\",status_class=\"2xx\"} 44\nforgeoj_http_requests_total{route=\"other\",status_class=\"3xx\"} 0\nforgeoj_http_requests_total{route=\"other\",status_class=\"4xx\"} 12\nforgeoj_http_requests_total{route=\"other\",status_class=\"5xx\"} 0\nforgeoj_http_requests_total{route=\"other\",status_class=\"other\"} 0\n# HELP forgeoj_http_request_duration_seconds Request duration in seconds.\n# TYPE forgeoj_http_request_duration_seconds histogram\nforgeoj_http_request_duration_seconds_bucket{route=\"auth\",le=\"0.005\"} 229\nforgeoj_http_request_duration_seconds_bucket{route=\"auth\",le=\"0.01\"} 231\nforgeoj_http_request_duration_seconds_bucket{route=\"auth\",le=\"0.025\"} 232\nforgeoj_http_request_duration_seconds_bucket{route=\"auth\",le=\"0.05\"} 232\nforgeoj_http_request_duration_seconds_bucket{route=\"auth\",le=\"0.1\"} 254\nforgeoj_http_request_duration_seconds_bucket{route=\"auth\",le=\"0.25\"} 255\nforgeoj_http_request_duration_seconds_bucket{route=\"auth\",le=\"0.5\"} 256\nforgeoj_http_request_duration_seconds_bucket{route=\"auth\",le=\"1.0\"} 256\nforgeoj_http_request_duration_seconds_bucket{route=\"auth\",le=\"2.5\"} 256\nforgeoj_http_request_duration_seconds_bucket{route=\"auth\",le=\"5.0\"} 256\nforgeoj_http_request_duration_seconds_bucket{route=\"auth\",le=\"+Inf\"} 256\nforgeoj_http_request_duration_seconds_count{route=\"auth\"} 256\nforgeoj_http_request_duration_seconds_sum{route=\"auth\"} 2.322592562\nforgeoj_http_request_duration_seconds_bucket{route=\"admin\",le=\"0.005\"} 23\nforgeoj_http_request_duration_seconds_bucket{route=\"admin\",le=\"0.01\"} 25\nforgeoj_http_request_duration_seconds_bucket{route=\"admin\",le=\"0.025\"} 131\nforgeoj_http_request_duration_seconds_bucket{route=\"admin\",le=\"0.05\"} 145\nforgeoj_http_request_duration_seconds_bucket{route=\"admin\",le=\"0.1\"} 175\nforgeoj_http_request_duration_seconds_bucket{route=\"admin\",le=\"0.25\"} 180\nforgeoj_http_request_duration_seconds_bucket{route=\"admin\",le=\"0.5\"} 180\nforgeoj_http_request_duration_seconds_bucket{route=\"admin\",le=\"1.0\"} 180\nforgeoj_http_request_duration_seconds_bucket{route=\"admin\",le=\"2.5\"} 181\nforgeoj_http_request_duration_seconds_bucket{route=\"admin\",le=\"5.0\"} 181\nforgeoj_http_request_duration_seconds_bucket{route=\"admin\",le=\"+Inf\"} 181\nforgeoj_http_request_duration_seconds_count{route=\"admin\"} 181\nforgeoj_http_request_duration_seconds_sum{route=\"admin\"} 7.236899619\nforgeoj_http_request_duration_seconds_bucket{route=\"library\",le=\"0.005\"} 8\nforgeoj_http_request_duration_seconds_bucket{route=\"library\",le=\"0.01\"} 17\nforgeoj_http_request_duration_seconds_bucket{route=\"library\",le=\"0.025\"} 24\nforgeoj_http_request_duration_seconds_bucket{route=\"library\",le=\"0.05\"} 27\nforgeoj_http_request_duration_seconds_bucket{route=\"library\",le=\"0.1\"} 28\nforgeoj_http_request_duration_seconds_bucket{route=\"library\",le=\"0.25\"} 28\nforgeoj_http_request_duration_seconds_bucket{route=\"library\",le=\"0.5\"} 30\nforgeoj_http_request_duration_seconds_bucket{route=\"library\",le=\"1.0\"} 30\nforgeoj_http_request_duration_seconds_bucket{route=\"library\",le=\"2.5\"} 30\nforgeoj_http_request_duration_seconds_bucket{route=\"library\",le=\"5.0\"} 30\nforgeoj_http_request_duration_seconds_bucket{route=\"library\",le=\"+Inf\"} 30\nforgeoj_http_request_duration_seconds_count{route=\"library\"} 30\nforgeoj_http_request_duration_seconds_sum{route=\"library\"} 1.059101869\nforgeoj_http_request_duration_seconds_bucket{route=\"submission\",le=\"0.005\"} 98\nforgeoj_http_request_duration_seconds_bucket{route=\"submission\",le=\"0.01\"} 111\nforgeoj_http_request_duration_seconds_bucket{route=\"submission\",le=\"0.025\"} 125\nforgeoj_http_request_duration_seconds_bucket{route=\"submission\",le=\"0.05\"} 131\nforgeoj_http_request_duration_seconds_bucket{route=\"submission\",le=\"0.1\"} 133\nforgeoj_http_request_duration_seconds_bucket{route=\"submission\",le=\"0.25\"} 134\nforgeoj_http_request_duration_seconds_bucket{route=\"submission\",le=\"0.5\"} 134\nforgeoj_http_request_duration_seconds_bucket{route=\"submission\",le=\"1.0\"} 134\nforgeoj_http_request_duration_seconds_bucket{route=\"submission\",le=\"2.5\"} 134\nforgeoj_http_request_duration_seconds_bucket{route=\"submission\",le=\"5.0\"} 134\nforgeoj_http_request_duration_seconds_bucket{route=\"submission\",le=\"+Inf\"} 134\nforgeoj_http_request_duration_seconds_count{route=\"submission\"} 134\nforgeoj_http_request_duration_seconds_sum{route=\"submission\"} 1.253639186\nforgeoj_http_request_duration_seconds_bucket{route=\"selftest\",le=\"0.005\"} 14\nforgeoj_http_request_duration_seconds_bucket{route=\"selftest\",le=\"0.01\"} 30\nforgeoj_http_request_duration_seconds_bucket{route=\"selftest\",le=\"0.025\"} 33\nforgeoj_http_request_duration_seconds_bucket{route=\"selftest\",le=\"0.05\"} 34\nforgeoj_http_request_duration_seconds_bucket{route=\"selftest\",le=\"0.1\"} 34\nforgeoj_http_request_duration_seconds_bucket{route=\"selftest\",le=\"0.25\"} 34\nforgeoj_http_request_duration_seconds_bucket{route=\"selftest\",le=\"0.5\"} 34\nforgeoj_http_request_duration_seconds_bucket{route=\"selftest\",le=\"1.0\"} 34\nforgeoj_http_request_duration_seconds_bucket{route=\"selftest\",le=\"2.5\"} 34\nforgeoj_http_request_duration_seconds_bucket{route=\"selftest\",le=\"5.0\"} 34\nforgeoj_http_request_duration_seconds_bucket{route=\"selftest\",le=\"+Inf\"} 34\nforgeoj_http_request_duration_seconds_count{route=\"selftest\"} 34\nforgeoj_http_request_duration_seconds_sum{route=\"selftest\"} 0.236644632\nforgeoj_http_request_duration_seconds_bucket{route=\"content\",le=\"0.005\"} 74\nforgeoj_http_request_duration_seconds_bucket{route=\"content\",le=\"0.01\"} 143\nforgeoj_http_request_duration_seconds_bucket{route=\"content\",le=\"0.025\"} 154\nforgeoj_http_request_duration_seconds_bucket{route=\"content\",le=\"0.05\"} 158\nforgeoj_http_request_duration_seconds_bucket{route=\"content\",le=\"0.1\"} 158\nforgeoj_http_request_duration_seconds_bucket{route=\"content\",le=\"0.25\"} 158\nforgeoj_http_request_duration_seconds_bucket{route=\"content\",le=\"0.5\"} 158\nforgeoj_http_request_duration_seconds_bucket{route=\"content\",le=\"1.0\"} 158\nforgeoj_http_request_duration_seconds_bucket{route=\"content\",le=\"2.5\"} 158\nforgeoj_http_request_duration_seconds_bucket{route=\"content\",le=\"5.0\"} 158\nforgeoj_http_request_duration_seconds_bucket{route=\"content\",le=\"+Inf\"} 158\nforgeoj_http_request_duration_seconds_count{route=\"content\"} 158\nforgeoj_http_request_duration_seconds_sum{route=\"content\"} 1.121450446\nforgeoj_http_request_duration_seconds_bucket{route=\"classroom\",le=\"0.005\"} 14\nforgeoj_http_request_duration_seconds_bucket{route=\"classroom\",le=\"0.01\"} 80\nforgeoj_http_request_duration_seconds_bucket{route=\"classroom\",le=\"0.025\"} 124\nforgeoj_http_request_duration_seconds_bucket{route=\"classroom\",le=\"0.05\"} 133\nforgeoj_http_request_duration_seconds_bucket{route=\"classroom\",le=\"0.1\"} 133\nforgeoj_http_request_duration_seconds_bucket{route=\"classroom\",le=\"0.25\"} 133\nforgeoj_http_request_duration_seconds_bucket{route=\"classroom\",le=\"0.5\"} 133\nforgeoj_http_request_duration_seconds_bucket{route=\"classroom\",le=\"1.0\"} 133\nforgeoj_http_request_duration_seconds_bucket{route=\"classroom\",le=\"2.5\"} 133\nforgeoj_http_request_duration_seconds_bucket{route=\"classroom\",le=\"5.0\"} 133\nforgeoj_http_request_duration_seconds_bucket{route=\"classroom\",le=\"+Inf\"} 133\nforgeoj_http_request_duration_seconds_count{route=\"classroom\"} 133\nforgeoj_http_request_duration_seconds_sum{route=\"classroom\"} 1.654379593\nforgeoj_http_request_duration_seconds_bucket{route=\"other\",le=\"0.005\"} 11\nforgeoj_http_request_duration_seconds_bucket{route=\"other\",le=\"0.01\"} 26\nforgeoj_http_request_duration_seconds_bucket{route=\"other\",le=\"0.025\"} 50\nforgeoj_http_request_duration_seconds_bucket{route=\"other\",le=\"0.05\"} 56\nforgeoj_http_request_duration_seconds_bucket{route=\"other\",le=\"0.1\"} 56\nforgeoj_http_request_duration_seconds_bucket{route=\"other\",le=\"0.25\"} 56\nforgeoj_http_request_duration_seconds_bucket{route=\"other\",le=\"0.5\"} 56\nforgeoj_http_request_duration_seconds_bucket{route=\"other\",le=\"1.0\"} 56\nforgeoj_http_request_duration_seconds_bucket{route=\"other\",le=\"2.5\"} 56\nforgeoj_http_request_duration_seconds_bucket{route=\"other\",le=\"5.0\"} 56\nforgeoj_http_request_duration_seconds_bucket{route=\"other\",le=\"+Inf\"} 56\nforgeoj_http_request_duration_seconds_count{route=\"other\"} 56\nforgeoj_http_request_duration_seconds_sum{route=\"other\"} 0.747583537\n# HELP forgeoj_monitoring_collection_success Whether the most recent SQL collection succeeded.\n# TYPE forgeoj_monitoring_collection_success gauge\nforgeoj_monitoring_collection_success 1\n# HELP forgeoj_monitoring_last_success_seconds Unix time of the last successful SQL snapshot.\n# TYPE forgeoj_monitoring_last_success_seconds gauge\nforgeoj_monitoring_last_success_seconds 1791684882\n# HELP forgeoj_monitoring_snapshot_fresh Whether a successful snapshot is less than 45 seconds old.\n# TYPE forgeoj_monitoring_snapshot_fresh gauge\nforgeoj_monitoring_snapshot_fresh 1\n# HELP forgeoj_tasks Current retained tasks by fixed kind and state.\n# TYPE forgeoj_tasks gauge\nforgeoj_tasks{kind=\"FORMAL\",state=\"QUEUED\"} 0\nforgeoj_tasks{kind=\"FORMAL\",state=\"RUNNING\"} 0\nforgeoj_tasks{kind=\"FORMAL\",state=\"RETRYING\"} 0\nforgeoj_tasks{kind=\"FORMAL\",state=\"WAITING_RETRY\"} 0\nforgeoj_tasks{kind=\"FORMAL\",state=\"FINISHED\"} 17\nforgeoj_tasks{kind=\"FORMAL\",state=\"CANCELLED\"} 1\nforgeoj_tasks{kind=\"FORMAL\",state=\"SYSTEM_ERROR\"} 0\nforgeoj_tasks{kind=\"FORMAL\",state=\"DEAD_LETTER\"} 1\nforgeoj_tasks{kind=\"VALIDATE\",state=\"QUEUED\"} 0\nforgeoj_tasks{kind=\"VALIDATE\",state=\"RUNNING\"} 0\nforgeoj_tasks{kind=\"VALIDATE\",state=\"RETRYING\"} 0\nforgeoj_tasks{kind=\"VALIDATE\",state=\"WAITING_RETRY\"} 0\nforgeoj_tasks{kind=\"VALIDATE\",state=\"FINISHED\"} 10\nforgeoj_tasks{kind=\"VALIDATE\",state=\"CANCELLED\"} 0\nforgeoj_tasks{kind=\"VALIDATE\",state=\"SYSTEM_ERROR\"} 0\nforgeoj_tasks{kind=\"VALIDATE\",state=\"DEAD_LETTER\"} 0\nforgeoj_tasks{kind=\"OUTPUT_PREVIEW\",state=\"QUEUED\"} 0\nforgeoj_tasks{kind=\"OUTPUT_PREVIEW\",state=\"RUNNING\"} 0\nforgeoj_tasks{kind=\"OUTPUT_PREVIEW\",state=\"RETRYING\"} 0\nforgeoj_tasks{kind=\"OUTPUT_PREVIEW\",state=\"WAITING_RETRY\"} 0\nforgeoj_tasks{kind=\"OUTPUT_PREVIEW\",state=\"FINISHED\"} 1\nforgeoj_tasks{kind=\"OUTPUT_PREVIEW\",state=\"CANCELLED\"} 0\nforgeoj_tasks{kind=\"OUTPUT_PREVIEW\",state=\"SYSTEM_ERROR\"} 0\nforgeoj_tasks{kind=\"OUTPUT_PREVIEW\",state=\"DEAD_LETTER\"} 0\nforgeoj_tasks{kind=\"SELF_TEST\",state=\"QUEUED\"} 0\nforgeoj_tasks{kind=\"SELF_TEST\",state=\"RUNNING\"} 0\nforgeoj_tasks{kind=\"SELF_TEST\",state=\"RETRYING\"} 0\nforgeoj_tasks{kind=\"SELF_TEST\",state=\"WAITING_RETRY\"} 0\nforgeoj_tasks{kind=\"SELF_TEST\",state=\"FINISHED\"} 3\nforgeoj_tasks{kind=\"SELF_TEST\",state=\"CANCELLED\"} 0\nforgeoj_tasks{kind=\"SELF_TEST\",state=\"SYSTEM_ERROR\"} 0\nforgeoj_tasks{kind=\"SELF_TEST\",state=\"DEAD_LETTER\"} 0\n# HELP forgeoj_formal_results Current retained formal results, not fabricated by monitoring.\n# TYPE forgeoj_formal_results gauge\nforgeoj_formal_results{verdict=\"AC\"} 8\nforgeoj_formal_results{verdict=\"WA\"} 3\nforgeoj_formal_results{verdict=\"CE\"} 1\nforgeoj_formal_results{verdict=\"RE\"} 1\nforgeoj_formal_results{verdict=\"TLE\"} 1\nforgeoj_formal_results{verdict=\"OLE\"} 1\nforgeoj_formal_results{verdict=\"MLE\"} 1\nforgeoj_formal_results{verdict=\"SECURITY_VIOLATION\"} 1\nforgeoj_formal_results{verdict=\"SYSTEM_ERROR\"} 0\n# HELP forgeoj_oldest_queue_seconds Current retained SQL aggregate; seconds values use database timestamps.\n# TYPE forgeoj_oldest_queue_seconds gauge\nforgeoj_oldest_queue_seconds{kind=\"FORMAL\"} 0.0\nforgeoj_oldest_queue_seconds{kind=\"VALIDATE\"} 0.0\nforgeoj_oldest_queue_seconds{kind=\"OUTPUT_PREVIEW\"} 0.0\nforgeoj_oldest_queue_seconds{kind=\"SELF_TEST\"} 0.0\n# HELP forgeoj_completed_duration_seconds Current retained SQL aggregate; seconds values use database timestamps.\n# TYPE forgeoj_completed_duration_seconds gauge\nforgeoj_completed_duration_seconds{kind=\"FORMAL\"} 104.8853\nforgeoj_completed_duration_seconds{kind=\"VALIDATE\"} 83.0704\nforgeoj_completed_duration_seconds{kind=\"OUTPUT_PREVIEW\"} 30.6723\nforgeoj_completed_duration_seconds{kind=\"SELF_TEST\"} 30.0826\n# HELP forgeoj_completed_tasks Current retained SQL aggregate; seconds values use database timestamps.\n# TYPE forgeoj_completed_tasks gauge\nforgeoj_completed_tasks{kind=\"FORMAL\"} 17.0\nforgeoj_completed_tasks{kind=\"VALIDATE\"} 10.0\nforgeoj_completed_tasks{kind=\"OUTPUT_PREVIEW\"} 1.0\nforgeoj_completed_tasks{kind=\"SELF_TEST\"} 3.0\n# HELP forgeoj_attempt_retries Current retained SQL aggregate; seconds values use database timestamps.\n# TYPE forgeoj_attempt_retries gauge\nforgeoj_attempt_retries{kind=\"FORMAL\"} 8.0\nforgeoj_attempt_retries{kind=\"VALIDATE\"} 3.0\nforgeoj_attempt_retries{kind=\"OUTPUT_PREVIEW\"} 3.0\nforgeoj_attempt_retries{kind=\"SELF_TEST\"} 3.0\n# HELP forgeoj_outbox_pending Current SQL backlog or public epoch difference.\n# TYPE forgeoj_outbox_pending gauge\nforgeoj_outbox_pending 0\n# HELP forgeoj_outbox_failed Current SQL backlog or public epoch difference.\n# TYPE forgeoj_outbox_failed gauge\nforgeoj_outbox_failed 0\n# HELP forgeoj_invalidation_pending Current SQL backlog or public epoch difference.\n# TYPE forgeoj_invalidation_pending gauge\nforgeoj_invalidation_pending 0\n# HELP forgeoj_invalidation_failed Current SQL backlog or public epoch difference.\n# TYPE forgeoj_invalidation_failed gauge\nforgeoj_invalidation_failed 0\n# HELP forgeoj_search_pending Current SQL backlog or public epoch difference.\n# TYPE forgeoj_search_pending gauge\nforgeoj_search_pending 0\n# HELP forgeoj_search_dead Current SQL backlog or public epoch difference.\n# TYPE forgeoj_search_dead gauge\nforgeoj_search_dead 0\n# HELP forgeoj_search_epoch_gap Current SQL backlog or public epoch difference.\n# TYPE forgeoj_search_epoch_gap gauge\nforgeoj_search_epoch_gap 0\n# HELP forgeoj_search_rebuilds Current retained managed rebuild jobs by fixed state.\n# TYPE forgeoj_search_rebuilds gauge\nforgeoj_search_rebuilds{state=\"QUEUED\"} 0\nforgeoj_search_rebuilds{state=\"RUNNING\"} 0\nforgeoj_search_rebuilds{state=\"READY\"} 0\nforgeoj_search_rebuilds{state=\"SUCCEEDED\"} 1\nforgeoj_search_rebuilds{state=\"FAILED\"} 0\n",
+    "replica": "# HELP forgeoj_api_events_total Process-local API events since start.\n# TYPE forgeoj_api_events_total counter\nforgeoj_api_events_total{event=\"cache_hit\"} 0\nforgeoj_api_events_total{event=\"cache_miss\"} 0\nforgeoj_api_events_total{event=\"cache_bypass\"} 0\nforgeoj_api_events_total{event=\"redis_success\"} 15\nforgeoj_api_events_total{event=\"redis_unavailable\"} 0\nforgeoj_api_events_total{event=\"redis_disabled\"} 0\nforgeoj_api_events_total{event=\"redis_circuit_open\"} 0\nforgeoj_api_events_total{event=\"redis_busy\"} 0\nforgeoj_api_events_total{event=\"search_full_text\"} 0\nforgeoj_api_events_total{event=\"search_title_fallback\"} 0\n# HELP forgeoj_http_requests_total Requests by fixed route and response class.\n# TYPE forgeoj_http_requests_total counter\nforgeoj_http_requests_total{route=\"auth\",status_class=\"1xx\"} 0\nforgeoj_http_requests_total{route=\"auth\",status_class=\"2xx\"} 107\nforgeoj_http_requests_total{route=\"auth\",status_class=\"3xx\"} 0\nforgeoj_http_requests_total{route=\"auth\",status_class=\"4xx\"} 5\nforgeoj_http_requests_total{route=\"auth\",status_class=\"5xx\"} 0\nforgeoj_http_requests_total{route=\"auth\",status_class=\"other\"} 0\nforgeoj_http_requests_total{route=\"admin\",status_class=\"1xx\"} 0\nforgeoj_http_requests_total{route=\"admin\",status_class=\"2xx\"} 0\nforgeoj_http_requests_total{route=\"admin\",status_class=\"3xx\"} 0\nforgeoj_http_requests_total{route=\"admin\",status_class=\"4xx\"} 0\nforgeoj_http_requests_total{route=\"admin\",status_class=\"5xx\"} 0\nforgeoj_http_requests_total{route=\"admin\",status_class=\"other\"} 0\nforgeoj_http_requests_total{route=\"library\",status_class=\"1xx\"} 0\nforgeoj_http_requests_total{route=\"library\",status_class=\"2xx\"} 0\nforgeoj_http_requests_total{route=\"library\",status_class=\"3xx\"} 0\nforgeoj_http_requests_total{route=\"library\",status_class=\"4xx\"} 0\nforgeoj_http_requests_total{route=\"library\",status_class=\"5xx\"} 0\nforgeoj_http_requests_total{route=\"library\",status_class=\"other\"} 0\nforgeoj_http_requests_total{route=\"submission\",status_class=\"1xx\"} 0\nforgeoj_http_requests_total{route=\"submission\",status_class=\"2xx\"} 0\nforgeoj_http_requests_total{route=\"submission\",status_class=\"3xx\"} 0\nforgeoj_http_requests_total{route=\"submission\",status_class=\"4xx\"} 0\nforgeoj_http_requests_total{route=\"submission\",status_class=\"5xx\"} 0\nforgeoj_http_requests_total{route=\"submission\",status_class=\"other\"} 0\nforgeoj_http_requests_total{route=\"selftest\",status_class=\"1xx\"} 0\nforgeoj_http_requests_total{route=\"selftest\",status_class=\"2xx\"} 0\nforgeoj_http_requests_total{route=\"selftest\",status_class=\"3xx\"} 0\nforgeoj_http_requests_total{route=\"selftest\",status_class=\"4xx\"} 0\nforgeoj_http_requests_total{route=\"selftest\",status_class=\"5xx\"} 0\nforgeoj_http_requests_total{route=\"selftest\",status_class=\"other\"} 0\nforgeoj_http_requests_total{route=\"content\",status_class=\"1xx\"} 0\nforgeoj_http_requests_total{route=\"content\",status_class=\"2xx\"} 0\nforgeoj_http_requests_total{route=\"content\",status_class=\"3xx\"} 0\nforgeoj_http_requests_total{route=\"content\",status_class=\"4xx\"} 0\nforgeoj_http_requests_total{route=\"content\",status_class=\"5xx\"} 0\nforgeoj_http_requests_total{route=\"content\",status_class=\"other\"} 0\nforgeoj_http_requests_total{route=\"classroom\",status_class=\"1xx\"} 0\nforgeoj_http_requests_total{route=\"classroom\",status_class=\"2xx\"} 0\nforgeoj_http_requests_total{route=\"classroom\",status_class=\"3xx\"} 0\nforgeoj_http_requests_total{route=\"classroom\",status_class=\"4xx\"} 0\nforgeoj_http_requests_total{route=\"classroom\",status_class=\"5xx\"} 0\nforgeoj_http_requests_total{route=\"classroom\",status_class=\"other\"} 0\nforgeoj_http_requests_total{route=\"other\",status_class=\"1xx\"} 0\nforgeoj_http_requests_total{route=\"other\",status_class=\"2xx\"} 0\nforgeoj_http_requests_total{route=\"other\",status_class=\"3xx\"} 0\nforgeoj_http_requests_total{route=\"other\",status_class=\"4xx\"} 0\nforgeoj_http_requests_total{route=\"other\",status_class=\"5xx\"} 0\nforgeoj_http_requests_total{route=\"other\",status_class=\"other\"} 0\n# HELP forgeoj_http_request_duration_seconds Request duration in seconds.\n# TYPE forgeoj_http_request_duration_seconds histogram\nforgeoj_http_request_duration_seconds_bucket{route=\"auth\",le=\"0.005\"} 106\nforgeoj_http_request_duration_seconds_bucket{route=\"auth\",le=\"0.01\"} 106\nforgeoj_http_request_duration_seconds_bucket{route=\"auth\",le=\"0.025\"} 106\nforgeoj_http_request_duration_seconds_bucket{route=\"auth\",le=\"0.05\"} 106\nforgeoj_http_request_duration_seconds_bucket{route=\"auth\",le=\"0.1\"} 110\nforgeoj_http_request_duration_seconds_bucket{route=\"auth\",le=\"0.25\"} 111\nforgeoj_http_request_duration_seconds_bucket{route=\"auth\",le=\"0.5\"} 112\nforgeoj_http_request_duration_seconds_bucket{route=\"auth\",le=\"1.0\"} 112\nforgeoj_http_request_duration_seconds_bucket{route=\"auth\",le=\"2.5\"} 112\nforgeoj_http_request_duration_seconds_bucket{route=\"auth\",le=\"5.0\"} 112\nforgeoj_http_request_duration_seconds_bucket{route=\"auth\",le=\"+Inf\"} 112\nforgeoj_http_request_duration_seconds_count{route=\"auth\"} 112\nforgeoj_http_request_duration_seconds_sum{route=\"auth\"} 1.000850629\nforgeoj_http_request_duration_seconds_bucket{route=\"admin\",le=\"0.005\"} 0\nforgeoj_http_request_duration_seconds_bucket{route=\"admin\",le=\"0.01\"} 0\nforgeoj_http_request_duration_seconds_bucket{route=\"admin\",le=\"0.025\"} 0\nforgeoj_http_request_duration_seconds_bucket{route=\"admin\",le=\"0.05\"} 0\nforgeoj_http_request_duration_seconds_bucket{route=\"admin\",le=\"0.1\"} 0\nforgeoj_http_request_duration_seconds_bucket{route=\"admin\",le=\"0.25\"} 0\nforgeoj_http_request_duration_seconds_bucket{route=\"admin\",le=\"0.5\"} 0\nforgeoj_http_request_duration_seconds_bucket{route=\"admin\",le=\"1.0\"} 0\nforgeoj_http_request_duration_seconds_bucket{route=\"admin\",le=\"2.5\"} 0\nforgeoj_http_request_duration_seconds_bucket{route=\"admin\",le=\"5.0\"} 0\nforgeoj_http_request_duration_seconds_bucket{route=\"admin\",le=\"+Inf\"} 0\nforgeoj_http_request_duration_seconds_count{route=\"admin\"} 0\nforgeoj_http_request_duration_seconds_sum{route=\"admin\"} 0.0\nforgeoj_http_request_duration_seconds_bucket{route=\"library\",le=\"0.005\"} 0\nforgeoj_http_request_duration_seconds_bucket{route=\"library\",le=\"0.01\"} 0\nforgeoj_http_request_duration_seconds_bucket{route=\"library\",le=\"0.025\"} 0\nforgeoj_http_request_duration_seconds_bucket{route=\"library\",le=\"0.05\"} 0\nforgeoj_http_request_duration_seconds_bucket{route=\"library\",le=\"0.1\"} 0\nforgeoj_http_request_duration_seconds_bucket{route=\"library\",le=\"0.25\"} 0\nforgeoj_http_request_duration_seconds_bucket{route=\"library\",le=\"0.5\"} 0\nforgeoj_http_request_duration_seconds_bucket{route=\"library\",le=\"1.0\"} 0\nforgeoj_http_request_duration_seconds_bucket{route=\"library\",le=\"2.5\"} 0\nforgeoj_http_request_duration_seconds_bucket{route=\"library\",le=\"5.0\"} 0\nforgeoj_http_request_duration_seconds_bucket{route=\"library\",le=\"+Inf\"} 0\nforgeoj_http_request_duration_seconds_count{route=\"library\"} 0\nforgeoj_http_request_duration_seconds_sum{route=\"library\"} 0.0\nforgeoj_http_request_duration_seconds_bucket{route=\"submission\",le=\"0.005\"} 0\nforgeoj_http_request_duration_seconds_bucket{route=\"submission\",le=\"0.01\"} 0\nforgeoj_http_request_duration_seconds_bucket{route=\"submission\",le=\"0.025\"} 0\nforgeoj_http_request_duration_seconds_bucket{route=\"submission\",le=\"0.05\"} 0\nforgeoj_http_request_duration_seconds_bucket{route=\"submission\",le=\"0.1\"} 0\nforgeoj_http_request_duration_seconds_bucket{route=\"submission\",le=\"0.25\"} 0\nforgeoj_http_request_duration_seconds_bucket{route=\"submission\",le=\"0.5\"} 0\nforgeoj_http_request_duration_seconds_bucket{route=\"submission\",le=\"1.0\"} 0\nforgeoj_http_request_duration_seconds_bucket{route=\"submission\",le=\"2.5\"} 0\nforgeoj_http_request_duration_seconds_bucket{route=\"submission\",le=\"5.0\"} 0\nforgeoj_http_request_duration_seconds_bucket{route=\"submission\",le=\"+Inf\"} 0\nforgeoj_http_request_duration_seconds_count{route=\"submission\"} 0\nforgeoj_http_request_duration_seconds_sum{route=\"submission\"} 0.0\nforgeoj_http_request_duration_seconds_bucket{route=\"selftest\",le=\"0.005\"} 0\nforgeoj_http_request_duration_seconds_bucket{route=\"selftest\",le=\"0.01\"} 0\nforgeoj_http_request_duration_seconds_bucket{route=\"selftest\",le=\"0.025\"} 0\nforgeoj_http_request_duration_seconds_bucket{route=\"selftest\",le=\"0.05\"} 0\nforgeoj_http_request_duration_seconds_bucket{route=\"selftest\",le=\"0.1\"} 0\nforgeoj_http_request_duration_seconds_bucket{route=\"selftest\",le=\"0.25\"} 0\nforgeoj_http_request_duration_seconds_bucket{route=\"selftest\",le=\"0.5\"} 0\nforgeoj_http_request_duration_seconds_bucket{route=\"selftest\",le=\"1.0\"} 0\nforgeoj_http_request_duration_seconds_bucket{route=\"selftest\",le=\"2.5\"} 0\nforgeoj_http_request_duration_seconds_bucket{route=\"selftest\",le=\"5.0\"} 0\nforgeoj_http_request_duration_seconds_bucket{route=\"selftest\",le=\"+Inf\"} 0\nforgeoj_http_request_duration_seconds_count{route=\"selftest\"} 0\nforgeoj_http_request_duration_seconds_sum{route=\"selftest\"} 0.0\nforgeoj_http_request_duration_seconds_bucket{route=\"content\",le=\"0.005\"} 0\nforgeoj_http_request_duration_seconds_bucket{route=\"content\",le=\"0.01\"} 0\nforgeoj_http_request_duration_seconds_bucket{route=\"content\",le=\"0.025\"} 0\nforgeoj_http_request_duration_seconds_bucket{route=\"content\",le=\"0.05\"} 0\nforgeoj_http_request_duration_seconds_bucket{route=\"content\",le=\"0.1\"} 0\nforgeoj_http_request_duration_seconds_bucket{route=\"content\",le=\"0.25\"} 0\nforgeoj_http_request_duration_seconds_bucket{route=\"content\",le=\"0.5\"} 0\nforgeoj_http_request_duration_seconds_bucket{route=\"content\",le=\"1.0\"} 0\nforgeoj_http_request_duration_seconds_bucket{route=\"content\",le=\"2.5\"} 0\nforgeoj_http_request_duration_seconds_bucket{route=\"content\",le=\"5.0\"} 0\nforgeoj_http_request_duration_seconds_bucket{route=\"content\",le=\"+Inf\"} 0\nforgeoj_http_request_duration_seconds_count{route=\"content\"} 0\nforgeoj_http_request_duration_seconds_sum{route=\"content\"} 0.0\nforgeoj_http_request_duration_seconds_bucket{route=\"classroom\",le=\"0.005\"} 0\nforgeoj_http_request_duration_seconds_bucket{route=\"classroom\",le=\"0.01\"} 0\nforgeoj_http_request_duration_seconds_bucket{route=\"classroom\",le=\"0.025\"} 0\nforgeoj_http_request_duration_seconds_bucket{route=\"classroom\",le=\"0.05\"} 0\nforgeoj_http_request_duration_seconds_bucket{route=\"classroom\",le=\"0.1\"} 0\nforgeoj_http_request_duration_seconds_bucket{route=\"classroom\",le=\"0.25\"} 0\nforgeoj_http_request_duration_seconds_bucket{route=\"classroom\",le=\"0.5\"} 0\nforgeoj_http_request_duration_seconds_bucket{route=\"classroom\",le=\"1.0\"} 0\nforgeoj_http_request_duration_seconds_bucket{route=\"classroom\",le=\"2.5\"} 0\nforgeoj_http_request_duration_seconds_bucket{route=\"classroom\",le=\"5.0\"} 0\nforgeoj_http_request_duration_seconds_bucket{route=\"classroom\",le=\"+Inf\"} 0\nforgeoj_http_request_duration_seconds_count{route=\"classroom\"} 0\nforgeoj_http_request_duration_seconds_sum{route=\"classroom\"} 0.0\nforgeoj_http_request_duration_seconds_bucket{route=\"other\",le=\"0.005\"} 0\nforgeoj_http_request_duration_seconds_bucket{route=\"other\",le=\"0.01\"} 0\nforgeoj_http_request_duration_seconds_bucket{route=\"other\",le=\"0.025\"} 0\nforgeoj_http_request_duration_seconds_bucket{route=\"other\",le=\"0.05\"} 0\nforgeoj_http_request_duration_seconds_bucket{route=\"other\",le=\"0.1\"} 0\nforgeoj_http_request_duration_seconds_bucket{route=\"other\",le=\"0.25\"} 0\nforgeoj_http_request_duration_seconds_bucket{route=\"other\",le=\"0.5\"} 0\nforgeoj_http_request_duration_seconds_bucket{route=\"other\",le=\"1.0\"} 0\nforgeoj_http_request_duration_seconds_bucket{route=\"other\",le=\"2.5\"} 0\nforgeoj_http_request_duration_seconds_bucket{route=\"other\",le=\"5.0\"} 0\nforgeoj_http_request_duration_seconds_bucket{route=\"other\",le=\"+Inf\"} 0\nforgeoj_http_request_duration_seconds_count{route=\"other\"} 0\nforgeoj_http_request_duration_seconds_sum{route=\"other\"} 0.0\n# HELP forgeoj_monitoring_collection_success Whether the most recent SQL collection succeeded.\n# TYPE forgeoj_monitoring_collection_success gauge\nforgeoj_monitoring_collection_success 1\n# HELP forgeoj_monitoring_last_success_seconds Unix time of the last successful SQL snapshot.\n# TYPE forgeoj_monitoring_last_success_seconds gauge\nforgeoj_monitoring_last_success_seconds 1791684882\n# HELP forgeoj_monitoring_snapshot_fresh Whether a successful snapshot is less than 45 seconds old.\n# TYPE forgeoj_monitoring_snapshot_fresh gauge\nforgeoj_monitoring_snapshot_fresh 1\n# HELP forgeoj_tasks Current retained tasks by fixed kind and state.\n# TYPE forgeoj_tasks gauge\nforgeoj_tasks{kind=\"FORMAL\",state=\"QUEUED\"} 0\nforgeoj_tasks{kind=\"FORMAL\",state=\"RUNNING\"} 0\nforgeoj_tasks{kind=\"FORMAL\",state=\"RETRYING\"} 0\nforgeoj_tasks{kind=\"FORMAL\",state=\"WAITING_RETRY\"} 0\nforgeoj_tasks{kind=\"FORMAL\",state=\"FINISHED\"} 17\nforgeoj_tasks{kind=\"FORMAL\",state=\"CANCELLED\"} 1\nforgeoj_tasks{kind=\"FORMAL\",state=\"SYSTEM_ERROR\"} 0\nforgeoj_tasks{kind=\"FORMAL\",state=\"DEAD_LETTER\"} 1\nforgeoj_tasks{kind=\"VALIDATE\",state=\"QUEUED\"} 0\nforgeoj_tasks{kind=\"VALIDATE\",state=\"RUNNING\"} 0\nforgeoj_tasks{kind=\"VALIDATE\",state=\"RETRYING\"} 0\nforgeoj_tasks{kind=\"VALIDATE\",state=\"WAITING_RETRY\"} 0\nforgeoj_tasks{kind=\"VALIDATE\",state=\"FINISHED\"} 10\nforgeoj_tasks{kind=\"VALIDATE\",state=\"CANCELLED\"} 0\nforgeoj_tasks{kind=\"VALIDATE\",state=\"SYSTEM_ERROR\"} 0\nforgeoj_tasks{kind=\"VALIDATE\",state=\"DEAD_LETTER\"} 0\nforgeoj_tasks{kind=\"OUTPUT_PREVIEW\",state=\"QUEUED\"} 0\nforgeoj_tasks{kind=\"OUTPUT_PREVIEW\",state=\"RUNNING\"} 0\nforgeoj_tasks{kind=\"OUTPUT_PREVIEW\",state=\"RETRYING\"} 0\nforgeoj_tasks{kind=\"OUTPUT_PREVIEW\",state=\"WAITING_RETRY\"} 0\nforgeoj_tasks{kind=\"OUTPUT_PREVIEW\",state=\"FINISHED\"} 1\nforgeoj_tasks{kind=\"OUTPUT_PREVIEW\",state=\"CANCELLED\"} 0\nforgeoj_tasks{kind=\"OUTPUT_PREVIEW\",state=\"SYSTEM_ERROR\"} 0\nforgeoj_tasks{kind=\"OUTPUT_PREVIEW\",state=\"DEAD_LETTER\"} 0\nforgeoj_tasks{kind=\"SELF_TEST\",state=\"QUEUED\"} 0\nforgeoj_tasks{kind=\"SELF_TEST\",state=\"RUNNING\"} 0\nforgeoj_tasks{kind=\"SELF_TEST\",state=\"RETRYING\"} 0\nforgeoj_tasks{kind=\"SELF_TEST\",state=\"WAITING_RETRY\"} 0\nforgeoj_tasks{kind=\"SELF_TEST\",state=\"FINISHED\"} 3\nforgeoj_tasks{kind=\"SELF_TEST\",state=\"CANCELLED\"} 0\nforgeoj_tasks{kind=\"SELF_TEST\",state=\"SYSTEM_ERROR\"} 0\nforgeoj_tasks{kind=\"SELF_TEST\",state=\"DEAD_LETTER\"} 0\n# HELP forgeoj_formal_results Current retained formal results, not fabricated by monitoring.\n# TYPE forgeoj_formal_results gauge\nforgeoj_formal_results{verdict=\"AC\"} 8\nforgeoj_formal_results{verdict=\"WA\"} 3\nforgeoj_formal_results{verdict=\"CE\"} 1\nforgeoj_formal_results{verdict=\"RE\"} 1\nforgeoj_formal_results{verdict=\"TLE\"} 1\nforgeoj_formal_results{verdict=\"OLE\"} 1\nforgeoj_formal_results{verdict=\"MLE\"} 1\nforgeoj_formal_results{verdict=\"SECURITY_VIOLATION\"} 1\nforgeoj_formal_results{verdict=\"SYSTEM_ERROR\"} 0\n# HELP forgeoj_oldest_queue_seconds Current retained SQL aggregate; seconds values use database timestamps.\n# TYPE forgeoj_oldest_queue_seconds gauge\nforgeoj_oldest_queue_seconds{kind=\"FORMAL\"} 0.0\nforgeoj_oldest_queue_seconds{kind=\"VALIDATE\"} 0.0\nforgeoj_oldest_queue_seconds{kind=\"OUTPUT_PREVIEW\"} 0.0\nforgeoj_oldest_queue_seconds{kind=\"SELF_TEST\"} 0.0\n# HELP forgeoj_completed_duration_seconds Current retained SQL aggregate; seconds values use database timestamps.\n# TYPE forgeoj_completed_duration_seconds gauge\nforgeoj_completed_duration_seconds{kind=\"FORMAL\"} 104.8853\nforgeoj_completed_duration_seconds{kind=\"VALIDATE\"} 83.0704\nforgeoj_completed_duration_seconds{kind=\"OUTPUT_PREVIEW\"} 30.6723\nforgeoj_completed_duration_seconds{kind=\"SELF_TEST\"} 30.0826\n# HELP forgeoj_completed_tasks Current retained SQL aggregate; seconds values use database timestamps.\n# TYPE forgeoj_completed_tasks gauge\nforgeoj_completed_tasks{kind=\"FORMAL\"} 17.0\nforgeoj_completed_tasks{kind=\"VALIDATE\"} 10.0\nforgeoj_completed_tasks{kind=\"OUTPUT_PREVIEW\"} 1.0\nforgeoj_completed_tasks{kind=\"SELF_TEST\"} 3.0\n# HELP forgeoj_attempt_retries Current retained SQL aggregate; seconds values use database timestamps.\n# TYPE forgeoj_attempt_retries gauge\nforgeoj_attempt_retries{kind=\"FORMAL\"} 8.0\nforgeoj_attempt_retries{kind=\"VALIDATE\"} 3.0\nforgeoj_attempt_retries{kind=\"OUTPUT_PREVIEW\"} 3.0\nforgeoj_attempt_retries{kind=\"SELF_TEST\"} 3.0\n# HELP forgeoj_outbox_pending Current SQL backlog or public epoch difference.\n# TYPE forgeoj_outbox_pending gauge\nforgeoj_outbox_pending 0\n# HELP forgeoj_outbox_failed Current SQL backlog or public epoch difference.\n# TYPE forgeoj_outbox_failed gauge\nforgeoj_outbox_failed 0\n# HELP forgeoj_invalidation_pending Current SQL backlog or public epoch difference.\n# TYPE forgeoj_invalidation_pending gauge\nforgeoj_invalidation_pending 0\n# HELP forgeoj_invalidation_failed Current SQL backlog or public epoch difference.\n# TYPE forgeoj_invalidation_failed gauge\nforgeoj_invalidation_failed 0\n# HELP forgeoj_search_pending Current SQL backlog or public epoch difference.\n# TYPE forgeoj_search_pending gauge\nforgeoj_search_pending 0\n# HELP forgeoj_search_dead Current SQL backlog or public epoch difference.\n# TYPE forgeoj_search_dead gauge\nforgeoj_search_dead 0\n# HELP forgeoj_search_epoch_gap Current SQL backlog or public epoch difference.\n# TYPE forgeoj_search_epoch_gap gauge\nforgeoj_search_epoch_gap 0\n# HELP forgeoj_search_rebuilds Current retained managed rebuild jobs by fixed state.\n# TYPE forgeoj_search_rebuilds gauge\nforgeoj_search_rebuilds{state=\"QUEUED\"} 0\nforgeoj_search_rebuilds{state=\"RUNNING\"} 0\nforgeoj_search_rebuilds{state=\"READY\"} 0\nforgeoj_search_rebuilds{state=\"SUCCEEDED\"} 1\nforgeoj_search_rebuilds{state=\"FAILED\"} 0\n",
+    "worker": "# HELP forgeoj_worker_events_total Process-local lifecycle events since start.\n# TYPE forgeoj_worker_events_total counter\nforgeoj_worker_events_total{event=\"delivery_rejected\"} 0\nforgeoj_worker_events_total{event=\"delivery_received\"} 34\nforgeoj_worker_events_total{event=\"delivery_claim_failed\"} 0\nforgeoj_worker_events_total{event=\"delivery_claim_result\"} 34\nforgeoj_worker_events_total{event=\"delivery_execution_failed\"} 0\nforgeoj_worker_events_total{event=\"delivery_ack_failed\"} 0\nforgeoj_worker_events_total{event=\"delivery_ack_sent\"} 30\nforgeoj_worker_events_total{event=\"attempt_finished\"} 8\nforgeoj_worker_events_total{event=\"attempt_retry_scheduled\"} 6\nforgeoj_worker_events_total{event=\"attempt_dead_lettered\"} 3\nforgeoj_worker_events_total{event=\"attempt_heartbeat_failed\"} 0\nforgeoj_worker_events_total{event=\"attempt_claimed\"} 17\nforgeoj_worker_events_total{event=\"task_quota_deferred\"} 0\nforgeoj_worker_events_total{event=\"task_exhausted\"} 0\nforgeoj_worker_events_total{event=\"task_lease_recovered\"} 0\nforgeoj_worker_events_total{event=\"recovery_sent\"} 2\nforgeoj_worker_events_total{event=\"recovery_send_failed\"} 0\nforgeoj_worker_events_total{event=\"sandbox_cleanup_failed\"} 0\nforgeoj_worker_events_total{event=\"sandbox_execution_cleanup_failed\"} 0\n# HELP forgeoj_worker_execution_duration_seconds Claimed formal execution duration including completion persistence, before ACK.\n# TYPE forgeoj_worker_execution_duration_seconds summary\nforgeoj_worker_execution_duration_seconds_count 17\nforgeoj_worker_execution_duration_seconds_sum 21.722376639\n# HELP forgeoj_monitoring_collection_success Whether the most recent database schema probe succeeded.\n# TYPE forgeoj_monitoring_collection_success gauge\nforgeoj_monitoring_collection_success 1\n# HELP forgeoj_monitoring_snapshot_fresh Whether a successful database probe is less than 45 seconds old.\n# TYPE forgeoj_monitoring_snapshot_fresh gauge\nforgeoj_monitoring_snapshot_fresh 1\n# HELP forgeoj_worker_consumers_ready Whether all configured consumers report active connections.\n# TYPE forgeoj_worker_consumers_ready gauge\nforgeoj_worker_consumers_ready 1\n# HELP forgeoj_monitoring_last_observation_seconds Unix time of the last dependency observation.\n# TYPE forgeoj_monitoring_last_observation_seconds gauge\nforgeoj_monitoring_last_observation_seconds 1791684874\n"
+  }
+}

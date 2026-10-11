@@ -1,0 +1,5 @@
+{
+  "reason": "Repeated login measurement before the existing source-IP window expired returned 429; no Redis pause or later group was run. Wait for natural expiry, no counter reset.",
+  "phase": "prepare-outage",
+  "at": "2026-10-11T13:03:04.8763620+08:00"
+}

@@ -1,0 +1,100 @@
+Browser tab: 4, Title: "ForgeOJ 最小监控 - ForgeOJ - Dashboards - Grafana", URL: "http://127.0.0.1:51028/d/forgeoj-overview/forgeoj-e69c80-e5b08f-e79b91-e68ea7?from=now-30m&to=now&timezone=browser&refresh=30s".
+1 AXWebArea ForgeOJ 最小监控 - ForgeOJ - Dashboards - Grafana, URL: 127.0.0.1:51028/d/forgeoj-overview/forgeoj-e69c80-e5b08f-e79b91-e68ea7?from=now-30m&to=now&timezone=browser&refresh=30s
+	2 container reactRoot
+		3 container floating-boundary
+			4 link Description: Skip to main content, Value: 127.0.0.1:51028/#pageContent
+			5 container
+				6 link Description: Grafana, Help: Home, Value: 127.0.0.1:51028/
+				7 button (collapsed) Description: Main menu, ID: mega-menu-toggle, Secondary Actions: Expand
+				8 container Breadcrumbs
+					9 content list
+						10 link Description: ForgeOJ, Value: 127.0.0.1:51028/dashboards/f/fg0v35rvqnugwf/forgeoj
+						11 text ForgeOJ 最小监控
+				12 checkbox Description: Mark "ForgeOJ 最小监控" as favorite, Value: 0
+				13 button Search...
+				14 button (collapsed) Description: Help, Secondary Actions: Expand
+				15 button (collapsed) Description: Profile, Secondary Actions: Expand
+					16 image User avatar
+			17 container
+				18 container
+					19 button Move 15m backward
+					20 button (collapsed) Description: Time range selected: Last 30 minutes, Secondary Actions: Expand
+					21 button Move time range forwards
+					22 button Zoom out time range
+					98 button Refresh
+					24 button (collapsed) Description: Choose refresh time interval with current interval 30 seconds selected, Secondary Actions: Expand
+					25 button Copy link
+					26 button (collapsed) Description: Share, Secondary Actions: Expand
+				27 container Dashboard content
+					28 container
+						29 container 服务抓取成功（1=成功）
+							30 heading 服务抓取成功（1=成功）, Value: 2
+								31 text 服务抓取成功（1=成功）
+							32 container
+								33 container
+									34 text forgeoj-api api-replica:9091
+									35 text 1
+								36 container
+									37 text forgeoj-api api:9091
+									38 text 1
+								39 container
+									40 text rabbitmq rabbitmq:15692
+									41 text 1
+								42 container
+									43 text forgeoj-worker worker:9092
+									44 text 1
+						45 container 快照新鲜与Worker消费者
+							46 heading 快照新鲜与Worker消费者, Value: 2
+								47 text 快照新鲜与Worker消费者
+							48 container
+								49 container
+									50 text forgeoj-api api-replica:9091
+									51 text 1
+								52 container
+									53 text forgeoj-api api:9091
+									54 text 1
+								55 container
+									56 text forgeoj-worker worker:9092
+									57 text 1
+								58 container
+									59 text forgeoj-worker worker:9092
+									60 text 1
+						61 container 请求速率（实测，非容量结论）
+							62 heading 请求速率（实测，非容量结论）, Value: 2
+								63 text 请求速率（实测，非容量结论）
+						64 container 请求延迟分位数（固定桶估计）
+							65 heading 请求延迟分位数（固定桶估计）, Value: 2
+								66 text 请求延迟分位数（固定桶估计）
+						67 container Rabbit队列待处理与未确认
+							68 heading Rabbit队列待处理与未确认, Value: 2
+								69 text Rabbit队列待处理与未确认
+						70 container 任务库存（双API取max）
+							71 heading 任务库存（双API取max）, Value: 2
+								72 text 任务库存（双API取max）
+						73 container 最老排队时间
+							74 heading 最老排队时间, Value: 2
+								75 text 最老排队时间
+						76 container 正式执行平均耗时（含完成持久化）
+							77 heading 正式执行平均耗时（含完成持久化）, Value: 2
+								78 text 正式执行平均耗时（含完成持久化）
+						79 container 正式结果库存
+							80 heading 正式结果库存, Value: 2
+								81 text 正式结果库存
+						82 container 重试与死信
+							83 heading 重试与死信, Value: 2
+								84 text 重试与死信
+						85 container 缓存与Redis事件
+							86 heading 缓存与Redis事件, Value: 2
+								87 text 缓存与Redis事件
+						88 container 搜索全文与标题降级
+							89 heading 搜索全文与标题降级, Value: 2
+								90 text 搜索全文与标题降级
+						91 container Outbox、失效与搜索积压
+							92 heading Outbox、失效与搜索积压, Value: 2
+								93 text Outbox、失效与搜索积压
+						94 container 执行及恢复容器清理失败
+							95 heading 执行及恢复容器清理失败, Value: 2
+								96 text 执行及恢复容器清理失败
+				97 button Show
+
+The focused UI element is 1 AXWebArea ForgeOJ 最小监控 - ForgeOJ - Dashboards - Grafana, URL: 127.0.0.1:51028/d/forgeoj-overview/forgeoj-e69c80-e5b08f-e79b91-e68ea7?from=now-30m&to=now&timezone=browser&refresh=30s

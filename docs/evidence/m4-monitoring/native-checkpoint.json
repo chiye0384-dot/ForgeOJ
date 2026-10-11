@@ -1,0 +1,188 @@
+{
+  "status": "IN_PROGRESS",
+  "scope": "M4 step7 native monitoring foundation only",
+  "checkedAt": "2026-10-10T14:32:45.286Z",
+  "baselineCommit": "cd2be91c4da523df7456778f87e1f7de3ba0fdbb",
+  "nativeChecksPassed": true,
+  "platform": "Windows/JDK21; Maven offline",
+  "groups": [
+    {
+      "path": "target/monitoring-api-regression.log",
+      "tests": 45,
+      "sha256": "b53d64187990cd7a7afbf5fd8f1b99ff25e67140f52ccf501412eae21e91fac3"
+    },
+    {
+      "path": "target/monitoring-api-format.log",
+      "tests": 7,
+      "sha256": "56c3f495820026811648e958412911ab649ee12eef31171ca159e9cd1291d0cf"
+    },
+    {
+      "path": "target/monitoring-worker-regression.log",
+      "tests": 17,
+      "sha256": "7eada9bb54fd694ae6c10be1856f770f7cdfc2c135f50d77ee63c265a33a07b3"
+    }
+  ],
+  "latestSuiteSummaries": [
+    {
+      "module": "forgeoj-api",
+      "suite": "RedisIntegrationTests",
+      "tests": 11,
+      "failures": 0,
+      "errors": 0,
+      "skipped": 0,
+      "report": "forgeoj-api/target/surefire-reports/TEST-com.forgeoj.api.cache.RedisIntegrationTests.xml",
+      "reportSha256": "1755101b5e2ae7ccd14ecab96033b5d5c27323c7967f3f763daf9e9af9fdcc3e"
+    },
+    {
+      "module": "forgeoj-api",
+      "suite": "MonitoringHttpServerTests",
+      "tests": 3,
+      "failures": 0,
+      "errors": 0,
+      "skipped": 0,
+      "report": "forgeoj-api/target/surefire-reports/TEST-com.forgeoj.api.observability.MonitoringHttpServerTests.xml",
+      "reportSha256": "803011807008bd2d76046de4abd9a957f47fc2595f36dcd052d72f98009bbfa0"
+    },
+    {
+      "module": "forgeoj-api",
+      "suite": "MonitoringMetricsTests",
+      "tests": 3,
+      "failures": 0,
+      "errors": 0,
+      "skipped": 0,
+      "report": "forgeoj-api/target/surefire-reports/TEST-com.forgeoj.api.observability.MonitoringMetricsTests.xml",
+      "reportSha256": "4835750f96a402c45809f8b4faffe0a62e1565ac25623f8a3391859ca85cc686"
+    },
+    {
+      "module": "forgeoj-api",
+      "suite": "MonitoringRuntimeTests",
+      "tests": 3,
+      "failures": 0,
+      "errors": 0,
+      "skipped": 0,
+      "report": "forgeoj-api/target/surefire-reports/TEST-com.forgeoj.api.observability.MonitoringRuntimeTests.xml",
+      "reportSha256": "d0692dfb3394bca2c2a82a8d5a3ad0b6f1fe38f23a43e7f7fc594283603735c2"
+    },
+    {
+      "module": "forgeoj-api",
+      "suite": "MonitoringSnapshotIntegrationTests",
+      "tests": 1,
+      "failures": 0,
+      "errors": 0,
+      "skipped": 0,
+      "report": "forgeoj-api/target/surefire-reports/TEST-com.forgeoj.api.observability.MonitoringSnapshotIntegrationTests.xml",
+      "reportSha256": "5575fb3450b9deb6e8bcb41ed9fcf74e0f976878159d61adcc242f747d2afc3a"
+    },
+    {
+      "module": "forgeoj-api",
+      "suite": "MonitoringSnapshotTests",
+      "tests": 4,
+      "failures": 0,
+      "errors": 0,
+      "skipped": 0,
+      "report": "forgeoj-api/target/surefire-reports/TEST-com.forgeoj.api.observability.MonitoringSnapshotTests.xml",
+      "reportSha256": "11a3a70b8a47d664cec91c3d6e4fa4ba13e5e919ac7568a4558807142d315521"
+    },
+    {
+      "module": "forgeoj-api",
+      "suite": "RequestCorrelationFilterTests",
+      "tests": 3,
+      "failures": 0,
+      "errors": 0,
+      "skipped": 0,
+      "report": "forgeoj-api/target/surefire-reports/TEST-com.forgeoj.api.observability.RequestCorrelationFilterTests.xml",
+      "reportSha256": "69b823f074022721b2f795325d70d788304fcdcf085136d7eb02acd53232077b"
+    },
+    {
+      "module": "forgeoj-api",
+      "suite": "ElasticSearchIntegrationTests",
+      "tests": 19,
+      "failures": 0,
+      "errors": 0,
+      "skipped": 0,
+      "report": "forgeoj-api/target/surefire-reports/TEST-com.forgeoj.api.search.ElasticSearchIntegrationTests.xml",
+      "reportSha256": "0bb46d4e6f907bffffaf6cf6fb4d8a39d38d32b4569108ae870dcce89f166303"
+    },
+    {
+      "module": "forgeoj-judge-worker",
+      "suite": "MonitoringHttpServerTests",
+      "tests": 3,
+      "failures": 0,
+      "errors": 0,
+      "skipped": 0,
+      "report": "forgeoj-judge-worker/target/surefire-reports/TEST-com.forgeoj.worker.observability.MonitoringHttpServerTests.xml",
+      "reportSha256": "9d33ab061b6088eb8a7d926428f4372956a66606a3627e94bc224b591568db00"
+    },
+    {
+      "module": "forgeoj-judge-worker",
+      "suite": "MonitoringMetricsTests",
+      "tests": 1,
+      "failures": 0,
+      "errors": 0,
+      "skipped": 0,
+      "report": "forgeoj-judge-worker/target/surefire-reports/TEST-com.forgeoj.worker.observability.MonitoringMetricsTests.xml",
+      "reportSha256": "0e1727f59bef32104fd2c875a000650cf9f8e7c2d96add1b14a082525fc63cff"
+    },
+    {
+      "module": "forgeoj-judge-worker",
+      "suite": "MonitoringRuntimeTests",
+      "tests": 2,
+      "failures": 0,
+      "errors": 0,
+      "skipped": 0,
+      "report": "forgeoj-judge-worker/target/surefire-reports/TEST-com.forgeoj.worker.observability.MonitoringRuntimeTests.xml",
+      "reportSha256": "0c79cab1cf9cd6c0a59bd592bc4a077535086e1d619fbd023749859aec8f6a55"
+    },
+    {
+      "module": "forgeoj-judge-worker",
+      "suite": "JudgingEventsTests",
+      "tests": 3,
+      "failures": 0,
+      "errors": 0,
+      "skipped": 0,
+      "report": "forgeoj-judge-worker/target/surefire-reports/TEST-com.forgeoj.worker.observability.JudgingEventsTests.xml",
+      "reportSha256": "70742da1fec418dd4298c8e07711a0df8d2c971d8de0e4ca9f21a0a762cf1fed"
+    },
+    {
+      "module": "forgeoj-judge-worker",
+      "suite": "JudgeTaskListenerLoggingTests",
+      "tests": 6,
+      "failures": 0,
+      "errors": 0,
+      "skipped": 0,
+      "report": "forgeoj-judge-worker/target/surefire-reports/TEST-com.forgeoj.worker.messaging.JudgeTaskListenerLoggingTests.xml",
+      "reportSha256": "f413238173159833137ef2f31636b3736128027e8964f6cb6358661d5c69a618"
+    },
+    {
+      "module": "forgeoj-judge-worker",
+      "suite": "SandboxRecoveryCleanerTests",
+      "tests": 2,
+      "failures": 0,
+      "errors": 0,
+      "skipped": 0,
+      "report": "forgeoj-judge-worker/target/surefire-reports/TEST-com.forgeoj.worker.sandbox.SandboxRecoveryCleanerTests.xml",
+      "reportSha256": "c178695d21e66657d575228c3805e815f389d1e32f3ef3a46ff66396766a2bed"
+    }
+  ],
+  "uniqueCases": 64,
+  "formatTestsOverlapPriorGroups": true,
+  "sourceInputs": 428,
+  "frontendUnchanged": 84,
+  "cleanup": {
+    "checkedAt": "2026-10-10T22:26:04.3093363+08:00",
+    "testcontainers": 0,
+    "managedSandboxes": 0,
+    "protectedFilesUnchanged": true,
+    "protectedHashCheckedAt": "2026-10-10T22:32:36.5754909+08:00"
+  },
+  "fullLinux": false,
+  "sameJarReplay": false,
+  "promtool": false,
+  "prometheusGrafanaImported": false,
+  "browserDashboard": false,
+  "threeDependencyFaultReplay": false,
+  "grafanaLicense": "AWAITING_USER_CONFIRMATION",
+  "committed": false,
+  "pushed": false,
+  "fullM4": "IN_PROGRESS"
+}

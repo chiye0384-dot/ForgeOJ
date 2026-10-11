@@ -1,0 +1,12 @@
+# Copyright 2026 池也; SPDX-License-Identifier: Apache-2.0
+apiVersion: 1
+providers:
+  - name: ForgeOJ
+    orgId: 1
+    folder: ForgeOJ
+    type: file
+    disableDeletion: true
+    allowUiUpdates: false
+    updateIntervalSeconds: 30
+    options:
+      path: /etc/grafana/forgeoj-dashboards

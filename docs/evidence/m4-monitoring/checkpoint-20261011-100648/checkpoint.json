@@ -1,0 +1,271 @@
+{
+  "status": "IN_PROGRESS",
+  "accepted": false,
+  "fullM4": "IN_PROGRESS",
+  "checkedAt": "2026-10-11T02:34:03.443Z",
+  "build": "target/forgeoj-linux-20261011-092954-14188847",
+  "replay": "target/forgeoj-e2e-20261011-100648-94b8da0a",
+  "apiSha256": "f13c52ca61744d7c4983e2b98c6a68d05b17eb7fce77d637761e1b615dd32c4e",
+  "workerSha256": "ff4dd5abf4931a345dd3a94af8c07966aced3a91ebcd4cd6b4c600877b261d1f",
+  "apiTests": 335,
+  "apiSuites": 59,
+  "workerTests": 139,
+  "workerSuites": 26,
+  "frontendTests": 129,
+  "frontendFiles": 25,
+  "sourceInputs": 428,
+  "servedFrontendInputs": 84,
+  "panels": 14,
+  "validExpressions": 23,
+  "monitoringHttpChecks": 169,
+  "threeDependencyOutageAndRecoveryPassed": true,
+  "rabbitRealAcAndSingleAttempt": true,
+  "browserPassed": true,
+  "wholeIndexDeletionRebuildPassed": true,
+  "cleanup": {
+    "ownedImages": 0,
+    "testcontainers": 0,
+    "managedSandboxes": 0,
+    "ownedVolumes": 0,
+    "ownedNetworks": 0,
+    "checkedAt": "2026-10-11T10:32:23.7049184+08:00",
+    "ownedContainers": 0,
+    "builders": 0
+  },
+  "dlq": [
+    {
+      "name": "forgeoj.content.validation.dead.v1",
+      "messages_unacknowledged": 0,
+      "messages_ready": 4,
+      "publishedUniqueEvents": 2
+    },
+    {
+      "name": "forgeoj.judge.self-test.dead.v1",
+      "messages_unacknowledged": 0,
+      "messages_ready": 2,
+      "publishedUniqueEvents": 1
+    },
+    {
+      "name": "forgeoj.judge.submission.dead.v1",
+      "messages_unacknowledged": 0,
+      "messages_ready": 6,
+      "publishedUniqueEvents": 3
+    }
+  ],
+  "finalAuditFailure": "Original fault DLQ must remain: content.validation.dead.v1 ready 4 versus 2 published unique events. Formal 6 versus 3, self-test 2 versus 1. Message identities were not captured before cleanup.",
+  "nextAction": "Inspect retained original dead-letter message IDs/payload bindings in a new owned same-JAR replay. Preserve at-least-once duplicates and correlate unique published events with actual copies; do not purge queues, fabricate identities, remove assertions or change the business protocol to exactly-once. Recheck quota and current 428 source/JAR inputs first.",
+  "helperChanges": "Four validation helpers differ from backend snapshot; compiled business/test/frontend inputs match. Redis helpers use normal HTTP login after JWT expiry and a new measured rate window.",
+  "failures": [
+    {
+      "phase": "Redis outage",
+      "reason": "Fixture access JWT expired; HTTP 401; resumed after normal HTTP reauthentication, outage/recovery passed."
+    },
+    {
+      "phase": "Redis final Warm",
+      "reason": "Fixture access JWT expired after Rabbit exercise; HTTP 401; normal HTTP login of current identities passed; stale credentials unchanged."
+    },
+    {
+      "phase": "Read-only diagnostic",
+      "reason": "Unknown optional SQL column next_publish_at; corrected query used known metadata and read FINISHED, attempt 1, publication 6, published true."
+    },
+    {
+      "phase": "Final evidence audit",
+      "reason": "Unique durable event count is not the observed message copy count; identity correlation remains pending."
+    }
+  ],
+  "quotaUsedPercent": 89,
+  "commit": "cd2be91c4da523df7456778f87e1f7de3ba0fdbb",
+  "branch": "feat/m2-accounts",
+  "uncommitted": true,
+  "pushedThisUnit": false,
+  "m5": "PLANNED",
+  "release": false,
+  "resumeReady": false,
+  "files": [
+    {
+      "path": "monitoring-http.json",
+      "sha256": "2c721df2bafec9de4e36cc8e4330575e27725ce65e867f21eaf0dfb09e2d261e",
+      "bytes": 66351
+    },
+    {
+      "path": "monitoring-jwt-http.json",
+      "sha256": "ce3eadb44a583447b0e2cbc6d60e1b8c0935d4fad1eb942159af016b23ae9564",
+      "bytes": 868
+    },
+    {
+      "path": "monitoring-promtool.json",
+      "sha256": "c97a255216f67f7513f9cc8a442a6838058e435205062d80f1a2152f3fd948fa",
+      "bytes": 147
+    },
+    {
+      "path": "monitoring-runtime.json",
+      "sha256": "b08ca5cde89d96801f223f146edfb3b1aba825fdb8d301c4f47c3992e805182d",
+      "bytes": 7886
+    },
+    {
+      "path": "monitoring-rabbit-http.json",
+      "sha256": "357481d25a0c420498b948e1d70d126e2ca3487da400c2273e9298d5bbf4ab1e",
+      "bytes": 14029
+    },
+    {
+      "path": "monitoring-rabbit-pending-facts.json",
+      "sha256": "5b61b7f297283ddc29a1e14d0d9f8488dd6e1313129cbdf964e0694245e94b4f",
+      "bytes": 600
+    },
+    {
+      "path": "monitoring-rabbit-final-facts.json",
+      "sha256": "667d9175a320580c507525368ebb9ef28367422d300d3630d3e1f60c501b40ac",
+      "bytes": 809
+    },
+    {
+      "path": "monitoring-admin-audit.jsonl",
+      "sha256": "f94b259a81ae0a7ddefa50a469c5c878d1c819e5084c63b8e178e224ca87c351",
+      "bytes": 63480
+    },
+    {
+      "path": "monitoring-queues.json",
+      "sha256": "411f62009b9d988659ddeec464250a9627ef9828993203598696ad1f47d6ffa8",
+      "bytes": 1042
+    },
+    {
+      "path": "monitoring-browser.json",
+      "sha256": "7d2cffa338a3e933611428948456f285247ee616c310f2874a93061d0b938fc9",
+      "bytes": 547
+    },
+    {
+      "path": "monitoring-cleanup.json",
+      "sha256": "087e7cd0cfb7fb7228d802b589ff2133df0e73008f3683310c5214bc83e03edb",
+      "bytes": 217
+    },
+    {
+      "path": "monitoring-tool-inputs.sha256",
+      "sha256": "1af6b92b05fd96574d5ca60dd32b7c74a56b2f0bf15e1d37fcaf1b572ffdb4f9",
+      "bytes": 7452
+    },
+    {
+      "path": "monitoring-replay-progress.json",
+      "sha256": "ad48a7c92dc11120d4881d4202f65e4b6bee6872ca2e6ddaf7afcdff475e279c",
+      "bytes": 9197
+    },
+    {
+      "path": "operations-outbox-facts.jsonl",
+      "sha256": "7a2516f3d136330db1a7732c0e25e509477f22af1f42f4ff8efad0824b82cdf9",
+      "bytes": 15290
+    },
+    {
+      "path": "operations-frozen-before.jsonl",
+      "sha256": "6983958c5675036c6bf9e78ee28104cb80c326fa544eb5e8ac282eccf83e75e8",
+      "bytes": 6532
+    },
+    {
+      "path": "operations-frozen-after.jsonl",
+      "sha256": "fbe3b63116abc3aa0f1ab1e125318ab91e247357e76e294802d15cf80be1fabd",
+      "bytes": 7344
+    },
+    {
+      "path": "operations-denials.json",
+      "sha256": "5704394c6286b65ed7b346ac9d786c07ff418e72baa1553dbf41cc71c6a48d51",
+      "bytes": 115
+    },
+    {
+      "path": "operations-http.json",
+      "sha256": "2b5245e523011a378c6a3c54c6ebf80a246fb13faf4d5cd94e08413114a2c172",
+      "bytes": 31520
+    },
+    {
+      "path": "admin-http.json",
+      "sha256": "a901ae75533531309cc89005f3897396c7f1c5d8cc5657804ac26eed828ff5b6",
+      "bytes": 7554
+    },
+    {
+      "path": "redis-http.json",
+      "sha256": "b716c79450b1dd8b12356525f97125ac7ef0c58096d2f2992614ccb5c7ff8325",
+      "bytes": 19801
+    },
+    {
+      "path": "search-http.json",
+      "sha256": "f647f1a143f7d3f0a39d77f3ba268d3fcd5a0c36643e389ba049ec6f532ea78a",
+      "bytes": 7887
+    },
+    {
+      "path": "matrix.json",
+      "sha256": "c161eba2961dc5ad0a5675d5ad6f827480ea619859ba5bfa076e93ff1b5b91d2",
+      "bytes": 4870
+    },
+    {
+      "path": "permissions.json",
+      "sha256": "bc7f0e79bf5a1c6de577da2847336b52402a0233a45cf23ae43d47b2170b0bb5",
+      "bytes": 306
+    },
+    {
+      "path": "classroom-http.json",
+      "sha256": "8b12af2b41f10d6c2b3f95f4485d87aab6e6769bfddc1f8e7955307ac470e2a9",
+      "bytes": 7014
+    },
+    {
+      "path": "private-problems-http.json",
+      "sha256": "095b27f9b96633d079aec8ad602beecb2f3ef022f3c219307004fd2f79723bc2",
+      "bytes": 19365
+    },
+    {
+      "path": "public-review-http.json",
+      "sha256": "7a9b73fadb06f39742e614fbcf226befb93a3c1048540ada2751bf69296b4030",
+      "bytes": 17512
+    },
+    {
+      "path": "search-index-deletion-facts.json",
+      "sha256": "dba049b68dbe3fd235c69356e5816860128c8cf53e145c3f78292a03f4c36a02",
+      "bytes": 1120
+    },
+    {
+      "path": "search-index-deletion-http.json",
+      "sha256": "ab2aca0e12f504e4daa0283616477b1516f657d35db66d0a6eaf0ef836b2b20e",
+      "bytes": 1533
+    },
+    {
+      "path": "frontend-runtime.sha256",
+      "sha256": "1b3f67fa5f57f1456c88c0e713c10ea48f738f3dbc5f789fe5c7d3166a1019be",
+      "bytes": 8702
+    },
+    {
+      "path": "frontend-served-runtime.sha256",
+      "sha256": "1b3f67fa5f57f1456c88c0e713c10ea48f738f3dbc5f789fe5c7d3166a1019be",
+      "bytes": 8702
+    },
+    {
+      "path": "teacher-runtime.json",
+      "sha256": "9e2f041901f20c26d1b1a7fbc6f06fe1c4b805337f6817a17974c79a6480e99c",
+      "bytes": 80
+    },
+    {
+      "path": "monitoring-browser-anonymous.jpg",
+      "sha256": "007fc7607f996ec489690b4fc1267ba0bf9ca2f4e4cf03f41ab19463cb7baa5b",
+      "bytes": 15458
+    },
+    {
+      "path": "monitoring-browser-dashboard.jpg",
+      "sha256": "fa119b396830c18d2df31cf15d56f832b013d253e84619cd596a844231e7a7d5",
+      "bytes": 19482
+    },
+    {
+      "path": "monitoring-browser-logout.jpg",
+      "sha256": "a01d67acd559ef03ef369c67a50f95edf5251232ec7d788131c2bd87c37550c7",
+      "bytes": 15458
+    },
+    {
+      "path": "monitoring-browser-anonymous.txt",
+      "sha256": "8510bb6835afb7f42443fbc95b5099c11dcfc5357433c7b762ec21f604bd67ef",
+      "bytes": 633
+    },
+    {
+      "path": "monitoring-browser-dashboard.txt",
+      "sha256": "0ce2ee6c86eda48fdaac3e3d9c7b7db7af2c0f1af414e21716d01771602c1383",
+      "bytes": 4849
+    },
+    {
+      "path": "monitoring-browser-logout.txt",
+      "sha256": "8510bb6835afb7f42443fbc95b5099c11dcfc5357433c7b762ec21f604bd67ef",
+      "bytes": 633
+    }
+  ]
+}

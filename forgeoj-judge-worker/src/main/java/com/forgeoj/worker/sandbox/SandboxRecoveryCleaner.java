@@ -21,6 +21,7 @@ final class SandboxRecoveryCleaner {
         try {
             runtime.cleanupManagedContainers();
         } catch (RuntimeException unavailable) {
+            com.forgeoj.worker.observability.MonitoringMetrics.PROCESS.event("sandbox.cleanup_failed");
             LOG.atWarn().addKeyValue("event", "sandbox.cleanup_failed")
                     .addKeyValue("failureCode", "SANDBOX_CLEANUP_FAILURE").log("Sandbox recovery cleanup failed");
         }

@@ -1,0 +1,60 @@
+# Copyright 2026 池也; SPDX-License-Identifier: Apache-2.0
+# Overlay only for an exact owned disposable project. No production configuration.
+x-monitoring: &monitoring
+  FORGEOJ_MONITORING_ENABLED: "true"
+  FORGEOJ_MONITORING_BIND: 0.0.0.0
+  FORGEOJ_MONITORING_ALLOW_PRIVATE_NETWORK_BIND: "true"
+  FORGEOJ_MONITORING_TOKEN: ${FORGEOJ_E2E_MONITORING_TOKEN:?generate per-run token}
+services:
+  api:
+    environment: *monitoring
+  api-replica:
+    environment: *monitoring
+  worker:
+    environment: *monitoring
+  prometheus:
+    image: prom/prometheus:v3.15.0@sha256:efd719c99d83b060d9daefdcf00360461adf279f45ef5391f8d111892118753e
+    platform: linux/amd64
+    user: "65534:65534"
+    read_only: true
+    cap_drop: [ALL]
+    security_opt: [no-new-privileges:true]
+    mem_limit: 256m
+    tmpfs: ["/prometheus:size=128m,mode=1777"]
+    command: [--config.file=/etc/prometheus/prometheus.yml, --storage.tsdb.path=/prometheus, --storage.tsdb.retention.time=24h, --storage.tsdb.retention.size=96MB]
+    volumes:
+      - ${FORGEOJ_E2E_SOURCE}/deploy/monitoring/prometheus.yml:/etc/prometheus/prometheus.yml:ro
+      - ${FORGEOJ_E2E_REPORTS}/monitoring-private/token:/run/monitoring-token:ro
+  grafana:
+    image: grafana/grafana:13.2.3@sha256:b28bae15e219c998fb0e0424ed724930cc61b1f61fb404d47c862f9a23f9e572
+    platform: linux/amd64
+    user: "472:472"
+    read_only: true
+    cap_drop: [ALL]
+    security_opt: [no-new-privileges:true]
+    mem_limit: 384m
+    tmpfs: ["/var/lib/grafana:size=128m,mode=1777", "/var/log/grafana:size=16m,mode=1777", "/tmp:size=16m,mode=1777"]
+    environment:
+      GF_SECURITY_ADMIN_USER: forgeoj_monitor_admin
+      GF_SECURITY_ADMIN_PASSWORD__FILE: /run/grafana-password
+      GF_SECURITY_SECRET_KEY__FILE: /run/grafana-key
+      GF_AUTH_ANONYMOUS_ENABLED: "false"
+      GF_USERS_ALLOW_SIGN_UP: "false"
+      GF_USERS_ALLOW_ORG_CREATE: "false"
+      GF_USERS_AUTO_ASSIGN_ORG_ROLE: Viewer
+      GF_AUTH_BASIC_ENABLED: "true"
+      GF_ANALYTICS_REPORTING_ENABLED: "false"
+      GF_ANALYTICS_CHECK_FOR_UPDATES: "false"
+      GF_ANALYTICS_CHECK_FOR_PLUGIN_UPDATES: "false"
+      GF_PLUGINS_PREINSTALL_DISABLED: "true"
+      GF_NEWS_NEWS_FEED_ENABLED: "false"
+      GF_SNAPSHOTS_EXTERNAL_ENABLED: "false"
+      GF_SECURITY_COOKIE_SAMESITE: strict
+      GF_SECURITY_ALLOW_EMBEDDING: "false"
+    volumes:
+      - ${FORGEOJ_E2E_SOURCE}/deploy/monitoring/datasources.yml:/etc/grafana/provisioning/datasources/forgeoj.yml:ro
+      - ${FORGEOJ_E2E_SOURCE}/deploy/monitoring/dashboards.yml:/etc/grafana/provisioning/dashboards/forgeoj.yml:ro
+      - ${FORGEOJ_E2E_SOURCE}/deploy/monitoring/forgeoj.json:/etc/grafana/forgeoj-dashboards/forgeoj.json:ro
+      - ${FORGEOJ_E2E_REPORTS}/monitoring-private/grafana-password:/run/grafana-password:ro
+      - ${FORGEOJ_E2E_REPORTS}/monitoring-private/grafana-key:/run/grafana-key:ro
+    ports: ["127.0.0.1::3000"]

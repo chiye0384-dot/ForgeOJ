@@ -1,0 +1,62 @@
+{
+  "allPassed": true,
+  "deletedIndexFallsBack": true,
+  "titleFallbackStillWorks": true,
+  "rebuildId": "48d6bbd9-8a79-4953-afb6-5f5a2100d770",
+  "replayedSameId": true,
+  "rebuildSucceeded": true,
+  "fullTextRestored": true,
+  "checks": [
+    {
+      "method": "GET",
+      "path": "/api/v1/problems/search?keyword=%E6%9C%89%E7%AC%A6%E5%8F%B7%E6%95%B4%E6%95%B0",
+      "status": 200
+    },
+    {
+      "method": "GET",
+      "path": "/api/v1/problems/search?keyword=%E4%B8%A4%E6%95%B0",
+      "status": 200
+    },
+    {
+      "method": "GET",
+      "path": "/api/v1/admin/auth/session",
+      "status": 200
+    },
+    {
+      "method": "POST",
+      "path": "/api/v1/admin/auth/login",
+      "status": 200
+    },
+    {
+      "method": "GET",
+      "path": "/api/v1/admin/search/status",
+      "status": 200
+    },
+    {
+      "method": "POST",
+      "path": "/api/v1/admin/search/rebuilds",
+      "status": 200
+    },
+    {
+      "method": "POST",
+      "path": "/api/v1/admin/search/rebuilds",
+      "status": 200
+    },
+    {
+      "method": "GET",
+      "path": "/api/v1/admin/search/rebuilds",
+      "status": 200
+    },
+    {
+      "method": "GET",
+      "path": "/api/v1/admin/search/rebuilds",
+      "status": 200
+    },
+    {
+      "method": "GET",
+      "path": "/api/v1/problems/search?keyword=%E6%9C%89%E7%AC%A6%E5%8F%B7%E6%95%B4%E6%95%B0",
+      "status": 200
+    }
+  ],
+  "checkedAt": "2026-10-11T01:18:52.331Z"
+}

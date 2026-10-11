@@ -1,0 +1,22 @@
+# Copyright 2026 池也; SPDX-License-Identifier: Apache-2.0
+# Private disposable network. Token generated per replay, never stored in Git.
+global:
+  scrape_interval: 15s
+  scrape_timeout: 5s
+  evaluation_interval: 15s
+scrape_configs:
+  - job_name: forgeoj-api
+    authorization:
+      type: Bearer
+      credentials_file: /run/monitoring-token
+    static_configs:
+      - targets: [api:9091, api-replica:9091]
+  - job_name: forgeoj-worker
+    authorization:
+      type: Bearer
+      credentials_file: /run/monitoring-token
+    static_configs:
+      - targets: [worker:9092]
+  - job_name: rabbitmq
+    static_configs:
+      - targets: [rabbitmq:15692]

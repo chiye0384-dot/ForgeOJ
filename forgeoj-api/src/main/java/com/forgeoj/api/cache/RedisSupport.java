@@ -37,16 +37,17 @@ public class RedisSupport {
     }
     /** null means unavailable, including a bounded half-open probe already in progress. */
     private <T>T call(Supplier<T> action) {
-        if(!enabled) return null;
+        if(!enabled){metric(com.forgeoj.api.observability.MonitoringMetrics.Event.REDIS_DISABLED);return null;}
         long failed=unavailableUntil.get(),now=System.nanoTime();
-        if(failed!=0 && now-failed<0) return null;
+        if(failed!=0 && now-failed<0){metric(com.forgeoj.api.observability.MonitoringMetrics.Event.REDIS_CIRCUIT_OPEN);return null;}
         boolean probe=failed!=0;
-        if(probe&&!probes.tryAcquire()) return null;
-        try {T value=action.get();unavailableUntil.set(0);return value;}
+        if(probe&&!probes.tryAcquire()){metric(com.forgeoj.api.observability.MonitoringMetrics.Event.REDIS_BUSY);return null;}
+        try {T value=action.get();unavailableUntil.set(0);metric(com.forgeoj.api.observability.MonitoringMetrics.Event.REDIS_SUCCESS);return value;}
         catch(org.springframework.dao.DataAccessException | io.lettuce.core.RedisException failure) {
-            unavailableUntil.set(System.nanoTime()+cooldownNanos);return null;
+            unavailableUntil.set(System.nanoTime()+cooldownNanos);metric(com.forgeoj.api.observability.MonitoringMetrics.Event.REDIS_UNAVAILABLE);return null;
         } finally {if(probe) probes.release();}
     }
+    private static void metric(com.forgeoj.api.observability.MonitoringMetrics.Event event){com.forgeoj.api.observability.MonitoringMetrics.PROCESS.increment(event);}
     public String get(String key) {return call(()->redis.opsForValue().get(key));}
     public boolean enabled(){return enabled;}
     public void delete(String key) {call(()->redis.delete(key));}

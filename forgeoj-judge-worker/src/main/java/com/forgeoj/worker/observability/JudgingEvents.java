@@ -18,6 +18,7 @@ public final class JudgingEvents {
     public static void record(String event, JudgeTaskMessage message, ClaimedJudgeTask attempt,
             String outcome, String failureCode) {
         try {
+            MonitoringMetrics.PROCESS.event(event);
             var log = (failureCode == null ? LOGGER.atInfo()
                     : "EXECUTION_FAILURE".equals(failureCode) ? LOGGER.atError() : LOGGER.atWarn())
                     .addKeyValue("event", event);

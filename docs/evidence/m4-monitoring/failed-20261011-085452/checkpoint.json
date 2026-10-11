@@ -1,0 +1,81 @@
+{
+  "status": "IN_PROGRESS",
+  "accepted": false,
+  "build": "target/forgeoj-linux-20261011-081915-29d9f2df",
+  "replay": "target/forgeoj-e2e-20261011-085452-14355b06",
+  "apiTests": 335,
+  "workerTests": 139,
+  "frontendTests": 129,
+  "supersededReason": "Real Rabbit outage exposed unsigned zero-attempt aggregate underflow; current MonitoringMapper and regression differ from this build.",
+  "rabbitOutagePassed": false,
+  "rabbitRecoveryPassed": false,
+  "failures": [
+    "Unquoted YAML tmpfs options",
+    "PowerShell metrics stdin CRLF",
+    "0600 fixture JWT reader UID and report ownership",
+    "Exception-only operations list queried too early",
+    "MySQL unsigned attempt_count - 1 underflow on a queued task",
+    "Confirm timeout buffered delivery completed before manual recovery, correctly denied 409"
+  ],
+  "rabbitFacts": "Real AC in one attempt, original event retains failed publication count 5 and published=false. Never relabeled as confirmed publication.",
+  "cleanup": "All owned resources zero; browser retained at about:blank.",
+  "artifacts": [
+    {
+      "path": "monitoring-http.json",
+      "sha256": "66fcd1cbe8cacc8dc7e8e3cf5337d1c33d52a5cf83f679474139f5350701c0da"
+    },
+    {
+      "path": "monitoring-jwt-http.json",
+      "sha256": "3ee47970dd9279674ba41f961d6e0c01a9999ca411373ef1df9d97d7e73d340a"
+    },
+    {
+      "path": "monitoring-promtool.json",
+      "sha256": "ec90d97ad74f7cfdf3939dea1ca6d7a6293d02137d4bd309f0baa439a730c2f9"
+    },
+    {
+      "path": "monitoring-browser.json",
+      "sha256": "337e7a551c49a3c343a5c3d637590239299c45a2400b3a1df6514c7398b8e743"
+    },
+    {
+      "path": "monitoring-browser-dashboard.jpg",
+      "sha256": "fa119b396830c18d2df31cf15d56f832b013d253e84619cd596a844231e7a7d5"
+    },
+    {
+      "path": "monitoring-browser-dashboard.txt",
+      "sha256": "29d25ba32ee8d5cb7b598fc59c422ee76481f03c169ca3e18a6be09b2e629f99"
+    },
+    {
+      "path": "monitoring-browser-fault-panels.jpg",
+      "sha256": "6c0265189205d1fe3be7f91ae4087d677888ad1a7bd3ee0778749037f5121e33"
+    },
+    {
+      "path": "monitoring-browser-fault-panels.txt",
+      "sha256": "3cfdecb466fad29f42ba2016f95e978bf2e8a64dfa08927cf077fd987445a298"
+    },
+    {
+      "path": "monitoring-browser-logout.jpg",
+      "sha256": "b6e9935ab0088d9213fc8dd8352806e2882538408f64f9fb3e3d45b85b9fe497"
+    },
+    {
+      "path": "monitoring-browser-logout.txt",
+      "sha256": "c519c29d3eab7378e0d65bc271bc8cbc6f68b3f42e0a0d17113d8c24cf266d11"
+    },
+    {
+      "path": "monitoring-rabbit-failed-run-facts.json",
+      "sha256": "dda4aaa62e97fb7502fef6ee4cb70f61c187f950775d37f2377418b68ea9b37a"
+    },
+    {
+      "path": "monitoring-cleanup.json",
+      "sha256": "a330c1ef79110757ba6875a0798cbf0ee30aba850f76bdb478abbcea43df869b"
+    },
+    {
+      "path": "search-index-deletion-facts.json",
+      "sha256": "840e7209b5bef29b88031ac5d756a94227c0b0e278ddf4d2c5944b2e8402628c"
+    },
+    {
+      "path": "search-index-deletion-http.json",
+      "sha256": "859ac7ac6a0129204c345012ffb5f021850fb291910ba71f47d47356617bc195"
+    }
+  ],
+  "checkedAt": "2026-10-11T01:31:29.913Z"
+}

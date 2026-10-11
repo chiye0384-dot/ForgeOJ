@@ -37,6 +37,7 @@ public class RequestCorrelationFilter extends OncePerRequestFilter {
             returned = true;
         } finally {
             try {
+                MonitoringMetrics.PROCESS.request(route(request.getRequestURI()),returned?response.getStatus():500,System.nanoTime()-started);
                 LOGGER.atInfo().addKeyValue("event", "request.completed")
                         .addKeyValue("method", METHODS.contains(request.getMethod()) ? request.getMethod() : "OTHER")
                         .addKeyValue("route", route(request.getRequestURI()))
@@ -54,6 +55,9 @@ public class RequestCorrelationFilter extends OncePerRequestFilter {
 
     private static String route(String path) {
         // Classification only: never output raw paths, slugs or query strings.
+        if(path.startsWith("/api/v1/admin/"))return "admin";
+        if(path.equals("/api/v1/problems")||path.equals("/api/v1/problem-tags")||path.equals("/api/v1/problems/search"))return "library";
+        if(path.startsWith("/api/v1/classrooms"))return "classroom";
         if (path.startsWith("/api/v1/submissions/")) {
             if (path.endsWith("/cancel")) return "submission.cancel";
             if (path.endsWith("/events")) return "submission.events";

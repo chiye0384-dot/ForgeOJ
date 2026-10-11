@@ -1,3 +1,7 @@
+2026-10-11当前验收：M4第7步及完整M4 **VERIFIED**，五项总门禁全部PASS。独立Grafana OSS许可已批准；固定Linux API335/59 suites、Worker139/26 suites、前端129/25零失败/错误/跳过，428业务/测试/前端输入、84实际提供前端与准确JAR一致。同JAR新回放覆盖Redis/ES/RabbitMQ中断恢复、真实AC、原事件受审计重送、整个索引删除重建、实际promtool及Grafana14面板/23表达式/只读浏览器登录退出。6个唯一原死信事件对应6份实测消息，每一份均匹配原事件ID和四字段契约；诊断前后数量不变，没有清空死信。本轮拥有者资源与沙箱清理全0。详见[M4总门禁](M4-GATE-AUDIT.md)、[监控验收](M4-MONITORING-VALIDATION.md)及[最终机器证据](evidence/m4-monitoring/verification.json)。M5仍PLANNED，未PR/main/tag/Release/RESUME_READY；按授权交付feat/m2-accounts后停止。
+
+> 以下旧日期的阶段、额度、待许可、未完成和“下一步”文字为历史快照；实时状态以上方当前验收与对应最终证据为准。
+
 # ForgeOJ 上游与许可证策略
 
 2026-10-09 M4运维单元：任务/attempt/投递/恢复历史查询、有限执行及投递恢复、V20～V22、不可变凭证、页面和验收工具为ForgeOJ自有实现，池也/Apache-2.0。复用既有Spring/MyBatis/Jackson和Java/Node/PowerShell标准能力，没有新增依赖或复制外部后台模板。故障包装脚本及Java求和程序为原创一次性fixture，只在已核对的测试栈运行；保护文件未进入构建副本。
@@ -298,3 +302,13 @@ Maven、npm、Docker 镜像和操作系统包都属于第三方组成。Release 
 2026-10-10，用户已批准D-047。官方9.5.3镜像已按多平台摘要sha256:f456578fc2a620a8a4f4c21d070fff1f6070345adb2be5e5626b65be72aea350拉取，原始[LICENSE](licenses/elasticsearch-9.5.3/LICENSE.txt)与[NOTICE](licenses/elasticsearch-9.5.3/NOTICE.txt)直接从/usr/share/elasticsearch提取、未修改，SHA256分别48255018b41fc0e965b1115af7e6779bc218bb8a6747d561da800d5022622aa2和e991cad8358b62fbba6443f08853a72d55d6cb7a49e5a3e36d3da31d13f0af76。镜像标签版本9.5.3、ELv2、源码revision367ec317ec5f668dd864d41be06052a567102fec；专用未启动提取容器已按所有者标签核验后移除。同准确JAR真实HTTPS重放已验证服务9.5.3、免费Basic、无插件、未认证401、运行账号无关索引403以及故障降级/重建；见[M4搜索验收](M4-SEARCH-VALIDATION.md)和[运行证据](evidence/m4-search/search-runtime.json)。技术单元VERIFIED，完整M4和首次正式分发审计未完成。
 
 只接入镜像服务及现有JDK21 HttpClient/Jackson3协议适配，无ES源码复制、ES客户端Maven依赖、Kibana、付费功能或Release。许可证及摘要来源与原创边界见[M4-SEARCH-DESIGN](M4-SEARCH-DESIGN.md)。ForgeOJ自有源码保持Apache-2.0。内置CJK、索引external版本、alias为Elastic能力；事务、白名单投影、复核、降级、重建、回执及测试为ForgeOJ实现。不新增云费用，不扩展为ES托管服务；首次分发仍需完整审计。
+
+### U-013：独立监控服务（Grafana许可已批准）
+
+实际引入2026-10-11：`prom/prometheus:v3.15.0@sha256:efd719c99d83b060d9daefdcf00360461adf279f45ef5391f8d111892118753e`及`grafana/grafana:13.2.3@sha256:b28bae15e219c998fb0e0424ed724930cc61b1f61fb404d47c862f9a23f9e572`（linux/amd64），无latest或镜像修改。Prometheus实际`--version`报告revision `5241a27fe3c6983549fccc32f6e65917408c63cd`；Grafana `--version`报告13.2.3，实际health commit `90ffed056f0884267356c12a0eeb72a022af53f1`，对应源码[commit](https://github.com/grafana/grafana/tree/90ffed056f0884267356c12a0eeb72a022af53f1)及[tag](https://github.com/grafana/grafana/tree/v13.2.3)。原镜像`/LICENSE`、`/NOTICE`和`/usr/share/grafana/LICENSE`字节分别保留在`docs/licenses/prometheus-3.15.0/`及`docs/licenses/grafana-13.2.3/`；Grafana全部129个镜像内license/notice匹配文件原路径和逐文件SHA保留，原文件集合为`third-party-notices.tar`。此清单不冒充基础OS完整SBOM，未移除镜像内任何原告知。准确摘要/来源见[镜像记录](evidence/m4-monitoring/upstream-images.json)。保留[Prometheus对应源码](https://github.com/prometheus/prometheus/tree/5241a27fe3c6983549fccc32f6e65917408c63cd)与Grafana源码链接；不重新许可上游。ForgeOJ自有`deploy/monitoring/`和验证脚本属Apache-2.0；上游原生Prometheus/Grafana能力不称自研，外部插件/Cloud/收费/源代码合并均未采用。
+
+2026-10-11：用户明确批准“按推荐，采用独立Grafana OSS”，D-048许可已接受。采用官方Prometheus3.15.0/Apache-2.0与Grafana OSS13.2.3/AGPLv3，独立未修改本地免费服务、保留告知/对应源代码链接；ForgeOJ只通过标准HTTP连接，自有指标与面板代码仍Apache-2.0。以下版本评估和未引入记录是2026-10-10历史；实际镜像固定摘要和原告知清单已见前段及镜像记录，禁止浮动latest或杜撰来源。
+
+2026-10-10已从官方发布与固定tag原LICENSE核对：[Prometheus3.15.0](https://github.com/prometheus/prometheus/releases/tag/v3.15.0)为[Apache-2.0](https://raw.githubusercontent.com/prometheus/prometheus/v3.15.0/LICENSE)；[Grafana OSS13.2.3](https://github.com/grafana/grafana/releases/tag/v13.2.3)为[AGPLv3](https://raw.githubusercontent.com/grafana/grafana/v13.2.3/LICENSE)，并对照[官方许可说明](https://grafana.com/licensing/)。这是研究事实，不是已接入/批准/验收。此前ES ELv2批准不自动涵盖新AGPL义务，当前实际用户答复仍待到达。
+
+推荐独立未修改的免费服务，仅标准HTTP聚合指标/面板、自有代码Apache-2.0、保留原许可和对应源码出处；没有企业付费/Cloud/插件或服务端源码复制。确认后才取得不可变镜像digest、revision、原LICENSE/NOTICE/第三方告知及运行证据，不能先填假摘要或标VERIFIED。当前自有JDK21指标/抓取实现没有新Maven依赖；两服务尚未拉取/运行，见[监控设计](M4-MONITORING-DESIGN.md)。

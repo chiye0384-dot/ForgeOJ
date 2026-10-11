@@ -228,6 +228,7 @@ public final class DockerCliSandboxRuntime implements SandboxRuntime {
                 }
             } catch (RuntimeException failure) {
                 cleanupFailure = failure;
+                com.forgeoj.worker.observability.MonitoringMetrics.PROCESS.event("sandbox.execution_cleanup_failed");
                 if (primaryFailure != null) {
                     primaryFailure.addSuppressed(failure);
                 }

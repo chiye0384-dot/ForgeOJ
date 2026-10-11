@@ -3,5 +3,7 @@
 /NOTICE text eol=lf
 /licenses/*.txt text eol=lf
 /docs/licenses/elasticsearch-9.5.3/*.txt -text
+/docs/licenses/prometheus-3.15.0/*.txt -text
+/docs/licenses/grafana-13.2.3/** -text
 *.cmd text eol=crlf
 *.sh text eol=lf

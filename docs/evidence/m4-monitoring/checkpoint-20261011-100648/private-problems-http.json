@@ -1,0 +1,846 @@
+{
+  "checkedAt": "2026-10-11T02:12:42.956Z",
+  "classroomId": "688c391d-6c36-4f10-931c-da2ccefd613b",
+  "secondClassroomId": "e0895e61-00fa-47d8-8833-8f3a7a42ece6",
+  "archiveClassroomId": "bc0b48d7-45fd-4787-8d1d-c8c1ae5eddcb",
+  "publishedSlug": "class-32da35c5-0b08-4962-86b8-3a0adc3cfe1e",
+  "assistantSlug": "class-f7d9b9c4-66a0-457a-96f9-6b11978e3271",
+  "validationJobs": [
+    "d8215d03-b3d2-47ca-b881-f74ede8fc3ae",
+    "2ff27df1-1f8f-472a-af9d-b0bb2ab8db2e",
+    "0fc162ab-3de6-49b9-a8d2-39a12c409c0f"
+  ],
+  "browserDraftId": "eb036aa5-e9e2-4c0c-a32d-96c14da54493",
+  "browserJobId": "0fc162ab-3de6-49b9-a8d2-39a12c409c0f",
+  "copiedDraftId": "e583706c-e68e-466a-93a6-71db926eb0a7",
+  "selfTestId": "4ba0da2c-cd73-4823-9974-fb564e78cdba",
+  "formalSubmissions": [
+    {
+      "id": "7349e0bd-331a-4b1d-b6b3-d08a528ebc6f",
+      "verdict": "WA"
+    },
+    {
+      "id": "1048afd1-1afc-4e15-8650-b1ee434edf3d",
+      "verdict": "AC"
+    }
+  ],
+  "independentPrograms": true,
+  "realWorkerValidation": true,
+  "checks": [
+    {
+      "method": "GET",
+      "path": "/api/v1/auth/session",
+      "status": 200
+    },
+    {
+      "method": "POST",
+      "path": "/api/v1/auth/login",
+      "status": 200
+    },
+    {
+      "method": "GET",
+      "path": "/api/v1/auth/session",
+      "status": 200
+    },
+    {
+      "method": "POST",
+      "path": "/api/v1/auth/login",
+      "status": 200
+    },
+    {
+      "method": "GET",
+      "path": "/api/v1/auth/session",
+      "status": 200
+    },
+    {
+      "method": "POST",
+      "path": "/api/v1/auth/login",
+      "status": 200
+    },
+    {
+      "method": "POST",
+      "path": "/api/v1/classrooms",
+      "status": 201
+    },
+    {
+      "method": "GET",
+      "path": "/api/v1/classrooms/:id",
+      "status": 200
+    },
+    {
+      "method": "POST",
+      "path": "/api/v1/classrooms/:id/invite",
+      "status": 200
+    },
+    {
+      "method": "POST",
+      "path": "/api/v1/classrooms/join",
+      "status": 200
+    },
+    {
+      "method": "GET",
+      "path": "/api/v1/classrooms/:id",
+      "status": 200
+    },
+    {
+      "method": "POST",
+      "path": "/api/v1/classrooms/:id/members/2/role",
+      "status": 200
+    },
+    {
+      "method": "POST",
+      "path": "/api/v1/me/authored-problems",
+      "status": 201
+    },
+    {
+      "method": "PUT",
+      "path": "/api/v1/me/authored-problems/:id",
+      "status": 200
+    },
+    {
+      "method": "PUT",
+      "path": "/api/v1/me/authored-problems/:id/tests",
+      "status": 200
+    },
+    {
+      "method": "POST",
+      "path": "/api/v1/me/authored-problems/:id/validations",
+      "status": 202
+    },
+    {
+      "method": "GET",
+      "path": "/api/v1/me/authored-problems/:id/validations/:id",
+      "status": 200
+    },
+    {
+      "method": "GET",
+      "path": "/api/v1/me/authored-problems/:id/validations/:id",
+      "status": 200
+    },
+    {
+      "method": "GET",
+      "path": "/api/v1/me/authored-problems/:id/validations/:id",
+      "status": 200
+    },
+    {
+      "method": "GET",
+      "path": "/api/v1/me/authored-problems/:id/validations/:id",
+      "status": 200
+    },
+    {
+      "method": "GET",
+      "path": "/api/v1/me/authored-problems/:id/validations/:id",
+      "status": 200
+    },
+    {
+      "method": "GET",
+      "path": "/api/v1/me/authored-problems/:id/validations/:id",
+      "status": 200
+    },
+    {
+      "method": "GET",
+      "path": "/api/v1/me/authored-problems/:id/validations/:id",
+      "status": 200
+    },
+    {
+      "method": "GET",
+      "path": "/api/v1/me/authored-problems/:id/validations/:id",
+      "status": 200
+    },
+    {
+      "method": "GET",
+      "path": "/api/v1/me/authored-problems/:id/validations/:id",
+      "status": 200
+    },
+    {
+      "method": "GET",
+      "path": "/api/v1/me/authored-problems/:id/validations/:id",
+      "status": 200
+    },
+    {
+      "method": "GET",
+      "path": "/api/v1/me/authored-problems/:id/validations/:id",
+      "status": 200
+    },
+    {
+      "method": "GET",
+      "path": "/api/v1/me/authored-problems/:id/validations/:id",
+      "status": 200
+    },
+    {
+      "method": "GET",
+      "path": "/api/v1/me/authored-problems/:id/validations/:id",
+      "status": 200
+    },
+    {
+      "method": "GET",
+      "path": "/api/v1/me/authored-problems/:id/validations/:id",
+      "status": 200
+    },
+    {
+      "method": "GET",
+      "path": "/api/v1/me/authored-problems/:id/validations/:id",
+      "status": 200
+    },
+    {
+      "method": "GET",
+      "path": "/api/v1/me/authored-problems/:id/validations/:id",
+      "status": 200
+    },
+    {
+      "method": "GET",
+      "path": "/api/v1/me/authored-problems/:id/validations/:id",
+      "status": 200
+    },
+    {
+      "method": "GET",
+      "path": "/api/v1/me/authored-problems/:id/validations/:id",
+      "status": 200
+    },
+    {
+      "method": "GET",
+      "path": "/api/v1/me/authored-problems/:id/validations/:id",
+      "status": 200
+    },
+    {
+      "method": "GET",
+      "path": "/api/v1/me/authored-problems/:id/validations/:id",
+      "status": 200
+    },
+    {
+      "method": "GET",
+      "path": "/api/v1/me/authored-problems/:id/validations/:id",
+      "status": 200
+    },
+    {
+      "method": "GET",
+      "path": "/api/v1/me/authored-problems/:id/validations/:id",
+      "status": 200
+    },
+    {
+      "method": "POST",
+      "path": "/api/v1/classrooms/:id/problems",
+      "status": 201
+    },
+    {
+      "method": "POST",
+      "path": "/api/v1/classrooms/:id/problems",
+      "status": 201
+    },
+    {
+      "method": "POST",
+      "path": "/api/v1/classrooms/:id/problems",
+      "status": 409
+    },
+    {
+      "method": "GET",
+      "path": "/api/v1/classrooms/:id/problems/class-:id",
+      "status": 200
+    },
+    {
+      "method": "GET",
+      "path": "/api/v1/classrooms/:id/problems/class-:id",
+      "status": 404
+    },
+    {
+      "method": "GET",
+      "path": "/api/v1/problems/class-:id",
+      "status": 404
+    },
+    {
+      "method": "GET",
+      "path": "/api/v1/me/problems/class-:id/solution",
+      "status": 404
+    },
+    {
+      "method": "POST",
+      "path": "/api/v1/me/problems/class-:id/solution/early-view",
+      "status": 404
+    },
+    {
+      "method": "POST",
+      "path": "/api/v1/problems/class-:id/submissions",
+      "status": 404
+    },
+    {
+      "method": "GET",
+      "path": "/api/v1/problems?page=1&size=50",
+      "status": 200
+    },
+    {
+      "method": "POST",
+      "path": "/api/v1/me/problem-lists",
+      "status": 201
+    },
+    {
+      "method": "POST",
+      "path": "/api/v1/me/problem-lists/:id/items",
+      "status": 404
+    },
+    {
+      "method": "POST",
+      "path": "/api/v1/classrooms",
+      "status": 201
+    },
+    {
+      "method": "GET",
+      "path": "/api/v1/classrooms/:id/problems/class-:id",
+      "status": 404
+    },
+    {
+      "method": "POST",
+      "path": "/api/v1/me/authored-problems",
+      "status": 201
+    },
+    {
+      "method": "PUT",
+      "path": "/api/v1/me/authored-problems/:id",
+      "status": 200
+    },
+    {
+      "method": "PUT",
+      "path": "/api/v1/me/authored-problems/:id/tests",
+      "status": 200
+    },
+    {
+      "method": "POST",
+      "path": "/api/v1/me/authored-problems/:id/validations",
+      "status": 202
+    },
+    {
+      "method": "GET",
+      "path": "/api/v1/me/authored-problems/:id/validations/:id",
+      "status": 200
+    },
+    {
+      "method": "GET",
+      "path": "/api/v1/me/authored-problems/:id/validations/:id",
+      "status": 200
+    },
+    {
+      "method": "GET",
+      "path": "/api/v1/me/authored-problems/:id/validations/:id",
+      "status": 200
+    },
+    {
+      "method": "GET",
+      "path": "/api/v1/me/authored-problems/:id/validations/:id",
+      "status": 200
+    },
+    {
+      "method": "GET",
+      "path": "/api/v1/me/authored-problems/:id/validations/:id",
+      "status": 200
+    },
+    {
+      "method": "GET",
+      "path": "/api/v1/me/authored-problems/:id/validations/:id",
+      "status": 200
+    },
+    {
+      "method": "GET",
+      "path": "/api/v1/me/authored-problems/:id/validations/:id",
+      "status": 200
+    },
+    {
+      "method": "GET",
+      "path": "/api/v1/me/authored-problems/:id/validations/:id",
+      "status": 200
+    },
+    {
+      "method": "GET",
+      "path": "/api/v1/me/authored-problems/:id/validations/:id",
+      "status": 200
+    },
+    {
+      "method": "GET",
+      "path": "/api/v1/me/authored-problems/:id/validations/:id",
+      "status": 200
+    },
+    {
+      "method": "GET",
+      "path": "/api/v1/me/authored-problems/:id/validations/:id",
+      "status": 200
+    },
+    {
+      "method": "GET",
+      "path": "/api/v1/me/authored-problems/:id/validations/:id",
+      "status": 200
+    },
+    {
+      "method": "GET",
+      "path": "/api/v1/me/authored-problems/:id/validations/:id",
+      "status": 200
+    },
+    {
+      "method": "GET",
+      "path": "/api/v1/me/authored-problems/:id/validations/:id",
+      "status": 200
+    },
+    {
+      "method": "GET",
+      "path": "/api/v1/me/authored-problems/:id/validations/:id",
+      "status": 200
+    },
+    {
+      "method": "GET",
+      "path": "/api/v1/me/authored-problems/:id/validations/:id",
+      "status": 200
+    },
+    {
+      "method": "POST",
+      "path": "/api/v1/classrooms/:id/problems",
+      "status": 201
+    },
+    {
+      "method": "GET",
+      "path": "/api/v1/classrooms/:id",
+      "status": 200
+    },
+    {
+      "method": "POST",
+      "path": "/api/v1/classrooms/:id/leave",
+      "status": 204
+    },
+    {
+      "method": "GET",
+      "path": "/api/v1/classrooms/:id/problems/class-:id",
+      "status": 404
+    },
+    {
+      "method": "GET",
+      "path": "/api/v1/classrooms/:id/problems/class-:id/maintenance",
+      "status": 200
+    },
+    {
+      "method": "POST",
+      "path": "/api/v1/classrooms/join",
+      "status": 200
+    },
+    {
+      "method": "GET",
+      "path": "/api/v1/classrooms/:id/problems/class-:id/maintenance",
+      "status": 403
+    },
+    {
+      "method": "POST",
+      "path": "/api/v1/classrooms/:id/problems/class-:id/copy",
+      "status": 200
+    },
+    {
+      "method": "POST",
+      "path": "/api/v1/classrooms/:id/problems",
+      "status": 409
+    },
+    {
+      "method": "PUT",
+      "path": "/api/v1/me/authored-problems/:id",
+      "status": 200
+    },
+    {
+      "method": "GET",
+      "path": "/api/v1/classrooms/:id/problems/class-:id",
+      "status": 200
+    },
+    {
+      "method": "POST",
+      "path": "/api/v1/classrooms/:id/problems",
+      "status": 409
+    },
+    {
+      "method": "POST",
+      "path": "/api/v1/classrooms/:id/problems",
+      "status": 201
+    },
+    {
+      "method": "GET",
+      "path": "/api/v1/classrooms/:id/problems/class-:id/solution",
+      "status": 200
+    },
+    {
+      "method": "POST",
+      "path": "/api/v1/classrooms/:id/problems/class-:id/solution/early-view",
+      "status": 400
+    },
+    {
+      "method": "GET",
+      "path": "/api/v1/classrooms/:id/problems/class-:id/solution",
+      "status": 200
+    },
+    {
+      "method": "POST",
+      "path": "/api/v1/classrooms/:id/problems/class-:id/solution/early-view",
+      "status": 409
+    },
+    {
+      "method": "POST",
+      "path": "/api/v1/classrooms/:id/problems/class-:id/solution/early-view",
+      "status": 200
+    },
+    {
+      "method": "POST",
+      "path": "/api/v1/classrooms/:id/problems/class-:id/solution/early-view",
+      "status": 200
+    },
+    {
+      "method": "GET",
+      "path": "/api/v1/classrooms/:id/problems/class-:id/solution",
+      "status": 200
+    },
+    {
+      "method": "POST",
+      "path": "/api/v1/classrooms/:id/problems/class-:id/self-tests",
+      "status": 202
+    },
+    {
+      "method": "GET",
+      "path": "/api/v1/self-tests/:id",
+      "status": 200
+    },
+    {
+      "method": "GET",
+      "path": "/api/v1/self-tests/:id",
+      "status": 200
+    },
+    {
+      "method": "GET",
+      "path": "/api/v1/self-tests/:id",
+      "status": 200
+    },
+    {
+      "method": "GET",
+      "path": "/api/v1/self-tests/:id",
+      "status": 200
+    },
+    {
+      "method": "GET",
+      "path": "/api/v1/self-tests/:id",
+      "status": 200
+    },
+    {
+      "method": "GET",
+      "path": "/api/v1/self-tests/:id",
+      "status": 200
+    },
+    {
+      "method": "GET",
+      "path": "/api/v1/self-tests/:id",
+      "status": 200
+    },
+    {
+      "method": "GET",
+      "path": "/api/v1/self-tests/:id",
+      "status": 404
+    },
+    {
+      "method": "POST",
+      "path": "/api/v1/classrooms/:id/problems/class-:id/submissions",
+      "status": 202
+    },
+    {
+      "method": "POST",
+      "path": "/api/v1/classrooms/:id/problems/class-:id/submissions",
+      "status": 202
+    },
+    {
+      "method": "GET",
+      "path": "/api/v1/submissions/:id",
+      "status": 200
+    },
+    {
+      "method": "GET",
+      "path": "/api/v1/submissions/:id",
+      "status": 200
+    },
+    {
+      "method": "GET",
+      "path": "/api/v1/submissions/:id",
+      "status": 200
+    },
+    {
+      "method": "GET",
+      "path": "/api/v1/submissions/:id",
+      "status": 200
+    },
+    {
+      "method": "GET",
+      "path": "/api/v1/submissions/:id",
+      "status": 200
+    },
+    {
+      "method": "GET",
+      "path": "/api/v1/submissions/:id",
+      "status": 200
+    },
+    {
+      "method": "GET",
+      "path": "/api/v1/submissions/:id",
+      "status": 200
+    },
+    {
+      "method": "POST",
+      "path": "/api/v1/classrooms/:id/problems/class-:id/submissions",
+      "status": 202
+    },
+    {
+      "method": "POST",
+      "path": "/api/v1/classrooms/:id/problems/class-:id/submissions",
+      "status": 202
+    },
+    {
+      "method": "GET",
+      "path": "/api/v1/submissions/:id",
+      "status": 200
+    },
+    {
+      "method": "GET",
+      "path": "/api/v1/submissions/:id",
+      "status": 200
+    },
+    {
+      "method": "GET",
+      "path": "/api/v1/submissions/:id",
+      "status": 200
+    },
+    {
+      "method": "GET",
+      "path": "/api/v1/submissions/:id",
+      "status": 200
+    },
+    {
+      "method": "GET",
+      "path": "/api/v1/submissions/:id",
+      "status": 200
+    },
+    {
+      "method": "GET",
+      "path": "/api/v1/submissions/:id",
+      "status": 200
+    },
+    {
+      "method": "GET",
+      "path": "/api/v1/submissions/:id",
+      "status": 200
+    },
+    {
+      "method": "GET",
+      "path": "/api/v1/submissions/:id",
+      "status": 200
+    },
+    {
+      "method": "GET",
+      "path": "/api/v1/classrooms/:id/problems/class-:id/solution",
+      "status": 200
+    },
+    {
+      "method": "GET",
+      "path": "/api/v1/submissions/:id",
+      "status": 404
+    },
+    {
+      "method": "GET",
+      "path": "/api/v1/classrooms/:id",
+      "status": 200
+    },
+    {
+      "method": "POST",
+      "path": "/api/v1/classrooms/:id/leave",
+      "status": 204
+    },
+    {
+      "method": "GET",
+      "path": "/api/v1/classrooms/:id/problems/class-:id",
+      "status": 404
+    },
+    {
+      "method": "GET",
+      "path": "/api/v1/classrooms/:id/problems/class-:id/solution",
+      "status": 404
+    },
+    {
+      "method": "GET",
+      "path": "/api/v1/classrooms/:id/problems/class-:id/maintenance",
+      "status": 404
+    },
+    {
+      "method": "POST",
+      "path": "/api/v1/classrooms/:id/problems/class-:id/solution/early-view",
+      "status": 404
+    },
+    {
+      "method": "GET",
+      "path": "/api/v1/submissions/:id",
+      "status": 200
+    },
+    {
+      "method": "GET",
+      "path": "/api/v1/me/submissions?page=1&size=50",
+      "status": 200
+    },
+    {
+      "method": "POST",
+      "path": "/api/v1/classrooms/join",
+      "status": 200
+    },
+    {
+      "method": "GET",
+      "path": "/api/v1/classrooms/:id",
+      "status": 200
+    },
+    {
+      "method": "POST",
+      "path": "/api/v1/classrooms/:id/members/2/remove",
+      "status": 200
+    },
+    {
+      "method": "GET",
+      "path": "/api/v1/classrooms/:id/problems/class-:id",
+      "status": 404
+    },
+    {
+      "method": "GET",
+      "path": "/api/v1/classrooms/:id",
+      "status": 200
+    },
+    {
+      "method": "POST",
+      "path": "/api/v1/classrooms/:id/members/2/restore",
+      "status": 200
+    },
+    {
+      "method": "POST",
+      "path": "/api/v1/classrooms/:id/problems/class-:id/archive",
+      "status": 204
+    },
+    {
+      "method": "POST",
+      "path": "/api/v1/classrooms/:id/problems/class-:id/submissions",
+      "status": 404
+    },
+    {
+      "method": "GET",
+      "path": "/api/v1/classrooms/:id",
+      "status": 200
+    },
+    {
+      "method": "DELETE",
+      "path": "/api/v1/classrooms/:id?expectedVersion=10",
+      "status": 409
+    },
+    {
+      "method": "POST",
+      "path": "/api/v1/classrooms",
+      "status": 201
+    },
+    {
+      "method": "POST",
+      "path": "/api/v1/classrooms/:id/archive",
+      "status": 204
+    },
+    {
+      "method": "POST",
+      "path": "/api/v1/classrooms/:id/problems",
+      "status": 409
+    },
+    {
+      "method": "POST",
+      "path": "/api/v1/me/authored-problems",
+      "status": 201
+    },
+    {
+      "method": "PUT",
+      "path": "/api/v1/me/authored-problems/:id",
+      "status": 200
+    },
+    {
+      "method": "PUT",
+      "path": "/api/v1/me/authored-problems/:id/tests",
+      "status": 200
+    },
+    {
+      "method": "POST",
+      "path": "/api/v1/me/authored-problems/:id/validations",
+      "status": 202
+    },
+    {
+      "method": "GET",
+      "path": "/api/v1/me/authored-problems/:id/validations/:id",
+      "status": 200
+    },
+    {
+      "method": "GET",
+      "path": "/api/v1/me/authored-problems/:id/validations/:id",
+      "status": 200
+    },
+    {
+      "method": "GET",
+      "path": "/api/v1/me/authored-problems/:id/validations/:id",
+      "status": 200
+    },
+    {
+      "method": "GET",
+      "path": "/api/v1/me/authored-problems/:id/validations/:id",
+      "status": 200
+    },
+    {
+      "method": "GET",
+      "path": "/api/v1/me/authored-problems/:id/validations/:id",
+      "status": 200
+    },
+    {
+      "method": "GET",
+      "path": "/api/v1/me/authored-problems/:id/validations/:id",
+      "status": 200
+    },
+    {
+      "method": "GET",
+      "path": "/api/v1/me/authored-problems/:id/validations/:id",
+      "status": 200
+    },
+    {
+      "method": "GET",
+      "path": "/api/v1/me/authored-problems/:id/validations/:id",
+      "status": 200
+    },
+    {
+      "method": "GET",
+      "path": "/api/v1/me/authored-problems/:id/validations/:id",
+      "status": 200
+    },
+    {
+      "method": "GET",
+      "path": "/api/v1/me/authored-problems/:id/validations/:id",
+      "status": 200
+    },
+    {
+      "method": "GET",
+      "path": "/api/v1/me/authored-problems/:id/validations/:id",
+      "status": 200
+    },
+    {
+      "method": "GET",
+      "path": "/api/v1/me/authored-problems/:id/validations/:id",
+      "status": 200
+    },
+    {
+      "method": "GET",
+      "path": "/api/v1/me/authored-problems/:id/validations/:id",
+      "status": 200
+    },
+    {
+      "method": "GET",
+      "path": "/api/v1/me/authored-problems/:id/validations/:id",
+      "status": 200
+    },
+    {
+      "method": "GET",
+      "path": "/api/v1/me/authored-problems/:id/validations/:id",
+      "status": 200
+    },
+    {
+      "method": "GET",
+      "path": "/api/v1/me/authored-problems/:id/validations/:id",
+      "status": 200
+    }
+  ]
+}

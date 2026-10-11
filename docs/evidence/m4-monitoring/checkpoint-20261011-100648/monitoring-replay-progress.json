@@ -1,0 +1,352 @@
+[
+  {
+    "script": "Verify-M4MonitoringReplay.ps1",
+    "completedAt": "2026-10-11T10:11:37.3649809+08:00",
+    "action": "Setup",
+    "phase": "",
+    "group": "Baseline"
+  },
+  {
+    "script": "Verify-M4AdminReplay.ps1",
+    "completedAt": "2026-10-11T10:11:45.4320749+08:00",
+    "action": "Setup",
+    "phase": "",
+    "group": "Baseline"
+  },
+  {
+    "script": "Replay-FixedLinux.ps1",
+    "completedAt": "2026-10-11T10:11:46.5588754+08:00",
+    "action": "Library",
+    "phase": "",
+    "group": "Baseline"
+  },
+  {
+    "script": "Replay-FixedLinux.ps1",
+    "completedAt": "2026-10-11T10:12:08.815655+08:00",
+    "action": "Matrix",
+    "phase": "",
+    "group": "Baseline"
+  },
+  {
+    "script": "Replay-FixedLinux.ps1",
+    "completedAt": "2026-10-11T10:12:10.4005855+08:00",
+    "action": "WorkerStop",
+    "phase": "",
+    "group": "Baseline"
+  },
+  {
+    "script": "Replay-FixedLinux.ps1",
+    "completedAt": "2026-10-11T10:12:11.4670384+08:00",
+    "action": "Permissions",
+    "phase": "",
+    "group": "Baseline"
+  },
+  {
+    "script": "Replay-FixedLinux.ps1",
+    "completedAt": "2026-10-11T10:12:13.2212621+08:00",
+    "action": "WorkerStart",
+    "phase": "",
+    "group": "Baseline"
+  },
+  {
+    "script": "Replay-FixedLinux.ps1",
+    "completedAt": "2026-10-11T10:12:15.486446+08:00",
+    "action": "Classroom",
+    "phase": "",
+    "group": "Baseline"
+  },
+  {
+    "script": "Replay-FixedLinux.ps1",
+    "completedAt": "2026-10-11T10:12:43.2103783+08:00",
+    "action": "PrivateProblems",
+    "phase": "",
+    "group": "Baseline"
+  },
+  {
+    "script": "Verify-M4RedisReplay.ps1",
+    "completedAt": "2026-10-11T10:12:47.4808348+08:00",
+    "action": "Setup",
+    "phase": "",
+    "group": "Baseline"
+  },
+  {
+    "script": "Verify-M4PublicReviewReplay.ps1",
+    "completedAt": "2026-10-11T10:13:38.9495304+08:00",
+    "action": "Http",
+    "phase": "",
+    "group": "Baseline"
+  },
+  {
+    "script": "Verify-M4OperationsReplay.ps1",
+    "completedAt": "2026-10-11T10:13:41.3416481+08:00",
+    "action": "FaultInstall",
+    "phase": "",
+    "group": "Baseline"
+  },
+  {
+    "script": "Verify-M4OperationsReplay.ps1",
+    "completedAt": "2026-10-11T10:14:11.7729398+08:00",
+    "action": "Fault",
+    "phase": "",
+    "group": "Baseline"
+  },
+  {
+    "script": "Verify-M4OperationsReplay.ps1",
+    "completedAt": "2026-10-11T10:14:13.478276+08:00",
+    "action": "FaultRestore",
+    "phase": "",
+    "group": "Baseline"
+  },
+  {
+    "script": "Verify-M4OperationsReplay.ps1",
+    "completedAt": "2026-10-11T10:14:30.9756+08:00",
+    "action": "Recover",
+    "phase": "",
+    "group": "Baseline"
+  },
+  {
+    "script": "Verify-M4SearchReplay.ps1",
+    "completedAt": "2026-10-11T10:14:31.6480222+08:00",
+    "action": "Setup",
+    "phase": "",
+    "group": "Baseline"
+  },
+  {
+    "script": "Verify-M4SearchReplay.ps1",
+    "completedAt": "2026-10-11T10:14:34.0679094+08:00",
+    "action": "Healthy",
+    "phase": "",
+    "group": "Baseline"
+  },
+  {
+    "script": "Verify-M4MonitoringReplay.ps1",
+    "completedAt": "2026-10-11T10:14:35.6164983+08:00",
+    "action": "Probe",
+    "phase": "jwt-denied",
+    "group": "Baseline"
+  },
+  {
+    "script": "Verify-M4RedisReplay.ps1",
+    "completedAt": "2026-10-11T10:14:42.4206448+08:00",
+    "action": "Healthy",
+    "phase": "",
+    "group": "Baseline"
+  },
+  {
+    "script": "Verify-M4RedisReplay.ps1",
+    "completedAt": "2026-10-11T10:14:45.6447568+08:00",
+    "action": "GuardFailure",
+    "phase": "",
+    "group": "Baseline"
+  },
+  {
+    "script": "Verify-M4MonitoringReplay.ps1",
+    "completedAt": "2026-10-11T10:14:49.0091086+08:00",
+    "action": "Check",
+    "phase": "",
+    "group": "Baseline"
+  },
+  {
+    "action": "Pause",
+    "completedAt": "2026-10-11T10:20:15.193704+08:00",
+    "phase": "",
+    "script": "Verify-M4RedisReplay.ps1",
+    "group": "Redis"
+  },
+  {
+    "script": "Verify-M4RedisReplay.ps1",
+    "phase": "",
+    "action": "Pause",
+    "group": "Redis",
+    "completedAt": "2026-10-11T10:22:53.4380254+08:00"
+  },
+  {
+    "script": "Verify-M4RedisReplay.ps1",
+    "phase": "",
+    "action": "Outage",
+    "group": "Redis",
+    "completedAt": "2026-10-11T10:22:59.7332569+08:00"
+  },
+  {
+    "script": "Verify-M4RedisReplay.ps1",
+    "phase": "",
+    "action": "Pending",
+    "group": "Redis",
+    "completedAt": "2026-10-11T10:23:00.6465893+08:00"
+  },
+  {
+    "script": "Verify-M4MonitoringReplay.ps1",
+    "phase": "redis-outage",
+    "action": "Probe",
+    "group": "Redis",
+    "completedAt": "2026-10-11T10:23:02.1146086+08:00"
+  },
+  {
+    "script": "Verify-M4RedisReplay.ps1",
+    "phase": "",
+    "action": "ResumeFlush",
+    "group": "Redis",
+    "completedAt": "2026-10-11T10:23:03.3598538+08:00"
+  },
+  {
+    "script": "Verify-M4RedisReplay.ps1",
+    "phase": "",
+    "action": "Recovered",
+    "group": "Redis",
+    "completedAt": "2026-10-11T10:23:05.3373831+08:00"
+  },
+  {
+    "script": "Verify-M4MonitoringReplay.ps1",
+    "phase": "redis-recovered",
+    "action": "Probe",
+    "group": "Redis",
+    "completedAt": "2026-10-11T10:23:06.8230721+08:00"
+  },
+  {
+    "script": "Verify-M4SearchReplay.ps1",
+    "phase": "",
+    "action": "Pause",
+    "completedAt": "2026-10-11T10:23:49.3163908+08:00",
+    "group": "Search"
+  },
+  {
+    "script": "Verify-M4SearchReplay.ps1",
+    "phase": "",
+    "action": "Outage",
+    "completedAt": "2026-10-11T10:23:54.9115898+08:00",
+    "group": "Search"
+  },
+  {
+    "script": "Verify-M4SearchReplay.ps1",
+    "phase": "",
+    "action": "Pending",
+    "completedAt": "2026-10-11T10:23:55.4024662+08:00",
+    "group": "Search"
+  },
+  {
+    "script": "Verify-M4MonitoringReplay.ps1",
+    "phase": "es-outage",
+    "action": "Probe",
+    "completedAt": "2026-10-11T10:23:56.8899241+08:00",
+    "group": "Search"
+  },
+  {
+    "script": "Verify-M4SearchReplay.ps1",
+    "phase": "",
+    "action": "Resume",
+    "completedAt": "2026-10-11T10:23:57.7070824+08:00",
+    "group": "Search"
+  },
+  {
+    "script": "Verify-M4SearchReplay.ps1",
+    "phase": "",
+    "action": "Recovered",
+    "completedAt": "2026-10-11T10:24:00.6327327+08:00",
+    "group": "Search"
+  },
+  {
+    "script": "Verify-M4MonitoringReplay.ps1",
+    "phase": "es-recovered",
+    "action": "Probe",
+    "completedAt": "2026-10-11T10:24:02.0620808+08:00",
+    "group": "Search"
+  },
+  {
+    "script": "Verify-M4SearchIndexDeletion.ps1",
+    "phase": "",
+    "action": "Run",
+    "completedAt": "2026-10-11T10:24:13.8472363+08:00",
+    "group": "Search"
+  },
+  {
+    "completedAt": "2026-10-11T10:24:52.4148197+08:00",
+    "phase": "",
+    "action": "PauseRabbit",
+    "script": "Verify-M4MonitoringReplay.ps1",
+    "group": "Rabbit"
+  },
+  {
+    "completedAt": "2026-10-11T10:27:34.1704536+08:00",
+    "phase": "rabbit-accept",
+    "action": "Business",
+    "script": "Verify-M4MonitoringReplay.ps1",
+    "group": "Rabbit"
+  },
+  {
+    "completedAt": "2026-10-11T10:27:35.8470412+08:00",
+    "phase": "",
+    "action": "RabbitPending",
+    "script": "Verify-M4MonitoringReplay.ps1",
+    "group": "Rabbit"
+  },
+  {
+    "completedAt": "2026-10-11T10:27:37.2769851+08:00",
+    "phase": "rabbit-outage",
+    "action": "Probe",
+    "script": "Verify-M4MonitoringReplay.ps1",
+    "group": "Rabbit"
+  },
+  {
+    "completedAt": "2026-10-11T10:27:38.6987538+08:00",
+    "phase": "",
+    "action": "PauseWorker",
+    "script": "Verify-M4MonitoringReplay.ps1",
+    "group": "Rabbit"
+  },
+  {
+    "completedAt": "2026-10-11T10:27:39.4988852+08:00",
+    "phase": "",
+    "action": "ResumeRabbit",
+    "script": "Verify-M4MonitoringReplay.ps1",
+    "group": "Rabbit"
+  },
+  {
+    "completedAt": "2026-10-11T10:27:43.0825026+08:00",
+    "phase": "rabbit-rearm",
+    "action": "Business",
+    "script": "Verify-M4MonitoringReplay.ps1",
+    "group": "Rabbit"
+  },
+  {
+    "completedAt": "2026-10-11T10:27:43.8737755+08:00",
+    "phase": "",
+    "action": "ResumeWorker",
+    "script": "Verify-M4MonitoringReplay.ps1",
+    "group": "Rabbit"
+  },
+  {
+    "completedAt": "2026-10-11T10:27:52.3672584+08:00",
+    "phase": "rabbit-recover",
+    "action": "Business",
+    "script": "Verify-M4MonitoringReplay.ps1",
+    "group": "Rabbit"
+  },
+  {
+    "completedAt": "2026-10-11T10:27:53.8708221+08:00",
+    "phase": "rabbit-recovered",
+    "action": "Probe",
+    "script": "Verify-M4MonitoringReplay.ps1",
+    "group": "Rabbit"
+  },
+  {
+    "action": "Audit",
+    "phase": "",
+    "group": "Audit",
+    "script": "Verify-M4OperationsReplay.ps1",
+    "completedAt": "2026-10-11T10:28:39.3082821+08:00"
+  },
+  {
+    "action": "CaptureRuntime",
+    "phase": "",
+    "group": "Audit",
+    "script": "Verify-M4SearchReplay.ps1",
+    "completedAt": "2026-10-11T10:29:02.0524731+08:00"
+  },
+  {
+    "action": "Audit",
+    "phase": "",
+    "group": "Audit",
+    "script": "Verify-M4SearchReplay.ps1",
+    "completedAt": "2026-10-11T10:29:14.6556534+08:00"
+  }
+]

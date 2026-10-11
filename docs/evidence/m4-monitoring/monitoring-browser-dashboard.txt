@@ -1,0 +1,296 @@
+Browser tab: 5, Title: "ForgeOJ 最小监控 - ForgeOJ - Dashboards - Grafana", URL: "http://127.0.0.1:52529/d/forgeoj-overview/forgeoj-e69c80-e5b08f-e79b91-e68ea7?from=now-30m&to=now&timezone=browser&refresh=30s".
+1 AXWebArea ForgeOJ 最小监控 - ForgeOJ - Dashboards - Grafana, URL: 127.0.0.1:52529/d/forgeoj-overview/forgeoj-e69c80-e5b08f-e79b91-e68ea7?from=now-30m&to=now&timezone=browser&refresh=30s
+	2 container reactRoot
+		3 container floating-boundary
+			4 link Description: Skip to main content, Value: 127.0.0.1:52529/#pageContent
+			5 container
+				6 link Description: Grafana, Help: Home, Value: 127.0.0.1:52529/
+				7 link Description: Grafana, Help: Home, Value: 127.0.0.1:52529/
+				8 button Close menu
+				9 container Navigation
+					10 container
+						11 content list Navigation
+							12 container
+								13 link Description: Bookmarks, Value: 127.0.0.1:52529/bookmarks
+								14 button (collapsed) Description: Expand section: Bookmarks, Secondary Actions: Expand
+							15 container
+								16 link Description: Starred, Value: 127.0.0.1:52529/dashboards?starred
+								17 button (collapsed) Description: Expand section: Starred, Secondary Actions: Expand
+							18 container
+								19 link Description: Dashboards, Value: 127.0.0.1:52529/dashboards
+								20 button (collapsed) Description: Expand section: Dashboards, Secondary Actions: Expand
+							21 container
+								22 link Description: Alerting, Value: 127.0.0.1:52529/alerting
+								23 button (collapsed) Description: Expand section: Alerting, Secondary Actions: Expand
+					24 button Description: Undock menu, ID: dock-menu-button
+			25 container
+				26 container Breadcrumbs
+					27 content list
+						28 link Description: Dashboards, Value: 127.0.0.1:52529/dashboards
+						29 link Description: ForgeOJ, Value: 127.0.0.1:52529/dashboards/f/fg0vhykpo9eyof/forgeoj
+						30 text ForgeOJ 最小监控
+				31 checkbox Description: Mark "ForgeOJ 最小监控" as favorite, Value: 0
+				32 button Search...
+				33 text ctrl+k
+				34 button (collapsed) Description: Help, Secondary Actions: Expand
+				35 button (collapsed) Description: Profile, Secondary Actions: Expand
+					36 image User avatar
+			37 container
+				38 container
+					39 button Move 15m backward
+					40 button (collapsed) Description: Time range selected: Last 30 minutes, Secondary Actions: Expand
+						41 text Last 30 minutes
+					42 button Move time range forwards
+					43 button Zoom out time range
+					44 button Refresh
+					45 button (collapsed) Description: Choose refresh time interval with current interval 30 seconds selected, Secondary Actions: Expand
+					46 button Copy link
+					47 button (collapsed) Description: Share, Secondary Actions: Expand
+				48 container Dashboard content
+					49 container
+						50 container 服务抓取成功（1=成功）
+							51 heading 服务抓取成功（1=成功）, Value: 2
+								52 text 服务抓取成功（1=成功）
+							53 container
+								54 container
+									55 text forgeoj-api api-replica:9091
+									56 text 1
+								57 container
+									58 text forgeoj-api api:9091
+									59 text 1
+								60 container
+									61 text rabbitmq rabbitmq:15692
+									62 text 1
+								63 container
+									64 text forgeoj-worker worker:9092
+									65 text 1
+						66 container 快照新鲜与Worker消费者
+							67 heading 快照新鲜与Worker消费者, Value: 2
+								68 text 快照新鲜与Worker消费者
+							69 container
+								70 container
+									71 text forgeoj-api api-replica:9091
+									72 text 1
+								73 container
+									74 text forgeoj-api api:9091
+									75 text 1
+								76 container
+									77 text forgeoj-worker worker:9092
+									78 text 1
+								79 container
+									80 text forgeoj-worker worker:9092
+									81 text 1
+						82 container 请求速率（实测，非容量结论）
+							83 heading 请求速率（实测，非容量结论）, Value: 2
+								84 text 请求速率（实测，非容量结论）
+							85 container
+								86 content list
+									87 container
+										88 pop up button (collapsed) Description: Edit color for admin, Secondary Actions: Expand
+										89 button All series selected
+									90 container
+										91 pop up button (collapsed) Description: Edit color for admin, Secondary Actions: Expand
+										92 button All series selected
+									93 container
+										94 pop up button (collapsed) Description: Edit color for admin, Secondary Actions: Expand
+										95 button All series selected
+									96 container
+										97 pop up button (collapsed) Description: Edit color for admin, Secondary Actions: Expand
+										98 button All series selected
+									99 container
+										100 pop up button (collapsed) Description: Edit color for admin, Secondary Actions: Expand
+										101 button All series selected
+									102 container
+										103 pop up button (collapsed) Description: Edit color for admin, Secondary Actions: Expand
+										104 button All series selected
+									105 container
+										106 pop up button (collapsed) Description: Edit color for auth, Secondary Actions: Expand
+										107 button All series selected
+									108 container
+										109 pop up button (collapsed) Description: Edit color for auth, Secondary Actions: Expand
+										110 button All series selected
+									111 container
+										112 pop up button (collapsed) Description: Edit color for auth, Secondary Actions: Expand
+										113 button All series selected
+									114 container
+										115 pop up button (collapsed) Description: Edit color for auth, Secondary Actions: Expand
+										116 button All series selected
+									117 container
+										118 pop up button (collapsed) Description: Edit color for auth, Secondary Actions: Expand
+										119 button All series selected
+									120 container
+										121 pop up button (collapsed) Description: Edit color for auth, Secondary Actions: Expand
+										122 button All series selected
+									123 container
+										124 pop up button (collapsed) Description: Edit color for classroom, Secondary Actions: Expand
+										125 button All series selected
+									126 container
+										127 pop up button (collapsed) Description: Edit color for classroom, Secondary Actions: Expand
+										128 button All series selected
+									129 container
+										130 pop up button (collapsed) Description: Edit color for classroom, Secondary Actions: Expand
+										131 button All series selected
+									132 container
+										133 pop up button (collapsed) Description: Edit color for classroom, Secondary Actions: Expand
+										134 button All series selected
+									135 container
+										136 pop up button (collapsed) Description: Edit color for classroom, Secondary Actions: Expand
+										137 button All series selected
+									138 container
+										139 pop up button (collapsed) Description: Edit color for classroom, Secondary Actions: Expand
+										140 button All series selected
+									141 container
+										142 pop up button (collapsed) Description: Edit color for content, Secondary Actions: Expand
+										143 button All series selected
+									144 container
+										145 pop up button (collapsed) Description: Edit color for content, Secondary Actions: Expand
+										146 button All series selected
+									147 container
+										148 pop up button (collapsed) Description: Edit color for content, Secondary Actions: Expand
+										149 button All series selected
+									150 container
+										151 pop up button (collapsed) Description: Edit color for content, Secondary Actions: Expand
+										152 button All series selected
+									153 container
+										154 pop up button (collapsed) Description: Edit color for content, Secondary Actions: Expand
+										155 button All series selected
+									156 container
+										157 pop up button (collapsed) Description: Edit color for content, Secondary Actions: Expand
+										158 button All series selected
+									159 container
+										160 pop up button (collapsed) Description: Edit color for library, Secondary Actions: Expand
+										161 button All series selected
+									162 container
+										163 pop up button (collapsed) Description: Edit color for library, Secondary Actions: Expand
+										164 button All series selected
+									165 container
+										166 pop up button (collapsed) Description: Edit color for library, Secondary Actions: Expand
+										167 button All series selected
+									168 container
+										169 pop up button (collapsed) Description: Edit color for library, Secondary Actions: Expand
+										170 button All series selected
+									171 container
+										172 pop up button (collapsed) Description: Edit color for library, Secondary Actions: Expand
+										173 button All series selected
+									174 container
+										175 pop up button (collapsed) Description: Edit color for library, Secondary Actions: Expand
+										176 button All series selected
+									177 container
+										178 pop up button (collapsed) Description: Edit color for other, Secondary Actions: Expand
+										179 button All series selected
+									180 container
+										181 pop up button (collapsed) Description: Edit color for other, Secondary Actions: Expand
+										182 button All series selected
+									183 container
+										184 pop up button (collapsed) Description: Edit color for other, Secondary Actions: Expand
+										185 button All series selected
+									186 container
+										187 pop up button (collapsed) Description: Edit color for other, Secondary Actions: Expand
+										188 button All series selected
+									189 container
+										190 pop up button (collapsed) Description: Edit color for other, Secondary Actions: Expand
+										191 button All series selected
+									192 container
+										193 pop up button (collapsed) Description: Edit color for other, Secondary Actions: Expand
+										194 button All series selected
+									195 container
+										196 pop up button (collapsed) Description: Edit color for selftest, Secondary Actions: Expand
+										197 button All series selected
+									198 container
+										199 pop up button (collapsed) Description: Edit color for selftest, Secondary Actions: Expand
+										200 button All series selected
+									201 container
+										202 pop up button (collapsed) Description: Edit color for selftest, Secondary Actions: Expand
+										203 button All series selected
+									204 container
+										205 pop up button (collapsed) Description: Edit color for selftest, Secondary Actions: Expand
+										206 button All series selected
+									207 container
+										208 pop up button (collapsed) Description: Edit color for selftest, Secondary Actions: Expand
+										209 button All series selected
+									210 container
+										211 pop up button (collapsed) Description: Edit color for selftest, Secondary Actions: Expand
+										212 button All series selected
+									213 container
+										214 pop up button (collapsed) Description: Edit color for submission, Secondary Actions: Expand
+										215 button All series selected
+									216 container
+										217 pop up button (collapsed) Description: Edit color for submission, Secondary Actions: Expand
+										218 button All series selected
+									219 container
+										220 pop up button (collapsed) Description: Edit color for submission, Secondary Actions: Expand
+										221 button All series selected
+									222 container
+										223 pop up button (collapsed) Description: Edit color for submission, Secondary Actions: Expand
+										224 button All series selected
+									225 container
+										226 pop up button (collapsed) Description: Edit color for submission, Secondary Actions: Expand
+										227 button All series selected
+									228 container
+										229 pop up button (collapsed) Description: Edit color for submission, Secondary Actions: Expand
+										230 button All series selected
+						231 container 请求延迟分位数（固定桶估计）
+							232 heading 请求延迟分位数（固定桶估计）, Value: 2
+								233 text 请求延迟分位数（固定桶估计）
+							234 container
+								235 content list
+									236 container
+										237 pop up button (collapsed) Description: Edit color for admin, Secondary Actions: Expand
+										238 button All series selected
+									239 container
+										240 pop up button (collapsed) Description: Edit color for auth, Secondary Actions: Expand
+										241 button All series selected
+									242 container
+										243 pop up button (collapsed) Description: Edit color for classroom, Secondary Actions: Expand
+										244 button All series selected
+									245 container
+										246 pop up button (collapsed) Description: Edit color for content, Secondary Actions: Expand
+										247 button All series selected
+									248 container
+										249 pop up button (collapsed) Description: Edit color for library, Secondary Actions: Expand
+										250 button All series selected
+									251 container
+										252 pop up button (collapsed) Description: Edit color for other, Secondary Actions: Expand
+										253 button All series selected
+									254 container
+										255 pop up button (collapsed) Description: Edit color for selftest, Secondary Actions: Expand
+										256 button All series selected
+									257 container
+										258 pop up button (collapsed) Description: Edit color for submission, Secondary Actions: Expand
+										259 button All series selected
+						260 container Rabbit队列待处理与未确认
+							261 heading Rabbit队列待处理与未确认, Value: 2
+								262 text Rabbit队列待处理与未确认
+						263 container 任务库存（双API取max）
+							264 heading 任务库存（双API取max）, Value: 2
+								265 text 任务库存（双API取max）
+						266 container 最老排队时间
+							267 heading 最老排队时间, Value: 2
+								268 text 最老排队时间
+						269 container 正式执行平均耗时（含完成持久化）
+							270 heading 正式执行平均耗时（含完成持久化）, Value: 2
+								271 text 正式执行平均耗时（含完成持久化）
+						272 container 正式结果库存
+							273 heading 正式结果库存, Value: 2
+								274 text 正式结果库存
+						275 container 重试与死信
+							276 heading 重试与死信, Value: 2
+								277 text 重试与死信
+						278 container 缓存与Redis事件
+							279 heading 缓存与Redis事件, Value: 2
+								280 text 缓存与Redis事件
+						281 container 搜索全文与标题降级
+							282 heading 搜索全文与标题降级, Value: 2
+								283 text 搜索全文与标题降级
+						284 container Outbox、失效与搜索积压
+							285 heading Outbox、失效与搜索积压, Value: 2
+								286 text Outbox、失效与搜索积压
+						287 container 执行及恢复容器清理失败
+							288 heading 执行及恢复容器清理失败, Value: 2
+								289 text 执行及恢复容器清理失败
+				290 container sidebar-container
+					291 button (collapsed) Description: Export, Secondary Actions: Expand
+					292 button (collapsed) Description: Outline, Secondary Actions: Expand
+					293 button Hide
+
+The focused UI element is 1 AXWebArea ForgeOJ 最小监控 - ForgeOJ - Dashboards - Grafana, URL: 127.0.0.1:52529/d/forgeoj-overview/forgeoj-e69c80-e5b08f-e79b91-e68ea7?from=now-30m&to=now&timezone=browser&refresh=30s

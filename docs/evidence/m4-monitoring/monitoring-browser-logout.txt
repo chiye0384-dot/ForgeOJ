@@ -1,0 +1,31 @@
+Browser tab: 5, Title: "Grafana", URL: "http://127.0.0.1:52529/login".
+1 AXWebArea Grafana, URL: 127.0.0.1:52529/login
+	2 container reactRoot
+		3 container
+			4 image Grafana
+			5 heading Welcome to Grafana, Value: 1
+				6 text Welcome to Grafana
+			7 container
+				8 text Email or username
+				9 text field (settable) Email or username
+				10 text Password
+				11 text field (settable) Password
+				12 switch Description: Show password, Value: 0
+				13 button Log in
+				14 link Description: Forgot your password?, Value: 127.0.0.1:52529/user/password/send-reset-email
+			15 content list
+				16 container
+					17 link Description: Documentation, Value: grafana.com/docs/grafana/latest/?utm_source=grafana_footer, ID: documentation
+					18 text  |
+				19 container
+					20 link Description: Support, Value: grafana.com/products/enterprise/?utm_source=grafana_footer, ID: support
+					21 text  |
+				22 container
+					23 link Description: Community, Value: community.grafana.com/?utm_source=grafana_footer, ID: community
+					24 text  |
+				25 container
+					26 link Description: Open Source, Value: grafana.com/oss/grafana?utm_source=grafana_footer, ID: license
+					27 text  |
+				28 link Description: Grafana v13.2.3 (90ffed056f), Value: github.com/grafana/grafana/blob/main/CHANGELOG.md, ID: version
+
+The focused UI element is 9 text field (settable) Email or username

@@ -1,0 +1,20 @@
+{
+  "anonymousLoginRequired": true,
+  "viewerDashboard": true,
+  "viewerCannotEdit": true,
+  "logoutCleared": true,
+  "tabRetained": true,
+  "refreshSeconds": 30,
+  "observedUrl": "http://127.0.0.1:51028/d/forgeoj-overview",
+  "checkedAt": "2026-10-11T02:26:04.307Z",
+  "screenshots": [
+    "monitoring-browser-anonymous.jpg",
+    "monitoring-browser-dashboard.jpg",
+    "monitoring-browser-logout.jpg"
+  ],
+  "snapshots": [
+    "monitoring-browser-anonymous.txt",
+    "monitoring-browser-dashboard.txt",
+    "monitoring-browser-logout.txt"
+  ]
+}

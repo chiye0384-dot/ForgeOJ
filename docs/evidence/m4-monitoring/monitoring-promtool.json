@@ -1,0 +1,9 @@
+{
+  "allPassed": true,
+  "services": [
+    "api",
+    "api-replica",
+    "worker"
+  ],
+  "checkedAt": "2026-10-11T13:00:42.1952308+08:00"
+}

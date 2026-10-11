@@ -1,4 +1,12 @@
+2026-10-11当前验收：M4第7步及完整M4 **VERIFIED**，五项总门禁全部PASS。独立Grafana OSS许可已批准；固定Linux API335/59 suites、Worker139/26 suites、前端129/25零失败/错误/跳过，428业务/测试/前端输入、84实际提供前端与准确JAR一致。同JAR新回放覆盖Redis/ES/RabbitMQ中断恢复、真实AC、原事件受审计重送、整个索引删除重建、实际promtool及Grafana14面板/23表达式/只读浏览器登录退出。6个唯一原死信事件对应6份实测消息，每一份均匹配原事件ID和四字段契约；诊断前后数量不变，没有清空死信。本轮拥有者资源与沙箱清理全0。详见[M4总门禁](M4-GATE-AUDIT.md)、[监控验收](M4-MONITORING-VALIDATION.md)及[最终机器证据](evidence/m4-monitoring/verification.json)。M5仍PLANNED，未PR/main/tag/Release/RESUME_READY；按授权交付feat/m2-accounts后停止。
+
+> 以下旧日期的阶段、额度、待许可、未完成和“下一步”文字为历史快照；实时状态以上方当前验收与对应最终证据为准。
+
 # M4 实施步骤
+
+2026-10-11 09:30当前：第7步及完整M4仍 **IN_PROGRESS**。Grafana OSS许可已明确批准，固定独立镜像/告知与14面板已落地；第一轮固定Linux335 API/139 Worker/129前端通过，真实Redis/ES故障恢复、整索引删除重建和Grafana只读登录/退出已验证，但Rabbit故障发现unsigned attempt_count=0聚合下溢。已以CASE先判断修复重试数及水位差，真实MySQL回归通过，正在以当前修复源码重新执行固定Linux全量；第一轮JAR/截图是[被替代的失败运行记录](evidence/m4-monitoring/failed-20261011-085452/checkpoint.json)，不可当最终通过。首轮全部拥有者资源清理0，未提交/推送。当前恢复入口为[M4监控验证](M4-MONITORING-VALIDATION.md)；下方旧日期/待许可/额度文字均为历史。按既有授权完成现有功能分支后停止，M5/PR/main/tag/Release/RESUME_READY不启动。
+
+2026-10-10 22:26最新检查点：用户继续后第7步监控已 **IN_PROGRESS**。自有聚合指标、只读快照/陈旧状态、默认关闭的私有抓取及Worker接线已加入；API45项真实Redis/ES/SQL回归、最终格式7项和Worker17项通过，合并64唯一用例，428最终输入冻结、84前端未变。见[监控检查点](M4-MONITORING-VALIDATION.md)和[本机机器记录](evidence/m4-monitoring/native-checkpoint.json)。这是Windows/JDK21专项，不是当前固定Linux/JAR/Prometheus/Grafana/浏览器/三故障/M4总门禁。Grafana OSS13.2.3新AGPL许可待实际用户答复，未引入镜像；当前额度78%已用，不足下一组长验收，按用户规则停。工作树未暂存/提交/推送，HEAD为已交付搜索cd2be91；完整M4/E-04仍IN_PROGRESS，第6步历史VERIFIED保持，M5/PR/main/tag/Release未开始。下方旧日期中的“第7步未开始/不启动”仅为历史，不能覆盖本次继续授权。
 
 2026-10-10 20:30最终验收：M4第6步公共搜索 **VERIFIED**，见[M4搜索验收](M4-SEARCH-VALIDATION.md)与[机器证据](evidence/m4-search/verification.json)。固定Linux API321/54 suites、Worker133/23 suites均零失败/错误/跳过，前端129/25及全部检查通过；412输入及84个实际提供的前端输入匹配准确构件。同JAR HTTPS/Basic、73项搜索HTTP、107项Redis回归、真实判题/权限/浏览器、有限死信及内容清空重建通过；另一个同JAR临时环境完成整个索引删除、标题降级和受审计重建（恢复阶段11项HTTP）。两个环境拥有者资源、builder、Testcontainers、沙箱全0。完整M4与E-04仍IN_PROGRESS，第7步/M5/Release未开始。按已授权交付feat/m2-accounts后停。下方旧日期记录只表示历史，当前状态以本段及最终机器证据为准。
 
@@ -18,7 +26,7 @@
 | 4 运维闭环（VERIFIED） | 正式判题、内容验证、自测的异常任务/attempt/死信查询，按用途限定的人工幂等重试与理由审计 | CONTENT_REVIEWER拒绝，OPS/SUPER允许；终态与重试资格复核、并发/重复/响应丢失、Outbox/ACK故障检查；不得改用户源码或把WA改AC |
 | 5 Redis与降级（VERIFIED） | 公共题/官方题单Cache-Aside、可靠失效Outbox、普通和管理会话安全缓存、共享限流与短期幂等辅助 | 清空/故障回退MySQL，撤销与降级均不越权，保守单机限流及数据库配额保留，事件重放/TTL抖动/热点单重建和恢复验证 |
 | 6 公共搜索（VERIFIED） | Elasticsearch公开题标题/题面纯文本/难度/标签检索、版本化Outbox同步、有界重试/死信、管理重建、MySQL回退 | 不索引私有题/源码/隐藏测试/题解；旧事件不覆盖新版本；候选ID经MySQL公开状态复核；清索引后重建和故障降级通过 |
-| 7 监控与M4最终门禁 | 最小Prometheus/Grafana面板、异常/队列/重试/失效/搜索积压和降级状态，Redis/ES/RabbitMQ故障演练及最终证据关联 | Roadmap五项总门禁全部PASS，当前源码/实际构件/浏览器/数据与证据关联；完整M4才可升VERIFIED，未等同M5上线或Release |
+| 7 监控与M4最终门禁（VERIFIED） | 最小Prometheus/Grafana面板、异常/队列/重试/失效/搜索积压和降级状态，Redis/ES/RabbitMQ故障演练及最终证据关联 | Roadmap五项总门禁全部PASS，当前源码/实际构件/浏览器/数据与证据关联；完整M4才可升VERIFIED，未等同M5上线或Release |
 
 每个实现单元都先确定请求/事务/权限合约，执行直接回归、真实运行与精确清理后更新证据；发现范围变化先记录。完整M4不是把各模块“启动成功”相加。
 

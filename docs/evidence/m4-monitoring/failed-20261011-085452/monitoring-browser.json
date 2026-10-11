@@ -1,0 +1,23 @@
+{
+  "anonymousLoginRequired": true,
+  "viewerDashboard": true,
+  "viewerCannotEdit": true,
+  "logoutCleared": true,
+  "tabRetained": true,
+  "refreshSeconds": 30,
+  "observedUrl": "http://127.0.0.1:53126/d/forgeoj-overview",
+  "tabId": "4",
+  "screenshots": [
+    "monitoring-browser-anonymous.jpg",
+    "monitoring-browser-dashboard.jpg",
+    "monitoring-browser-fault-panels.jpg",
+    "monitoring-browser-logout.jpg"
+  ],
+  "snapshots": [
+    "monitoring-browser-anonymous.txt",
+    "monitoring-browser-dashboard.txt",
+    "monitoring-browser-fault-panels.txt",
+    "monitoring-browser-logout.txt"
+  ],
+  "checkedAt": "2026-10-11T01:27:18.105Z"
+}

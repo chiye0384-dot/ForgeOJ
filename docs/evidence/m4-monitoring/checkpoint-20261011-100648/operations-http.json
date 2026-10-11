@@ -1,0 +1,947 @@
+{
+  "allPassed": true,
+  "faultsRealWorker": true,
+  "tasks": [
+    {
+      "kind": "FORMAL",
+      "id": "9184d20a-7500-419e-99f6-9b08b9a828d7",
+      "submissionId": "284a58cf-fe79-4046-a35f-5961ae2152d6",
+      "resultPath": "/api/v1/submissions/284a58cf-fe79-4046-a35f-5961ae2152d6",
+      "before": {
+        "kind": "FORMAL",
+        "id": "9184d20a-7500-419e-99f6-9b08b9a828d7",
+        "ownerId": 1,
+        "submissionId": "284a58cf-fe79-4046-a35f-5961ae2152d6",
+        "snapshotId": null,
+        "status": "DEAD_LETTER",
+        "version": 6,
+        "attemptCount": 3,
+        "maxAttempts": 3,
+        "failureCode": "PLATFORM_FAILURE",
+        "createdAt": "2026-10-11 02:13:41.800948",
+        "startedAt": "2026-10-11 02:13:41.911188",
+        "finishedAt": "2026-10-11 02:13:44.376623",
+        "nextAttemptAt": null,
+        "leaseExpired": false,
+        "expiresAt": null,
+        "executionRecoveryUsed": false
+      },
+      "oldAttempts": [
+        {
+          "id": "10861dbc-7e2d-4cff-bd4c-7c87b9ff955d",
+          "number": 3,
+          "status": "DEAD_LETTERED",
+          "failureCode": "PLATFORM_FAILURE",
+          "startedAt": "2026-10-11 02:13:44.351093",
+          "heartbeatAt": "2026-10-11 02:13:44.377867",
+          "leaseExpiresAt": "2026-10-11 02:13:56.349750",
+          "finishedAt": "2026-10-11 02:13:44.377867"
+        },
+        {
+          "id": "cefe0774-8785-4d16-b518-737045d69929",
+          "number": 2,
+          "status": "RETRYABLE_FAILURE",
+          "failureCode": "PLATFORM_FAILURE",
+          "startedAt": "2026-10-11 02:13:43.135896",
+          "heartbeatAt": "2026-10-11 02:13:43.165515",
+          "leaseExpiresAt": "2026-10-11 02:13:55.133987",
+          "finishedAt": "2026-10-11 02:13:43.165515"
+        },
+        {
+          "id": "c85d1cbc-2355-483f-9e63-e3f135defeb5",
+          "number": 1,
+          "status": "RETRYABLE_FAILURE",
+          "failureCode": "PLATFORM_FAILURE",
+          "startedAt": "2026-10-11 02:13:41.912826",
+          "heartbeatAt": "2026-10-11 02:13:41.939317",
+          "leaseExpiresAt": "2026-10-11 02:13:53.911188",
+          "finishedAt": "2026-10-11 02:13:41.939317"
+        }
+      ],
+      "after": {
+        "kind": "FORMAL",
+        "id": "9184d20a-7500-419e-99f6-9b08b9a828d7",
+        "ownerId": 1,
+        "submissionId": "284a58cf-fe79-4046-a35f-5961ae2152d6",
+        "snapshotId": null,
+        "status": "FINISHED",
+        "version": 9,
+        "attemptCount": 4,
+        "maxAttempts": 4,
+        "failureCode": "PLATFORM_FAILURE",
+        "createdAt": "2026-10-11 02:13:41.800948",
+        "startedAt": "2026-10-11 02:13:41.911188",
+        "finishedAt": "2026-10-11 02:14:17.524279",
+        "nextAttemptAt": null,
+        "leaseExpired": false,
+        "expiresAt": null,
+        "executionRecoveryUsed": true
+      },
+      "receipt": {
+        "id": "e33dd886-7194-4f75-989d-fdb557082615",
+        "scope": "EXECUTION",
+        "kind": "FORMAL",
+        "taskId": "9184d20a-7500-419e-99f6-9b08b9a828d7",
+        "targetId": "9184d20a-7500-419e-99f6-9b08b9a828d7",
+        "eventId": "2aad3dfd-4d3d-4980-bc0c-f9cafc2662f9",
+        "version": 7,
+        "createdAt": "2026-10-11 02:14:14.068172"
+      },
+      "resultVerified": true
+    },
+    {
+      "kind": "FORMAL",
+      "id": "e86ed82c-5cd6-4d95-be4e-0a152390db3d",
+      "submissionId": "845dbcd9-dc35-4a3a-87ed-965f0d742bca",
+      "resultPath": "/api/v1/submissions/845dbcd9-dc35-4a3a-87ed-965f0d742bca",
+      "browser": true,
+      "before": {
+        "kind": "FORMAL",
+        "id": "e86ed82c-5cd6-4d95-be4e-0a152390db3d",
+        "ownerId": 1,
+        "submissionId": "845dbcd9-dc35-4a3a-87ed-965f0d742bca",
+        "snapshotId": null,
+        "status": "DEAD_LETTER",
+        "version": 6,
+        "attemptCount": 3,
+        "maxAttempts": 3,
+        "failureCode": "PLATFORM_FAILURE",
+        "createdAt": "2026-10-11 02:13:44.911437",
+        "startedAt": "2026-10-11 02:13:44.980547",
+        "finishedAt": "2026-10-11 02:13:47.456503",
+        "nextAttemptAt": null,
+        "leaseExpired": false,
+        "expiresAt": null,
+        "executionRecoveryUsed": false
+      },
+      "oldAttempts": [
+        {
+          "id": "247e841f-46f5-4e88-90d7-6dfe6de865c3",
+          "number": 3,
+          "status": "DEAD_LETTERED",
+          "failureCode": "PLATFORM_FAILURE",
+          "startedAt": "2026-10-11 02:13:47.434944",
+          "heartbeatAt": "2026-10-11 02:13:47.457787",
+          "leaseExpiresAt": "2026-10-11 02:13:59.433707",
+          "finishedAt": "2026-10-11 02:13:47.457787"
+        },
+        {
+          "id": "ee7060bb-a898-4ae9-b352-11119e5ea6cf",
+          "number": 2,
+          "status": "RETRYABLE_FAILURE",
+          "failureCode": "PLATFORM_FAILURE",
+          "startedAt": "2026-10-11 02:13:46.203229",
+          "heartbeatAt": "2026-10-11 02:13:46.236179",
+          "leaseExpiresAt": "2026-10-11 02:13:58.202100",
+          "finishedAt": "2026-10-11 02:13:46.236179"
+        },
+        {
+          "id": "d4660f7f-e379-4aa7-83b0-21e6c379b9c8",
+          "number": 1,
+          "status": "RETRYABLE_FAILURE",
+          "failureCode": "PLATFORM_FAILURE",
+          "startedAt": "2026-10-11 02:13:44.981873",
+          "heartbeatAt": "2026-10-11 02:13:45.004807",
+          "leaseExpiresAt": "2026-10-11 02:13:56.980547",
+          "finishedAt": "2026-10-11 02:13:45.004807"
+        }
+      ]
+    },
+    {
+      "kind": "FORMAL",
+      "id": "2a52faef-0923-4027-a22b-d2b754c5fd59",
+      "submissionId": "fcda3c55-382e-4784-acee-ee3643db3f53",
+      "resultPath": "/api/v1/submissions/fcda3c55-382e-4784-acee-ee3643db3f53",
+      "assignmentPath": "/api/v1/classrooms/61c4eb30-2d77-46f1-802d-3d8bdb0de2b8/assignments/b9fccaea-5126-4b62-bfb3-adf1b547b925",
+      "deadlineAt": "2026-10-11T02:14:03.013Z",
+      "before": {
+        "kind": "FORMAL",
+        "id": "2a52faef-0923-4027-a22b-d2b754c5fd59",
+        "ownerId": 1,
+        "submissionId": "fcda3c55-382e-4784-acee-ee3643db3f53",
+        "snapshotId": null,
+        "status": "DEAD_LETTER",
+        "version": 6,
+        "attemptCount": 3,
+        "maxAttempts": 3,
+        "failureCode": "PLATFORM_FAILURE",
+        "createdAt": "2026-10-11 02:13:48.086321",
+        "startedAt": "2026-10-11 02:13:48.260948",
+        "finishedAt": "2026-10-11 02:13:50.555140",
+        "nextAttemptAt": null,
+        "leaseExpired": false,
+        "expiresAt": null,
+        "executionRecoveryUsed": false
+      },
+      "oldAttempts": [
+        {
+          "id": "0b8336d6-e108-4182-9ca1-0c36492c67b7",
+          "number": 3,
+          "status": "DEAD_LETTERED",
+          "failureCode": "PLATFORM_FAILURE",
+          "startedAt": "2026-10-11 02:13:50.536988",
+          "heartbeatAt": "2026-10-11 02:13:50.556273",
+          "leaseExpiresAt": "2026-10-11 02:14:02.535908",
+          "finishedAt": "2026-10-11 02:13:50.556273"
+        },
+        {
+          "id": "f452c6d8-0def-4a29-a824-0e6af1fc4c12",
+          "number": 2,
+          "status": "RETRYABLE_FAILURE",
+          "failureCode": "PLATFORM_FAILURE",
+          "startedAt": "2026-10-11 02:13:49.478395",
+          "heartbeatAt": "2026-10-11 02:13:49.507151",
+          "leaseExpiresAt": "2026-10-11 02:14:01.477183",
+          "finishedAt": "2026-10-11 02:13:49.507151"
+        },
+        {
+          "id": "ebf89a70-12a6-4aaa-8379-633794398087",
+          "number": 1,
+          "status": "RETRYABLE_FAILURE",
+          "failureCode": "PLATFORM_FAILURE",
+          "startedAt": "2026-10-11 02:13:48.262704",
+          "heartbeatAt": "2026-10-11 02:13:48.285686",
+          "leaseExpiresAt": "2026-10-11 02:14:00.260948",
+          "finishedAt": "2026-10-11 02:13:48.285686"
+        }
+      ],
+      "originalAcceptanceGradeVerified": true,
+      "after": {
+        "kind": "FORMAL",
+        "id": "2a52faef-0923-4027-a22b-d2b754c5fd59",
+        "ownerId": 1,
+        "submissionId": "fcda3c55-382e-4784-acee-ee3643db3f53",
+        "snapshotId": null,
+        "status": "FINISHED",
+        "version": 9,
+        "attemptCount": 4,
+        "maxAttempts": 4,
+        "failureCode": "PLATFORM_FAILURE",
+        "createdAt": "2026-10-11 02:13:48.086321",
+        "startedAt": "2026-10-11 02:13:48.260948",
+        "finishedAt": "2026-10-11 02:14:21.057171",
+        "nextAttemptAt": null,
+        "leaseExpired": false,
+        "expiresAt": null,
+        "executionRecoveryUsed": true
+      },
+      "receipt": {
+        "id": "0cc6412e-9b48-4ba9-8d7f-cc926658da51",
+        "scope": "EXECUTION",
+        "kind": "FORMAL",
+        "taskId": "2a52faef-0923-4027-a22b-d2b754c5fd59",
+        "targetId": "2a52faef-0923-4027-a22b-d2b754c5fd59",
+        "eventId": "b0fc870c-29c9-4800-8f81-23ea7197c4ad",
+        "version": 7,
+        "createdAt": "2026-10-11 02:14:17.824873"
+      },
+      "resultVerified": true
+    },
+    {
+      "kind": "VALIDATE",
+      "id": "6f9eaa57-6b38-427e-a7e4-3e7ba4b90c05",
+      "draftId": "46c6d9ca-eefb-48a1-a4f2-2c1fffb2d428",
+      "draftVersion": 3,
+      "resultPath": "/api/v1/me/authored-problems/46c6d9ca-eefb-48a1-a4f2-2c1fffb2d428/validations/6f9eaa57-6b38-427e-a7e4-3e7ba4b90c05",
+      "before": {
+        "kind": "VALIDATE",
+        "id": "6f9eaa57-6b38-427e-a7e4-3e7ba4b90c05",
+        "ownerId": 1,
+        "submissionId": null,
+        "snapshotId": "e57d2d00-1a49-4ae8-abc9-6bc0557dcd5c",
+        "status": "SYSTEM_ERROR",
+        "version": 6,
+        "attemptCount": 3,
+        "maxAttempts": 3,
+        "failureCode": "PLATFORM_FAILURE",
+        "createdAt": "2026-10-11 02:13:50.773333",
+        "startedAt": "2026-10-11 02:13:50.942471",
+        "finishedAt": "2026-10-11 02:13:57.238770",
+        "nextAttemptAt": null,
+        "leaseExpired": false,
+        "expiresAt": null,
+        "executionRecoveryUsed": false
+      },
+      "oldAttempts": [
+        {
+          "id": "a90e33a7-2b57-4e3a-9670-f13618f0eed7",
+          "number": 3,
+          "status": "DEAD_LETTERED",
+          "failureCode": "PLATFORM_FAILURE",
+          "startedAt": "2026-10-11 02:13:57.215925",
+          "heartbeatAt": "2026-10-11 02:13:57.215925",
+          "leaseExpiresAt": "2026-10-11 02:14:09.215319",
+          "finishedAt": "2026-10-11 02:13:57.238151"
+        },
+        {
+          "id": "b2c2e0ee-e139-4265-bec8-a810663e2398",
+          "number": 2,
+          "status": "RETRYABLE_FAILURE",
+          "failureCode": "PLATFORM_FAILURE",
+          "startedAt": "2026-10-11 02:13:53.176716",
+          "heartbeatAt": "2026-10-11 02:13:53.176716",
+          "leaseExpiresAt": "2026-10-11 02:14:05.176011",
+          "finishedAt": "2026-10-11 02:13:53.199657"
+        },
+        {
+          "id": "cf0af899-ffcf-4a00-94d5-e869fc45950b",
+          "number": 1,
+          "status": "RETRYABLE_FAILURE",
+          "failureCode": "PLATFORM_FAILURE",
+          "startedAt": "2026-10-11 02:13:50.943441",
+          "heartbeatAt": "2026-10-11 02:13:50.943441",
+          "leaseExpiresAt": "2026-10-11 02:14:02.942471",
+          "finishedAt": "2026-10-11 02:13:50.970978"
+        }
+      ],
+      "after": {
+        "kind": "VALIDATE",
+        "id": "6f9eaa57-6b38-427e-a7e4-3e7ba4b90c05",
+        "ownerId": 1,
+        "submissionId": null,
+        "snapshotId": "e57d2d00-1a49-4ae8-abc9-6bc0557dcd5c",
+        "status": "FINISHED",
+        "version": 9,
+        "attemptCount": 4,
+        "maxAttempts": 4,
+        "failureCode": null,
+        "createdAt": "2026-10-11 02:13:50.773333",
+        "startedAt": "2026-10-11 02:13:50.942471",
+        "finishedAt": "2026-10-11 02:14:25.683579",
+        "nextAttemptAt": null,
+        "leaseExpired": false,
+        "expiresAt": null,
+        "executionRecoveryUsed": true
+      },
+      "receipt": {
+        "id": "a7506706-d9ba-46a2-92c8-2dd37075e997",
+        "scope": "EXECUTION",
+        "kind": "VALIDATE",
+        "taskId": "6f9eaa57-6b38-427e-a7e4-3e7ba4b90c05",
+        "targetId": "6f9eaa57-6b38-427e-a7e4-3e7ba4b90c05",
+        "eventId": "1330b251-e579-43d8-9862-f9661e58c377",
+        "version": 7,
+        "createdAt": "2026-10-11 02:14:21.558259"
+      },
+      "resultVerified": true
+    },
+    {
+      "kind": "OUTPUT_PREVIEW",
+      "id": "b5115c52-d016-4ae3-9830-e41e09fe37ee",
+      "draftId": "9b3c2f2e-e42a-49f0-a1bf-fed44870685e",
+      "draftVersion": 3,
+      "resultPath": "/api/v1/me/authored-problems/9b3c2f2e-e42a-49f0-a1bf-fed44870685e/output-previews/b5115c52-d016-4ae3-9830-e41e09fe37ee",
+      "before": {
+        "kind": "OUTPUT_PREVIEW",
+        "id": "b5115c52-d016-4ae3-9830-e41e09fe37ee",
+        "ownerId": 1,
+        "submissionId": null,
+        "snapshotId": "fbd6cb6c-29f4-4e73-8efb-11e0ff6bc517",
+        "status": "SYSTEM_ERROR",
+        "version": 6,
+        "attemptCount": 3,
+        "maxAttempts": 3,
+        "failureCode": "PLATFORM_FAILURE",
+        "createdAt": "2026-10-11 02:13:57.498614",
+        "startedAt": "2026-10-11 02:13:57.653195",
+        "finishedAt": "2026-10-11 02:14:03.966371",
+        "nextAttemptAt": null,
+        "leaseExpired": false,
+        "expiresAt": null,
+        "executionRecoveryUsed": false
+      },
+      "oldAttempts": [
+        {
+          "id": "edcbaf58-85c8-40bc-849d-fcaded05536e",
+          "number": 3,
+          "status": "DEAD_LETTERED",
+          "failureCode": "PLATFORM_FAILURE",
+          "startedAt": "2026-10-11 02:14:03.942127",
+          "heartbeatAt": "2026-10-11 02:14:03.942127",
+          "leaseExpiresAt": "2026-10-11 02:14:15.940885",
+          "finishedAt": "2026-10-11 02:14:03.965398"
+        },
+        {
+          "id": "4b2d98a8-a642-4ea2-aa61-64fe95ea6287",
+          "number": 2,
+          "status": "RETRYABLE_FAILURE",
+          "failureCode": "PLATFORM_FAILURE",
+          "startedAt": "2026-10-11 02:13:59.885323",
+          "heartbeatAt": "2026-10-11 02:13:59.885323",
+          "leaseExpiresAt": "2026-10-11 02:14:11.884733",
+          "finishedAt": "2026-10-11 02:13:59.909346"
+        },
+        {
+          "id": "69277ad8-e052-49ac-80d9-e0f5d5b5e445",
+          "number": 1,
+          "status": "RETRYABLE_FAILURE",
+          "failureCode": "PLATFORM_FAILURE",
+          "startedAt": "2026-10-11 02:13:57.655044",
+          "heartbeatAt": "2026-10-11 02:13:57.655044",
+          "leaseExpiresAt": "2026-10-11 02:14:09.653195",
+          "finishedAt": "2026-10-11 02:13:57.678733"
+        }
+      ],
+      "after": {
+        "kind": "OUTPUT_PREVIEW",
+        "id": "b5115c52-d016-4ae3-9830-e41e09fe37ee",
+        "ownerId": 1,
+        "submissionId": null,
+        "snapshotId": "fbd6cb6c-29f4-4e73-8efb-11e0ff6bc517",
+        "status": "FINISHED",
+        "version": 9,
+        "attemptCount": 4,
+        "maxAttempts": 4,
+        "failureCode": null,
+        "createdAt": "2026-10-11 02:13:57.498614",
+        "startedAt": "2026-10-11 02:13:57.653195",
+        "finishedAt": "2026-10-11 02:14:28.325486",
+        "nextAttemptAt": null,
+        "leaseExpired": false,
+        "expiresAt": null,
+        "executionRecoveryUsed": true
+      },
+      "receipt": {
+        "id": "565837ee-e68b-4c4d-b257-534595f10be3",
+        "scope": "EXECUTION",
+        "kind": "OUTPUT_PREVIEW",
+        "taskId": "b5115c52-d016-4ae3-9830-e41e09fe37ee",
+        "targetId": "b5115c52-d016-4ae3-9830-e41e09fe37ee",
+        "eventId": "0c6d0099-4354-435c-a6e3-ecca6d492b01",
+        "version": 7,
+        "createdAt": "2026-10-11 02:14:26.326583"
+      },
+      "resultVerified": true
+    },
+    {
+      "kind": "SELF_TEST",
+      "id": "42b14ae8-2390-4ae9-85c9-30af6982f687",
+      "resultPath": "/api/v1/self-tests/42b14ae8-2390-4ae9-85c9-30af6982f687",
+      "before": {
+        "kind": "SELF_TEST",
+        "id": "42b14ae8-2390-4ae9-85c9-30af6982f687",
+        "ownerId": 1,
+        "submissionId": null,
+        "snapshotId": "b214733f-cd58-44f3-8f55-c0dd0ea8196f",
+        "status": "SYSTEM_ERROR",
+        "version": 6,
+        "attemptCount": 3,
+        "maxAttempts": 3,
+        "failureCode": "PLATFORM_FAILURE",
+        "createdAt": "2026-10-11 02:14:04.154426",
+        "startedAt": "2026-10-11 02:14:04.369851",
+        "finishedAt": "2026-10-11 02:14:10.472651",
+        "nextAttemptAt": null,
+        "leaseExpired": false,
+        "expiresAt": "2026-10-12 02:14:10.472651",
+        "executionRecoveryUsed": false
+      },
+      "oldAttempts": [
+        {
+          "id": "ce394d05-e48c-4c40-b362-f59b5c28dc94",
+          "number": 3,
+          "status": "DEAD_LETTERED",
+          "failureCode": "PLATFORM_FAILURE",
+          "startedAt": "2026-10-11 02:14:10.451385",
+          "heartbeatAt": "2026-10-11 02:14:10.451385",
+          "leaseExpiresAt": "2026-10-11 02:14:22.450601",
+          "finishedAt": "2026-10-11 02:14:10.471950"
+        },
+        {
+          "id": "892a1efb-b627-44af-b33d-7e5435462a7b",
+          "number": 2,
+          "status": "RETRYABLE_FAILURE",
+          "failureCode": "PLATFORM_FAILURE",
+          "startedAt": "2026-10-11 02:14:06.407826",
+          "heartbeatAt": "2026-10-11 02:14:06.407826",
+          "leaseExpiresAt": "2026-10-11 02:14:18.406813",
+          "finishedAt": "2026-10-11 02:14:06.431650"
+        },
+        {
+          "id": "fc2c042a-01cd-4f92-a564-bab9eefda55a",
+          "number": 1,
+          "status": "RETRYABLE_FAILURE",
+          "failureCode": "PLATFORM_FAILURE",
+          "startedAt": "2026-10-11 02:14:04.370461",
+          "heartbeatAt": "2026-10-11 02:14:04.370461",
+          "leaseExpiresAt": "2026-10-11 02:14:16.369851",
+          "finishedAt": "2026-10-11 02:14:04.398739"
+        }
+      ],
+      "after": {
+        "kind": "SELF_TEST",
+        "id": "42b14ae8-2390-4ae9-85c9-30af6982f687",
+        "ownerId": 1,
+        "submissionId": null,
+        "snapshotId": "b214733f-cd58-44f3-8f55-c0dd0ea8196f",
+        "status": "FINISHED",
+        "version": 9,
+        "attemptCount": 4,
+        "maxAttempts": 4,
+        "failureCode": null,
+        "createdAt": "2026-10-11 02:14:04.154426",
+        "startedAt": "2026-10-11 02:14:04.369851",
+        "finishedAt": "2026-10-11 02:14:30.541968",
+        "nextAttemptAt": null,
+        "leaseExpired": false,
+        "expiresAt": "2026-10-12 02:14:30.541968",
+        "executionRecoveryUsed": true
+      },
+      "receipt": {
+        "id": "61568311-d143-4ed5-ba11-c1ee392aa907",
+        "scope": "EXECUTION",
+        "kind": "SELF_TEST",
+        "taskId": "42b14ae8-2390-4ae9-85c9-30af6982f687",
+        "targetId": "42b14ae8-2390-4ae9-85c9-30af6982f687",
+        "eventId": "3403bdfd-a7d3-4345-836d-7c485c029005",
+        "version": 7,
+        "createdAt": "2026-10-11 02:14:28.528850"
+      },
+      "resultVerified": true
+    }
+  ],
+  "checks": [
+    {
+      "method": "GET",
+      "path": "/api/v1/auth/session",
+      "status": 200
+    },
+    {
+      "method": "POST",
+      "path": "/api/v1/auth/login",
+      "status": 200
+    },
+    {
+      "method": "GET",
+      "path": "/api/v1/admin/auth/session",
+      "status": 200
+    },
+    {
+      "method": "POST",
+      "path": "/api/v1/admin/auth/login",
+      "status": 200
+    },
+    {
+      "method": "POST",
+      "path": "/api/v1/problems/sum-two-integers/submissions",
+      "status": 202
+    },
+    {
+      "method": "GET",
+      "path": "/api/v1/admin/operations/tasks?kind=FORMAL&size=50",
+      "status": 200
+    },
+    {
+      "method": "POST",
+      "path": "/api/v1/problems/sum-two-integers/submissions",
+      "status": 202
+    },
+    {
+      "method": "GET",
+      "path": "/api/v1/admin/operations/tasks?kind=FORMAL&size=50",
+      "status": 200
+    },
+    {
+      "method": "POST",
+      "path": "/api/v1/classrooms",
+      "status": 201
+    },
+    {
+      "method": "POST",
+      "path": "/api/v1/classrooms/61c4eb30-2d77-46f1-802d-3d8bdb0de2b8/assignments",
+      "status": 201
+    },
+    {
+      "method": "POST",
+      "path": "/api/v1/classrooms/61c4eb30-2d77-46f1-802d-3d8bdb0de2b8/assignments/b9fccaea-5126-4b62-bfb3-adf1b547b925/publish",
+      "status": 200
+    },
+    {
+      "method": "POST",
+      "path": "/api/v1/classrooms/61c4eb30-2d77-46f1-802d-3d8bdb0de2b8/assignments/b9fccaea-5126-4b62-bfb3-adf1b547b925/problems/sum-two-integers/submissions",
+      "status": 202
+    },
+    {
+      "method": "GET",
+      "path": "/api/v1/admin/operations/tasks?kind=FORMAL&size=50",
+      "status": 200
+    },
+    {
+      "method": "POST",
+      "path": "/api/v1/me/authored-problems",
+      "status": 201
+    },
+    {
+      "method": "PUT",
+      "path": "/api/v1/me/authored-problems/46c6d9ca-eefb-48a1-a4f2-2c1fffb2d428",
+      "status": 200
+    },
+    {
+      "method": "PUT",
+      "path": "/api/v1/me/authored-problems/46c6d9ca-eefb-48a1-a4f2-2c1fffb2d428/tests",
+      "status": 200
+    },
+    {
+      "method": "POST",
+      "path": "/api/v1/me/authored-problems/46c6d9ca-eefb-48a1-a4f2-2c1fffb2d428/validations",
+      "status": 202
+    },
+    {
+      "method": "POST",
+      "path": "/api/v1/me/authored-problems",
+      "status": 201
+    },
+    {
+      "method": "PUT",
+      "path": "/api/v1/me/authored-problems/9b3c2f2e-e42a-49f0-a1bf-fed44870685e",
+      "status": 200
+    },
+    {
+      "method": "PUT",
+      "path": "/api/v1/me/authored-problems/9b3c2f2e-e42a-49f0-a1bf-fed44870685e/tests",
+      "status": 200
+    },
+    {
+      "method": "POST",
+      "path": "/api/v1/me/authored-problems/9b3c2f2e-e42a-49f0-a1bf-fed44870685e/output-previews",
+      "status": 202
+    },
+    {
+      "method": "POST",
+      "path": "/api/v1/problems/sum-two-integers/self-tests",
+      "status": 202
+    },
+    {
+      "method": "GET",
+      "path": "/api/v1/admin/operations/tasks/FORMAL/9184d20a-7500-419e-99f6-9b08b9a828d7",
+      "status": 200
+    },
+    {
+      "method": "GET",
+      "path": "/api/v1/admin/operations/tasks/FORMAL/9184d20a-7500-419e-99f6-9b08b9a828d7/attempts",
+      "status": 200
+    },
+    {
+      "method": "GET",
+      "path": "/api/v1/admin/operations/tasks/FORMAL/e86ed82c-5cd6-4d95-be4e-0a152390db3d",
+      "status": 200
+    },
+    {
+      "method": "GET",
+      "path": "/api/v1/admin/operations/tasks/FORMAL/e86ed82c-5cd6-4d95-be4e-0a152390db3d/attempts",
+      "status": 200
+    },
+    {
+      "method": "GET",
+      "path": "/api/v1/admin/operations/tasks/FORMAL/2a52faef-0923-4027-a22b-d2b754c5fd59",
+      "status": 200
+    },
+    {
+      "method": "GET",
+      "path": "/api/v1/admin/operations/tasks/FORMAL/2a52faef-0923-4027-a22b-d2b754c5fd59/attempts",
+      "status": 200
+    },
+    {
+      "method": "GET",
+      "path": "/api/v1/admin/operations/tasks/VALIDATE/6f9eaa57-6b38-427e-a7e4-3e7ba4b90c05",
+      "status": 200
+    },
+    {
+      "method": "GET",
+      "path": "/api/v1/admin/operations/tasks/VALIDATE/6f9eaa57-6b38-427e-a7e4-3e7ba4b90c05/attempts",
+      "status": 200
+    },
+    {
+      "method": "GET",
+      "path": "/api/v1/admin/operations/tasks/OUTPUT_PREVIEW/b5115c52-d016-4ae3-9830-e41e09fe37ee",
+      "status": 200
+    },
+    {
+      "method": "GET",
+      "path": "/api/v1/admin/operations/tasks/OUTPUT_PREVIEW/b5115c52-d016-4ae3-9830-e41e09fe37ee/attempts",
+      "status": 200
+    },
+    {
+      "method": "GET",
+      "path": "/api/v1/admin/operations/tasks/SELF_TEST/42b14ae8-2390-4ae9-85c9-30af6982f687",
+      "status": 200
+    },
+    {
+      "method": "GET",
+      "path": "/api/v1/admin/operations/tasks/SELF_TEST/42b14ae8-2390-4ae9-85c9-30af6982f687/attempts",
+      "status": 200
+    },
+    {
+      "method": "GET",
+      "path": "/api/v1/classrooms/61c4eb30-2d77-46f1-802d-3d8bdb0de2b8/assignments/b9fccaea-5126-4b62-bfb3-adf1b547b925",
+      "status": 200
+    },
+    {
+      "method": "GET",
+      "path": "/api/v1/auth/session",
+      "status": 200
+    },
+    {
+      "method": "POST",
+      "path": "/api/v1/auth/login",
+      "status": 200
+    },
+    {
+      "method": "GET",
+      "path": "/api/v1/admin/auth/session",
+      "status": 200
+    },
+    {
+      "method": "POST",
+      "path": "/api/v1/admin/auth/login",
+      "status": 200
+    },
+    {
+      "method": "GET",
+      "path": "/api/v1/admin/auth/session",
+      "status": 200
+    },
+    {
+      "method": "POST",
+      "path": "/api/v1/admin/auth/login",
+      "status": 200
+    },
+    {
+      "method": "POST",
+      "path": "/api/v1/admin/operations/tasks/FORMAL/9184d20a-7500-419e-99f6-9b08b9a828d7/retry",
+      "status": 403
+    },
+    {
+      "method": "POST",
+      "path": "/api/v1/admin/operations/tasks/FORMAL/9184d20a-7500-419e-99f6-9b08b9a828d7/retry",
+      "status": 403
+    },
+    {
+      "method": "POST",
+      "path": "/api/v1/admin/operations/tasks/FORMAL/9184d20a-7500-419e-99f6-9b08b9a828d7/retry",
+      "status": 200
+    },
+    {
+      "method": "POST",
+      "path": "/api/v1/admin/operations/tasks/FORMAL/9184d20a-7500-419e-99f6-9b08b9a828d7/retry",
+      "status": 200
+    },
+    {
+      "method": "POST",
+      "path": "/api/v1/admin/operations/tasks/FORMAL/9184d20a-7500-419e-99f6-9b08b9a828d7/retry",
+      "status": 409
+    },
+    {
+      "method": "GET",
+      "path": "/api/v1/admin/operations/tasks/FORMAL/9184d20a-7500-419e-99f6-9b08b9a828d7",
+      "status": 200
+    },
+    {
+      "method": "GET",
+      "path": "/api/v1/admin/operations/tasks/FORMAL/9184d20a-7500-419e-99f6-9b08b9a828d7/attempts",
+      "status": 200
+    },
+    {
+      "method": "GET",
+      "path": "/api/v1/admin/operations/tasks/FORMAL/9184d20a-7500-419e-99f6-9b08b9a828d7/recoveries",
+      "status": 200
+    },
+    {
+      "method": "POST",
+      "path": "/api/v1/admin/operations/tasks/FORMAL/9184d20a-7500-419e-99f6-9b08b9a828d7/retry",
+      "status": 409
+    },
+    {
+      "method": "POST",
+      "path": "/api/v1/admin/operations/tasks/FORMAL/2a52faef-0923-4027-a22b-d2b754c5fd59/retry",
+      "status": 403
+    },
+    {
+      "method": "POST",
+      "path": "/api/v1/admin/operations/tasks/FORMAL/2a52faef-0923-4027-a22b-d2b754c5fd59/retry",
+      "status": 403
+    },
+    {
+      "method": "POST",
+      "path": "/api/v1/admin/operations/tasks/FORMAL/2a52faef-0923-4027-a22b-d2b754c5fd59/retry",
+      "status": 200
+    },
+    {
+      "method": "POST",
+      "path": "/api/v1/admin/operations/tasks/FORMAL/2a52faef-0923-4027-a22b-d2b754c5fd59/retry",
+      "status": 200
+    },
+    {
+      "method": "POST",
+      "path": "/api/v1/admin/operations/tasks/FORMAL/2a52faef-0923-4027-a22b-d2b754c5fd59/retry",
+      "status": 409
+    },
+    {
+      "method": "GET",
+      "path": "/api/v1/classrooms/61c4eb30-2d77-46f1-802d-3d8bdb0de2b8/assignments/b9fccaea-5126-4b62-bfb3-adf1b547b925",
+      "status": 200
+    },
+    {
+      "method": "GET",
+      "path": "/api/v1/admin/operations/tasks/FORMAL/2a52faef-0923-4027-a22b-d2b754c5fd59",
+      "status": 200
+    },
+    {
+      "method": "GET",
+      "path": "/api/v1/admin/operations/tasks/FORMAL/2a52faef-0923-4027-a22b-d2b754c5fd59/attempts",
+      "status": 200
+    },
+    {
+      "method": "GET",
+      "path": "/api/v1/admin/operations/tasks/FORMAL/2a52faef-0923-4027-a22b-d2b754c5fd59/recoveries",
+      "status": 200
+    },
+    {
+      "method": "POST",
+      "path": "/api/v1/admin/operations/tasks/FORMAL/2a52faef-0923-4027-a22b-d2b754c5fd59/retry",
+      "status": 409
+    },
+    {
+      "method": "POST",
+      "path": "/api/v1/admin/operations/tasks/VALIDATE/6f9eaa57-6b38-427e-a7e4-3e7ba4b90c05/retry",
+      "status": 403
+    },
+    {
+      "method": "POST",
+      "path": "/api/v1/admin/operations/tasks/VALIDATE/6f9eaa57-6b38-427e-a7e4-3e7ba4b90c05/retry",
+      "status": 403
+    },
+    {
+      "method": "POST",
+      "path": "/api/v1/admin/operations/tasks/VALIDATE/6f9eaa57-6b38-427e-a7e4-3e7ba4b90c05/retry",
+      "status": 200
+    },
+    {
+      "method": "POST",
+      "path": "/api/v1/admin/operations/tasks/VALIDATE/6f9eaa57-6b38-427e-a7e4-3e7ba4b90c05/retry",
+      "status": 200
+    },
+    {
+      "method": "POST",
+      "path": "/api/v1/admin/operations/tasks/VALIDATE/6f9eaa57-6b38-427e-a7e4-3e7ba4b90c05/retry",
+      "status": 409
+    },
+    {
+      "method": "GET",
+      "path": "/api/v1/admin/operations/tasks/VALIDATE/6f9eaa57-6b38-427e-a7e4-3e7ba4b90c05",
+      "status": 200
+    },
+    {
+      "method": "GET",
+      "path": "/api/v1/admin/operations/tasks/VALIDATE/6f9eaa57-6b38-427e-a7e4-3e7ba4b90c05/attempts",
+      "status": 200
+    },
+    {
+      "method": "GET",
+      "path": "/api/v1/admin/operations/tasks/VALIDATE/6f9eaa57-6b38-427e-a7e4-3e7ba4b90c05/recoveries",
+      "status": 200
+    },
+    {
+      "method": "POST",
+      "path": "/api/v1/admin/operations/tasks/VALIDATE/6f9eaa57-6b38-427e-a7e4-3e7ba4b90c05/retry",
+      "status": 409
+    },
+    {
+      "method": "POST",
+      "path": "/api/v1/admin/operations/tasks/OUTPUT_PREVIEW/b5115c52-d016-4ae3-9830-e41e09fe37ee/retry",
+      "status": 403
+    },
+    {
+      "method": "POST",
+      "path": "/api/v1/admin/operations/tasks/OUTPUT_PREVIEW/b5115c52-d016-4ae3-9830-e41e09fe37ee/retry",
+      "status": 403
+    },
+    {
+      "method": "POST",
+      "path": "/api/v1/admin/operations/tasks/OUTPUT_PREVIEW/b5115c52-d016-4ae3-9830-e41e09fe37ee/retry",
+      "status": 200
+    },
+    {
+      "method": "POST",
+      "path": "/api/v1/admin/operations/tasks/OUTPUT_PREVIEW/b5115c52-d016-4ae3-9830-e41e09fe37ee/retry",
+      "status": 200
+    },
+    {
+      "method": "POST",
+      "path": "/api/v1/admin/operations/tasks/OUTPUT_PREVIEW/b5115c52-d016-4ae3-9830-e41e09fe37ee/retry",
+      "status": 409
+    },
+    {
+      "method": "GET",
+      "path": "/api/v1/me/authored-problems/9b3c2f2e-e42a-49f0-a1bf-fed44870685e",
+      "status": 200
+    },
+    {
+      "method": "GET",
+      "path": "/api/v1/admin/operations/tasks/OUTPUT_PREVIEW/b5115c52-d016-4ae3-9830-e41e09fe37ee",
+      "status": 200
+    },
+    {
+      "method": "GET",
+      "path": "/api/v1/admin/operations/tasks/OUTPUT_PREVIEW/b5115c52-d016-4ae3-9830-e41e09fe37ee/attempts",
+      "status": 200
+    },
+    {
+      "method": "GET",
+      "path": "/api/v1/admin/operations/tasks/OUTPUT_PREVIEW/b5115c52-d016-4ae3-9830-e41e09fe37ee/recoveries",
+      "status": 200
+    },
+    {
+      "method": "POST",
+      "path": "/api/v1/admin/operations/tasks/OUTPUT_PREVIEW/b5115c52-d016-4ae3-9830-e41e09fe37ee/retry",
+      "status": 409
+    },
+    {
+      "method": "POST",
+      "path": "/api/v1/admin/operations/tasks/SELF_TEST/42b14ae8-2390-4ae9-85c9-30af6982f687/retry",
+      "status": 403
+    },
+    {
+      "method": "POST",
+      "path": "/api/v1/admin/operations/tasks/SELF_TEST/42b14ae8-2390-4ae9-85c9-30af6982f687/retry",
+      "status": 403
+    },
+    {
+      "method": "POST",
+      "path": "/api/v1/admin/operations/tasks/SELF_TEST/42b14ae8-2390-4ae9-85c9-30af6982f687/retry",
+      "status": 200
+    },
+    {
+      "method": "POST",
+      "path": "/api/v1/admin/operations/tasks/SELF_TEST/42b14ae8-2390-4ae9-85c9-30af6982f687/retry",
+      "status": 200
+    },
+    {
+      "method": "POST",
+      "path": "/api/v1/admin/operations/tasks/SELF_TEST/42b14ae8-2390-4ae9-85c9-30af6982f687/retry",
+      "status": 409
+    },
+    {
+      "method": "GET",
+      "path": "/api/v1/admin/operations/tasks/SELF_TEST/42b14ae8-2390-4ae9-85c9-30af6982f687",
+      "status": 200
+    },
+    {
+      "method": "GET",
+      "path": "/api/v1/admin/operations/tasks/SELF_TEST/42b14ae8-2390-4ae9-85c9-30af6982f687/attempts",
+      "status": 200
+    },
+    {
+      "method": "GET",
+      "path": "/api/v1/admin/operations/tasks/SELF_TEST/42b14ae8-2390-4ae9-85c9-30af6982f687/recoveries",
+      "status": 200
+    },
+    {
+      "method": "POST",
+      "path": "/api/v1/admin/operations/tasks/SELF_TEST/42b14ae8-2390-4ae9-85c9-30af6982f687/retry",
+      "status": 409
+    }
+  ],
+  "checkedAt": "2026-10-11T02:14:30.709Z",
+  "executionRecoveryPassed": true
+}

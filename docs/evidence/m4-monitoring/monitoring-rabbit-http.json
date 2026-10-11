@@ -1,0 +1,473 @@
+{
+  "submissionId": "6bce4de5-1263-4ee9-b84b-9821304d203c",
+  "taskId": "b27cbdbb-727b-4471-9771-de2cf1ffea47",
+  "requestId": "0738ed29-4f1c-424d-bd16-30dc707fc25e",
+  "acceptedWhileRabbitUnavailable": true,
+  "duplicateSameId": true,
+  "noExecutionAttemptDuringOutage": true,
+  "checks": [
+    {
+      "path": "/api/v1/auth/session",
+      "method": "GET",
+      "status": 200
+    },
+    {
+      "path": "/api/v1/auth/login",
+      "method": "POST",
+      "status": 200
+    },
+    {
+      "path": "/api/v1/admin/auth/session",
+      "method": "GET",
+      "status": 200
+    },
+    {
+      "path": "/api/v1/admin/auth/login",
+      "method": "POST",
+      "status": 200
+    },
+    {
+      "path": "/api/v1/problems/sum-two-integers/submissions",
+      "method": "POST",
+      "status": 202
+    },
+    {
+      "path": "/api/v1/problems/sum-two-integers/submissions",
+      "method": "POST",
+      "status": 202
+    },
+    {
+      "path": "/api/v1/submissions/6bce4de5-1263-4ee9-b84b-9821304d203c",
+      "method": "GET",
+      "status": 200
+    },
+    {
+      "path": "/api/v1/admin/operations/tasks?kind=FORMAL&size=50",
+      "method": "GET",
+      "status": 200
+    },
+    {
+      "path": "/api/v1/admin/operations/tasks?kind=FORMAL&size=50",
+      "method": "GET",
+      "status": 200
+    },
+    {
+      "path": "/api/v1/admin/operations/tasks?kind=FORMAL&size=50",
+      "method": "GET",
+      "status": 200
+    },
+    {
+      "path": "/api/v1/admin/operations/tasks?kind=FORMAL&size=50",
+      "method": "GET",
+      "status": 200
+    },
+    {
+      "path": "/api/v1/admin/operations/tasks?kind=FORMAL&size=50",
+      "method": "GET",
+      "status": 200
+    },
+    {
+      "path": "/api/v1/admin/operations/tasks?kind=FORMAL&size=50",
+      "method": "GET",
+      "status": 200
+    },
+    {
+      "path": "/api/v1/admin/operations/tasks?kind=FORMAL&size=50",
+      "method": "GET",
+      "status": 200
+    },
+    {
+      "path": "/api/v1/admin/operations/tasks?kind=FORMAL&size=50",
+      "method": "GET",
+      "status": 200
+    },
+    {
+      "path": "/api/v1/admin/operations/tasks?kind=FORMAL&size=50",
+      "method": "GET",
+      "status": 200
+    },
+    {
+      "path": "/api/v1/admin/operations/tasks?kind=FORMAL&size=50",
+      "method": "GET",
+      "status": 200
+    },
+    {
+      "path": "/api/v1/admin/operations/tasks?kind=FORMAL&size=50",
+      "method": "GET",
+      "status": 200
+    },
+    {
+      "path": "/api/v1/admin/operations/tasks?kind=FORMAL&size=50",
+      "method": "GET",
+      "status": 200
+    },
+    {
+      "path": "/api/v1/admin/operations/tasks?kind=FORMAL&size=50",
+      "method": "GET",
+      "status": 200
+    },
+    {
+      "path": "/api/v1/admin/operations/tasks?kind=FORMAL&size=50",
+      "method": "GET",
+      "status": 200
+    },
+    {
+      "path": "/api/v1/admin/operations/tasks?kind=FORMAL&size=50",
+      "method": "GET",
+      "status": 200
+    },
+    {
+      "path": "/api/v1/admin/operations/tasks?kind=FORMAL&size=50",
+      "method": "GET",
+      "status": 200
+    },
+    {
+      "path": "/api/v1/admin/operations/tasks?kind=FORMAL&size=50",
+      "method": "GET",
+      "status": 200
+    },
+    {
+      "path": "/api/v1/admin/operations/tasks?kind=FORMAL&size=50",
+      "method": "GET",
+      "status": 200
+    },
+    {
+      "path": "/api/v1/admin/operations/tasks?kind=FORMAL&size=50",
+      "method": "GET",
+      "status": 200
+    },
+    {
+      "path": "/api/v1/admin/operations/tasks?kind=FORMAL&size=50",
+      "method": "GET",
+      "status": 200
+    },
+    {
+      "path": "/api/v1/admin/operations/tasks?kind=FORMAL&size=50",
+      "method": "GET",
+      "status": 200
+    },
+    {
+      "path": "/api/v1/admin/operations/tasks?kind=FORMAL&size=50",
+      "method": "GET",
+      "status": 200
+    },
+    {
+      "path": "/api/v1/admin/operations/tasks?kind=FORMAL&size=50",
+      "method": "GET",
+      "status": 200
+    },
+    {
+      "path": "/api/v1/admin/operations/tasks?kind=FORMAL&size=50",
+      "method": "GET",
+      "status": 200
+    },
+    {
+      "path": "/api/v1/admin/operations/tasks?kind=FORMAL&size=50",
+      "method": "GET",
+      "status": 200
+    },
+    {
+      "path": "/api/v1/admin/operations/tasks?kind=FORMAL&size=50",
+      "method": "GET",
+      "status": 200
+    },
+    {
+      "path": "/api/v1/admin/operations/tasks?kind=FORMAL&size=50",
+      "method": "GET",
+      "status": 200
+    },
+    {
+      "path": "/api/v1/admin/operations/tasks?kind=FORMAL&size=50",
+      "method": "GET",
+      "status": 200
+    },
+    {
+      "path": "/api/v1/admin/operations/tasks?kind=FORMAL&size=50",
+      "method": "GET",
+      "status": 200
+    },
+    {
+      "path": "/api/v1/admin/operations/tasks?kind=FORMAL&size=50",
+      "method": "GET",
+      "status": 200
+    },
+    {
+      "path": "/api/v1/admin/operations/tasks?kind=FORMAL&size=50",
+      "method": "GET",
+      "status": 200
+    },
+    {
+      "path": "/api/v1/admin/operations/tasks?kind=FORMAL&size=50",
+      "method": "GET",
+      "status": 200
+    },
+    {
+      "path": "/api/v1/admin/operations/tasks?kind=FORMAL&size=50",
+      "method": "GET",
+      "status": 200
+    },
+    {
+      "path": "/api/v1/admin/operations/tasks?kind=FORMAL&size=50",
+      "method": "GET",
+      "status": 200
+    },
+    {
+      "path": "/api/v1/admin/operations/tasks?kind=FORMAL&size=50",
+      "method": "GET",
+      "status": 200
+    },
+    {
+      "path": "/api/v1/admin/operations/tasks?kind=FORMAL&size=50",
+      "method": "GET",
+      "status": 200
+    },
+    {
+      "path": "/api/v1/admin/operations/tasks?kind=FORMAL&size=50",
+      "method": "GET",
+      "status": 200
+    },
+    {
+      "path": "/api/v1/admin/operations/tasks?kind=FORMAL&size=50",
+      "method": "GET",
+      "status": 200
+    },
+    {
+      "path": "/api/v1/admin/operations/tasks?kind=FORMAL&size=50",
+      "method": "GET",
+      "status": 200
+    },
+    {
+      "path": "/api/v1/admin/operations/tasks?kind=FORMAL&size=50",
+      "method": "GET",
+      "status": 200
+    },
+    {
+      "path": "/api/v1/admin/operations/tasks?kind=FORMAL&size=50",
+      "method": "GET",
+      "status": 200
+    },
+    {
+      "path": "/api/v1/admin/operations/tasks?kind=FORMAL&size=50",
+      "method": "GET",
+      "status": 200
+    },
+    {
+      "path": "/api/v1/admin/operations/tasks?kind=FORMAL&size=50",
+      "method": "GET",
+      "status": 200
+    },
+    {
+      "path": "/api/v1/admin/operations/tasks?kind=FORMAL&size=50",
+      "method": "GET",
+      "status": 200
+    },
+    {
+      "path": "/api/v1/admin/operations/tasks?kind=FORMAL&size=50",
+      "method": "GET",
+      "status": 200
+    },
+    {
+      "path": "/api/v1/admin/operations/tasks?kind=FORMAL&size=50",
+      "method": "GET",
+      "status": 200
+    },
+    {
+      "path": "/api/v1/admin/operations/tasks?kind=FORMAL&size=50",
+      "method": "GET",
+      "status": 200
+    },
+    {
+      "path": "/api/v1/admin/operations/tasks?kind=FORMAL&size=50",
+      "method": "GET",
+      "status": 200
+    },
+    {
+      "path": "/api/v1/admin/operations/tasks?kind=FORMAL&size=50",
+      "method": "GET",
+      "status": 200
+    },
+    {
+      "path": "/api/v1/admin/operations/tasks?kind=FORMAL&size=50",
+      "method": "GET",
+      "status": 200
+    },
+    {
+      "path": "/api/v1/admin/operations/tasks?kind=FORMAL&size=50",
+      "method": "GET",
+      "status": 200
+    },
+    {
+      "path": "/api/v1/admin/operations/tasks/FORMAL/b27cbdbb-727b-4471-9771-de2cf1ffea47/attempts",
+      "method": "GET",
+      "status": 200
+    },
+    {
+      "path": "/api/v1/auth/session",
+      "method": "GET",
+      "status": 200
+    },
+    {
+      "path": "/api/v1/auth/login",
+      "method": "POST",
+      "status": 200
+    },
+    {
+      "path": "/api/v1/admin/auth/session",
+      "method": "GET",
+      "status": 200
+    },
+    {
+      "path": "/api/v1/admin/auth/login",
+      "method": "POST",
+      "status": 200
+    },
+    {
+      "path": "/api/v1/admin/operations/tasks/FORMAL/b27cbdbb-727b-4471-9771-de2cf1ffea47",
+      "method": "GET",
+      "status": 200
+    },
+    {
+      "path": "/api/v1/admin/operations/tasks/FORMAL/b27cbdbb-727b-4471-9771-de2cf1ffea47/events",
+      "method": "GET",
+      "status": 200
+    },
+    {
+      "path": "/api/v1/admin/auth/session",
+      "method": "GET",
+      "status": 200
+    },
+    {
+      "path": "/api/v1/admin/auth/login",
+      "method": "POST",
+      "status": 200
+    },
+    {
+      "path": "/api/v1/admin/operations/tasks/FORMAL/b27cbdbb-727b-4471-9771-de2cf1ffea47/events/9fd848ea-e84d-4d7d-adcf-5105b0907a6d/recover",
+      "method": "POST",
+      "status": 403
+    },
+    {
+      "path": "/api/v1/admin/operations/tasks/FORMAL/b27cbdbb-727b-4471-9771-de2cf1ffea47/events/9fd848ea-e84d-4d7d-adcf-5105b0907a6d/recover",
+      "method": "POST",
+      "status": 403
+    },
+    {
+      "path": "/api/v1/admin/operations/tasks/FORMAL/b27cbdbb-727b-4471-9771-de2cf1ffea47/events/9fd848ea-e84d-4d7d-adcf-5105b0907a6d/recover",
+      "method": "POST",
+      "status": 200
+    },
+    {
+      "path": "/api/v1/admin/operations/tasks/FORMAL/b27cbdbb-727b-4471-9771-de2cf1ffea47/events/9fd848ea-e84d-4d7d-adcf-5105b0907a6d/recover",
+      "method": "POST",
+      "status": 200
+    },
+    {
+      "path": "/api/v1/admin/operations/tasks/FORMAL/b27cbdbb-727b-4471-9771-de2cf1ffea47/events/9fd848ea-e84d-4d7d-adcf-5105b0907a6d/recover",
+      "method": "POST",
+      "status": 409
+    },
+    {
+      "path": "/api/v1/admin/operations/tasks/FORMAL/b27cbdbb-727b-4471-9771-de2cf1ffea47/events",
+      "method": "GET",
+      "status": 200
+    },
+    {
+      "path": "/api/v1/admin/operations/tasks/FORMAL/b27cbdbb-727b-4471-9771-de2cf1ffea47/events",
+      "method": "GET",
+      "status": 200
+    },
+    {
+      "path": "/api/v1/admin/operations/tasks/FORMAL/b27cbdbb-727b-4471-9771-de2cf1ffea47/attempts",
+      "method": "GET",
+      "status": 200
+    },
+    {
+      "path": "/api/v1/auth/session",
+      "method": "GET",
+      "status": 200
+    },
+    {
+      "path": "/api/v1/auth/login",
+      "method": "POST",
+      "status": 200
+    },
+    {
+      "path": "/api/v1/admin/auth/session",
+      "method": "GET",
+      "status": 200
+    },
+    {
+      "path": "/api/v1/admin/auth/login",
+      "method": "POST",
+      "status": 200
+    },
+    {
+      "path": "/api/v1/admin/operations/tasks/FORMAL/b27cbdbb-727b-4471-9771-de2cf1ffea47",
+      "method": "GET",
+      "status": 200
+    },
+    {
+      "path": "/api/v1/admin/operations/tasks/FORMAL/b27cbdbb-727b-4471-9771-de2cf1ffea47/events",
+      "method": "GET",
+      "status": 200
+    },
+    {
+      "path": "/api/v1/submissions/6bce4de5-1263-4ee9-b84b-9821304d203c",
+      "method": "GET",
+      "status": 200
+    },
+    {
+      "path": "/api/v1/submissions/6bce4de5-1263-4ee9-b84b-9821304d203c",
+      "method": "GET",
+      "status": 200
+    },
+    {
+      "path": "/api/v1/submissions/6bce4de5-1263-4ee9-b84b-9821304d203c",
+      "method": "GET",
+      "status": 200
+    },
+    {
+      "path": "/api/v1/submissions/6bce4de5-1263-4ee9-b84b-9821304d203c",
+      "method": "GET",
+      "status": 200
+    },
+    {
+      "path": "/api/v1/submissions/6bce4de5-1263-4ee9-b84b-9821304d203c",
+      "method": "GET",
+      "status": 200
+    },
+    {
+      "path": "/api/v1/admin/operations/tasks/FORMAL/b27cbdbb-727b-4471-9771-de2cf1ffea47/events",
+      "method": "GET",
+      "status": 200
+    }
+  ],
+  "checkedAt": "2026-10-11T05:14:11.805Z",
+  "originalEventId": "9fd848ea-e84d-4d7d-adcf-5105b0907a6d",
+  "manualDeliveryRecovery": {
+    "receipt": {
+      "id": "c88e7073-428a-4993-bbeb-f21661c378ca",
+      "scope": "DELIVERY",
+      "kind": "FORMAL",
+      "taskId": "b27cbdbb-727b-4471-9771-de2cf1ffea47",
+      "targetId": "9fd848ea-e84d-4d7d-adcf-5105b0907a6d",
+      "eventId": "9fd848ea-e84d-4d7d-adcf-5105b0907a6d",
+      "version": 0,
+      "createdAt": "2026-10-11 05:14:05.442792"
+    },
+    "reason": "Rabbit私有暂停演练已恢复，重送原持久化事件",
+    "originalPublishAttempts": 5,
+    "originalFailureCode": "PUBLISH_EXCEPTION"
+  },
+  "sameEventPublished": true,
+  "rearmedBeforeWorkerResumed": true,
+  "realWorkerAc": true,
+  "terminal": {
+    "submissionId": "6bce4de5-1263-4ee9-b84b-9821304d203c",
+    "processingStatus": "FINISHED",
+    "statusVersion": 2,
+    "verdict": "AC",
+    "diagnosticMessage": null
+  },
+  "allPassed": true
+}

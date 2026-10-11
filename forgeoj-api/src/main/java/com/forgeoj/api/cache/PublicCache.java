@@ -19,14 +19,14 @@ public class PublicCache {
     public static String index(long revision){return RedisSupport.PREFIX+"public:"+revision+":index";}
     public <T>T read(String request,Class<T> type,Supplier<T> load){return read(request,json.constructType(type),load);}
     public <T>T read(String request,JavaType type,Supplier<T> load) {
-        if(!redis.enabled())return load.get();
+        if(!redis.enabled()){com.forgeoj.api.observability.MonitoringMetrics.PROCESS.increment(com.forgeoj.api.observability.MonitoringMetrics.Event.CACHE_BYPASS);return load.get();}
         long revision=mapper.publicRevision();
         String digest=RedisSupport.digest(request);
         String key=RedisSupport.PREFIX+"public:"+revision+":"+digest;
         synchronized(locks[Math.floorMod(key.hashCode(),locks.length)]) {
             String cached=redis.get(key);
             if(cached!=null) {
-                try{return decode(cached,digest,type);}catch(InvalidCache | tools.jackson.core.JacksonException invalid){redis.delete(key);}
+                try{return cachedValue(cached,digest,type);}catch(InvalidCache | tools.jackson.core.JacksonException invalid){redis.delete(key);}
             }
             String lock=key+":lock",token=redis.acquire(lock,Duration.ofSeconds(3));
             if(token==null && redis.get(lock)!=null) {
@@ -34,11 +34,12 @@ public class PublicCache {
                     try{Thread.sleep(20);}catch(InterruptedException interrupted){Thread.currentThread().interrupt();break;}
                     String filled=redis.get(key);
                     if(filled!=null) {
-                        try{return decode(filled,digest,type);}catch(InvalidCache | tools.jackson.core.JacksonException invalid){redis.delete(key);break;}
+                        try{return cachedValue(filled,digest,type);}catch(InvalidCache | tools.jackson.core.JacksonException invalid){redis.delete(key);break;}
                     }
                 }
             }
             try {
+                com.forgeoj.api.observability.MonitoringMetrics.PROCESS.increment(com.forgeoj.api.observability.MonitoringMetrics.Event.CACHE_MISS);
                 T value=load.get();
                 String body=json.writeValueAsString(value);
                 if(token!=null&&body.length()<=1048576)redis.publish(lock,token,key,index(revision),revision,encode(digest,body),Duration.ofSeconds(ThreadLocalRandom.current().nextLong(240,301)));
@@ -50,6 +51,10 @@ public class PublicCache {
         }
     }
     private String encode(String request,String body){return json.writeValueAsString(new Entry(request,body,RedisSupport.digest(body)));}
+    private <T>T cachedValue(String cached,String request,JavaType type){
+        try{T value=decode(cached,request,type);com.forgeoj.api.observability.MonitoringMetrics.PROCESS.increment(com.forgeoj.api.observability.MonitoringMetrics.Event.CACHE_HIT);return value;}
+        catch(ResponseStatusException missing){com.forgeoj.api.observability.MonitoringMetrics.PROCESS.increment(com.forgeoj.api.observability.MonitoringMetrics.Event.CACHE_HIT);throw missing;}
+    }
     private <T>T decode(String value,String request,JavaType type) {
         if(value.length()>2097152)throw new InvalidCache();
         Entry entry=json.readValue(value,Entry.class);

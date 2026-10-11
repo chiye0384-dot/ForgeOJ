@@ -70,6 +70,7 @@ final class JudgeTaskListener {
             acknowledge(channel, deliveryTag, message, null);
             return;
         }
+        long executionStarted=System.nanoTime();
         try {
             runner.run(claim.claimedTask());
         } catch (RuntimeException executionFailure) {
@@ -77,6 +78,8 @@ final class JudgeTaskListener {
                     null, "EXECUTION_FAILURE");
             channel.basicReject(deliveryTag, false);
             return;
+        } finally {
+            com.forgeoj.worker.observability.MonitoringMetrics.PROCESS.execution(System.nanoTime()-executionStarted);
         }
         try {
             acknowledge(channel, deliveryTag, message, claim.claimedTask());

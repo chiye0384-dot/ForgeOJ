@@ -1,0 +1,47 @@
+{
+  "checks": [
+    {
+      "base": "http://api:9091",
+      "path": "/metrics",
+      "method": "GET",
+      "status": 401
+    },
+    {
+      "base": "http://api-replica:9091",
+      "path": "/metrics",
+      "method": "GET",
+      "status": 401
+    },
+    {
+      "base": "http://worker:9092",
+      "path": "/metrics",
+      "method": "GET",
+      "status": 401
+    },
+    {
+      "base": "http://api:9091",
+      "path": "/metrics",
+      "method": "GET",
+      "status": 401
+    },
+    {
+      "base": "http://api-replica:9091",
+      "path": "/metrics",
+      "method": "GET",
+      "status": 401
+    },
+    {
+      "base": "http://worker:9092",
+      "path": "/metrics",
+      "method": "GET",
+      "status": 401
+    }
+  ],
+  "phases": {
+    "jwt-denied": {
+      "allPassed": true,
+      "checkedAt": "2026-10-11T02:14:35.227Z",
+      "checks": 6
+    }
+  }
+}

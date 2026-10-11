@@ -1,5 +1,7 @@
 # ForgeOJ
 
+2026-10-11当前：M-1～M4全部**VERIFIED**，M4七步与5/5总门禁通过；实现提交`30b7f53`已推送`feat/m2-accounts`。固定LinuxAPI335/Worker139/前端129、准确构件与三依赖故障/私有监控/消息关联验收见[M4总审计](docs/M4-GATE-AUDIT.md)。下一阶段M5仍PLANNED，尚无Release或RESUME_READY。新对话从[M5启动指令](docs/M5-NEW-CHAT-START.md)与[详细交接](docs/M5-NEXT-CHAT-HANDOFF.md)只读接手；用户继续后再实施。下方旧日期状态/下一步为历史，开发Compose与临时监控配置不能直接当作生产部署。
+
 2026-10-10增量：第5步已推送并核验70042f8；用户授权第6步公共搜索，当前IN_PROGRESS（设计/上游评估），见[公共搜索设计](docs/M4-SEARCH-DESIGN.md)。暂无业务实现或新验收；ELv2已获明确确认（D-047），额度约剩15%，按用户要求停在已批准设计检查点。第7步未开始。以下第5步验收记录继续有效。
 
 2026-10-10 当前：M4第5步 Redis 与故障降级已 **[VERIFIED](docs/M4-REDIS-VALIDATION.md)**。固定Linux API289+Worker133=422、前端124项及全部检查通过；同JAR双API、真实Redis故障/清空、108项HTTP、两次真实AC、浏览器撤权/降级、数据库事实及精确清理通过。完整M4仍IN_PROGRESS，第6步搜索已进入设计/上游评估，第7步监控未开始。下方带日期记录为历史，以本段和最终机器证据为准。
@@ -16,11 +18,11 @@
 
 2026-10-06 班级与成员首单元 **VERIFIED**，完整 M3 `IN_PROGRESS`：V15、班级作用域权限、邀请码、退出/移除/恢复、接受转让、归档及 `/classrooms` 页面完成。最终 Linux API192、Worker133（分开构建，首轮包装脚本异常如实保留）、前端75；62项真实HTTP、三账号真实页面/SQL、正常与回退AC、38项权限拒绝、日志/Outbox/队列及精确清理通过。[设计](docs/M3-CLASSROOM-DESIGN.md)、[验收](docs/M3-CLASSROOM-VALIDATION.md) 和 [脱敏证据](docs/evidence/m3-classroom/README.md) 记录实际结果；班级私有题、作业及教师关联查询尚未实现。完整M2保持VERIFIED，以下日期段落保留历史，M4/M5仍PLANNED，没有Release或RESUME_READY。
 
-接续开发请先读 [M4最新交接](docs/M4-NEXT-CHAT-HANDOFF.md)：已完成边界、证据、后续第3步和保留文件说明均在其中；M3交接已作为历史入口保留。
+当前接续请先读[M5启动指令](docs/M5-NEW-CHAT-START.md)及[详细交接](docs/M5-NEXT-CHAT-HANDOFF.md)；旧M3/M4交接仅保留历史，不再作为下一阶段入口。
 
 2026-10-05 最终门禁：完整 M2 已 VERIFIED，5/5 门禁通过，见 [最终审计](docs/M2-GATE-AUDIT.md)。本轮补齐历史版本两项直接回归，固定 Linux API182+Worker133=315 零失败/错误/跳过；原前端69及其全部输入保持一致，已接受运行时的全部生产源码与 JAR 重新核对一致。真实浏览器/Worker故障/QQ邮件沿用各自原验收记录，本轮未重新回放或发送邮件。受控审核发布和 Redis/ES 仍属 M4；下一步 M3 班级与作业，尚未正式发布或新增 RESUME_READY。下方单元段落保留历史，当前完整状态以本段为准。
 
-> 当前状态：M-1、M0、M1、完整M2、完整M3均 `VERIFIED`；M4第2步管理身份单元 `VERIFIED`，完整M4 `IN_PROGRESS`；M5/V1.1仍 `PLANNED`，尚未发布。
+> 当前状态：M-1～M4均`VERIFIED`；M5/V1.1仍`PLANNED`；尚未正式发布或进入RESUME_READY。
 >
 > 需求基线：2026-09-24；工程基线：2026-09-28
 

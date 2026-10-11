@@ -1,3 +1,5 @@
+2026-10-11新对话接续入口：[M5启动指令](docs/M5-NEW-CHAT-START.md)与[详细交接](docs/M5-NEXT-CHAT-HANDOFF.md)。用户本次要求写交接并创建新对话：第一轮只读接手/核对/提出M5建议，等待用户明确“继续”才实施或启动长验证。完成M4实现基线30b7f53619f9c1aaf930ea1df64f82f5d42271be已推送；本交接是后续文档提交，不启动M5部署。旧M4/M3交接下一步已被取代，保护文件、桌面连续性与额度规则保持。
+
 2026-10-11当前验收：M4第7步及完整M4 **VERIFIED**，五项总门禁全部PASS。独立Grafana OSS许可已批准；固定Linux API335/59 suites、Worker139/26 suites、前端129/25零失败/错误/跳过，428业务/测试/前端输入、84实际提供前端与准确JAR一致。同JAR新回放覆盖Redis/ES/RabbitMQ中断恢复、真实AC、原事件受审计重送、整个索引删除重建、实际promtool及Grafana14面板/23表达式/只读浏览器登录退出。6个唯一原死信事件对应6份实测消息，每一份均匹配原事件ID和四字段契约；诊断前后数量不变，没有清空死信。本轮拥有者资源与沙箱清理全0。详见[M4总门禁](docs/M4-GATE-AUDIT.md)、[监控验收](docs/M4-MONITORING-VALIDATION.md)及[最终机器证据](docs/evidence/m4-monitoring/verification.json)。M5仍PLANNED，未PR/main/tag/Release/RESUME_READY；按授权交付feat/m2-accounts后停止。
 
 接续先核实际Git和docs/M4-MONITORING-VALIDATION.md；本单元已完成，没有当前运行中的演练。tab5保留about:blank/deliverable，不关闭内置标签页或Codex/ChatGPT。docs/M2-NEXT-CHAT-HANDOFF.md与.smtp.qq.local仍只允许核对摘要，禁止读取、暂存或改动。后续阶段须用户再次授权，并遵守额度不足下一组就停止。

@@ -1,18 +1,19 @@
 import { createRouter, createWebHistory } from 'vue-router'
+import { requireAccount } from './accountNavigation'
 
-import JudgeWorkspaceView from '@/views/JudgeWorkspaceView.vue'
-import AccountView from '@/views/AccountView.vue'
-import ProblemLibraryView from '@/views/ProblemLibraryView.vue'
-import LearningView from '@/views/LearningView.vue'
-import AuthoringView from '@/views/AuthoringView.vue'
-import ClassroomView from '@/views/ClassroomView.vue'
-import ClassroomProblemsView from '@/views/ClassroomProblemsView.vue'
-import AssignmentsView from '@/views/AssignmentsView.vue'
-import TeacherRecordsView from '@/views/TeacherRecordsView.vue'
-import AdminView from '@/views/AdminView.vue'
-import AdminContentView from '@/views/AdminContentView.vue'
-import AdminOperationsView from '@/views/AdminOperationsView.vue'
-import AdminSearchView from '@/views/AdminSearchView.vue'
+const JudgeWorkspaceView = () => import('@/views/JudgeWorkspaceView.vue')
+const AccountView = () => import('@/views/AccountView.vue')
+const ProblemLibraryView = () => import('@/views/ProblemLibraryView.vue')
+const LearningView = () => import('@/views/LearningView.vue')
+const AuthoringView = () => import('@/views/AuthoringView.vue')
+const ClassroomView = () => import('@/views/ClassroomView.vue')
+const ClassroomProblemsView = () => import('@/views/ClassroomProblemsView.vue')
+const AssignmentsView = () => import('@/views/AssignmentsView.vue')
+const TeacherRecordsView = () => import('@/views/TeacherRecordsView.vue')
+const AdminView = () => import('@/views/AdminView.vue')
+const AdminContentView = () => import('@/views/AdminContentView.vue')
+const AdminOperationsView = () => import('@/views/AdminOperationsView.vue')
+const AdminSearchView = () => import('@/views/AdminSearchView.vue')
 
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
@@ -44,38 +45,60 @@ const router = createRouter({
     {
       path: '/classrooms/:id/assignments/:assignmentId/records',
       name: 'teacher-records',
+      meta: { requiresAccount: true },
       component: TeacherRecordsView,
       props: true,
     },
     {
       path: '/classrooms/:id/assignments',
       name: 'assignments',
+      meta: { requiresAccount: true },
       component: AssignmentsView,
       props: true,
     },
     {
       path: '/classrooms/:id/problems',
       name: 'classroom-problems',
+      meta: { requiresAccount: true },
       component: ClassroomProblemsView,
       props: true,
     },
-    { path: '/classrooms', name: 'classrooms', component: ClassroomView },
-    { path: '/authoring', name: 'authoring', component: AuthoringView },
-    { path: '/learning', name: 'learning', component: LearningView },
+    {
+      path: '/classrooms',
+      name: 'classrooms',
+      meta: { requiresAccount: true },
+      component: ClassroomView,
+    },
+    {
+      path: '/authoring',
+      name: 'authoring',
+      meta: { requiresAccount: true },
+      component: AuthoringView,
+    },
+    {
+      path: '/learning',
+      name: 'learning',
+      meta: { requiresAccount: true },
+      component: LearningView,
+    },
     { path: '/account', name: 'account', component: AccountView },
+    { path: '/account/:action(register|forgot|resend)', component: AccountView },
     { path: '/problems', name: 'problem-library', component: ProblemLibraryView },
     {
       path: '/problems/:slug',
       name: 'problem-workspace',
+      meta: { requiresAccount: true },
       component: JudgeWorkspaceView,
       props: true,
     },
     {
       path: '/',
       name: 'judge-workspace',
-      component: JudgeWorkspaceView,
+      redirect: { name: 'problem-library' },
     },
   ],
 })
+
+router.beforeEach(requireAccount)
 
 export default router

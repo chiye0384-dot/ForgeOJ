@@ -45,6 +45,7 @@ export interface ProblemResponse {
 export type ProblemDifficulty = 'EASY' | 'MEDIUM' | 'HARD'
 
 export interface ProblemListQuery {
+  progress?: 'SOLVED' | 'ATTEMPTED' | 'UNTRIED'
   keyword?: string
   difficulty?: ProblemDifficulty
   tag?: string
@@ -53,6 +54,7 @@ export interface ProblemListQuery {
 }
 
 export interface ProblemListItem {
+  progress?: 'SOLVED' | 'ATTEMPTED' | 'UNTRIED'
   slug: string
   title: string
   difficulty: ProblemDifficulty | null
@@ -62,6 +64,7 @@ export interface ProblemListItem {
 }
 
 export interface ProblemListResponse {
+  resume?: { slug: string; title: string } | null
   items: ProblemListItem[]
   page: number
   size: number
@@ -197,6 +200,14 @@ export function getProblems(query: ProblemListQuery): Promise<ProblemListRespons
 export function getProblemTags(): Promise<{ tags: string[] }> {
   return requestJson('/api/v1/problem-tags')
 }
+export function getPracticeProblems(query: ProblemListQuery): Promise<ProblemListResponse> {
+  const parameters = new URLSearchParams({ page: String(query.page), size: String(query.size) })
+  if (query.keyword) parameters.set('keyword', query.keyword)
+  if (query.difficulty) parameters.set('difficulty', query.difficulty)
+  if (query.tag) parameters.set('tag', query.tag)
+  if (query.progress) parameters.set('progress', query.progress)
+  return requestJson(`/api/v1/me/practice-problems?${parameters}`)
+}
 
 export function createSubmission(
   slug: string,
@@ -211,9 +222,18 @@ export function createSubmission(
       'Idempotency-Key': idempotencyKey,
     },
     body: JSON.stringify({ language: 'JAVA_21', sourceCode }),
+    signal: AbortSignal.timeout(15000),
   })
 }
 
 export function getSubmission(submissionId: string): Promise<SubmissionStatusResponse> {
   return requestJson(`/api/v1/submissions/${encodeURIComponent(submissionId)}`)
+}
+
+export function completeRegistration(token: string, csrf: CsrfToken): Promise<SessionResponse> {
+  return requestJson('/api/v1/auth/registration/complete', {
+    method: 'POST',
+    headers: jsonHeaders(csrf),
+    body: JSON.stringify({ token }),
+  })
 }

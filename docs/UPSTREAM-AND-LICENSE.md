@@ -1,3 +1,5 @@
+2026-10-30 最新：做题与复盘闭环本地范围 VERIFIED，见[验收](PRACTICE-CONTINUITY-VALIDATION.md)。左侧第五项提交历史/本人历史源码与确认载入、原键原源码异常重试、题库个人进度筛选/继续草稿/官方题单、中文判题建议和编辑偏好、A+B说明及20份教学题解修订已验证。固定Linux受影响API58项/4 suites、完整Windows前端159项/30 suites、20份新代码真实AC及真实HTTP/桌面/窄屏通过；本轮未重跑API全量或Worker套件。原MySQL容器/挂载与历史保留，保护文件仅核SHA未变；未新增外部依赖或许可。原审核快照不改，教学修订另有本地维护收据，人工教学评价未完成。M5/Release/公网状态不提升，新源码部署前需重打包。网站保持运行，工作树未提交推送；下方旧日期段落是历史。
+
 2026-10-11当前验收：M4第7步及完整M4 **VERIFIED**，五项总门禁全部PASS。独立Grafana OSS许可已批准；固定Linux API335/59 suites、Worker139/26 suites、前端129/25零失败/错误/跳过，428业务/测试/前端输入、84实际提供前端与准确JAR一致。同JAR新回放覆盖Redis/ES/RabbitMQ中断恢复、真实AC、原事件受审计重送、整个索引删除重建、实际promtool及Grafana14面板/23表达式/只读浏览器登录退出。6个唯一原死信事件对应6份实测消息，每一份均匹配原事件ID和四字段契约；诊断前后数量不变，没有清空死信。本轮拥有者资源与沙箱清理全0。详见[M4总门禁](M4-GATE-AUDIT.md)、[监控验收](M4-MONITORING-VALIDATION.md)及[最终机器证据](evidence/m4-monitoring/verification.json)。M5仍PLANNED，未PR/main/tag/Release/RESUME_READY；按授权交付feat/m2-accounts后停止。
 
 > 以下旧日期的阶段、额度、待许可、未完成和“下一步”文字为历史快照；实时状态以上方当前验收与对应最终证据为准。
@@ -312,3 +314,14 @@ Maven、npm、Docker 镜像和操作系统包都属于第三方组成。Release 
 2026-10-10已从官方发布与固定tag原LICENSE核对：[Prometheus3.15.0](https://github.com/prometheus/prometheus/releases/tag/v3.15.0)为[Apache-2.0](https://raw.githubusercontent.com/prometheus/prometheus/v3.15.0/LICENSE)；[Grafana OSS13.2.3](https://github.com/grafana/grafana/releases/tag/v13.2.3)为[AGPLv3](https://raw.githubusercontent.com/grafana/grafana/v13.2.3/LICENSE)，并对照[官方许可说明](https://grafana.com/licensing/)。这是研究事实，不是已接入/批准/验收。此前ES ELv2批准不自动涵盖新AGPL义务，当前实际用户答复仍待到达。
 
 推荐独立未修改的免费服务，仅标准HTTP聚合指标/面板、自有代码Apache-2.0、保留原许可和对应源码出处；没有企业付费/Cloud/插件或服务端源码复制。确认后才取得不可变镜像digest、revision、原LICENSE/NOTICE/第三方告知及运行证据，不能先填假摘要或标VERIFIED。当前自有JDK21指标/抓取实现没有新Maven依赖；两服务尚未拉取/运行，见[监控设计](M4-MONITORING-DESIGN.md)。
+
+### U-014：M5独立Nginx部署入口
+
+2026-10-11：官方Nginx1.30.5-trixie固定镜像摘要sha256:9bf97bd7714f5e24c1ccd545ecb9eb5435cb6d109c97cebb15e7e455e0239edb（linux/amd64），nginx -v实测1.30.5。官方docker-nginx构建源码a16f1329e13e7273c4103f75d863ca625b75109e:stable/debian，登记https://github.com/docker-library/official-images/blob/master/library/nginx，许可https://nginx.org/LICENSE。镜像内/usr/share/doc/nginx/copyright原字节保存在docs/licenses/nginx-1.30.5/copyright，SHA256 4f72e2bccf0bcd839dd447ab6f359336f428caa1987a9afec2bc9ade5711658a，gitattributes -text保持。独立未修改Nginx标准HTTP/TLS代理，配置为ForgeOJ原创Apache-2.0；无商业服务/业务代码复制，首次公开发布仍需完整OS/传递依赖/源码可获得性审计。首份包同时保留本原告知和M5设计中的版本/来源记录，不把upstream能力称自研。
+2026-10-27备份工具：没有引入新的Python/Maven依赖或新的镜像。加密助手复用已固定eclipse-temurin:21.0.12_8-jdk-jammy@sha256:c7d5863b5dd8f26b90c64f1d80cc2b0e5a5e4642f8db9955a370d348edd8f438内OpenSSL；MySQL客户端/导出仍在既有数据库镜像。独立工具Zip不分发这些运行时；上游原告知继续由部署包保留。生产发行完整审计仍未完成。
+
+2026-10-27镜像配置回滚工具未增加Python/Maven/Node依赖、上游镜像或许可证选择；只用既有固定运行时/Compose/MySQL及原创标准库编排。独立Zip不分发镜像或第三方二进制；现有部署包原告知与正式发行审计边界保持。
+
+2026-10-28性能基线未增加Python/Node/Maven依赖或镜像选择。复用已固定node:24.14.1-bookworm-slim@sha256:b506e7321f176aae77317f99d67a24b272c1f09f1d10f1761f2773447d8da26c，使用Node内置https/crypto/fs/perf_hooks与Python标准库；Java/数据库/监控保持既有固定镜像。k6仅为负载方法参考，未拉取/安装/复制其实现。证据Zip只含原创源码、报告、测试原始元数据和LICENSE/NOTICE，无上游二进制或私密配置。
+
+2026-10-28只读热点诊断未增加依赖、镜像或许可选择。复用既有Temurin JDK21 jcmd/JFR、Connector/J 9.7元数据、MySQL Performance Schema和原固定Node客户端；原创Python标准库归纳和最小JFC。证据包含自有测试记录api.jfr而无JDK/驱动/数据库运行时，LICENSE/NOTICE保留，未引入第三方profiler或云服务。

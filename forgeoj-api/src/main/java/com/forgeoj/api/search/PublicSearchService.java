@@ -21,11 +21,18 @@ public class PublicSearchService {
     private final ElasticSearchClient es;
     private final ProblemLibraryService library;
     private final TransactionTemplate snapshot;
+    @org.springframework.beans.factory.annotation.Autowired
+    private com.forgeoj.api.learning.PracticeMapper practice;
     public PublicSearchService(SearchMapper mapper,CacheMapper epochs,ElasticSearchClient es,ProblemLibraryService library,PlatformTransactionManager manager){
         this.mapper=mapper;this.epochs=epochs;this.es=es;this.library=library;snapshot=new TransactionTemplate(manager);
         snapshot.setReadOnly(true);snapshot.setIsolationLevel(TransactionDefinition.ISOLATION_REPEATABLE_READ);
     }
     public Page search(String keyword,String difficulty,String tag,int page,int size){
+        return searchPersonal(keyword,difficulty,tag,page,size,0,null);
+    }
+    public Page searchPersonal(String keyword,String difficulty,String tag,int page,int size,long userId,String progress){
+        progress=com.forgeoj.api.learning.PracticeService.progress(progress);
+        final String filter=progress;
         String word=normalize(keyword,100),level=normalize(difficulty,8),selected=normalize(tag,32);
         if(word==null||page<1||size<1||size>50||level!=null&&!Set.of("EASY","MEDIUM","HARD").contains(level))throw invalid();
         try{
@@ -41,8 +48,15 @@ public class PublicSearchService {
                 var checked=new HashMap<Long,SearchMapper.Projection>();var tags=new HashMap<Long,List<String>>();
                 for(int i=0;i<candidates.size();i+=50){
                     var batch=candidates.subList(i,Math.min(i+50,candidates.size()));
-                    for(var projection:mapper.projections(batch.stream().map(ElasticSearchClient.Candidate::problemId).toList())){
-                        checked.put(projection.problemId(),projection);tags.put(projection.problemId(),mapper.tags(projection.problemId()));
+                    var ids = batch.stream().map(ElasticSearchClient.Candidate::problemId).toList();
+                    for (var projection : mapper.projections(ids)) {
+                        checked.put(projection.problemId(), projection);
+                        tags.put(projection.problemId(), new ArrayList<>());
+                    }
+                    // Keep the same snapshot and tag ordering while removing one SQL call per hit.
+                    for (var row : mapper.tagsForProblems(ids)) {
+                        var problemTags = tags.get(row.problemId());
+                        if (problemTags != null) problemTags.add(row.tag());
                     }
                 }
                 for(var candidate:candidates){
@@ -51,15 +65,29 @@ public class PublicSearchService {
                         ||!es.document(p,tags.get(p.problemId())).equals(candidate.document())
                         ||level!=null&&!level.equals(p.difficulty())||selected!=null&&tags.get(p.problemId()).stream().noneMatch(matchingTags::contains))throw ElasticSearchClient.unavailable();
                 }
+                var selectedCandidates=candidates;
+                if(userId>0&&filter!=null&&!candidates.isEmpty()){
+                    Map<String,String> states=new HashMap<>();
+                    practice.states(userId,candidates.stream().map(c->checked.get(c.problemId()).slug()).toList()).forEach(p->states.put(p.slug(),p.progress()));
+                    selectedCandidates=candidates.stream().filter(c->filter.equals(states.get(checked.get(c.problemId()).slug()))).toList();
+                }
                 long offset=((long)page-1)*size;
-                var items=candidates.stream().skip(offset).limit(size).map(c->{var p=checked.get(c.problemId());
+                var items=selectedCandidates.stream().skip(offset).limit(size).map(c->{var p=checked.get(c.problemId());
                     return new Item(p.slug(),p.title(),p.difficulty(),tags.get(p.problemId()),p.judgeVersion(),highlights(p.title(),p.statementText(),word));}).toList();
-                return new Page(items,page,size,candidates.size(),"FULL_TEXT",null);
+                return new Page(items,page,size,selectedCandidates.size(),"FULL_TEXT",null);
             });
             if(epochs.publicRevision()!=epoch)throw ElasticSearchClient.unavailable();
             var after=mapper.control();if(!Objects.equals(control,after))throw ElasticSearchClient.unavailable();
             com.forgeoj.api.observability.MonitoringMetrics.PROCESS.increment(com.forgeoj.api.observability.MonitoringMetrics.Event.SEARCH_FULL_TEXT);return result;
         }catch(ElasticSearchClient.SearchUnavailable unavailable){
+            if(userId>0){
+                String pattern="%"+word.replace("=","==").replace("%","=%").replace("_","=_")+"%";
+                long total=practice.count(userId,pattern,level,selected,filter),offset=((long)page-1)*size;
+                var rows=offset>=total?List.<com.forgeoj.api.problem.ProblemLibraryMapper.ProblemSummaryRow>of():practice.page(userId,pattern,level,selected,filter,size,offset);
+                var tagMap=new HashMap<Long,List<String>>();
+                if(!rows.isEmpty())for(var row:mapper.tagsForProblems(rows.stream().map(com.forgeoj.api.problem.ProblemLibraryMapper.ProblemSummaryRow::id).toList()))tagMap.computeIfAbsent(row.problemId(),k->new ArrayList<>()).add(row.tag());
+                return new Page(rows.stream().map(p->new Item(p.slug(),p.title(),p.difficulty(),tagMap.getOrDefault(p.id(),List.of()),p.judgeVersion(),highlights(p.title(),"",word))).toList(),page,size,total,"TITLE_FALLBACK",NOTICE);
+            }
             var fallback=library.list(word,level,selected,page,size);
             com.forgeoj.api.observability.MonitoringMetrics.PROCESS.increment(com.forgeoj.api.observability.MonitoringMetrics.Event.SEARCH_TITLE_FALLBACK);
             return new Page(fallback.items().stream().map(p->new Item(p.slug(),p.title(),p.difficulty(),p.tags(),p.judgeVersion(),highlights(p.title(),"",word))).toList(),page,size,fallback.total(),"TITLE_FALLBACK",NOTICE);

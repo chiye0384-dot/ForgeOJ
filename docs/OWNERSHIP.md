@@ -77,3 +77,13 @@ M2 普通账号单元（`VERIFIED`）的自有部分是 V6 账号/会话/摘要�
 这个根许可证不改变归属边界：Spring Initializr/create-vue 生成文件、Maven Wrapper、本仓库保留的其他上游代码以及 Maven/npm 依赖继续遵循各自许可证；题目、题解、测试数据和用户提交内容也不会自动改用 Apache-2.0。来源、修改点和发布义务继续记录在 `THIRD_PARTY_NOTICES.md`、`licenses/` 与直接依赖清单中。
 
 2026-10-03 题解访问单元 VERIFIED 的自有部分为 V10 独立快照/私有首次查看、当前版本本人 AC 与严格确认授权、会话复核/锁/幂等、页面文本/乱序与实际权限/迁移/竞争测试。固定 Linux 269/45 与真实浏览器证据见 [验收](M2-SOLUTION-ACCESS-VALIDATION.md)；复用既有 Spring/MyBatis/Vue/Testcontainers，无新增依赖或外部源码。新 DirectMySQLContainer 是两个模块的 test-only 构建诊断适配，运行 JAR 均无它，不将 Docker/Maven/Testcontainers 底层能力表述为自建。完整内容验证/发布与 M2 未完成。
+
+2026-10-11：M5独立包的Compose、镜像配方、Nginx配置、文件秘密/预检/安装脚本、使用既有Flyway的部署runner和隔离审计为ForgeOJ原创Apache-2.0；上游运行时/Nginx/TLS/数据库/容器隔离能力保持原归属。设计和首版包已实现，有限检查见M5-DEPLOYMENT-VALIDATION，未真实主机上线或Release。
+
+2026-10-27：deploy/production/scripts/backup.py、tools/deployment/Verify-BackupTools.py、Verify-BackupCryptoPosix.py、backup-source-fixture.mjs、Build-BackupKit.py及备份文档是ForgeOJ原创Apache-2.0。密码学、数据库导出与容器由既有上游提供，不称自研；独立工具Zip只分发原创Python/文档与LICENSE/NOTICE/manifest，不含上游二进制、业务副本或密钥。
+
+2026-10-27：rollback.py、Verify-ImageRollback.py、rollback-http.mjs、Build-RollbackKit.py与镜像配置回滚文档为ForgeOJ原创Apache-2.0，复用已有backup.py标准库辅助。Docker镜像/数据库/Java能力仍属上游；测试坏镜像只含原镜像的故意无效启动配置，不进入发行包。独立Zip不含上游二进制、实例文件、计划或before.env。
+
+2026-10-28：tools/performance/内的准备器、原创合成题生成器、Node HTTPS客户端、采样编排、独立归纳器、证据打包器及报告为ForgeOJ原创Apache-2.0。数据复用项目原公开开发测试用例且只进新空库测试。没有导入k6、第三方脚本或运行时二进制；方法说明引用官方文档，不将Node/Java/Docker/MySQL能力称自研。
+
+2026-10-28只读诊断：diagnose-hotspots.py、diagnostic_queries.py、最小diagnostic.jfc、summarize-hotspots.py、build-diagnostic-evidence.py和DriverDefaults探针/合成观测归纳为ForgeOJ原创Apache-2.0。JFR/jcmd、数据库执行计划和驱动元数据由既有JDK/MySQL/Connector/J提供，不称为自研分析引擎。没有复制第三方栈分析器或其他OJ数据；失败工具版本保留，当前诊断不含优化实现。

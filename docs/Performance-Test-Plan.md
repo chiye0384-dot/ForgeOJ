@@ -1,6 +1,12 @@
+2026-10-28当前：SQL/API只读热点诊断有限单元 **VERIFIED**，见[报告](M5-PERFORMANCE-DIAGNOSTIC-REPORT.md)、[设计](M5-PERFORMANCE-DIAGNOSTIC-DESIGN.md)与[安全收据](evidence/m5-hotspot-diagnostic/20261028/verification.json)。四阶段94862次测量请求错误0、客户端/HTTP计数一致；原301题数据/权限与428编译输入不变，无新判题提交。列表三类业务SELECT及事务/状态交互、JDBC解析样本，详情缓存命中仍查epoch并解码JSON；实际Connector/J语句缓存默认关闭。SQL摘要计数差异未解释，长摘要截断、32帧缺项目帧、探针/JIT/GC/配额混杂明确保留，不能宣称唯一瓶颈、优化收益或云容量。
+
+诊断证据Zip：target/forgeoj-hotspot-diagnostic-20261028-164533-ad5de7da/forgeoj-hotspot-diagnostic-20261028-164533-ad5de7da.zip，7795432字节/131文件，SHA256 814881967ca9662952b3f9aeac8c2cf713e407e7bf81d3832ad90ca5cebdecc2；白名单/实际随机秘密/敏感JFR事件/CRC/逐文件摘要通过。拥有者forgeoj-m5check-147876a386fa容器/卷/网络/三镜像别名和负载容器已精确清理；旧LAN八容器退出保留、无关redis运行。原部署/备份/回滚/基线包均保留，HEAD058f36c771f15735a1e987a21c55074b80f511a9，未提交推送。没有实施优化；下一有限单元建议新隔离项目做仅连接级语句/查询元数据缓存受控A/B，先核整组额度，充分预热/交错重复、固定资源/数据与正确性，收益未证实前不改生产。完整性能计划/M5仍IN_PROGRESS，E-06/E-07/Release/RESUME_READY不提升；真实Linux/域名CA/SMTP、每日异地/密钥保管、跨业务版本回滚、长稳/开放负载/真实试用仍缺。不购买/公网发布/发邀请/PR/main/tag/Release；既有继续授权生效，下方旧下一步为历史，保护文件及桌面连续性规则保持。
+
+2026-10-28当前：本机隔离性能有限基线 **VERIFIED**，见[完整报告](M5-PERFORMANCE-BASELINE-REPORT.md)、[设计](M5-PERFORMANCE-BASELINE-DESIGN.md)与[安全证据](evidence/m5-performance/20261028/verification.json)。最终277633次测量请求状态/网络/超时/内容错误0，13个读阶段由原始NDJSON独立重算并匹配服务端计数；11次真实判题、唯一task/attempt/Outbox，九队列空、无丢失/重复副作用/沙箱残留。并发8吞吐下降、尾延迟升高，API/列表MySQL接近各自2CPU配额，保留两轮波动与首轮工具封顶失败；没有优化比例或云容量结论。完整性能计划/M5保持IN_PROGRESS，E-06/E-07/Release/RESUME_READY不提升。
+
 # ForgeOJ 性能与可靠性测试计划
 
-> 当前状态：`PLANNED`。  
+> 完整计划状态：`IN_PROGRESS`。
 > 当前没有任何可写入简历的 QPS、P95、吞吐或优化比例。
 
 ## 1. 目标

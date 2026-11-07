@@ -150,7 +150,9 @@ label {
 textarea {
   display: block;
   width: 100%;
-  min-height: 4rem;
+  box-sizing: border-box;
+  min-height: 8rem;
+  padding: 0.6rem;
 }
 pre {
   white-space: pre-wrap;

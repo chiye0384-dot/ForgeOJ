@@ -207,6 +207,44 @@ class LearningIntegrationTests {
         assertThat((List<?>)JsonPath.read(get(owner,"/api/v1/me/problem-lists?page=2147483647&size=50").body(),"$.items")).isEmpty();
     }
     private int completed(String id) throws Exception {var result=get(owner,"/api/v1/me/problem-lists/"+id);code(result,200);return JsonPath.read(result.body(),"$.list.completedCount");}
+    @Test void historicalSourceIsOwnerOnlyImmutableAndNeverIncludesJudgeSecrets() throws Exception {
+        String id=submission(1,1,1,"FINISHED","AC");
+        var response=get(owner,"/api/v1/me/submissions/"+id+"/source");code(response,200);
+        assertThat((String)JsonPath.read(response.body(),"$.sourceCode")).isEqualTo("fixture source");
+        assertThat(response.headers().firstValue("Cache-Control")).contains("no-store");
+        assertThat(response.body()).doesNotContain("sha256","testDataset","userId","password");
+        code(get(other,"/api/v1/me/submissions/"+id+"/source?userId=1"),404);
+        code(get(owner,"/api/v1/me/submissions/"+UUID.randomUUID()+"/source"),404);
+        code(get(owner,"/api/v1/me/submissions/not-a-uuid/source"),404);
+        code(get(null,"/api/v1/me/submissions/"+id+"/source"),401);
+        code(draft(owner,"edited draft",0),200);
+        assertThat((String)JsonPath.read(get(owner,"/api/v1/me/submissions/"+id+"/source").body(),"$.sourceCode")).isEqualTo("fixture source");
+        db().update("UPDATE problem SET status='ARCHIVED' WHERE id=1");
+        var archived=get(owner,"/api/v1/me/submissions/"+id+"/source");code(archived,200);
+        assertThat((Object)JsonPath.read(archived.body(),"$.problemSlug")).isNull();
+    }
+    @Test void personalLibraryFiltersBeforePagingOnlyOwnCurrentVersionAndNoSourceLeak() throws Exception {
+        submission(1,1,1,"FINISHED","AC");submission(2,2,2,"FINISHED","AC");
+        var solved=get(owner,"/api/v1/me/practice-problems?progress=SOLVED&size=1");code(solved,200);
+        assertThat((Integer)JsonPath.read(solved.body(),"$.total")).isEqualTo(1);
+        assertThat((String)JsonPath.read(solved.body(),"$.items[0].progress")).isEqualTo("SOLVED");
+        assertThat(solved.headers().firstValue("Cache-Control")).contains("no-store");
+        assertThat(solved.body()).doesNotContain("sourceCode","userId","password","fixture source");
+        var untried=get(owner,"/api/v1/me/practice-problems?progress=UNTRIED&size=1");code(untried,200);
+        assertThat((String)JsonPath.read(untried.body(),"$.items[0].slug")).isEqualTo("second-fixture");
+        submission(1,2,2,"FINISHED","WA");
+        var attempted=get(owner,"/api/v1/me/practice-problems?progress=ATTEMPTED&keyword=第二&size=1");code(attempted,200);
+        assertThat((Integer)JsonPath.read(attempted.body(),"$.total")).isEqualTo(1);
+        assertThat((String)JsonPath.read(attempted.body(),"$.items[0].progress")).isEqualTo("ATTEMPTED");
+        db().update("UPDATE problem SET current_judge_version_id=3 WHERE id=1");
+        assertThat((Integer)JsonPath.read(get(owner,"/api/v1/me/practice-problems?progress=SOLVED").body(),"$.total")).isZero();
+        code(draft(owner,"resume fixture",0),200);
+        assertThat((String)JsonPath.read(get(owner,"/api/v1/me/practice-problems").body(),"$.resume.slug")).isEqualTo("sum-two-integers");
+        code(get(null,"/api/v1/me/practice-problems"),401);
+        code(get(owner,"/api/v1/me/practice-problems?progress=invalid"),400);
+        code(get(owner,"/api/v1/me/practice-problems?size=51"),400);
+        assertThat(get(null,"/api/v1/problems").body()).doesNotContain("progress","resume","sourceCode");
+    }
     private List<Integer> race(Callable<HttpResponse<String>> action) throws Exception {
         try(var executor=Executors.newFixedThreadPool(2)) {
             var start=new CountDownLatch(1);Callable<Integer> call=()->{start.await();return action.call().statusCode();};

@@ -215,3 +215,11 @@ private references are never copied or disclosed. Formal validated/reviewed
 publication, self-test and external SMTP are still unfinished. Fixed Linux tests
 opt into sibling MySQL routing only in test sources; production JARs contain no
 adapter. Other Docker networks need fresh route validation.
+
+生产部署准备见 [独立包模板](production/README.md) 与 [M5设计](../docs/M5-DEPLOYMENT-DESIGN.md)。开发配置不代替它。
+
+手动维护窗加密备份与新空库恢复工具见[操作手册](../docs/M5-BACKUP-RESTORE.md)与[有限验收](../docs/M5-BACKUP-VALIDATION.md)。每日异地运营能力仍未验收。
+
+镜像启动配置的保守回退工具见[手册](../docs/M5-IMAGE-ROLLBACK.md)与[有限验收](../docs/M5-IMAGE-ROLLBACK-VALIDATION.md)。只支持同文件层/同业务构件的ENTRYPOINT变化，跨业务版本与schema回滚仍不支持。
+
+本机隔离性能基线见[报告](../docs/M5-PERFORMANCE-BASELINE-REPORT.md)与[工具](../tools/performance/README.md)；CPU上限仅在新测试包，未改生产模板。该短测不提供云主机容量或优化提升承诺。

@@ -1,5 +1,6 @@
 import { afterEach, beforeEach, describe, expect, it, vi } from 'vitest'
 import { createApp, nextTick } from 'vue'
+import { createMemoryHistory, createRouter } from 'vue-router'
 
 import JudgeWorkspaceView from '../views/JudgeWorkspaceView.vue'
 
@@ -132,7 +133,12 @@ describe('M0 judge workspace', () => {
     vi.stubGlobal('fetch', fetchMock)
 
     const host = document.createElement('div')
-    const app = createApp(JudgeWorkspaceView)
+    const router = createRouter({
+      history: createMemoryHistory(),
+      routes: [{ path: '/:pathMatch(.*)*', component: JudgeWorkspaceView }],
+    })
+    await router.push('/')
+    const app = createApp(JudgeWorkspaceView).use(router)
     app.mount(host)
     await settleVue()
 
@@ -163,7 +169,9 @@ describe('M0 judge workspace', () => {
     expect(host.textContent).toContain('AC')
     expect(host.textContent).toContain('状态版本：2')
     expect(host.textContent).not.toContain('must-never-be-rendered')
-    expect(fetchMock).toHaveBeenCalledTimes(11)
+    expect(
+      fetchMock.mock.calls.filter(([path]) => String(path).includes('/feedbacks')),
+    ).toHaveLength(0)
     expect(vi.getTimerCount()).toBe(0)
 
     expect(fetchMock).toHaveBeenNthCalledWith(
@@ -174,8 +182,7 @@ describe('M0 judge workspace', () => {
         headers: expect.objectContaining({ 'X-CSRF-TOKEN': 'csrf-before-login' }),
       }),
     )
-    expect(fetchMock).toHaveBeenNthCalledWith(
-      8,
+    expect(fetchMock).toHaveBeenCalledWith(
       '/api/v1/problems/sum-two-integers/submissions',
       expect.objectContaining({
         method: 'POST',

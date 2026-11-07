@@ -1,0 +1,1754 @@
+{
+  "status": "PASS",
+  "independentRawRecalculation": true,
+  "readCases": [
+    {
+      "case": "cold-unique-300",
+      "status": "PASS",
+      "mode": "cold",
+      "concurrency": 1,
+      "round": 0,
+      "startedAt": "2026-10-28T01:32:50.305Z",
+      "finishedAt": "2026-10-28T01:32:51.054Z",
+      "elapsedMs": 748.753167,
+      "measurementCount": 300,
+      "warmupCount": 0,
+      "successful": 300,
+      "errors": 0,
+      "timeouts": 0,
+      "networkErrors": 0,
+      "semanticErrors": 0,
+      "statuses": {
+        "200": 300
+      },
+      "attemptedRps": 400.66608492889355,
+      "successfulRps": 400.66608492889355,
+      "errorRate": 0,
+      "allLatency": {
+        "p50Ms": 2.273313999999999,
+        "p95Ms": 3.1220590000000357,
+        "p99Ms": 4.117689999999925
+      },
+      "successLatency": {
+        "p50Ms": 2.273313999999999,
+        "p95Ms": 3.1220590000000357,
+        "p99Ms": 4.117689999999925
+      },
+      "clientCpuPercent": 19.519516770204195,
+      "clientRssBytes": 66760704,
+      "clientEventLoopP99Ms": 10.944511,
+      "model": "closed loop; no retry; same bridge; validated TLS; keep-alive",
+      "maxRequestCap": 100000,
+      "serverConfirmedRequestsIncludingWarmup": 300,
+      "resource": {},
+      "resourceSampleErrors": 0,
+      "cacheCountersIncludingWarmup": {
+        "cache_hit": 0,
+        "cache_miss": 300,
+        "cache_bypass": 0
+      },
+      "mysqlCountersIncludingWarmupAndProbes": {
+        "Questions": 2478,
+        "Queries": 2489,
+        "Slow_queries": 0,
+        "Connections": 2,
+        "Innodb_buffer_pool_read_requests": 2409,
+        "Innodb_buffer_pool_reads": 0
+      }
+    },
+    {
+      "case": "r1-detail-c1",
+      "status": "PASS",
+      "mode": "detail",
+      "concurrency": 1,
+      "round": 1,
+      "startedAt": "2026-10-28T01:33:23.943Z",
+      "finishedAt": "2026-10-28T01:33:43.943Z",
+      "elapsedMs": 20000.178821,
+      "measurementCount": 13868,
+      "warmupCount": 300,
+      "successful": 13868,
+      "errors": 0,
+      "timeouts": 0,
+      "networkErrors": 0,
+      "semanticErrors": 0,
+      "statuses": {
+        "200": 13868
+      },
+      "attemptedRps": 693.3938003313615,
+      "successfulRps": 693.3938003313615,
+      "errorRate": 0,
+      "allLatency": {
+        "p50Ms": 1.301452000000154,
+        "p95Ms": 1.9438790000021982,
+        "p99Ms": 2.800681999999142
+      },
+      "successLatency": {
+        "p50Ms": 1.301452000000154,
+        "p95Ms": 1.9438790000021982,
+        "p99Ms": 2.800681999999142
+      },
+      "clientCpuPercent": 17.705611693240566,
+      "clientRssBytes": 85065728,
+      "clientEventLoopP99Ms": 11.018239,
+      "model": "closed loop; no retry; same bridge; validated TLS; keep-alive",
+      "maxRequestCap": 100000,
+      "serverConfirmedRequestsIncludingWarmup": 14168,
+      "resource": {
+        "api": {
+          "samples": 4,
+          "sampleMeanCpuPercent": 45.125,
+          "maxSampleCpuPercent": 46.43,
+          "maxSampleMemoryMiB": 342.6,
+          "maxSamplePids": 45
+        },
+        "worker": {
+          "samples": 4,
+          "sampleMeanCpuPercent": 0.9925,
+          "maxSampleCpuPercent": 3.48,
+          "maxSampleMemoryMiB": 173.8,
+          "maxSamplePids": 35
+        },
+        "mysql": {
+          "samples": 4,
+          "sampleMeanCpuPercent": 25.54,
+          "maxSampleCpuPercent": 27.19,
+          "maxSampleMemoryMiB": 547.8,
+          "maxSamplePids": 66
+        },
+        "rabbitmq": {
+          "samples": 4,
+          "sampleMeanCpuPercent": 46.550000000000004,
+          "maxSampleCpuPercent": 96.9,
+          "maxSampleMemoryMiB": 248.3,
+          "maxSamplePids": 135
+        },
+        "redis": {
+          "samples": 4,
+          "sampleMeanCpuPercent": 3.465,
+          "maxSampleCpuPercent": 5.66,
+          "maxSampleMemoryMiB": 7.348,
+          "maxSamplePids": 5
+        },
+        "search": {
+          "samples": 4,
+          "sampleMeanCpuPercent": 0.4125,
+          "maxSampleCpuPercent": 0.47,
+          "maxSampleMemoryMiB": 966.9,
+          "maxSamplePids": 103
+        },
+        "web": {
+          "samples": 4,
+          "sampleMeanCpuPercent": 12.3825,
+          "maxSampleCpuPercent": 13.71,
+          "maxSampleMemoryMiB": 39.28,
+          "maxSamplePids": 25
+        },
+        "prometheus": {
+          "samples": 4,
+          "sampleMeanCpuPercent": 1.98,
+          "maxSampleCpuPercent": 2.19,
+          "maxSampleMemoryMiB": 32.58,
+          "maxSamplePids": 7
+        },
+        "grafana": {
+          "samples": 4,
+          "sampleMeanCpuPercent": 2.9775,
+          "maxSampleCpuPercent": 3.41,
+          "maxSampleMemoryMiB": 259.5,
+          "maxSamplePids": 107
+        },
+        "client": {
+          "samples": 4,
+          "sampleMeanCpuPercent": 12.6325,
+          "maxSampleCpuPercent": 17.55,
+          "maxSampleMemoryMiB": 32.77,
+          "maxSamplePids": 11
+        }
+      },
+      "resourceSampleErrors": 0,
+      "cacheCountersIncludingWarmup": {
+        "cache_hit": 13868,
+        "cache_miss": 300,
+        "cache_bypass": 0
+      },
+      "mysqlCountersIncludingWarmupAndProbes": {
+        "Questions": 99855,
+        "Queries": 99892,
+        "Slow_queries": 0,
+        "Connections": 5,
+        "Innodb_buffer_pool_read_requests": 17072,
+        "Innodb_buffer_pool_reads": 0
+      }
+    },
+    {
+      "case": "r1-detail-c4",
+      "status": "PASS",
+      "mode": "detail",
+      "concurrency": 4,
+      "round": 1,
+      "startedAt": "2026-10-28T01:34:14.385Z",
+      "finishedAt": "2026-10-28T01:34:34.393Z",
+      "elapsedMs": 20002.472446,
+      "measurementCount": 41203,
+      "warmupCount": 300,
+      "successful": 41203,
+      "errors": 0,
+      "timeouts": 0,
+      "networkErrors": 0,
+      "semanticErrors": 0,
+      "statuses": {
+        "200": 41203
+      },
+      "attemptedRps": 2059.89535099895,
+      "successfulRps": 2059.89535099895,
+      "errorRate": 0,
+      "allLatency": {
+        "p50Ms": 1.7200020000000222,
+        "p95Ms": 3.0111850000012055,
+        "p99Ms": 3.9717219999997724
+      },
+      "successLatency": {
+        "p50Ms": 1.7200020000000222,
+        "p95Ms": 3.0111850000012055,
+        "p99Ms": 3.9717219999997724
+      },
+      "clientCpuPercent": 41.36928083435391,
+      "clientRssBytes": 105893888,
+      "clientEventLoopP99Ms": 11.083775,
+      "model": "closed loop; no retry; same bridge; validated TLS; keep-alive",
+      "maxRequestCap": 100000,
+      "serverConfirmedRequestsIncludingWarmup": 41503,
+      "resource": {
+        "api": {
+          "samples": 4,
+          "sampleMeanCpuPercent": 168.465,
+          "maxSampleCpuPercent": 171.4,
+          "maxSampleMemoryMiB": 343.7,
+          "maxSamplePids": 47
+        },
+        "worker": {
+          "samples": 4,
+          "sampleMeanCpuPercent": 0.1,
+          "maxSampleCpuPercent": 0.22,
+          "maxSampleMemoryMiB": 172.7,
+          "maxSamplePids": 35
+        },
+        "mysql": {
+          "samples": 4,
+          "sampleMeanCpuPercent": 110.12,
+          "maxSampleCpuPercent": 112.0,
+          "maxSampleMemoryMiB": 548.1,
+          "maxSamplePids": 66
+        },
+        "rabbitmq": {
+          "samples": 4,
+          "sampleMeanCpuPercent": 31.4525,
+          "maxSampleCpuPercent": 76.2,
+          "maxSampleMemoryMiB": 240.2,
+          "maxSamplePids": 135
+        },
+        "redis": {
+          "samples": 4,
+          "sampleMeanCpuPercent": 8.9875,
+          "maxSampleCpuPercent": 9.73,
+          "maxSampleMemoryMiB": 7.605,
+          "maxSamplePids": 5
+        },
+        "search": {
+          "samples": 4,
+          "sampleMeanCpuPercent": 0.4775,
+          "maxSampleCpuPercent": 0.5,
+          "maxSampleMemoryMiB": 967.5,
+          "maxSamplePids": 104
+        },
+        "web": {
+          "samples": 4,
+          "sampleMeanCpuPercent": 40.035,
+          "maxSampleCpuPercent": 42.64,
+          "maxSampleMemoryMiB": 41.55,
+          "maxSamplePids": 25
+        },
+        "prometheus": {
+          "samples": 4,
+          "sampleMeanCpuPercent": 1.82,
+          "maxSampleCpuPercent": 3.93,
+          "maxSampleMemoryMiB": 33.37,
+          "maxSamplePids": 7
+        },
+        "grafana": {
+          "samples": 4,
+          "sampleMeanCpuPercent": 1.36,
+          "maxSampleCpuPercent": 3.41,
+          "maxSampleMemoryMiB": 258.1,
+          "maxSamplePids": 107
+        },
+        "client": {
+          "samples": 4,
+          "sampleMeanCpuPercent": 31.5975,
+          "maxSampleCpuPercent": 48.96,
+          "maxSampleMemoryMiB": 36.83,
+          "maxSamplePids": 11
+        }
+      },
+      "resourceSampleErrors": 0,
+      "cacheCountersIncludingWarmup": {
+        "cache_hit": 41203,
+        "cache_miss": 300,
+        "cache_bypass": 0
+      },
+      "mysqlCountersIncludingWarmupAndProbes": {
+        "Questions": 291238,
+        "Queries": 291280,
+        "Slow_queries": 0,
+        "Connections": 6,
+        "Innodb_buffer_pool_read_requests": 44508,
+        "Innodb_buffer_pool_reads": 0
+      }
+    },
+    {
+      "case": "r1-detail-c8",
+      "status": "PASS",
+      "mode": "detail",
+      "concurrency": 8,
+      "round": 1,
+      "startedAt": "2026-10-28T01:35:07.009Z",
+      "finishedAt": "2026-10-28T01:35:27.048Z",
+      "elapsedMs": 20035.924948,
+      "measurementCount": 35843,
+      "warmupCount": 300,
+      "successful": 35843,
+      "errors": 0,
+      "timeouts": 0,
+      "networkErrors": 0,
+      "semanticErrors": 0,
+      "statuses": {
+        "200": 35843
+      },
+      "attemptedRps": 1788.9366272345653,
+      "successfulRps": 1788.9366272345653,
+      "errorRate": 0,
+      "allLatency": {
+        "p50Ms": 2.20701900000131,
+        "p95Ms": 8.114285999999993,
+        "p99Ms": 43.81808899999851
+      },
+      "successLatency": {
+        "p50Ms": 2.20701900000131,
+        "p95Ms": 8.114285999999993,
+        "p99Ms": 43.81808899999851
+      },
+      "clientCpuPercent": 40.88374268350249,
+      "clientRssBytes": 114216960,
+      "clientEventLoopP99Ms": 11.059199,
+      "model": "closed loop; no retry; same bridge; validated TLS; keep-alive",
+      "maxRequestCap": 100000,
+      "serverConfirmedRequestsIncludingWarmup": 36143,
+      "resource": {
+        "api": {
+          "samples": 4,
+          "sampleMeanCpuPercent": 198.865,
+          "maxSampleCpuPercent": 200.77,
+          "maxSampleMemoryMiB": 343.8,
+          "maxSamplePids": 48
+        },
+        "worker": {
+          "samples": 4,
+          "sampleMeanCpuPercent": 6.6025,
+          "maxSampleCpuPercent": 9.61,
+          "maxSampleMemoryMiB": 174.9,
+          "maxSamplePids": 35
+        },
+        "mysql": {
+          "samples": 4,
+          "sampleMeanCpuPercent": 135.35250000000002,
+          "maxSampleCpuPercent": 138.78,
+          "maxSampleMemoryMiB": 550.7,
+          "maxSamplePids": 66
+        },
+        "rabbitmq": {
+          "samples": 4,
+          "sampleMeanCpuPercent": 12.774999999999999,
+          "maxSampleCpuPercent": 50.62,
+          "maxSampleMemoryMiB": 235.4,
+          "maxSamplePids": 135
+        },
+        "redis": {
+          "samples": 4,
+          "sampleMeanCpuPercent": 8.305,
+          "maxSampleCpuPercent": 8.51,
+          "maxSampleMemoryMiB": 8.387,
+          "maxSamplePids": 5
+        },
+        "search": {
+          "samples": 4,
+          "sampleMeanCpuPercent": 4.545,
+          "maxSampleCpuPercent": 10.81,
+          "maxSampleMemoryMiB": 967.3,
+          "maxSamplePids": 103
+        },
+        "web": {
+          "samples": 4,
+          "sampleMeanCpuPercent": 41.15,
+          "maxSampleCpuPercent": 43.73,
+          "maxSampleMemoryMiB": 43.5,
+          "maxSamplePids": 25
+        },
+        "prometheus": {
+          "samples": 4,
+          "sampleMeanCpuPercent": 0.3025,
+          "maxSampleCpuPercent": 0.61,
+          "maxSampleMemoryMiB": 31.67,
+          "maxSamplePids": 7
+        },
+        "grafana": {
+          "samples": 4,
+          "sampleMeanCpuPercent": 1.025,
+          "maxSampleCpuPercent": 1.17,
+          "maxSampleMemoryMiB": 258.0,
+          "maxSamplePids": 107
+        },
+        "client": {
+          "samples": 4,
+          "sampleMeanCpuPercent": 28.545,
+          "maxSampleCpuPercent": 40.86,
+          "maxSampleMemoryMiB": 34.97,
+          "maxSamplePids": 11
+        }
+      },
+      "resourceSampleErrors": 0,
+      "cacheCountersIncludingWarmup": {
+        "cache_hit": 35843,
+        "cache_miss": 300,
+        "cache_bypass": 0
+      },
+      "mysqlCountersIncludingWarmupAndProbes": {
+        "Questions": 253704,
+        "Queries": 253747,
+        "Slow_queries": 0,
+        "Connections": 6,
+        "Innodb_buffer_pool_read_requests": 39104,
+        "Innodb_buffer_pool_reads": 0
+      }
+    },
+    {
+      "case": "r1-list-c1",
+      "status": "PASS",
+      "mode": "list",
+      "concurrency": 1,
+      "round": 1,
+      "startedAt": "2026-10-28T01:32:56.425Z",
+      "finishedAt": "2026-10-28T01:33:16.425Z",
+      "elapsedMs": 20000.041738,
+      "measurementCount": 7494,
+      "warmupCount": 30,
+      "successful": 7494,
+      "errors": 0,
+      "timeouts": 0,
+      "networkErrors": 0,
+      "semanticErrors": 0,
+      "statuses": {
+        "200": 7494
+      },
+      "attemptedRps": 374.69921804020186,
+      "successfulRps": 374.69921804020186,
+      "errorRate": 0,
+      "allLatency": {
+        "p50Ms": 2.4636460000001534,
+        "p95Ms": 3.557710000000043,
+        "p99Ms": 4.438245000000279
+      },
+      "successLatency": {
+        "p50Ms": 2.4636460000001534,
+        "p95Ms": 3.557710000000043,
+        "p99Ms": 4.438245000000279
+      },
+      "clientCpuPercent": 10.398098300208657,
+      "clientRssBytes": 85336064,
+      "clientEventLoopP99Ms": 10.977279,
+      "model": "closed loop; no retry; same bridge; validated TLS; keep-alive",
+      "maxRequestCap": 100000,
+      "serverConfirmedRequestsIncludingWarmup": 7524,
+      "resource": {
+        "api": {
+          "samples": 4,
+          "sampleMeanCpuPercent": 34.4,
+          "maxSampleCpuPercent": 34.94,
+          "maxSampleMemoryMiB": 342.1,
+          "maxSamplePids": 45
+        },
+        "worker": {
+          "samples": 4,
+          "sampleMeanCpuPercent": 2.8325,
+          "maxSampleCpuPercent": 3.44,
+          "maxSampleMemoryMiB": 173.8,
+          "maxSamplePids": 35
+        },
+        "mysql": {
+          "samples": 4,
+          "sampleMeanCpuPercent": 50.255,
+          "maxSampleCpuPercent": 51.22,
+          "maxSampleMemoryMiB": 548.2,
+          "maxSamplePids": 66
+        },
+        "rabbitmq": {
+          "samples": 4,
+          "sampleMeanCpuPercent": 0.1175,
+          "maxSampleCpuPercent": 0.13,
+          "maxSampleMemoryMiB": 160.8,
+          "maxSamplePids": 69
+        },
+        "redis": {
+          "samples": 4,
+          "sampleMeanCpuPercent": 0.07250000000000001,
+          "maxSampleCpuPercent": 0.08,
+          "maxSampleMemoryMiB": 6.445,
+          "maxSamplePids": 5
+        },
+        "search": {
+          "samples": 4,
+          "sampleMeanCpuPercent": 4.3575,
+          "maxSampleCpuPercent": 12.1,
+          "maxSampleMemoryMiB": 968.6,
+          "maxSamplePids": 104
+        },
+        "web": {
+          "samples": 4,
+          "sampleMeanCpuPercent": 10.5425,
+          "maxSampleCpuPercent": 11.06,
+          "maxSampleMemoryMiB": 40.07,
+          "maxSamplePids": 25
+        },
+        "prometheus": {
+          "samples": 4,
+          "sampleMeanCpuPercent": 0.1325,
+          "maxSampleCpuPercent": 0.14,
+          "maxSampleMemoryMiB": 31.77,
+          "maxSamplePids": 7
+        },
+        "grafana": {
+          "samples": 4,
+          "sampleMeanCpuPercent": 0.655,
+          "maxSampleCpuPercent": 0.69,
+          "maxSampleMemoryMiB": 262.9,
+          "maxSamplePids": 107
+        },
+        "client": {
+          "samples": 4,
+          "sampleMeanCpuPercent": 7.6925,
+          "maxSampleCpuPercent": 11.96,
+          "maxSampleMemoryMiB": 34.81,
+          "maxSamplePids": 11
+        }
+      },
+      "resourceSampleErrors": 0,
+      "cacheCountersIncludingWarmup": {
+        "cache_hit": 0,
+        "cache_miss": 0,
+        "cache_bypass": 0
+      },
+      "mysqlCountersIncludingWarmupAndProbes": {
+        "Questions": 68107,
+        "Queries": 68144,
+        "Slow_queries": 0,
+        "Connections": 6,
+        "Innodb_buffer_pool_read_requests": 7431219,
+        "Innodb_buffer_pool_reads": 0
+      }
+    },
+    {
+      "case": "r1-list-c4",
+      "status": "PASS",
+      "mode": "list",
+      "concurrency": 4,
+      "round": 1,
+      "startedAt": "2026-10-28T01:33:48.422Z",
+      "finishedAt": "2026-10-28T01:34:08.427Z",
+      "elapsedMs": 20001.785393000002,
+      "measurementCount": 23141,
+      "warmupCount": 30,
+      "successful": 23141,
+      "errors": 0,
+      "timeouts": 0,
+      "networkErrors": 0,
+      "semanticErrors": 0,
+      "statuses": {
+        "200": 23141
+      },
+      "attemptedRps": 1156.9467197712572,
+      "successfulRps": 1156.9467197712572,
+      "errorRate": 0,
+      "allLatency": {
+        "p50Ms": 3.1075920000002952,
+        "p95Ms": 5.039965999998458,
+        "p99Ms": 8.038002000001143
+      },
+      "successLatency": {
+        "p50Ms": 3.1075920000002952,
+        "p95Ms": 5.039965999998458,
+        "p99Ms": 8.038002000001143
+      },
+      "clientCpuPercent": 24.397752021216277,
+      "clientRssBytes": 84365312,
+      "clientEventLoopP99Ms": 11.059199,
+      "model": "closed loop; no retry; same bridge; validated TLS; keep-alive",
+      "maxRequestCap": 100000,
+      "serverConfirmedRequestsIncludingWarmup": 23171,
+      "resource": {
+        "api": {
+          "samples": 4,
+          "sampleMeanCpuPercent": 125.15,
+          "maxSampleCpuPercent": 129.39,
+          "maxSampleMemoryMiB": 342.8,
+          "maxSamplePids": 47
+        },
+        "worker": {
+          "samples": 4,
+          "sampleMeanCpuPercent": 0.1125,
+          "maxSampleCpuPercent": 0.18,
+          "maxSampleMemoryMiB": 173.3,
+          "maxSamplePids": 35
+        },
+        "mysql": {
+          "samples": 4,
+          "sampleMeanCpuPercent": 184.27,
+          "maxSampleCpuPercent": 196.61,
+          "maxSampleMemoryMiB": 547.4,
+          "maxSamplePids": 66
+        },
+        "rabbitmq": {
+          "samples": 4,
+          "sampleMeanCpuPercent": 30.5975,
+          "maxSampleCpuPercent": 64.16,
+          "maxSampleMemoryMiB": 242.3,
+          "maxSamplePids": 135
+        },
+        "redis": {
+          "samples": 4,
+          "sampleMeanCpuPercent": 0.0925,
+          "maxSampleCpuPercent": 0.12,
+          "maxSampleMemoryMiB": 6.129,
+          "maxSamplePids": 5
+        },
+        "search": {
+          "samples": 4,
+          "sampleMeanCpuPercent": 0.5475,
+          "maxSampleCpuPercent": 0.64,
+          "maxSampleMemoryMiB": 967.8,
+          "maxSamplePids": 103
+        },
+        "web": {
+          "samples": 4,
+          "sampleMeanCpuPercent": 23.9325,
+          "maxSampleCpuPercent": 25.33,
+          "maxSampleMemoryMiB": 40.44,
+          "maxSamplePids": 25
+        },
+        "prometheus": {
+          "samples": 4,
+          "sampleMeanCpuPercent": 0.6625000000000001,
+          "maxSampleCpuPercent": 2.18,
+          "maxSampleMemoryMiB": 32.58,
+          "maxSamplePids": 7
+        },
+        "grafana": {
+          "samples": 4,
+          "sampleMeanCpuPercent": 3.2575000000000003,
+          "maxSampleCpuPercent": 3.42,
+          "maxSampleMemoryMiB": 259.1,
+          "maxSamplePids": 107
+        },
+        "client": {
+          "samples": 4,
+          "sampleMeanCpuPercent": 17.705000000000002,
+          "maxSampleCpuPercent": 25.12,
+          "maxSampleMemoryMiB": 32.09,
+          "maxSamplePids": 11
+        }
+      },
+      "resourceSampleErrors": 0,
+      "cacheCountersIncludingWarmup": {
+        "cache_hit": 0,
+        "cache_miss": 0,
+        "cache_bypass": 0
+      },
+      "mysqlCountersIncludingWarmupAndProbes": {
+        "Questions": 208942,
+        "Queries": 208978,
+        "Slow_queries": 0,
+        "Connections": 5,
+        "Innodb_buffer_pool_read_requests": 22883210,
+        "Innodb_buffer_pool_reads": 0
+      }
+    },
+    {
+      "case": "r1-list-c8",
+      "status": "PASS",
+      "mode": "list",
+      "concurrency": 8,
+      "round": 1,
+      "startedAt": "2026-10-28T01:34:40.334Z",
+      "finishedAt": "2026-10-28T01:35:00.346Z",
+      "elapsedMs": 20013.160293999998,
+      "measurementCount": 17324,
+      "warmupCount": 30,
+      "successful": 17324,
+      "errors": 0,
+      "timeouts": 0,
+      "networkErrors": 0,
+      "semanticErrors": 0,
+      "statuses": {
+        "200": 17324
+      },
+      "attemptedRps": 865.6304024704076,
+      "successfulRps": 865.6304024704076,
+      "errorRate": 0,
+      "allLatency": {
+        "p50Ms": 3.8782270000001517,
+        "p95Ms": 54.13564000000042,
+        "p99Ms": 59.04329499999949
+      },
+      "successLatency": {
+        "p50Ms": 3.8782270000001517,
+        "p95Ms": 54.13564000000042,
+        "p99Ms": 59.04329499999949
+      },
+      "clientCpuPercent": 22.558111431074117,
+      "clientRssBytes": 89214976,
+      "clientEventLoopP99Ms": 11.157503,
+      "model": "closed loop; no retry; same bridge; validated TLS; keep-alive",
+      "maxRequestCap": 100000,
+      "serverConfirmedRequestsIncludingWarmup": 17354,
+      "resource": {
+        "api": {
+          "samples": 4,
+          "sampleMeanCpuPercent": 125.1525,
+          "maxSampleCpuPercent": 127.14,
+          "maxSampleMemoryMiB": 343.8,
+          "maxSamplePids": 48
+        },
+        "worker": {
+          "samples": 4,
+          "sampleMeanCpuPercent": 0.125,
+          "maxSampleCpuPercent": 0.18,
+          "maxSampleMemoryMiB": 172.6,
+          "maxSamplePids": 35
+        },
+        "mysql": {
+          "samples": 4,
+          "sampleMeanCpuPercent": 196.8325,
+          "maxSampleCpuPercent": 197.47,
+          "maxSampleMemoryMiB": 555.5,
+          "maxSamplePids": 72
+        },
+        "rabbitmq": {
+          "samples": 4,
+          "sampleMeanCpuPercent": 12.6775,
+          "maxSampleCpuPercent": 48.24,
+          "maxSampleMemoryMiB": 163.4,
+          "maxSamplePids": 69
+        },
+        "redis": {
+          "samples": 4,
+          "sampleMeanCpuPercent": 0.10500000000000001,
+          "maxSampleCpuPercent": 0.14,
+          "maxSampleMemoryMiB": 6.715,
+          "maxSamplePids": 5
+        },
+        "search": {
+          "samples": 4,
+          "sampleMeanCpuPercent": 0.6675,
+          "maxSampleCpuPercent": 0.83,
+          "maxSampleMemoryMiB": 966.1,
+          "maxSamplePids": 104
+        },
+        "web": {
+          "samples": 4,
+          "sampleMeanCpuPercent": 21.93,
+          "maxSampleCpuPercent": 23.27,
+          "maxSampleMemoryMiB": 41.8,
+          "maxSamplePids": 25
+        },
+        "prometheus": {
+          "samples": 4,
+          "sampleMeanCpuPercent": 0.8425,
+          "maxSampleCpuPercent": 2.58,
+          "maxSampleMemoryMiB": 31.66,
+          "maxSamplePids": 7
+        },
+        "grafana": {
+          "samples": 4,
+          "sampleMeanCpuPercent": 0.915,
+          "maxSampleCpuPercent": 1.09,
+          "maxSampleMemoryMiB": 261.0,
+          "maxSamplePids": 107
+        },
+        "client": {
+          "samples": 4,
+          "sampleMeanCpuPercent": 15.780000000000001,
+          "maxSampleCpuPercent": 23.94,
+          "maxSampleMemoryMiB": 39.18,
+          "maxSamplePids": 11
+        }
+      },
+      "resourceSampleErrors": 0,
+      "cacheCountersIncludingWarmup": {
+        "cache_hit": 0,
+        "cache_miss": 0,
+        "cache_bypass": 0
+      },
+      "mysqlCountersIncludingWarmupAndProbes": {
+        "Questions": 156578,
+        "Queries": 156616,
+        "Slow_queries": 0,
+        "Connections": 6,
+        "Innodb_buffer_pool_read_requests": 17138698,
+        "Innodb_buffer_pool_reads": 0
+      }
+    },
+    {
+      "case": "r2-detail-c1",
+      "status": "PASS",
+      "mode": "detail",
+      "concurrency": 1,
+      "round": 2,
+      "startedAt": "2026-10-28T01:35:59.011Z",
+      "finishedAt": "2026-10-28T01:36:19.012Z",
+      "elapsedMs": 20000.953979,
+      "measurementCount": 14333,
+      "warmupCount": 300,
+      "successful": 14333,
+      "errors": 0,
+      "timeouts": 0,
+      "networkErrors": 0,
+      "semanticErrors": 0,
+      "statuses": {
+        "200": 14333
+      },
+      "attemptedRps": 716.6158181779194,
+      "successfulRps": 716.6158181779194,
+      "errorRate": 0,
+      "allLatency": {
+        "p50Ms": 1.2825859999993554,
+        "p95Ms": 1.7351149999999507,
+        "p99Ms": 2.3946839999989606
+      },
+      "successLatency": {
+        "p50Ms": 1.2825859999993554,
+        "p95Ms": 1.7351149999999507,
+        "p99Ms": 2.3946839999989606
+      },
+      "clientCpuPercent": 17.69684587903326,
+      "clientRssBytes": 87793664,
+      "clientEventLoopP99Ms": 11.034623,
+      "model": "closed loop; no retry; same bridge; validated TLS; keep-alive",
+      "maxRequestCap": 100000,
+      "serverConfirmedRequestsIncludingWarmup": 14633,
+      "resource": {
+        "api": {
+          "samples": 4,
+          "sampleMeanCpuPercent": 45.705,
+          "maxSampleCpuPercent": 46.39,
+          "maxSampleMemoryMiB": 343.5,
+          "maxSamplePids": 47
+        },
+        "worker": {
+          "samples": 4,
+          "sampleMeanCpuPercent": 1.3875,
+          "maxSampleCpuPercent": 5.13,
+          "maxSampleMemoryMiB": 175.2,
+          "maxSamplePids": 35
+        },
+        "mysql": {
+          "samples": 4,
+          "sampleMeanCpuPercent": 27.2,
+          "maxSampleCpuPercent": 27.94,
+          "maxSampleMemoryMiB": 550.9,
+          "maxSamplePids": 66
+        },
+        "rabbitmq": {
+          "samples": 4,
+          "sampleMeanCpuPercent": 31.9275,
+          "maxSampleCpuPercent": 88.57,
+          "maxSampleMemoryMiB": 239.7,
+          "maxSamplePids": 135
+        },
+        "redis": {
+          "samples": 4,
+          "sampleMeanCpuPercent": 2.69,
+          "maxSampleCpuPercent": 2.84,
+          "maxSampleMemoryMiB": 6.449,
+          "maxSamplePids": 5
+        },
+        "search": {
+          "samples": 4,
+          "sampleMeanCpuPercent": 4.2524999999999995,
+          "maxSampleCpuPercent": 5.47,
+          "maxSampleMemoryMiB": 967.4,
+          "maxSamplePids": 103
+        },
+        "web": {
+          "samples": 4,
+          "sampleMeanCpuPercent": 15.969999999999999,
+          "maxSampleCpuPercent": 16.09,
+          "maxSampleMemoryMiB": 43.1,
+          "maxSamplePids": 25
+        },
+        "prometheus": {
+          "samples": 4,
+          "sampleMeanCpuPercent": 0.1525,
+          "maxSampleCpuPercent": 0.31,
+          "maxSampleMemoryMiB": 31.94,
+          "maxSamplePids": 7
+        },
+        "grafana": {
+          "samples": 4,
+          "sampleMeanCpuPercent": 0.6425000000000001,
+          "maxSampleCpuPercent": 0.74,
+          "maxSampleMemoryMiB": 258.2,
+          "maxSamplePids": 107
+        },
+        "client": {
+          "samples": 4,
+          "sampleMeanCpuPercent": 12.5875,
+          "maxSampleCpuPercent": 17.21,
+          "maxSampleMemoryMiB": 36.06,
+          "maxSamplePids": 11
+        }
+      },
+      "resourceSampleErrors": 0,
+      "cacheCountersIncludingWarmup": {
+        "cache_hit": 14333,
+        "cache_miss": 300,
+        "cache_bypass": 0
+      },
+      "mysqlCountersIncludingWarmupAndProbes": {
+        "Questions": 103133,
+        "Queries": 103179,
+        "Slow_queries": 0,
+        "Connections": 6,
+        "Innodb_buffer_pool_read_requests": 17594,
+        "Innodb_buffer_pool_reads": 0
+      }
+    },
+    {
+      "case": "r2-detail-c4",
+      "status": "PASS",
+      "mode": "detail",
+      "concurrency": 4,
+      "round": 2,
+      "startedAt": "2026-10-28T01:36:50.785Z",
+      "finishedAt": "2026-10-28T01:37:10.790Z",
+      "elapsedMs": 20001.078379000002,
+      "measurementCount": 47631,
+      "warmupCount": 300,
+      "successful": 47631,
+      "errors": 0,
+      "timeouts": 0,
+      "networkErrors": 0,
+      "semanticErrors": 0,
+      "statuses": {
+        "200": 47631
+      },
+      "attemptedRps": 2381.4215962480225,
+      "successfulRps": 2381.4215962480225,
+      "errorRate": 0,
+      "allLatency": {
+        "p50Ms": 1.547722000000249,
+        "p95Ms": 2.324265000000196,
+        "p99Ms": 3.0853880000013305
+      },
+      "successLatency": {
+        "p50Ms": 1.547722000000249,
+        "p95Ms": 2.324265000000196,
+        "p99Ms": 3.0853880000013305
+      },
+      "clientCpuPercent": 42.448586216802205,
+      "clientRssBytes": 113102848,
+      "clientEventLoopP99Ms": 11.034623,
+      "model": "closed loop; no retry; same bridge; validated TLS; keep-alive",
+      "maxRequestCap": 100000,
+      "serverConfirmedRequestsIncludingWarmup": 47931,
+      "resource": {
+        "api": {
+          "samples": 4,
+          "sampleMeanCpuPercent": 170.39,
+          "maxSampleCpuPercent": 173.75,
+          "maxSampleMemoryMiB": 344.0,
+          "maxSamplePids": 47
+        },
+        "worker": {
+          "samples": 4,
+          "sampleMeanCpuPercent": 0.0725,
+          "maxSampleCpuPercent": 0.12,
+          "maxSampleMemoryMiB": 174.1,
+          "maxSamplePids": 35
+        },
+        "mysql": {
+          "samples": 4,
+          "sampleMeanCpuPercent": 113.03,
+          "maxSampleCpuPercent": 115.42,
+          "maxSampleMemoryMiB": 551.3,
+          "maxSamplePids": 66
+        },
+        "rabbitmq": {
+          "samples": 4,
+          "sampleMeanCpuPercent": 0.7625000000000001,
+          "maxSampleCpuPercent": 1.09,
+          "maxSampleMemoryMiB": 162.0,
+          "maxSamplePids": 69
+        },
+        "redis": {
+          "samples": 4,
+          "sampleMeanCpuPercent": 8.2925,
+          "maxSampleCpuPercent": 9.38,
+          "maxSampleMemoryMiB": 7.898,
+          "maxSamplePids": 5
+        },
+        "search": {
+          "samples": 4,
+          "sampleMeanCpuPercent": 2.1475,
+          "maxSampleCpuPercent": 7.19,
+          "maxSampleMemoryMiB": 965.8,
+          "maxSamplePids": 104
+        },
+        "web": {
+          "samples": 4,
+          "sampleMeanCpuPercent": 37.8625,
+          "maxSampleCpuPercent": 43.92,
+          "maxSampleMemoryMiB": 43.9,
+          "maxSamplePids": 25
+        },
+        "prometheus": {
+          "samples": 4,
+          "sampleMeanCpuPercent": 0.1325,
+          "maxSampleCpuPercent": 0.15,
+          "maxSampleMemoryMiB": 31.8,
+          "maxSamplePids": 7
+        },
+        "grafana": {
+          "samples": 4,
+          "sampleMeanCpuPercent": 0.6,
+          "maxSampleCpuPercent": 0.64,
+          "maxSampleMemoryMiB": 258.9,
+          "maxSamplePids": 107
+        },
+        "client": {
+          "samples": 4,
+          "sampleMeanCpuPercent": 41.225,
+          "maxSampleCpuPercent": 42.61,
+          "maxSampleMemoryMiB": 35.83,
+          "maxSamplePids": 11
+        }
+      },
+      "resourceSampleErrors": 0,
+      "cacheCountersIncludingWarmup": {
+        "cache_hit": 47631,
+        "cache_miss": 300,
+        "cache_bypass": 0
+      },
+      "mysqlCountersIncludingWarmupAndProbes": {
+        "Questions": 336234,
+        "Queries": 336277,
+        "Slow_queries": 0,
+        "Connections": 6,
+        "Innodb_buffer_pool_read_requests": 50927,
+        "Innodb_buffer_pool_reads": 0
+      }
+    },
+    {
+      "case": "r2-detail-c8",
+      "status": "PASS",
+      "mode": "detail",
+      "concurrency": 8,
+      "round": 2,
+      "startedAt": "2026-10-28T01:37:43.391Z",
+      "finishedAt": "2026-10-28T01:38:03.396Z",
+      "elapsedMs": 20002.199726,
+      "measurementCount": 29523,
+      "warmupCount": 300,
+      "successful": 29523,
+      "errors": 0,
+      "timeouts": 0,
+      "networkErrors": 0,
+      "semanticErrors": 0,
+      "statuses": {
+        "200": 29523
+      },
+      "attemptedRps": 1475.9876615782573,
+      "successfulRps": 1475.9876615782573,
+      "errorRate": 0,
+      "allLatency": {
+        "p50Ms": 2.6262079999996786,
+        "p95Ms": 33.83799999999974,
+        "p99Ms": 44.622163
+      },
+      "successLatency": {
+        "p50Ms": 2.6262079999996786,
+        "p95Ms": 33.83799999999974,
+        "p99Ms": 44.622163
+      },
+      "clientCpuPercent": 43.10038454817497,
+      "clientRssBytes": 90324992,
+      "clientEventLoopP99Ms": 11.837439,
+      "model": "closed loop; no retry; same bridge; validated TLS; keep-alive",
+      "maxRequestCap": 100000,
+      "serverConfirmedRequestsIncludingWarmup": 29823,
+      "resource": {
+        "api": {
+          "samples": 4,
+          "sampleMeanCpuPercent": 191.95000000000002,
+          "maxSampleCpuPercent": 203.11,
+          "maxSampleMemoryMiB": 344.9,
+          "maxSamplePids": 48
+        },
+        "worker": {
+          "samples": 4,
+          "sampleMeanCpuPercent": 0.5875,
+          "maxSampleCpuPercent": 2.04,
+          "maxSampleMemoryMiB": 183.2,
+          "maxSamplePids": 35
+        },
+        "mysql": {
+          "samples": 4,
+          "sampleMeanCpuPercent": 121.4375,
+          "maxSampleCpuPercent": 130.18,
+          "maxSampleMemoryMiB": 551.7,
+          "maxSamplePids": 66
+        },
+        "rabbitmq": {
+          "samples": 4,
+          "sampleMeanCpuPercent": 25.315,
+          "maxSampleCpuPercent": 100.83,
+          "maxSampleMemoryMiB": 244.9,
+          "maxSamplePids": 135
+        },
+        "redis": {
+          "samples": 4,
+          "sampleMeanCpuPercent": 9.0775,
+          "maxSampleCpuPercent": 11.06,
+          "maxSampleMemoryMiB": 8.531,
+          "maxSamplePids": 5
+        },
+        "search": {
+          "samples": 4,
+          "sampleMeanCpuPercent": 1.24,
+          "maxSampleCpuPercent": 2.43,
+          "maxSampleMemoryMiB": 966.3,
+          "maxSamplePids": 104
+        },
+        "web": {
+          "samples": 4,
+          "sampleMeanCpuPercent": 39.705,
+          "maxSampleCpuPercent": 46.8,
+          "maxSampleMemoryMiB": 44.82,
+          "maxSamplePids": 25
+        },
+        "prometheus": {
+          "samples": 4,
+          "sampleMeanCpuPercent": 0.235,
+          "maxSampleCpuPercent": 0.31,
+          "maxSampleMemoryMiB": 31.93,
+          "maxSamplePids": 7
+        },
+        "grafana": {
+          "samples": 4,
+          "sampleMeanCpuPercent": 1.295,
+          "maxSampleCpuPercent": 1.79,
+          "maxSampleMemoryMiB": 261.3,
+          "maxSamplePids": 107
+        },
+        "client": {
+          "samples": 4,
+          "sampleMeanCpuPercent": 29.8475,
+          "maxSampleCpuPercent": 44.55,
+          "maxSampleMemoryMiB": 34.62,
+          "maxSamplePids": 11
+        }
+      },
+      "resourceSampleErrors": 0,
+      "cacheCountersIncludingWarmup": {
+        "cache_hit": 29523,
+        "cache_miss": 300,
+        "cache_bypass": 0
+      },
+      "mysqlCountersIncludingWarmupAndProbes": {
+        "Questions": 209424,
+        "Queries": 209464,
+        "Slow_queries": 0,
+        "Connections": 6,
+        "Innodb_buffer_pool_read_requests": 32682,
+        "Innodb_buffer_pool_reads": 0
+      }
+    },
+    {
+      "case": "r2-list-c1",
+      "status": "PASS",
+      "mode": "list",
+      "concurrency": 1,
+      "round": 2,
+      "startedAt": "2026-10-28T01:35:32.814Z",
+      "finishedAt": "2026-10-28T01:35:52.814Z",
+      "elapsedMs": 20000.170376,
+      "measurementCount": 7753,
+      "warmupCount": 30,
+      "successful": 7753,
+      "errors": 0,
+      "timeouts": 0,
+      "networkErrors": 0,
+      "semanticErrors": 0,
+      "statuses": {
+        "200": 7753
+      },
+      "attemptedRps": 387.6466977153115,
+      "successfulRps": 387.6466977153115,
+      "errorRate": 0,
+      "allLatency": {
+        "p50Ms": 2.404448999999886,
+        "p95Ms": 3.374746999999843,
+        "p99Ms": 3.9728849999992235
+      },
+      "successLatency": {
+        "p50Ms": 2.404448999999886,
+        "p95Ms": 3.374746999999843,
+        "p99Ms": 3.9728849999992235
+      },
+      "clientCpuPercent": 10.132228685570274,
+      "clientRssBytes": 77557760,
+      "clientEventLoopP99Ms": 11.010047,
+      "model": "closed loop; no retry; same bridge; validated TLS; keep-alive",
+      "maxRequestCap": 100000,
+      "serverConfirmedRequestsIncludingWarmup": 7783,
+      "resource": {
+        "api": {
+          "samples": 4,
+          "sampleMeanCpuPercent": 33.4225,
+          "maxSampleCpuPercent": 35.32,
+          "maxSampleMemoryMiB": 343.7,
+          "maxSamplePids": 47
+        },
+        "worker": {
+          "samples": 4,
+          "sampleMeanCpuPercent": 4.84,
+          "maxSampleCpuPercent": 5.14,
+          "maxSampleMemoryMiB": 174.7,
+          "maxSamplePids": 35
+        },
+        "mysql": {
+          "samples": 4,
+          "sampleMeanCpuPercent": 51.935,
+          "maxSampleCpuPercent": 53.8,
+          "maxSampleMemoryMiB": 551.1,
+          "maxSamplePids": 66
+        },
+        "rabbitmq": {
+          "samples": 4,
+          "sampleMeanCpuPercent": 11.8125,
+          "maxSampleCpuPercent": 46.97,
+          "maxSampleMemoryMiB": 241.7,
+          "maxSamplePids": 135
+        },
+        "redis": {
+          "samples": 4,
+          "sampleMeanCpuPercent": 0.07500000000000001,
+          "maxSampleCpuPercent": 0.08,
+          "maxSampleMemoryMiB": 6.457,
+          "maxSamplePids": 5
+        },
+        "search": {
+          "samples": 4,
+          "sampleMeanCpuPercent": 2.0100000000000002,
+          "maxSampleCpuPercent": 3.72,
+          "maxSampleMemoryMiB": 967.9,
+          "maxSamplePids": 103
+        },
+        "web": {
+          "samples": 4,
+          "sampleMeanCpuPercent": 7.4399999999999995,
+          "maxSampleCpuPercent": 7.59,
+          "maxSampleMemoryMiB": 42.42,
+          "maxSamplePids": 25
+        },
+        "prometheus": {
+          "samples": 4,
+          "sampleMeanCpuPercent": 0.15,
+          "maxSampleCpuPercent": 0.18,
+          "maxSampleMemoryMiB": 32.15,
+          "maxSamplePids": 7
+        },
+        "grafana": {
+          "samples": 4,
+          "sampleMeanCpuPercent": 0.575,
+          "maxSampleCpuPercent": 0.62,
+          "maxSampleMemoryMiB": 258.6,
+          "maxSamplePids": 107
+        },
+        "client": {
+          "samples": 4,
+          "sampleMeanCpuPercent": 10.5175,
+          "maxSampleCpuPercent": 13.31,
+          "maxSampleMemoryMiB": 28.02,
+          "maxSamplePids": 11
+        }
+      },
+      "resourceSampleErrors": 0,
+      "cacheCountersIncludingWarmup": {
+        "cache_hit": 0,
+        "cache_miss": 0,
+        "cache_bypass": 0
+      },
+      "mysqlCountersIncludingWarmupAndProbes": {
+        "Questions": 70436,
+        "Queries": 70475,
+        "Slow_queries": 0,
+        "Connections": 6,
+        "Innodb_buffer_pool_read_requests": 7687009,
+        "Innodb_buffer_pool_reads": 0
+      }
+    },
+    {
+      "case": "r2-list-c4",
+      "status": "PASS",
+      "mode": "list",
+      "concurrency": 4,
+      "round": 2,
+      "startedAt": "2026-10-28T01:36:24.143Z",
+      "finishedAt": "2026-10-28T01:36:44.145Z",
+      "elapsedMs": 20000.621399,
+      "measurementCount": 25494,
+      "warmupCount": 30,
+      "successful": 25494,
+      "errors": 0,
+      "timeouts": 0,
+      "networkErrors": 0,
+      "semanticErrors": 0,
+      "statuses": {
+        "200": 25494
+      },
+      "attemptedRps": 1274.660396365218,
+      "successfulRps": 1274.660396365218,
+      "errorRate": 0,
+      "allLatency": {
+        "p50Ms": 2.8030739999994694,
+        "p95Ms": 4.318774999999732,
+        "p99Ms": 9.216645999998946
+      },
+      "successLatency": {
+        "p50Ms": 2.8030739999994694,
+        "p95Ms": 4.318774999999732,
+        "p99Ms": 9.216645999998946
+      },
+      "clientCpuPercent": 23.753516979415128,
+      "clientRssBytes": 85966848,
+      "clientEventLoopP99Ms": 10.993663,
+      "model": "closed loop; no retry; same bridge; validated TLS; keep-alive",
+      "maxRequestCap": 100000,
+      "serverConfirmedRequestsIncludingWarmup": 25524,
+      "resource": {
+        "api": {
+          "samples": 4,
+          "sampleMeanCpuPercent": 114.34,
+          "maxSampleCpuPercent": 119.73,
+          "maxSampleMemoryMiB": 344.0,
+          "maxSamplePids": 47
+        },
+        "worker": {
+          "samples": 4,
+          "sampleMeanCpuPercent": 0.07,
+          "maxSampleCpuPercent": 0.1,
+          "maxSampleMemoryMiB": 173.8,
+          "maxSamplePids": 35
+        },
+        "mysql": {
+          "samples": 4,
+          "sampleMeanCpuPercent": 189.1975,
+          "maxSampleCpuPercent": 197.64,
+          "maxSampleMemoryMiB": 552.3,
+          "maxSamplePids": 66
+        },
+        "rabbitmq": {
+          "samples": 4,
+          "sampleMeanCpuPercent": 29.18,
+          "maxSampleCpuPercent": 103.13,
+          "maxSampleMemoryMiB": 250.9,
+          "maxSamplePids": 135
+        },
+        "redis": {
+          "samples": 4,
+          "sampleMeanCpuPercent": 0.0825,
+          "maxSampleCpuPercent": 0.09,
+          "maxSampleMemoryMiB": 6.484,
+          "maxSamplePids": 5
+        },
+        "search": {
+          "samples": 4,
+          "sampleMeanCpuPercent": 1.43,
+          "maxSampleCpuPercent": 4.39,
+          "maxSampleMemoryMiB": 967.9,
+          "maxSamplePids": 103
+        },
+        "web": {
+          "samples": 4,
+          "sampleMeanCpuPercent": 22.56,
+          "maxSampleCpuPercent": 23.29,
+          "maxSampleMemoryMiB": 43.28,
+          "maxSamplePids": 25
+        },
+        "prometheus": {
+          "samples": 4,
+          "sampleMeanCpuPercent": 1.6600000000000001,
+          "maxSampleCpuPercent": 2.2,
+          "maxSampleMemoryMiB": 32.31,
+          "maxSamplePids": 7
+        },
+        "grafana": {
+          "samples": 4,
+          "sampleMeanCpuPercent": 2.4975,
+          "maxSampleCpuPercent": 2.91,
+          "maxSampleMemoryMiB": 259.0,
+          "maxSamplePids": 107
+        },
+        "client": {
+          "samples": 4,
+          "sampleMeanCpuPercent": 23.47,
+          "maxSampleCpuPercent": 25.02,
+          "maxSampleMemoryMiB": 34.16,
+          "maxSamplePids": 11
+        }
+      },
+      "resourceSampleErrors": 0,
+      "cacheCountersIncludingWarmup": {
+        "cache_hit": 0,
+        "cache_miss": 0,
+        "cache_bypass": 0
+      },
+      "mysqlCountersIncludingWarmupAndProbes": {
+        "Questions": 230123,
+        "Queries": 230167,
+        "Slow_queries": 0,
+        "Connections": 6,
+        "Innodb_buffer_pool_read_requests": 25206862,
+        "Innodb_buffer_pool_reads": 0
+      }
+    },
+    {
+      "case": "r2-list-c8",
+      "status": "PASS",
+      "mode": "list",
+      "concurrency": 8,
+      "round": 2,
+      "startedAt": "2026-10-28T01:37:16.880Z",
+      "finishedAt": "2026-10-28T01:37:36.922Z",
+      "elapsedMs": 20039.740511,
+      "measurementCount": 13726,
+      "warmupCount": 30,
+      "successful": 13726,
+      "errors": 0,
+      "timeouts": 0,
+      "networkErrors": 0,
+      "semanticErrors": 0,
+      "statuses": {
+        "200": 13726
+      },
+      "attemptedRps": 684.9390086895421,
+      "successfulRps": 684.9390086895421,
+      "errorRate": 0,
+      "allLatency": {
+        "p50Ms": 4.676034000000072,
+        "p95Ms": 56.616462999998475,
+        "p99Ms": 62.56948200000261
+      },
+      "successLatency": {
+        "p50Ms": 4.676034000000072,
+        "p95Ms": 56.616462999998475,
+        "p99Ms": 62.56948200000261
+      },
+      "clientCpuPercent": 22.804437001025597,
+      "clientRssBytes": 82239488,
+      "clientEventLoopP99Ms": 11.534335,
+      "model": "closed loop; no retry; same bridge; validated TLS; keep-alive",
+      "maxRequestCap": 100000,
+      "serverConfirmedRequestsIncludingWarmup": 13756,
+      "resource": {
+        "api": {
+          "samples": 4,
+          "sampleMeanCpuPercent": 119.88,
+          "maxSampleCpuPercent": 133.36,
+          "maxSampleMemoryMiB": 344.5,
+          "maxSamplePids": 48
+        },
+        "worker": {
+          "samples": 4,
+          "sampleMeanCpuPercent": 0.19,
+          "maxSampleCpuPercent": 0.46,
+          "maxSampleMemoryMiB": 174.5,
+          "maxSamplePids": 35
+        },
+        "mysql": {
+          "samples": 4,
+          "sampleMeanCpuPercent": 200.4175,
+          "maxSampleCpuPercent": 202.66,
+          "maxSampleMemoryMiB": 553.2,
+          "maxSamplePids": 66
+        },
+        "rabbitmq": {
+          "samples": 4,
+          "sampleMeanCpuPercent": 32.015,
+          "maxSampleCpuPercent": 93.62,
+          "maxSampleMemoryMiB": 231.3,
+          "maxSamplePids": 135
+        },
+        "redis": {
+          "samples": 4,
+          "sampleMeanCpuPercent": 0.1525,
+          "maxSampleCpuPercent": 0.19,
+          "maxSampleMemoryMiB": 7.293,
+          "maxSamplePids": 5
+        },
+        "search": {
+          "samples": 4,
+          "sampleMeanCpuPercent": 1.4475,
+          "maxSampleCpuPercent": 1.74,
+          "maxSampleMemoryMiB": 966.7,
+          "maxSamplePids": 104
+        },
+        "web": {
+          "samples": 4,
+          "sampleMeanCpuPercent": 23.165,
+          "maxSampleCpuPercent": 25.03,
+          "maxSampleMemoryMiB": 44.03,
+          "maxSamplePids": 25
+        },
+        "prometheus": {
+          "samples": 4,
+          "sampleMeanCpuPercent": 0.275,
+          "maxSampleCpuPercent": 0.37,
+          "maxSampleMemoryMiB": 32.06,
+          "maxSamplePids": 7
+        },
+        "grafana": {
+          "samples": 4,
+          "sampleMeanCpuPercent": 1.12,
+          "maxSampleCpuPercent": 1.36,
+          "maxSampleMemoryMiB": 259.0,
+          "maxSamplePids": 107
+        },
+        "client": {
+          "samples": 4,
+          "sampleMeanCpuPercent": 21.39,
+          "maxSampleCpuPercent": 25.45,
+          "maxSampleMemoryMiB": 32.93,
+          "maxSamplePids": 11
+        }
+      },
+      "resourceSampleErrors": 0,
+      "cacheCountersIncludingWarmup": {
+        "cache_hit": 0,
+        "cache_miss": 0,
+        "cache_bypass": 0
+      },
+      "mysqlCountersIncludingWarmupAndProbes": {
+        "Questions": 124222,
+        "Queries": 124265,
+        "Slow_queries": 0,
+        "Connections": 6,
+        "Innodb_buffer_pool_read_requests": 13585616,
+        "Innodb_buffer_pool_reads": 0
+      }
+    }
+  ],
+  "judge": {
+    "status": "PASS",
+    "mode": "judge",
+    "startedAt": "2026-10-28T01:38:10.916Z",
+    "finishedAt": "2026-10-28T01:38:44.568Z",
+    "elapsedMs": 33655.071691,
+    "jobs": [
+      {
+        "name": "AC-1",
+        "expected": "AC",
+        "submissionId": "b86c7252-1d2c-40bb-8137-a4315f3b971e",
+        "sourceSha256": "d062d649a9b19fb54e5c64b40475450a0371164ae990c088b9a5257aa05aa4f1",
+        "acceptanceMs": 54.80931899999999,
+        "clientVisibleMs": 3963.2738419999996,
+        "verdict": "AC",
+        "statusVersion": 2,
+        "server": {
+          "submissionId": "b86c7252-1d2c-40bb-8137-a4315f3b971e",
+          "queueMs": 701.338,
+          "processingEnvelopeMs": 3087.385,
+          "acceptedToFinishedMs": 3791.633
+        }
+      },
+      {
+        "name": "AC-2",
+        "expected": "AC",
+        "submissionId": "94e3afdc-ba9c-47f9-9b6c-8a793d6b064c",
+        "sourceSha256": "de5b9688e17129a7bb19ffb89d2cbbcffa62b3b11e7ce72a676fc26a3f1eba75",
+        "acceptanceMs": 26.811969999999747,
+        "clientVisibleMs": 3511.18311,
+        "verdict": "AC",
+        "statusVersion": 2,
+        "server": {
+          "submissionId": "94e3afdc-ba9c-47f9-9b6c-8a793d6b064c",
+          "queueMs": 450.227,
+          "processingEnvelopeMs": 2890.759,
+          "acceptedToFinishedMs": 3342.403
+        }
+      },
+      {
+        "name": "AC-3",
+        "expected": "AC",
+        "submissionId": "9747cb89-55c7-4d2a-9a22-f16fad3e5bee",
+        "sourceSha256": "92d5e18abfc999d3ef7c17f37c25147ac9fca01cd7b543e9df3d02469d186e66",
+        "acceptanceMs": 20.50752300000022,
+        "clientVisibleMs": 3916.511485,
+        "verdict": "AC",
+        "statusVersion": 2,
+        "server": {
+          "submissionId": "9747cb89-55c7-4d2a-9a22-f16fad3e5bee",
+          "queueMs": 967.216,
+          "processingEnvelopeMs": 2802.513,
+          "acceptedToFinishedMs": 3770.802
+        }
+      },
+      {
+        "name": "AC-4",
+        "expected": "AC",
+        "submissionId": "4077fcec-57e9-48e9-a39a-4063fce9f1fe",
+        "sourceSha256": "c437a47e634b43094f64070933fd74afbe814f517b95e1f860ab8e01e4119436",
+        "acceptanceMs": 24.46253500000057,
+        "clientVisibleMs": 3089.5360029999993,
+        "verdict": "AC",
+        "statusVersion": 2,
+        "server": {
+          "submissionId": "4077fcec-57e9-48e9-a39a-4063fce9f1fe",
+          "queueMs": 62.66,
+          "processingEnvelopeMs": 2825.277,
+          "acceptedToFinishedMs": 2888.762
+        }
+      },
+      {
+        "name": "AC-5",
+        "expected": "AC",
+        "submissionId": "4b48a922-b5a7-4c04-98b3-dbf7eca039f3",
+        "sourceSha256": "ec46ea9bcdb7e59aea02db404cebf92b409b835bf529b0165a454fb09f4d01cb",
+        "acceptanceMs": 22.007620999998835,
+        "clientVisibleMs": 3907.1577469999993,
+        "verdict": "AC",
+        "statusVersion": 2,
+        "server": {
+          "submissionId": "4b48a922-b5a7-4c04-98b3-dbf7eca039f3",
+          "queueMs": 989.359,
+          "processingEnvelopeMs": 2796.072,
+          "acceptedToFinishedMs": 3788.926
+        }
+      },
+      {
+        "name": "AC-6",
+        "expected": "AC",
+        "submissionId": "6780524f-e25e-4684-81e0-bc4a252eb2de",
+        "sourceSha256": "27309548d1ff65b198d6b6d8cf88f00e5fd8e397da98dd8ded61453cb384f7a5",
+        "acceptanceMs": 21.46952500000043,
+        "clientVisibleMs": 3086.544452000002,
+        "verdict": "AC",
+        "statusVersion": 2,
+        "server": {
+          "submissionId": "6780524f-e25e-4684-81e0-bc4a252eb2de",
+          "queueMs": 96.56,
+          "processingEnvelopeMs": 2855.931,
+          "acceptedToFinishedMs": 2953.398
+        }
+      },
+      {
+        "name": "WA",
+        "expected": "WA",
+        "submissionId": "c968a8c9-09f5-4b51-b830-1b04035d2550",
+        "sourceSha256": "adcbe7a334fe42c7b97f1f50d6ee55924fa73ef900bbba35cb1733ec54a9c65c",
+        "acceptanceMs": 20.40338899999915,
+        "clientVisibleMs": 1864.5117950000022,
+        "verdict": "WA",
+        "statusVersion": 2,
+        "server": {
+          "submissionId": "c968a8c9-09f5-4b51-b830-1b04035d2550",
+          "queueMs": 54.267,
+          "processingEnvelopeMs": 1645.077,
+          "acceptedToFinishedMs": 1700.708
+        }
+      },
+      {
+        "name": "CE",
+        "expected": "CE",
+        "submissionId": "5c56b3fc-7e1e-47ad-b4c7-d37534d9e915",
+        "sourceSha256": "387c63f6dfb15570ef1862c582d5e7fe692999592c0ac6151154ae8430790297",
+        "acceptanceMs": 16.605733000000328,
+        "clientVisibleMs": 1244.724390000003,
+        "verdict": "CE",
+        "statusVersion": 2,
+        "server": {
+          "submissionId": "5c56b3fc-7e1e-47ad-b4c7-d37534d9e915",
+          "queueMs": 206.27,
+          "processingEnvelopeMs": 873.373,
+          "acceptedToFinishedMs": 1080.521
+        }
+      },
+      {
+        "name": "RE",
+        "expected": "RE",
+        "submissionId": "7c4473a6-ab9f-47f9-ac2b-f3d33835dfba",
+        "sourceSha256": "990fa62796ab9ca3549ddac7049aee77c2db792379230eaeb2bd1c363134601c",
+        "acceptanceMs": 19.05114699999831,
+        "clientVisibleMs": 2682.5148420000005,
+        "verdict": "RE",
+        "statusVersion": 2,
+        "server": {
+          "submissionId": "7c4473a6-ab9f-47f9-ac2b-f3d33835dfba",
+          "queueMs": 979.661,
+          "processingEnvelopeMs": 1622.322,
+          "acceptedToFinishedMs": 2602.79
+        }
+      },
+      {
+        "name": "TLE",
+        "expected": "TLE",
+        "submissionId": "529b8828-784f-4560-9383-747b6f4290a1",
+        "sourceSha256": "7c0c5894ea70523e5813d0bf5d3becb0e97a3341f5718d58022d2ded47057e74",
+        "acceptanceMs": 21.656465999996726,
+        "clientVisibleMs": 4106.536294999998,
+        "verdict": "TLE",
+        "statusVersion": 2,
+        "server": {
+          "submissionId": "529b8828-784f-4560-9383-747b6f4290a1",
+          "queueMs": 360.958,
+          "processingEnvelopeMs": 3626.958,
+          "acceptedToFinishedMs": 3988.774
+        }
+      },
+      {
+        "name": "OLE",
+        "expected": "OLE",
+        "submissionId": "f254456a-7050-42f2-8901-da0468f54d01",
+        "sourceSha256": "12fe60c16992d3b50d64fee712224846cf237e97ec8ad233f9c0331264c5f2ed",
+        "acceptanceMs": 18.210221000001184,
+        "clientVisibleMs": 2281.4897660000024,
+        "verdict": "OLE",
+        "statusVersion": 2,
+        "server": {
+          "submissionId": "f254456a-7050-42f2-8901-da0468f54d01",
+          "queueMs": 279.014,
+          "processingEnvelopeMs": 1887.208,
+          "acceptedToFinishedMs": 2167.193
+        }
+      }
+    ],
+    "duplicateProbe": {
+      "submissionId": "b86c7252-1d2c-40bb-8137-a4315f3b971e",
+      "sameId": true
+    },
+    "pollIntervalMs": 200,
+    "scope": "eleven sequential fresh-container observations; six AC plus five distinct verdict probes; not saturated judge throughput"
+  },
+  "requestCount": 277633,
+  "requestErrors": 0,
+  "scope": "two repeats of bounded closed-loop local read stages plus eleven sequential judge observations"
+}

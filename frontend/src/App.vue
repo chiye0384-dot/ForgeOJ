@@ -15,7 +15,6 @@ import { RouterLink, RouterView } from 'vue-router'
         <RouterLink to="/learning">学习记录</RouterLink>
         <RouterLink to="/classrooms">班级</RouterLink>
         <RouterLink to="/authoring">我的题目</RouterLink>
-        <RouterLink to="/">做题</RouterLink>
         <RouterLink to="/account">账号</RouterLink>
         <RouterLink to="/admin/login">管理后台</RouterLink>
       </nav>
@@ -112,5 +111,21 @@ textarea {
   margin-top: 0.15rem;
   color: #637083;
   font-size: 0.82rem;
+}
+
+@media (max-width: 600px) {
+  .brand nav {
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    width: 100%;
+    margin-left: 0;
+    gap: 0.65rem 0.75rem;
+  }
+
+  .brand nav a {
+    white-space: nowrap;
+    text-align: center;
+    font-size: 0.9rem;
+  }
 }
 </style>

@@ -38,6 +38,22 @@ class SearchProjectionIntegrationTests {
     JdbcTemplate migrator(){return db("forgeoj_migrator","m0-migrator-test-secret");}
     JdbcTemplate db(String user,String password){return new JdbcTemplate(new DriverManagerDataSource(MYSQL.getJdbcUrl(),user,password));}
     void change(){new TransactionTemplate(manager).executeWithoutResult(s->{invalidations.publicChanged();changes.changed(1);});}
+    @Test void batchTagsKeepProblemBindingsOrderingAndExcludeUnrequestedRows() {
+        var db = migrator();
+        var ids = new ArrayList<Long>();
+        for (int i = 0; i < 3; i++) {
+            String slug = "batch-tags-" + UUID.randomUUID();
+            db.update("INSERT INTO problem(slug,title,statement_text,input_description,output_description,public_samples_json,status) VALUES(?,'batch tags','','','',JSON_ARRAY(),'ACTIVE')", slug);
+            long id = db.queryForObject("SELECT id FROM problem WHERE slug=?", Long.class, slug);
+            ids.add(id);
+            db.update("INSERT INTO problem_tag(problem_id,tag) VALUES(?,'z-last'),(?,'a-first')", id, id);
+        }
+        assertThat(mapper.tagsForProblems(ids.subList(0, 2))).containsExactly(
+                new SearchMapper.ProblemTag(ids.get(0), "a-first"),
+                new SearchMapper.ProblemTag(ids.get(0), "z-last"),
+                new SearchMapper.ProblemTag(ids.get(1), "a-first"),
+                new SearchMapper.ProblemTag(ids.get(1), "z-last"));
+    }
     @Test void commitsOneVersionAndMinimalEventWhileRollbackPreservesAllThreeFacts(){
         long old=mapper.projection(1).orElseThrow().dataVersion(),count=mapper.eventCount(1),epoch=epochs.publicRevision();
         assertThatThrownBy(()->new TransactionTemplate(manager).executeWithoutResult(s->{invalidations.publicChanged();changes.changed(1);throw new IllegalStateException("fixture rollback");})).isInstanceOf(IllegalStateException.class);

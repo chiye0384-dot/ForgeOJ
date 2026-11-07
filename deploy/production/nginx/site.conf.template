@@ -1,0 +1,38 @@
+# Copyright 2026 池也; SPDX-License-Identifier: Apache-2.0
+server {
+  listen 80 default_server;
+  server_name _;
+  if ($host != '${FORGEOJ_DOMAIN}') { return 444; }
+  return 308 https://${FORGEOJ_DOMAIN}${FORGEOJ_HTTPS_SUFFIX}$request_uri;
+}
+server {
+  listen 443 ssl default_server;
+  server_name ${FORGEOJ_DOMAIN};
+  ssl_certificate /run/tls/fullchain.pem;
+  ssl_certificate_key /run/tls/privkey.pem;
+  ssl_protocols TLSv1.2 TLSv1.3;
+  if ($host != '${FORGEOJ_DOMAIN}') { return 444; }
+  root /usr/share/nginx/html;
+  add_header X-Content-Type-Options nosniff always;
+  add_header Referrer-Policy same-origin always;
+  location / { try_files $uri $uri/ /index.html; }
+  location /assets/ { try_files $uri =404; }
+  location /api/ {
+    proxy_pass http://api:8080;
+    proxy_http_version 1.1;
+    proxy_set_header Host ${FORGEOJ_DOMAIN}${FORGEOJ_HTTPS_SUFFIX};
+    proxy_set_header X-Forwarded-Host ${FORGEOJ_DOMAIN}${FORGEOJ_HTTPS_SUFFIX};
+    proxy_set_header X-Forwarded-Proto https;
+    proxy_set_header X-Forwarded-Port ${FORGEOJ_HTTPS_PORT};
+    # A single authoritative address replaces any client forwarding chain.
+    proxy_set_header X-Forwarded-For $remote_addr;
+    proxy_set_header Forwarded "";
+    proxy_set_header Upgrade $http_upgrade;
+    proxy_set_header Connection $connection_upgrade;
+    proxy_read_timeout 75s;
+    proxy_buffering off;
+  }
+  location /dev-mail { return 404; }
+  location /src/ { return 404; }
+  location ~ /\. { deny all; }
+}

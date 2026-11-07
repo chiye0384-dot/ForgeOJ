@@ -19,6 +19,11 @@ public interface SearchMapper {
     @Select(PROJECT+"AND p.id>#{after} ORDER BY p.id LIMIT 100") List<Projection> scan(long after);
     @Select("<script>"+PROJECT+"AND p.id IN <foreach collection='ids' item='id' open='(' separator=',' close=')'>#{id}</foreach></script>") List<Projection> projections(@Param("ids")List<Long> ids);
     @Select("SELECT tag FROM problem_tag WHERE problem_id=#{id} ORDER BY tag") List<String> tags(long id);
+    record ProblemTag(long problemId, String tag) {}
+    @Select("<script>SELECT problem_id AS problemId,tag FROM problem_tag WHERE problem_id IN "
+            + "<foreach collection='ids' item='id' open='(' separator=',' close=')'>#{id}</foreach>"
+            + " ORDER BY problem_id,tag</script>")
+    List<ProblemTag> tagsForProblems(@Param("ids") List<Long> ids);
     @Select("SELECT DISTINCT pt.tag COLLATE utf8mb4_bin AS tag FROM problem_tag pt JOIN problem p ON p.id=pt.problem_id WHERE p.scope='PUBLIC' AND p.status='ACTIVE' AND pt.tag=#{tag} LIMIT 101") List<String> matchingTags(String tag);
     @Select("SELECT COUNT(*) FROM public_search_version") long projectionCount();
     @Select("SELECT version,readable_epoch AS readableEpoch,index_name AS indexName,index_uuid AS indexUuid,active_job AS activeJob FROM public_search_control WHERE id=1") Control control();

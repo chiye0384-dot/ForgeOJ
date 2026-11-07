@@ -1,0 +1,149 @@
+{
+  "status": "VERIFIED",
+  "checkedAt": "2026-10-30T02:59:10.194Z",
+  "project": "forgeoj-e2e-20261029-201735-604f52a7",
+  "solutions": [
+    {
+      "slug": "sum-two-integers",
+      "judgeVersion": 1,
+      "ideaSha256": "7ae84cfe1f6adfe9aa1cbca9025a43e2cf2f4f573333bb54ba75977cdff25098",
+      "sourceSha256": "8ea97069f7dab7a359659988f2fe21e12c13bad2d7709d36536e2d8047f76f28"
+    },
+    {
+      "slug": "public-39eeb0d2-72f1-433f-96f3-5f2689dd2807",
+      "judgeVersion": 1,
+      "ideaSha256": "499a196b2d65225d287a90220a34c7eae0585590deb755035b28c9a4b1a9493f",
+      "sourceSha256": "7240f3a5a3761b4ed05c31b4d6a323acffefcb5aeb347f67d9314fe2bb6d0462"
+    },
+    {
+      "slug": "public-5862d7e0-ad9c-4253-b22e-29dba3645d9c",
+      "judgeVersion": 1,
+      "ideaSha256": "d86f498f5648d345277a59426746c3bdae87abc8b99654d31ad6e9115b846fdf",
+      "sourceSha256": "f3e9286327b0840f3ace954bdabdcb4e0355c1751b37523245e1fd9a84eac76b"
+    },
+    {
+      "slug": "public-212a8f29-bc5b-4b99-b166-43b74f067159",
+      "judgeVersion": 1,
+      "ideaSha256": "4f1153a1dcfd172d45d9f8a247ce1541c22f0a5f425e1490846375e212c51ebe",
+      "sourceSha256": "b6b858f60514d745d76590ca2842a0e4f9d6ae29d2bce35b5238a967b07dd3d6"
+    },
+    {
+      "slug": "public-e0c61819-1477-468b-ab94-25256c17267c",
+      "judgeVersion": 1,
+      "ideaSha256": "a36ade1e92f0c5ebe7f917174111768ca6b133dcfdca1fa6a87c3d92c45a61f1",
+      "sourceSha256": "cd88443bcbbd121fb8cf321fb0b232ad2e3780b66fed17d66e616e8c5b12bacc"
+    },
+    {
+      "slug": "public-5ec20251-2833-4091-815b-93359ac583f8",
+      "judgeVersion": 1,
+      "ideaSha256": "fb26368f290efb5112aed16bf9bafbfcf945a810da570e35fca4cb52ba220e22",
+      "sourceSha256": "eace233ff6901872228158fd826041abeb14a29b3f7e25cc61f54c4854510a69"
+    },
+    {
+      "slug": "public-40e4a865-fe61-4378-b755-a73f674dd158",
+      "judgeVersion": 1,
+      "ideaSha256": "04d3fa389d99163e97d8c2b1b9c825dab12677c199a5024dc9aae9bffa291b8a",
+      "sourceSha256": "390c66d7d01c2159ba2aada6b1c2381c222c3923e9a779cfb3384e1b0471659b"
+    },
+    {
+      "slug": "public-799e18d1-0d3c-425d-a58b-e17249117259",
+      "judgeVersion": 1,
+      "ideaSha256": "1cede6a9af4113cc94c15959b3212d42d07bc58fe2427510e0d50be1840d3065",
+      "sourceSha256": "e1dd2c7e82623354605301d4ab7d7c33f4a6fce0a576a149a754036b89df51a0"
+    },
+    {
+      "slug": "public-146d18d0-334b-4ee9-9740-d055ec144ee7",
+      "judgeVersion": 1,
+      "ideaSha256": "f49898ba79104359edf5033e7caaa9fad398094df391df92aaeea85158a3a590",
+      "sourceSha256": "92ccb3e910fcbaae678650f018328cdebe2ea4b1c41956f84c7bca0bcdf74d86"
+    },
+    {
+      "slug": "public-f451ff69-590b-4617-9861-fb62f7184cac",
+      "judgeVersion": 1,
+      "ideaSha256": "a5145a57342db974f94015e0ff9a2207614eeb91ef8f87b3f58ddeae4cef1fd3",
+      "sourceSha256": "9ddaf849a3423e1aaa14c19838531328f0c5abb7adee382744e4df092ecf9f87"
+    },
+    {
+      "slug": "public-2bb4f782-7c98-4ab3-8ae8-802180af9ba5",
+      "judgeVersion": 1,
+      "ideaSha256": "4efdb34fe04331281027345f493e8d80fa6e448de6d1be487eebcf5d61ff332b",
+      "sourceSha256": "ebf5554b06f00467cd540bdf4233e4fba54d3230c8c76a742a737671405d76dd"
+    },
+    {
+      "slug": "public-2fc67124-121b-42b8-ac73-da420dace5d4",
+      "judgeVersion": 1,
+      "ideaSha256": "5c84a1f6c4b0c59c98b7bee84612a3e3cd7222ee6fee26ce22d298415d10f369",
+      "sourceSha256": "8133d7661067d5fc2e0686615799374bf274aa6a131e2963965394e1bca78058"
+    },
+    {
+      "slug": "public-c958fcd5-b8e7-4eea-96c9-40f744af5bd9",
+      "judgeVersion": 1,
+      "ideaSha256": "77a6b21975708c2b4c964ea2eda92b5f308415ab538dc3bb9fc0e00e79651a4f",
+      "sourceSha256": "ac8dd0e32bf1739cde565c14c939300c6f506621d638df7eb9a28238f15c3b0d"
+    },
+    {
+      "slug": "public-32553c78-8d80-4891-9550-258e276c71ac",
+      "judgeVersion": 1,
+      "ideaSha256": "1cb4ffd974e89c4de2dffd02df14d715769f84648a098a336b80d7cb21497df5",
+      "sourceSha256": "71c6f80e3969bc9f830ee2238d1f59f861496fa9ac947d8225b83ff18c4b0d15"
+    },
+    {
+      "slug": "public-744f0523-d525-4500-bd6b-1125da8cb86f",
+      "judgeVersion": 1,
+      "ideaSha256": "cbe0b9ddd33e929440bb1ac40887958864f9bb2e406849a943aa6709ead2c298",
+      "sourceSha256": "cf54da5a10286229600b2dda9be359d74e110ea8f033ae4f6ca415aa24ff5137"
+    },
+    {
+      "slug": "public-6c36b2ae-f58e-4148-9c1a-33b3c2d2a35c",
+      "judgeVersion": 1,
+      "ideaSha256": "90d8f0ff21f0adf40592543ae07c411512c6d3c585915a3814d7d53fe5252726",
+      "sourceSha256": "a68cba4cd7e4e53356589c9734ae33893ef645710e702ff0eb8e4a3d68bf4827"
+    },
+    {
+      "slug": "public-8f9fc08a-8303-460f-922f-1bcb92c9ebe6",
+      "judgeVersion": 1,
+      "ideaSha256": "5beb218e1898312ec32b16bc1da5f66792678984cafbfe3a7bfb8746a9acfced",
+      "sourceSha256": "89b5ad5947968b95480bb1e0268092f860770596370bbf317c1eb4f8c1207f2a"
+    },
+    {
+      "slug": "public-5f61cf2e-2c92-4e02-80f4-5a9baf4e545a",
+      "judgeVersion": 1,
+      "ideaSha256": "a5dcf9b9db7d21679a6112693a98f5b37bf4a93b55f2a38143457fa0b1744d06",
+      "sourceSha256": "9af4e63ca577d634c6a80e29ca66e2d2b6a5a272d3c1efa6814c243ca4d7c16b"
+    },
+    {
+      "slug": "public-682c403f-4cff-400c-bc20-8059ec7bae28",
+      "judgeVersion": 1,
+      "ideaSha256": "c175364afa53947cc756685b3afce26b385056b0d885322da35edfa68e688bd4",
+      "sourceSha256": "6367f3b91c5ae78c1bd3145e81eb3aaaa064b200b7c27090bf7f4be14c763ba9"
+    },
+    {
+      "slug": "public-daeb3895-9d44-4e14-a75b-080aae19c834",
+      "judgeVersion": 1,
+      "ideaSha256": "ac74038d8a97f6f1323ada8d083c5ae44e9c33419d91621d81a9646ac8bbf04e",
+      "sourceSha256": "aa62656de63b21e2c2a8acd77854f53056de24174bf83c4d6978058be88797e6"
+    },
+    {
+      "slug": "public-cfd71911-d944-4511-8f62-ea7db61b09d4",
+      "judgeVersion": 1,
+      "ideaSha256": "d25ba4bbbcf999f38d5ee88e086cfff69ce2b32f24f8332c551aeb2c402220cc",
+      "sourceSha256": "be008c8095a112bec942ff27ea3a2757e3d2edbbc2e82516f87cde51da06212f"
+    }
+  ],
+  "formalSubmission": {
+    "id": "dc378c93-05cb-4712-aee5-5067fc0df5cc",
+    "verdict": "AC"
+  },
+  "selfTest": {
+    "runId": "ac8f9a39-259c-434f-88de-640e63750663",
+    "executionResult": "SUCCESS",
+    "output": "42\n",
+    "sourceSha256": "bb6bcbbcdf18d821cc3eecbe95452f1f29e67d98ff264a2c9ecfffa179dbcfd6"
+  },
+  "accessChecks": {
+    "lockedHidesContent": true,
+    "falseConsentRejected": true,
+    "explicitConsentUnlocks": true,
+    "ordinaryLearnerProgressModified": false
+  }
+}

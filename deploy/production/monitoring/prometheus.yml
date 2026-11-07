@@ -1,0 +1,13 @@
+# Copyright 2026 池也; SPDX-License-Identifier: Apache-2.0
+global:
+  scrape_interval: 15s
+  scrape_timeout: 5s
+scrape_configs:
+  - job_name: forgeoj-api
+    authorization: {type: Bearer, credentials_file: /run/secrets/monitoring-token}
+    static_configs: [{targets: [api:9091]}]
+  - job_name: forgeoj-worker
+    authorization: {type: Bearer, credentials_file: /run/secrets/monitoring-token}
+    static_configs: [{targets: [worker:9092]}]
+  - job_name: rabbitmq
+    static_configs: [{targets: [rabbitmq:15692]}]

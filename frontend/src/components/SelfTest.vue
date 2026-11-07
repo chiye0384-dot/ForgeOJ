@@ -287,13 +287,14 @@ onBeforeUnmount(() => {
 
 <style scoped>
 .self-test {
-  margin-top: 1.5rem;
-  padding-top: 1rem;
-  border-top: 1px solid #d8e0eb;
+  margin: 0;
 }
 textarea {
   display: block;
   width: 100%;
+  box-sizing: border-box;
+  min-height: 7rem;
+  padding: 0.6rem;
   font-family: monospace;
 }
 button {
@@ -303,7 +304,8 @@ button {
 }
 pre {
   overflow: auto;
-  white-space: pre;
+  white-space: pre-wrap;
+  overflow-wrap: anywhere;
   background: #f1f5f9;
   padding: 1rem;
 }

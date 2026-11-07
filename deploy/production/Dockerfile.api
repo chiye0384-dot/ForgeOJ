@@ -1,0 +1,17 @@
+# Copyright 2026 池也; SPDX-License-Identifier: Apache-2.0
+FROM eclipse-temurin:21.0.12_8-jdk-jammy@sha256:c7d5863b5dd8f26b90c64f1d80cc2b0e5a5e4642f8db9955a370d348edd8f438 AS unpack
+WORKDIR /unpack
+COPY artifacts/api.jar /input.jar
+RUN jar -xf /input.jar && rm -rf BOOT-INF/classes/db/devdata && rm -f BOOT-INF/classes/application-dev.properties
+COPY scripts/Migrate.java /Migrate.java
+RUN javac -cp 'BOOT-INF/lib/*' -d /migration /Migrate.java
+FROM eclipse-temurin:21.0.12_8-jdk-jammy@sha256:c7d5863b5dd8f26b90c64f1d80cc2b0e5a5e4642f8db9955a370d348edd8f438
+WORKDIR /app
+COPY --from=unpack /unpack/BOOT-INF/classes /app/classes
+COPY --from=unpack /unpack/BOOT-INF/lib /app/lib
+COPY --from=unpack /migration /app/migration
+COPY notices /app/notices
+COPY scripts/admin.sh /app/admin.sh
+COPY scripts/health.sh /app/health.sh
+USER 10001:10001
+ENTRYPOINT ["java", "-Xmx384m", "-cp", "/app/classes:/app/lib/*", "com.forgeoj.api.ForgeojApiApplication"]

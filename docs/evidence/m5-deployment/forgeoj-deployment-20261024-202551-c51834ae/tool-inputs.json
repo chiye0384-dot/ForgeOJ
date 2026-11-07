@@ -1,0 +1,30 @@
+[
+  {
+    "path": "tools/deployment/audit-package.py",
+    "sha256": "2424dbe0d4d6d3c859244ae4b42d3013ee1c484f01ca37d1d3a0991041662df9"
+  },
+  {
+    "path": "tools/deployment/Build-ProductionPackage.ps1",
+    "sha256": "6760a33f66049f955298b9e80a7214a21b091d64162e32ec986921b8a49859f8"
+  },
+  {
+    "path": "tools/deployment/check-package-lifecycle.py",
+    "sha256": "72b80b11a61e5b1aaf6179c89375e25f2c8aa8536ba83ce76147149b9b0eabec"
+  },
+  {
+    "path": "tools/deployment/finalize-package.py",
+    "sha256": "aa425660c1ce57eb26cd5d1afd143207196ed765bf32e3194ff755fb642acb66"
+  },
+  {
+    "path": "tools/deployment/smoke-https.mjs",
+    "sha256": "2d7fe39fab65ee271be27d3285f5d9e21d8367861d1cec628ad6d2b396031d6f"
+  },
+  {
+    "path": "tools/deployment/Stop-ProductionPackageCheck.ps1",
+    "sha256": "4cdb543fa6e297c9a68a92ac7d0729aac548929f0ee706ebac4c53b57c219e63"
+  },
+  {
+    "path": "tools/deployment/Verify-ProductionPackage.ps1",
+    "sha256": "e7754cc1ea5cc0c0c463e7e0e868e331fef3e4b1661cec07428dbaf779e9f6d2"
+  }
+]

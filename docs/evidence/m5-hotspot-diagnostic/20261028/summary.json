@@ -1,0 +1,3393 @@
+{
+  "status": "PASS",
+  "scope": "probe-enabled diagnosis only; no optimization comparison",
+  "cases": [
+    {
+      "case": "list-c4",
+      "requestSummary": {
+        "status": "PASS",
+        "mode": "list",
+        "concurrency": 4,
+        "round": 0,
+        "startedAt": "2026-10-28T08:04:05.079Z",
+        "finishedAt": "2026-10-28T08:04:25.083Z",
+        "elapsedMs": 20002.952697,
+        "measurementCount": 10313,
+        "warmupCount": 30,
+        "successful": 10313,
+        "errors": 0,
+        "timeouts": 0,
+        "networkErrors": 0,
+        "semanticErrors": 0,
+        "statuses": {
+          "200": 10313
+        },
+        "attemptedRps": 515.573883327071,
+        "successfulRps": 515.573883327071,
+        "errorRate": 0,
+        "allLatency": {
+          "p50Ms": 4.82826699999714,
+          "p95Ms": 28.966663999999582,
+          "p99Ms": 57.49341800000002
+        },
+        "successLatency": {
+          "p50Ms": 4.82826699999714,
+          "p95Ms": 28.966663999999582,
+          "p99Ms": 57.49341800000002
+        },
+        "clientCpuPercent": 14.255250428241313,
+        "clientRssBytes": 78868480,
+        "clientEventLoopP99Ms": 11.091967,
+        "model": "closed loop; no retry; same bridge; validated TLS; keep-alive",
+        "maxRequestCap": 100000
+      },
+      "serverConfirmedIncludingWarmup": 10343,
+      "sqlCountCoverage": {
+        "list-count": {
+          "expectedFromRequestAndMapper": 10343,
+          "observedDigestDelta": 10068,
+          "difference": -275,
+          "ratio": 0.9734119694479358
+        },
+        "list-page": {
+          "expectedFromRequestAndMapper": 10343,
+          "observedDigestDelta": 10320,
+          "difference": -23,
+          "ratio": 0.9977762738083729
+        },
+        "list-tags": {
+          "expectedFromRequestAndMapper": 10343,
+          "observedDigestDelta": 10333,
+          "difference": -10,
+          "ratio": 0.9990331625253794
+        }
+      },
+      "sqlStatements": [
+        {
+          "family": "list-count",
+          "digest": "5ec90171c7e6ac0d10274f38fc30c176e39e395628c56fc3bfc3bda1731593f4",
+          "normalized": "SELECT COUNT ( * ) FROM `problem` `p` JOIN `problem_judge_version` `jv` ON `jv` . `id` = `p` . `current_judge_version_id` WHERE `p` . `status` = ? AND `p` . `scope` = ? AND `p` . `title` LIKE ? ESCAPE ? AND `p` . `difficulty` = ? AND EXISTS ( SELECT ? FROM `problem_tag` `pt` WHERE `pt` . `problem_id` = `p` . `id` AND `pt` . `tag` = ? )",
+          "count": 10068,
+          "totalPs": 5979248513000,
+          "lockPs": 25084000000,
+          "rowsExamined": 3274410,
+          "rowsSent": 10283,
+          "noIndex": 1004,
+          "noGoodIndex": 0,
+          "errors": 0,
+          "totalElapsedMs": 5979.248513,
+          "meanElapsedMs": 0.5938864236193881,
+          "meanRowsExamined": 325.22943980929676
+        },
+        {
+          "family": "list-page",
+          "digest": "b42df987bfad52f5faec6ec5214297266845b75e09fb65537368e818f0a10327",
+          "normalized": "SELECT `p` . `id` , `p` . `slug` , `p` . `title` , `p` . `difficulty` , `jv` . `version_no` AS `judgeVersion` FROM `problem` `p` JOIN `problem_judge_version` `jv` ON `jv` . `id` = `p` . `current_judge_version_id` WHERE `p` . `status` = ? AND `p` . `scope` = ? AND `p` . `title` LIKE ? ESCAPE ? AND `p` . `difficulty` = ? AND EXISTS ( SELECT ? FROM `problem_tag` `pt` WHERE `pt` . `problem_id` = `p` . `id` AND `pt` . `tag` = ? ) ORDER BY `p` . `id` ASC LIMIT ? OFFSET ?",
+          "count": 10320,
+          "totalPs": 5943150203000,
+          "lockPs": 14878000000,
+          "rowsExamined": 3657619,
+          "rowsSent": 206780,
+          "noIndex": 0,
+          "noGoodIndex": 0,
+          "errors": 0,
+          "totalElapsedMs": 5943.150203,
+          "meanElapsedMs": 0.5758866475775194,
+          "meanRowsExamined": 354.4204457364341
+        },
+        {
+          "family": "list-tags",
+          "digest": "276487d148a381437118de81ca4e4b2773f26e93ef4092f1aceddb480d94a454",
+          "normalized": "SELECT `problem_id` AS `problemId` , `tag` FROM `problem_tag` WHERE `problem_id` IN (...) ORDER BY `problem_id` ASC , `tag` ASC",
+          "count": 10333,
+          "totalPs": 2558521218000,
+          "lockPs": 10310000000,
+          "rowsExamined": 413280,
+          "rowsSent": 413400,
+          "noIndex": 0,
+          "noGoodIndex": 0,
+          "errors": 0,
+          "totalElapsedMs": 2558.521218,
+          "meanElapsedMs": 0.24760681486499567,
+          "meanRowsExamined": 39.99612890738411
+        },
+        {
+          "family": "transaction-control",
+          "digest": "158bfe3d4b4b0a372a4acdb38affe2cb4f6b3cb21a9af0ea9fad9a9a083ac18a",
+          "normalized": "SET `autocommit` = ?",
+          "count": 20733,
+          "totalPs": 1166961265000,
+          "lockPs": 0,
+          "rowsExamined": 0,
+          "rowsSent": 0,
+          "noIndex": 0,
+          "noGoodIndex": 0,
+          "errors": 0,
+          "totalElapsedMs": 1166.961265,
+          "meanElapsedMs": 0.056285210292769984,
+          "meanRowsExamined": 0.0
+        },
+        {
+          "family": "transaction-control",
+          "digest": "9cf78ec1ee2746bb4c688b21593f69a1eba7026ba2277d7717cd8defb167449a",
+          "normalized": "SET SESSION TRANSACTION READ ONLY",
+          "count": 10201,
+          "totalPs": 805628670000,
+          "lockPs": 0,
+          "rowsExamined": 0,
+          "rowsSent": 0,
+          "noIndex": 0,
+          "noGoodIndex": 0,
+          "errors": 0,
+          "totalElapsedMs": 805.62867,
+          "meanElapsedMs": 0.0789754602489952,
+          "meanRowsExamined": 0.0
+        },
+        {
+          "family": "connection-state-probe",
+          "digest": "a724a21545b602d4ae826ae58bbf526427a94f1e68ebec539ec3c53bfaa88281",
+          "normalized": "SELECT @@SESSION . `transaction_isolation`",
+          "count": 10256,
+          "totalPs": 768935147000,
+          "lockPs": 0,
+          "rowsExamined": 10302,
+          "rowsSent": 10343,
+          "noIndex": 0,
+          "noGoodIndex": 0,
+          "errors": 0,
+          "totalElapsedMs": 768.935147,
+          "meanElapsedMs": 0.07497417579953199,
+          "meanRowsExamined": 1.0044851794071763
+        },
+        {
+          "family": "transaction-control",
+          "digest": "f2b9be5f0f32ca7507e4ddf133cd2fad0993a1c26fde9caa6f067b1af2b7603c",
+          "normalized": "COMMIT",
+          "count": 10338,
+          "totalPs": 611364031000,
+          "lockPs": 0,
+          "rowsExamined": 0,
+          "rowsSent": 0,
+          "noIndex": 0,
+          "noGoodIndex": 0,
+          "errors": 0,
+          "totalElapsedMs": 611.364031,
+          "meanElapsedMs": 0.0591375537821629,
+          "meanRowsExamined": 0.0
+        },
+        {
+          "family": "transaction-control",
+          "digest": "664a2aec28f52c38fac12d5adf14d7f8da06346ba3a594072cc152ad9bcecb59",
+          "normalized": "SET SESSION TRANSACTION READ WRITE",
+          "count": 10338,
+          "totalPs": 521127152000,
+          "lockPs": 0,
+          "rowsExamined": 0,
+          "rowsSent": 0,
+          "noIndex": 0,
+          "noGoodIndex": 0,
+          "errors": 0,
+          "totalElapsedMs": 521.127152,
+          "meanElapsedMs": 0.0504088945637454,
+          "meanRowsExamined": 0.0
+        },
+        {
+          "family": "background-or-observer",
+          "digest": "7343b32f775d7d5be95052955fdf5f53bc70027f8158ef28d11f4e11386af067",
+          "normalized": "SELECT `o` . `id` , `o` . `event_type` AS `eventType` , `o` . `sequence_no` AS `sequenceNo` , CAST ( `o` . `payload` AS CHARACTER ) AS `payload` , `o` . `publish_attempts` AS `publishAttempts` , `o` . `aggregate_id` AS `judgeTaskId` , `jt` . `submission_id` AS `submissionId` FROM `outbox_event` `o` LEFT JOIN `judge_task` `jt` ON `jt` . `id` = `o` . `aggregate_id` WHERE `o` . `published_at` IS NULL AND `o` . `failed_at` IS NULL AND `o` . `next_attempt_at` <= NOW (?) AND ( ( `o` . `aggregate_type` = ? AND `o` . `event_type` IN (...) ) OR ( `o` . `aggregate_type` = ? AND `o` . `event_type` IN (...) ) OR ( `o` . `aggregate_type` = ? AND `o` . `event_type` IN (...) ) ) AND `o` . `contract_version` = ? ORDER BY `o` . `next_attempt_at` , `o` . `created_at` , `o` . `id` LIMIT ?",
+          "count": 25,
+          "totalPs": 9673306000,
+          "lockPs": 58000000,
+          "rowsExamined": 0,
+          "rowsSent": 0,
+          "noIndex": 0,
+          "noGoodIndex": 0,
+          "errors": 0,
+          "totalElapsedMs": 9.673306,
+          "meanElapsedMs": 0.38693224,
+          "meanRowsExamined": 0.0
+        },
+        {
+          "family": "background-or-observer",
+          "digest": "8426cac9b1e0a76090c4850ce74f11750aa42b76644d3686921c4eb0d0bc9d59",
+          "normalized": "SELECT `id` , `problem_id` AS `problemId` , `data_version` AS `dataVersion` , `public_epoch` AS `publicEpoch` , `publish_attempts` AS `publishAttempts` FROM `public_search_outbox` WHERE `published_at` IS NULL AND `failed_at` IS NULL AND `next_publish_at` <= UTC_TIMESTAMP (?) ORDER BY `created_at` , `id` LIMIT ?",
+          "count": 25,
+          "totalPs": 7131501000,
+          "lockPs": 64000000,
+          "rowsExamined": 0,
+          "rowsSent": 0,
+          "noIndex": 0,
+          "noGoodIndex": 0,
+          "errors": 0,
+          "totalElapsedMs": 7.131501,
+          "meanElapsedMs": 0.28526004,
+          "meanRowsExamined": 0.0
+        },
+        {
+          "family": "background-or-observer",
+          "digest": "4651e858447eca5374729484ccfa1f58ef393141183c9d7066c2578dcf4d0031",
+          "normalized": "SELECT `d` . `event_id` FROM `public_search_delivery` `d` WHERE `d` . `status` IN (...) AND `d` . `next_attempt_at` <= UTC_TIMESTAMP (?) AND ( `d` . `lease_expires_at` IS NULL OR `d` . `lease_expires_at` <= UTC_TIMESTAMP (?) ) ORDER BY `d` . `next_attempt_at` LIMIT ?",
+          "count": 25,
+          "totalPs": 5542109000,
+          "lockPs": 38000000,
+          "rowsExamined": 0,
+          "rowsSent": 0,
+          "noIndex": 0,
+          "noGoodIndex": 0,
+          "errors": 0,
+          "totalElapsedMs": 5.542109,
+          "meanElapsedMs": 0.22168436,
+          "meanRowsExamined": 0.0
+        },
+        {
+          "family": "background-or-observer",
+          "digest": "8c7230d3b18cedd9eb4b54c87da2a3cae233f1ab96340b9d15564cc4a5fb9b2e",
+          "normalized": "SELECT `id` FROM `cache_invalidation_outbox` WHERE `delivered_at` IS NULL AND `next_attempt_at` <= UTC_TIMESTAMP (?) ORDER BY `id` LIMIT ?",
+          "count": 25,
+          "totalPs": 4627368000,
+          "lockPs": 39000000,
+          "rowsExamined": 0,
+          "rowsSent": 0,
+          "noIndex": 0,
+          "noGoodIndex": 0,
+          "errors": 0,
+          "totalElapsedMs": 4.627368,
+          "meanElapsedMs": 0.18509472,
+          "meanRowsExamined": 0.0
+        },
+        {
+          "family": "background-or-observer",
+          "digest": "ec1f676bf6ca7a071cd5897ae1d12459d7277b54544315a7fb9557e646774436",
+          "normalized": "SELECT `event_id` AS `eventId` , `attempts` FROM `public_search_dead_outbox` WHERE `published_at` IS NULL AND `failed_at` IS NULL AND `next_attempt_at` <= UTC_TIMESTAMP (?) LIMIT ?",
+          "count": 25,
+          "totalPs": 4442175000,
+          "lockPs": 46000000,
+          "rowsExamined": 0,
+          "rowsSent": 0,
+          "noIndex": 25,
+          "noGoodIndex": 0,
+          "errors": 0,
+          "totalElapsedMs": 4.442175,
+          "meanElapsedMs": 0.177687,
+          "meanRowsExamined": 0.0
+        },
+        {
+          "family": "background-or-observer",
+          "digest": "083d61af86560f87ce1cea5f804a5c5240721a9b867b75d508e64710bf13b918",
+          "normalized": "SELECT `revision` FROM `cache_epoch` WHERE `namespace` = ? FOR UPDATE",
+          "count": 25,
+          "totalPs": 4410593000,
+          "lockPs": 39000000,
+          "rowsExamined": 25,
+          "rowsSent": 25,
+          "noIndex": 0,
+          "noGoodIndex": 0,
+          "errors": 0,
+          "totalElapsedMs": 4.410593,
+          "meanElapsedMs": 0.17642372,
+          "meanRowsExamined": 1.0
+        },
+        {
+          "family": "background-or-observer",
+          "digest": "ba5a9eb9c8e3bd77b8c95716c14ce0ff53e406d82ba5929c6acc00027eb27275",
+          "normalized": "SELECT DISTINCTROW `classroom_id` FROM `classroom_assignment` WHERE ( STATUS = ? AND `starts_at` <= UTC_TIMESTAMP (?) ) OR ( STATUS = ? AND `allow_late` = FALSE AND `deadline_at` <= UTC_TIMESTAMP (?) ) ORDER BY `classroom_id` LIMIT ?",
+          "count": 13,
+          "totalPs": 4371056000,
+          "lockPs": 26000000,
+          "rowsExamined": 0,
+          "rowsSent": 0,
+          "noIndex": 0,
+          "noGoodIndex": 0,
+          "errors": 0,
+          "totalElapsedMs": 4.371056,
+          "meanElapsedMs": 0.3362350769230769,
+          "meanRowsExamined": 0.0
+        },
+        {
+          "family": "background-or-observer",
+          "digest": "59cbe901e298f69893485f02b6b54c017f9d59d62d1125e3fd3f16006324410d",
+          "normalized": "SELECT `event_id` AS `eventId` , `rebuild_id` AS `rebuildId` , `attempts` FROM `public_search_dead_recovery` WHERE `published_at` IS NULL AND `failed_at` IS NULL AND `next_attempt_at` <= UTC_TIMESTAMP (?) LIMIT ?",
+          "count": 25,
+          "totalPs": 4263409000,
+          "lockPs": 47000000,
+          "rowsExamined": 0,
+          "rowsSent": 0,
+          "noIndex": 25,
+          "noGoodIndex": 0,
+          "errors": 0,
+          "totalElapsedMs": 4.263409,
+          "meanElapsedMs": 0.17053636,
+          "meanRowsExamined": 0.0
+        },
+        {
+          "family": "background-or-observer",
+          "digest": "a7b4ca0b1bd44dd12bb67f1cbacf2eecb5eabfc5f66321587440e8d49574c57c",
+          "normalized": "SELECT `version` , `readable_epoch` AS `readableEpoch` , `index_name` AS `indexName` , `index_uuid` AS `indexUuid` , `active_job` AS `activeJob` FROM `public_search_control` WHERE `id` = ? FOR UPDATE",
+          "count": 25,
+          "totalPs": 4211368000,
+          "lockPs": 29000000,
+          "rowsExamined": 25,
+          "rowsSent": 25,
+          "noIndex": 0,
+          "noGoodIndex": 0,
+          "errors": 0,
+          "totalElapsedMs": 4.211368,
+          "meanElapsedMs": 0.16845472,
+          "meanRowsExamined": 1.0
+        },
+        {
+          "family": "background-or-observer",
+          "digest": "56ec0ef9e38196102e02c14112d07d78b5db040065ea3d646b4a975738297768",
+          "normalized": "SELECT `version` , `readable_epoch` AS `readableEpoch` , `index_name` AS `indexName` , `index_uuid` AS `indexUuid` , `active_job` AS `activeJob` FROM `public_search_control` WHERE `id` = ?",
+          "count": 13,
+          "totalPs": 2359686000,
+          "lockPs": 23000000,
+          "rowsExamined": 13,
+          "rowsSent": 13,
+          "noIndex": 0,
+          "noGoodIndex": 0,
+          "errors": 0,
+          "totalElapsedMs": 2.359686,
+          "meanElapsedMs": 0.18151430769230767,
+          "meanRowsExamined": 1.0
+        },
+        {
+          "family": "transaction-control",
+          "digest": "184b254cf8a04dc02dde13544f6b8fc2abe37037886cd02a153350b3909cf70e",
+          "normalized": "SET SESSION TRANSACTION ISOLATION LEVEL READ COMMITTED",
+          "count": 25,
+          "totalPs": 1944111000,
+          "lockPs": 0,
+          "rowsExamined": 0,
+          "rowsSent": 0,
+          "noIndex": 0,
+          "noGoodIndex": 0,
+          "errors": 0,
+          "totalElapsedMs": 1.944111,
+          "meanElapsedMs": 0.07776444,
+          "meanRowsExamined": 0.0
+        },
+        {
+          "family": "background-or-observer",
+          "digest": "c61a751920da4f01603993db860fae53ee794199e2cdd6cbc3efbcc2a014f34b",
+          "normalized": "SELECT `jt` . `id` AS `taskId` , `jt` . `submission_id` AS `submissionId` , `jt` . `task_type` AS `taskType` , `jt` . `contract_version` AS `contractVersion` FROM `judge_task` `jt` JOIN `submission` `s` ON `s` . `id` = `jt` . `submission_id` WHERE ( `jt` . `task_status` = `s` . `processing_status` OR ( `jt` . `task_status` = ? AND `s` . `processing_status` = ? ) ) AND ( ( `jt` . `task_status` = ? AND `jt` . `lease_expires_at` <= NOW (?) ) OR ( `jt` . `task_status` = ? AND `jt` . `next_attempt_at` IS NOT NULL AND `jt` . `next_attempt_at` <= NOW (?) ) OR ( `jt` . `task_status` IN (...) AND `jt` . `next_attempt_at` <= NOW (?) ) ) ORDER BY CASE `jt` . `task_status` WHEN ? THEN `jt` . `lease_expires_at` ELSE `jt` . `next_attempt_at` END , `jt` . `id` LIMIT ?",
+          "count": 5,
+          "totalPs": 1580027000,
+          "lockPs": 10000000,
+          "rowsExamined": 0,
+          "rowsSent": 0,
+          "noIndex": 0,
+          "noGoodIndex": 0,
+          "errors": 0,
+          "totalElapsedMs": 1.580027,
+          "meanElapsedMs": 0.3160054,
+          "meanRowsExamined": 0.0
+        },
+        {
+          "family": "transaction-control",
+          "digest": "a2ec27bb65e6253a3fcebb742606cd68e95fa42fe95a2a3ddb7914176b2d4ddd",
+          "normalized": "SET SESSION TRANSACTION ISOLATION LEVEL REPEATABLE READ",
+          "count": 25,
+          "totalPs": 1536765000,
+          "lockPs": 0,
+          "rowsExamined": 0,
+          "rowsSent": 0,
+          "noIndex": 0,
+          "noGoodIndex": 0,
+          "errors": 0,
+          "totalElapsedMs": 1.536765,
+          "meanElapsedMs": 0.0614706,
+          "meanRowsExamined": 0.0
+        },
+        {
+          "family": "background-or-observer",
+          "digest": "da85dbcc5dde6bfab6ee293c3441cc40fca0f2989553fc0e759f8194c508f537",
+          "normalized": "SELECT `id` FROM `content_validation_job` WHERE `processing_status` = ? AND `lease_expires_at` <= NOW (?) ORDER BY `lease_expires_at` , `id` LIMIT ?",
+          "count": 5,
+          "totalPs": 1517980000,
+          "lockPs": 13000000,
+          "rowsExamined": 0,
+          "rowsSent": 0,
+          "noIndex": 0,
+          "noGoodIndex": 0,
+          "errors": 0,
+          "totalElapsedMs": 1.51798,
+          "meanElapsedMs": 0.303596,
+          "meanRowsExamined": 0.0
+        },
+        {
+          "family": "background-or-observer",
+          "digest": "1f525327687ba84ef62f75c1934a6fc2e3f2c1f4ef092a615bb5c266d62e71a6",
+          "normalized": "SELECT `id` FROM `self_test_job` WHERE `processing_status` = ? AND `lease_expires_at` <= NOW (?) ORDER BY `lease_expires_at` , `id` LIMIT ?",
+          "count": 5,
+          "totalPs": 1068115000,
+          "lockPs": 8000000,
+          "rowsExamined": 0,
+          "rowsSent": 0,
+          "noIndex": 0,
+          "noGoodIndex": 0,
+          "errors": 0,
+          "totalElapsedMs": 1.068115,
+          "meanElapsedMs": 0.213623,
+          "meanRowsExamined": 0.0
+        },
+        {
+          "family": "background-or-observer",
+          "digest": "34d38bdda6c8352ffde8bdd7cad64df9ab18e112de152425d9622486053b4089",
+          "normalized": "SELECT `kind` , `state` , COUNT ( * ) VALUE FROM ( SELECT ? `kind` , `task_status` `state` , `created_at` , `started_at` , `finished_at` , `attempt_count` FROM `judge_task` UNION ALL SELECT `execution_kind` , `processing_status` , `created_at` , `started_at` , `finished_at` , `attempt_count` FROM `content_validation_job` UNION ALL SELECT ? , `processing_status` , `created_at` , `started_at` , `finished_at` , `attempt_count` FROM `self_test_job` ) `t` GROUP BY `kind` , `state`",
+          "count": 1,
+          "totalPs": 662878000,
+          "lockPs": 2000000,
+          "rowsExamined": 0,
+          "rowsSent": 0,
+          "noIndex": 1,
+          "noGoodIndex": 0,
+          "errors": 0,
+          "totalElapsedMs": 0.662878,
+          "meanElapsedMs": 0.662878,
+          "meanRowsExamined": 0.0
+        },
+        {
+          "family": "background-or-observer",
+          "digest": "fa9fd87a0bab4c0b1ae65bc7b4aa25017f05923b5e2c2a5292bc93eeb6e4db2b",
+          "normalized": "SELECT ( SELECT COUNT ( * ) FROM `outbox_event` WHERE `published_at` IS NULL ) `outboxPending` , ( SELECT COUNT ( * ) FROM `outbox_event` WHERE `published_at` IS NULL AND `failed_at` IS NOT NULL ) `outboxFailed` , ( SELECT COUNT ( * ) FROM `cache_invalidation_outbox` WHERE `delivered_at` IS NULL ) `invalidationPending` , ( SELECT COUNT ( * ) FROM `cache_invalidation_outbox` WHERE `delivered_at` IS NULL AND `attempts` > ? ) `invalidationFailed` , ( SELECT COUNT ( * ) FROM `public_search_outbox` WHERE `published_at` IS NULL ) `searchPending` , ( SELECT COUNT ( * ) FROM `public_search_delivery` WHERE STATUS = ? ) `searchDead` , CASE WHEN `e` . `revision` > `c` . `readable_epoch` THEN `e` . `revision` - `c` . `readable_epoch` ELSE ? END `epochGap` FROM `cache_epoch` `e` JOIN `public_search_control` `c` ON `c` . `id` = ? WHERE `e` . `namespace` = ?",
+          "count": 1,
+          "totalPs": 485613000,
+          "lockPs": 2000000,
+          "rowsExamined": 1,
+          "rowsSent": 1,
+          "noIndex": 0,
+          "noGoodIndex": 0,
+          "errors": 0,
+          "totalElapsedMs": 0.485613,
+          "meanElapsedMs": 0.485613,
+          "meanRowsExamined": 1.0
+        },
+        {
+          "family": "background-or-observer",
+          "digest": "160c356c1828697d50f4f1a0a9b3c16f53c4ae1281a127961304d7e02cbe55e2",
+          "normalized": "SELECT ? `kind` , `verdict` `state` , COUNT ( * ) VALUE FROM `submission` WHERE `verdict` IS NOT NULL GROUP BY `verdict`",
+          "count": 1,
+          "totalPs": 369456000,
+          "lockPs": 3000000,
+          "rowsExamined": 0,
+          "rowsSent": 0,
+          "noIndex": 0,
+          "noGoodIndex": 0,
+          "errors": 0,
+          "totalElapsedMs": 0.369456,
+          "meanElapsedMs": 0.369456,
+          "meanRowsExamined": 0.0
+        },
+        {
+          "family": "background-or-observer",
+          "digest": "e8614c907862addd26571be2c0725dc287e7042ab4b68f586512252e87ac4ca6",
+          "normalized": "SELECT `kind` , COALESCE ( MAX ( CASE WHEN `state` IN (...) THEN `GREATEST` ( ? , TIMESTAMPDIFF ( MICROSECOND , `created_at` , UTC_TIMESTAMP (?) ) / ? ) END ) , ? ) `oldest` , COALESCE ( SUM ( CASE WHEN `state` = ? THEN `GREATEST` ( ? , TIMESTAMPDIFF ( MICROSECOND , `started_at` , `finished_at` ) / ? ) END ) , ? ) `seconds` , SUM ( `state` = ? ) `completed` , COALESCE ( SUM ( CASE WHEN `attempt_count` > ? THEN `attempt_count` - ? ELSE ? END ) , ? ) `retries` FROM ( SELECT ? `kind` , `task_status` `state` , `created_at` , `started_at` , `finished_at` , `attempt_count` FROM `judge_task` UNION ALL SELECT `execution_kind` , `processing_status` , `created_at` , `started_at` , `finished_at` , `attempt_count` FROM `content_validation_job` UNION ALL SELECT ? , `processing_status` , `created_at` , `started_at` , `finished_at` , `attempt_count` FROM `self_test_job` ) `t` GROUP BY `kind`",
+          "count": 1,
+          "totalPs": 330679000,
+          "lockPs": 1000000,
+          "rowsExamined": 0,
+          "rowsSent": 0,
+          "noIndex": 1,
+          "noGoodIndex": 0,
+          "errors": 0,
+          "totalElapsedMs": 0.330679,
+          "meanElapsedMs": 0.330679,
+          "meanRowsExamined": 0.0
+        },
+        {
+          "family": "background-or-observer",
+          "digest": "2bb67edc1005d0edc95c2b796337d686f57da86fe14e78a287e4cb31f244569b",
+          "normalized": "SELECT COUNT ( * ) FROM `judge_task` WHERE ? = ?",
+          "count": 2,
+          "totalPs": 300961000,
+          "lockPs": 3000000,
+          "rowsExamined": 0,
+          "rowsSent": 2,
+          "noIndex": 0,
+          "noGoodIndex": 0,
+          "errors": 0,
+          "totalElapsedMs": 0.300961,
+          "meanElapsedMs": 0.1504805,
+          "meanRowsExamined": 0.0
+        },
+        {
+          "family": "background-or-observer",
+          "digest": "44e35cee979ba420eb49a8471f852bbe15b403c89742704817dfbaace0d99dbb",
+          "normalized": "SELECT @@`version_comment` LIMIT ?",
+          "count": 1,
+          "totalPs": 292145000,
+          "lockPs": 0,
+          "rowsExamined": 1,
+          "rowsSent": 1,
+          "noIndex": 0,
+          "noGoodIndex": 0,
+          "errors": 0,
+          "totalElapsedMs": 0.292145,
+          "meanElapsedMs": 0.292145,
+          "meanRowsExamined": 1.0
+        },
+        {
+          "family": "background-or-observer",
+          "digest": "588da873d7cc80d98ee8bb306e3d9a53545f04e40b699bab02825d56b0994a6e",
+          "normalized": "SELECT ? `kind` , STATUS `state` , COUNT ( * ) VALUE FROM `public_search_rebuild` GROUP BY STATUS",
+          "count": 1,
+          "totalPs": 157204000,
+          "lockPs": 1000000,
+          "rowsExamined": 0,
+          "rowsSent": 0,
+          "noIndex": 1,
+          "noGoodIndex": 0,
+          "errors": 0,
+          "totalElapsedMs": 0.157204,
+          "meanElapsedMs": 0.157204,
+          "meanRowsExamined": 0.0
+        }
+      ],
+      "sqlFamilies": {
+        "background-or-observer": {
+          "count": 249,
+          "totalPs": 57797629000,
+          "rowsExamined": 65
+        },
+        "transaction-control": {
+          "count": 51660,
+          "totalPs": 3108561994000,
+          "rowsExamined": 0
+        },
+        "list-tags": {
+          "count": 10333,
+          "totalPs": 2558521218000,
+          "rowsExamined": 413280
+        },
+        "list-count": {
+          "count": 10068,
+          "totalPs": 5979248513000,
+          "rowsExamined": 3274410
+        },
+        "connection-state-probe": {
+          "count": 10256,
+          "totalPs": 768935147000,
+          "rowsExamined": 10302
+        },
+        "list-page": {
+          "count": 10320,
+          "totalPs": 5943150203000,
+          "rowsExamined": 3657619
+        }
+      },
+      "cpuDeltaIncludingWarmupAndProbeControl": {
+        "api": {
+          "usage_usec": 41993831,
+          "user_usec": 35873375,
+          "system_usec": 6120456,
+          "nr_periods": 226,
+          "nr_throttled": 204,
+          "throttled_usec": 31859010
+        },
+        "mysql": {
+          "usage_usec": 21712117,
+          "user_usec": 17785101,
+          "system_usec": 3927015,
+          "nr_periods": 231,
+          "nr_throttled": 3,
+          "throttled_usec": 123210
+        }
+      },
+      "jfr": {
+        "measurementJavaSamples": 485,
+        "requestJavaSamples": 475,
+        "topJavaLeaf": [
+          {
+            "name": "com.mysql.cj.util.StringInspector.indexOfNextChar",
+            "samples": 27
+          },
+          {
+            "name": "java.util.HashMap.getNode",
+            "samples": 21
+          },
+          {
+            "name": "com.mysql.cj.QueryInfo.<init>",
+            "samples": 19
+          },
+          {
+            "name": "java.util.ArrayList.grow",
+            "samples": 13
+          },
+          {
+            "name": "java.lang.String.equalsIgnoreCase",
+            "samples": 8
+          },
+          {
+            "name": "java.lang.ThreadLocal.get",
+            "samples": 6
+          },
+          {
+            "name": "com.mysql.cj.conf.DefaultPropertySet.getProperty",
+            "samples": 5
+          },
+          {
+            "name": "org.apache.tomcat.util.buf.ByteChunk.toString",
+            "samples": 5
+          },
+          {
+            "name": "java.util.concurrent.locks.ReentrantLock$Sync.lock",
+            "samples": 4
+          },
+          {
+            "name": "java.lang.invoke.DirectMethodHandle.allocateInstance",
+            "samples": 4
+          },
+          {
+            "name": "java.util.concurrent.locks.AbstractQueuedSynchronizer.signalNext",
+            "samples": 4
+          },
+          {
+            "name": "java.util.LinkedList.contains",
+            "samples": 4
+          }
+        ],
+        "topRequestJavaLeaf": [
+          {
+            "name": "com.mysql.cj.util.StringInspector.indexOfNextChar",
+            "samples": 27
+          },
+          {
+            "name": "java.util.HashMap.getNode",
+            "samples": 20
+          },
+          {
+            "name": "com.mysql.cj.QueryInfo.<init>",
+            "samples": 19
+          },
+          {
+            "name": "java.util.ArrayList.grow",
+            "samples": 13
+          },
+          {
+            "name": "java.lang.String.equalsIgnoreCase",
+            "samples": 8
+          },
+          {
+            "name": "java.lang.ThreadLocal.get",
+            "samples": 6
+          },
+          {
+            "name": "com.mysql.cj.conf.DefaultPropertySet.getProperty",
+            "samples": 5
+          },
+          {
+            "name": "org.apache.tomcat.util.buf.ByteChunk.toString",
+            "samples": 5
+          },
+          {
+            "name": "java.util.concurrent.locks.ReentrantLock$Sync.lock",
+            "samples": 4
+          },
+          {
+            "name": "java.lang.invoke.DirectMethodHandle.allocateInstance",
+            "samples": 4
+          },
+          {
+            "name": "java.util.concurrent.locks.AbstractQueuedSynchronizer.signalNext",
+            "samples": 4
+          },
+          {
+            "name": "java.util.LinkedList.contains",
+            "samples": 4
+          }
+        ],
+        "measurementNativeSamples": 1724,
+        "requestNativeSamples": 505,
+        "topNativeLeafNotCpuTime": [
+          {
+            "name": "sun.nio.ch.EPoll.wait",
+            "samples": 886
+          },
+          {
+            "name": "sun.nio.ch.Net.poll",
+            "samples": 555
+          },
+          {
+            "name": "sun.nio.ch.Net.accept",
+            "samples": 213
+          },
+          {
+            "name": "sun.nio.ch.SocketDispatcher.write0",
+            "samples": 56
+          },
+          {
+            "name": "java.io.FileOutputStream.writeBytes",
+            "samples": 3
+          },
+          {
+            "name": "sun.nio.ch.UnixDispatcher.close0",
+            "samples": 2
+          },
+          {
+            "name": "sun.nio.ch.SocketDispatcher.read0",
+            "samples": 2
+          },
+          {
+            "name": "sun.nio.ch.EventFD.set0",
+            "samples": 1
+          },
+          {
+            "name": "jdk.internal.reflect.Reflection.getCallerClass",
+            "samples": 1
+          },
+          {
+            "name": "java.io.RandomAccessFile.readBytes0",
+            "samples": 1
+          },
+          {
+            "name": "sun.nio.ch.Net.getIntOption0",
+            "samples": 1
+          },
+          {
+            "name": "sun.nio.ch.IOUtil.configureBlocking",
+            "samples": 1
+          }
+        ],
+        "topRequestNativeLeafNotCpuTime": [
+          {
+            "name": "sun.nio.ch.Net.poll",
+            "samples": 439
+          },
+          {
+            "name": "sun.nio.ch.SocketDispatcher.write0",
+            "samples": 56
+          },
+          {
+            "name": "java.io.FileOutputStream.writeBytes",
+            "samples": 3
+          },
+          {
+            "name": "sun.nio.ch.SocketDispatcher.read0",
+            "samples": 2
+          },
+          {
+            "name": "jdk.internal.reflect.Reflection.getCallerClass",
+            "samples": 1
+          },
+          {
+            "name": "java.io.RandomAccessFile.readBytes0",
+            "samples": 1
+          },
+          {
+            "name": "sun.nio.ch.Net.getIntOption0",
+            "samples": 1
+          },
+          {
+            "name": "sun.nio.ch.Net.shutdown",
+            "samples": 1
+          },
+          {
+            "name": "java.lang.ref.Reference.clear0",
+            "samples": 1
+          }
+        ],
+        "requestJavaTextSamples": 475,
+        "topClosestApplicationFrame": [
+          {
+            "name": "com.forgeoj.api.problem.ProblemLibraryService.list",
+            "samples": 98
+          },
+          {
+            "name": "com.forgeoj.api.problem.ProblemLibraryService$$SpringCGLIB$$0.list",
+            "samples": 36
+          },
+          {
+            "name": "com.forgeoj.api.observability.RequestCorrelationFilter.doFilterInternal",
+            "samples": 26
+          },
+          {
+            "name": "com.forgeoj.api.auth.SameOriginFilter.doFilterInternal",
+            "samples": 13
+          },
+          {
+            "name": "com.forgeoj.api.auth.AccountAuthenticationFilter.doFilterInternal",
+            "samples": 3
+          },
+          {
+            "name": "com.forgeoj.api.problem.ProblemLibraryService.normalized",
+            "samples": 1
+          }
+        ],
+        "missingApplicationFrameIn32": 298,
+        "inclusiveFamiliesMayOverlap": {
+          "jdbc-mybatis": 260,
+          "logging": 15,
+          "json": 23,
+          "digest": 2
+        },
+        "gcPauseCount": 173,
+        "gcPauseOverlapMs": 422.489,
+        "maxGcPauseOverlapMs": 127.06899999999999
+      },
+      "eventSafety": {
+        "allowedPositiveTypes": [
+          "jdk.CPULoad",
+          "jdk.Checkpoint",
+          "jdk.ExecutionSample",
+          "jdk.GCPhasePause",
+          "jdk.GarbageCollection",
+          "jdk.Metadata",
+          "jdk.NativeMethodSample",
+          "jdk.ThreadCPULoad"
+        ],
+        "jsonStackDepth": 8,
+        "textStackDepth": 32,
+        "binaryDigest": "6d2df84e2d0e09a036f307db2f63eacf94b9e0e266d745835f05ecd93c7bf123",
+        "forbiddenEventCounts": {
+          "jdk.InitialEnvironmentVariable": 0,
+          "jdk.InitialSystemProperty": 0,
+          "jdk.JavaErrorThrow": 0,
+          "jdk.JavaExceptionThrow": 0,
+          "jdk.OldObjectSample": 0,
+          "jdk.SystemProcess": 0,
+          "jdk.ThreadDump": 0
+        }
+      }
+    },
+    {
+      "case": "detail-c4",
+      "requestSummary": {
+        "status": "PASS",
+        "mode": "detail",
+        "concurrency": 4,
+        "round": 0,
+        "startedAt": "2026-10-28T08:12:15.282Z",
+        "finishedAt": "2026-10-28T08:12:35.288Z",
+        "elapsedMs": 20001.802945,
+        "measurementCount": 34818,
+        "warmupCount": 300,
+        "successful": 34818,
+        "errors": 0,
+        "timeouts": 0,
+        "networkErrors": 0,
+        "semanticErrors": 0,
+        "statuses": {
+          "200": 34818
+        },
+        "attemptedRps": 1740.7430767986702,
+        "successfulRps": 1740.7430767986702,
+        "errorRate": 0,
+        "allLatency": {
+          "p50Ms": 1.8033640000012383,
+          "p95Ms": 3.717270000001008,
+          "p99Ms": 6.5928899999998976
+        },
+        "successLatency": {
+          "p50Ms": 1.8033640000012383,
+          "p95Ms": 3.717270000001008,
+          "p99Ms": 6.5928899999998976
+        },
+        "clientCpuPercent": 36.54372068407556,
+        "clientRssBytes": 102256640,
+        "clientEventLoopP99Ms": 11.116543,
+        "model": "closed loop; no retry; same bridge; validated TLS; keep-alive",
+        "maxRequestCap": 100000
+      },
+      "serverConfirmedIncludingWarmup": 35118,
+      "sqlCountCoverage": {
+        "detail-epoch": {
+          "expectedFromRequestAndMapper": 35118,
+          "observedDigestDelta": 35077,
+          "difference": -41,
+          "ratio": 0.9988325075459878
+        },
+        "detail-load-warmup": {
+          "expectedFromRequestAndMapper": 300,
+          "observedDigestDelta": 300,
+          "difference": 0,
+          "ratio": 1.0
+        }
+      },
+      "sqlStatements": [
+        {
+          "family": "detail-epoch",
+          "digest": "740b270aae57f22b2e5b363379000bf8e61fd0c6b5595e18bfa05487d503f95e",
+          "normalized": "SELECT `revision` FROM `cache_epoch` WHERE `namespace` = ?",
+          "count": 35077,
+          "totalPs": 3787765344000,
+          "lockPs": 48039000000,
+          "rowsExamined": 35093,
+          "rowsSent": 35107,
+          "noIndex": 0,
+          "noGoodIndex": 0,
+          "errors": 0,
+          "totalElapsedMs": 3787.765344,
+          "meanElapsedMs": 0.10798430150811072,
+          "meanRowsExamined": 1.0004561393505715
+        },
+        {
+          "family": "transaction-control",
+          "digest": "158bfe3d4b4b0a372a4acdb38affe2cb4f6b3cb21a9af0ea9fad9a9a083ac18a",
+          "normalized": "SET `autocommit` = ?",
+          "count": 70288,
+          "totalPs": 3387323901000,
+          "lockPs": 0,
+          "rowsExamined": 0,
+          "rowsSent": 0,
+          "noIndex": 0,
+          "noGoodIndex": 0,
+          "errors": 0,
+          "totalElapsedMs": 3387.323901,
+          "meanElapsedMs": 0.04819206551616208,
+          "meanRowsExamined": 0.0
+        },
+        {
+          "family": "connection-state-probe",
+          "digest": "a724a21545b602d4ae826ae58bbf526427a94f1e68ebec539ec3c53bfaa88281",
+          "normalized": "SELECT @@SESSION . `transaction_isolation`",
+          "count": 35100,
+          "totalPs": 2213360838000,
+          "lockPs": 0,
+          "rowsExamined": 35127,
+          "rowsSent": 35140,
+          "noIndex": 0,
+          "noGoodIndex": 0,
+          "errors": 0,
+          "totalElapsedMs": 2213.360838,
+          "meanElapsedMs": 0.06305871333333334,
+          "meanRowsExamined": 1.0007692307692309
+        },
+        {
+          "family": "transaction-control",
+          "digest": "9cf78ec1ee2746bb4c688b21593f69a1eba7026ba2277d7717cd8defb167449a",
+          "normalized": "SET SESSION TRANSACTION READ ONLY",
+          "count": 35077,
+          "totalPs": 1936951692000,
+          "lockPs": 0,
+          "rowsExamined": 0,
+          "rowsSent": 0,
+          "noIndex": 0,
+          "noGoodIndex": 0,
+          "errors": 0,
+          "totalElapsedMs": 1936.951692,
+          "meanElapsedMs": 0.05521999292984007,
+          "meanRowsExamined": 0.0
+        },
+        {
+          "family": "transaction-control",
+          "digest": "f2b9be5f0f32ca7507e4ddf133cd2fad0993a1c26fde9caa6f067b1af2b7603c",
+          "normalized": "COMMIT",
+          "count": 35087,
+          "totalPs": 1733777234000,
+          "lockPs": 0,
+          "rowsExamined": 0,
+          "rowsSent": 0,
+          "noIndex": 0,
+          "noGoodIndex": 0,
+          "errors": 0,
+          "totalElapsedMs": 1733.777234,
+          "meanElapsedMs": 0.04941366414911506,
+          "meanRowsExamined": 0.0
+        },
+        {
+          "family": "transaction-control",
+          "digest": "664a2aec28f52c38fac12d5adf14d7f8da06346ba3a594072cc152ad9bcecb59",
+          "normalized": "SET SESSION TRANSACTION READ WRITE",
+          "count": 35108,
+          "totalPs": 1580586888000,
+          "lockPs": 0,
+          "rowsExamined": 0,
+          "rowsSent": 0,
+          "noIndex": 0,
+          "noGoodIndex": 0,
+          "errors": 0,
+          "totalElapsedMs": 1580.586888,
+          "meanElapsedMs": 0.04502070434089096,
+          "meanRowsExamined": 0.0
+        },
+        {
+          "family": "detail-load-warmup",
+          "digest": "b2b96f2068b34ed1d3cc3f2ad73d0ac685138c5e222f46b9034e12e1f01810fd",
+          "normalized": "SELECT `p` . `slug` , `p` . `title` , `p` . `statement_text` AS `statementText` , `p` . `input_description` AS `inputDescription` , `p` . `output_description` AS `outputDescription` , `JSON_UNQUOTE` ( `JSON_EXTRACT` ( `p` . `public_samples_json` , ? ) ) AS `sampleInput` , `JSON_UNQUOTE` ( `JSON_EXTRACT` ( `p` . `public_samples_json` , ? ) ) AS `sampleOutput` , `jv` . `version_no` AS `judgeVersion` , `jv` . `time_limit_ms` AS `timeLimitMs` , `jv` . `memory_limit_mb` AS `memoryLimitMb` , `jv` . `output_limit_bytes` AS `outputLimitBytes` , CAST ( `p` . `public_samples_json` AS CHARACTER CHARACTER SET `utf8mb4` ) AS `publicSamplesJson` , `u` . `username` AS `authorName` , `JSON_UNQUOTE` ( `JSON_EXTRACT` ( `s` . `metadata_text` , ? ) ) AS `originType` , `NULLIF` ( `JSON_UNQUOTE` ( `JSON_EXTRACT` ( `s` . `metadata_text` , ? ) ) , ? ) AS `sourceUrl` , `JSON_UNQUOTE` ( `JSON_EXTRACT` ( `s` . `metadata_text` , ? ) ) AS `licenseStatement` , `corrected` . `slug` AS `correctionOfSlug` FROM `problem`",
+          "count": 300,
+          "totalPs": 97802883000,
+          "lockPs": 675000000,
+          "rowsExamined": 300,
+          "rowsSent": 300,
+          "noIndex": 0,
+          "noGoodIndex": 0,
+          "errors": 0,
+          "totalElapsedMs": 97.802883,
+          "meanElapsedMs": 0.32600961,
+          "meanRowsExamined": 1.0
+        },
+        {
+          "family": "background-or-observer",
+          "digest": "7343b32f775d7d5be95052955fdf5f53bc70027f8158ef28d11f4e11386af067",
+          "normalized": "SELECT `o` . `id` , `o` . `event_type` AS `eventType` , `o` . `sequence_no` AS `sequenceNo` , CAST ( `o` . `payload` AS CHARACTER ) AS `payload` , `o` . `publish_attempts` AS `publishAttempts` , `o` . `aggregate_id` AS `judgeTaskId` , `jt` . `submission_id` AS `submissionId` FROM `outbox_event` `o` LEFT JOIN `judge_task` `jt` ON `jt` . `id` = `o` . `aggregate_id` WHERE `o` . `published_at` IS NULL AND `o` . `failed_at` IS NULL AND `o` . `next_attempt_at` <= NOW (?) AND ( ( `o` . `aggregate_type` = ? AND `o` . `event_type` IN (...) ) OR ( `o` . `aggregate_type` = ? AND `o` . `event_type` IN (...) ) OR ( `o` . `aggregate_type` = ? AND `o` . `event_type` IN (...) ) ) AND `o` . `contract_version` = ? ORDER BY `o` . `next_attempt_at` , `o` . `created_at` , `o` . `id` LIMIT ?",
+          "count": 26,
+          "totalPs": 7386995000,
+          "lockPs": 43000000,
+          "rowsExamined": 0,
+          "rowsSent": 0,
+          "noIndex": 0,
+          "noGoodIndex": 0,
+          "errors": 0,
+          "totalElapsedMs": 7.386995,
+          "meanElapsedMs": 0.2841151923076923,
+          "meanRowsExamined": 0.0
+        },
+        {
+          "family": "background-or-observer",
+          "digest": "8426cac9b1e0a76090c4850ce74f11750aa42b76644d3686921c4eb0d0bc9d59",
+          "normalized": "SELECT `id` , `problem_id` AS `problemId` , `data_version` AS `dataVersion` , `public_epoch` AS `publicEpoch` , `publish_attempts` AS `publishAttempts` FROM `public_search_outbox` WHERE `published_at` IS NULL AND `failed_at` IS NULL AND `next_publish_at` <= UTC_TIMESTAMP (?) ORDER BY `created_at` , `id` LIMIT ?",
+          "count": 26,
+          "totalPs": 6376887000,
+          "lockPs": 49000000,
+          "rowsExamined": 0,
+          "rowsSent": 0,
+          "noIndex": 0,
+          "noGoodIndex": 0,
+          "errors": 0,
+          "totalElapsedMs": 6.376887,
+          "meanElapsedMs": 0.24526488461538462,
+          "meanRowsExamined": 0.0
+        },
+        {
+          "family": "background-or-observer",
+          "digest": "4651e858447eca5374729484ccfa1f58ef393141183c9d7066c2578dcf4d0031",
+          "normalized": "SELECT `d` . `event_id` FROM `public_search_delivery` `d` WHERE `d` . `status` IN (...) AND `d` . `next_attempt_at` <= UTC_TIMESTAMP (?) AND ( `d` . `lease_expires_at` IS NULL OR `d` . `lease_expires_at` <= UTC_TIMESTAMP (?) ) ORDER BY `d` . `next_attempt_at` LIMIT ?",
+          "count": 26,
+          "totalPs": 4525776000,
+          "lockPs": 30000000,
+          "rowsExamined": 0,
+          "rowsSent": 0,
+          "noIndex": 0,
+          "noGoodIndex": 0,
+          "errors": 0,
+          "totalElapsedMs": 4.525776,
+          "meanElapsedMs": 0.1740683076923077,
+          "meanRowsExamined": 0.0
+        },
+        {
+          "family": "background-or-observer",
+          "digest": "8c7230d3b18cedd9eb4b54c87da2a3cae233f1ab96340b9d15564cc4a5fb9b2e",
+          "normalized": "SELECT `id` FROM `cache_invalidation_outbox` WHERE `delivered_at` IS NULL AND `next_attempt_at` <= UTC_TIMESTAMP (?) ORDER BY `id` LIMIT ?",
+          "count": 26,
+          "totalPs": 4327841000,
+          "lockPs": 37000000,
+          "rowsExamined": 0,
+          "rowsSent": 0,
+          "noIndex": 0,
+          "noGoodIndex": 0,
+          "errors": 0,
+          "totalElapsedMs": 4.327841,
+          "meanElapsedMs": 0.16645542307692307,
+          "meanRowsExamined": 0.0
+        },
+        {
+          "family": "background-or-observer",
+          "digest": "ba5a9eb9c8e3bd77b8c95716c14ce0ff53e406d82ba5929c6acc00027eb27275",
+          "normalized": "SELECT DISTINCTROW `classroom_id` FROM `classroom_assignment` WHERE ( STATUS = ? AND `starts_at` <= UTC_TIMESTAMP (?) ) OR ( STATUS = ? AND `allow_late` = FALSE AND `deadline_at` <= UTC_TIMESTAMP (?) ) ORDER BY `classroom_id` LIMIT ?",
+          "count": 13,
+          "totalPs": 4136948000,
+          "lockPs": 19000000,
+          "rowsExamined": 0,
+          "rowsSent": 0,
+          "noIndex": 0,
+          "noGoodIndex": 0,
+          "errors": 0,
+          "totalElapsedMs": 4.136948,
+          "meanElapsedMs": 0.3182267692307692,
+          "meanRowsExamined": 0.0
+        },
+        {
+          "family": "background-or-observer",
+          "digest": "ec1f676bf6ca7a071cd5897ae1d12459d7277b54544315a7fb9557e646774436",
+          "normalized": "SELECT `event_id` AS `eventId` , `attempts` FROM `public_search_dead_outbox` WHERE `published_at` IS NULL AND `failed_at` IS NULL AND `next_attempt_at` <= UTC_TIMESTAMP (?) LIMIT ?",
+          "count": 26,
+          "totalPs": 3558903000,
+          "lockPs": 31000000,
+          "rowsExamined": 0,
+          "rowsSent": 0,
+          "noIndex": 26,
+          "noGoodIndex": 0,
+          "errors": 0,
+          "totalElapsedMs": 3.558903,
+          "meanElapsedMs": 0.1368808846153846,
+          "meanRowsExamined": 0.0
+        },
+        {
+          "family": "background-or-observer",
+          "digest": "59cbe901e298f69893485f02b6b54c017f9d59d62d1125e3fd3f16006324410d",
+          "normalized": "SELECT `event_id` AS `eventId` , `rebuild_id` AS `rebuildId` , `attempts` FROM `public_search_dead_recovery` WHERE `published_at` IS NULL AND `failed_at` IS NULL AND `next_attempt_at` <= UTC_TIMESTAMP (?) LIMIT ?",
+          "count": 26,
+          "totalPs": 3169285000,
+          "lockPs": 28000000,
+          "rowsExamined": 0,
+          "rowsSent": 0,
+          "noIndex": 26,
+          "noGoodIndex": 0,
+          "errors": 0,
+          "totalElapsedMs": 3.169285,
+          "meanElapsedMs": 0.12189557692307693,
+          "meanRowsExamined": 0.0
+        },
+        {
+          "family": "background-or-observer",
+          "digest": "083d61af86560f87ce1cea5f804a5c5240721a9b867b75d508e64710bf13b918",
+          "normalized": "SELECT `revision` FROM `cache_epoch` WHERE `namespace` = ? FOR UPDATE",
+          "count": 26,
+          "totalPs": 3115053000,
+          "lockPs": 34000000,
+          "rowsExamined": 26,
+          "rowsSent": 26,
+          "noIndex": 0,
+          "noGoodIndex": 0,
+          "errors": 0,
+          "totalElapsedMs": 3.115053,
+          "meanElapsedMs": 0.11980973076923077,
+          "meanRowsExamined": 1.0
+        },
+        {
+          "family": "background-or-observer",
+          "digest": "a7b4ca0b1bd44dd12bb67f1cbacf2eecb5eabfc5f66321587440e8d49574c57c",
+          "normalized": "SELECT `version` , `readable_epoch` AS `readableEpoch` , `index_name` AS `indexName` , `index_uuid` AS `indexUuid` , `active_job` AS `activeJob` FROM `public_search_control` WHERE `id` = ? FOR UPDATE",
+          "count": 26,
+          "totalPs": 3001067000,
+          "lockPs": 28000000,
+          "rowsExamined": 26,
+          "rowsSent": 26,
+          "noIndex": 0,
+          "noGoodIndex": 0,
+          "errors": 0,
+          "totalElapsedMs": 3.001067,
+          "meanElapsedMs": 0.11542565384615384,
+          "meanRowsExamined": 1.0
+        },
+        {
+          "family": "background-or-observer",
+          "digest": "56ec0ef9e38196102e02c14112d07d78b5db040065ea3d646b4a975738297768",
+          "normalized": "SELECT `version` , `readable_epoch` AS `readableEpoch` , `index_name` AS `indexName` , `index_uuid` AS `indexUuid` , `active_job` AS `activeJob` FROM `public_search_control` WHERE `id` = ?",
+          "count": 13,
+          "totalPs": 1831218000,
+          "lockPs": 18000000,
+          "rowsExamined": 13,
+          "rowsSent": 13,
+          "noIndex": 0,
+          "noGoodIndex": 0,
+          "errors": 0,
+          "totalElapsedMs": 1.831218,
+          "meanElapsedMs": 0.14086292307692308,
+          "meanRowsExamined": 1.0
+        },
+        {
+          "family": "background-or-observer",
+          "digest": "c61a751920da4f01603993db860fae53ee794199e2cdd6cbc3efbcc2a014f34b",
+          "normalized": "SELECT `jt` . `id` AS `taskId` , `jt` . `submission_id` AS `submissionId` , `jt` . `task_type` AS `taskType` , `jt` . `contract_version` AS `contractVersion` FROM `judge_task` `jt` JOIN `submission` `s` ON `s` . `id` = `jt` . `submission_id` WHERE ( `jt` . `task_status` = `s` . `processing_status` OR ( `jt` . `task_status` = ? AND `s` . `processing_status` = ? ) ) AND ( ( `jt` . `task_status` = ? AND `jt` . `lease_expires_at` <= NOW (?) ) OR ( `jt` . `task_status` = ? AND `jt` . `next_attempt_at` IS NOT NULL AND `jt` . `next_attempt_at` <= NOW (?) ) OR ( `jt` . `task_status` IN (...) AND `jt` . `next_attempt_at` <= NOW (?) ) ) ORDER BY CASE `jt` . `task_status` WHEN ? THEN `jt` . `lease_expires_at` ELSE `jt` . `next_attempt_at` END , `jt` . `id` LIMIT ?",
+          "count": 5,
+          "totalPs": 1296945000,
+          "lockPs": 6000000,
+          "rowsExamined": 0,
+          "rowsSent": 0,
+          "noIndex": 0,
+          "noGoodIndex": 0,
+          "errors": 0,
+          "totalElapsedMs": 1.296945,
+          "meanElapsedMs": 0.259389,
+          "meanRowsExamined": 0.0
+        },
+        {
+          "family": "transaction-control",
+          "digest": "a2ec27bb65e6253a3fcebb742606cd68e95fa42fe95a2a3ddb7914176b2d4ddd",
+          "normalized": "SET SESSION TRANSACTION ISOLATION LEVEL REPEATABLE READ",
+          "count": 26,
+          "totalPs": 1279177000,
+          "lockPs": 0,
+          "rowsExamined": 0,
+          "rowsSent": 0,
+          "noIndex": 0,
+          "noGoodIndex": 0,
+          "errors": 0,
+          "totalElapsedMs": 1.279177,
+          "meanElapsedMs": 0.04919911538461538,
+          "meanRowsExamined": 0.0
+        },
+        {
+          "family": "transaction-control",
+          "digest": "184b254cf8a04dc02dde13544f6b8fc2abe37037886cd02a153350b3909cf70e",
+          "normalized": "SET SESSION TRANSACTION ISOLATION LEVEL READ COMMITTED",
+          "count": 26,
+          "totalPs": 1266953000,
+          "lockPs": 0,
+          "rowsExamined": 0,
+          "rowsSent": 0,
+          "noIndex": 0,
+          "noGoodIndex": 0,
+          "errors": 0,
+          "totalElapsedMs": 1.266953,
+          "meanElapsedMs": 0.048728961538461533,
+          "meanRowsExamined": 0.0
+        },
+        {
+          "family": "background-or-observer",
+          "digest": "da85dbcc5dde6bfab6ee293c3441cc40fca0f2989553fc0e759f8194c508f537",
+          "normalized": "SELECT `id` FROM `content_validation_job` WHERE `processing_status` = ? AND `lease_expires_at` <= NOW (?) ORDER BY `lease_expires_at` , `id` LIMIT ?",
+          "count": 5,
+          "totalPs": 1090837000,
+          "lockPs": 9000000,
+          "rowsExamined": 0,
+          "rowsSent": 0,
+          "noIndex": 0,
+          "noGoodIndex": 0,
+          "errors": 0,
+          "totalElapsedMs": 1.090837,
+          "meanElapsedMs": 0.2181674,
+          "meanRowsExamined": 0.0
+        },
+        {
+          "family": "background-or-observer",
+          "digest": "1f525327687ba84ef62f75c1934a6fc2e3f2c1f4ef092a615bb5c266d62e71a6",
+          "normalized": "SELECT `id` FROM `self_test_job` WHERE `processing_status` = ? AND `lease_expires_at` <= NOW (?) ORDER BY `lease_expires_at` , `id` LIMIT ?",
+          "count": 5,
+          "totalPs": 940260000,
+          "lockPs": 6000000,
+          "rowsExamined": 0,
+          "rowsSent": 0,
+          "noIndex": 0,
+          "noGoodIndex": 0,
+          "errors": 0,
+          "totalElapsedMs": 0.94026,
+          "meanElapsedMs": 0.188052,
+          "meanRowsExamined": 0.0
+        },
+        {
+          "family": "background-or-observer",
+          "digest": "fa9fd87a0bab4c0b1ae65bc7b4aa25017f05923b5e2c2a5292bc93eeb6e4db2b",
+          "normalized": "SELECT ( SELECT COUNT ( * ) FROM `outbox_event` WHERE `published_at` IS NULL ) `outboxPending` , ( SELECT COUNT ( * ) FROM `outbox_event` WHERE `published_at` IS NULL AND `failed_at` IS NOT NULL ) `outboxFailed` , ( SELECT COUNT ( * ) FROM `cache_invalidation_outbox` WHERE `delivered_at` IS NULL ) `invalidationPending` , ( SELECT COUNT ( * ) FROM `cache_invalidation_outbox` WHERE `delivered_at` IS NULL AND `attempts` > ? ) `invalidationFailed` , ( SELECT COUNT ( * ) FROM `public_search_outbox` WHERE `published_at` IS NULL ) `searchPending` , ( SELECT COUNT ( * ) FROM `public_search_delivery` WHERE STATUS = ? ) `searchDead` , CASE WHEN `e` . `revision` > `c` . `readable_epoch` THEN `e` . `revision` - `c` . `readable_epoch` ELSE ? END `epochGap` FROM `cache_epoch` `e` JOIN `public_search_control` `c` ON `c` . `id` = ? WHERE `e` . `namespace` = ?",
+          "count": 2,
+          "totalPs": 565593000,
+          "lockPs": 6000000,
+          "rowsExamined": 2,
+          "rowsSent": 2,
+          "noIndex": 0,
+          "noGoodIndex": 0,
+          "errors": 0,
+          "totalElapsedMs": 0.565593,
+          "meanElapsedMs": 0.2827965,
+          "meanRowsExamined": 1.0
+        },
+        {
+          "family": "background-or-observer",
+          "digest": "e8614c907862addd26571be2c0725dc287e7042ab4b68f586512252e87ac4ca6",
+          "normalized": "SELECT `kind` , COALESCE ( MAX ( CASE WHEN `state` IN (...) THEN `GREATEST` ( ? , TIMESTAMPDIFF ( MICROSECOND , `created_at` , UTC_TIMESTAMP (?) ) / ? ) END ) , ? ) `oldest` , COALESCE ( SUM ( CASE WHEN `state` = ? THEN `GREATEST` ( ? , TIMESTAMPDIFF ( MICROSECOND , `started_at` , `finished_at` ) / ? ) END ) , ? ) `seconds` , SUM ( `state` = ? ) `completed` , COALESCE ( SUM ( CASE WHEN `attempt_count` > ? THEN `attempt_count` - ? ELSE ? END ) , ? ) `retries` FROM ( SELECT ? `kind` , `task_status` `state` , `created_at` , `started_at` , `finished_at` , `attempt_count` FROM `judge_task` UNION ALL SELECT `execution_kind` , `processing_status` , `created_at` , `started_at` , `finished_at` , `attempt_count` FROM `content_validation_job` UNION ALL SELECT ? , `processing_status` , `created_at` , `started_at` , `finished_at` , `attempt_count` FROM `self_test_job` ) `t` GROUP BY `kind`",
+          "count": 2,
+          "totalPs": 499035000,
+          "lockPs": 3000000,
+          "rowsExamined": 0,
+          "rowsSent": 0,
+          "noIndex": 2,
+          "noGoodIndex": 0,
+          "errors": 0,
+          "totalElapsedMs": 0.499035,
+          "meanElapsedMs": 0.2495175,
+          "meanRowsExamined": 0.0
+        },
+        {
+          "family": "background-or-observer",
+          "digest": "34d38bdda6c8352ffde8bdd7cad64df9ab18e112de152425d9622486053b4089",
+          "normalized": "SELECT `kind` , `state` , COUNT ( * ) VALUE FROM ( SELECT ? `kind` , `task_status` `state` , `created_at` , `started_at` , `finished_at` , `attempt_count` FROM `judge_task` UNION ALL SELECT `execution_kind` , `processing_status` , `created_at` , `started_at` , `finished_at` , `attempt_count` FROM `content_validation_job` UNION ALL SELECT ? , `processing_status` , `created_at` , `started_at` , `finished_at` , `attempt_count` FROM `self_test_job` ) `t` GROUP BY `kind` , `state`",
+          "count": 2,
+          "totalPs": 486506000,
+          "lockPs": 4000000,
+          "rowsExamined": 0,
+          "rowsSent": 0,
+          "noIndex": 2,
+          "noGoodIndex": 0,
+          "errors": 0,
+          "totalElapsedMs": 0.486506,
+          "meanElapsedMs": 0.243253,
+          "meanRowsExamined": 0.0
+        },
+        {
+          "family": "background-or-observer",
+          "digest": "2bb67edc1005d0edc95c2b796337d686f57da86fe14e78a287e4cb31f244569b",
+          "normalized": "SELECT COUNT ( * ) FROM `judge_task` WHERE ? = ?",
+          "count": 2,
+          "totalPs": 324944000,
+          "lockPs": 5000000,
+          "rowsExamined": 0,
+          "rowsSent": 2,
+          "noIndex": 0,
+          "noGoodIndex": 0,
+          "errors": 0,
+          "totalElapsedMs": 0.324944,
+          "meanElapsedMs": 0.162472,
+          "meanRowsExamined": 0.0
+        },
+        {
+          "family": "background-or-observer",
+          "digest": "160c356c1828697d50f4f1a0a9b3c16f53c4ae1281a127961304d7e02cbe55e2",
+          "normalized": "SELECT ? `kind` , `verdict` `state` , COUNT ( * ) VALUE FROM `submission` WHERE `verdict` IS NOT NULL GROUP BY `verdict`",
+          "count": 2,
+          "totalPs": 302030000,
+          "lockPs": 2000000,
+          "rowsExamined": 0,
+          "rowsSent": 0,
+          "noIndex": 0,
+          "noGoodIndex": 0,
+          "errors": 0,
+          "totalElapsedMs": 0.30203,
+          "meanElapsedMs": 0.151015,
+          "meanRowsExamined": 0.0
+        },
+        {
+          "family": "background-or-observer",
+          "digest": "588da873d7cc80d98ee8bb306e3d9a53545f04e40b699bab02825d56b0994a6e",
+          "normalized": "SELECT ? `kind` , STATUS `state` , COUNT ( * ) VALUE FROM `public_search_rebuild` GROUP BY STATUS",
+          "count": 2,
+          "totalPs": 256050000,
+          "lockPs": 2000000,
+          "rowsExamined": 0,
+          "rowsSent": 0,
+          "noIndex": 2,
+          "noGoodIndex": 0,
+          "errors": 0,
+          "totalElapsedMs": 0.25605,
+          "meanElapsedMs": 0.128025,
+          "meanRowsExamined": 0.0
+        },
+        {
+          "family": "background-or-observer",
+          "digest": "7a2292f450412c3d0e99cb548ab97ad74268d8e08f398cce6a6b5d746ccd8131",
+          "normalized": "SELECT `j` . `id` FROM `self_test_job` `j` WHERE `j` . `processing_status` IN (...) AND `j` . `expires_at` <= NOW (?) AND ( EXISTS ( SELECT ? FROM `self_test_payload` `p` WHERE `p` . `snapshot_id` = `j` . `snapshot_id` ) OR EXISTS ( SELECT ? FROM `self_test_output` `o` WHERE `o` . `job_id` = `j` . `id` ) ) ORDER BY `j` . `expires_at` , `j` . `id` LIMIT ?",
+          "count": 1,
+          "totalPs": 221028000,
+          "lockPs": 3000000,
+          "rowsExamined": 0,
+          "rowsSent": 0,
+          "noIndex": 0,
+          "noGoodIndex": 0,
+          "errors": 0,
+          "totalElapsedMs": 0.221028,
+          "meanElapsedMs": 0.221028,
+          "meanRowsExamined": 0.0
+        },
+        {
+          "family": "background-or-observer",
+          "digest": "44e35cee979ba420eb49a8471f852bbe15b403c89742704817dfbaace0d99dbb",
+          "normalized": "SELECT @@`version_comment` LIMIT ?",
+          "count": 1,
+          "totalPs": 91274000,
+          "lockPs": 0,
+          "rowsExamined": 1,
+          "rowsSent": 1,
+          "noIndex": 0,
+          "noGoodIndex": 0,
+          "errors": 0,
+          "totalElapsedMs": 0.091274,
+          "meanElapsedMs": 0.091274,
+          "meanRowsExamined": 1.0
+        }
+      ],
+      "sqlFamilies": {
+        "background-or-observer": {
+          "count": 263,
+          "totalPs": 47504475000,
+          "rowsExamined": 68
+        },
+        "transaction-control": {
+          "count": 175612,
+          "totalPs": 8641185845000,
+          "rowsExamined": 0
+        },
+        "detail-epoch": {
+          "count": 35077,
+          "totalPs": 3787765344000,
+          "rowsExamined": 35093
+        },
+        "connection-state-probe": {
+          "count": 35100,
+          "totalPs": 2213360838000,
+          "rowsExamined": 35127
+        },
+        "detail-load-warmup": {
+          "count": 300,
+          "totalPs": 97802883000,
+          "rowsExamined": 300
+        }
+      },
+      "cpuDeltaIncludingWarmupAndProbeControl": {
+        "api": {
+          "usage_usec": 38790297,
+          "user_usec": 24954729,
+          "system_usec": 13835568,
+          "nr_periods": 233,
+          "nr_throttled": 76,
+          "throttled_usec": 7997773
+        },
+        "mysql": {
+          "usage_usec": 20315023,
+          "user_usec": 12349947,
+          "system_usec": 7965077,
+          "nr_periods": 234,
+          "nr_throttled": 0,
+          "throttled_usec": 0
+        }
+      },
+      "jfr": {
+        "measurementJavaSamples": 458,
+        "requestJavaSamples": 447,
+        "topJavaLeaf": [
+          {
+            "name": "java.util.HashMap.getNode",
+            "samples": 25
+          },
+          {
+            "name": "org.springframework.web.util.pattern.SeparatorPathElement.matches",
+            "samples": 22
+          },
+          {
+            "name": "jakarta.servlet.http.HttpServletRequestWrapper.getMethod",
+            "samples": 21
+          },
+          {
+            "name": "java.util.concurrent.ConcurrentHashMap.get",
+            "samples": 17
+          },
+          {
+            "name": "java.lang.String.equalsIgnoreCase",
+            "samples": 15
+          },
+          {
+            "name": "java.lang.invoke.Invokers$Holder.invokeExact_MT",
+            "samples": 7
+          },
+          {
+            "name": "java.util.HashMap.putVal",
+            "samples": 7
+          },
+          {
+            "name": "com.sun.crypto.provider.GaloisCounterMode.engineDoFinal",
+            "samples": 7
+          },
+          {
+            "name": "java.lang.ThreadLocal$ThreadLocalMap.getEntry",
+            "samples": 6
+          },
+          {
+            "name": "tools.jackson.core.json.ReaderBasedJsonParser._finishString2",
+            "samples": 5
+          },
+          {
+            "name": "java.nio.charset.Charset.lookup",
+            "samples": 5
+          },
+          {
+            "name": "tools.jackson.core.json.UTF8JsonGenerator._writeStringSegments",
+            "samples": 5
+          }
+        ],
+        "topRequestJavaLeaf": [
+          {
+            "name": "java.util.HashMap.getNode",
+            "samples": 25
+          },
+          {
+            "name": "org.springframework.web.util.pattern.SeparatorPathElement.matches",
+            "samples": 22
+          },
+          {
+            "name": "jakarta.servlet.http.HttpServletRequestWrapper.getMethod",
+            "samples": 21
+          },
+          {
+            "name": "java.util.concurrent.ConcurrentHashMap.get",
+            "samples": 17
+          },
+          {
+            "name": "java.lang.String.equalsIgnoreCase",
+            "samples": 15
+          },
+          {
+            "name": "java.lang.invoke.Invokers$Holder.invokeExact_MT",
+            "samples": 7
+          },
+          {
+            "name": "java.util.HashMap.putVal",
+            "samples": 7
+          },
+          {
+            "name": "com.sun.crypto.provider.GaloisCounterMode.engineDoFinal",
+            "samples": 7
+          },
+          {
+            "name": "java.lang.ThreadLocal$ThreadLocalMap.getEntry",
+            "samples": 6
+          },
+          {
+            "name": "tools.jackson.core.json.ReaderBasedJsonParser._finishString2",
+            "samples": 5
+          },
+          {
+            "name": "java.nio.charset.Charset.lookup",
+            "samples": 5
+          },
+          {
+            "name": "tools.jackson.core.json.UTF8JsonGenerator._writeStringSegments",
+            "samples": 5
+          }
+        ],
+        "measurementNativeSamples": 1915,
+        "requestNativeSamples": 399,
+        "topNativeLeafNotCpuTime": [
+          {
+            "name": "sun.nio.ch.EPoll.wait",
+            "samples": 987
+          },
+          {
+            "name": "sun.nio.ch.Net.poll",
+            "samples": 552
+          },
+          {
+            "name": "sun.nio.ch.Net.accept",
+            "samples": 242
+          },
+          {
+            "name": "sun.nio.ch.SocketDispatcher.write0",
+            "samples": 102
+          },
+          {
+            "name": "sun.nio.ch.SocketDispatcher.read0",
+            "samples": 9
+          },
+          {
+            "name": "sun.nio.ch.EventFD.set0",
+            "samples": 6
+          },
+          {
+            "name": "sun.nio.ch.Net.shutdown",
+            "samples": 4
+          },
+          {
+            "name": "java.io.FileOutputStream.writeBytes",
+            "samples": 3
+          },
+          {
+            "name": "sun.nio.ch.UnixDispatcher.close0",
+            "samples": 2
+          },
+          {
+            "name": "sun.nio.ch.Net.setIntOption0",
+            "samples": 2
+          },
+          {
+            "name": "sun.nio.ch.Net.localInetAddress",
+            "samples": 1
+          },
+          {
+            "name": "sun.nio.ch.EPoll.ctl",
+            "samples": 1
+          }
+        ],
+        "topRequestNativeLeafNotCpuTime": [
+          {
+            "name": "sun.nio.ch.Net.poll",
+            "samples": 292
+          },
+          {
+            "name": "sun.nio.ch.SocketDispatcher.write0",
+            "samples": 90
+          },
+          {
+            "name": "sun.nio.ch.SocketDispatcher.read0",
+            "samples": 6
+          },
+          {
+            "name": "sun.nio.ch.Net.shutdown",
+            "samples": 4
+          },
+          {
+            "name": "java.io.FileOutputStream.writeBytes",
+            "samples": 3
+          },
+          {
+            "name": "sun.nio.ch.EventFD.set0",
+            "samples": 2
+          },
+          {
+            "name": "java.lang.ref.Reference.clear0",
+            "samples": 1
+          },
+          {
+            "name": "java.io.FileInputStream.readBytes",
+            "samples": 1
+          }
+        ],
+        "requestJavaTextSamples": 447,
+        "topClosestApplicationFrame": [
+          {
+            "name": "com.forgeoj.api.problem.ProblemController$$SpringCGLIB$$0.getProblem",
+            "samples": 59
+          },
+          {
+            "name": "com.forgeoj.api.auth.SameOriginFilter.doFilterInternal",
+            "samples": 25
+          },
+          {
+            "name": "com.forgeoj.api.observability.RequestCorrelationFilter.doFilterInternal",
+            "samples": 23
+          },
+          {
+            "name": "com.forgeoj.api.cache.PublicCache.decode",
+            "samples": 16
+          },
+          {
+            "name": "com.forgeoj.api.cache.PublicCache.read",
+            "samples": 12
+          },
+          {
+            "name": "com.forgeoj.api.cache.RedisSupport.lambda$get$0",
+            "samples": 8
+          },
+          {
+            "name": "com.forgeoj.api.auth.AccountAuthenticationFilter.doFilterInternal",
+            "samples": 8
+          },
+          {
+            "name": "com.forgeoj.api.cache.RedisSupport.digest",
+            "samples": 5
+          },
+          {
+            "name": "com.forgeoj.api.content.ContentRequestSizeFilter.shouldNotFilter",
+            "samples": 1
+          }
+        ],
+        "missingApplicationFrameIn32": 290,
+        "inclusiveFamiliesMayOverlap": {
+          "json": 57,
+          "jdbc-mybatis": 72,
+          "logging": 21,
+          "redis-netty": 6,
+          "digest": 6
+        },
+        "gcPauseCount": 215,
+        "gcPauseOverlapMs": 298.952,
+        "maxGcPauseOverlapMs": 3.9810000000000003
+      },
+      "eventSafety": {
+        "allowedPositiveTypes": [
+          "jdk.CPULoad",
+          "jdk.Checkpoint",
+          "jdk.ExecutionSample",
+          "jdk.GCPhasePause",
+          "jdk.GarbageCollection",
+          "jdk.Metadata",
+          "jdk.NativeMethodSample",
+          "jdk.ThreadCPULoad"
+        ],
+        "jsonStackDepth": 8,
+        "textStackDepth": 32,
+        "binaryDigest": "1095a47389b0287ee8ad4166797f363a5b08026c494de5f80bc16d388534bb8a",
+        "forbiddenEventCounts": {
+          "jdk.InitialEnvironmentVariable": 0,
+          "jdk.InitialSystemProperty": 0,
+          "jdk.JavaErrorThrow": 0,
+          "jdk.JavaExceptionThrow": 0,
+          "jdk.OldObjectSample": 0,
+          "jdk.SystemProcess": 0,
+          "jdk.ThreadDump": 0
+        }
+      }
+    },
+    {
+      "case": "list-c8",
+      "requestSummary": {
+        "status": "PASS",
+        "mode": "list",
+        "concurrency": 8,
+        "round": 0,
+        "startedAt": "2026-10-28T08:12:46.244Z",
+        "finishedAt": "2026-10-28T08:13:06.257Z",
+        "elapsedMs": 20009.11785,
+        "measurementCount": 15914,
+        "warmupCount": 30,
+        "successful": 15914,
+        "errors": 0,
+        "timeouts": 0,
+        "networkErrors": 0,
+        "semanticErrors": 0,
+        "statuses": {
+          "200": 15914
+        },
+        "attemptedRps": 795.3374116390644,
+        "successfulRps": 795.3374116390644,
+        "errorRate": 0,
+        "allLatency": {
+          "p50Ms": 4.8955559999994875,
+          "p95Ms": 52.57257500000196,
+          "p99Ms": 56.26711200000136
+        },
+        "successLatency": {
+          "p50Ms": 4.8955559999994875,
+          "p95Ms": 52.57257500000196,
+          "p99Ms": 56.26711200000136
+        },
+        "clientCpuPercent": 22.205861514279604,
+        "clientRssBytes": 86007808,
+        "clientEventLoopP99Ms": 11.239423,
+        "model": "closed loop; no retry; same bridge; validated TLS; keep-alive",
+        "maxRequestCap": 100000
+      },
+      "serverConfirmedIncludingWarmup": 15944,
+      "sqlCountCoverage": {
+        "list-count": {
+          "expectedFromRequestAndMapper": 15944,
+          "observedDigestDelta": 15839,
+          "difference": -105,
+          "ratio": 0.9934144505770196
+        },
+        "list-page": {
+          "expectedFromRequestAndMapper": 15944,
+          "observedDigestDelta": 15932,
+          "difference": -12,
+          "ratio": 0.9992473657802308
+        },
+        "list-tags": {
+          "expectedFromRequestAndMapper": 15944,
+          "observedDigestDelta": 15933,
+          "difference": -11,
+          "ratio": 0.9993100852985449
+        }
+      },
+      "sqlStatements": [
+        {
+          "family": "list-count",
+          "digest": "5ec90171c7e6ac0d10274f38fc30c176e39e395628c56fc3bfc3bda1731593f4",
+          "normalized": "SELECT COUNT ( * ) FROM `problem` `p` JOIN `problem_judge_version` `jv` ON `jv` . `id` = `p` . `current_judge_version_id` WHERE `p` . `status` = ? AND `p` . `scope` = ? AND `p` . `title` LIKE ? ESCAPE ? AND `p` . `difficulty` = ? AND EXISTS ( SELECT ? FROM `problem_tag` `pt` WHERE `pt` . `problem_id` = `p` . `id` AND `pt` . `tag` = ? )",
+          "count": 15839,
+          "totalPs": 13717473980000,
+          "lockPs": 39499000000,
+          "rowsExamined": 4769400,
+          "rowsSent": 15921,
+          "noIndex": 0,
+          "noGoodIndex": 0,
+          "errors": 0,
+          "totalElapsedMs": 13717.47398,
+          "meanElapsedMs": 0.8660568205063451,
+          "meanRowsExamined": 301.11749479133783
+        },
+        {
+          "family": "list-page",
+          "digest": "b42df987bfad52f5faec6ec5214297266845b75e09fb65537368e818f0a10327",
+          "normalized": "SELECT `p` . `id` , `p` . `slug` , `p` . `title` , `p` . `difficulty` , `jv` . `version_no` AS `judgeVersion` FROM `problem` `p` JOIN `problem_judge_version` `jv` ON `jv` . `id` = `p` . `current_judge_version_id` WHERE `p` . `status` = ? AND `p` . `scope` = ? AND `p` . `title` LIKE ? ESCAPE ? AND `p` . `difficulty` = ? AND EXISTS ( SELECT ? FROM `problem_tag` `pt` WHERE `pt` . `problem_id` = `p` . `id` AND `pt` . `tag` = ? ) ORDER BY `p` . `id` ASC LIMIT ? OFFSET ?",
+          "count": 15932,
+          "totalPs": 13575776725000,
+          "lockPs": 27216000000,
+          "rowsExamined": 5736200,
+          "rowsSent": 318780,
+          "noIndex": 0,
+          "noGoodIndex": 0,
+          "errors": 0,
+          "totalElapsedMs": 13575.776725,
+          "meanElapsedMs": 0.8521075021968366,
+          "meanRowsExamined": 360.04268139593273
+        },
+        {
+          "family": "list-tags",
+          "digest": "276487d148a381437118de81ca4e4b2773f26e93ef4092f1aceddb480d94a454",
+          "normalized": "SELECT `problem_id` AS `problemId` , `tag` FROM `problem_tag` WHERE `problem_id` IN (...) ORDER BY `problem_id` ASC , `tag` ASC",
+          "count": 15933,
+          "totalPs": 5406793843000,
+          "lockPs": 18102000000,
+          "rowsExamined": 637360,
+          "rowsSent": 637440,
+          "noIndex": 0,
+          "noGoodIndex": 0,
+          "errors": 0,
+          "totalElapsedMs": 5406.793843,
+          "meanElapsedMs": 0.33934562499215465,
+          "meanRowsExamined": 40.00251051277223
+        },
+        {
+          "family": "transaction-control",
+          "digest": "158bfe3d4b4b0a372a4acdb38affe2cb4f6b3cb21a9af0ea9fad9a9a083ac18a",
+          "normalized": "SET `autocommit` = ?",
+          "count": 31933,
+          "totalPs": 2557517900000,
+          "lockPs": 0,
+          "rowsExamined": 0,
+          "rowsSent": 0,
+          "noIndex": 0,
+          "noGoodIndex": 0,
+          "errors": 0,
+          "totalElapsedMs": 2557.5179,
+          "meanElapsedMs": 0.08009012307017818,
+          "meanRowsExamined": 0.0
+        },
+        {
+          "family": "connection-state-probe",
+          "digest": "a724a21545b602d4ae826ae58bbf526427a94f1e68ebec539ec3c53bfaa88281",
+          "normalized": "SELECT @@SESSION . `transaction_isolation`",
+          "count": 15947,
+          "totalPs": 1622258517000,
+          "lockPs": 0,
+          "rowsExamined": 15958,
+          "rowsSent": 15964,
+          "noIndex": 0,
+          "noGoodIndex": 0,
+          "errors": 0,
+          "totalElapsedMs": 1622.258517,
+          "meanElapsedMs": 0.1017281317489183,
+          "meanRowsExamined": 1.0006897849125227
+        },
+        {
+          "family": "transaction-control",
+          "digest": "9cf78ec1ee2746bb4c688b21593f69a1eba7026ba2277d7717cd8defb167449a",
+          "normalized": "SET SESSION TRANSACTION READ ONLY",
+          "count": 15922,
+          "totalPs": 1312433627000,
+          "lockPs": 0,
+          "rowsExamined": 0,
+          "rowsSent": 0,
+          "noIndex": 0,
+          "noGoodIndex": 0,
+          "errors": 0,
+          "totalElapsedMs": 1312.433627,
+          "meanElapsedMs": 0.08242894278356991,
+          "meanRowsExamined": 0.0
+        },
+        {
+          "family": "transaction-control",
+          "digest": "664a2aec28f52c38fac12d5adf14d7f8da06346ba3a594072cc152ad9bcecb59",
+          "normalized": "SET SESSION TRANSACTION READ WRITE",
+          "count": 15941,
+          "totalPs": 1192799497000,
+          "lockPs": 0,
+          "rowsExamined": 0,
+          "rowsSent": 0,
+          "noIndex": 0,
+          "noGoodIndex": 0,
+          "errors": 0,
+          "totalElapsedMs": 1192.799497,
+          "meanElapsedMs": 0.07482588902829182,
+          "meanRowsExamined": 0.0
+        },
+        {
+          "family": "transaction-control",
+          "digest": "f2b9be5f0f32ca7507e4ddf133cd2fad0993a1c26fde9caa6f067b1af2b7603c",
+          "normalized": "COMMIT",
+          "count": 15946,
+          "totalPs": 1186092261000,
+          "lockPs": 0,
+          "rowsExamined": 0,
+          "rowsSent": 0,
+          "noIndex": 0,
+          "noGoodIndex": 0,
+          "errors": 0,
+          "totalElapsedMs": 1186.092261,
+          "meanElapsedMs": 0.07438180490405116,
+          "meanRowsExamined": 0.0
+        },
+        {
+          "family": "background-or-observer",
+          "digest": "7343b32f775d7d5be95052955fdf5f53bc70027f8158ef28d11f4e11386af067",
+          "normalized": "SELECT `o` . `id` , `o` . `event_type` AS `eventType` , `o` . `sequence_no` AS `sequenceNo` , CAST ( `o` . `payload` AS CHARACTER ) AS `payload` , `o` . `publish_attempts` AS `publishAttempts` , `o` . `aggregate_id` AS `judgeTaskId` , `jt` . `submission_id` AS `submissionId` FROM `outbox_event` `o` LEFT JOIN `judge_task` `jt` ON `jt` . `id` = `o` . `aggregate_id` WHERE `o` . `published_at` IS NULL AND `o` . `failed_at` IS NULL AND `o` . `next_attempt_at` <= NOW (?) AND ( ( `o` . `aggregate_type` = ? AND `o` . `event_type` IN (...) ) OR ( `o` . `aggregate_type` = ? AND `o` . `event_type` IN (...) ) OR ( `o` . `aggregate_type` = ? AND `o` . `event_type` IN (...) ) ) AND `o` . `contract_version` = ? ORDER BY `o` . `next_attempt_at` , `o` . `created_at` , `o` . `id` LIMIT ?",
+          "count": 25,
+          "totalPs": 8942657000,
+          "lockPs": 48000000,
+          "rowsExamined": 0,
+          "rowsSent": 0,
+          "noIndex": 0,
+          "noGoodIndex": 0,
+          "errors": 0,
+          "totalElapsedMs": 8.942657,
+          "meanElapsedMs": 0.35770628,
+          "meanRowsExamined": 0.0
+        },
+        {
+          "family": "background-or-observer",
+          "digest": "8426cac9b1e0a76090c4850ce74f11750aa42b76644d3686921c4eb0d0bc9d59",
+          "normalized": "SELECT `id` , `problem_id` AS `problemId` , `data_version` AS `dataVersion` , `public_epoch` AS `publicEpoch` , `publish_attempts` AS `publishAttempts` FROM `public_search_outbox` WHERE `published_at` IS NULL AND `failed_at` IS NULL AND `next_publish_at` <= UTC_TIMESTAMP (?) ORDER BY `created_at` , `id` LIMIT ?",
+          "count": 25,
+          "totalPs": 8687510000,
+          "lockPs": 77000000,
+          "rowsExamined": 0,
+          "rowsSent": 0,
+          "noIndex": 0,
+          "noGoodIndex": 0,
+          "errors": 0,
+          "totalElapsedMs": 8.68751,
+          "meanElapsedMs": 0.3475004,
+          "meanRowsExamined": 0.0
+        },
+        {
+          "family": "background-or-observer",
+          "digest": "4651e858447eca5374729484ccfa1f58ef393141183c9d7066c2578dcf4d0031",
+          "normalized": "SELECT `d` . `event_id` FROM `public_search_delivery` `d` WHERE `d` . `status` IN (...) AND `d` . `next_attempt_at` <= UTC_TIMESTAMP (?) AND ( `d` . `lease_expires_at` IS NULL OR `d` . `lease_expires_at` <= UTC_TIMESTAMP (?) ) ORDER BY `d` . `next_attempt_at` LIMIT ?",
+          "count": 25,
+          "totalPs": 6105255000,
+          "lockPs": 44000000,
+          "rowsExamined": 0,
+          "rowsSent": 0,
+          "noIndex": 0,
+          "noGoodIndex": 0,
+          "errors": 0,
+          "totalElapsedMs": 6.105255,
+          "meanElapsedMs": 0.2442102,
+          "meanRowsExamined": 0.0
+        },
+        {
+          "family": "background-or-observer",
+          "digest": "ba5a9eb9c8e3bd77b8c95716c14ce0ff53e406d82ba5929c6acc00027eb27275",
+          "normalized": "SELECT DISTINCTROW `classroom_id` FROM `classroom_assignment` WHERE ( STATUS = ? AND `starts_at` <= UTC_TIMESTAMP (?) ) OR ( STATUS = ? AND `allow_late` = FALSE AND `deadline_at` <= UTC_TIMESTAMP (?) ) ORDER BY `classroom_id` LIMIT ?",
+          "count": 12,
+          "totalPs": 5248983000,
+          "lockPs": 37000000,
+          "rowsExamined": 0,
+          "rowsSent": 0,
+          "noIndex": 0,
+          "noGoodIndex": 0,
+          "errors": 0,
+          "totalElapsedMs": 5.248983,
+          "meanElapsedMs": 0.43741525,
+          "meanRowsExamined": 0.0
+        },
+        {
+          "family": "background-or-observer",
+          "digest": "8c7230d3b18cedd9eb4b54c87da2a3cae233f1ab96340b9d15564cc4a5fb9b2e",
+          "normalized": "SELECT `id` FROM `cache_invalidation_outbox` WHERE `delivered_at` IS NULL AND `next_attempt_at` <= UTC_TIMESTAMP (?) ORDER BY `id` LIMIT ?",
+          "count": 25,
+          "totalPs": 5119416000,
+          "lockPs": 41000000,
+          "rowsExamined": 0,
+          "rowsSent": 0,
+          "noIndex": 0,
+          "noGoodIndex": 0,
+          "errors": 0,
+          "totalElapsedMs": 5.119416,
+          "meanElapsedMs": 0.20477664,
+          "meanRowsExamined": 0.0
+        },
+        {
+          "family": "background-or-observer",
+          "digest": "083d61af86560f87ce1cea5f804a5c5240721a9b867b75d508e64710bf13b918",
+          "normalized": "SELECT `revision` FROM `cache_epoch` WHERE `namespace` = ? FOR UPDATE",
+          "count": 25,
+          "totalPs": 4238582000,
+          "lockPs": 38000000,
+          "rowsExamined": 25,
+          "rowsSent": 25,
+          "noIndex": 0,
+          "noGoodIndex": 0,
+          "errors": 0,
+          "totalElapsedMs": 4.238582,
+          "meanElapsedMs": 0.16954328,
+          "meanRowsExamined": 1.0
+        },
+        {
+          "family": "background-or-observer",
+          "digest": "ec1f676bf6ca7a071cd5897ae1d12459d7277b54544315a7fb9557e646774436",
+          "normalized": "SELECT `event_id` AS `eventId` , `attempts` FROM `public_search_dead_outbox` WHERE `published_at` IS NULL AND `failed_at` IS NULL AND `next_attempt_at` <= UTC_TIMESTAMP (?) LIMIT ?",
+          "count": 25,
+          "totalPs": 4138961000,
+          "lockPs": 40000000,
+          "rowsExamined": 0,
+          "rowsSent": 0,
+          "noIndex": 25,
+          "noGoodIndex": 0,
+          "errors": 0,
+          "totalElapsedMs": 4.138961,
+          "meanElapsedMs": 0.16555844,
+          "meanRowsExamined": 0.0
+        },
+        {
+          "family": "background-or-observer",
+          "digest": "59cbe901e298f69893485f02b6b54c017f9d59d62d1125e3fd3f16006324410d",
+          "normalized": "SELECT `event_id` AS `eventId` , `rebuild_id` AS `rebuildId` , `attempts` FROM `public_search_dead_recovery` WHERE `published_at` IS NULL AND `failed_at` IS NULL AND `next_attempt_at` <= UTC_TIMESTAMP (?) LIMIT ?",
+          "count": 25,
+          "totalPs": 3966205000,
+          "lockPs": 34000000,
+          "rowsExamined": 0,
+          "rowsSent": 0,
+          "noIndex": 25,
+          "noGoodIndex": 0,
+          "errors": 0,
+          "totalElapsedMs": 3.966205,
+          "meanElapsedMs": 0.1586482,
+          "meanRowsExamined": 0.0
+        },
+        {
+          "family": "background-or-observer",
+          "digest": "a7b4ca0b1bd44dd12bb67f1cbacf2eecb5eabfc5f66321587440e8d49574c57c",
+          "normalized": "SELECT `version` , `readable_epoch` AS `readableEpoch` , `index_name` AS `indexName` , `index_uuid` AS `indexUuid` , `active_job` AS `activeJob` FROM `public_search_control` WHERE `id` = ? FOR UPDATE",
+          "count": 25,
+          "totalPs": 3636091000,
+          "lockPs": 27000000,
+          "rowsExamined": 25,
+          "rowsSent": 25,
+          "noIndex": 0,
+          "noGoodIndex": 0,
+          "errors": 0,
+          "totalElapsedMs": 3.636091,
+          "meanElapsedMs": 0.14544364,
+          "meanRowsExamined": 1.0
+        },
+        {
+          "family": "background-or-observer",
+          "digest": "56ec0ef9e38196102e02c14112d07d78b5db040065ea3d646b4a975738297768",
+          "normalized": "SELECT `version` , `readable_epoch` AS `readableEpoch` , `index_name` AS `indexName` , `index_uuid` AS `indexUuid` , `active_job` AS `activeJob` FROM `public_search_control` WHERE `id` = ?",
+          "count": 12,
+          "totalPs": 2788116000,
+          "lockPs": 25000000,
+          "rowsExamined": 12,
+          "rowsSent": 12,
+          "noIndex": 0,
+          "noGoodIndex": 0,
+          "errors": 0,
+          "totalElapsedMs": 2.788116,
+          "meanElapsedMs": 0.232343,
+          "meanRowsExamined": 1.0
+        },
+        {
+          "family": "background-or-observer",
+          "digest": "c61a751920da4f01603993db860fae53ee794199e2cdd6cbc3efbcc2a014f34b",
+          "normalized": "SELECT `jt` . `id` AS `taskId` , `jt` . `submission_id` AS `submissionId` , `jt` . `task_type` AS `taskType` , `jt` . `contract_version` AS `contractVersion` FROM `judge_task` `jt` JOIN `submission` `s` ON `s` . `id` = `jt` . `submission_id` WHERE ( `jt` . `task_status` = `s` . `processing_status` OR ( `jt` . `task_status` = ? AND `s` . `processing_status` = ? ) ) AND ( ( `jt` . `task_status` = ? AND `jt` . `lease_expires_at` <= NOW (?) ) OR ( `jt` . `task_status` = ? AND `jt` . `next_attempt_at` IS NOT NULL AND `jt` . `next_attempt_at` <= NOW (?) ) OR ( `jt` . `task_status` IN (...) AND `jt` . `next_attempt_at` <= NOW (?) ) ) ORDER BY CASE `jt` . `task_status` WHEN ? THEN `jt` . `lease_expires_at` ELSE `jt` . `next_attempt_at` END , `jt` . `id` LIMIT ?",
+          "count": 5,
+          "totalPs": 2410186000,
+          "lockPs": 11000000,
+          "rowsExamined": 0,
+          "rowsSent": 0,
+          "noIndex": 0,
+          "noGoodIndex": 0,
+          "errors": 0,
+          "totalElapsedMs": 2.410186,
+          "meanElapsedMs": 0.4820372,
+          "meanRowsExamined": 0.0
+        },
+        {
+          "family": "transaction-control",
+          "digest": "a2ec27bb65e6253a3fcebb742606cd68e95fa42fe95a2a3ddb7914176b2d4ddd",
+          "normalized": "SET SESSION TRANSACTION ISOLATION LEVEL REPEATABLE READ",
+          "count": 25,
+          "totalPs": 1865208000,
+          "lockPs": 0,
+          "rowsExamined": 0,
+          "rowsSent": 0,
+          "noIndex": 0,
+          "noGoodIndex": 0,
+          "errors": 0,
+          "totalElapsedMs": 1.865208,
+          "meanElapsedMs": 0.07460832,
+          "meanRowsExamined": 0.0
+        },
+        {
+          "family": "transaction-control",
+          "digest": "184b254cf8a04dc02dde13544f6b8fc2abe37037886cd02a153350b3909cf70e",
+          "normalized": "SET SESSION TRANSACTION ISOLATION LEVEL READ COMMITTED",
+          "count": 25,
+          "totalPs": 1781357000,
+          "lockPs": 0,
+          "rowsExamined": 0,
+          "rowsSent": 0,
+          "noIndex": 0,
+          "noGoodIndex": 0,
+          "errors": 0,
+          "totalElapsedMs": 1.781357,
+          "meanElapsedMs": 0.07125428,
+          "meanRowsExamined": 0.0
+        },
+        {
+          "family": "background-or-observer",
+          "digest": "da85dbcc5dde6bfab6ee293c3441cc40fca0f2989553fc0e759f8194c508f537",
+          "normalized": "SELECT `id` FROM `content_validation_job` WHERE `processing_status` = ? AND `lease_expires_at` <= NOW (?) ORDER BY `lease_expires_at` , `id` LIMIT ?",
+          "count": 5,
+          "totalPs": 1598212000,
+          "lockPs": 13000000,
+          "rowsExamined": 0,
+          "rowsSent": 0,
+          "noIndex": 0,
+          "noGoodIndex": 0,
+          "errors": 0,
+          "totalElapsedMs": 1.598212,
+          "meanElapsedMs": 0.3196424,
+          "meanRowsExamined": 0.0
+        },
+        {
+          "family": "background-or-observer",
+          "digest": "34d38bdda6c8352ffde8bdd7cad64df9ab18e112de152425d9622486053b4089",
+          "normalized": "SELECT `kind` , `state` , COUNT ( * ) VALUE FROM ( SELECT ? `kind` , `task_status` `state` , `created_at` , `started_at` , `finished_at` , `attempt_count` FROM `judge_task` UNION ALL SELECT `execution_kind` , `processing_status` , `created_at` , `started_at` , `finished_at` , `attempt_count` FROM `content_validation_job` UNION ALL SELECT ? , `processing_status` , `created_at` , `started_at` , `finished_at` , `attempt_count` FROM `self_test_job` ) `t` GROUP BY `kind` , `state`",
+          "count": 2,
+          "totalPs": 1244526000,
+          "lockPs": 9000000,
+          "rowsExamined": 0,
+          "rowsSent": 0,
+          "noIndex": 2,
+          "noGoodIndex": 0,
+          "errors": 0,
+          "totalElapsedMs": 1.244526,
+          "meanElapsedMs": 0.622263,
+          "meanRowsExamined": 0.0
+        },
+        {
+          "family": "background-or-observer",
+          "digest": "1f525327687ba84ef62f75c1934a6fc2e3f2c1f4ef092a615bb5c266d62e71a6",
+          "normalized": "SELECT `id` FROM `self_test_job` WHERE `processing_status` = ? AND `lease_expires_at` <= NOW (?) ORDER BY `lease_expires_at` , `id` LIMIT ?",
+          "count": 5,
+          "totalPs": 1212542000,
+          "lockPs": 9000000,
+          "rowsExamined": 0,
+          "rowsSent": 0,
+          "noIndex": 0,
+          "noGoodIndex": 0,
+          "errors": 0,
+          "totalElapsedMs": 1.212542,
+          "meanElapsedMs": 0.2425084,
+          "meanRowsExamined": 0.0
+        },
+        {
+          "family": "background-or-observer",
+          "digest": "fa9fd87a0bab4c0b1ae65bc7b4aa25017f05923b5e2c2a5292bc93eeb6e4db2b",
+          "normalized": "SELECT ( SELECT COUNT ( * ) FROM `outbox_event` WHERE `published_at` IS NULL ) `outboxPending` , ( SELECT COUNT ( * ) FROM `outbox_event` WHERE `published_at` IS NULL AND `failed_at` IS NOT NULL ) `outboxFailed` , ( SELECT COUNT ( * ) FROM `cache_invalidation_outbox` WHERE `delivered_at` IS NULL ) `invalidationPending` , ( SELECT COUNT ( * ) FROM `cache_invalidation_outbox` WHERE `delivered_at` IS NULL AND `attempts` > ? ) `invalidationFailed` , ( SELECT COUNT ( * ) FROM `public_search_outbox` WHERE `published_at` IS NULL ) `searchPending` , ( SELECT COUNT ( * ) FROM `public_search_delivery` WHERE STATUS = ? ) `searchDead` , CASE WHEN `e` . `revision` > `c` . `readable_epoch` THEN `e` . `revision` - `c` . `readable_epoch` ELSE ? END `epochGap` FROM `cache_epoch` `e` JOIN `public_search_control` `c` ON `c` . `id` = ? WHERE `e` . `namespace` = ?",
+          "count": 2,
+          "totalPs": 1024437000,
+          "lockPs": 6000000,
+          "rowsExamined": 2,
+          "rowsSent": 2,
+          "noIndex": 0,
+          "noGoodIndex": 0,
+          "errors": 0,
+          "totalElapsedMs": 1.024437,
+          "meanElapsedMs": 0.5122185,
+          "meanRowsExamined": 1.0
+        },
+        {
+          "family": "background-or-observer",
+          "digest": "e8614c907862addd26571be2c0725dc287e7042ab4b68f586512252e87ac4ca6",
+          "normalized": "SELECT `kind` , COALESCE ( MAX ( CASE WHEN `state` IN (...) THEN `GREATEST` ( ? , TIMESTAMPDIFF ( MICROSECOND , `created_at` , UTC_TIMESTAMP (?) ) / ? ) END ) , ? ) `oldest` , COALESCE ( SUM ( CASE WHEN `state` = ? THEN `GREATEST` ( ? , TIMESTAMPDIFF ( MICROSECOND , `started_at` , `finished_at` ) / ? ) END ) , ? ) `seconds` , SUM ( `state` = ? ) `completed` , COALESCE ( SUM ( CASE WHEN `attempt_count` > ? THEN `attempt_count` - ? ELSE ? END ) , ? ) `retries` FROM ( SELECT ? `kind` , `task_status` `state` , `created_at` , `started_at` , `finished_at` , `attempt_count` FROM `judge_task` UNION ALL SELECT `execution_kind` , `processing_status` , `created_at` , `started_at` , `finished_at` , `attempt_count` FROM `content_validation_job` UNION ALL SELECT ? , `processing_status` , `created_at` , `started_at` , `finished_at` , `attempt_count` FROM `self_test_job` ) `t` GROUP BY `kind`",
+          "count": 2,
+          "totalPs": 706132000,
+          "lockPs": 3000000,
+          "rowsExamined": 0,
+          "rowsSent": 0,
+          "noIndex": 2,
+          "noGoodIndex": 0,
+          "errors": 0,
+          "totalElapsedMs": 0.706132,
+          "meanElapsedMs": 0.353066,
+          "meanRowsExamined": 0.0
+        },
+        {
+          "family": "background-or-observer",
+          "digest": "160c356c1828697d50f4f1a0a9b3c16f53c4ae1281a127961304d7e02cbe55e2",
+          "normalized": "SELECT ? `kind` , `verdict` `state` , COUNT ( * ) VALUE FROM `submission` WHERE `verdict` IS NOT NULL GROUP BY `verdict`",
+          "count": 2,
+          "totalPs": 551085000,
+          "lockPs": 2000000,
+          "rowsExamined": 0,
+          "rowsSent": 0,
+          "noIndex": 0,
+          "noGoodIndex": 0,
+          "errors": 0,
+          "totalElapsedMs": 0.551085,
+          "meanElapsedMs": 0.2755425,
+          "meanRowsExamined": 0.0
+        },
+        {
+          "family": "background-or-observer",
+          "digest": "588da873d7cc80d98ee8bb306e3d9a53545f04e40b699bab02825d56b0994a6e",
+          "normalized": "SELECT ? `kind` , STATUS `state` , COUNT ( * ) VALUE FROM `public_search_rebuild` GROUP BY STATUS",
+          "count": 2,
+          "totalPs": 435992000,
+          "lockPs": 2000000,
+          "rowsExamined": 0,
+          "rowsSent": 0,
+          "noIndex": 2,
+          "noGoodIndex": 0,
+          "errors": 0,
+          "totalElapsedMs": 0.435992,
+          "meanElapsedMs": 0.217996,
+          "meanRowsExamined": 0.0
+        },
+        {
+          "family": "background-or-observer",
+          "digest": "2bb67edc1005d0edc95c2b796337d686f57da86fe14e78a287e4cb31f244569b",
+          "normalized": "SELECT COUNT ( * ) FROM `judge_task` WHERE ? = ?",
+          "count": 2,
+          "totalPs": 374153000,
+          "lockPs": 6000000,
+          "rowsExamined": 0,
+          "rowsSent": 2,
+          "noIndex": 0,
+          "noGoodIndex": 0,
+          "errors": 0,
+          "totalElapsedMs": 0.374153,
+          "meanElapsedMs": 0.1870765,
+          "meanRowsExamined": 0.0
+        },
+        {
+          "family": "background-or-observer",
+          "digest": "44e35cee979ba420eb49a8471f852bbe15b403c89742704817dfbaace0d99dbb",
+          "normalized": "SELECT @@`version_comment` LIMIT ?",
+          "count": 1,
+          "totalPs": 94430000,
+          "lockPs": 0,
+          "rowsExamined": 1,
+          "rowsSent": 1,
+          "noIndex": 0,
+          "noGoodIndex": 0,
+          "errors": 0,
+          "totalElapsedMs": 0.09443,
+          "meanElapsedMs": 0.09443,
+          "meanRowsExamined": 1.0
+        }
+      ],
+      "sqlFamilies": {
+        "background-or-observer": {
+          "count": 252,
+          "totalPs": 62523471000,
+          "rowsExamined": 65
+        },
+        "transaction-control": {
+          "count": 79792,
+          "totalPs": 6252489850000,
+          "rowsExamined": 0
+        },
+        "list-tags": {
+          "count": 15933,
+          "totalPs": 5406793843000,
+          "rowsExamined": 637360
+        },
+        "list-count": {
+          "count": 15839,
+          "totalPs": 13717473980000,
+          "rowsExamined": 4769400
+        },
+        "connection-state-probe": {
+          "count": 15947,
+          "totalPs": 1622258517000,
+          "rowsExamined": 15958
+        },
+        "list-page": {
+          "count": 15932,
+          "totalPs": 13575776725000,
+          "rowsExamined": 5736200
+        }
+      },
+      "cpuDeltaIncludingWarmupAndProbeControl": {
+        "api": {
+          "usage_usec": 27225237,
+          "user_usec": 17189849,
+          "system_usec": 10035388,
+          "nr_periods": 224,
+          "nr_throttled": 3,
+          "throttled_usec": 340725
+        },
+        "mysql": {
+          "usage_usec": 40130247,
+          "user_usec": 32261371,
+          "system_usec": 7868876,
+          "nr_periods": 224,
+          "nr_throttled": 198,
+          "throttled_usec": 75082401
+        }
+      },
+      "jfr": {
+        "measurementJavaSamples": 524,
+        "requestJavaSamples": 522,
+        "topJavaLeaf": [
+          {
+            "name": "com.mysql.cj.util.StringInspector.indexOfNextChar",
+            "samples": 39
+          },
+          {
+            "name": "java.util.HashMap.getNode",
+            "samples": 38
+          },
+          {
+            "name": "java.util.concurrent.ConcurrentHashMap.get",
+            "samples": 18
+          },
+          {
+            "name": "java.lang.String.equalsIgnoreCase",
+            "samples": 12
+          },
+          {
+            "name": "java.util.HashMap.putVal",
+            "samples": 11
+          },
+          {
+            "name": "com.mysql.cj.QueryInfo.<init>",
+            "samples": 9
+          },
+          {
+            "name": "com.mysql.cj.protocol.a.result.ResultsetRowsStatic.next",
+            "samples": 8
+          },
+          {
+            "name": "org.springframework.util.ObjectUtils.nullSafeEquals",
+            "samples": 8
+          },
+          {
+            "name": "java.lang.CharacterDataLatin1.toUpperCase",
+            "samples": 6
+          },
+          {
+            "name": "java.nio.charset.Charset.lookup",
+            "samples": 6
+          },
+          {
+            "name": "java.util.concurrent.locks.AbstractQueuedSynchronizer.signalNext",
+            "samples": 6
+          },
+          {
+            "name": "java.util.HashMap.resize",
+            "samples": 6
+          }
+        ],
+        "topRequestJavaLeaf": [
+          {
+            "name": "com.mysql.cj.util.StringInspector.indexOfNextChar",
+            "samples": 39
+          },
+          {
+            "name": "java.util.HashMap.getNode",
+            "samples": 38
+          },
+          {
+            "name": "java.util.concurrent.ConcurrentHashMap.get",
+            "samples": 18
+          },
+          {
+            "name": "java.lang.String.equalsIgnoreCase",
+            "samples": 12
+          },
+          {
+            "name": "java.util.HashMap.putVal",
+            "samples": 11
+          },
+          {
+            "name": "com.mysql.cj.QueryInfo.<init>",
+            "samples": 9
+          },
+          {
+            "name": "com.mysql.cj.protocol.a.result.ResultsetRowsStatic.next",
+            "samples": 8
+          },
+          {
+            "name": "org.springframework.util.ObjectUtils.nullSafeEquals",
+            "samples": 8
+          },
+          {
+            "name": "java.lang.CharacterDataLatin1.toUpperCase",
+            "samples": 6
+          },
+          {
+            "name": "java.nio.charset.Charset.lookup",
+            "samples": 6
+          },
+          {
+            "name": "java.util.concurrent.locks.AbstractQueuedSynchronizer.signalNext",
+            "samples": 6
+          },
+          {
+            "name": "java.util.HashMap.resize",
+            "samples": 6
+          }
+        ],
+        "measurementNativeSamples": 1934,
+        "requestNativeSamples": 912,
+        "topNativeLeafNotCpuTime": [
+          {
+            "name": "sun.nio.ch.Net.poll",
+            "samples": 1024
+          },
+          {
+            "name": "sun.nio.ch.EPoll.wait",
+            "samples": 679
+          },
+          {
+            "name": "sun.nio.ch.Net.accept",
+            "samples": 165
+          },
+          {
+            "name": "sun.nio.ch.SocketDispatcher.write0",
+            "samples": 49
+          },
+          {
+            "name": "java.io.FileOutputStream.writeBytes",
+            "samples": 6
+          },
+          {
+            "name": "sun.nio.ch.SocketDispatcher.read0",
+            "samples": 6
+          },
+          {
+            "name": "sun.nio.ch.EPoll.ctl",
+            "samples": 1
+          },
+          {
+            "name": "sun.nio.ch.EventFD.set0",
+            "samples": 1
+          },
+          {
+            "name": "sun.nio.ch.Net.localInetAddress",
+            "samples": 1
+          },
+          {
+            "name": "sun.nio.ch.UnixDispatcher.close0",
+            "samples": 1
+          },
+          {
+            "name": "sun.nio.ch.Net.shutdown",
+            "samples": 1
+          }
+        ],
+        "topRequestNativeLeafNotCpuTime": [
+          {
+            "name": "sun.nio.ch.Net.poll",
+            "samples": 851
+          },
+          {
+            "name": "sun.nio.ch.SocketDispatcher.write0",
+            "samples": 48
+          },
+          {
+            "name": "java.io.FileOutputStream.writeBytes",
+            "samples": 6
+          },
+          {
+            "name": "sun.nio.ch.SocketDispatcher.read0",
+            "samples": 6
+          },
+          {
+            "name": "sun.nio.ch.Net.shutdown",
+            "samples": 1
+          }
+        ],
+        "requestJavaTextSamples": 522,
+        "topClosestApplicationFrame": [
+          {
+            "name": "com.forgeoj.api.problem.ProblemLibraryService.list",
+            "samples": 124
+          },
+          {
+            "name": "com.forgeoj.api.problem.ProblemLibraryService$$SpringCGLIB$$0.list",
+            "samples": 50
+          },
+          {
+            "name": "com.forgeoj.api.observability.RequestCorrelationFilter.doFilterInternal",
+            "samples": 24
+          },
+          {
+            "name": "com.forgeoj.api.auth.SameOriginFilter.doFilterInternal",
+            "samples": 22
+          },
+          {
+            "name": "com.forgeoj.api.auth.AccountAuthenticationFilter.doFilterInternal",
+            "samples": 6
+          },
+          {
+            "name": "com.forgeoj.api.auth.AccountCookies.read",
+            "samples": 1
+          }
+        ],
+        "missingApplicationFrameIn32": 295,
+        "inclusiveFamiliesMayOverlap": {
+          "jdbc-mybatis": 305,
+          "json": 20,
+          "logging": 16
+        },
+        "gcPauseCount": 239,
+        "gcPauseOverlapMs": 427.705,
+        "maxGcPauseOverlapMs": 5.011
+      },
+      "eventSafety": {
+        "allowedPositiveTypes": [
+          "jdk.CPULoad",
+          "jdk.Checkpoint",
+          "jdk.ExecutionSample",
+          "jdk.GCPhasePause",
+          "jdk.GarbageCollection",
+          "jdk.Metadata",
+          "jdk.NativeMethodSample",
+          "jdk.ThreadCPULoad"
+        ],
+        "jsonStackDepth": 8,
+        "textStackDepth": 32,
+        "binaryDigest": "5b30c498e011a9791c8d3d9e51e19e688c58a28e108eb9a37c2f7f60a4115f68",
+        "forbiddenEventCounts": {
+          "jdk.InitialEnvironmentVariable": 0,
+          "jdk.InitialSystemProperty": 0,
+          "jdk.JavaErrorThrow": 0,
+          "jdk.JavaExceptionThrow": 0,
+          "jdk.OldObjectSample": 0,
+          "jdk.SystemProcess": 0,
+          "jdk.ThreadDump": 0
+        }
+      }
+    },
+    {
+      "case": "detail-c8",
+      "requestSummary": {
+        "status": "PASS",
+        "mode": "detail",
+        "concurrency": 8,
+        "round": 0,
+        "startedAt": "2026-10-28T08:16:28.535Z",
+        "finishedAt": "2026-10-28T08:16:48.541Z",
+        "elapsedMs": 20002.684399,
+        "measurementCount": 33817,
+        "warmupCount": 300,
+        "successful": 33817,
+        "errors": 0,
+        "timeouts": 0,
+        "networkErrors": 0,
+        "semanticErrors": 0,
+        "statuses": {
+          "200": 33817
+        },
+        "attemptedRps": 1690.6230846541087,
+        "successfulRps": 1690.6230846541087,
+        "errorRate": 0,
+        "allLatency": {
+          "p50Ms": 2.414615000000026,
+          "p95Ms": 9.49659900000188,
+          "p99Ms": 45.632800999999745
+        },
+        "successLatency": {
+          "p50Ms": 2.414615000000026,
+          "p95Ms": 9.49659900000188,
+          "p99Ms": 45.632800999999745
+        },
+        "clientCpuPercent": 41.35422943739262,
+        "clientRssBytes": 112005120,
+        "clientEventLoopP99Ms": 11.239423,
+        "model": "closed loop; no retry; same bridge; validated TLS; keep-alive",
+        "maxRequestCap": 100000
+      },
+      "serverConfirmedIncludingWarmup": 34117,
+      "sqlCountCoverage": {
+        "detail-epoch": {
+          "expectedFromRequestAndMapper": 34117,
+          "observedDigestDelta": 34098,
+          "difference": -19,
+          "ratio": 0.9994430928862444
+        },
+        "detail-load-warmup": {
+          "expectedFromRequestAndMapper": 300,
+          "observedDigestDelta": 300,
+          "difference": 0,
+          "ratio": 1.0
+        }
+      },
+      "sqlStatements": [
+        {
+          "family": "detail-epoch",
+          "digest": "740b270aae57f22b2e5b363379000bf8e61fd0c6b5595e18bfa05487d503f95e",
+          "normalized": "SELECT `revision` FROM `cache_epoch` WHERE `namespace` = ?",
+          "count": 34098,
+          "totalPs": 4708899959000,
+          "lockPs": 56087000000,
+          "rowsExamined": 34111,
+          "rowsSent": 34114,
+          "noIndex": 0,
+          "noGoodIndex": 0,
+          "errors": 0,
+          "totalElapsedMs": 4708.899959,
+          "meanElapsedMs": 0.13809900753709894,
+          "meanRowsExamined": 1.0003812540324946
+        },
+        {
+          "family": "transaction-control",
+          "digest": "158bfe3d4b4b0a372a4acdb38affe2cb4f6b3cb21a9af0ea9fad9a9a083ac18a",
+          "normalized": "SET `autocommit` = ?",
+          "count": 68272,
+          "totalPs": 4612858175000,
+          "lockPs": 0,
+          "rowsExamined": 0,
+          "rowsSent": 0,
+          "noIndex": 0,
+          "noGoodIndex": 0,
+          "errors": 0,
+          "totalElapsedMs": 4612.858175,
+          "meanElapsedMs": 0.06756588608800093,
+          "meanRowsExamined": 0.0
+        },
+        {
+          "family": "connection-state-probe",
+          "digest": "a724a21545b602d4ae826ae58bbf526427a94f1e68ebec539ec3c53bfaa88281",
+          "normalized": "SELECT @@SESSION . `transaction_isolation`",
+          "count": 34124,
+          "totalPs": 2849499334000,
+          "lockPs": 0,
+          "rowsExamined": 34138,
+          "rowsSent": 34141,
+          "noIndex": 0,
+          "noGoodIndex": 0,
+          "errors": 0,
+          "totalElapsedMs": 2849.499334,
+          "meanElapsedMs": 0.08350425899660063,
+          "meanRowsExamined": 1.0004102684327747
+        },
+        {
+          "family": "transaction-control",
+          "digest": "9cf78ec1ee2746bb4c688b21593f69a1eba7026ba2277d7717cd8defb167449a",
+          "normalized": "SET SESSION TRANSACTION READ ONLY",
+          "count": 34104,
+          "totalPs": 2379049907000,
+          "lockPs": 0,
+          "rowsExamined": 0,
+          "rowsSent": 0,
+          "noIndex": 0,
+          "noGoodIndex": 0,
+          "errors": 0,
+          "totalElapsedMs": 2379.049907,
+          "meanElapsedMs": 0.06975867660684965,
+          "meanRowsExamined": 0.0
+        },
+        {
+          "family": "transaction-control",
+          "digest": "f2b9be5f0f32ca7507e4ddf133cd2fad0993a1c26fde9caa6f067b1af2b7603c",
+          "normalized": "COMMIT",
+          "count": 34123,
+          "totalPs": 2225101314000,
+          "lockPs": 0,
+          "rowsExamined": 0,
+          "rowsSent": 0,
+          "noIndex": 0,
+          "noGoodIndex": 0,
+          "errors": 0,
+          "totalElapsedMs": 2225.101314,
+          "meanElapsedMs": 0.06520825583917006,
+          "meanRowsExamined": 0.0
+        },
+        {
+          "family": "transaction-control",
+          "digest": "664a2aec28f52c38fac12d5adf14d7f8da06346ba3a594072cc152ad9bcecb59",
+          "normalized": "SET SESSION TRANSACTION READ WRITE",
+          "count": 34115,
+          "totalPs": 2188121743000,
+          "lockPs": 0,
+          "rowsExamined": 0,
+          "rowsSent": 0,
+          "noIndex": 0,
+          "noGoodIndex": 0,
+          "errors": 0,
+          "totalElapsedMs": 2188.121743,
+          "meanElapsedMs": 0.06413957915872784,
+          "meanRowsExamined": 0.0
+        },
+        {
+          "family": "detail-load-warmup",
+          "digest": "b2b96f2068b34ed1d3cc3f2ad73d0ac685138c5e222f46b9034e12e1f01810fd",
+          "normalized": "SELECT `p` . `slug` , `p` . `title` , `p` . `statement_text` AS `statementText` , `p` . `input_description` AS `inputDescription` , `p` . `output_description` AS `outputDescription` , `JSON_UNQUOTE` ( `JSON_EXTRACT` ( `p` . `public_samples_json` , ? ) ) AS `sampleInput` , `JSON_UNQUOTE` ( `JSON_EXTRACT` ( `p` . `public_samples_json` , ? ) ) AS `sampleOutput` , `jv` . `version_no` AS `judgeVersion` , `jv` . `time_limit_ms` AS `timeLimitMs` , `jv` . `memory_limit_mb` AS `memoryLimitMb` , `jv` . `output_limit_bytes` AS `outputLimitBytes` , CAST ( `p` . `public_samples_json` AS CHARACTER CHARACTER SET `utf8mb4` ) AS `publicSamplesJson` , `u` . `username` AS `authorName` , `JSON_UNQUOTE` ( `JSON_EXTRACT` ( `s` . `metadata_text` , ? ) ) AS `originType` , `NULLIF` ( `JSON_UNQUOTE` ( `JSON_EXTRACT` ( `s` . `metadata_text` , ? ) ) , ? ) AS `sourceUrl` , `JSON_UNQUOTE` ( `JSON_EXTRACT` ( `s` . `metadata_text` , ? ) ) AS `licenseStatement` , `corrected` . `slug` AS `correctionOfSlug` FROM `problem`",
+          "count": 300,
+          "totalPs": 98905307000,
+          "lockPs": 679000000,
+          "rowsExamined": 300,
+          "rowsSent": 300,
+          "noIndex": 0,
+          "noGoodIndex": 0,
+          "errors": 0,
+          "totalElapsedMs": 98.905307,
+          "meanElapsedMs": 0.3296843566666667,
+          "meanRowsExamined": 1.0
+        },
+        {
+          "family": "background-or-observer",
+          "digest": "7343b32f775d7d5be95052955fdf5f53bc70027f8158ef28d11f4e11386af067",
+          "normalized": "SELECT `o` . `id` , `o` . `event_type` AS `eventType` , `o` . `sequence_no` AS `sequenceNo` , CAST ( `o` . `payload` AS CHARACTER ) AS `payload` , `o` . `publish_attempts` AS `publishAttempts` , `o` . `aggregate_id` AS `judgeTaskId` , `jt` . `submission_id` AS `submissionId` FROM `outbox_event` `o` LEFT JOIN `judge_task` `jt` ON `jt` . `id` = `o` . `aggregate_id` WHERE `o` . `published_at` IS NULL AND `o` . `failed_at` IS NULL AND `o` . `next_attempt_at` <= NOW (?) AND ( ( `o` . `aggregate_type` = ? AND `o` . `event_type` IN (...) ) OR ( `o` . `aggregate_type` = ? AND `o` . `event_type` IN (...) ) OR ( `o` . `aggregate_type` = ? AND `o` . `event_type` IN (...) ) ) AND `o` . `contract_version` = ? ORDER BY `o` . `next_attempt_at` , `o` . `created_at` , `o` . `id` LIMIT ?",
+          "count": 25,
+          "totalPs": 15893311000,
+          "lockPs": 57000000,
+          "rowsExamined": 0,
+          "rowsSent": 0,
+          "noIndex": 0,
+          "noGoodIndex": 0,
+          "errors": 0,
+          "totalElapsedMs": 15.893311,
+          "meanElapsedMs": 0.63573244,
+          "meanRowsExamined": 0.0
+        },
+        {
+          "family": "background-or-observer",
+          "digest": "8426cac9b1e0a76090c4850ce74f11750aa42b76644d3686921c4eb0d0bc9d59",
+          "normalized": "SELECT `id` , `problem_id` AS `problemId` , `data_version` AS `dataVersion` , `public_epoch` AS `publicEpoch` , `publish_attempts` AS `publishAttempts` FROM `public_search_outbox` WHERE `published_at` IS NULL AND `failed_at` IS NULL AND `next_publish_at` <= UTC_TIMESTAMP (?) ORDER BY `created_at` , `id` LIMIT ?",
+          "count": 25,
+          "totalPs": 9325454000,
+          "lockPs": 58000000,
+          "rowsExamined": 0,
+          "rowsSent": 0,
+          "noIndex": 0,
+          "noGoodIndex": 0,
+          "errors": 0,
+          "totalElapsedMs": 9.325454,
+          "meanElapsedMs": 0.37301816,
+          "meanRowsExamined": 0.0
+        },
+        {
+          "family": "background-or-observer",
+          "digest": "8c7230d3b18cedd9eb4b54c87da2a3cae233f1ab96340b9d15564cc4a5fb9b2e",
+          "normalized": "SELECT `id` FROM `cache_invalidation_outbox` WHERE `delivered_at` IS NULL AND `next_attempt_at` <= UTC_TIMESTAMP (?) ORDER BY `id` LIMIT ?",
+          "count": 25,
+          "totalPs": 8142098000,
+          "lockPs": 40000000,
+          "rowsExamined": 0,
+          "rowsSent": 0,
+          "noIndex": 0,
+          "noGoodIndex": 0,
+          "errors": 0,
+          "totalElapsedMs": 8.142098,
+          "meanElapsedMs": 0.32568392,
+          "meanRowsExamined": 0.0
+        },
+        {
+          "family": "background-or-observer",
+          "digest": "ba5a9eb9c8e3bd77b8c95716c14ce0ff53e406d82ba5929c6acc00027eb27275",
+          "normalized": "SELECT DISTINCTROW `classroom_id` FROM `classroom_assignment` WHERE ( STATUS = ? AND `starts_at` <= UTC_TIMESTAMP (?) ) OR ( STATUS = ? AND `allow_late` = FALSE AND `deadline_at` <= UTC_TIMESTAMP (?) ) ORDER BY `classroom_id` LIMIT ?",
+          "count": 12,
+          "totalPs": 7553937000,
+          "lockPs": 45000000,
+          "rowsExamined": 0,
+          "rowsSent": 0,
+          "noIndex": 0,
+          "noGoodIndex": 0,
+          "errors": 0,
+          "totalElapsedMs": 7.553937,
+          "meanElapsedMs": 0.62949475,
+          "meanRowsExamined": 0.0
+        },
+        {
+          "family": "background-or-observer",
+          "digest": "4651e858447eca5374729484ccfa1f58ef393141183c9d7066c2578dcf4d0031",
+          "normalized": "SELECT `d` . `event_id` FROM `public_search_delivery` `d` WHERE `d` . `status` IN (...) AND `d` . `next_attempt_at` <= UTC_TIMESTAMP (?) AND ( `d` . `lease_expires_at` IS NULL OR `d` . `lease_expires_at` <= UTC_TIMESTAMP (?) ) ORDER BY `d` . `next_attempt_at` LIMIT ?",
+          "count": 25,
+          "totalPs": 7170178000,
+          "lockPs": 41000000,
+          "rowsExamined": 0,
+          "rowsSent": 0,
+          "noIndex": 0,
+          "noGoodIndex": 0,
+          "errors": 0,
+          "totalElapsedMs": 7.170178,
+          "meanElapsedMs": 0.28680712,
+          "meanRowsExamined": 0.0
+        },
+        {
+          "family": "background-or-observer",
+          "digest": "ec1f676bf6ca7a071cd5897ae1d12459d7277b54544315a7fb9557e646774436",
+          "normalized": "SELECT `event_id` AS `eventId` , `attempts` FROM `public_search_dead_outbox` WHERE `published_at` IS NULL AND `failed_at` IS NULL AND `next_attempt_at` <= UTC_TIMESTAMP (?) LIMIT ?",
+          "count": 25,
+          "totalPs": 6951454000,
+          "lockPs": 44000000,
+          "rowsExamined": 0,
+          "rowsSent": 0,
+          "noIndex": 25,
+          "noGoodIndex": 0,
+          "errors": 0,
+          "totalElapsedMs": 6.951454,
+          "meanElapsedMs": 0.27805816,
+          "meanRowsExamined": 0.0
+        },
+        {
+          "family": "background-or-observer",
+          "digest": "59cbe901e298f69893485f02b6b54c017f9d59d62d1125e3fd3f16006324410d",
+          "normalized": "SELECT `event_id` AS `eventId` , `rebuild_id` AS `rebuildId` , `attempts` FROM `public_search_dead_recovery` WHERE `published_at` IS NULL AND `failed_at` IS NULL AND `next_attempt_at` <= UTC_TIMESTAMP (?) LIMIT ?",
+          "count": 25,
+          "totalPs": 6076615000,
+          "lockPs": 71000000,
+          "rowsExamined": 0,
+          "rowsSent": 0,
+          "noIndex": 25,
+          "noGoodIndex": 0,
+          "errors": 0,
+          "totalElapsedMs": 6.076615,
+          "meanElapsedMs": 0.2430646,
+          "meanRowsExamined": 0.0
+        },
+        {
+          "family": "background-or-observer",
+          "digest": "a7b4ca0b1bd44dd12bb67f1cbacf2eecb5eabfc5f66321587440e8d49574c57c",
+          "normalized": "SELECT `version` , `readable_epoch` AS `readableEpoch` , `index_name` AS `indexName` , `index_uuid` AS `indexUuid` , `active_job` AS `activeJob` FROM `public_search_control` WHERE `id` = ? FOR UPDATE",
+          "count": 25,
+          "totalPs": 5683420000,
+          "lockPs": 32000000,
+          "rowsExamined": 25,
+          "rowsSent": 25,
+          "noIndex": 0,
+          "noGoodIndex": 0,
+          "errors": 0,
+          "totalElapsedMs": 5.68342,
+          "meanElapsedMs": 0.2273368,
+          "meanRowsExamined": 1.0
+        },
+        {
+          "family": "background-or-observer",
+          "digest": "083d61af86560f87ce1cea5f804a5c5240721a9b867b75d508e64710bf13b918",
+          "normalized": "SELECT `revision` FROM `cache_epoch` WHERE `namespace` = ? FOR UPDATE",
+          "count": 25,
+          "totalPs": 5471351000,
+          "lockPs": 41000000,
+          "rowsExamined": 25,
+          "rowsSent": 25,
+          "noIndex": 0,
+          "noGoodIndex": 0,
+          "errors": 0,
+          "totalElapsedMs": 5.471351,
+          "meanElapsedMs": 0.21885404,
+          "meanRowsExamined": 1.0
+        },
+        {
+          "family": "background-or-observer",
+          "digest": "56ec0ef9e38196102e02c14112d07d78b5db040065ea3d646b4a975738297768",
+          "normalized": "SELECT `version` , `readable_epoch` AS `readableEpoch` , `index_name` AS `indexName` , `index_uuid` AS `indexUuid` , `active_job` AS `activeJob` FROM `public_search_control` WHERE `id` = ?",
+          "count": 12,
+          "totalPs": 3103241000,
+          "lockPs": 25000000,
+          "rowsExamined": 12,
+          "rowsSent": 12,
+          "noIndex": 0,
+          "noGoodIndex": 0,
+          "errors": 0,
+          "totalElapsedMs": 3.103241,
+          "meanElapsedMs": 0.25860341666666664,
+          "meanRowsExamined": 1.0
+        },
+        {
+          "family": "transaction-control",
+          "digest": "184b254cf8a04dc02dde13544f6b8fc2abe37037886cd02a153350b3909cf70e",
+          "normalized": "SET SESSION TRANSACTION ISOLATION LEVEL READ COMMITTED",
+          "count": 25,
+          "totalPs": 2752390000,
+          "lockPs": 0,
+          "rowsExamined": 0,
+          "rowsSent": 0,
+          "noIndex": 0,
+          "noGoodIndex": 0,
+          "errors": 0,
+          "totalElapsedMs": 2.75239,
+          "meanElapsedMs": 0.1100956,
+          "meanRowsExamined": 0.0
+        },
+        {
+          "family": "background-or-observer",
+          "digest": "fa9fd87a0bab4c0b1ae65bc7b4aa25017f05923b5e2c2a5292bc93eeb6e4db2b",
+          "normalized": "SELECT ( SELECT COUNT ( * ) FROM `outbox_event` WHERE `published_at` IS NULL ) `outboxPending` , ( SELECT COUNT ( * ) FROM `outbox_event` WHERE `published_at` IS NULL AND `failed_at` IS NOT NULL ) `outboxFailed` , ( SELECT COUNT ( * ) FROM `cache_invalidation_outbox` WHERE `delivered_at` IS NULL ) `invalidationPending` , ( SELECT COUNT ( * ) FROM `cache_invalidation_outbox` WHERE `delivered_at` IS NULL AND `attempts` > ? ) `invalidationFailed` , ( SELECT COUNT ( * ) FROM `public_search_outbox` WHERE `published_at` IS NULL ) `searchPending` , ( SELECT COUNT ( * ) FROM `public_search_delivery` WHERE STATUS = ? ) `searchDead` , CASE WHEN `e` . `revision` > `c` . `readable_epoch` THEN `e` . `revision` - `c` . `readable_epoch` ELSE ? END `epochGap` FROM `cache_epoch` `e` JOIN `public_search_control` `c` ON `c` . `id` = ? WHERE `e` . `namespace` = ?",
+          "count": 2,
+          "totalPs": 1951716000,
+          "lockPs": 7000000,
+          "rowsExamined": 2,
+          "rowsSent": 2,
+          "noIndex": 0,
+          "noGoodIndex": 0,
+          "errors": 0,
+          "totalElapsedMs": 1.951716,
+          "meanElapsedMs": 0.975858,
+          "meanRowsExamined": 1.0
+        },
+        {
+          "family": "transaction-control",
+          "digest": "a2ec27bb65e6253a3fcebb742606cd68e95fa42fe95a2a3ddb7914176b2d4ddd",
+          "normalized": "SET SESSION TRANSACTION ISOLATION LEVEL REPEATABLE READ",
+          "count": 25,
+          "totalPs": 1879650000,
+          "lockPs": 0,
+          "rowsExamined": 0,
+          "rowsSent": 0,
+          "noIndex": 0,
+          "noGoodIndex": 0,
+          "errors": 0,
+          "totalElapsedMs": 1.87965,
+          "meanElapsedMs": 0.075186,
+          "meanRowsExamined": 0.0
+        },
+        {
+          "family": "background-or-observer",
+          "digest": "e8614c907862addd26571be2c0725dc287e7042ab4b68f586512252e87ac4ca6",
+          "normalized": "SELECT `kind` , COALESCE ( MAX ( CASE WHEN `state` IN (...) THEN `GREATEST` ( ? , TIMESTAMPDIFF ( MICROSECOND , `created_at` , UTC_TIMESTAMP (?) ) / ? ) END ) , ? ) `oldest` , COALESCE ( SUM ( CASE WHEN `state` = ? THEN `GREATEST` ( ? , TIMESTAMPDIFF ( MICROSECOND , `started_at` , `finished_at` ) / ? ) END ) , ? ) `seconds` , SUM ( `state` = ? ) `completed` , COALESCE ( SUM ( CASE WHEN `attempt_count` > ? THEN `attempt_count` - ? ELSE ? END ) , ? ) `retries` FROM ( SELECT ? `kind` , `task_status` `state` , `created_at` , `started_at` , `finished_at` , `attempt_count` FROM `judge_task` UNION ALL SELECT `execution_kind` , `processing_status` , `created_at` , `started_at` , `finished_at` , `attempt_count` FROM `content_validation_job` UNION ALL SELECT ? , `processing_status` , `created_at` , `started_at` , `finished_at` , `attempt_count` FROM `self_test_job` ) `t` GROUP BY `kind`",
+          "count": 2,
+          "totalPs": 1600756000,
+          "lockPs": 4000000,
+          "rowsExamined": 0,
+          "rowsSent": 0,
+          "noIndex": 2,
+          "noGoodIndex": 0,
+          "errors": 0,
+          "totalElapsedMs": 1.600756,
+          "meanElapsedMs": 0.800378,
+          "meanRowsExamined": 0.0
+        },
+        {
+          "family": "background-or-observer",
+          "digest": "c61a751920da4f01603993db860fae53ee794199e2cdd6cbc3efbcc2a014f34b",
+          "normalized": "SELECT `jt` . `id` AS `taskId` , `jt` . `submission_id` AS `submissionId` , `jt` . `task_type` AS `taskType` , `jt` . `contract_version` AS `contractVersion` FROM `judge_task` `jt` JOIN `submission` `s` ON `s` . `id` = `jt` . `submission_id` WHERE ( `jt` . `task_status` = `s` . `processing_status` OR ( `jt` . `task_status` = ? AND `s` . `processing_status` = ? ) ) AND ( ( `jt` . `task_status` = ? AND `jt` . `lease_expires_at` <= NOW (?) ) OR ( `jt` . `task_status` = ? AND `jt` . `next_attempt_at` IS NOT NULL AND `jt` . `next_attempt_at` <= NOW (?) ) OR ( `jt` . `task_status` IN (...) AND `jt` . `next_attempt_at` <= NOW (?) ) ) ORDER BY CASE `jt` . `task_status` WHEN ? THEN `jt` . `lease_expires_at` ELSE `jt` . `next_attempt_at` END , `jt` . `id` LIMIT ?",
+          "count": 5,
+          "totalPs": 1351090000,
+          "lockPs": 6000000,
+          "rowsExamined": 0,
+          "rowsSent": 0,
+          "noIndex": 0,
+          "noGoodIndex": 0,
+          "errors": 0,
+          "totalElapsedMs": 1.35109,
+          "meanElapsedMs": 0.270218,
+          "meanRowsExamined": 0.0
+        },
+        {
+          "family": "background-or-observer",
+          "digest": "34d38bdda6c8352ffde8bdd7cad64df9ab18e112de152425d9622486053b4089",
+          "normalized": "SELECT `kind` , `state` , COUNT ( * ) VALUE FROM ( SELECT ? `kind` , `task_status` `state` , `created_at` , `started_at` , `finished_at` , `attempt_count` FROM `judge_task` UNION ALL SELECT `execution_kind` , `processing_status` , `created_at` , `started_at` , `finished_at` , `attempt_count` FROM `content_validation_job` UNION ALL SELECT ? , `processing_status` , `created_at` , `started_at` , `finished_at` , `attempt_count` FROM `self_test_job` ) `t` GROUP BY `kind` , `state`",
+          "count": 2,
+          "totalPs": 1095414000,
+          "lockPs": 4000000,
+          "rowsExamined": 0,
+          "rowsSent": 0,
+          "noIndex": 2,
+          "noGoodIndex": 0,
+          "errors": 0,
+          "totalElapsedMs": 1.095414,
+          "meanElapsedMs": 0.547707,
+          "meanRowsExamined": 0.0
+        },
+        {
+          "family": "background-or-observer",
+          "digest": "da85dbcc5dde6bfab6ee293c3441cc40fca0f2989553fc0e759f8194c508f537",
+          "normalized": "SELECT `id` FROM `content_validation_job` WHERE `processing_status` = ? AND `lease_expires_at` <= NOW (?) ORDER BY `lease_expires_at` , `id` LIMIT ?",
+          "count": 5,
+          "totalPs": 1093470000,
+          "lockPs": 9000000,
+          "rowsExamined": 0,
+          "rowsSent": 0,
+          "noIndex": 0,
+          "noGoodIndex": 0,
+          "errors": 0,
+          "totalElapsedMs": 1.09347,
+          "meanElapsedMs": 0.218694,
+          "meanRowsExamined": 0.0
+        },
+        {
+          "family": "background-or-observer",
+          "digest": "1f525327687ba84ef62f75c1934a6fc2e3f2c1f4ef092a615bb5c266d62e71a6",
+          "normalized": "SELECT `id` FROM `self_test_job` WHERE `processing_status` = ? AND `lease_expires_at` <= NOW (?) ORDER BY `lease_expires_at` , `id` LIMIT ?",
+          "count": 5,
+          "totalPs": 871309000,
+          "lockPs": 8000000,
+          "rowsExamined": 0,
+          "rowsSent": 0,
+          "noIndex": 0,
+          "noGoodIndex": 0,
+          "errors": 0,
+          "totalElapsedMs": 0.871309,
+          "meanElapsedMs": 0.1742618,
+          "meanRowsExamined": 0.0
+        },
+        {
+          "family": "background-or-observer",
+          "digest": "160c356c1828697d50f4f1a0a9b3c16f53c4ae1281a127961304d7e02cbe55e2",
+          "normalized": "SELECT ? `kind` , `verdict` `state` , COUNT ( * ) VALUE FROM `submission` WHERE `verdict` IS NOT NULL GROUP BY `verdict`",
+          "count": 2,
+          "totalPs": 536309000,
+          "lockPs": 1000000,
+          "rowsExamined": 0,
+          "rowsSent": 0,
+          "noIndex": 0,
+          "noGoodIndex": 0,
+          "errors": 0,
+          "totalElapsedMs": 0.536309,
+          "meanElapsedMs": 0.2681545,
+          "meanRowsExamined": 0.0
+        },
+        {
+          "family": "background-or-observer",
+          "digest": "44e35cee979ba420eb49a8471f852bbe15b403c89742704817dfbaace0d99dbb",
+          "normalized": "SELECT @@`version_comment` LIMIT ?",
+          "count": 1,
+          "totalPs": 372925000,
+          "lockPs": 0,
+          "rowsExamined": 1,
+          "rowsSent": 1,
+          "noIndex": 0,
+          "noGoodIndex": 0,
+          "errors": 0,
+          "totalElapsedMs": 0.372925,
+          "meanElapsedMs": 0.372925,
+          "meanRowsExamined": 1.0
+        },
+        {
+          "family": "background-or-observer",
+          "digest": "2bb67edc1005d0edc95c2b796337d686f57da86fe14e78a287e4cb31f244569b",
+          "normalized": "SELECT COUNT ( * ) FROM `judge_task` WHERE ? = ?",
+          "count": 2,
+          "totalPs": 334177000,
+          "lockPs": 5000000,
+          "rowsExamined": 0,
+          "rowsSent": 2,
+          "noIndex": 0,
+          "noGoodIndex": 0,
+          "errors": 0,
+          "totalElapsedMs": 0.334177,
+          "meanElapsedMs": 0.1670885,
+          "meanRowsExamined": 0.0
+        },
+        {
+          "family": "background-or-observer",
+          "digest": "7a2292f450412c3d0e99cb548ab97ad74268d8e08f398cce6a6b5d746ccd8131",
+          "normalized": "SELECT `j` . `id` FROM `self_test_job` `j` WHERE `j` . `processing_status` IN (...) AND `j` . `expires_at` <= NOW (?) AND ( EXISTS ( SELECT ? FROM `self_test_payload` `p` WHERE `p` . `snapshot_id` = `j` . `snapshot_id` ) OR EXISTS ( SELECT ? FROM `self_test_output` `o` WHERE `o` . `job_id` = `j` . `id` ) ) ORDER BY `j` . `expires_at` , `j` . `id` LIMIT ?",
+          "count": 1,
+          "totalPs": 305150000,
+          "lockPs": 2000000,
+          "rowsExamined": 0,
+          "rowsSent": 0,
+          "noIndex": 0,
+          "noGoodIndex": 0,
+          "errors": 0,
+          "totalElapsedMs": 0.30515,
+          "meanElapsedMs": 0.30515,
+          "meanRowsExamined": 0.0
+        },
+        {
+          "family": "background-or-observer",
+          "digest": "588da873d7cc80d98ee8bb306e3d9a53545f04e40b699bab02825d56b0994a6e",
+          "normalized": "SELECT ? `kind` , STATUS `state` , COUNT ( * ) VALUE FROM `public_search_rebuild` GROUP BY STATUS",
+          "count": 2,
+          "totalPs": 302082000,
+          "lockPs": 2000000,
+          "rowsExamined": 0,
+          "rowsSent": 0,
+          "noIndex": 2,
+          "noGoodIndex": 0,
+          "errors": 0,
+          "totalElapsedMs": 0.302082,
+          "meanElapsedMs": 0.151041,
+          "meanRowsExamined": 0.0
+        }
+      ],
+      "sqlFamilies": {
+        "background-or-observer": {
+          "count": 253,
+          "totalPs": 85185457000,
+          "rowsExamined": 65
+        },
+        "transaction-control": {
+          "count": 170664,
+          "totalPs": 11409763179000,
+          "rowsExamined": 0
+        },
+        "detail-epoch": {
+          "count": 34098,
+          "totalPs": 4708899959000,
+          "rowsExamined": 34111
+        },
+        "connection-state-probe": {
+          "count": 34124,
+          "totalPs": 2849499334000,
+          "rowsExamined": 34138
+        },
+        "detail-load-warmup": {
+          "count": 300,
+          "totalPs": 98905307000,
+          "rowsExamined": 300
+        }
+      },
+      "cpuDeltaIncludingWarmupAndProbeControl": {
+        "api": {
+          "usage_usec": 41020203,
+          "user_usec": 22199559,
+          "system_usec": 18820644,
+          "nr_periods": 227,
+          "nr_throttled": 203,
+          "throttled_usec": 38955160
+        },
+        "mysql": {
+          "usage_usec": 26456819,
+          "user_usec": 15614045,
+          "system_usec": 10842775,
+          "nr_periods": 222,
+          "nr_throttled": 0,
+          "throttled_usec": 0
+        }
+      },
+      "jfr": {
+        "measurementJavaSamples": 591,
+        "requestJavaSamples": 581,
+        "topJavaLeaf": [
+          {
+            "name": "java.util.HashMap.getNode",
+            "samples": 40
+          },
+          {
+            "name": "org.springframework.web.util.pattern.SeparatorPathElement.matches",
+            "samples": 26
+          },
+          {
+            "name": "java.lang.String.equalsIgnoreCase",
+            "samples": 23
+          },
+          {
+            "name": "java.util.concurrent.ConcurrentHashMap.get",
+            "samples": 21
+          },
+          {
+            "name": "tools.jackson.core.json.UTF8JsonGenerator._writeStringSegments",
+            "samples": 18
+          },
+          {
+            "name": "jakarta.servlet.http.HttpServletRequestWrapper.getMethod",
+            "samples": 18
+          },
+          {
+            "name": "java.util.HashMap.putVal",
+            "samples": 11
+          },
+          {
+            "name": "java.lang.ThreadLocal$ThreadLocalMap.getEntry",
+            "samples": 11
+          },
+          {
+            "name": "java.nio.charset.Charset.lookup",
+            "samples": 9
+          },
+          {
+            "name": "java.nio.charset.CharsetEncoder.encode",
+            "samples": 9
+          },
+          {
+            "name": "tools.jackson.core.json.ReaderBasedJsonParser._decodeEscaped",
+            "samples": 9
+          },
+          {
+            "name": "java.lang.invoke.Invokers$Holder.invokeExact_MT",
+            "samples": 8
+          }
+        ],
+        "topRequestJavaLeaf": [
+          {
+            "name": "java.util.HashMap.getNode",
+            "samples": 39
+          },
+          {
+            "name": "org.springframework.web.util.pattern.SeparatorPathElement.matches",
+            "samples": 26
+          },
+          {
+            "name": "java.lang.String.equalsIgnoreCase",
+            "samples": 23
+          },
+          {
+            "name": "java.util.concurrent.ConcurrentHashMap.get",
+            "samples": 21
+          },
+          {
+            "name": "tools.jackson.core.json.UTF8JsonGenerator._writeStringSegments",
+            "samples": 18
+          },
+          {
+            "name": "jakarta.servlet.http.HttpServletRequestWrapper.getMethod",
+            "samples": 18
+          },
+          {
+            "name": "java.util.HashMap.putVal",
+            "samples": 11
+          },
+          {
+            "name": "java.lang.ThreadLocal$ThreadLocalMap.getEntry",
+            "samples": 11
+          },
+          {
+            "name": "java.nio.charset.Charset.lookup",
+            "samples": 9
+          },
+          {
+            "name": "java.nio.charset.CharsetEncoder.encode",
+            "samples": 9
+          },
+          {
+            "name": "tools.jackson.core.json.ReaderBasedJsonParser._decodeEscaped",
+            "samples": 9
+          },
+          {
+            "name": "java.lang.invoke.Invokers$Holder.invokeExact_MT",
+            "samples": 8
+          }
+        ],
+        "measurementNativeSamples": 1641,
+        "requestNativeSamples": 554,
+        "topNativeLeafNotCpuTime": [
+          {
+            "name": "sun.nio.ch.EPoll.wait",
+            "samples": 704
+          },
+          {
+            "name": "sun.nio.ch.Net.poll",
+            "samples": 616
+          },
+          {
+            "name": "sun.nio.ch.Net.accept",
+            "samples": 163
+          },
+          {
+            "name": "sun.nio.ch.SocketDispatcher.write0",
+            "samples": 112
+          },
+          {
+            "name": "sun.nio.ch.SocketDispatcher.read0",
+            "samples": 17
+          },
+          {
+            "name": "sun.nio.ch.EventFD.set0",
+            "samples": 10
+          },
+          {
+            "name": "java.io.FileOutputStream.writeBytes",
+            "samples": 8
+          },
+          {
+            "name": "sun.nio.ch.Net.shutdown",
+            "samples": 4
+          },
+          {
+            "name": "sun.nio.ch.UnixDispatcher.close0",
+            "samples": 3
+          },
+          {
+            "name": "sun.nio.ch.Net.setIntOption0",
+            "samples": 2
+          },
+          {
+            "name": "java.lang.ref.Reference.clear0",
+            "samples": 1
+          },
+          {
+            "name": "sun.nio.ch.EPoll.ctl",
+            "samples": 1
+          }
+        ],
+        "topRequestNativeLeafNotCpuTime": [
+          {
+            "name": "sun.nio.ch.Net.poll",
+            "samples": 424
+          },
+          {
+            "name": "sun.nio.ch.SocketDispatcher.write0",
+            "samples": 100
+          },
+          {
+            "name": "sun.nio.ch.SocketDispatcher.read0",
+            "samples": 13
+          },
+          {
+            "name": "java.io.FileOutputStream.writeBytes",
+            "samples": 8
+          },
+          {
+            "name": "sun.nio.ch.Net.shutdown",
+            "samples": 4
+          },
+          {
+            "name": "sun.nio.ch.EventFD.set0",
+            "samples": 4
+          },
+          {
+            "name": "java.lang.ref.Reference.clear0",
+            "samples": 1
+          }
+        ],
+        "requestJavaTextSamples": 581,
+        "topClosestApplicationFrame": [
+          {
+            "name": "com.forgeoj.api.problem.ProblemController$$SpringCGLIB$$0.getProblem",
+            "samples": 77
+          },
+          {
+            "name": "com.forgeoj.api.observability.RequestCorrelationFilter.doFilterInternal",
+            "samples": 40
+          },
+          {
+            "name": "com.forgeoj.api.auth.SameOriginFilter.doFilterInternal",
+            "samples": 33
+          },
+          {
+            "name": "com.forgeoj.api.cache.PublicCache.read",
+            "samples": 30
+          },
+          {
+            "name": "com.forgeoj.api.cache.PublicCache.decode",
+            "samples": 28
+          },
+          {
+            "name": "com.forgeoj.api.auth.AccountAuthenticationFilter.doFilterInternal",
+            "samples": 7
+          },
+          {
+            "name": "com.forgeoj.api.cache.RedisSupport.lambda$get$0",
+            "samples": 7
+          },
+          {
+            "name": "com.forgeoj.api.cache.RedisSupport.digest",
+            "samples": 4
+          },
+          {
+            "name": "com.forgeoj.api.content.ContentRequestSizeFilter.shouldNotFilter",
+            "samples": 3
+          },
+          {
+            "name": "com.forgeoj.api.auth.AccountCookies.read",
+            "samples": 1
+          }
+        ],
+        "missingApplicationFrameIn32": 351,
+        "inclusiveFamiliesMayOverlap": {
+          "jdbc-mybatis": 129,
+          "json": 78,
+          "logging": 35,
+          "digest": 7,
+          "redis-netty": 5
+        },
+        "gcPauseCount": 208,
+        "gcPauseOverlapMs": 517.656,
+        "maxGcPauseOverlapMs": 107.06599999999999
+      },
+      "eventSafety": {
+        "allowedPositiveTypes": [
+          "jdk.CPULoad",
+          "jdk.Checkpoint",
+          "jdk.ExecutionSample",
+          "jdk.GCPhasePause",
+          "jdk.GarbageCollection",
+          "jdk.Metadata",
+          "jdk.NativeMethodSample",
+          "jdk.ThreadCPULoad"
+        ],
+        "jsonStackDepth": 8,
+        "textStackDepth": 32,
+        "binaryDigest": "8feb6a296e5442688ade84f5b30246850939446fed9464666f46d3a2f07999a3",
+        "forbiddenEventCounts": {
+          "jdk.InitialEnvironmentVariable": 0,
+          "jdk.InitialSystemProperty": 0,
+          "jdk.JavaErrorThrow": 0,
+          "jdk.JavaExceptionThrow": 0,
+          "jdk.OldObjectSample": 0,
+          "jdk.SystemProcess": 0,
+          "jdk.ThreadDump": 0
+        }
+      }
+    }
+  ],
+  "requests": 94862,
+  "businessFactsUnchanged": true,
+  "digestCountLimitation": "Digest deltas differ from request/Mapper counts in load phases; cause unconfirmed. Calibration is retained, no exact per-request SQL accounting claim.",
+  "counterCalibration": {
+    "status": "PASS",
+    "scope": "read-only digest counter calibration, excluded from HTTP load measurements",
+    "metadata": {
+      "digestLost": "0",
+      "digestSlots": "10000",
+      "actualDigests": 564
+    },
+    "serial": {
+      "returned": 1000,
+      "digestDelta": 1000
+    },
+    "parallel4": {
+      "returned": 2000,
+      "digestDelta": 2000
+    }
+  }
+}

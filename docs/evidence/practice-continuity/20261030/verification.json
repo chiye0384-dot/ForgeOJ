@@ -1,0 +1,106 @@
+{
+  "publicRelease": false,
+  "committed": false,
+  "api": {
+    "suites": 4,
+    "tests": 58,
+    "build": "D:\\Java项目\\ForgeOJ\\target\\forgeoj-linux-20261030-170406-9b32ab4c",
+    "fullSuiteRerun": false
+  },
+  "worker": {
+    "testsRerun": false,
+    "unchanged": true
+  },
+  "status": "VERIFIED",
+  "baselineCommit": "058f36c771f15735a1e987a21c55074b80f511a9",
+  "protected": [
+    {
+      "path": "docs/M2-NEXT-CHAT-HANDOFF.md",
+      "method": "Get-FileHash only",
+      "sha256": "e08acd3d26a8cd27aca394bdac91828e13b9455a86f62133c5bafc038b18c054"
+    },
+    {
+      "path": ".smtp.qq.local",
+      "method": "Get-FileHash only",
+      "sha256": "6df348a6404786791eb57c0dce9c9fb8968f7f0737de304f17d52c3900a03907"
+    }
+  ],
+  "frontend": {
+    "suites": 30,
+    "tests": 159,
+    "allGates": true,
+    "platform": "Windows",
+    "log": "target/practice-frontend-session-accepted.log"
+  },
+  "inputCount": 342,
+  "scope": "local practice continuity only",
+  "runtime": [
+    {
+      "service": "api",
+      "sha256": "6f79f700c2d4c17843172c1f4aeb66a25ad7f44a57016ba7b75b706e56b1be52"
+    },
+    {
+      "service": "worker",
+      "sha256": "2be34c53d39560ddd955e761fcad7fb06a6cd19d8ea2720b36b3d8990d7a5761"
+    }
+  ],
+  "remaining": [
+    "production deployment and full M5 gates unchanged",
+    "rebuild deployment package before deploying new source",
+    "teaching quality not yet evaluated by human learners",
+    "pending request key retained only in current page with leave warning"
+  ],
+  "servedAssets": 37,
+  "checkedAt": "2026-10-30T17:29:39.3039414+08:00",
+  "persisted": {
+    "retryTasks": 1,
+    "retryEvents": 1,
+    "publicProblems": 21,
+    "retrySubmissions": 1,
+    "officialSolutions": 21
+  },
+  "project": "forgeoj-e2e-20261029-201735-604f52a7",
+  "browserVerified": true,
+  "evidence": [
+    {
+      "sha256": "b397f0c1fc36a679a4eef7354873c144dd113e1f099e6aad3ad96b7e49c3c116",
+      "path": "api-update.json"
+    },
+    {
+      "sha256": "42df7a93b9058108c370905efefb9a000c0320f467414179568499648abca442",
+      "path": "browser-verification.json"
+    },
+    {
+      "sha256": "79028aa928d420e1747f0dc5253df8738f12d3d1e1d03e0e9c3d6bda0a5bc9f3",
+      "path": "history-desktop.jpg"
+    },
+    {
+      "sha256": "d369252223ee5cfd3606d1c50eb8d674e2d14c88c0325539b0db2857c67c0125",
+      "path": "library-progress.jpg"
+    },
+    {
+      "sha256": "348c081268c1e937aec54b05ac02eef80f1fe1690f9aaf30740084add38de092",
+      "path": "practice-continuity-http.json"
+    },
+    {
+      "sha256": "4ea1bcb9ddaae21f025ae07a16d61aa8aade6c01ac0507c5db644671b1989be4",
+      "path": "served-assets.json"
+    },
+    {
+      "sha256": "bf3556a6263262f72db31b32529c01c36681e76233bf47927358ca08d4b16812",
+      "path": "solution-narrow.jpg"
+    },
+    {
+      "sha256": "a315b5f7189ee0ef323ad8c19f8534d4c57d2e8c14b0e64abf5711410229a1e6",
+      "path": "source-inputs.json"
+    },
+    {
+      "sha256": "4f713a8d505688e134fec0a007bb906347e9211d75fde2a71797d1d3250706a1",
+      "path": "teaching-revision-maintenance.json"
+    },
+    {
+      "sha256": "78dbe5cec669c6b3cec5f1a2044940c119e3254ccd62cc1867c9a7215a2fcb4e",
+      "path": "teaching-revision-validation.json"
+    }
+  ]
+}

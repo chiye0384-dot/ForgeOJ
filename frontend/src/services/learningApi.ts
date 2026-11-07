@@ -37,6 +37,28 @@ export interface HistoryItem {
   judgeVersion: number
   problem: { slug: string; title: string } | null
 }
+export interface SubmissionSource {
+  submissionId: string
+  language: string
+  sourceCode: string
+  judgeVersion: number
+  createdAt: string
+  problemSlug: string | null
+}
+export function getSubmissionSource(id: string): Promise<SubmissionSource> {
+  return requestJson<SubmissionSource>(
+    `/api/v1/me/submissions/${encodeURIComponent(id)}/source`,
+  ).then((value) => {
+    if (
+      value.submissionId !== id ||
+      value.language !== 'JAVA_21' ||
+      typeof value.sourceCode !== 'string' ||
+      !Number.isSafeInteger(value.judgeVersion)
+    )
+      throw new Error('历史代码响应无效。')
+    return value
+  })
+}
 export interface CodeDraft {
   language: string
   sourceCode: string | null

@@ -10,6 +10,7 @@ import {
 } from '@/services/solutionApi'
 
 const props = defineProps<{
+  active?: boolean
   slug: string
   judgeVersion: number
   userId: number
@@ -68,6 +69,7 @@ watch(
     confirming.value = false
     busy.value = false
     refreshPending = false
+    if (props.active) void load()
   },
   { flush: 'sync' },
 )
@@ -78,6 +80,13 @@ watch(
     if (busy.value) refreshPending = true
     else void load()
   },
+)
+watch(
+  () => props.active,
+  (active) => {
+    if (active && !opened.value) void load()
+  },
+  { immediate: true },
 )
 onBeforeUnmount(() => {
   disposed = true
@@ -117,9 +126,7 @@ onBeforeUnmount(() => {
 
 <style scoped>
 .official-solution {
-  margin-top: 1.5rem;
-  border-top: 1px solid #d8e0eb;
-  padding-top: 1rem;
+  margin: 0;
 }
 button {
   margin: 0.25rem 0.5rem 0.25rem 0;
@@ -128,7 +135,8 @@ button {
 }
 pre {
   overflow: auto;
-  white-space: pre;
+  white-space: pre-wrap;
+  overflow-wrap: anywhere;
   background: #f1f5f9;
   padding: 1rem;
 }

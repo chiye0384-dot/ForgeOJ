@@ -361,6 +361,48 @@ class AccountHttpIntegrationTests {
         }
     }
 
+    @Test
+    void completingRegistrationActivatesAndAuthenticatesWithoutPasswordReentry() throws Exception {
+        Browser guest = anonymous();
+        write(guest, "register", "{\"username\":\"HttpAutoLogin\",\"email\":\"httpautologin@example.test\",\"password\":\""
+                + PASSWORD + "\"}").andExpect(status().isAccepted());
+        loginRequest(guest, "HttpAutoLogin", PASSWORD).andExpect(status().isUnauthorized());
+        String activation = token("httpautologin@example.test", "ACTIVATE");
+        MvcResult result = write(guest, "registration/complete", tokenBody(activation))
+                .andExpect(status().isOk())
+                .andExpect(jsonPath("$.authenticated").value(true))
+                .andExpect(jsonPath("$.user.username").value("HttpAutoLogin")).andReturn();
+        assertSessionWhitelist(result, true);
+        Browser signedIn = browser(result);
+        assertThat(signedIn.cookies()).extracting(Cookie::getName)
+                .contains(AccountCookies.ACCESS, AccountCookies.REFRESH, AccountCookies.CSRF);
+        assertThat(signedIn.csrfToken()).isNotEqualTo(guest.csrfToken());
+        assertAuthenticated(signedIn);
+        write(anonymous(), "registration/complete", tokenBody(activation))
+                .andExpect(status().isBadRequest());
+        assertAuthenticated(signedIn);
+    }
+
+    @Test
+    void sessionInsertFailureRollsBackActivationAndAllowsTheSameLinkToBeRetried() throws Exception {
+        accounts.register("HttpAtomicSignup", "httpatomic@example.test", PASSWORD, null);
+        String activation = token("httpatomic@example.test", "ACTIVATE");
+        JdbcTemplate admin = new JdbcTemplate(new DriverManagerDataSource(
+                MYSQL.getJdbcUrl(), "forgeoj_migrator", "m0-migrator-test-secret"));
+        admin.execute("REVOKE INSERT ON forgeoj.login_session FROM 'forgeoj_api'@'%'");
+        try {
+            org.assertj.core.api.Assertions.assertThatThrownBy(() -> accounts.completeRegistration(activation))
+                    .isInstanceOf(org.springframework.dao.DataAccessException.class);
+            assertThat(admin.queryForObject("SELECT status FROM user_account WHERE username='HttpAtomicSignup'", String.class))
+                    .isEqualTo("PENDING_VERIFICATION");
+        } finally {
+            admin.execute("GRANT INSERT ON forgeoj.login_session TO 'forgeoj_api'@'%'");
+        }
+        AccountService.Login signedIn = accounts.completeRegistration(activation);
+        assertThat(signedIn.username()).isEqualTo("HttpAtomicSignup");
+        assertThat(accounts.login("HttpAtomicSignup", PASSWORD).userId()).isEqualTo(signedIn.userId());
+    }
+
     private Browser active(String username) throws Exception {
         String email = username.toLowerCase(Locale.ROOT) + "@example.test";
         Browser anonymous = anonymous();

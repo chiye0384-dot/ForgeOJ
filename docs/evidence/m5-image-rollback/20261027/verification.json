@@ -1,0 +1,328 @@
+{
+  "status": "VERIFIED",
+  "scope": "same-filesystem ENTRYPOINT-only failed configuration rollback",
+  "fullM5": "IN_PROGRESS",
+  "businessVersionsDiffer": false,
+  "release": false,
+  "resumeReady": false,
+  "assembledAt": "2026-10-27T20:16:45.352966+08:00",
+  "environment": "Windows / Python 3.13 / Docker Desktop Linux amd64; not a fresh Linux host",
+  "gitHead": "058f36c771f15735a1e987a21c55074b80f511a9",
+  "workingTree": "uncommitted deployment engineering work",
+  "sourceRun": "target/forgeoj-deployment-20261027-114214-aa1ad0f9",
+  "acceptedAttempt": "target/forgeoj-deployment-20261027-114214-aa1ad0f9/rollback-attempt-20261027-200636",
+  "accepted": {
+    "status": "PASS",
+    "scope": "same-filesystem ENTRYPOINT fault and rollback only; not cross-business-version/schema rollback",
+    "project": "forgeoj-m5check-3c7199fdf1f7",
+    "goodApiImage": "sha256:057b6d916b7fc6be1026c0943c146f431d72fd173ccb85d49b363eeb21d80c11",
+    "badApiImage": "sha256:e2d20bfc382ce7f581e063f95569900026609cf83f2c4e51856debaefcf72697",
+    "distinctImageIds": true,
+    "identicalFilesystemLayers": true,
+    "sourceEntrypoint": [
+      "java",
+      "-Xmx384m",
+      "-cp",
+      "/app/classes:/app/lib/*",
+      "com.forgeoj.api.ForgeojApiApplication"
+    ],
+    "faultEntrypoint": [
+      "java",
+      "-XX:ForgeOJDeliberateStartupFailure=1"
+    ],
+    "startupFailureStoppedAllApplications": true,
+    "rollback": {
+      "status": "READY_FOR_BUSINESS_CHECK",
+      "planSha256": "ca129a36376406a020b4d0458f8f970a40e2318defa618d8bb4ad7cfe7834aa5",
+      "project": "forgeoj-m5check-3c7199fdf1f7",
+      "images": {
+        "api": "sha256:057b6d916b7fc6be1026c0943c146f431d72fd173ccb85d49b363eeb21d80c11",
+        "worker": "sha256:1198200bbae39dddbd8f2589b925b60598eed919e5e7bb088309913e72274b98",
+        "web": "sha256:36a5b852b3d2477bf86a32616879529dc8161ff8ceeefd6c2cf7ca218e778246"
+      },
+      "dataAndGrantsMatched": true,
+      "infrastructurePreserved": true,
+      "scope": "same filesystem ENTRYPOINT rollback; business smoke and operator acceptance remain required"
+    },
+    "maintenanceSnapshotMatched": true,
+    "schemaAndGrantsUnchanged": true,
+    "sqlPermissionDenials": 2,
+    "httpsProofs": [
+      {
+        "status": "PASS",
+        "submissionId": "fce585f9-b578-4320-8099-74496deab22a",
+        "processingStatus": "FINISHED",
+        "verdict": "AC",
+        "sourceSha256": "84d2e167687da10fb0ecdc3f4b9d0c72fce14d25c8010544e9e08ccfa7a84e99",
+        "history": null,
+        "scope": "owned fixture; actual HTTPS and Worker; no manufactured verdict"
+      },
+      {
+        "status": "PASS",
+        "submissionId": "3f5b22b1-49ca-4002-8664-bcb2fb56150c",
+        "processingStatus": "QUEUED",
+        "verdict": null,
+        "sourceSha256": "54acef154e2ebc3b7178daac54093102030b970e428c2912cd7c15f6605a5dd5",
+        "history": null,
+        "scope": "owned fixture; actual HTTPS and Worker; no manufactured verdict"
+      },
+      {
+        "status": "PASS",
+        "submissionId": "872382d7-ba88-4081-85a9-245b7abf1c5c",
+        "processingStatus": "FINISHED",
+        "verdict": "AC",
+        "sourceSha256": "009ffdeb558142a377cb87e3dca6b457d045239fb1d6cbaf134bc30f0ae536c7",
+        "history": {
+          "submissionId": "fce585f9-b578-4320-8099-74496deab22a",
+          "verdict": "AC",
+          "readViaHttps": true
+        },
+        "scope": "owned fixture; actual HTTPS and Worker; no manufactured verdict"
+      }
+    ],
+    "queuedSubmissionNaturallyCompleted": true,
+    "negativeCases": [
+      "active writers",
+      "pending real submission",
+      "same image",
+      "mutable tag",
+      "changed filesystem",
+      "wrong plan digest",
+      "held instance lock",
+      "instance config drift",
+      "index-only schema drift",
+      "expired plan",
+      "replayed attempt"
+    ],
+    "databaseRestored": false,
+    "migrationsRunDuringRollback": false,
+    "queuesPurged": false,
+    "businessVersionsDiffer": false,
+    "notVerified": [
+      "cross-business-version compatibility",
+      "schema upgrade/downgrade",
+      "production Linux host",
+      "production cutover"
+    ]
+  },
+  "readOnlyFinalAudit": {
+    "status": "PASS",
+    "allFiveRealSubmissionsPreserved": [
+      {
+        "submissionId": "0c78a347-7d91-47aa-a71f-fd19c346ca41",
+        "processingStatus": "FINISHED",
+        "verdict": "AC",
+        "sourceSha256": "a114cb5f54c6e2bd66a1d4ee4ef37662b9377d88750177e16b43f92286aa58d6"
+      },
+      {
+        "submissionId": "661afd4e-3cfb-4ca7-821d-4fa91cfe4d72",
+        "processingStatus": "FINISHED",
+        "verdict": "AC",
+        "sourceSha256": "58f097c25f0f263c68b48951d56e05fd2b05930a36e3fa2963fefc21fce211b4"
+      },
+      {
+        "submissionId": "fce585f9-b578-4320-8099-74496deab22a",
+        "processingStatus": "FINISHED",
+        "verdict": "AC",
+        "sourceSha256": "84d2e167687da10fb0ecdc3f4b9d0c72fce14d25c8010544e9e08ccfa7a84e99"
+      },
+      {
+        "submissionId": "3f5b22b1-49ca-4002-8664-bcb2fb56150c",
+        "processingStatus": "FINISHED",
+        "verdict": "AC",
+        "sourceSha256": "54acef154e2ebc3b7178daac54093102030b970e428c2912cd7c15f6605a5dd5"
+      },
+      {
+        "submissionId": "872382d7-ba88-4081-85a9-245b7abf1c5c",
+        "processingStatus": "FINISHED",
+        "verdict": "AC",
+        "sourceSha256": "009ffdeb558142a377cb87e3dca6b457d045239fb1d6cbaf134bc30f0ae536c7"
+      }
+    ],
+    "runtime": [
+      {
+        "service": "api",
+        "image": "sha256:057b6d916b7fc6be1026c0943c146f431d72fd173ccb85d49b363eeb21d80c11",
+        "user": "10001:10001",
+        "healthy": true,
+        "readOnlyRoot": true,
+        "dockerSocket": false,
+        "noSecretsInConfigEnv": true
+      },
+      {
+        "service": "worker",
+        "image": "sha256:1198200bbae39dddbd8f2589b925b60598eed919e5e7bb088309913e72274b98",
+        "user": "10002:10002",
+        "healthy": true,
+        "readOnlyRoot": true,
+        "dockerSocket": true,
+        "noSecretsInConfigEnv": true
+      }
+    ],
+    "compiledInputsMatch": 428,
+    "temporarySchemaIndexRemoved": true,
+    "tables": 71
+  },
+  "startupFault": {
+    "image": "sha256:e2d20bfc382ce7f581e063f95569900026609cf83f2c4e51856debaefcf72697",
+    "status": "exited",
+    "exitCode": 1,
+    "reason": [
+      "Unrecognized VM option 'ForgeOJDeliberateStartupFailure=1'",
+      "Unrecognized VM option 'ForgeOJDeliberateStartupFailure=1'"
+    ],
+    "observedAt": "2026-10-27T20:09:39.2025183+08:00"
+  },
+  "maintenanceSchemaAndDataSha256": "4859c58e8052ab4f0df3d71b61559a8fd84efd44a12c283335cfe3f0ecb8f74d",
+  "imageIds": [
+    {
+      "component": "api",
+      "id": "sha256:057b6d916b7fc6be1026c0943c146f431d72fd173ccb85d49b363eeb21d80c11",
+      "tag": "forgeoj-m5check-3c7199fdf1f7-api"
+    },
+    {
+      "component": "worker",
+      "id": "sha256:1198200bbae39dddbd8f2589b925b60598eed919e5e7bb088309913e72274b98",
+      "tag": "forgeoj-m5check-3c7199fdf1f7-worker"
+    },
+    {
+      "component": "web",
+      "id": "sha256:36a5b852b3d2477bf86a32616879529dc8161ff8ceeefd6c2cf7ca218e778246",
+      "tag": "forgeoj-m5check-3c7199fdf1f7-web"
+    }
+  ],
+  "apiInputSha256": "f13c52ca61744d7c4983e2b98c6a68d05b17eb7fce77d637761e1b615dd32c4e",
+  "workerInputSha256": "ff4dd5abf4931a345dd3a94af8c07966aced3a91ebcd4cd6b4c600877b261d1f",
+  "tools": [
+    {
+      "path": "deploy/production/scripts/rollback.py",
+      "sha256": "7c5ebc5c6dbae340d9c7232060033f978eca02eeebaee0c4d233879d3b00f38f"
+    },
+    {
+      "path": "deploy/production/scripts/backup.py",
+      "sha256": "6ef926046c7e96f0f46fbc31762cfff62275b8afea2d2476d4b9fc097f3ef2c5"
+    },
+    {
+      "path": "tools/deployment/Verify-ImageRollback.py",
+      "sha256": "20b021a26f5bc5462236d15c81c12a6e6a263eeccf763b64c2e1be38c4b2caba"
+    },
+    {
+      "path": "tools/deployment/rollback-http.mjs",
+      "sha256": "6de166ec22a044ddb3620713dfcc484474055085cbfbe19cdc9c62adf07c5c73"
+    },
+    {
+      "path": "tools/deployment/Build-RollbackKit.py",
+      "sha256": "516328d2c6be02d5089b85b0858df3abb918eee6c04172090f21b4d0f58d42f8"
+    }
+  ],
+  "failureAndFinalLogHashes": [
+    {
+      "path": "target/m5-image-rollback-20261027.log",
+      "sha256": "eeef445cd907f952c991491293013c64b732f6f1f261124929eb75ceee93f76f"
+    },
+    {
+      "path": "target/m5-image-rollback-retry-20261027.log",
+      "sha256": "4b8c6b1ea102e58861755f55832b602475c1a0f272fca2a937b4e7c6ad489544"
+    },
+    {
+      "path": "target/m5-image-rollback-owned-resume-20261027.log",
+      "sha256": "c3e24fde7164fdb4528287a8e1e1afd64c88eaac1f8c0018ae8a6c99f733e80d"
+    },
+    {
+      "path": "target/m5-rollback-timeout-recovery-20261027.log",
+      "sha256": "e132e04cf7851959433763799bc2333dbdf9120eaca0be1464103c1ef32369b6"
+    },
+    {
+      "path": "target/m5-image-rollback-final-20261027.log",
+      "sha256": "90cd6e57bf36edae423868b1511b569d40b081e635d119e7c6881668eec666c6"
+    }
+  ],
+  "kit": {
+    "status": "PASS",
+    "archive": "D:\\Java项目\\ForgeOJ\\target\\forgeoj-rollback-tools-20261027-201347-7a617b78\\forgeoj-rollback-tools-20261027-201347-7a617b78.zip",
+    "sha256": "4c518731247ce4221f5bcdc9eb01c838726e30d1bad7e89f26f30a3ef4527890",
+    "bytes": 20174,
+    "files": [
+      "LICENSE",
+      "NOTICE",
+      "README.md",
+      "backup.py",
+      "manifest.json",
+      "rollback.py"
+    ],
+    "manifest": {
+      "format": "forgeoj-entrypoint-rollback-kit-v1",
+      "createdAt": "2026-10-27T12:13:47.855016+00:00",
+      "gitHead": "058f36c771f15735a1e987a21c55074b80f511a9",
+      "workingTree": "uncommitted engineering work; not a Release",
+      "scope": "identical filesystem layers; ENTRYPOINT only; no business/schema version rollback",
+      "files": [
+        {
+          "path": "backup.py",
+          "sha256": "6ef926046c7e96f0f46fbc31762cfff62275b8afea2d2476d4b9fc097f3ef2c5",
+          "bytes": 19520
+        },
+        {
+          "path": "LICENSE",
+          "sha256": "cfc7749b96f63bd31c3c42b5c471bf756814053e847c10f3eb003417bc523d30",
+          "bytes": 11358
+        },
+        {
+          "path": "NOTICE",
+          "sha256": "479f56fa2a534d8a4ad734b52e8a50e3a073c2aa7b3c0ce34028ef1b71fe156c",
+          "bytes": 252
+        },
+        {
+          "path": "README.md",
+          "sha256": "34eb2a2d882b0b2200a72faa4fdf396f1190bc7470dcdc1f78d62fda51096a33",
+          "bytes": 5517
+        },
+        {
+          "path": "rollback.py",
+          "sha256": "7c5ebc5c6dbae340d9c7232060033f978eca02eeebaee0c4d233879d3b00f38f",
+          "bytes": 14213
+        }
+      ]
+    },
+    "verification": [
+      "allowlist",
+      "CRC",
+      "extracted hashes",
+      "two Python ASTs",
+      "three CLI help routes"
+    ]
+  },
+  "cleanup": {
+    "project": "forgeoj-m5check-3c7199fdf1f7",
+    "containers": 0,
+    "volumes": 0,
+    "networks": 0,
+    "ownedApplicationTagsRemoved": 3,
+    "unrelatedServices": "not targeted",
+    "verifiedAt": "2026-10-27T20:14:33.6454655+08:00"
+  },
+  "fixtureCleanup": {
+    "status": "PASS",
+    "fixtureAliasesRemoved": 2,
+    "forceUsed": false,
+    "verifiedAt": "2026-10-27T20:14:21.8692621+08:00"
+  },
+  "notVerified": [
+    "cross-business-version compatibility",
+    "schema upgrade/downgrade",
+    "production Linux host",
+    "production cutover",
+    "offsite/daily backup",
+    "fixed-host performance",
+    "real user trial",
+    "production SMTP/HTTPS"
+  ],
+  "liveCleanupAudit": {
+    "project": "forgeoj-m5check-3c7199fdf1f7",
+    "containers": 0,
+    "volumes": 0,
+    "networks": 0,
+    "imageAliases": 0,
+    "checkedAt": "2026-10-27T20:17:58.4119050+08:00"
+  }
+}

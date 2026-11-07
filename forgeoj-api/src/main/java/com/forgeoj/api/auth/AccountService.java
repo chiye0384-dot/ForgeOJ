@@ -99,12 +99,22 @@ public class AccountService {
                     || !account.passwordHash().equals(candidate.passwordHash())) {
                 unauthorized();
             }
-            var expires = now().plusDays(7);
-            String sid = UUID.randomUUID().toString(), refresh = AccountSecrets.token();
-            mapper.insertSession(new AccountMapper.Session(sid, account.id(), expires, null));
-            mapper.insertRefresh(AccountSecrets.digest(refresh), sid);
-            return new Login(account.id(), account.username(), sid, refresh, expires);
+            return createLogin(account);
         });
+    }
+
+
+    private Login createLogin(AccountMapper.Account account) {
+        var expires = now().plusDays(7);
+        String sid = UUID.randomUUID().toString(), refresh = AccountSecrets.token();
+        mapper.insertSession(new AccountMapper.Session(sid, account.id(), expires, null));
+        mapper.insertRefresh(AccountSecrets.digest(refresh), sid);
+        return new Login(account.id(), account.username(), sid, refresh, expires);
+    }
+
+    /** Activation and first login commit together; a failed session insert leaves the token usable. */
+    public Login completeRegistration(String token) {
+        return transaction.execute(status -> createLogin(confirm(token, "ACTIVATE", null, null, null)));
     }
 
     public Login refresh(String token) {
@@ -284,7 +294,7 @@ public class AccountService {
         confirm(token, "BIND_EMAIL", null, id, sid);
     }
 
-    private void confirm(
+    private AccountMapper.Account confirm(
             String token, String purpose, String newPassword, Long expectedUser, String sid) {
         String hash = AccountSecrets.tokenDigest(token);
         String passwordHash =
@@ -293,7 +303,7 @@ public class AccountService {
                         : null;
         var first = mapper.action(hash).orElseThrow(AccountService::invalidToken);
         try {
-            transaction.executeWithoutResult(status -> {
+            return transaction.execute(status -> {
                 var account = mapper.lockAccount(first.userId()).orElseThrow(AccountService::invalidToken);
                 if (expectedUser != null) {
                     if (account.id() != expectedUser) {
@@ -335,6 +345,7 @@ public class AccountService {
                 }
                 mapper.consumeAction(hash);
                 mapper.invalidateActions(account.id(), purpose);
+                return account;
             });
         } catch (DuplicateKeyException conflict) {
             throw invalidToken();

@@ -1,0 +1,11 @@
+{
+  "api": "6f79f700c2d4c17843172c1f4aeb66a25ad7f44a57016ba7b75b706e56b1be52",
+  "status": "VERIFIED",
+  "previousApi": "fd5b9939738a167314bea5dda24155c0d7a3849506f322bb7e4d3c3784c14b0b",
+  "checkedAt": "2026-10-30T17:20:29.4230542+08:00",
+  "mysqlMountUnchanged": true,
+  "stateBackup": "state.before-api-20261030-172010.json",
+  "mysqlId": "5adaca12e497db0f97996d3914152c6528988e12bd5cdb30e5713f627d244414",
+  "project": "forgeoj-e2e-20261029-201735-604f52a7",
+  "worker": "2be34c53d39560ddd955e761fcad7fb06a6cd19d8ea2720b36b3d8990d7a5761"
+}

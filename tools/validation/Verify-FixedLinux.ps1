@@ -4,6 +4,8 @@
 param(
     [ValidateSet('All', 'Backend', 'Api', 'Frontend')]
     [string]$Scope = 'All',
+    [ValidatePattern('^[A-Za-z0-9,*]+$')]
+    [string]$TestFilter = '',
     [string]$DockerCommand = 'docker',
     [ValidatePattern('^[A-Za-z0-9.:-]+$')]
     [string]$TestcontainersHost = 'host.docker.internal'
@@ -57,6 +59,7 @@ if ($Scope -in @('All', 'Backend', 'Api')) {
             '--mount', "type=bind,source=$artifacts,target=/artifacts",
             '--mount', 'type=bind,source=/var/run/docker.sock,target=/var/run/docker.sock',
             '-e', "TESTCONTAINERS_HOST_OVERRIDE=$TestcontainersHost",
+            '-e', "FORGEOJ_TEST_FILTER=$TestFilter",
             $backendImage, '/source/tools/validation/verify-linux.sh', $(if($Scope -eq 'Api') {'api'} else {'backend'}))
     } finally {
         # Only remove the exact image tag created by this invocation, never prune shared images.

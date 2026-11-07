@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- Copyright 2026 池也; SPDX-License-Identifier: Apache-2.0 -->
+<configuration version="2.0" label="ForgeOJ bounded CPU diagnosis" description="CPU stacks and GC only; no environment or exception contents" provider="ForgeOJ">
+  <event name="jdk.ExecutionSample"><setting name="enabled">true</setting><setting name="period">10 ms</setting></event>
+  <event name="jdk.NativeMethodSample"><setting name="enabled">true</setting><setting name="period">10 ms</setting></event>
+  <event name="jdk.CPULoad"><setting name="enabled">true</setting><setting name="period">1 s</setting></event>
+  <event name="jdk.ThreadCPULoad"><setting name="enabled">true</setting><setting name="period">1 s</setting></event>
+  <event name="jdk.GarbageCollection"><setting name="enabled">true</setting><setting name="threshold">0 ms</setting></event>
+  <event name="jdk.GCPhasePause"><setting name="enabled">true</setting><setting name="threshold">0 ms</setting></event>
+  <event name="jdk.InitialEnvironmentVariable"><setting name="enabled">false</setting></event>
+  <event name="jdk.InitialSystemProperty"><setting name="enabled">false</setting></event>
+  <event name="jdk.JavaExceptionThrow"><setting name="enabled">false</setting></event>
+  <event name="jdk.JavaErrorThrow"><setting name="enabled">false</setting></event>
+  <event name="jdk.SystemProcess"><setting name="enabled">false</setting></event>
+  <event name="jdk.ThreadDump"><setting name="enabled">false</setting></event>
+  <event name="jdk.OldObjectSample"><setting name="enabled">false</setting></event>
+</configuration>

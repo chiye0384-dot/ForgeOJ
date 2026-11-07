@@ -155,6 +155,20 @@ public class AuthController {
         accounts.confirm(input.token(), "ACTIVATE", null);
     }
 
+    @PostMapping("/registration/complete")
+    SessionResponse completeRegistration(
+            @RequestBody Token input, HttpServletRequest request, HttpServletResponse response) {
+        consumeLimit(request);
+        var login = accounts.completeRegistration(input.token());
+        cookies.login(response, login, jwt.issue(login));
+        var principal = new ForgeOjPrincipal(
+                login.userId(), login.username(), "", true, login.sessionId());
+        response.setHeader("Cache-Control", "no-store");
+        return toResponse(
+                new UsernamePasswordAuthenticationToken(principal, null, List.of()),
+                csrf.rotate(request, response));
+    }
+
     @PostMapping("/email-binding/confirm")
     @ResponseStatus(HttpStatus.NO_CONTENT)
     void confirmBinding(

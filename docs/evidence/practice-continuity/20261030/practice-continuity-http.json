@@ -1,0 +1,46 @@
+{
+  "status": "VERIFIED",
+  "project": "forgeoj-e2e-20261029-201735-604f52a7",
+  "programs": {
+    "retry": {
+      "requestId": "8adebdaf-9e2c-4a00-929a-6e3014ddd63a",
+      "slug": "sum-two-integers",
+      "sourceSha256": "8ea97069f7dab7a359659988f2fe21e12c13bad2d7709d36536e2d8047f76f28",
+      "submissionId": "753e9d42-beaf-427f-ad38-d65ee71166a6",
+      "sameReceipt": true,
+      "verdict": "AC"
+    },
+    "attempted": {
+      "requestId": "2a79b116-c5f6-43c0-bad7-07ec3242c9ac",
+      "slug": "public-39eeb0d2-72f1-433f-96f3-5f2689dd2807",
+      "sourceSha256": "1a2bce543a57e80e11c9a15c231b299eb84d5a5be8636ab4a2ee92d5ac9377d4",
+      "submissionId": "982e90c4-c52f-4c8f-83f2-0510eaad312d",
+      "verdict": "WA"
+    },
+    "solved": {
+      "requestId": "514ae5b3-b29c-4f00-87dc-c73f7dd6e075",
+      "slug": "public-5862d7e0-ad9c-4253-b22e-29dba3645d9c",
+      "sourceSha256": "9cc51dbf7e35848c2df8a02b4be702f6a25bed91a035b2325f0eb7bdaefaaa60",
+      "submissionId": "659438f0-e47b-4ab0-80c1-fa6e98488bf0",
+      "verdict": "AC"
+    }
+  },
+  "ownerSource": {
+    "submissionId": "8847d011-9fc2-42b7-b716-1e63b96701ea",
+    "sourceSha256": "f896569b6a2ea9658d42b6aba92fcefb82064ba5cdbc1709e87ac01993889e38",
+    "otherOwner": 404,
+    "anonymous": 401,
+    "noStore": true
+  },
+  "progress": {
+    "SOLVED": 1,
+    "ATTEMPTED": 1,
+    "UNTRIED": 19
+  },
+  "search": {
+    "mode": "FULL_TEXT",
+    "total": 8,
+    "filterBeforePagination": true
+  },
+  "checkedAt": "2026-10-30T09:21:40.903Z"
+}

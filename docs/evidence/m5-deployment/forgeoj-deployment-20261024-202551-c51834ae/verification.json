@@ -1,0 +1,115 @@
+{
+  "status": "IMPLEMENTED",
+  "isolatedPackageChecks": "VERIFIED",
+  "deploymentRevision": 2,
+  "m5": "IN_PROGRESS",
+  "release": false,
+  "sourceCommit": "058f36c771f15735a1e987a21c55074b80f511a9",
+  "compiledInputs": 428,
+  "apiInputSha256": "f13c52ca61744d7c4983e2b98c6a68d05b17eb7fce77d637761e1b615dd32c4e",
+  "workerInputSha256": "ff4dd5abf4931a345dd3a94af8c07966aced3a91ebcd4cd6b4c600877b261d1f",
+  "project": "forgeoj-m5check-9929d1ea812e",
+  "images": [
+    {
+      "component": "api",
+      "id": "sha256:583e9bde83959285972b23f4953a22b238fdfcf203abcbd73e8639578b5963b1",
+      "tag": "forgeoj-m5check-9929d1ea812e-api"
+    },
+    {
+      "component": "worker",
+      "id": "sha256:9b39a0deeaea3ac8b2595c4f4f40d0d782eacd45fb577a9af3d923cfd78dbb5f",
+      "tag": "forgeoj-m5check-9929d1ea812e-worker"
+    },
+    {
+      "component": "web",
+      "id": "sha256:1baa73fb5d4063432bcc7531664f0c8a5599fbba24bd0789e8dbcd52d9c57382",
+      "tag": "forgeoj-m5check-9929d1ea812e-web"
+    }
+  ],
+  "httpsSmoke": {
+    "status": "PASS",
+    "checks": 15,
+    "domain": "oj.test",
+    "tlsValidated": true,
+    "scope": "empty database HTTPS/secure-cookie/CSRF/origin/forwarding/anonymous-WS refusal; no real user or production SMTP",
+    "verifiedAt": "2026-10-24T12:35:48.970Z"
+  },
+  "readOnlyAudit": {
+    "status": "PASS",
+    "counts": {
+      "users": 0,
+      "admins": 0,
+      "problems": 0,
+      "versionedMigrations": 24,
+      "schemaVersion": 24
+    },
+    "permissionDenials": [
+      "DENIED_1142",
+      "DENIED_1142"
+    ],
+    "apiWithoutDocker": true,
+    "workerNonRoot": true,
+    "noDevdataInImage": true,
+    "noSecretsInRuntimeConfigEnv": true,
+    "scrapeTargetsUp": 3,
+    "unauthenticatedMetricsRefused": 2,
+    "grafanaDatabase": "ok",
+    "monitoringNamedVolumes": true,
+    "scope": "isolated read-only package audit; not fresh-host/backup/rollback/performance/user-trial verification"
+  },
+  "archive": "D:\\Java项目\\ForgeOJ\\target\\forgeoj-deployment-20261024-202551-c51834ae\\forgeoj-deployment-20261024-202551-c51834ae.zip",
+  "archiveSha256": "4824fa8ad1ed158a89cf6e8c9865071b5f5295994c33cef92ef090bfb74e241c",
+  "files": 52,
+  "bytes": 65337841,
+  "cleanup": {
+    "project": "forgeoj-m5check-9929d1ea812e",
+    "containers": 0,
+    "volumes": 0,
+    "networks": 0,
+    "ownedApplicationTagsRemoved": 3,
+    "unrelatedServices": "not targeted",
+    "verifiedAt": "2026-10-24T20:36:28.8431242+08:00"
+  },
+  "lifecycle": {
+    "status": "PASS",
+    "readinessServices": 5,
+    "linuxEnginePermissionProbe": {
+      "status": "PASS",
+      "negativeCases": 4,
+      "authorizedLeafReads": 3,
+      "privateParentDenied": true,
+      "existingSecretOverwriteRefused": true
+    },
+    "startupGuards": {
+      "activeWriterRefused": true,
+      "concurrentStartRefused": true,
+      "scope": "real bash script with controlled preflight/docker dependencies"
+    },
+    "dependencyOutage": {
+      "apiReady": false,
+      "workerReady": false,
+      "apiHealth": "unhealthy",
+      "workerHealth": "unhealthy"
+    },
+    "recovery": "api/worker/web healthy",
+    "monitoringRecreated": [
+      "prometheus",
+      "grafana"
+    ],
+    "historicalPrometheusSampleRetained": true,
+    "grafanaDashboardRetained": true,
+    "noSecretInHealthCommandOrHistory": true,
+    "scope": "isolated Docker Linux engine; not a fresh Linux host or real user trial"
+  },
+  "notVerified": [
+    "fresh Linux host",
+    "real domain/DNS/CA/SMTP",
+    "old-version schema upgrade",
+    "external encrypted backup/restore",
+    "compatible version rollback",
+    "fixed-host performance",
+    "controlled real-user trial",
+    "Linux host file permissions",
+    "full release dependency and image audit"
+  ]
+}

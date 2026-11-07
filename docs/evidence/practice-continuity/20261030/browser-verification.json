@@ -1,0 +1,53 @@
+{
+  "status": "VERIFIED",
+  "checkedAt": "2026-10-30T09:31:09.231Z",
+  "desktop": {
+    "width": 1440,
+    "height": 900,
+    "fiveTabs": true,
+    "historicalSourceVisible": true,
+    "loadConfirmationObserved": true,
+    "cancelPreservesEditor": true,
+    "historicalSourceLoaded": true,
+    "originalFixtureDraftRestored": true,
+    "preferencesSurvivedReload": {
+      "share": 40,
+      "wrapped": false,
+      "fontSize": 16
+    },
+    "preferencesRestored": {
+      "share": 38,
+      "wrapped": true,
+      "fontSize": 14
+    }
+  },
+  "library": {
+    "personalProgressVisible": true,
+    "sessionRestoredAfterExpiredAccess": true,
+    "verificationLearnerUntriedFilterTotal": 0,
+    "officialListItems": 20,
+    "resumeLinkRestoredOriginalDraft": true
+  },
+  "teaching": {
+    "steps": true,
+    "workedExample": true,
+    "pitfalls": true,
+    "correctness": true,
+    "complexity": true,
+    "readableSource": true
+  },
+  "narrow": {
+    "width": 375,
+    "height": 760,
+    "pageScrollWidth": 360,
+    "allFiveTabsWithinViewport": true,
+    "fifthTabWrapsToNextRow": true
+  },
+  "temporaryViewportReset": true,
+  "ordinaryLearnerModified": false,
+  "screenshots": [
+    "history-desktop.jpg",
+    "library-progress.jpg",
+    "solution-narrow.jpg"
+  ]
+}

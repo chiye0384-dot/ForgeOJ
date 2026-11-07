@@ -1,3 +1,25 @@
+2026-10-30 最新：做题与复盘闭环本地范围 VERIFIED，见[验收](PRACTICE-CONTINUITY-VALIDATION.md)。左侧第五项提交历史/本人历史源码与确认载入、原键原源码异常重试、题库个人进度筛选/继续草稿/官方题单、中文判题建议和编辑偏好、A+B说明及20份教学题解修订已验证。固定Linux受影响API58项/4 suites、完整Windows前端159项/30 suites、20份新代码真实AC及真实HTTP/桌面/窄屏通过；本轮未重跑API全量或Worker套件。原MySQL容器/挂载与历史保留，保护文件仅核SHA未变；未新增外部依赖或许可。原审核快照不改，教学修订另有本地维护收据，人工教学评价未完成。M5/Release/公网状态不提升，新源码部署前需重打包。网站保持运行，工作树未提交推送；下方旧日期段落是历史。
+
+2026-10-30：做题工作台本地范围 VERIFIED，见 [工作台验收](WORKSPACE-UX-VALIDATION.md)。可调分栏、展开、默认换行、四标签和21份官方题解已验证；前端154项/29 suites与真实页面/自测/AC通过。本轮API/Worker未改、未重跑完整套件。完整M5、Release和公网验收仍未完成，下方旧阶段记录保留。
+
+2026-10-30 当前：本地使用改进范围已 VERIFIED，固定入口 http://127.0.0.1:8088/problems。21题（20新题真实双验证/审核发布）、草稿保护、编辑器、批量标签和启动工具完成；API336/Worker139、Windows与Linux前端140通过，84条持久事实及数据挂载停启一致，重启后真实AC。当前入口为 docs/CURRENT-STATUS.md、docs/PRODUCT-IMPROVEMENTS-VALIDATION.md 及 docs/evidence/product-improvements/20261029/verification.json（docs内链接按相对位置解释）。本地单元已结束，不重复长验证或旧诊断下一步；完整M5/Release/RESUME_READY未提升，新源码上线需重打部署包。旧LAN数据/原包/失败记录/保护文件及桌面连续性规则保持；新演示保持运行供用户使用，不能按旧“精确清理”说明删除。变更未提交推送。
+
+2026-10-29 当前：用户授权本地使用改善，见 [具体计划](PRODUCT-IMPROVEMENT-PLAN.md)与[当前状态](CURRENT-STATUS.md)。M5仍 IN_PROGRESS，新增源码等待本轮构件/页面/真实判题验证；旧日期的下一步不能覆盖本次范围。M0～M4历史验收保留，Release/RESUME_READY不提升。
+
+2026-10-28当前：SQL/API只读热点诊断有限单元 **VERIFIED**，见[报告](M5-PERFORMANCE-DIAGNOSTIC-REPORT.md)、[设计](M5-PERFORMANCE-DIAGNOSTIC-DESIGN.md)与[安全收据](evidence/m5-hotspot-diagnostic/20261028/verification.json)。四阶段94862次测量请求错误0、客户端/HTTP计数一致；原301题数据/权限与428编译输入不变，无新判题提交。列表三类业务SELECT及事务/状态交互、JDBC解析样本，详情缓存命中仍查epoch并解码JSON；实际Connector/J语句缓存默认关闭。SQL摘要计数差异未解释，长摘要截断、32帧缺项目帧、探针/JIT/GC/配额混杂明确保留，不能宣称唯一瓶颈、优化收益或云容量。
+
+诊断证据Zip：target/forgeoj-hotspot-diagnostic-20261028-164533-ad5de7da/forgeoj-hotspot-diagnostic-20261028-164533-ad5de7da.zip，7795432字节/131文件，SHA256 814881967ca9662952b3f9aeac8c2cf713e407e7bf81d3832ad90ca5cebdecc2；白名单/实际随机秘密/敏感JFR事件/CRC/逐文件摘要通过。拥有者forgeoj-m5check-147876a386fa容器/卷/网络/三镜像别名和负载容器已精确清理；旧LAN八容器退出保留、无关redis运行。原部署/备份/回滚/基线包均保留，HEAD058f36c771f15735a1e987a21c55074b80f511a9，未提交推送。没有实施优化；下一有限单元建议新隔离项目做仅连接级语句/查询元数据缓存受控A/B，先核整组额度，充分预热/交错重复、固定资源/数据与正确性，收益未证实前不改生产。完整性能计划/M5仍IN_PROGRESS，E-06/E-07/Release/RESUME_READY不提升；真实Linux/域名CA/SMTP、每日异地/密钥保管、跨业务版本回滚、长稳/开放负载/真实试用仍缺。不购买/公网发布/发邀请/PR/main/tag/Release；既有继续授权生效，下方旧下一步为历史，保护文件及桌面连续性规则保持。
+
+2026-10-28当前：本机隔离性能有限基线 **VERIFIED**，见[完整报告](M5-PERFORMANCE-BASELINE-REPORT.md)、[设计](M5-PERFORMANCE-BASELINE-DESIGN.md)与[安全证据](evidence/m5-performance/20261028/verification.json)。最终277633次测量请求状态/网络/超时/内容错误0，13个读阶段由原始NDJSON独立重算并匹配服务端计数；11次真实判题、唯一task/attempt/Outbox，九队列空、无丢失/重复副作用/沙箱残留。并发8吞吐下降、尾延迟升高，API/列表MySQL接近各自2CPU配额，保留两轮波动与首轮工具封顶失败；没有优化比例或云容量结论。完整性能计划/M5保持IN_PROGRESS，E-06/E-07/Release/RESUME_READY不提升。
+
+2026-10-27当前：同文件系统、仅ENTRYPOINT变化的镜像配置故障/回退有限单元 **VERIFIED**，见[回滚验收](M5-IMAGE-ROLLBACK-VALIDATION.md)及[手册](M5-IMAGE-ROLLBACK.md)。两个不同镜像ID的真实启动故障、失败保持停止、新计划回到原镜像、11类拒绝、71表结构/数据/授权匹配、五条新旧真实AC与源码保留、回退后HTTPS判题通过。JAR与文件层相同，跨业务版本/跨schema回滚仍未验证；完整M5 IN_PROGRESS，E-06/E-07/Release/RESUME_READY不提升。
+
+2026-10-27：手动维护窗加密备份与独立空库恢复有限单元 **VERIFIED**；实际演练为2026-10-24，本日完成独立工具包与清理核验。71表数据/权限匹配、8类拒绝、Flyway校验及Linux引擎UID1000加解密通过。见[M5备份验收](M5-BACKUP-VALIDATION.md)与[操作手册](M5-BACKUP-RESTORE.md)。完整M5保持IN_PROGRESS；每日调度、异地副本、真实Linux主机、生产密钥保管/消息协调、回滚、性能和真实试用未验收。E-06/E-07/Release/RESUME_READY不提升。
+
+2026-10-24：第二版独立部署包的就绪/引擎权限/数据库故障恢复/监控重建持久性有限单元VERIFIED，见[M5第二版验收](M5-DEPLOYMENT-HARDENING-VALIDATION.md)。M5整体IN_PROGRESS，E-06/E-07/Release/RESUME_READY仍未通过；首版记录保持历史。
+
+2026-10-11：M5设计与首版独立部署包IMPLEMENTED，隔离配置/镜像/空库/HTTPS检查VERIFIED；完整M5 IN_PROGRESS，真实主机/异地恢复/兼容回滚/性能/试用门禁未完成。见[M5设计](M5-DEPLOYMENT-DESIGN.md)、[验证](M5-DEPLOYMENT-VALIDATION.md)与[安全机器证据](evidence/m5-deployment/verification.json)。E-06/E-07和Release/RESUME_READY不提升；下方M5 PLANNED等带日期段落保留历史。
+
 2026-10-11当前验收：M4第7步及完整M4 **VERIFIED**，五项总门禁全部PASS。独立Grafana OSS许可已批准；固定Linux API335/59 suites、Worker139/26 suites、前端129/25零失败/错误/跳过，428业务/测试/前端输入、84实际提供前端与准确JAR一致。同JAR新回放覆盖Redis/ES/RabbitMQ中断恢复、真实AC、原事件受审计重送、整个索引删除重建、实际promtool及Grafana14面板/23表达式/只读浏览器登录退出。6个唯一原死信事件对应6份实测消息，每一份均匹配原事件ID和四字段契约；诊断前后数量不变，没有清空死信。本轮拥有者资源与沙箱清理全0。详见[M4总门禁](M4-GATE-AUDIT.md)、[监控验收](M4-MONITORING-VALIDATION.md)及[最终机器证据](evidence/m4-monitoring/verification.json)。M5仍PLANNED，未PR/main/tag/Release/RESUME_READY；按授权交付feat/m2-accounts后停止。
 
 > 以下旧日期的阶段、额度、待许可、未完成和“下一步”文字为历史快照；实时状态以上方当前验收与对应最终证据为准。

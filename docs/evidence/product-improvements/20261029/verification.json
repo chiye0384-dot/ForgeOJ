@@ -1,0 +1,105 @@
+{
+  "worktreeUncommitted": true,
+  "worker": {
+    "failures": 0,
+    "errors": 0,
+    "tests": 139,
+    "skipped": 0,
+    "suites": 26
+  },
+  "frontend": {
+    "nativeLog": "target/product-frontend-20261030-verification.log",
+    "windowsAndLinux": true,
+    "linuxBuild": "D:\\Java项目\\ForgeOJ\\target\\forgeoj-linux-20261030-091357-1dfa127f",
+    "tests": 140,
+    "suites": 27
+  },
+  "performanceGainClaimed": false,
+  "sourceInputs": {
+    "allMatch": true,
+    "count": 423,
+    "sha256": "1c7de051010e8dfc8a49521dafdb329c0c80bc1915d950613c003ed53083042a"
+  },
+  "runtimeJars": [
+    {
+      "sha256": "c2b2e407df458865e5f95ff4cba40020dd8ee5807242c2999a64da614ba2c664",
+      "service": "api"
+    },
+    {
+      "sha256": "2be34c53d39560ddd955e761fcad7fb06a6cd19d8ea2720b36b3d8990d7a5761",
+      "service": "worker"
+    }
+  ],
+  "checkedAt": "2026-10-30T09:18:18.0940566+08:00",
+  "scope": "local product improvements only",
+  "status": "VERIFIED",
+  "browser": {
+    "neutralTemplate": true,
+    "narrowNavigationFixed": true,
+    "homepage": "problem library",
+    "immediateLeaveDraftRecovered": true,
+    "screenshot": "library-final-20261030.jpg",
+    "libraryCount": 21,
+    "realAcObserved": true
+  },
+  "remaining": [
+    "real server and public HTTPS",
+    "production SMTP and offsite backups",
+    "cross-business-version rollback",
+    "long-running load and controlled real-user trial",
+    "regenerate deployment package for changed source"
+  ],
+  "fullM5": "IN_PROGRESS",
+  "postRestartJudge": {
+    "project": "forgeoj-e2e-20261029-201735-604f52a7",
+    "checkedAt": "2026-10-30T01:12:32.704Z",
+    "status": "VERIFIED",
+    "requestId": "29da3e12-8529-4380-9bef-628e74af95ba",
+    "submissionId": "67a5a000-fb68-4a92-ae03-769a7029465d",
+    "verdict": "AC"
+  },
+  "url": "http://127.0.0.1:8088/problems",
+  "catalog": {
+    "approvedReviews": 20,
+    "newProblems": 20,
+    "platformDoubleValidationJobs": 20,
+    "officialListItems": 20,
+    "catalogSha256": "ae2328d7910336a01f07b98655d53500d6c92a9bdc9948a9f274e0be38baf9d0",
+    "localProgramExecutions": 256,
+    "totalLibrary": 21
+  },
+  "resumeReady": false,
+  "project": "forgeoj-e2e-20261029-201735-604f52a7",
+  "baselineCommit": "058f36c771f15735a1e987a21c55074b80f511a9",
+  "api": {
+    "failures": 0,
+    "errors": 0,
+    "tests": 336,
+    "skipped": 0,
+    "suites": 59
+  },
+  "persistence": {
+    "dataMountsUnchanged": true,
+    "checkedAt": "2026-10-30T09:10:49.896065+08:00",
+    "project": "forgeoj-e2e-20261029-201735-604f52a7",
+    "url": "http://127.0.0.1:8088/problems",
+    "rows": 84,
+    "status": "VERIFIED"
+  },
+  "http": {
+    "solutionUnlockChecks": 20,
+    "receiptSha256": "e1950bef381fcdc81f64681fd08cb8e88cf2fb38a9ad3c376f181e58eb94a06d",
+    "fullText": {
+      "mode": "FULL_TEXT",
+      "total": 2
+    },
+    "idempotencyChecks": 20,
+    "formalAc": 20,
+    "learnerHistoryUnchanged": true,
+    "status": "VERIFIED",
+    "crossOwnerDenied": true,
+    "formalWa": 1,
+    "selfTest": "SUCCESS"
+  },
+  "release": false
+}

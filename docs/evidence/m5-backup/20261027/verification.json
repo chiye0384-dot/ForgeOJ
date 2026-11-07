@@ -1,0 +1,245 @@
+{
+  "status": "VERIFIED",
+  "scope": "manual maintenance-window local MySQL backup and isolated empty-target restore",
+  "fullM5": "IN_PROGRESS",
+  "release": false,
+  "resumeReady": false,
+  "assembledAt": "2026-10-27T09:36:59.521199+08:00",
+  "runtimeValidationDate": "2026-10-24",
+  "assemblyAndCleanupDate": "2026-10-27",
+  "validationEnvironment": "Windows / Python 3.13 / Docker Desktop Linux engine; not a fresh Linux host",
+  "accepted": {
+    "status": "PASS",
+    "sourceProject": "forgeoj-m5check-29fc2fce56ac",
+    "targetProject": "forgeoj-m5check-1f3f3562c7d4",
+    "targetRun": "D:\\Java项目\\ForgeOJ\\target\\forgeoj-deployment-20261024-211833-9ab7ed76",
+    "realSubmission": {
+      "id": "b7833727-1750-4603-94ea-eb9ef98955d1",
+      "verdict": "AC"
+    },
+    "tablesMatched": 71,
+    "allRowsAndRuntimeGrantsMatched": true,
+    "flywayValidateAfterRestore": true,
+    "permissionDenials": 2,
+    "negativeCases": [
+      "existing offline key directory",
+      "active source writers",
+      "existing backup output",
+      "wrong private key",
+      "wrong ciphertext digest",
+      "authenticated ciphertext corruption",
+      "source instance restore",
+      "nonempty target restore"
+    ],
+    "noPlaintextDatabaseDumpFileWritten": true,
+    "sourceUnchanged": true,
+    "retentionPlan": {
+      "keep": 9,
+      "deleteCandidates": 6,
+      "deleted": 0
+    },
+    "encryptedArtifactSha256": "b0f3b5eb411c025ebbf3772547fc9da2193d2635088873aa91125145ad733861",
+    "scope": "maintenance-only disposable MySQL backup/restore; local file copy; no offsite/scheduler/production cutover/RabbitMQ recovery"
+  },
+  "cryptoPosix": {
+    "status": "PASS",
+    "uid": 1000,
+    "directoryMode": "0700",
+    "privateKeyMode": "0600",
+    "cryptoRoundtrip": true,
+    "scope": "Linux engine helper filesystem; not a fresh Linux host CLI verification"
+  },
+  "compiledInputsStillMatch": 428,
+  "apiInputSha256": "f13c52ca61744d7c4983e2b98c6a68d05b17eb7fce77d637761e1b615dd32c4e",
+  "workerInputSha256": "ff4dd5abf4931a345dd3a94af8c07966aced3a91ebcd4cd6b4c600877b261d1f",
+  "sourceImageIds": [
+    {
+      "component": "api",
+      "id": "sha256:ff3783c0565c31faf78eaa693446aa418823c760522f7abd637a82bba5781e04",
+      "tag": "forgeoj-m5check-29fc2fce56ac-api"
+    },
+    {
+      "component": "worker",
+      "id": "sha256:151bc9fd87fbea94304313c7717159965262ff32c53f4fa12261199204fa27d7",
+      "tag": "forgeoj-m5check-29fc2fce56ac-worker"
+    },
+    {
+      "component": "web",
+      "id": "sha256:7b882116bec88f58ead07c88c936f00f0075dd6238354248cfccb2649eb47366",
+      "tag": "forgeoj-m5check-29fc2fce56ac-web"
+    }
+  ],
+  "toolHashesAtDelivery": [
+    {
+      "path": "deploy/production/scripts/backup.py",
+      "sha256": "6ef926046c7e96f0f46fbc31762cfff62275b8afea2d2476d4b9fc097f3ef2c5"
+    },
+    {
+      "path": "tools/deployment/Verify-BackupTools.py",
+      "sha256": "30b6cc61eefe094414cf8bf14459a11e9c2fc7344ea149f49cfcbd28a2242ca2"
+    },
+    {
+      "path": "tools/deployment/Verify-BackupCryptoPosix.py",
+      "sha256": "69a17559dc626f0a0c55509bf4101d31e9645114453e4788be7e1dd05584fb10"
+    },
+    {
+      "path": "tools/deployment/backup-source-fixture.mjs",
+      "sha256": "732404d649626ae4b0163c2a803d0b501a552ff3f598b0e3d6e82e1c39c07669"
+    },
+    {
+      "path": "tools/deployment/Build-BackupKit.py",
+      "sha256": "13d92de3c9bc7b332ce6cea8385dd4cb5c3b6929d3be88a58e7e76f3ed8765c8"
+    }
+  ],
+  "testedBackupMatchesDeliveredBytes": true,
+  "rawReportHashes": [
+    {
+      "path": "backup-verification.json",
+      "sha256": "cdf193aa54335cc4fffd422ce3b558add82c60f0a77083caa3ba636961c2d255"
+    },
+    {
+      "path": "crypto-posix.json",
+      "sha256": "d595096e987c23c39fd1dcfb28694e205a3b047bc71fe2453bac0df0a1e33194"
+    }
+  ],
+  "kit": {
+    "status": "PASS",
+    "archive": "D:\\Java项目\\ForgeOJ\\target\\forgeoj-backup-tools-20261027-093540-fbb721fd\\forgeoj-backup-tools-20261027-093540-fbb721fd.zip",
+    "sha256": "69ea58f59a0233982af2cfa3b0f40abe6424eb18adeed54a992553e3d90f56b3",
+    "bytes": 16402,
+    "files": [
+      "LICENSE",
+      "NOTICE",
+      "README.md",
+      "backup.py",
+      "manifest.json"
+    ],
+    "verification": [
+      "exact allowlist",
+      "zip CRC",
+      "extracted SHA256",
+      "Python AST",
+      "five CLI help routes"
+    ],
+    "manifest": {
+      "format": "forgeoj-backup-tools-v1",
+      "createdAt": "2026-10-27T01:35:40.634898+00:00",
+      "gitHead": "058f36c771f15735a1e987a21c55074b80f511a9",
+      "workingTree": "uncommitted engineering work; not a Release",
+      "scope": "manual maintenance-window MySQL encryption and isolated empty-target restore; no scheduler/offsite/cutover",
+      "files": [
+        {
+          "path": "backup.py",
+          "sha256": "6ef926046c7e96f0f46fbc31762cfff62275b8afea2d2476d4b9fc097f3ef2c5",
+          "bytes": 19520
+        },
+        {
+          "path": "LICENSE",
+          "sha256": "cfc7749b96f63bd31c3c42b5c471bf756814053e847c10f3eb003417bc523d30",
+          "bytes": 11358
+        },
+        {
+          "path": "NOTICE",
+          "sha256": "db7ef6ebf01342e416c1421343282d4e4b97347dc72175b85daed41c37dd98de",
+          "bytes": 325
+        },
+        {
+          "path": "README.md",
+          "sha256": "d30742924cb7ca56fa5c5036639a33e6a08fa8d253eea3923da10aee7dcd69b8",
+          "bytes": 7712
+        }
+      ]
+    }
+  },
+  "cleanup": [
+    {
+      "run": "target/forgeoj-deployment-20261024-210935-57d5a721",
+      "receipt": {
+        "project": "forgeoj-m5check-635415b1a898",
+        "containers": 0,
+        "volumes": 0,
+        "networks": 0,
+        "ownedApplicationTagsRemoved": 3,
+        "unrelatedServices": "not targeted",
+        "verifiedAt": "2026-10-24T21:13:11.2738828+08:00"
+      }
+    },
+    {
+      "run": "target/forgeoj-deployment-20261024-211348-93032067",
+      "receipt": {
+        "project": "forgeoj-m5check-9b91b8be6437",
+        "containers": 0,
+        "volumes": 0,
+        "networks": 0,
+        "ownedApplicationTagsRemoved": 3,
+        "unrelatedServices": "not targeted",
+        "verifiedAt": "2026-10-24T21:17:24.3376262+08:00"
+      }
+    },
+    {
+      "run": "target/forgeoj-deployment-20261024-211833-9ab7ed76",
+      "receipt": {
+        "project": "forgeoj-m5check-1f3f3562c7d4",
+        "containers": 0,
+        "volumes": 0,
+        "networks": 0,
+        "ownedApplicationTagsRemoved": 3,
+        "unrelatedServices": "not targeted",
+        "verifiedAt": "2026-10-27T09:34:10.8913681+08:00"
+      }
+    },
+    {
+      "run": "target/forgeoj-deployment-20261024-210022-78391b32",
+      "receipt": {
+        "project": "forgeoj-m5check-29fc2fce56ac",
+        "containers": 0,
+        "volumes": 0,
+        "networks": 0,
+        "ownedApplicationTagsRemoved": 3,
+        "unrelatedServices": "not targeted",
+        "verifiedAt": "2026-10-27T09:34:12.9448666+08:00"
+      }
+    }
+  ],
+  "notVerified": [
+    "offsite copy",
+    "daily scheduler",
+    "real 7-day/4-week history",
+    "production key custody",
+    "fresh Linux host CLI",
+    "RabbitMQ/Outbox cutover reconciliation",
+    "restored business API replay",
+    "compatible image rollback",
+    "performance",
+    "real user trial"
+  ],
+  "liveCleanupAudit": {
+    "checkedAt": "2026-10-27T09:38:00.2271453+08:00",
+    "projects": [
+      {
+        "project": "forgeoj-m5check-635415b1a898",
+        "containers": 0,
+        "volumes": 0,
+        "networks": 0
+      },
+      {
+        "project": "forgeoj-m5check-9b91b8be6437",
+        "containers": 0,
+        "volumes": 0,
+        "networks": 0
+      },
+      {
+        "project": "forgeoj-m5check-1f3f3562c7d4",
+        "containers": 0,
+        "volumes": 0,
+        "networks": 0
+      },
+      {
+        "project": "forgeoj-m5check-29fc2fce56ac",
+        "containers": 0,
+        "volumes": 0,
+        "networks": 0
+      }
+    ]
+  }
+}

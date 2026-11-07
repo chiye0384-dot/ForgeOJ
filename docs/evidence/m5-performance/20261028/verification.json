@@ -1,0 +1,255 @@
+{
+  "status": "VERIFIED",
+  "scope": "bounded local read baseline and eleven sequential judge observations",
+  "fullM5": "IN_PROGRESS",
+  "fullPerformancePlan": "IN_PROGRESS",
+  "release": false,
+  "resumeReady": false,
+  "acceptedSuite": "target/forgeoj-deployment-20261028-091950-6983a042/performance/suite-20261028-093237",
+  "verification": {
+    "status": "PASS",
+    "scope": "local fixed-image public read baseline plus small sequential judge observations",
+    "fullPerformancePlan": "IN_PROGRESS",
+    "fullM5": "IN_PROGRESS",
+    "release": false,
+    "resumeReady": false,
+    "project": "forgeoj-m5check-dd854834aae9",
+    "datasetSha256": "09d4eaa246747eb77d0525b7aecdebba7db045f44b5ff5eb6592bccd8d0a682b",
+    "readOnlyFactsUnchanged": true,
+    "cases": 14,
+    "requestErrors": 0,
+    "judgeUniqueSubmissions": 11,
+    "judgeTasks": 11,
+    "judgeAttempts": 11,
+    "judgeOutboxQueued": 11,
+    "silentLoss": 0,
+    "duplicateBusinessEffects": 0,
+    "pendingOutbox": 0,
+    "emptyQueues": 9,
+    "managedSandboxes": 0,
+    "toolHashes": [
+      {
+        "path": "tools/performance/prepare-baseline.py",
+        "sha256": "9aff924fc437677ac69751aaae957b9b5a63537096e3c74b3a2f560f83bd3c30"
+      },
+      {
+        "path": "tools/performance/dataset.py",
+        "sha256": "0954853c8813a8c0a3deea37d24177f7aaf98bc3d52f9ed0401ea6d7da5d12c0"
+      },
+      {
+        "path": "tools/performance/load.mjs",
+        "sha256": "f534d43d982a55d62dd4c45fa925b254ee2dd3e074272e9790a909e65fc4b529"
+      },
+      {
+        "path": "tools/performance/run-baseline.py",
+        "sha256": "2562c3674b1339ce85d2309946e4f14dffd5f88b9cb32c1a98282c5e87c4d864"
+      }
+    ]
+  },
+  "requestSummary": {
+    "count": 277633,
+    "errors": 0,
+    "independentlyRecomputed": true,
+    "serverCountsMatch": true
+  },
+  "host": {
+    "capturedAt": "2026-10-28T09:26:55.2717139+08:00",
+    "cpu": [
+      {
+        "Name": "Intel(R) Core(TM) i7-14650HX",
+        "NumberOfCores": 16,
+        "NumberOfLogicalProcessors": 24
+      }
+    ],
+    "physicalMemoryBytes": 16873545728,
+    "windows": "Microsoft Windows 11 家庭版 中文版",
+    "freePhysicalKiB": 1997144,
+    "disks": [
+      {
+        "FriendlyName": "YMTC YMSS2ED08D25MC",
+        "MediaType": "SSD",
+        "BusType": "NVMe",
+        "Size": 1024209543168
+      }
+    ]
+  },
+  "environment": {
+    "capturedAt": "2026-10-28T01:32:38.907703+00:00",
+    "gitHead": "058f36c771f15735a1e987a21c55074b80f511a9",
+    "workingTree": "uncommitted deployment/performance tools; compiled inputs hash-checked separately",
+    "release": null,
+    "engine": {
+      "ServerVersion": "29.8.0",
+      "OperatingSystem": "Docker Desktop",
+      "OSType": "linux",
+      "Architecture": "x86_64",
+      "KernelVersion": "6.18.33.2-microsoft-standard-WSL2",
+      "NCPU": 24,
+      "MemTotal": 8170168320,
+      "Driver": "overlayfs",
+      "CgroupVersion": "2"
+    },
+    "composeVersion": "5.5.1",
+    "nodeImage": "node:24.14.1-bookworm-slim@sha256:b506e7321f176aae77317f99d67a24b272c1f09f1d10f1761f2773447d8da26c",
+    "nodeImageId": "sha256:b506e7321f176aae77317f99d67a24b272c1f09f1d10f1761f2773447d8da26c",
+    "jdkVersion": "Picked up JAVA_TOOL_OPTIONS: -Djavax.net.ssl.trustStore=/run/search-trust.p12 -Djavax.net.ssl.trustStorePassword=changeit\nopenjdk version \"21.0.12\" 2026-07-21 LTS\nOpenJDK Runtime Environment Temurin-21.0.12+8 (build 21.0.12+8-LTS)\nOpenJDK 64-Bit Server VM Temurin-21.0.12+8 (build 21.0.12+8-LTS, mixed mode, sharing)\n",
+    "containers": [
+      {
+        "service": "api",
+        "id": "efa8e92f2b2bccc555841807dd4a90f69b9c65fad3025db08c5e44b85258d27e",
+        "image": "sha256:901ba5b719bc6fc317a1faf0c47dd97d9accf274b4db00bb612e0510222a028a",
+        "nanoCpus": 2000000000,
+        "memoryBytes": 805306368,
+        "pidsLimit": 256,
+        "user": "10001:10001"
+      },
+      {
+        "service": "worker",
+        "id": "ca220d6de6d0258e2d57d6a34a7bbe2a575f54a2237e9afa8336c30bb25d0fe8",
+        "image": "sha256:d79843e206cfa0bc78eed610ea1797ddf384adfd0671d49fc990016e13dd2b24",
+        "nanoCpus": 2000000000,
+        "memoryBytes": 805306368,
+        "pidsLimit": 256,
+        "user": "10002:10002"
+      },
+      {
+        "service": "mysql",
+        "id": "08915e0c8b246ef0dc4c3661756f342ac3173a286ea1ee861b47a6362fad4467",
+        "image": "sha256:7dcc4add9183664de3a214daf85a50c3ba6cccfd7534f700b6561bf5b41885be",
+        "nanoCpus": 2000000000,
+        "memoryBytes": 1073741824,
+        "pidsLimit": 256,
+        "user": ""
+      },
+      {
+        "service": "rabbitmq",
+        "id": "dd0ce8fb76c5e3ed5f455072903a10a94fba0054ed453dd53dc5082446166ade",
+        "image": "sha256:cdf40d8cb363d145e377ed88d59696a42386ffe54b30125f10eb128b862eea95",
+        "nanoCpus": 1000000000,
+        "memoryBytes": 536870912,
+        "pidsLimit": 512,
+        "user": "999:999"
+      },
+      {
+        "service": "redis",
+        "id": "263adcfef48fa421f192c7661eed81953c97c85739f76abe040cad40ed0ffa65",
+        "image": "sha256:29e8589c3f9ba699b5f7aa4b3c7733c58852a3626439e619aa0ee78de08c6ca0",
+        "nanoCpus": 1000000000,
+        "memoryBytes": 201326592,
+        "pidsLimit": 256,
+        "user": "999:999"
+      },
+      {
+        "service": "search",
+        "id": "251f46380e44dbedb0403d7e18b228440dff232aab0338f39ecc47602ba4947f",
+        "image": "sha256:f456578fc2a620a8a4f4c21d070fff1f6070345adb2be5e5626b65be72aea350",
+        "nanoCpus": 2000000000,
+        "memoryBytes": 1073741824,
+        "pidsLimit": 256,
+        "user": "1000:0"
+      },
+      {
+        "service": "web",
+        "id": "b755e6326cf8bbb3dc8dad92a2147c1f0be39a9f01cfc900d0cdac9acf7cbb7d",
+        "image": "sha256:1490fc06c44f5c5266bfbfab6556fcabc0293f23930dd2c35ea07d931d622c1b",
+        "nanoCpus": 1000000000,
+        "memoryBytes": 134217728,
+        "pidsLimit": 256,
+        "user": ""
+      },
+      {
+        "service": "prometheus",
+        "id": "e3060cbeabf0e68531ae43d9ab450dfbda2e989a68e011ed1d175e3b6e41b9c4",
+        "image": "sha256:efd719c99d83b060d9daefdcf00360461adf279f45ef5391f8d111892118753e",
+        "nanoCpus": 500000000,
+        "memoryBytes": 268435456,
+        "pidsLimit": 256,
+        "user": "65534:65534"
+      },
+      {
+        "service": "grafana",
+        "id": "6b9804f265a6fd76e588370656036935cf6e0c1a823574f0b9517a5bb325d666",
+        "image": "sha256:b28bae15e219c998fb0e0424ed724930cc61b1f61fb404d47c862f9a23f9e572",
+        "nanoCpus": 500000000,
+        "memoryBytes": 402653184,
+        "pidsLimit": 256,
+        "user": "472:472"
+      }
+    ],
+    "apiInstances": 1,
+    "workerInstances": 1,
+    "judgeModel": "sequential formal submissions; one queue consumer, prefetch=1; not aggregate concurrency across job kinds",
+    "network": "same owned Linux edge bridge -> Nginx HTTPS:443 -> API; verified .test certificate; not public RTT",
+    "hostShared": true,
+    "datasetScope": "public read fixture and sequential judge observations only"
+  },
+  "cleanup": {
+    "project": "forgeoj-m5check-dd854834aae9",
+    "containers": 0,
+    "volumes": 0,
+    "networks": 0,
+    "ownedApplicationTagsRemoved": 3,
+    "unrelatedServices": "not targeted",
+    "verifiedAt": "2026-10-28T09:46:26.6163853+08:00"
+  },
+  "compiledInputsMatch": 428,
+  "apiInputSha256": "f13c52ca61744d7c4983e2b98c6a68d05b17eb7fce77d637761e1b615dd32c4e",
+  "workerInputSha256": "ff4dd5abf4931a345dd3a94af8c07966aced3a91ebcd4cd6b4c600877b261d1f",
+  "notVerified": [
+    "cloud/native Linux capacity",
+    "open arrival rate",
+    "large historical/classroom dataset",
+    "long soak",
+    "fault-under-load",
+    "optimization improvement",
+    "formal user trial"
+  ],
+  "archive": {
+    "archive": "D:\\Java项目\\ForgeOJ\\target\\forgeoj-performance-baseline-20261028-115205-376f94b3\\forgeoj-performance-baseline-20261028-115205-376f94b3.zip",
+    "sha256": "bf9aa9dcb840a4001954ff4b20fe19d14be1a984c7b513a047bd25324df49bc0",
+    "bytes": 5608297,
+    "files": 282,
+    "contentSecretsScan": "PASS",
+    "crcAndHashes": "PASS"
+  },
+  "liveCleanupAudit": {
+    "project": "forgeoj-m5check-dd854834aae9",
+    "containers": 0,
+    "volumes": 0,
+    "networks": 0,
+    "imageAliases": 0,
+    "loadGenerators": 0,
+    "managedSandboxes": 0,
+    "verifiedAt": "2026-10-28T11:54:08.9859832+08:00"
+  },
+  "priorArchivesStillMatch": [
+    {
+      "path": "target/forgeoj-deployment-20261024-202551-c51834ae/forgeoj-deployment-20261024-202551-c51834ae.zip",
+      "sha256": "4824fa8ad1ed158a89cf6e8c9865071b5f5295994c33cef92ef090bfb74e241c"
+    },
+    {
+      "path": "target/forgeoj-backup-tools-20261027-093540-fbb721fd/forgeoj-backup-tools-20261027-093540-fbb721fd.zip",
+      "sha256": "69ea58f59a0233982af2cfa3b0f40abe6424eb18adeed54a992553e3d90f56b3"
+    },
+    {
+      "path": "target/forgeoj-rollback-tools-20261027-201347-7a617b78/forgeoj-rollback-tools-20261027-201347-7a617b78.zip",
+      "sha256": "4c518731247ce4221f5bcdc9eb01c838726e30d1bad7e89f26f30a3ef4527890"
+    }
+  ],
+  "postProcessingTools": [
+    {
+      "path": "tools/performance/summarize-baseline.py",
+      "sha256": "2239744b6e4d257682924ff42d89769686f0bf6b605e7041a159f5150e47076b"
+    },
+    {
+      "path": "tools/performance/build-evidence.py",
+      "sha256": "e91643b7c9215a3d859faf3f26abe24d99780d4d674d10ae89ed4a0ede9f19dd"
+    }
+  ],
+  "packagingScanCorrection": {
+    "draft": "target/forgeoj-performance-baseline-20261028-095021-183b6f7f",
+    "reason": "source marker string falsely matched as key header; complete PEM matcher checked with synthetic fixture",
+    "privateCredentialPayloadScan": "PASS",
+    "draftPublished": false
+  }
+}

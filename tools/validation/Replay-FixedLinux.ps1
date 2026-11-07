@@ -12,6 +12,7 @@ param(
     [string]$WorkerSha256 = '',
     [switch]$EnableRedis,
     [switch]$EnableSearch,
+    [switch]$SkipReplayFixtures,
     [string]$DockerCommand = 'docker'
 )
 $ErrorActionPreference = 'Stop'
@@ -64,6 +65,7 @@ if ($Action -eq 'Start') {
     $project = 'forgeoj-e2e-' + (Get-Date -Format 'yyyyMMdd-HHmmss') + '-' + [guid]::NewGuid().ToString('N').Substring(0,8)
     $RunDirectory = (New-Item -ItemType Directory -Path (Join-Path $repository "target/$project")).FullName
     $state = [pscustomobject]@{Project=$project;BuildDirectory=$build;ApiHash=$apiHash;WorkerHash=$workerHash;SourceCommit=(git -C $repository rev-parse HEAD);StartedAt=(Get-Date -Format o);FrontendUrl='';FallbackUrl='';RedisEnabled=[bool]$EnableRedis;SearchEnabled=[bool]$EnableSearch}
+    $state | Add-Member -NotePropertyName ProductDemo -NotePropertyValue ([bool]$SkipReplayFixtures)
     Set-ReplayEnvironment
     Save-State
     Write-Host "Replay state: $RunDirectory"
@@ -81,7 +83,9 @@ if ($Action -eq 'Start') {
     # All versioned migrations + dev seed, then remove the migrator-credential process.
     Compose-Checked @('stop','-t','10','bootstrap')
     Compose-Checked @('rm','--force','bootstrap')
-    Sql-Fixture (Get-Content (Join-Path $PSScriptRoot 'replay-fixture.sql') -Raw)
+    if (-not $SkipReplayFixtures) {
+        Sql-Fixture (Get-Content (Join-Path $PSScriptRoot 'replay-fixture.sql') -Raw)
+    }
     Compose-Checked @('up','--detach','--build','--wait','--wait-timeout','180','api','frontend','worker')
     $state.FrontendUrl = 'http://' + (Compose-Checked @('port','frontend','5173')).Trim()
     $state.FallbackUrl = 'http://' + (Compose-Checked @('port','frontend','5174')).Trim()

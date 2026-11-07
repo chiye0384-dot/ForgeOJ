@@ -1,0 +1,75 @@
+{
+  "status": "IMPLEMENTED",
+  "isolatedPackageChecks": "VERIFIED",
+  "m5": "IN_PROGRESS",
+  "release": false,
+  "sourceCommit": "058f36c771f15735a1e987a21c55074b80f511a9",
+  "compiledInputs": 428,
+  "apiInputSha256": "f13c52ca61744d7c4983e2b98c6a68d05b17eb7fce77d637761e1b615dd32c4e",
+  "workerInputSha256": "ff4dd5abf4931a345dd3a94af8c07966aced3a91ebcd4cd6b4c600877b261d1f",
+  "project": "forgeoj-m5check-df0331a167df",
+  "images": [
+    {
+      "component": "api",
+      "id": "sha256:8676d4a85a3c9d7f3cce32d7a2b74fac54ae5aa3ea1260341c132a566a561f6e",
+      "tag": "forgeoj-m5check-df0331a167df-api"
+    },
+    {
+      "component": "worker",
+      "id": "sha256:a135962f814d2116c400c3df63cc6a17d9ab89206c1c5134c5c3ea012c6ee36f",
+      "tag": "forgeoj-m5check-df0331a167df-worker"
+    },
+    {
+      "component": "web",
+      "id": "sha256:36eb870b87f34a77ceec24a63bb42fd9f65b0431e4d577564d18d710c49f38a6",
+      "tag": "forgeoj-m5check-df0331a167df-web"
+    }
+  ],
+  "httpsSmoke": {
+    "status": "PASS",
+    "checks": 15,
+    "domain": "oj.test",
+    "tlsValidated": true,
+    "scope": "empty database HTTPS/secure-cookie/CSRF/origin/forwarding/anonymous-WS refusal; no real user or production SMTP",
+    "verifiedAt": "2026-10-11T07:31:43.495Z"
+  },
+  "readOnlyAudit": {
+    "status": "PASS",
+    "counts": {
+      "users": 0,
+      "admins": 0,
+      "problems": 0,
+      "versionedMigrations": 24,
+      "schemaVersion": 24
+    },
+    "permissionDenials": [
+      "DENIED_1142",
+      "DENIED_1142"
+    ],
+    "apiWithoutDocker": true,
+    "workerNonRoot": true,
+    "noDevdataInImage": true,
+    "noSecretsInRuntimeConfigEnv": true,
+    "scrapeTargetsUp": 3,
+    "unauthenticatedMetricsRefused": 2,
+    "grafanaDatabase": "ok",
+    "monitoringNamedVolumes": true,
+    "scope": "isolated read-only package audit; not fresh-host/backup/rollback/performance/user-trial verification"
+  },
+  "archive": "D:\\Java项目\\ForgeOJ\\target\\forgeoj-deployment-20261011-152559-02e22ae1\\forgeoj-deployment-20261011-152559-02e22ae1.zip",
+  "archiveSha256": "2c97f251cba59fef7e9213444d319e39e0c2acbe4d4c53a0fe34ead37faa497f",
+  "files": 49,
+  "bytes": 65334454,
+  "cleanup": "owned containers/volumes/networks removed; LAN demo retained",
+  "notVerified": [
+    "fresh Linux host",
+    "real domain/DNS/CA/SMTP",
+    "old-version schema upgrade",
+    "external encrypted backup/restore",
+    "compatible version rollback",
+    "fixed-host performance",
+    "controlled real-user trial",
+    "Linux host file permissions",
+    "full release dependency and image audit"
+  ]
+}

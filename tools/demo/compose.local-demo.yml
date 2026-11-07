@@ -1,0 +1,11 @@
+# Copyright 2026 池也; SPDX-License-Identifier: Apache-2.0
+# Loopback-only gateway for an already initialized, explicitly owned demo.
+services:
+  frontend:
+    entrypoint: [node, /source/tools/demo/serve-lan-demo.mjs]
+    environment:
+      FORGEOJ_DEMO_HOST: 127.0.0.1:${FORGEOJ_DEMO_PORT:-8088}
+    volumes:
+      - ${FORGEOJ_DEMO_DIST:?set built frontend directory}:/site:ro
+    ports: !override
+      - 127.0.0.1:${FORGEOJ_DEMO_PORT:-8088}:5173

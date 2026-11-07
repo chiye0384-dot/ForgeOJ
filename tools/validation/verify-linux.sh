@@ -49,6 +49,9 @@ case "${1:-}" in
         export FORGEOJ_TEST_DIRECT_DB=1
         module_args=()
         if test "$1" = api; then module_args=(-pl forgeoj-api -am); fi
+        if test -n "${FORGEOJ_TEST_FILTER:-}"; then
+            module_args+=("-Dtest=$FORGEOJ_TEST_FILTER" -Dsurefire.failIfNoSpecifiedTests=false)
+        fi
         mvn --settings /source/tools/validation/maven-central-settings.xml \
             --batch-mode --no-transfer-progress "${module_args[@]}" clean verify 2>&1 | tee /artifacts/backend.log
         ;;

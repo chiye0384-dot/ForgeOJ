@@ -1,0 +1,15 @@
+{
+  "sqlSha256": "de6ea4330a254e4e4e8f51da8ba89880d2516199321a2fcfac4ecb964c72606b",
+  "facts": {
+    "status": "VERIFIED",
+    "project": "forgeoj-e2e-20261029-201735-604f52a7",
+    "legacyTitle": "整数相加（A + B）",
+    "draftsSha256": "028c6394573bb9c883aa091af6dc6ad22dc6e5db32d81c62a35044b8592ad7f5",
+    "historySha256": "647f838f3ce70ebd11338ea4ad57ca542619629a627437433866c95ef58800ab",
+    "reviewsSha256": "46c3636e14c6411dccbbc585f796b36e5378de296d958b1702ee680059c0f4aa",
+    "revisedSolutions": 20,
+    "officialSolutions": 21
+  },
+  "checkedAt": "2026-10-30T17:19:42.4661432+08:00",
+  "status": "VERIFIED"
+}

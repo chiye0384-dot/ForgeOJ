@@ -1,0 +1,14 @@
+{
+  "status": "VERIFIED",
+  "checkedAt": "2026-10-30T10:50:25.8611276+08:00",
+  "sqlSha256": "ace380657972a04885ff680ff574b0512cc6f4a34bb812255d2f4a57819d8894",
+  "facts": {
+    "status": "VERIFIED",
+    "project": "forgeoj-e2e-20261029-201735-604f52a7",
+    "inserted": 1,
+    "judgeVersion": 1,
+    "sourceSha256": "8ea97069f7dab7a359659988f2fe21e12c13bad2d7709d36536e2d8047f76f28",
+    "officialSolutions": 21,
+    "otherSolutionsSha256": "40b81c71949711195eb2eaedbc0778e609cdcef9647eca52f03c70006883f51a"
+  }
+}

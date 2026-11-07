@@ -13,6 +13,7 @@ export function useCodeDraft(slug: string, source: Ref<string>) {
   let csrf: CsrfToken | undefined
   let timer: ReturnType<typeof setTimeout> | undefined
   let busy = false
+  let pendingSave: Promise<void> | undefined
   let saved = ''
   let paused = false
   function clearTimer() {
@@ -27,6 +28,7 @@ export function useCodeDraft(slug: string, source: Ref<string>) {
     conflict.value = false
     dirty.value = false
     busy = false
+    pendingSave = undefined
     paused = false
     message.value = '登录后读取草稿。'
   }
@@ -57,7 +59,7 @@ export function useCodeDraft(slug: string, source: Ref<string>) {
         void save()
       }, 1000)
   }
-  async function save() {
+  async function persist() {
     if (!ready.value || paused || busy || !csrf || !dirty.value) return
     const operation = generation
     const snapshot = source.value
@@ -87,6 +89,29 @@ export function useCodeDraft(slug: string, source: Ref<string>) {
         schedule()
       }
     }
+  }
+  function save(): Promise<void> {
+    if (pendingSave) return pendingSave
+    const operation = persist()
+    pendingSave = operation
+    void operation.finally(() => {
+      if (pendingSave === operation) pendingSave = undefined
+    })
+    return operation
+  }
+  async function flush(): Promise<boolean> {
+    const operation = generation
+    clearTimer()
+    // Wait for an older response before saving newer typing with its new CAS version.
+    // Bound repeated typing; the leave guard will ask before discarding anything.
+    for (let attempt = 0; attempt < 3 && operation === generation; attempt += 1) {
+      if (pendingSave) await pendingSave
+      if (operation !== generation) return false
+      if (!dirty.value) return true
+      if (!ready.value || paused || busy || !csrf) return false
+      await save()
+    }
+    return operation === generation && !dirty.value
   }
   async function useServer() {
     if (csrf) await load(csrf)
@@ -139,5 +164,17 @@ export function useCodeDraft(slug: string, source: Ref<string>) {
     { flush: 'sync' },
   )
   onBeforeUnmount(reset)
-  return { message, conflict, ready, dirty, load, reset, useServer, keepLocal, saveLocal, retry }
+  return {
+    message,
+    conflict,
+    ready,
+    dirty,
+    load,
+    reset,
+    useServer,
+    keepLocal,
+    saveLocal,
+    retry,
+    flush,
+  }
 }

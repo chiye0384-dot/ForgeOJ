@@ -32,6 +32,7 @@ function mount() {
     userId: 1,
     csrf: { headerName: 'X-CSRF-TOKEN', parameterName: '_csrf', token: 'csrf' },
     refreshKey: 0,
+    active: false,
   })
   host = document.createElement('div')
   document.body.append(host)
@@ -156,4 +157,14 @@ describe('official solution', () => {
     expect(host.textContent).not.toContain('private solution text')
     expect(host.textContent).toContain('版本不一致')
   })
+})
+
+it('loads automatically when the dedicated solution tab opens and retains explicit early-view consent', async () => {
+  read.mockResolvedValue(locked)
+  const props = mount()
+  Object.assign(props, { active: true })
+  await settle()
+  expect(read).toHaveBeenCalledOnce()
+  expect(host.textContent).toContain('通过当前版本后自动解锁')
+  expect(confirm).not.toHaveBeenCalled()
 })

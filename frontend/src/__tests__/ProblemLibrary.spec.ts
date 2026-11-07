@@ -1,8 +1,20 @@
-import { afterEach, describe, expect, it, vi } from 'vitest'
+import { afterEach, beforeEach, describe, expect, it, vi } from 'vitest'
 import { createApp, h, nextTick, type App } from 'vue'
 import { createMemoryHistory, createRouter, RouterView, type Router } from 'vue-router'
 
 import ProblemLibraryView from '../views/ProblemLibraryView.vue'
+import { restoreSession } from '@/services/forgeojApi'
+vi.mock('@/services/forgeojApi', async (original) => ({
+  ...(await original<typeof import('@/services/forgeojApi')>()),
+  restoreSession: vi.fn<typeof restoreSession>(),
+}))
+beforeEach(() => {
+  vi.mocked(restoreSession).mockResolvedValue({
+    authenticated: false,
+    user: null,
+    csrf: { headerName: 'X-CSRF-TOKEN', parameterName: '_csrf', token: 'fixture' },
+  })
+})
 
 type FetchMock = (input: RequestInfo | URL, init?: RequestInit) => Promise<Response>
 
@@ -75,6 +87,31 @@ afterEach(() => {
 })
 
 describe('public problem library', () => {
+  it('uses owner-only pagination for progress filters and shows resume and official list entries', async () => {
+    vi.mocked(restoreSession).mockResolvedValue({
+      authenticated: true,
+      user: { id: 2, username: 'fixture' },
+      csrf: { headerName: 'X-CSRF-TOKEN', parameterName: '_csrf', token: 'fixture' },
+    })
+    const fetchMock = vi.fn<FetchMock>(async (input) => {
+      if (String(input) === '/api/v1/problem-tags') return jsonResponse({ tags: [] })
+      expect(String(input)).toContain('/api/v1/me/practice-problems?')
+      const result = list('已通过题目', 1, 20, 1)
+      return jsonResponse({
+        ...result,
+        items: result.items.map((p) => ({ ...p, progress: 'SOLVED' })),
+        resume: { slug: 'larger-of-two-integers', title: '上次草稿' },
+      })
+    })
+    vi.stubGlobal('fetch', fetchMock)
+    const { host } = await mountLibrary('/problems?progress=SOLVED')
+    expect(fetchMock.mock.calls.some(([path]) => String(path).includes('progress=SOLVED'))).toBe(
+      true,
+    )
+    expect(host.textContent).toContain('已通过')
+    expect(host.textContent).toContain('继续上次编辑：上次草稿')
+    expect(host.textContent).toContain('进入官方入门题单')
+  })
   it('uses the search route and renders fallback notice and highlights as escaped text', async () => {
     const unsafe = '<img src=x onerror=alert(1)>'
     const fetchMock = vi.fn<FetchMock>(async (input: RequestInfo | URL) => {

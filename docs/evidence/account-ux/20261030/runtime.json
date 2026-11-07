@@ -1,0 +1,9 @@
+{
+  "project": "forgeoj-e2e-20261029-201735-604f52a7",
+  "status": "IMPLEMENTED",
+  "apiTests": 54,
+  "apiHash": "fd5b9939738a167314bea5dda24155c0d7a3849506f322bb7e4d3c3784c14b0b",
+  "workerHash": "2be34c53d39560ddd955e761fcad7fb06a6cd19d8ea2720b36b3d8990d7a5761",
+  "updatedAt": "2026-10-30T10:02:44.8830909+08:00",
+  "mysqlMountsUnchanged": true
+}

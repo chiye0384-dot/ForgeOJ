@@ -1,0 +1,20 @@
+{
+  "status": "VERIFIED",
+  "project": "forgeoj-e2e-20261029-201735-604f52a7",
+  "contentSha256": "bd65b0e0682a824b4b9332d7c29dae18a87f0275c09c746988f3bb94c96461f1",
+  "programs": [
+    {
+      "requestId": "13182e0a-5237-4395-9dc5-abfc89da4999",
+      "sourceSha256": "8ea97069f7dab7a359659988f2fe21e12c13bad2d7709d36536e2d8047f76f28",
+      "submissionId": "91753c2a-66af-4b55-ac04-2eac047404a0",
+      "verdict": "AC"
+    },
+    {
+      "requestId": "b88f6104-0773-41fa-837e-5d8eac0b0cb1",
+      "sourceSha256": "4e22e058d7201b690edc6f28369b37e6b7bb4d0afe8fc837c5027e1148ab6f48",
+      "submissionId": "2200e82e-da4f-4485-bb66-83b5adfc48e3",
+      "verdict": "AC"
+    }
+  ],
+  "checkedAt": "2026-10-30T02:47:18.641Z"
+}

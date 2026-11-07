@@ -1,0 +1,11 @@
+{
+  "status": "PASS",
+  "compiledInputsMatch": 428,
+  "archiveMatches": true,
+  "zipCrcFileHashesAndExactAllowlist": true,
+  "archivedToolsMatchCurrent": true,
+  "pythonSyntaxAndJfcXml": "PASS",
+  "relativeLinksExist": 9,
+  "priorArchiveHashesUnchanged": 4,
+  "protectedFiles": "PASS Get-FileHash only; both match original SHA256"
+}

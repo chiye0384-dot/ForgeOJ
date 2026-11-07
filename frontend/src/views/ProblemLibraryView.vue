@@ -5,6 +5,8 @@ import { RouterLink, useRoute, useRouter, type LocationQuery } from 'vue-router'
 import {
   ApiRequestError,
   getProblems,
+  restoreSession,
+  getPracticeProblems,
   getProblemTags,
   type ProblemDifficulty,
   type ProblemListQuery,
@@ -14,6 +16,17 @@ import {
 const route = useRoute()
 const router = useRouter()
 const keyword = ref('')
+const authenticated = ref(false)
+const progress = ref<ProblemListQuery['progress'] | ''>('')
+const personalNotice = ref('')
+const sessionReady = restoreSession()
+  .then((value) => {
+    authenticated.value = value.authenticated
+  })
+  .catch(() => {
+    personalNotice.value = '登录状态暂时无法读取，当前显示公共题库。'
+  })
+const progressNames = { SOLVED: '已通过', ATTEMPTED: '已尝试', UNTRIED: '未尝试' }
 const difficulty = ref<ProblemDifficulty | ''>('')
 const tag = ref('')
 const tags = ref<string[]>([])
@@ -45,6 +58,9 @@ function positiveInteger(value: string, fallback: number, maximum: number): numb
 function readQuery(query: LocationQuery): ProblemListQuery {
   const requestedDifficulty = singleValue(query.difficulty)
   return {
+    progress: ['SOLVED', 'ATTEMPTED', 'UNTRIED'].includes(singleValue(query.progress))
+      ? (singleValue(query.progress) as ProblemListQuery['progress'])
+      : undefined,
     keyword: singleValue(query.keyword).trim() || undefined,
     difficulty:
       requestedDifficulty === 'EASY' ||
@@ -68,6 +84,7 @@ function routeQuery(query: ProblemListQuery): Record<string, string> {
   if (query.keyword) parameters.keyword = query.keyword
   if (query.difficulty) parameters.difficulty = query.difficulty
   if (query.tag) parameters.tag = query.tag
+  if (query.progress) parameters.progress = query.progress
   return parameters
 }
 
@@ -77,7 +94,8 @@ async function loadProblems(query = requestedQuery.value): Promise<void> {
   errorMessage.value = ''
   pageResult.value = null
   try {
-    const result = await getProblems(query)
+    await sessionReady
+    const result = await (authenticated.value ? getPracticeProblems(query) : getProblems(query))
     if (!disposed && generation === requestGeneration) pageResult.value = result
   } catch (error) {
     if (!disposed && generation === requestGeneration) {
@@ -111,6 +129,7 @@ function applyFilters(): void {
     keyword: keyword.value.trim() || undefined,
     difficulty: difficulty.value || undefined,
     tag: tag.value || undefined,
+    progress: progress.value || undefined,
     page: 1,
     size: requestedQuery.value.size,
   }
@@ -130,6 +149,7 @@ watch(
     keyword.value = query.keyword ?? ''
     difficulty.value = query.difficulty ?? ''
     tag.value = query.tag ?? ''
+    progress.value = query.progress ?? ''
     void loadProblems(query)
   },
   { immediate: true },
@@ -154,6 +174,22 @@ onBeforeUnmount(() => {
       <RouterLink to="/account">账号与登录</RouterLink>
     </div>
 
+    <div class="practice-start">
+      <div>
+        <strong>从这里开始练习</strong>
+        <p>Java 入门 20 题：从输入输出到数组、字符串、二分和前缀和。</p>
+        <RouterLink to="/learning?tab=official">进入官方入门题单</RouterLink>
+      </div>
+      <RouterLink
+        v-if="authenticated && pageResult?.resume"
+        :to="{ name: 'problem-workspace', params: { slug: pageResult.resume.slug } }"
+        >继续上次编辑：{{ pageResult.resume.title }}</RouterLink
+      >
+    </div>
+    <p v-if="personalNotice" role="status">{{ personalNotice }}</p>
+    <p v-if="!authenticated && requestedQuery.progress" role="status">
+      登录后可按个人进度筛选；当前展示公共题库。
+    </p>
     <form class="filters" data-testid="problem-filters" @submit.prevent="applyFilters">
       <label class="keyword-field">
         搜索关键词
@@ -177,6 +213,18 @@ onBeforeUnmount(() => {
         </select>
       </label>
       <button type="submit">查找题目</button>
+      <label
+        >个人进度<select
+          v-model="progress"
+          :disabled="!authenticated"
+          data-testid="problem-progress"
+        >
+          <option value="">全部进度</option>
+          <option value="UNTRIED">未尝试</option>
+          <option value="ATTEMPTED">已尝试</option>
+          <option value="SOLVED">已通过</option>
+        </select></label
+      >
     </form>
 
     <p v-if="tagErrorMessage" class="muted" role="status">
@@ -213,6 +261,9 @@ onBeforeUnmount(() => {
               </p>
             </div>
             <div class="metadata">
+              <span v-if="authenticated && problem.progress" class="progress-badge">{{
+                progressNames[problem.progress]
+              }}</span>
               <span class="difficulty">
                 {{ problem.difficulty ? difficultyNames[problem.difficulty] : '未标注' }}
               </span>
@@ -251,6 +302,24 @@ onBeforeUnmount(() => {
   width: min(1180px, calc(100% - 2rem));
   margin: 0 auto;
   padding: 2rem 0 4rem;
+}
+.practice-start {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 1rem;
+  justify-content: space-between;
+  align-items: center;
+  margin-top: 1.25rem;
+  padding: 1rem 1.5rem;
+  background: #e7f5f8;
+  border-radius: 12px;
+}
+.practice-start p {
+  margin: 0.5rem 0;
+}
+.progress-badge {
+  color: #15576d;
+  font-weight: 700;
 }
 
 .library-heading,

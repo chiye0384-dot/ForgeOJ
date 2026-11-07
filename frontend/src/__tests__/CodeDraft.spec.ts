@@ -50,6 +50,38 @@ afterEach(() => {
   vi.useRealTimers()
 })
 describe('server drafts', () => {
+  it('flushes the last edit before the debounce delay when leaving', async () => {
+    await draft.load(csrf)
+    source.value = 'last edit'
+    expect(await draft.flush()).toBe(true)
+    expect(saveCodeDraft).toHaveBeenCalledWith('actual-slug', 'last edit', 0, csrf)
+    expect(draft.dirty.value).toBe(false)
+    await vi.advanceTimersByTimeAsync(1000)
+    expect(saveCodeDraft).toHaveBeenCalledTimes(1)
+  })
+  it('waits for an in-flight save and then saves newer typing before leaving', async () => {
+    await draft.load(csrf)
+    const pending = deferred<CodeDraft>()
+    vi.mocked(saveCodeDraft).mockReturnValueOnce(pending.promise)
+    source.value = 'first'
+    await vi.advanceTimersByTimeAsync(1000)
+    source.value = 'last edit'
+    const leaving = draft.flush()
+    pending.resolve(state('first', 1))
+    expect(await leaving).toBe(true)
+    expect(saveCodeDraft).toHaveBeenLastCalledWith('actual-slug', 'last edit', 1, csrf)
+    expect(draft.dirty.value).toBe(false)
+  })
+  it('does not force overwrite a conflict when flushing before leaving', async () => {
+    await draft.load(csrf)
+    vi.mocked(saveCodeDraft).mockRejectedValueOnce(new ApiRequestError(409))
+    source.value = 'retained'
+    expect(await draft.flush()).toBe(false)
+    expect(draft.conflict.value).toBe(true)
+    expect(source.value).toBe('retained')
+    expect(await draft.flush()).toBe(false)
+    expect(saveCodeDraft).toHaveBeenCalledTimes(1)
+  })
   it('loads without GET writing and saves incomplete code after debounce with CAS', async () => {
     await draft.load(csrf)
     expect(saveCodeDraft).not.toHaveBeenCalled()

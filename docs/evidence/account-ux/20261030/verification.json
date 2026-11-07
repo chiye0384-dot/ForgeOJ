@@ -1,0 +1,517 @@
+{
+  "status": "VERIFIED",
+  "checkedAt": "2026-10-30T02:10:14.043Z",
+  "scope": "Local ordinary account navigation and registration completion",
+  "project": "forgeoj-e2e-20261029-201735-604f52a7",
+  "url": "http://127.0.0.1:8088/account",
+  "backend": {
+    "tests": 54,
+    "suites": 7,
+    "fullApiSuite": false,
+    "apiSha256": "fd5b9939738a167314bea5dda24155c0d7a3849506f322bb7e4d3c3784c14b0b",
+    "buildDirectory": "D:\\Java项目\\ForgeOJ\\target\\forgeoj-linux-20261030-095558-219c108b",
+    "sourceManifestSha256": "c28afd5852eb524bc7129ef3d4a68ee219a19c1fe3334e3674080f0fe98342b7"
+  },
+  "frontend": {
+    "tests": 149,
+    "suites": 28,
+    "typeCheck": true,
+    "lint": true,
+    "format": true,
+    "build": true,
+    "nativeLog": "target/account-ux-frontend-final-demo.log",
+    "logSha256": "b06212dba9b622e3fb23c9a34867152eab19ce639f6e2ecf4e447b454c3e66bf",
+    "assets": [
+      {
+        "path": "/assets/AccountView-B6AkIphQ.css",
+        "sha256": "3c630d1d7c85a537e4199a2c9a07b5b099cfca0a3f52fed5499b104a6122011a"
+      },
+      {
+        "path": "/assets/AccountView-DaJA-GxE.js",
+        "sha256": "b5ca6a467de33e937a6b79c57cb0e70e41959bda03c1ad3e98df65265cb697c7"
+      },
+      {
+        "path": "/assets/adminApi-DkyxilTy.js",
+        "sha256": "0dceda8c89854e6551c50717acf283d457aaba04df0a53aea0a8251c92c3cff9"
+      },
+      {
+        "path": "/assets/AdminContentView-D_paGlKA.css",
+        "sha256": "064d38bbc797e937c961f6186a0ab5a0a80ee385f257e16a0f2f8cb56f531d46"
+      },
+      {
+        "path": "/assets/AdminContentView-HO1mmS4I.js",
+        "sha256": "c8c17522b66ea895f90bedccfdff9f17b37af1cda92e9e1e0afdddb3fd6a2d02"
+      },
+      {
+        "path": "/assets/AdminOperationsView-Bkz8KI9B.css",
+        "sha256": "0c2f30e4a85c55eab427cdd86347b01ad41caf2fdfbaebc8d4e058a070dad274"
+      },
+      {
+        "path": "/assets/AdminOperationsView-D4r0jhob.js",
+        "sha256": "06f93f1b1df1235a8d0628b36dbe8b98882355d1dfa9c45a68e05f079517245e"
+      },
+      {
+        "path": "/assets/AdminSearchView-cJsm3vBc.css",
+        "sha256": "8906423c7b8cf7ee5253a5424fc606a488910c78fc701eb85fdb64e388ef71a3"
+      },
+      {
+        "path": "/assets/AdminSearchView-CSN9FK6R.js",
+        "sha256": "f8adbb4944e3b2afc0c66ef93ab23ac681d2091ba2f0e63edbd33ee0b2000a58"
+      },
+      {
+        "path": "/assets/AdminView-CaNI5zjv.js",
+        "sha256": "1001b34ce41d8fc3a52381dfb8c4a4aeb81c6aa5bd276c04d205ec5feb27b2de"
+      },
+      {
+        "path": "/assets/AdminView-CXx-48_9.css",
+        "sha256": "1a3e3088138d0fce7e2e851fb90960d1ebccce5c2859e77e927a45b6ad557cb6"
+      },
+      {
+        "path": "/assets/assignmentApi-CI3dIlxj.js",
+        "sha256": "b88a0c111dd33982fd839e467a0fe010e11b963d7a1469a4f3643a6147b39f2e"
+      },
+      {
+        "path": "/assets/AssignmentsView-BuZFZ8nB.js",
+        "sha256": "a1627bd581300d5c5737be6389a487d34785cca85d4b5c5d748051c2d620df20"
+      },
+      {
+        "path": "/assets/AssignmentsView-C8qyeWzy.css",
+        "sha256": "a6e58ca5998b59d31a96457168de75ab5001af95b0470eba3c40090a0991cede"
+      },
+      {
+        "path": "/assets/AuthoringView-CrpIBCX1.css",
+        "sha256": "ffdd9093a2688607e4a7774994e84dd1538dbaa1f2db34ec6ed3a88aea5f885b"
+      },
+      {
+        "path": "/assets/AuthoringView-DuhQEx06.js",
+        "sha256": "5d1f38eea491d34e005c5c42bf8eb7078bcad613c6795821a22140dd7a205773"
+      },
+      {
+        "path": "/assets/classroomApi-D5KxljNG.js",
+        "sha256": "af2833def4ca7ae2c1417946f97c3033bbf5947de5bc4865ddc67408f82d9873"
+      },
+      {
+        "path": "/assets/classroomProblemApi-BXB-vQD7.js",
+        "sha256": "43388295fa6571ff2a95825f4916afc08379e8adaa1261f46cb5d105b3797d69"
+      },
+      {
+        "path": "/assets/ClassroomProblemsView-DGG0SN4z.css",
+        "sha256": "5bfd68c85e398b6670a2427c28002c33d3f630f7969a4f96f6657e3168ed4527"
+      },
+      {
+        "path": "/assets/ClassroomProblemsView-DIBfJn-A.js",
+        "sha256": "b9be8998fc4478f4d7f0788024447fb10ab8937b5b3af43a95a2baa4c1efd9cd"
+      },
+      {
+        "path": "/assets/ClassroomView-Bd1cpqIb.js",
+        "sha256": "2e73c85bc6a71fc7254eb7afb054c4a1b5569ad2ce83f0ee6724048663e71126"
+      },
+      {
+        "path": "/assets/ClassroomView-u-a_zlPw.css",
+        "sha256": "7b0a7ec1d1429220748f439cecac78cfe8aa5450f7920060ebaeb602046770b5"
+      },
+      {
+        "path": "/assets/contentApi-XKsguLWf.js",
+        "sha256": "666ae78b338b39a7f60bb1e75512b400c3703f8a9940113d6f389d83e182a667"
+      },
+      {
+        "path": "/assets/index-BMNW6PYN.css",
+        "sha256": "068e9b426f18ff8a85597de452753c5bea89a0d275d0ca0d0467a7876f63fe38"
+      },
+      {
+        "path": "/assets/index-SGkPPfSw.js",
+        "sha256": "953f662a1878079a23278a51a3ee307ccfa5ac18ac0f93bf1c8f12e0fd4decef"
+      },
+      {
+        "path": "/assets/JudgeWorkspaceView-DMm8Dv10.css",
+        "sha256": "777702a0b5c90e611af1ae012e732bcec8c157e75647aab6ac6ca0af043ead95"
+      },
+      {
+        "path": "/assets/JudgeWorkspaceView-m_ZaKSRH.js",
+        "sha256": "83842b1ab065003176db59a37c770d44c22174ca88bb7a1398c43580d18f48e1"
+      },
+      {
+        "path": "/assets/learningApi-D7S2Btnw.js",
+        "sha256": "11ce7af5af92178cd938c905ff9bbe19a7e45bce1a564169bf1a6da4bb1513d3"
+      },
+      {
+        "path": "/assets/LearningView-B6yrw01c.css",
+        "sha256": "c33574f9e3c2e841e8e8f268d4afa62b96a796cb879633e661c8badc2f5f1ab4"
+      },
+      {
+        "path": "/assets/LearningView-Bxmj8q9j.js",
+        "sha256": "22496f2d8b41e583ea6fe8d0cf4179f0d8556be29c544d9c02e590c8e9af1bd2"
+      },
+      {
+        "path": "/assets/ProblemLibraryView-C6BMDuW8.js",
+        "sha256": "2baf043686b7cd640bbb2a7312778c2b771d009fea7fe131282a751204b8c5f1"
+      },
+      {
+        "path": "/assets/ProblemLibraryView-Dxn2q-Wu.css",
+        "sha256": "6b64f5f693eef4ff87aed7a6c7bf0c54ef5c60b792ff0b2e4d7943501cccc08e"
+      },
+      {
+        "path": "/assets/selfTestApi-Dwj78YiN.js",
+        "sha256": "cb1a9c139b74c9c23cbf1b4a756aa26bb8c5908287d8ede60ababcf96d760c6e"
+      },
+      {
+        "path": "/assets/TeacherRecordsView-Bpq6Qlrj.css",
+        "sha256": "9c91c7f11c8c6294d28cf36918ab32ae96cf76cab9b0f671ef10381a6ba8b50c"
+      },
+      {
+        "path": "/assets/TeacherRecordsView-DKFaiH0G.js",
+        "sha256": "1d56496c703cf846432fbcbab30264ad87ec10e025f58174f7a1f3a74d65e245"
+      },
+      {
+        "path": "/assets/_plugin-vue_export-helper-BDNMzG2s.js",
+        "sha256": "27e87fe62aa760227b7529576953d8314891fd2aec28e0a3f03aece406f2d7d7"
+      }
+    ]
+  },
+  "unchangedWorker": {
+    "sha256": "2be34c53d39560ddd955e761fcad7fb06a6cd19d8ea2720b36b3d8990d7a5761",
+    "rebuilt": false
+  },
+  "liveHttp": {
+    "status": "VERIFIED",
+    "project": "forgeoj-e2e-20261029-201735-604f52a7",
+    "mode": "verify",
+    "checks": [
+      "21 problems preserved",
+      "pending account cannot log in",
+      "optional nickname accepted",
+      "activation logs in without password reentry",
+      "CSRF rotated",
+      "authenticated protected query succeeds",
+      "used link rejected",
+      "logout works"
+    ],
+    "fixtureUsername": "UxSignup_1793325802371",
+    "checkedAt": "2026-10-30T02:03:23.847Z"
+  },
+  "browserChecks": [
+    "anonymous navigation defaults to login",
+    "registration is explicit and nickname optional",
+    "top account returns from registration to login",
+    "learning login returns to learning",
+    "anonymous selected problem redirects to login with return path",
+    "initial mail link and same-page fragment activation recognized",
+    "activation signs in without password reentry",
+    "signed-in account settings show actual fixture owner",
+    "fixture logged out; final tab shows login",
+    "local demo credentials and simulated-mail limitation visible on relevant pages"
+  ],
+  "screenshots": [
+    "login-final-demo.jpg",
+    "activation-signed-in.jpg"
+  ],
+  "boundaries": {
+    "realSmtp": false,
+    "publicDeployment": false,
+    "release": false,
+    "fullM5": false,
+    "originalDatabaseMountRetained": true
+  },
+  "sourceFiles": [
+    {
+      "path": "frontend/src/App.vue",
+      "sha256": "997ef9fd7b7266a96fa5cafe8e4c5418125a5ef8eb1cf1648ec4b3c0d6a97ce8"
+    },
+    {
+      "path": "frontend/src/components/CodeEditor.vue",
+      "sha256": "745907a8901616ec1502d1cff6edc31124816868b0528e5110b904fb2a8dbdfc"
+    },
+    {
+      "path": "frontend/src/components/ContentOutput.vue",
+      "sha256": "497a1858fc10b6a2477f3bb7feeecfbee5bde1b23951ada5a804e38a97ec9daf"
+    },
+    {
+      "path": "frontend/src/components/ContentReview.vue",
+      "sha256": "7dbf96130ae5cc9762e20e6421856b922b23257affa9077968f208f134cbffb5"
+    },
+    {
+      "path": "frontend/src/components/ContentValidation.vue",
+      "sha256": "7637f626a0c34b85faca066752b6f432cea2ad2fa97c60ad0454ccd4922f53b7"
+    },
+    {
+      "path": "frontend/src/components/OfficialSolution.vue",
+      "sha256": "ba2eae20641b8a02a2a7de89c6e80e8f0de4028ba06927e80793ad489e3d0f5f"
+    },
+    {
+      "path": "frontend/src/components/ProblemFeedback.vue",
+      "sha256": "c73d90f39c5183ff70d8299b32adac1ecba3449248619fdcb212f75f252d21d5"
+    },
+    {
+      "path": "frontend/src/components/PublicRevisionList.vue",
+      "sha256": "87ab9b96ebbbe6b84ee17a67d4612a0fbcd1faec6986935f956f90834015f699"
+    },
+    {
+      "path": "frontend/src/components/SelfTest.vue",
+      "sha256": "4a1486e02ac6956d319c224a839d41d8eb5c7d569e08576d95c18814456ff313"
+    },
+    {
+      "path": "frontend/src/composables/useCodeDraft.ts",
+      "sha256": "8e3e23bc6dc577efce7e9a383b983a5ccf9e71d92d90b76b8f3ef420e023f71f"
+    },
+    {
+      "path": "frontend/src/composables/useDraftLeaveGuard.ts",
+      "sha256": "a0a2ca62105f9743a9065e75c38458382151ba14feb0a5522b5bef2a22a63ace"
+    },
+    {
+      "path": "frontend/src/main.ts",
+      "sha256": "b82185c691e414cde9108c4d233b713155adf103e06978de606a9895d5ddcae6"
+    },
+    {
+      "path": "frontend/src/router/accountNavigation.ts",
+      "sha256": "731e1cf22989f32a283221876c178f7fcc5f1817e5eaf75985471d11ebd9f743"
+    },
+    {
+      "path": "frontend/src/router/index.ts",
+      "sha256": "a47e6ac75e0a90251bfcfb451d00cc4ad4b9b3d64e691655800fd4448358bac9"
+    },
+    {
+      "path": "frontend/src/services/adminApi.ts",
+      "sha256": "4fc7c292102255e60d82826b426e0d9762e0ec90fc1ad485d87e712f47b1d0e7"
+    },
+    {
+      "path": "frontend/src/services/assignmentApi.ts",
+      "sha256": "aa71edd9b3287bb3ce7ddc36c195625877518ec67d4466bcf59152bd9e71a0ba"
+    },
+    {
+      "path": "frontend/src/services/classroomApi.ts",
+      "sha256": "2fecac15c4420fba0cff13aabcb5756c8324d5b21a1d0ff0e1d5c462449107c7"
+    },
+    {
+      "path": "frontend/src/services/classroomProblemApi.ts",
+      "sha256": "d522f06501cedd7109655a6076f7548be85128872e45f662dc749270253eb114"
+    },
+    {
+      "path": "frontend/src/services/contentApi.ts",
+      "sha256": "370e9a7f0586c17b669492d6ea55d345d1df51dd4d510a066b1fe4d518a57ecf"
+    },
+    {
+      "path": "frontend/src/services/forgeojApi.ts",
+      "sha256": "fd529ee50b911a28a41e6230c18e008634cacdb7e0d07865ae63fc999d271099"
+    },
+    {
+      "path": "frontend/src/services/learningApi.ts",
+      "sha256": "45f0ce7ca86a77fbcee8853e57dd65292b0e95c85071e815781d08481a6ce21c"
+    },
+    {
+      "path": "frontend/src/services/operationsApi.ts",
+      "sha256": "cc1e9d56093b5b8c1b60f0dd99dae1c0431d6c9a74098209c0d6327b16b6a319"
+    },
+    {
+      "path": "frontend/src/services/outputApi.ts",
+      "sha256": "c1627dd8f44eaaeb5d728f6fe3f77ac266961ad5896816b073bb995b5cdeccf2"
+    },
+    {
+      "path": "frontend/src/services/publicRevisionApi.ts",
+      "sha256": "64639397792cf20b93e2e8e3e0a2e377d8a015903ab7b02e74fd616b3cfbca4e"
+    },
+    {
+      "path": "frontend/src/services/reviewApi.ts",
+      "sha256": "5424a3a54636c367acc082942f379414228c679225630660718fde3f9d1b1f6a"
+    },
+    {
+      "path": "frontend/src/services/selfTestApi.ts",
+      "sha256": "4acbaf031f0b54100692862218ab04d1799e2a2d4ea280242fae7056eee97744"
+    },
+    {
+      "path": "frontend/src/services/solutionApi.ts",
+      "sha256": "b72df53f1f51b9ce1fdcd7c197c04f35e0476da5155c897e76715139e5b53a31"
+    },
+    {
+      "path": "frontend/src/services/submissionMonitor.ts",
+      "sha256": "427863d4a8163388316c8cb22450a9c581705ba98a5e1469c706824c7db78daa"
+    },
+    {
+      "path": "frontend/src/services/teacherRecordApi.ts",
+      "sha256": "8c10830f524a81f3eb65875278af3d4616e8130439d1a54ef4b583e3c92dd5ba"
+    },
+    {
+      "path": "frontend/src/services/validationApi.ts",
+      "sha256": "54c0d7264ef52f2a08dffd5d92e236959f91f97379a0ee5525a1209a684b5fa7"
+    },
+    {
+      "path": "frontend/src/views/AccountView.vue",
+      "sha256": "46cbd71eba4ce2b263ebe61fa23fde5c3de8ef5bd38a39696e94b41ace878dd6"
+    },
+    {
+      "path": "frontend/src/views/AdminContentView.vue",
+      "sha256": "f99c628ca3790f94a2fed397cc78361b8c77296b62bd7a56db3e9406479bbf23"
+    },
+    {
+      "path": "frontend/src/views/AdminOperationsView.vue",
+      "sha256": "9c1f3b2ac77105fdc22fc9e4d2dd21021ac394c07b59a7c4a5095c13553204cb"
+    },
+    {
+      "path": "frontend/src/views/AdminSearchView.vue",
+      "sha256": "2914737d1a54fadab2c5103f7863af3367215db36591d892b9539a1631445e8f"
+    },
+    {
+      "path": "frontend/src/views/AdminView.vue",
+      "sha256": "cd5f1540e60083fac9c3258a23ee7d718e0ab05fe9a8cd01a5dc77b0fcb9531a"
+    },
+    {
+      "path": "frontend/src/views/AssignmentsView.vue",
+      "sha256": "231a775a1e39cf417977bab5fe869f2f2dae77243381a5adb3d332ca194e55a1"
+    },
+    {
+      "path": "frontend/src/views/AuthoringView.vue",
+      "sha256": "eaf7029d1c5fda642837c65da02880c8236818c24048fd6067115dd72427c220"
+    },
+    {
+      "path": "frontend/src/views/ClassroomProblemsView.vue",
+      "sha256": "8b39bb9fb9914b5c793453d5a5ecb7b2c35e813b02f73a491bf9b62989fa865d"
+    },
+    {
+      "path": "frontend/src/views/ClassroomView.vue",
+      "sha256": "3910c3b85eba8eefa3f2930228ab001488d8d8bfe7e3e6617f4f885f9148d873"
+    },
+    {
+      "path": "frontend/src/views/JudgeWorkspaceView.vue",
+      "sha256": "5eb555d93957475d7318803176bb7a1e8398d35bfd5ca2802f084307c2da1b4b"
+    },
+    {
+      "path": "frontend/src/views/LearningView.vue",
+      "sha256": "2eccb2fc8e409a2a013e41e25a82ba0cea788a03ae373663d2fce91847a473f2"
+    },
+    {
+      "path": "frontend/src/views/ProblemLibraryView.vue",
+      "sha256": "5d76a7430e6b349cd70ab7fe7466d7e8b0fa3205f8e7bcb246d192cb751e5842"
+    },
+    {
+      "path": "frontend/src/views/TeacherRecordsView.vue",
+      "sha256": "b47548658ade0c1b01e5324133676c65ecc675a2a33d36d30f4d5e9a3a0e724a"
+    },
+    {
+      "path": "frontend/src/__tests__/AccountNavigation.spec.ts",
+      "sha256": "629cd9b63a6211df71b690c5574db57be0c310d80c31964a6ab3abf8558a4572"
+    },
+    {
+      "path": "frontend/src/__tests__/AccountRefresh.spec.ts",
+      "sha256": "20fd8a8a9d835f1d9b6e2937b99c84e9eda757fa9e33a5e6fa7ca22255998ec5"
+    },
+    {
+      "path": "frontend/src/__tests__/AccountView.spec.ts",
+      "sha256": "a2038136b6b6aee4c0de1e95223ca9a499fe5aa779b0bd7c90afacf77aaa73fa"
+    },
+    {
+      "path": "frontend/src/__tests__/AdminContentView.spec.ts",
+      "sha256": "08ba13c6792fd3045d1323dee5058bb035d0d9ed9756eda3d27873fd9b4c9e15"
+    },
+    {
+      "path": "frontend/src/__tests__/AdminOperationsView.spec.ts",
+      "sha256": "912a305ebab2daf304e4929c8797bd52ac6218cc89d6eef73a07882617d33c7c"
+    },
+    {
+      "path": "frontend/src/__tests__/AdminRefresh.spec.ts",
+      "sha256": "11a0bbd40cb76cb4f296d6d73b081e214ad12fc0b9d5212242ffe7585bb53439"
+    },
+    {
+      "path": "frontend/src/__tests__/AdminSearchView.spec.ts",
+      "sha256": "f6a155cd8dba3b969d25e0cc151e80bc10c6304d8d44e81b36522ed6a25bcd8b"
+    },
+    {
+      "path": "frontend/src/__tests__/AdminView.spec.ts",
+      "sha256": "5cd593ded5dbabbe4305f02f0bf90313e49388c2766272a89fa5f5770b12501a"
+    },
+    {
+      "path": "frontend/src/__tests__/App.spec.ts",
+      "sha256": "9569d8b9000eff967e1ab3b7dada99e535f3fb8ae5ea1fce04c63a82bd925598"
+    },
+    {
+      "path": "frontend/src/__tests__/AssignmentsView.spec.ts",
+      "sha256": "713851499155b387dd4269959b7d0338f5f58ac4fd88b5ca52f477b137d56c33"
+    },
+    {
+      "path": "frontend/src/__tests__/AuthoringView.spec.ts",
+      "sha256": "4de48105d96fe9fd80c364ec9c7c386804e0ad5b9b2ac9a5c46a885ea03ecad0"
+    },
+    {
+      "path": "frontend/src/__tests__/ClassroomProblemsView.spec.ts",
+      "sha256": "0bdad97f6ea71fe79f11e60b1ffd46d23c83b4ef6d52b5c239b52ab0646a25a4"
+    },
+    {
+      "path": "frontend/src/__tests__/ClassroomView.spec.ts",
+      "sha256": "8ea438b0dd54684ded54903e8151311bd2fa3b0deee9f32e26aad0e731f25b3b"
+    },
+    {
+      "path": "frontend/src/__tests__/CodeDraft.spec.ts",
+      "sha256": "e4026b061df5a7d5aca082c5898d7be7b7100d6ae9fff1579cfe094b9ed0f193"
+    },
+    {
+      "path": "frontend/src/__tests__/CodeEditor.spec.ts",
+      "sha256": "b2a91db76ca98aa89101acf2e4a3ace84ef4affc0a3f7bac03ede9549cb40630"
+    },
+    {
+      "path": "frontend/src/__tests__/ContentOutput.spec.ts",
+      "sha256": "1989bc2524816e4cc4608aaf47d70523cd3a1527d6c73b08dda740af99fe7274"
+    },
+    {
+      "path": "frontend/src/__tests__/ContentReview.spec.ts",
+      "sha256": "44c8987f2063771392d96b021e5ecbc29b28ea2e84f4bb830fa490cb0023dfea"
+    },
+    {
+      "path": "frontend/src/__tests__/ContentValidation.spec.ts",
+      "sha256": "962b7927da5529ec5eaaea6d1a31983e3b08abbfa0ba10fe8f56bc0d930b24aa"
+    },
+    {
+      "path": "frontend/src/__tests__/DraftNavigation.spec.ts",
+      "sha256": "cc68ab00fa5ec1158e00d94d380fcc7bd1ba64d650b156448726118893e9d258"
+    },
+    {
+      "path": "frontend/src/__tests__/LearningView.spec.ts",
+      "sha256": "c58e33202ea462b7c22c016a3b4e60b8bbc956a6bd7d92ef9f1cac32ca386591"
+    },
+    {
+      "path": "frontend/src/__tests__/OfficialSolution.spec.ts",
+      "sha256": "b112e344f29f753620b6f6bc7b45eac94fed08e3af3e3bd2a1ea534a069bf870"
+    },
+    {
+      "path": "frontend/src/__tests__/ProblemFeedback.spec.ts",
+      "sha256": "451ef4bf49b6e1317b1c147f904a029d08b602ad770e34c48ecb9748a8d5473c"
+    },
+    {
+      "path": "frontend/src/__tests__/ProblemLibrary.spec.ts",
+      "sha256": "4e178e08b8fdfbae082523383f7d684b3e340ee0ba92dcfcb9e8059f490f6b25"
+    },
+    {
+      "path": "frontend/src/__tests__/ProblemWorkspace.spec.ts",
+      "sha256": "ed34e55b88d6df2cdabed56c623ddf839b93649cd2b57145b7154c6f8619ee28"
+    },
+    {
+      "path": "frontend/src/__tests__/PublicRevisionList.spec.ts",
+      "sha256": "8f81463fee403ba4b740571625b9471e78351604fdb3570b04524b5d69e952f0"
+    },
+    {
+      "path": "frontend/src/__tests__/SelfTest.spec.ts",
+      "sha256": "cddeede1ea551014ff43c85ea025839696e8926075e59d9c0e2ad2f626574509"
+    },
+    {
+      "path": "frontend/src/__tests__/submissionMonitor.spec.ts",
+      "sha256": "cced411cdcfdfb0c7975ea8a2fc704f5be4f87e477805b1379d83989f0bdc83e"
+    },
+    {
+      "path": "frontend/src/__tests__/TeacherRecordsView.spec.ts",
+      "sha256": "11fe9a4d89f392b20cdc115c8625780f54b024d68a16dc0713d0f07761945b76"
+    },
+    {
+      "path": "frontend/package.json",
+      "sha256": "0ad3d89f99474af92ba51765e1ad41637ee0897c6a53bc97db49fb979e6713b6"
+    },
+    {
+      "path": "frontend/package-lock.json",
+      "sha256": "51c5b2dd9e163837e123e0ebf89282aa7488de8a971e800b99243a84700f6351"
+    },
+    {
+      "path": "tools/demo/serve-lan-demo.mjs",
+      "sha256": "f185b5fe3b5a56a3b80656a7543b791aa6d2c65a01c382c270b42c75f44c2a58"
+    },
+    {
+      "path": "tools/demo/verify-account-ux.mjs",
+      "sha256": "b98ebf992cde4e1576c1b1e86a2dced727728ad6aee087cc3f915a8759c80c5a"
+    }
+  ]
+}

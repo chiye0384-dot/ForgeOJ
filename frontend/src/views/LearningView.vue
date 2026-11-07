@@ -1,6 +1,8 @@
 <!-- Copyright 2026 池也; SPDX-License-Identifier: Apache-2.0 -->
 <script setup lang="ts">
 import { onBeforeUnmount, onMounted, ref } from 'vue'
+import { getSubmissionSource, type SubmissionSource } from '@/services/learningApi'
+import { judgeLabel, judgeAdvice, judgeTime } from '@/services/judgePresentation'
 import {
   ApiRequestError,
   getProblems,
@@ -21,12 +23,15 @@ import {
 } from '@/services/learningApi'
 
 const query = new URLSearchParams(window.location.search)
-const tab = ref(query.get('tab') === 'history' ? 'history' : 'personal')
+const tab = ref(
+  ['history', 'official'].includes(query.get('tab') ?? '') ? query.get('tab')! : 'personal',
+)
 const session = ref<SessionResponse | null>(null)
 const lists = ref<ListSummary[]>([])
 const detail = ref<ListDetail | null>(null)
 const history = ref<HistoryItem[]>([])
 const selectedSubmission = ref<SubmissionStatusResponse | null>(null)
+const selectedSource = ref<SubmissionSource | null>(null)
 const page = ref(1)
 const total = ref(0)
 const itemPage = ref(1)
@@ -58,6 +63,7 @@ async function load() {
   loading.value = true
   error.value = ''
   selectedSubmission.value = null
+  selectedSource.value = null
   try {
     const account = await restoreSession()
     if (!current(operation)) return
@@ -218,9 +224,14 @@ async function move(itemId: string, direction: number) {
 async function inspect(id: string) {
   const operation = ++generation
   error.value = ''
+  selectedSource.value = null
+  selectedSubmission.value = null
   try {
-    const result = await getSubmission(id)
-    if (current(operation)) selectedSubmission.value = result
+    const [result, code] = await Promise.all([getSubmission(id), getSubmissionSource(id)])
+    if (current(operation)) {
+      selectedSubmission.value = result
+      selectedSource.value = code
+    }
   } catch (e) {
     if (current(operation)) error.value = fail(e)
   }
@@ -396,14 +407,21 @@ onBeforeUnmount(() => {
             item.problem.title
           }}</a
           ><span v-else>题目暂不可用</span> · 判题版本 {{ item.judgeVersion }} ·
-          {{ item.processingStatus }} {{ item.verdict ?? '' }} · {{ item.createdAt }}
+          {{ judgeLabel(item.processingStatus, item.verdict) }} ·
+          {{ judgeTime(item.createdAt) }}
           <span v-if="item.judgeDataWarning">{{ item.judgeDataWarning }}</span>
-          <button type="button" @click="inspect(item.submissionId)">查看本次状态</button>
+          <button type="button" @click="inspect(item.submissionId)">查看本次代码与结果</button>
         </li>
       </ul>
       <div v-if="selectedSubmission" class="detail">
         <p>提交 {{ selectedSubmission.submissionId }}</p>
-        <strong>{{ selectedSubmission.processingStatus }} {{ selectedSubmission.verdict }}</strong>
+        <strong>{{
+          judgeLabel(selectedSubmission.processingStatus, selectedSubmission.verdict)
+        }}</strong>
+        <p>{{ judgeAdvice(selectedSubmission.processingStatus, selectedSubmission.verdict) }}</p>
+        <pre v-if="selectedSource" data-testid="history-source">{{
+          selectedSource.sourceCode
+        }}</pre>
         <p v-if="selectedSubmission.judgeDataWarning" role="alert">
           {{ selectedSubmission.judgeDataWarning }}
         </p>

@@ -73,6 +73,8 @@ let app: App | undefined
 let sockets: Array<{ close: ReturnType<typeof vi.fn<() => void>> }>
 
 beforeEach(() => {
+  localStorage.clear()
+  vi.spyOn(window, 'confirm').mockReturnValue(true)
   vi.useFakeTimers()
   sockets = []
   vi.stubGlobal(
@@ -101,13 +103,59 @@ afterEach(() => {
 
 async function mountWorkspace(slug = 'larger-of-two-integers'): Promise<HTMLDivElement> {
   const host = document.createElement('div')
-  app = createApp(JudgeWorkspaceView, { slug })
+  const router = createRouter({
+    history: createMemoryHistory(),
+    routes: [{ path: '/:pathMatch(.*)*', component: JudgeWorkspaceView }],
+  })
+  await router.push('/')
+  app = createApp(JudgeWorkspaceView, { slug }).use(router)
   app.mount(host)
   await settleVue()
   return host
 }
 
 describe('selected problem workspace lifecycle', () => {
+  it('switches left-side tools without replacing code or self-test input', async () => {
+    vi.stubGlobal(
+      'fetch',
+      vi.fn<FetchMock>(async (input) => {
+        const path = String(input)
+        if (path.endsWith('/session')) return jsonResponse(session())
+        if (path === '/api/v1/problems/larger-of-two-integers')
+          return jsonResponse(problem('larger-of-two-integers'))
+        if (path.endsWith('/code-draft'))
+          return jsonResponse({ sourceCode: null, version: 0, editable: true })
+        if (path.endsWith('/solution'))
+          return jsonResponse({ access: 'LOCKED', judgeVersion: 1, solution: null })
+        return jsonResponse({ items: [], total: 0, page: 1, size: 20 })
+      }),
+    )
+    const host = await mountWorkspace()
+    const source = host.querySelector('[data-testid="source-code"]') as HTMLTextAreaElement
+    source.value = 'public class Main { /* keep this code */ }'
+    source.dispatchEvent(new Event('input', { bubbles: true }))
+    const tab = async (name: string) => {
+      Array.from(host.querySelectorAll('[role="tab"]'))
+        .find((button) => button.textContent?.trim() === name)!
+        .dispatchEvent(new MouseEvent('click'))
+      await settleVue()
+    }
+    await tab('自定义自测')
+    const input = host.querySelector('[data-testid="self-test-input"]') as HTMLTextAreaElement
+    input.value = '20 22'
+    input.dispatchEvent(new Event('input', { bubbles: true }))
+    await tab('官方题解')
+    expect(host.querySelector('[role="tab"][aria-selected="true"]')?.textContent).toBe('官方题解')
+    expect(host.textContent).toContain('通过当前版本后自动解锁')
+    await tab('题目反馈')
+    await tab('自定义自测')
+    expect(host.querySelector('[data-testid="self-test-input"]')).toBe(input)
+    expect(input.value).toBe('20 22')
+    expect(host.querySelector('[data-testid="source-code"]')).toBe(source)
+    expect(source.value).toContain('keep this code')
+    expect(host.querySelector('a[href*="tab=history"]')).not.toBeNull()
+  })
+
   it('loads and submits the selected slug with a neutral template and polls its returned result', async () => {
     let reads = 0
     const fetchMock = vi.fn<FetchMock>(async (input: RequestInfo | URL) => {
@@ -254,7 +302,7 @@ describe('selected problem workspace lifecycle', () => {
     app = createApp(AppView).use(router)
     app.mount(host)
     await settleVue()
-    expect((host.querySelector('textarea') as HTMLTextAreaElement).value).toContain(
+    expect((host.querySelector('textarea') as HTMLTextAreaElement).value).not.toContain(
       'System.out.println(a + b)',
     )
     submit(host)

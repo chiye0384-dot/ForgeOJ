@@ -1,0 +1,9 @@
+*
+!artifacts/
+!artifacts/**
+!scripts/
+!scripts/**
+!nginx/
+!nginx/**
+!notices/
+!notices/**

@@ -4,11 +4,9 @@ import jakarta.servlet.FilterChain;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
-
 import java.io.IOException;
 import java.util.Set;
 import java.util.UUID;
-
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.slf4j.MDC;
@@ -21,61 +19,72 @@ import org.springframework.web.filter.OncePerRequestFilter;
 @Order(Ordered.HIGHEST_PRECEDENCE)
 public class RequestCorrelationFilter extends OncePerRequestFilter {
 
-    private static final Logger LOGGER = LoggerFactory.getLogger(RequestCorrelationFilter.class);
-    private static final Set<String> METHODS = Set.of("GET", "POST", "PUT", "PATCH", "DELETE", "OPTIONS", "HEAD");
+  private static final Logger LOGGER = LoggerFactory.getLogger(RequestCorrelationFilter.class);
+  private static final Set<String> METHODS =
+      Set.of("GET", "POST", "PUT", "PATCH", "DELETE", "OPTIONS", "HEAD");
 
-    @Override
-    protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response,
-            FilterChain chain) throws ServletException, IOException {
-        String previous = MDC.get("requestId");
-        String requestId = UUID.randomUUID().toString();
-        long started = System.nanoTime();
-        boolean returned = false;
-        MDC.put("requestId", requestId);
-        try {
-            chain.doFilter(request, response);
-            returned = true;
-        } finally {
-            try {
-                MonitoringMetrics.PROCESS.request(route(request.getRequestURI()),returned?response.getStatus():500,System.nanoTime()-started);
-                LOGGER.atInfo().addKeyValue("event", "request.completed")
-                        .addKeyValue("method", METHODS.contains(request.getMethod()) ? request.getMethod() : "OTHER")
-                        .addKeyValue("route", route(request.getRequestURI()))
-                        .addKeyValue("httpStatus", returned ? response.getStatus() : 500)
-                        .addKeyValue("durationMillis", (System.nanoTime() - started) / 1_000_000)
-                        .log("HTTP request completed");
-            } catch (RuntimeException loggingFailure) {
-                // Keep the original HTTP outcome even if a logging sink fails.
-            } finally {
-                if (previous == null) MDC.remove("requestId");
-                else MDC.put("requestId", previous);
-            }
-        }
+  @Override
+  protected void doFilterInternal(
+      HttpServletRequest request, HttpServletResponse response, FilterChain chain)
+      throws ServletException, IOException {
+    String previous = MDC.get("requestId");
+    String requestId = UUID.randomUUID().toString();
+    long started = System.nanoTime();
+    boolean returned = false;
+    MDC.put("requestId", requestId);
+    try {
+      chain.doFilter(request, response);
+      returned = true;
+    } finally {
+      try {
+        MonitoringMetrics.PROCESS.request(
+            route(request.getRequestURI()),
+            returned ? response.getStatus() : 500,
+            System.nanoTime() - started);
+        LOGGER
+            .atInfo()
+            .addKeyValue("event", "request.completed")
+            .addKeyValue(
+                "method", METHODS.contains(request.getMethod()) ? request.getMethod() : "OTHER")
+            .addKeyValue("route", route(request.getRequestURI()))
+            .addKeyValue("httpStatus", returned ? response.getStatus() : 500)
+            .addKeyValue("durationMillis", (System.nanoTime() - started) / 1_000_000)
+            .log("HTTP request completed");
+      } catch (RuntimeException loggingFailure) {
+        // Keep the original HTTP outcome even if a logging sink fails.
+      } finally {
+        if (previous == null) MDC.remove("requestId");
+        else MDC.put("requestId", previous);
+      }
     }
+  }
 
-    private static String route(String path) {
-        // Classification only: never output raw paths, slugs or query strings.
-        if(path.startsWith("/api/v1/admin/"))return "admin";
-        if(path.equals("/api/v1/problems")||path.equals("/api/v1/problem-tags")||path.equals("/api/v1/problems/search"))return "library";
-        if(path.startsWith("/api/v1/classrooms"))return "classroom";
-        if (path.startsWith("/api/v1/submissions/")) {
-            if (path.endsWith("/cancel")) return "submission.cancel";
-            if (path.endsWith("/events")) return "submission.events";
-            return "submission.get";
-        }
-        if (path.startsWith("/api/v1/problems/")) {
-            if (path.endsWith("/self-tests")) return "selftest.create";
-            return path.endsWith("/submissions") ? "submission.create" : "problem.get";
-        }
-        if (path.startsWith("/api/v1/self-tests/")) return path.endsWith("/cancel") ? "selftest.cancel" : "selftest.get";
-        if (path.equals("/api/v1/me/self-tests")) return "selftest.list";
-        if (path.startsWith("/api/v1/me/authored-problems/") && path.contains("/output-previews"))
-            return path.endsWith("/accept") ? "content.output.accept" : "content.output";
-        if (path.startsWith("/api/v1/me/authored-problems/") && path.contains("/validations"))
-            return path.endsWith("/validations") ? "content.validation" : "content.validation.get";
-        if (path.startsWith("/api/v1/me/authored-problems/") && path.contains("/reviews"))
-            return path.endsWith("/withdraw") ? "content.review.withdraw" : "content.review";
-        if (path.startsWith("/api/v1/auth/")) return "auth";
-        return "other";
+  private static String route(String path) {
+    // Classification only: never output raw paths, slugs or query strings.
+    if (path.startsWith("/api/v1/admin/")) return "admin";
+    if (path.equals("/api/v1/problems")
+        || path.equals("/api/v1/problem-tags")
+        || path.equals("/api/v1/problems/search")) return "library";
+    if (path.startsWith("/api/v1/classrooms")) return "classroom";
+    if (path.startsWith("/api/v1/submissions/")) {
+      if (path.endsWith("/cancel")) return "submission.cancel";
+      if (path.endsWith("/events")) return "submission.events";
+      return "submission.get";
     }
+    if (path.startsWith("/api/v1/problems/")) {
+      if (path.endsWith("/self-tests")) return "selftest.create";
+      return path.endsWith("/submissions") ? "submission.create" : "problem.get";
+    }
+    if (path.startsWith("/api/v1/self-tests/"))
+      return path.endsWith("/cancel") ? "selftest.cancel" : "selftest.get";
+    if (path.equals("/api/v1/me/self-tests")) return "selftest.list";
+    if (path.startsWith("/api/v1/me/authored-problems/") && path.contains("/output-previews"))
+      return path.endsWith("/accept") ? "content.output.accept" : "content.output";
+    if (path.startsWith("/api/v1/me/authored-problems/") && path.contains("/validations"))
+      return path.endsWith("/validations") ? "content.validation" : "content.validation.get";
+    if (path.startsWith("/api/v1/me/authored-problems/") && path.contains("/reviews"))
+      return path.endsWith("/withdraw") ? "content.review.withdraw" : "content.review";
+    if (path.startsWith("/api/v1/auth/")) return "auth";
+    return "other";
+  }
 }

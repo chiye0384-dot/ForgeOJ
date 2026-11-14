@@ -15,18 +15,22 @@ import org.junit.jupiter.api.Test;
 /** Bounded adversarial programs run only inside the production restricted sandbox. */
 class DockerSandboxSecurityIntegrationTests {
 
-    private static final String IMAGE = "eclipse-temurin:21.0.12_8-jdk-jammy"
-            + "@sha256:c7d5863b5dd8f26b90c64f1d80cc2b0e5a5e4642f8db9955a370d348edd8f438";
-    private final DockerCommandExecutor docker = new ProcessBuilderDockerCommandExecutor("docker");
-    private DockerCommandResult lastExecution;
-    private String transferredInput;
+  private static final String IMAGE =
+      "eclipse-temurin:21.0.12_8-jdk-jammy"
+          + "@sha256:c7d5863b5dd8f26b90c64f1d80cc2b0e5a5e4642f8db9955a370d348edd8f438";
+  private final DockerCommandExecutor docker = new ProcessBuilderDockerCommandExecutor("docker");
+  private DockerCommandResult lastExecution;
+  private String transferredInput;
 
-    @BeforeAll static void ensureImage() {
-        DockerCliSandboxRuntimeIntegrationTests.ensurePinnedImageIsPresent();
-    }
+  @BeforeAll
+  static void ensureImage() {
+    DockerCliSandboxRuntimeIntegrationTests.ensurePinnedImageIsPresent();
+  }
 
-    @Test void writableCaseFilesAreRemovedBeforeTheNextJvm() {
-        assertAccepted("""
+  @Test
+  void writableCaseFilesAreRemovedBeforeTheNextJvm() {
+    assertAccepted(
+        """
                 import java.nio.file.*;
                 public class Main {
                     public static void main(String[] args) throws Exception {
@@ -41,11 +45,14 @@ class DockerSandboxSecurityIntegrationTests {
                         System.out.println("OK");
                     }
                 }
-                """, List.of(testCase(1, "first", "OK"), testCase(2, "second", "OK")));
-    }
+                """,
+        List.of(testCase(1, "first", "OK"), testCase(2, "second", "OK")));
+  }
 
-    @Test void backgroundDescendantCannotSurviveIntoTheNextCase() {
-        assertAccepted("""
+  @Test
+  void backgroundDescendantCannotSurviveIntoTheNextCase() {
+    assertAccepted(
+        """
                 import java.nio.file.*;
                 public class Main {
                     public static void main(String[] args) throws Exception {
@@ -67,15 +74,18 @@ class DockerSandboxSecurityIntegrationTests {
                         System.out.println("OK");
                     }
                 }
-                """, List.of(testCase(1, "first", "OK"), testCase(2, "second", "OK")));
-    }
+                """,
+        List.of(testCase(1, "first", "OK"), testCase(2, "second", "OK")));
+  }
 
-    private void assertAccepted(String source, List<JudgeTestCase> cases) {
-        assertThat(run(source, cases).outcome()).isEqualTo(SandboxOutcome.ACCEPTED);
-    }
+  private void assertAccepted(String source, List<JudgeTestCase> cases) {
+    assertThat(run(source, cases).outcome()).isEqualTo(SandboxOutcome.ACCEPTED);
+  }
 
-    @Test void rootFilesystemAndCompiledWorkspaceRejectWrites() {
-        assertAccepted("""
+  @Test
+  void rootFilesystemAndCompiledWorkspaceRejectWrites() {
+    assertAccepted(
+        """
                 import java.nio.file.*;
                 public class Main {
                     public static void main(String[] args) throws Exception {
@@ -87,11 +97,14 @@ class DockerSandboxSecurityIntegrationTests {
                         System.out.println("OK");
                     }
                 }
-                """, List.of(testCase(1, "", "OK")));
-    }
+                """,
+        List.of(testCase(1, "", "OK")));
+  }
 
-    @Test void sharedMemoryCannotProvideAnUncleanedWritableArea() {
-        assertAccepted("""
+  @Test
+  void sharedMemoryCannotProvideAnUncleanedWritableArea() {
+    assertAccepted(
+        """
                 import java.nio.file.*;
                 public class Main {
                     public static void main(String[] args) throws Exception {
@@ -101,11 +114,14 @@ class DockerSandboxSecurityIntegrationTests {
                         System.out.println("OK");
                     }
                 }
-                """, List.of(testCase(1, "", "OK")));
-    }
+                """,
+        List.of(testCase(1, "", "OK")));
+  }
 
-    @Test void nonRootNoCapabilitiesNoNewPrivilegesAndSetuidAttemptAreEnforced() {
-        assertAccepted("""
+  @Test
+  void nonRootNoCapabilitiesNoNewPrivilegesAndSetuidAttemptAreEnforced() {
+    assertAccepted(
+        """
                 import java.nio.file.*;
                 import java.util.concurrent.TimeUnit;
                 public class Main {
@@ -123,11 +139,14 @@ class DockerSandboxSecurityIntegrationTests {
                         System.out.println("OK");
                     }
                 }
-                """, List.of(testCase(1, "", "OK")));
-    }
+                """,
+        List.of(testCase(1, "", "OK")));
+  }
 
-    @Test void networkNamespaceHasOnlyLoopbackAndCannotReachAnExternalAddress() {
-        assertAccepted("""
+  @Test
+  void networkNamespaceHasOnlyLoopbackAndCannotReachAnExternalAddress() {
+    assertAccepted(
+        """
                 import java.net.*;
                 public class Main {
                     public static void main(String[] args) throws Exception {
@@ -143,11 +162,14 @@ class DockerSandboxSecurityIntegrationTests {
                         System.out.println("OK");
                     }
                 }
-                """, List.of(testCase(1, "", "OK")));
-    }
+                """,
+        List.of(testCase(1, "", "OK")));
+  }
 
-    @Test void heapAllocationIsBoundedAndDoesNotExhaustTheWorkerHost() {
-        assertAccepted("""
+  @Test
+  void heapAllocationIsBoundedAndDoesNotExhaustTheWorkerHost() {
+    assertAccepted(
+        """
                 import java.util.*;
                 public class Main {
                     public static void main(String[] args) {
@@ -158,11 +180,15 @@ class DockerSandboxSecurityIntegrationTests {
                         } catch (OutOfMemoryError bounded) { retained.clear(); System.out.println("BOUNDED"); }
                     }
                 }
-                """, List.of(testCase(1, "", "BOUNDED")));
-    }
+                """,
+        List.of(testCase(1, "", "BOUNDED")));
+  }
 
-    @Test void processCreationHitsThePidLimitAndAllChildrenAreCleaned() {
-        SandboxExecutionResult result = run("""
+  @Test
+  void processCreationHitsThePidLimitAndAllChildrenAreCleaned() {
+    SandboxExecutionResult result =
+        run(
+            """
                 import java.util.*;
                 import java.nio.file.*;
                 public class Main {
@@ -179,14 +205,17 @@ class DockerSandboxSecurityIntegrationTests {
                         System.out.println("BOUNDED");
                     }
                 }
-                """, List.of(testCase(1, "", "BOUNDED")));
-        assertThat(result.outcome().name()).isEqualTo("SECURITY_VIOLATION");
-        assertThat(lastExecution.exitCode()).isZero();
-        assertThat(lastExecution.stdout()).contains("BOUNDED");
-    }
+                """,
+            List.of(testCase(1, "", "BOUNDED")));
+    assertThat(result.outcome().name()).isEqualTo("SECURITY_VIOLATION");
+    assertThat(lastExecution.exitCode()).isZero();
+    assertThat(lastExecution.stdout()).contains("BOUNDED");
+  }
 
-    @Test void globalTmpFilesAndHostilePermissionsCannotLeakIntoTheNextCase() {
-        assertAccepted("""
+  @Test
+  void globalTmpFilesAndHostilePermissionsCannotLeakIntoTheNextCase() {
+    assertAccepted(
+        """
                 import java.nio.file.*;
                 import java.nio.file.attribute.PosixFilePermissions;
                 public class Main {
@@ -208,25 +237,32 @@ class DockerSandboxSecurityIntegrationTests {
                         System.out.println("OK");
                     }
                 }
-                """, List.of(testCase(1, "first", "OK"), testCase(2, "second", "OK")));
-    }
+                """,
+        List.of(testCase(1, "first", "OK"), testCase(2, "second", "OK")));
+  }
 
-    @Test void timedOutProgramAndItsNonCooperatingDescendantsAreRemoved() {
-        SandboxExecutionResult result = run("""
+  @Test
+  void timedOutProgramAndItsNonCooperatingDescendantsAreRemoved() {
+    SandboxExecutionResult result =
+        run(
+            """
                 public class Main {
                     public static void main(String[] args) throws Exception {
                         for (int i = 0; i < 8; i++) new ProcessBuilder("/usr/bin/sleep", "60").start();
                         while (true) Thread.onSpinWait();
                     }
                 }
-                """, List.of(testCase(1, "", "unused")));
-        assertThat(result.outcome()).isEqualTo(SandboxOutcome.TIME_LIMIT_EXCEEDED);
-        assertThat(lastExecution.timedOut()).isTrue();
-        // run() also checks the exact task has no remaining container, including stopped ones.
-    }
+                """,
+            List.of(testCase(1, "", "unused")));
+    assertThat(result.outcome()).isEqualTo(SandboxOutcome.TIME_LIMIT_EXCEEDED);
+    assertThat(lastExecution.timedOut()).isTrue();
+    // run() also checks the exact task has no remaining container, including stopped ones.
+  }
 
-    @Test void tmpfsRejectsBoundedDiskExhaustionAndItsFilesAreCleaned() {
-        assertAccepted("""
+  @Test
+  void tmpfsRejectsBoundedDiskExhaustionAndItsFilesAreCleaned() {
+    assertAccepted(
+        """
                 import java.nio.file.*;
                 public class Main {
                     public static void main(String[] args) throws Exception {
@@ -239,11 +275,15 @@ class DockerSandboxSecurityIntegrationTests {
                         System.out.println("BOUNDED");
                     }
                 }
-                """, List.of(testCase(1, "", "BOUNDED")));
-    }
+                """,
+        List.of(testCase(1, "", "BOUNDED")));
+  }
 
-    @Test void cgroupMemoryLimitKillsABoundedOversizedChildJvm() {
-        SandboxExecutionResult result = run("""
+  @Test
+  void cgroupMemoryLimitKillsABoundedOversizedChildJvm() {
+    SandboxExecutionResult result =
+        run(
+            """
                 import java.nio.file.*;
                 import java.util.concurrent.TimeUnit;
                 public class Main {
@@ -268,12 +308,16 @@ class DockerSandboxSecurityIntegrationTests {
                         System.out.println("BOUNDED");
                     }
                 }
-                """, List.of(testCase(1, "", "BOUNDED")));
-        assertThat(result.outcome().name()).isEqualTo("MEMORY_LIMIT_EXCEEDED");
-    }
+                """,
+            List.of(testCase(1, "", "BOUNDED")));
+    assertThat(result.outcome().name()).isEqualTo("MEMORY_LIMIT_EXCEEDED");
+  }
 
-    @Test void fabricatedResourceMessagesAndExitCodesRemainRuntimeErrors() {
-        SandboxExecutionResult result = run("""
+  @Test
+  void fabricatedResourceMessagesAndExitCodesRemainRuntimeErrors() {
+    SandboxExecutionResult result =
+        run(
+            """
                 import java.nio.file.*;
                 public class Main {
                     public static void main(String[] args) {
@@ -286,30 +330,75 @@ class DockerSandboxSecurityIntegrationTests {
                         System.exit(137);
                     }
                 }
-                """, List.of(testCase(1, "", "unused")));
-        assertThat(result.outcome()).isEqualTo(SandboxOutcome.RUNTIME_ERROR);
-    }
+                """,
+            List.of(testCase(1, "", "unused")));
+    assertThat(result.outcome()).isEqualTo(SandboxOutcome.RUNTIME_ERROR);
+  }
 
-    @Test void unavailableResourceEvidenceIsAPlatformFailureAndContainerIsStillCleaned() {
-        org.assertj.core.api.Assertions.assertThatThrownBy(() -> run("""
+  @Test
+  void unavailableResourceEvidenceIsAPlatformFailureAndContainerIsStillCleaned() {
+    org.assertj.core.api.Assertions.assertThatThrownBy(
+            () ->
+                run(
+                    """
                 public class Main { public static void main(String[] args) { System.out.println("OK"); } }
-                """, List.of(testCase(1, "", "OK")), true))
-                .isInstanceOf(SandboxException.class).hasMessage("Could not read sandbox resource evidence");
-    }
+                """,
+                    List.of(testCase(1, "", "OK")),
+                    true))
+        .isInstanceOf(SandboxException.class)
+        .hasMessage("Could not read sandbox resource evidence");
+  }
 
-    @Test void anotherLiveSubmissionsSourceIsNotMountedOrReadable() {
-        var runtime = new DockerCliSandboxRuntime(docker);
-        var otherSnapshot = snapshot(UUID.randomUUID().toString(), "public class Main {}", List.of(testCase(1, "", "")));
-        SandboxContainer other = runtime.prepare(otherSnapshot, UUID.randomUUID().toString());
-        String privateMarker = "OTHER_SUBMISSION_" + UUID.randomUUID();
-        try {
-            assertThat(docker.execute(List.of("container", "start", other.identifier()), Duration.ofSeconds(15), 4096).exitCode()).isZero();
-            assertThat(docker.execute(List.of("container", "exec", "-i", "--user", "65534:65534", other.identifier(),
-                    "dd", "of=/workspace/other-source.java", "status=none"), privateMarker.getBytes(StandardCharsets.UTF_8),
-                    Duration.ofSeconds(15), 4096).exitCode()).isZero();
-            assertThat(docker.execute(List.of("container", "exec", other.identifier(), "cat", "/workspace/other-source.java"),
-                    Duration.ofSeconds(15), 4096).stdout()).isEqualTo(privateMarker);
-            assertAccepted("""
+  @Test
+  void anotherLiveSubmissionsSourceIsNotMountedOrReadable() {
+    var runtime = new DockerCliSandboxRuntime(docker);
+    var otherSnapshot =
+        snapshot(
+            UUID.randomUUID().toString(), "public class Main {}", List.of(testCase(1, "", "")));
+    SandboxContainer other = runtime.prepare(otherSnapshot, UUID.randomUUID().toString());
+    String privateMarker = "OTHER_SUBMISSION_" + UUID.randomUUID();
+    try {
+      assertThat(
+              docker
+                  .execute(
+                      List.of("container", "start", other.identifier()),
+                      Duration.ofSeconds(15),
+                      4096)
+                  .exitCode())
+          .isZero();
+      assertThat(
+              docker
+                  .execute(
+                      List.of(
+                          "container",
+                          "exec",
+                          "-i",
+                          "--user",
+                          "65534:65534",
+                          other.identifier(),
+                          "dd",
+                          "of=/workspace/other-source.java",
+                          "status=none"),
+                      privateMarker.getBytes(StandardCharsets.UTF_8),
+                      Duration.ofSeconds(15),
+                      4096)
+                  .exitCode())
+          .isZero();
+      assertThat(
+              docker
+                  .execute(
+                      List.of(
+                          "container",
+                          "exec",
+                          other.identifier(),
+                          "cat",
+                          "/workspace/other-source.java"),
+                      Duration.ofSeconds(15),
+                      4096)
+                  .stdout())
+          .isEqualTo(privateMarker);
+      assertAccepted(
+          """
                     import java.nio.file.*;
                     public class Main {
                         public static void main(String[] args) {
@@ -319,14 +408,19 @@ class DockerSandboxSecurityIntegrationTests {
                             System.out.println("OK");
                         }
                     }
-                    """, List.of(testCase(1, "", "OK")));
-        } finally { runtime.cleanup(other); }
+                    """,
+          List.of(testCase(1, "", "OK")));
+    } finally {
+      runtime.cleanup(other);
     }
+  }
 
-    @Test void hiddenAnswersAndFutureInputsAreNeverTransferredToTheProgram() {
-        String secretAnswer = "EXPECTED_OUTPUT_" + UUID.randomUUID();
-        String futureInput = "FUTURE_INPUT_" + UUID.randomUUID();
-        String source = """
+  @Test
+  void hiddenAnswersAndFutureInputsAreNeverTransferredToTheProgram() {
+    String secretAnswer = "EXPECTED_OUTPUT_" + UUID.randomUUID();
+    String futureInput = "FUTURE_INPUT_" + UUID.randomUUID();
+    String source =
+        """
                 import java.nio.file.*;
                 public class Main {
                     public static void main(String[] args) throws Exception {
@@ -340,63 +434,103 @@ class DockerSandboxSecurityIntegrationTests {
                     }
                 }
                 """;
-        assertThat(run(source, List.of(testCase(1, "FIRST_INPUT", secretAnswer), testCase(2, futureInput, "unused")))
-                .outcome()).isEqualTo(SandboxOutcome.WRONG_ANSWER);
-        assertThat(transferredInput).doesNotContain(secretAnswer, futureInput);
+    assertThat(
+            run(
+                    source,
+                    List.of(
+                        testCase(1, "FIRST_INPUT", secretAnswer),
+                        testCase(2, futureInput, "unused")))
+                .outcome())
+        .isEqualTo(SandboxOutcome.WRONG_ANSWER);
+    assertThat(transferredInput).doesNotContain(secretAnswer, futureInput);
+  }
+
+  private SandboxExecutionResult run(String source, List<JudgeTestCase> cases) {
+    return run(source, cases, false);
+  }
+
+  private SandboxExecutionResult run(
+      String source, List<JudgeTestCase> cases, boolean failEvidenceRead) {
+    String taskId = UUID.randomUUID().toString();
+    JudgeTaskSnapshot snapshot = snapshot(taskId, source, cases);
+    RecordingExecutor recording = new RecordingExecutor(docker);
+    recording.failEvidenceRead = failEvidenceRead;
+    try {
+      SandboxExecutionResult result =
+          new DockerCliSandboxRuntime(recording).execute(snapshot, UUID.randomUUID().toString());
+      lastExecution = recording.lastExecution;
+      transferredInput = recording.inputs.toString(StandardCharsets.UTF_8);
+      return result;
+    } finally {
+      DockerCommandResult remaining =
+          docker.execute(
+              List.of(
+                  "container",
+                  "ls",
+                  "--all",
+                  "--quiet",
+                  "--no-trunc",
+                  "--filter",
+                  "label=com.forgeoj.task-id=" + taskId),
+              Duration.ofSeconds(15),
+              4096);
+      assertThat(remaining.exitCode()).isZero();
+      assertThat(remaining.stdout()).isBlank();
+      assertThat(recording.commands)
+          .allSatisfy(command -> assertThat(command).doesNotContain(source));
+    }
+  }
+
+  private JudgeTaskSnapshot snapshot(String taskId, String source, List<JudgeTestCase> cases) {
+    return new JudgeTaskSnapshot(
+        taskId,
+        UUID.randomUUID().toString(),
+        1,
+        "JAVA_21",
+        source,
+        "a".repeat(64),
+        5000,
+        192,
+        65536,
+        "trim-trailing-whitespace-v1",
+        "m0-v1",
+        IMAGE,
+        "b".repeat(64),
+        cases);
+  }
+
+  private static JudgeTestCase testCase(int ordinal, String input, String expected) {
+    return new JudgeTestCase(
+        ordinal, input.getBytes(StandardCharsets.UTF_8), expected.getBytes(StandardCharsets.UTF_8));
+  }
+
+  private static final class RecordingExecutor implements DockerCommandExecutor {
+    private final DockerCommandExecutor delegate;
+    private final List<List<String>> commands = new ArrayList<>();
+    private final java.io.ByteArrayOutputStream inputs = new java.io.ByteArrayOutputStream();
+    private DockerCommandResult lastExecution;
+    private boolean failEvidenceRead;
+
+    RecordingExecutor(DockerCommandExecutor delegate) {
+      this.delegate = delegate;
     }
 
-    private SandboxExecutionResult run(String source, List<JudgeTestCase> cases) {
-        return run(source, cases, false);
+    @Override
+    public DockerCommandResult execute(List<String> command, Duration timeout, int limit) {
+      return execute(command, new byte[0], timeout, limit);
     }
 
-    private SandboxExecutionResult run(String source, List<JudgeTestCase> cases, boolean failEvidenceRead) {
-        String taskId = UUID.randomUUID().toString();
-        JudgeTaskSnapshot snapshot = snapshot(taskId, source, cases);
-        RecordingExecutor recording = new RecordingExecutor(docker);
-        recording.failEvidenceRead = failEvidenceRead;
-        try {
-            SandboxExecutionResult result = new DockerCliSandboxRuntime(recording).execute(snapshot, UUID.randomUUID().toString());
-            lastExecution = recording.lastExecution;
-            transferredInput = recording.inputs.toString(StandardCharsets.UTF_8);
-            return result;
-        } finally {
-            DockerCommandResult remaining = docker.execute(List.of("container", "ls", "--all", "--quiet", "--no-trunc",
-                    "--filter", "label=com.forgeoj.task-id=" + taskId), Duration.ofSeconds(15), 4096);
-            assertThat(remaining.exitCode()).isZero();
-            assertThat(remaining.stdout()).isBlank();
-            assertThat(recording.commands).allSatisfy(command -> assertThat(command).doesNotContain(source));
-        }
+    @Override
+    public DockerCommandResult execute(
+        List<String> command, byte[] input, Duration timeout, int limit) {
+      commands.add(List.copyOf(command));
+      inputs.writeBytes(input);
+      if (failEvidenceRead && command.contains("/sys/fs/cgroup/memory.events")) {
+        return new DockerCommandResult(1, "", "PRIVATE_CONTROL_ERROR", false, false);
+      }
+      DockerCommandResult result = delegate.execute(command, input, timeout, limit);
+      if (command.contains("java")) lastExecution = result;
+      return result;
     }
-
-    private JudgeTaskSnapshot snapshot(String taskId, String source, List<JudgeTestCase> cases) {
-        return new JudgeTaskSnapshot(taskId, UUID.randomUUID().toString(), 1,
-                "JAVA_21", source, "a".repeat(64), 5000, 192, 65536,
-                "trim-trailing-whitespace-v1", "m0-v1", IMAGE, "b".repeat(64), cases);
-    }
-
-    private static JudgeTestCase testCase(int ordinal, String input, String expected) {
-        return new JudgeTestCase(ordinal, input.getBytes(StandardCharsets.UTF_8), expected.getBytes(StandardCharsets.UTF_8));
-    }
-
-    private static final class RecordingExecutor implements DockerCommandExecutor {
-        private final DockerCommandExecutor delegate;
-        private final List<List<String>> commands = new ArrayList<>();
-        private final java.io.ByteArrayOutputStream inputs = new java.io.ByteArrayOutputStream();
-        private DockerCommandResult lastExecution;
-        private boolean failEvidenceRead;
-        RecordingExecutor(DockerCommandExecutor delegate) { this.delegate = delegate; }
-        @Override public DockerCommandResult execute(List<String> command, Duration timeout, int limit) {
-            return execute(command, new byte[0], timeout, limit);
-        }
-        @Override public DockerCommandResult execute(List<String> command, byte[] input, Duration timeout, int limit) {
-            commands.add(List.copyOf(command));
-            inputs.writeBytes(input);
-            if (failEvidenceRead && command.contains("/sys/fs/cgroup/memory.events")) {
-                return new DockerCommandResult(1, "", "PRIVATE_CONTROL_ERROR", false, false);
-            }
-            DockerCommandResult result = delegate.execute(command, input, timeout, limit);
-            if (command.contains("java")) lastExecution = result;
-            return result;
-        }
-    }
+  }
 }

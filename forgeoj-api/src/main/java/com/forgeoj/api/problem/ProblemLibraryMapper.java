@@ -5,7 +5,6 @@
 package com.forgeoj.api.problem;
 
 import java.util.List;
-
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
 import org.apache.ibatis.annotations.Select;
@@ -13,7 +12,8 @@ import org.apache.ibatis.annotations.Select;
 @Mapper
 public interface ProblemLibraryMapper {
 
-    String FILTERED_PROBLEMS = """
+  String FILTERED_PROBLEMS =
+      """
             FROM problem p
             JOIN problem_judge_version jv ON jv.id = p.current_judge_version_id
             WHERE p.status = 'ACTIVE' AND p.scope = 'PUBLIC'
@@ -24,17 +24,25 @@ public interface ProblemLibraryMapper {
             </if>
             """;
 
-    @Select("<script>SELECT COUNT(*) " + FILTERED_PROBLEMS + "</script>")
-    long count(@Param("pattern") String pattern, @Param("difficulty") String difficulty,
-            @Param("tag") String tag);
+  @Select("<script>SELECT COUNT(*) " + FILTERED_PROBLEMS + "</script>")
+  long count(
+      @Param("pattern") String pattern,
+      @Param("difficulty") String difficulty,
+      @Param("tag") String tag);
 
-    @Select("<script>SELECT p.id, p.slug, p.title, p.difficulty, jv.version_no AS judgeVersion "
-            + FILTERED_PROBLEMS + " ORDER BY p.id ASC LIMIT #{size} OFFSET #{offset}</script>")
-    List<ProblemSummaryRow> page(@Param("pattern") String pattern,
-            @Param("difficulty") String difficulty, @Param("tag") String tag,
-            @Param("size") int size, @Param("offset") long offset);
+  @Select(
+      "<script>SELECT p.id, p.slug, p.title, p.difficulty, jv.version_no AS judgeVersion "
+          + FILTERED_PROBLEMS
+          + " ORDER BY p.id ASC LIMIT #{size} OFFSET #{offset}</script>")
+  List<ProblemSummaryRow> page(
+      @Param("pattern") String pattern,
+      @Param("difficulty") String difficulty,
+      @Param("tag") String tag,
+      @Param("size") int size,
+      @Param("offset") long offset);
 
-    @Select("""
+  @Select(
+      """
             <script>
             SELECT problem_id AS problemId, tag
             FROM problem_tag
@@ -45,9 +53,10 @@ public interface ProblemLibraryMapper {
             ORDER BY problem_id ASC, tag ASC
             </script>
             """)
-    List<ProblemTagRow> tagsForProblems(@Param("problemIds") List<Long> problemIds);
+  List<ProblemTagRow> tagsForProblems(@Param("problemIds") List<Long> problemIds);
 
-    @Select("""
+  @Select(
+      """
             SELECT DISTINCT pt.tag
             FROM problem_tag pt
             JOIN problem p ON p.id = pt.problem_id
@@ -55,9 +64,10 @@ public interface ProblemLibraryMapper {
             WHERE p.status = 'ACTIVE' AND p.scope = 'PUBLIC'
             ORDER BY pt.tag ASC
             """)
-    List<String> availableTags();
+  List<String> availableTags();
 
-    record ProblemSummaryRow(long id, String slug, String title, String difficulty, int judgeVersion) {}
+  record ProblemSummaryRow(
+      long id, String slug, String title, String difficulty, int judgeVersion) {}
 
-    record ProblemTagRow(long problemId, String tag) {}
+  record ProblemTagRow(long problemId, String tag) {}
 }

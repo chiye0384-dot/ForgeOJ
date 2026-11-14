@@ -10,22 +10,22 @@ import org.springframework.context.annotation.Configuration;
 @ConditionalOnProperty(name = "forgeoj.worker.sandbox.enabled", havingValue = "true")
 class DockerSandboxConfiguration {
 
-    @Bean
-    DockerCommandExecutor dockerCommandExecutor(
-            @Value("${forgeoj.worker.docker.executable:docker}") String executable) {
-        return new ProcessBuilderDockerCommandExecutor(executable);
-    }
+  @Bean
+  DockerCommandExecutor dockerCommandExecutor(
+      @Value("${forgeoj.worker.docker.executable:docker}") String executable) {
+    return new ProcessBuilderDockerCommandExecutor(executable);
+  }
 
-    @Bean
-    SandboxRuntime sandboxRuntime(DockerCommandExecutor executor, SandboxAttemptLookup attempts) {
-        return new DockerCliSandboxRuntime(executor, attempts);
-    }
+  @Bean
+  SandboxRuntime sandboxRuntime(DockerCommandExecutor executor, SandboxAttemptLookup attempts) {
+    return new DockerCliSandboxRuntime(executor, attempts);
+  }
 
-    @Bean
-    ApplicationRunner dockerSandboxStartup(SandboxRuntime runtime) {
-        return arguments -> {
-            runtime.verifyAvailable();
-            runtime.cleanupManagedContainers();
-        };
-    }
+  @Bean
+  ApplicationRunner dockerSandboxStartup(SandboxRuntime runtime) {
+    return arguments -> {
+      runtime.verifyAvailable();
+      runtime.cleanupManagedContainers();
+    };
+  }
 }

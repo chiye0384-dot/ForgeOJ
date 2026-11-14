@@ -1,0 +1,9 @@
+{
+  "status": "VERIFIED",
+  "managedSandboxes": 0,
+  "instrumentationImageId": "sha256:980ae09d6470f142cc3391f27f17b8c11697405713d5232c261e4ce7a5498d5e",
+  "checkedAt": "2026-11-14T19:41:59.8546857+08:00",
+  "instrumentationTagRemoved": "forgeoj-m5check-e78855240f7d-judge-probe",
+  "originalDemoTargeted": false,
+  "project": "forgeoj-m5check-e78855240f7d"
+}

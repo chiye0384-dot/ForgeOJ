@@ -1,0 +1,3476 @@
+{
+  "status": "PASS",
+  "scope": "same current JAR and fixture, three interleaved pairs, no statistical or cloud capacity claim",
+  "independentRawRecalculation": true,
+  "measuredRequests": 673076,
+  "jvmWarmupMeasurementRequestsExcluded": 458033,
+  "requestPrewarmRows": 6120,
+  "requestErrors": 0,
+  "measuredCells": [
+    {
+      "arm": "01-A",
+      "group": "A",
+      "case": "list-c4",
+      "requestCount": 19816,
+      "warmupRequests": 30,
+      "rps": 990.668031130237,
+      "latencyMs": {
+        "p50Ms": 3.7894420000002356,
+        "p95Ms": 5.489277000000584,
+        "p99Ms": 6.713796999996703
+      },
+      "elapsedMs": 20002.664240000002,
+      "clientCpuPercent": 25.005763932175064,
+      "clientEventLoopP99Ms": 11.091967,
+      "cpu": {
+        "api": {
+          "deltaIncludingRequestWarmup": {
+            "usage_usec": 26087719,
+            "user_usec": 16377619,
+            "system_usec": 9710100,
+            "nice_usec": 0,
+            "nr_periods": 224,
+            "nr_throttled": 0,
+            "throttled_usec": 0,
+            "nr_bursts": 0,
+            "burst_usec": 0
+          },
+          "usageUsecPerRequestIncludingWarmup": 1314.5076589741007,
+          "memoryBeforeBytes": 327241728,
+          "memoryAfterBytes": 327991296
+        },
+        "mysql": {
+          "deltaIncludingRequestWarmup": {
+            "usage_usec": 39890704,
+            "user_usec": 32493689,
+            "system_usec": 7397015,
+            "nice_usec": 0,
+            "nr_periods": 231,
+            "nr_throttled": 124,
+            "throttled_usec": 916701,
+            "nr_bursts": 0,
+            "burst_usec": 0
+          },
+          "usageUsecPerRequestIncludingWarmup": 2010.012294668951,
+          "memoryBeforeBytes": 544145408,
+          "memoryAfterBytes": 544358400
+        }
+      }
+    },
+    {
+      "arm": "01-A",
+      "group": "A",
+      "case": "detail-c4",
+      "requestCount": 37764,
+      "warmupRequests": 300,
+      "rps": 1888.0450218068324,
+      "latencyMs": {
+        "p50Ms": 1.9209559999999328,
+        "p95Ms": 3.1545249999999214,
+        "p99Ms": 4.074209999999766
+      },
+      "elapsedMs": 20001.641679,
+      "clientCpuPercent": 40.063551425447976,
+      "clientEventLoopP99Ms": 11.083775,
+      "cpu": {
+        "api": {
+          "deltaIncludingRequestWarmup": {
+            "usage_usec": 34683921,
+            "user_usec": 19186340,
+            "system_usec": 15497581,
+            "nice_usec": 0,
+            "nr_periods": 229,
+            "nr_throttled": 6,
+            "throttled_usec": 425288,
+            "nr_bursts": 0,
+            "burst_usec": 0
+          },
+          "usageUsecPerRequestIncludingWarmup": 911.2001103404792,
+          "memoryBeforeBytes": 326971392,
+          "memoryAfterBytes": 328941568
+        },
+        "mysql": {
+          "deltaIncludingRequestWarmup": {
+            "usage_usec": 22582445,
+            "user_usec": 13612460,
+            "system_usec": 8969986,
+            "nice_usec": 0,
+            "nr_periods": 234,
+            "nr_throttled": 0,
+            "throttled_usec": 0,
+            "nr_bursts": 0,
+            "burst_usec": 0
+          },
+          "usageUsecPerRequestIncludingWarmup": 593.2756672971836,
+          "memoryBeforeBytes": 544796672,
+          "memoryAfterBytes": 544808960
+        }
+      }
+    },
+    {
+      "arm": "01-A",
+      "group": "A",
+      "case": "list-c8",
+      "requestCount": 17594,
+      "warmupRequests": 30,
+      "rps": 877.5923114253917,
+      "latencyMs": {
+        "p50Ms": 4.351749999999811,
+        "p95Ms": 53.529741000000286,
+        "p99Ms": 56.57318699999996
+      },
+      "elapsedMs": 20048.033433,
+      "clientCpuPercent": 22.463784365936615,
+      "clientEventLoopP99Ms": 11.108351,
+      "cpu": {
+        "api": {
+          "deltaIncludingRequestWarmup": {
+            "usage_usec": 26159838,
+            "user_usec": 16168055,
+            "system_usec": 9991784,
+            "nice_usec": 0,
+            "nr_periods": 222,
+            "nr_throttled": 2,
+            "throttled_usec": 229547,
+            "nr_bursts": 0,
+            "burst_usec": 0
+          },
+          "usageUsecPerRequestIncludingWarmup": 1484.3303449841126,
+          "memoryBeforeBytes": 329068544,
+          "memoryAfterBytes": 330731520
+        },
+        "mysql": {
+          "deltaIncludingRequestWarmup": {
+            "usage_usec": 40359246,
+            "user_usec": 32325796,
+            "system_usec": 8033450,
+            "nice_usec": 0,
+            "nr_periods": 232,
+            "nr_throttled": 201,
+            "throttled_usec": 77570455,
+            "nr_bursts": 0,
+            "burst_usec": 0
+          },
+          "usageUsecPerRequestIncludingWarmup": 2290.016227871085,
+          "memoryBeforeBytes": 545468416,
+          "memoryAfterBytes": 544862208
+        }
+      }
+    },
+    {
+      "arm": "01-A",
+      "group": "A",
+      "case": "detail-c8",
+      "requestCount": 28894,
+      "warmupRequests": 300,
+      "rps": 1444.4663873178588,
+      "latencyMs": {
+        "p50Ms": 2.7058130000004894,
+        "p95Ms": 37.167831000000035,
+        "p99Ms": 46.389797999999246
+      },
+      "elapsedMs": 20003.234588000003,
+      "clientCpuPercent": 43.50930326648828,
+      "clientEventLoopP99Ms": 11.558911,
+      "cpu": {
+        "api": {
+          "deltaIncludingRequestWarmup": {
+            "usage_usec": 40636957,
+            "user_usec": 21770057,
+            "system_usec": 18866899,
+            "nice_usec": 0,
+            "nr_periods": 223,
+            "nr_throttled": 202,
+            "throttled_usec": 34723813,
+            "nr_bursts": 0,
+            "burst_usec": 0
+          },
+          "usageUsecPerRequestIncludingWarmup": 1391.962629307392,
+          "memoryBeforeBytes": 330240000,
+          "memoryAfterBytes": 331407360
+        },
+        "mysql": {
+          "deltaIncludingRequestWarmup": {
+            "usage_usec": 26991332,
+            "user_usec": 16036548,
+            "system_usec": 10954784,
+            "nice_usec": 0,
+            "nr_periods": 232,
+            "nr_throttled": 0,
+            "throttled_usec": 0,
+            "nr_bursts": 0,
+            "burst_usec": 0
+          },
+          "usageUsecPerRequestIncludingWarmup": 924.5506610947455,
+          "memoryBeforeBytes": 544878592,
+          "memoryAfterBytes": 546283520
+        }
+      }
+    },
+    {
+      "arm": "02-B",
+      "group": "B",
+      "case": "list-c4",
+      "requestCount": 24098,
+      "warmupRequests": 30,
+      "rps": 1204.8243319716898,
+      "latencyMs": {
+        "p50Ms": 2.937102999999297,
+        "p95Ms": 4.655632999998488,
+        "p99Ms": 10.336922000000413
+      },
+      "elapsedMs": 20001.256084,
+      "clientCpuPercent": 24.056149172796122,
+      "clientEventLoopP99Ms": 11.001855,
+      "cpu": {
+        "api": {
+          "deltaIncludingRequestWarmup": {
+            "usage_usec": 23344142,
+            "user_usec": 14430867,
+            "system_usec": 8913276,
+            "nice_usec": 0,
+            "nr_periods": 220,
+            "nr_throttled": 0,
+            "throttled_usec": 0,
+            "nr_bursts": 0,
+            "burst_usec": 0
+          },
+          "usageUsecPerRequestIncludingWarmup": 967.5125165782493,
+          "memoryBeforeBytes": 330493952,
+          "memoryAfterBytes": 330358784
+        },
+        "mysql": {
+          "deltaIncludingRequestWarmup": {
+            "usage_usec": 40159715,
+            "user_usec": 32965266,
+            "system_usec": 7194450,
+            "nice_usec": 0,
+            "nr_periods": 230,
+            "nr_throttled": 196,
+            "throttled_usec": 5136256,
+            "nr_bursts": 0,
+            "burst_usec": 0
+          },
+          "usageUsecPerRequestIncludingWarmup": 1664.444421419098,
+          "memoryBeforeBytes": 556982272,
+          "memoryAfterBytes": 556552192
+        }
+      }
+    },
+    {
+      "arm": "02-B",
+      "group": "B",
+      "case": "detail-c4",
+      "requestCount": 42524,
+      "warmupRequests": 300,
+      "rps": 2125.982198651302,
+      "latencyMs": {
+        "p50Ms": 1.6955399999999372,
+        "p95Ms": 2.8142159999988507,
+        "p99Ms": 3.690352999999959
+      },
+      "elapsedMs": 20002.048948,
+      "clientCpuPercent": 42.932016726509616,
+      "clientEventLoopP99Ms": 11.042815,
+      "cpu": {
+        "api": {
+          "deltaIncludingRequestWarmup": {
+            "usage_usec": 35572807,
+            "user_usec": 19991434,
+            "system_usec": 15581373,
+            "nice_usec": 0,
+            "nr_periods": 232,
+            "nr_throttled": 10,
+            "throttled_usec": 529716,
+            "nr_bursts": 0,
+            "burst_usec": 0
+          },
+          "usageUsecPerRequestIncludingWarmup": 830.6745516532785,
+          "memoryBeforeBytes": 330358784,
+          "memoryAfterBytes": 332193792
+        },
+        "mysql": {
+          "deltaIncludingRequestWarmup": {
+            "usage_usec": 22912741,
+            "user_usec": 14204070,
+            "system_usec": 8708670,
+            "nice_usec": 0,
+            "nr_periods": 233,
+            "nr_throttled": 0,
+            "throttled_usec": 0,
+            "nr_bursts": 0,
+            "burst_usec": 0
+          },
+          "usageUsecPerRequestIncludingWarmup": 535.0443909957033,
+          "memoryBeforeBytes": 556675072,
+          "memoryAfterBytes": 557199360
+        }
+      }
+    },
+    {
+      "arm": "02-B",
+      "group": "B",
+      "case": "list-c8",
+      "requestCount": 16853,
+      "warmupRequests": 30,
+      "rps": 841.4135926634779,
+      "latencyMs": {
+        "p50Ms": 4.352284999999938,
+        "p95Ms": 54.49528800000189,
+        "p99Ms": 57.766373000002204
+      },
+      "elapsedMs": 20029.388812999998,
+      "clientCpuPercent": 22.36877041945514,
+      "clientEventLoopP99Ms": 11.124735,
+      "cpu": {
+        "api": {
+          "deltaIncludingRequestWarmup": {
+            "usage_usec": 25419120,
+            "user_usec": 15188271,
+            "system_usec": 10230850,
+            "nice_usec": 0,
+            "nr_periods": 221,
+            "nr_throttled": 3,
+            "throttled_usec": 326261,
+            "nr_bursts": 0,
+            "burst_usec": 0
+          },
+          "usageUsecPerRequestIncludingWarmup": 1505.6044541846827,
+          "memoryBeforeBytes": 332328960,
+          "memoryAfterBytes": 334090240
+        },
+        "mysql": {
+          "deltaIncludingRequestWarmup": {
+            "usage_usec": 40319508,
+            "user_usec": 32489865,
+            "system_usec": 7829642,
+            "nice_usec": 0,
+            "nr_periods": 229,
+            "nr_throttled": 200,
+            "throttled_usec": 78651542,
+            "nr_bursts": 0,
+            "burst_usec": 0
+          },
+          "usageUsecPerRequestIncludingWarmup": 2388.1720073446663,
+          "memoryBeforeBytes": 556154880,
+          "memoryAfterBytes": 556457984
+        }
+      }
+    },
+    {
+      "arm": "02-B",
+      "group": "B",
+      "case": "detail-c8",
+      "requestCount": 35445,
+      "warmupRequests": 300,
+      "rps": 1772.0619686309828,
+      "latencyMs": {
+        "p50Ms": 2.5724370000007184,
+        "p95Ms": 6.004563999998936,
+        "p99Ms": 43.58374999999978
+      },
+      "elapsedMs": 20002.122176,
+      "clientCpuPercent": 40.63038375873582,
+      "clientEventLoopP99Ms": 11.034623,
+      "cpu": {
+        "api": {
+          "deltaIncludingRequestWarmup": {
+            "usage_usec": 40765717,
+            "user_usec": 21803198,
+            "system_usec": 18962520,
+            "nice_usec": 0,
+            "nr_periods": 231,
+            "nr_throttled": 202,
+            "throttled_usec": 37493729,
+            "nr_bursts": 0,
+            "burst_usec": 0
+          },
+          "usageUsecPerRequestIncludingWarmup": 1140.4592810183242,
+          "memoryBeforeBytes": 333459456,
+          "memoryAfterBytes": 338784256
+        },
+        "mysql": {
+          "deltaIncludingRequestWarmup": {
+            "usage_usec": 26801802,
+            "user_usec": 15842223,
+            "system_usec": 10959579,
+            "nice_usec": 0,
+            "nr_periods": 230,
+            "nr_throttled": 0,
+            "throttled_usec": 0,
+            "nr_bursts": 0,
+            "burst_usec": 0
+          },
+          "usageUsecPerRequestIncludingWarmup": 749.8056231640788,
+          "memoryBeforeBytes": 557170688,
+          "memoryAfterBytes": 556363776
+        }
+      }
+    },
+    {
+      "arm": "03-B",
+      "group": "B",
+      "case": "list-c4",
+      "requestCount": 24184,
+      "warmupRequests": 30,
+      "rps": 1209.1837739024788,
+      "latencyMs": {
+        "p50Ms": 2.891178999998374,
+        "p95Ms": 4.772686000000249,
+        "p99Ms": 10.717335999999705
+      },
+      "elapsedMs": 20000.268380999998,
+      "clientCpuPercent": 24.38344279736193,
+      "clientEventLoopP99Ms": 11.010047,
+      "cpu": {
+        "api": {
+          "deltaIncludingRequestWarmup": {
+            "usage_usec": 23281913,
+            "user_usec": 14411677,
+            "system_usec": 8870237,
+            "nice_usec": 0,
+            "nr_periods": 221,
+            "nr_throttled": 0,
+            "throttled_usec": 0,
+            "nr_bursts": 0,
+            "burst_usec": 0
+          },
+          "usageUsecPerRequestIncludingWarmup": 961.5062773602049,
+          "memoryBeforeBytes": 345051136,
+          "memoryAfterBytes": 344903680
+        },
+        "mysql": {
+          "deltaIncludingRequestWarmup": {
+            "usage_usec": 40150154,
+            "user_usec": 32742433,
+            "system_usec": 7407720,
+            "nice_usec": 0,
+            "nr_periods": 230,
+            "nr_throttled": 196,
+            "throttled_usec": 5317785,
+            "nr_bursts": 0,
+            "burst_usec": 0
+          },
+          "usageUsecPerRequestIncludingWarmup": 1658.1380193276616,
+          "memoryBeforeBytes": 564678656,
+          "memoryAfterBytes": 563961856
+        }
+      }
+    },
+    {
+      "arm": "03-B",
+      "group": "B",
+      "case": "detail-c4",
+      "requestCount": 44054,
+      "warmupRequests": 300,
+      "rps": 2202.5458252061817,
+      "latencyMs": {
+        "p50Ms": 1.6535550000007788,
+        "p95Ms": 2.6037839999989956,
+        "p99Ms": 3.4584310000000187
+      },
+      "elapsedMs": 20001.399969,
+      "clientCpuPercent": 43.36009986021794,
+      "clientEventLoopP99Ms": 11.091967,
+      "cpu": {
+        "api": {
+          "deltaIncludingRequestWarmup": {
+            "usage_usec": 35371946,
+            "user_usec": 19699591,
+            "system_usec": 15672355,
+            "nice_usec": 0,
+            "nr_periods": 227,
+            "nr_throttled": 3,
+            "throttled_usec": 56298,
+            "nr_bursts": 0,
+            "burst_usec": 0
+          },
+          "usageUsecPerRequestIncludingWarmup": 797.4916805699598,
+          "memoryBeforeBytes": 343810048,
+          "memoryAfterBytes": 344449024
+        },
+        "mysql": {
+          "deltaIncludingRequestWarmup": {
+            "usage_usec": 23058760,
+            "user_usec": 14298902,
+            "system_usec": 8759858,
+            "nice_usec": 0,
+            "nr_periods": 231,
+            "nr_throttled": 0,
+            "throttled_usec": 0,
+            "nr_bursts": 0,
+            "burst_usec": 0
+          },
+          "usageUsecPerRequestIncludingWarmup": 519.8800559137845,
+          "memoryBeforeBytes": 564609024,
+          "memoryAfterBytes": 564195328
+        }
+      }
+    },
+    {
+      "arm": "03-B",
+      "group": "B",
+      "case": "list-c8",
+      "requestCount": 12574,
+      "warmupRequests": 30,
+      "rps": 628.5824109312415,
+      "latencyMs": {
+        "p50Ms": 5.096682000000001,
+        "p95Ms": 58.67345299999943,
+        "p99Ms": 65.59684700000071
+      },
+      "elapsedMs": 20003.741405,
+      "clientCpuPercent": 22.144747376572074,
+      "clientEventLoopP99Ms": 11.444223,
+      "cpu": {
+        "api": {
+          "deltaIncludingRequestWarmup": {
+            "usage_usec": 24708651,
+            "user_usec": 15046106,
+            "system_usec": 9662545,
+            "nice_usec": 0,
+            "nr_periods": 222,
+            "nr_throttled": 2,
+            "throttled_usec": 55006,
+            "nr_bursts": 0,
+            "burst_usec": 0
+          },
+          "usageUsecPerRequestIncludingWarmup": 1960.3817042208823,
+          "memoryBeforeBytes": 344109056,
+          "memoryAfterBytes": 345235456
+        },
+        "mysql": {
+          "deltaIncludingRequestWarmup": {
+            "usage_usec": 40296265,
+            "user_usec": 32646032,
+            "system_usec": 7650234,
+            "nice_usec": 0,
+            "nr_periods": 232,
+            "nr_throttled": 200,
+            "throttled_usec": 79171159,
+            "nr_bursts": 0,
+            "burst_usec": 0
+          },
+          "usageUsecPerRequestIncludingWarmup": 3197.101317042209,
+          "memoryBeforeBytes": 563978240,
+          "memoryAfterBytes": 565981184
+        }
+      }
+    },
+    {
+      "arm": "03-B",
+      "group": "B",
+      "case": "detail-c8",
+      "requestCount": 28624,
+      "warmupRequests": 300,
+      "rps": 1427.9218288987768,
+      "latencyMs": {
+        "p50Ms": 2.667714999999589,
+        "p95Ms": 36.1215200000006,
+        "p99Ms": 45.85233599999992
+      },
+      "elapsedMs": 20045.915274,
+      "clientCpuPercent": 42.90584831093006,
+      "clientEventLoopP99Ms": 11.501567,
+      "cpu": {
+        "api": {
+          "deltaIncludingRequestWarmup": {
+            "usage_usec": 40833849,
+            "user_usec": 21989526,
+            "system_usec": 18844322,
+            "nice_usec": 0,
+            "nr_periods": 226,
+            "nr_throttled": 203,
+            "throttled_usec": 32857755,
+            "nr_bursts": 0,
+            "burst_usec": 0
+          },
+          "usageUsecPerRequestIncludingWarmup": 1411.7635527589546,
+          "memoryBeforeBytes": 345890816,
+          "memoryAfterBytes": 346710016
+        },
+        "mysql": {
+          "deltaIncludingRequestWarmup": {
+            "usage_usec": 27139340,
+            "user_usec": 15974714,
+            "system_usec": 11164626,
+            "nice_usec": 0,
+            "nr_periods": 233,
+            "nr_throttled": 0,
+            "throttled_usec": 0,
+            "nr_bursts": 0,
+            "burst_usec": 0
+          },
+          "usageUsecPerRequestIncludingWarmup": 938.2982989904577,
+          "memoryBeforeBytes": 565649408,
+          "memoryAfterBytes": 566005760
+        }
+      }
+    },
+    {
+      "arm": "04-A",
+      "group": "A",
+      "case": "list-c4",
+      "requestCount": 23378,
+      "warmupRequests": 30,
+      "rps": 1168.7525787506654,
+      "latencyMs": {
+        "p50Ms": 3.1064340000000072,
+        "p95Ms": 4.823769999999058,
+        "p99Ms": 8.041720999997779
+      },
+      "elapsedMs": 20002.522710999998,
+      "clientCpuPercent": 24.579924597691914,
+      "clientEventLoopP99Ms": 11.051007,
+      "cpu": {
+        "api": {
+          "deltaIncludingRequestWarmup": {
+            "usage_usec": 24991400,
+            "user_usec": 16249263,
+            "system_usec": 8742137,
+            "nice_usec": 0,
+            "nr_periods": 223,
+            "nr_throttled": 0,
+            "throttled_usec": 0,
+            "nr_bursts": 0,
+            "burst_usec": 0
+          },
+          "usageUsecPerRequestIncludingWarmup": 1067.6435406698565,
+          "memoryBeforeBytes": 344489984,
+          "memoryAfterBytes": 345501696
+        },
+        "mysql": {
+          "deltaIncludingRequestWarmup": {
+            "usage_usec": 40038792,
+            "user_usec": 32594989,
+            "system_usec": 7443803,
+            "nice_usec": 0,
+            "nr_periods": 226,
+            "nr_throttled": 183,
+            "throttled_usec": 2976812,
+            "nr_bursts": 0,
+            "burst_usec": 0
+          },
+          "usageUsecPerRequestIncludingWarmup": 1710.4747095010252,
+          "memoryBeforeBytes": 570331136,
+          "memoryAfterBytes": 569192448
+        }
+      }
+    },
+    {
+      "arm": "04-A",
+      "group": "A",
+      "case": "detail-c4",
+      "requestCount": 43405,
+      "warmupRequests": 300,
+      "rps": 2170.0261185138547,
+      "latencyMs": {
+        "p50Ms": 1.6540069999991829,
+        "p95Ms": 2.8234510000002047,
+        "p99Ms": 3.816835000001447
+      },
+      "elapsedMs": 20002.063399,
+      "clientCpuPercent": 41.19434998097218,
+      "clientEventLoopP99Ms": 11.116543,
+      "cpu": {
+        "api": {
+          "deltaIncludingRequestWarmup": {
+            "usage_usec": 35487256,
+            "user_usec": 20365842,
+            "system_usec": 15121414,
+            "nice_usec": 0,
+            "nr_periods": 231,
+            "nr_throttled": 6,
+            "throttled_usec": 147012,
+            "nr_bursts": 0,
+            "burst_usec": 0
+          },
+          "usageUsecPerRequestIncludingWarmup": 811.9724516645692,
+          "memoryBeforeBytes": 345718784,
+          "memoryAfterBytes": 346316800
+        },
+        "mysql": {
+          "deltaIncludingRequestWarmup": {
+            "usage_usec": 22917130,
+            "user_usec": 14231191,
+            "system_usec": 8685938,
+            "nice_usec": 0,
+            "nr_periods": 238,
+            "nr_throttled": 0,
+            "throttled_usec": 0,
+            "nr_bursts": 0,
+            "burst_usec": 0
+          },
+          "usageUsecPerRequestIncludingWarmup": 524.359455439881,
+          "memoryBeforeBytes": 569262080,
+          "memoryAfterBytes": 568442880
+        }
+      }
+    },
+    {
+      "arm": "04-A",
+      "group": "A",
+      "case": "list-c8",
+      "requestCount": 14047,
+      "warmupRequests": 30,
+      "rps": 701.9210915381684,
+      "latencyMs": {
+        "p50Ms": 4.776525999999649,
+        "p95Ms": 55.55374900000061,
+        "p99Ms": 62.06602899999962
+      },
+      "elapsedMs": 20012.220987999997,
+      "clientCpuPercent": 22.344461430249726,
+      "clientEventLoopP99Ms": 11.436031,
+      "cpu": {
+        "api": {
+          "deltaIncludingRequestWarmup": {
+            "usage_usec": 26523800,
+            "user_usec": 16625142,
+            "system_usec": 9898658,
+            "nice_usec": 0,
+            "nr_periods": 223,
+            "nr_throttled": 0,
+            "throttled_usec": 0,
+            "nr_bursts": 0,
+            "burst_usec": 0
+          },
+          "usageUsecPerRequestIncludingWarmup": 1884.1940754422108,
+          "memoryBeforeBytes": 346931200,
+          "memoryAfterBytes": 347631616
+        },
+        "mysql": {
+          "deltaIncludingRequestWarmup": {
+            "usage_usec": 40186495,
+            "user_usec": 32149276,
+            "system_usec": 8037220,
+            "nice_usec": 0,
+            "nr_periods": 229,
+            "nr_throttled": 200,
+            "throttled_usec": 77420027,
+            "nr_bursts": 0,
+            "burst_usec": 0
+          },
+          "usageUsecPerRequestIncludingWarmup": 2854.7627335369752,
+          "memoryBeforeBytes": 569393152,
+          "memoryAfterBytes": 569757696
+        }
+      }
+    },
+    {
+      "arm": "04-A",
+      "group": "A",
+      "case": "detail-c8",
+      "requestCount": 31636,
+      "warmupRequests": 300,
+      "rps": 1581.6660657828825,
+      "latencyMs": {
+        "p50Ms": 2.3821760000009817,
+        "p95Ms": 29.918851999999788,
+        "p99Ms": 45.40255900000011
+      },
+      "elapsedMs": 20001.693583999997,
+      "clientCpuPercent": 41.65635757296582,
+      "clientEventLoopP99Ms": 11.403263,
+      "cpu": {
+        "api": {
+          "deltaIncludingRequestWarmup": {
+            "usage_usec": 40655584,
+            "user_usec": 22129050,
+            "system_usec": 18526534,
+            "nice_usec": 0,
+            "nr_periods": 223,
+            "nr_throttled": 202,
+            "throttled_usec": 33599713,
+            "nr_bursts": 0,
+            "burst_usec": 0
+          },
+          "usageUsecPerRequestIncludingWarmup": 1273.0330661322646,
+          "memoryBeforeBytes": 346898432,
+          "memoryAfterBytes": 349429760
+        },
+        "mysql": {
+          "deltaIncludingRequestWarmup": {
+            "usage_usec": 26748216,
+            "user_usec": 15738371,
+            "system_usec": 11009846,
+            "nice_usec": 0,
+            "nr_periods": 231,
+            "nr_throttled": 0,
+            "throttled_usec": 0,
+            "nr_bursts": 0,
+            "burst_usec": 0
+          },
+          "usageUsecPerRequestIncludingWarmup": 837.5568637274549,
+          "memoryBeforeBytes": 569843712,
+          "memoryAfterBytes": 569450496
+        }
+      }
+    },
+    {
+      "arm": "05-A",
+      "group": "A",
+      "case": "list-c4",
+      "requestCount": 24345,
+      "warmupRequests": 30,
+      "rps": 1217.079851567357,
+      "latencyMs": {
+        "p50Ms": 2.9149209999995946,
+        "p95Ms": 4.835463999999774,
+        "p99Ms": 9.312673000000359
+      },
+      "elapsedMs": 20002.796011,
+      "clientCpuPercent": 24.34542649598588,
+      "clientEventLoopP99Ms": 11.051007,
+      "cpu": {
+        "api": {
+          "deltaIncludingRequestWarmup": {
+            "usage_usec": 24643069,
+            "user_usec": 15422289,
+            "system_usec": 9220779,
+            "nice_usec": 0,
+            "nr_periods": 229,
+            "nr_throttled": 0,
+            "throttled_usec": 0,
+            "nr_bursts": 0,
+            "burst_usec": 0
+          },
+          "usageUsecPerRequestIncludingWarmup": 1010.9977025641026,
+          "memoryBeforeBytes": 359616512,
+          "memoryAfterBytes": 359538688
+        },
+        "mysql": {
+          "deltaIncludingRequestWarmup": {
+            "usage_usec": 40094801,
+            "user_usec": 33026906,
+            "system_usec": 7067896,
+            "nice_usec": 0,
+            "nr_periods": 227,
+            "nr_throttled": 191,
+            "throttled_usec": 3966123,
+            "nr_bursts": 0,
+            "burst_usec": 0
+          },
+          "usageUsecPerRequestIncludingWarmup": 1644.9149128205129,
+          "memoryBeforeBytes": 572891136,
+          "memoryAfterBytes": 572768256
+        }
+      }
+    },
+    {
+      "arm": "05-A",
+      "group": "A",
+      "case": "detail-c4",
+      "requestCount": 43722,
+      "warmupRequests": 300,
+      "rps": 2186.026059089468,
+      "latencyMs": {
+        "p50Ms": 1.6325099999994563,
+        "p95Ms": 2.9001699999989796,
+        "p99Ms": 3.8781639999997424
+      },
+      "elapsedMs": 20000.676487,
+      "clientCpuPercent": 41.12014913768351,
+      "clientEventLoopP99Ms": 11.059199,
+      "cpu": {
+        "api": {
+          "deltaIncludingRequestWarmup": {
+            "usage_usec": 35482135,
+            "user_usec": 19528917,
+            "system_usec": 15953219,
+            "nice_usec": 0,
+            "nr_periods": 227,
+            "nr_throttled": 8,
+            "throttled_usec": 483510,
+            "nr_bursts": 0,
+            "burst_usec": 0
+          },
+          "usageUsecPerRequestIncludingWarmup": 806.0091545136522,
+          "memoryBeforeBytes": 360263680,
+          "memoryAfterBytes": 365895680
+        },
+        "mysql": {
+          "deltaIncludingRequestWarmup": {
+            "usage_usec": 22759710,
+            "user_usec": 13763818,
+            "system_usec": 8995892,
+            "nice_usec": 0,
+            "nr_periods": 234,
+            "nr_throttled": 0,
+            "throttled_usec": 0,
+            "nr_bursts": 0,
+            "burst_usec": 0
+          },
+          "usageUsecPerRequestIncludingWarmup": 517.0076325473627,
+          "memoryBeforeBytes": 573784064,
+          "memoryAfterBytes": 573112320
+        }
+      }
+    },
+    {
+      "arm": "05-A",
+      "group": "A",
+      "case": "list-c8",
+      "requestCount": 18969,
+      "warmupRequests": 30,
+      "rps": 946.3933073863619,
+      "latencyMs": {
+        "p50Ms": 3.763448000000153,
+        "p95Ms": 54.07655100000011,
+        "p99Ms": 57.41003600000113
+      },
+      "elapsedMs": 20043.463803000002,
+      "clientCpuPercent": 22.059610272243518,
+      "clientEventLoopP99Ms": 11.141119,
+      "cpu": {
+        "api": {
+          "deltaIncludingRequestWarmup": {
+            "usage_usec": 26091567,
+            "user_usec": 16306669,
+            "system_usec": 9784897,
+            "nice_usec": 0,
+            "nr_periods": 224,
+            "nr_throttled": 4,
+            "throttled_usec": 53194,
+            "nr_bursts": 0,
+            "burst_usec": 0
+          },
+          "usageUsecPerRequestIncludingWarmup": 1373.312648034107,
+          "memoryBeforeBytes": 366329856,
+          "memoryAfterBytes": 367316992
+        },
+        "mysql": {
+          "deltaIncludingRequestWarmup": {
+            "usage_usec": 40298647,
+            "user_usec": 32662293,
+            "system_usec": 7636353,
+            "nice_usec": 0,
+            "nr_periods": 228,
+            "nr_throttled": 200,
+            "throttled_usec": 77996024,
+            "nr_bursts": 0,
+            "burst_usec": 0
+          },
+          "usageUsecPerRequestIncludingWarmup": 2121.0930575293437,
+          "memoryBeforeBytes": 572645376,
+          "memoryAfterBytes": 572833792
+        }
+      }
+    },
+    {
+      "arm": "05-A",
+      "group": "A",
+      "case": "detail-c8",
+      "requestCount": 32209,
+      "warmupRequests": 300,
+      "rps": 1610.3492976118487,
+      "latencyMs": {
+        "p50Ms": 2.41962599999988,
+        "p95Ms": 16.418470000000525,
+        "p99Ms": 45.873225999999704
+      },
+      "elapsedMs": 20001.25069,
+      "clientCpuPercent": 41.11012919862563,
+      "clientEventLoopP99Ms": 11.411455,
+      "cpu": {
+        "api": {
+          "deltaIncludingRequestWarmup": {
+            "usage_usec": 40637377,
+            "user_usec": 21927098,
+            "system_usec": 18710278,
+            "nice_usec": 0,
+            "nr_periods": 227,
+            "nr_throttled": 202,
+            "throttled_usec": 33550703,
+            "nr_bursts": 0,
+            "burst_usec": 0
+          },
+          "usageUsecPerRequestIncludingWarmup": 1250.0346673228953,
+          "memoryBeforeBytes": 367353856,
+          "memoryAfterBytes": 368422912
+        },
+        "mysql": {
+          "deltaIncludingRequestWarmup": {
+            "usage_usec": 26696973,
+            "user_usec": 15818307,
+            "system_usec": 10878665,
+            "nice_usec": 0,
+            "nr_periods": 233,
+            "nr_throttled": 1,
+            "throttled_usec": 22705,
+            "nr_bursts": 0,
+            "burst_usec": 0
+          },
+          "usageUsecPerRequestIncludingWarmup": 821.2179088867698,
+          "memoryBeforeBytes": 573079552,
+          "memoryAfterBytes": 572739584
+        }
+      }
+    },
+    {
+      "arm": "06-B",
+      "group": "B",
+      "case": "list-c4",
+      "requestCount": 24437,
+      "warmupRequests": 30,
+      "rps": 1221.7451501977334,
+      "latencyMs": {
+        "p50Ms": 2.8701829999990878,
+        "p95Ms": 4.834145999999691,
+        "p99Ms": 10.508380000000216
+      },
+      "elapsedMs": 20001.716394000003,
+      "clientCpuPercent": 23.994350812011614,
+      "clientEventLoopP99Ms": 11.059199,
+      "cpu": {
+        "api": {
+          "deltaIncludingRequestWarmup": {
+            "usage_usec": 23374680,
+            "user_usec": 14532903,
+            "system_usec": 8841778,
+            "nice_usec": 0,
+            "nr_periods": 221,
+            "nr_throttled": 0,
+            "throttled_usec": 0,
+            "nr_bursts": 0,
+            "burst_usec": 0
+          },
+          "usageUsecPerRequestIncludingWarmup": 955.3553766297462,
+          "memoryBeforeBytes": 327561216,
+          "memoryAfterBytes": 327680000
+        },
+        "mysql": {
+          "deltaIncludingRequestWarmup": {
+            "usage_usec": 40095647,
+            "user_usec": 32833992,
+            "system_usec": 7261655,
+            "nice_usec": 0,
+            "nr_periods": 228,
+            "nr_throttled": 193,
+            "throttled_usec": 4950100,
+            "nr_bursts": 0,
+            "burst_usec": 0
+          },
+          "usageUsecPerRequestIncludingWarmup": 1638.7643356357544,
+          "memoryBeforeBytes": 578330624,
+          "memoryAfterBytes": 578015232
+        }
+      }
+    },
+    {
+      "arm": "06-B",
+      "group": "B",
+      "case": "detail-c4",
+      "requestCount": 44791,
+      "warmupRequests": 300,
+      "rps": 2239.400477133632,
+      "latencyMs": {
+        "p50Ms": 1.6043680000000222,
+        "p95Ms": 2.730835999998817,
+        "p99Ms": 3.738083000000188
+      },
+      "elapsedMs": 20001.335383,
+      "clientCpuPercent": 41.99717088459763,
+      "clientEventLoopP99Ms": 11.067391,
+      "cpu": {
+        "api": {
+          "deltaIncludingRequestWarmup": {
+            "usage_usec": 35222097,
+            "user_usec": 19434297,
+            "system_usec": 15787800,
+            "nice_usec": 0,
+            "nr_periods": 228,
+            "nr_throttled": 7,
+            "throttled_usec": 170827,
+            "nr_bursts": 0,
+            "burst_usec": 0
+          },
+          "usageUsecPerRequestIncludingWarmup": 781.1336408595951,
+          "memoryBeforeBytes": 327168000,
+          "memoryAfterBytes": 328609792
+        },
+        "mysql": {
+          "deltaIncludingRequestWarmup": {
+            "usage_usec": 23013633,
+            "user_usec": 14381471,
+            "system_usec": 8632161,
+            "nice_usec": 0,
+            "nr_periods": 233,
+            "nr_throttled": 0,
+            "throttled_usec": 0,
+            "nr_bursts": 0,
+            "burst_usec": 0
+          },
+          "usageUsecPerRequestIncludingWarmup": 510.3819609234659,
+          "memoryBeforeBytes": 578056192,
+          "memoryAfterBytes": 578605056
+        }
+      }
+    },
+    {
+      "arm": "06-B",
+      "group": "B",
+      "case": "list-c8",
+      "requestCount": 12066,
+      "warmupRequests": 30,
+      "rps": 603.1543305691075,
+      "latencyMs": {
+        "p50Ms": 5.534377000000006,
+        "p95Ms": 59.14733899999919,
+        "p99Ms": 64.69861900000069
+      },
+      "elapsedMs": 20004.830254,
+      "clientCpuPercent": 22.394566427796693,
+      "clientEventLoopP99Ms": 11.575295,
+      "cpu": {
+        "api": {
+          "deltaIncludingRequestWarmup": {
+            "usage_usec": 24895793,
+            "user_usec": 14980363,
+            "system_usec": 9915430,
+            "nice_usec": 0,
+            "nr_periods": 217,
+            "nr_throttled": 2,
+            "throttled_usec": 99480,
+            "nr_bursts": 0,
+            "burst_usec": 0
+          },
+          "usageUsecPerRequestIncludingWarmup": 2058.18394510582,
+          "memoryBeforeBytes": 329142272,
+          "memoryAfterBytes": 330268672
+        },
+        "mysql": {
+          "deltaIncludingRequestWarmup": {
+            "usage_usec": 40251882,
+            "user_usec": 32288833,
+            "system_usec": 7963049,
+            "nice_usec": 0,
+            "nr_periods": 227,
+            "nr_throttled": 200,
+            "throttled_usec": 80008341,
+            "nr_bursts": 0,
+            "burst_usec": 0
+          },
+          "usageUsecPerRequestIncludingWarmup": 3327.7018849206347,
+          "memoryBeforeBytes": 577847296,
+          "memoryAfterBytes": 578154496
+        }
+      }
+    },
+    {
+      "arm": "06-B",
+      "group": "B",
+      "case": "detail-c8",
+      "requestCount": 27647,
+      "warmupRequests": 300,
+      "rps": 1381.898855419083,
+      "latencyMs": {
+        "p50Ms": 2.7045360000001892,
+        "p95Ms": 37.46229400000084,
+        "p99Ms": 45.27509099999952
+      },
+      "elapsedMs": 20006.529343000002,
+      "clientCpuPercent": 41.50400030730607,
+      "clientEventLoopP99Ms": 11.616255,
+      "cpu": {
+        "api": {
+          "deltaIncludingRequestWarmup": {
+            "usage_usec": 40839475,
+            "user_usec": 21610734,
+            "system_usec": 19228740,
+            "nice_usec": 0,
+            "nr_periods": 227,
+            "nr_throttled": 203,
+            "throttled_usec": 35190834,
+            "nr_bursts": 0,
+            "burst_usec": 0
+          },
+          "usageUsecPerRequestIncludingWarmup": 1461.3187461981609,
+          "memoryBeforeBytes": 330203136,
+          "memoryAfterBytes": 331341824
+        },
+        "mysql": {
+          "deltaIncludingRequestWarmup": {
+            "usage_usec": 27208604,
+            "user_usec": 15844341,
+            "system_usec": 11364263,
+            "nice_usec": 0,
+            "nr_periods": 230,
+            "nr_throttled": 0,
+            "throttled_usec": 0,
+            "nr_bursts": 0,
+            "burst_usec": 0
+          },
+          "usageUsecPerRequestIncludingWarmup": 973.5787025441014,
+          "memoryBeforeBytes": 578613248,
+          "memoryAfterBytes": 577368064
+        }
+      }
+    }
+  ],
+  "jvmWarmupStages": [
+    {
+      "arm": "01-A",
+      "group": "A",
+      "case": "warm-list-1",
+      "requestCount": 15636,
+      "warmupRequests": 30,
+      "rps": 781.6753009025974,
+      "latencyMs": {
+        "p50Ms": 3.6484270000000834,
+        "p95Ms": 9.227811000000656,
+        "p99Ms": 41.446609999999964
+      },
+      "elapsedMs": 20003.190560000003,
+      "clientCpuPercent": 18.898680131356002,
+      "clientEventLoopP99Ms": 11.100159,
+      "cpu": {
+        "api": {
+          "deltaIncludingRequestWarmup": {
+            "usage_usec": 38091823,
+            "user_usec": 31074062,
+            "system_usec": 7017761,
+            "nice_usec": 0,
+            "nr_periods": 227,
+            "nr_throttled": 153,
+            "throttled_usec": 19665980,
+            "nr_bursts": 0,
+            "burst_usec": 0
+          },
+          "usageUsecPerRequestIncludingWarmup": 2431.4964253798034,
+          "memoryBeforeBytes": 241221632,
+          "memoryAfterBytes": 293085184
+        },
+        "mysql": {
+          "deltaIncludingRequestWarmup": {
+            "usage_usec": 28897206,
+            "user_usec": 23663398,
+            "system_usec": 5233807,
+            "nice_usec": 0,
+            "nr_periods": 233,
+            "nr_throttled": 33,
+            "throttled_usec": 447872,
+            "nr_bursts": 0,
+            "burst_usec": 0
+          },
+          "usageUsecPerRequestIncludingWarmup": 1844.5810034469553,
+          "memoryBeforeBytes": 543150080,
+          "memoryAfterBytes": 543629312
+        }
+      }
+    },
+    {
+      "arm": "01-A",
+      "group": "A",
+      "case": "warm-detail",
+      "requestCount": 33052,
+      "warmupRequests": 300,
+      "rps": 1652.5091446341007,
+      "latencyMs": {
+        "p50Ms": 1.9665570000015578,
+        "p95Ms": 3.776740000001155,
+        "p99Ms": 6.505675000000338
+      },
+      "elapsedMs": 20001.099605,
+      "clientCpuPercent": 36.826940245618566,
+      "clientEventLoopP99Ms": 11.100159,
+      "cpu": {
+        "api": {
+          "deltaIncludingRequestWarmup": {
+            "usage_usec": 39154099,
+            "user_usec": 25083655,
+            "system_usec": 14070443,
+            "nice_usec": 0,
+            "nr_periods": 237,
+            "nr_throttled": 76,
+            "throttled_usec": 7292709,
+            "nr_bursts": 0,
+            "burst_usec": 0
+          },
+          "usageUsecPerRequestIncludingWarmup": 1173.9655492923962,
+          "memoryBeforeBytes": 292442112,
+          "memoryAfterBytes": 327233536
+        },
+        "mysql": {
+          "deltaIncludingRequestWarmup": {
+            "usage_usec": 20588478,
+            "user_usec": 12580107,
+            "system_usec": 8008371,
+            "nice_usec": 0,
+            "nr_periods": 247,
+            "nr_throttled": 0,
+            "throttled_usec": 0,
+            "nr_bursts": 0,
+            "burst_usec": 0
+          },
+          "usageUsecPerRequestIncludingWarmup": 617.3086471575917,
+          "memoryBeforeBytes": 544063488,
+          "memoryAfterBytes": 544288768
+        }
+      }
+    },
+    {
+      "arm": "01-A",
+      "group": "A",
+      "case": "warm-list-2",
+      "requestCount": 19244,
+      "warmupRequests": 30,
+      "rps": 962.0265724874952,
+      "latencyMs": {
+        "p50Ms": 3.887144999999691,
+        "p95Ms": 5.6495300000005955,
+        "p99Ms": 7.207319999999527
+      },
+      "elapsedMs": 20003.605462000003,
+      "clientCpuPercent": 24.74388934236219,
+      "clientEventLoopP99Ms": 11.206655,
+      "cpu": {
+        "api": {
+          "deltaIncludingRequestWarmup": {
+            "usage_usec": 25958623,
+            "user_usec": 16401433,
+            "system_usec": 9557189,
+            "nice_usec": 0,
+            "nr_periods": 221,
+            "nr_throttled": 0,
+            "throttled_usec": 0,
+            "nr_bursts": 0,
+            "burst_usec": 0
+          },
+          "usageUsecPerRequestIncludingWarmup": 1346.8207429698039,
+          "memoryBeforeBytes": 326856704,
+          "memoryAfterBytes": 327589888
+        },
+        "mysql": {
+          "deltaIncludingRequestWarmup": {
+            "usage_usec": 39223674,
+            "user_usec": 31768206,
+            "system_usec": 7455468,
+            "nice_usec": 0,
+            "nr_periods": 233,
+            "nr_throttled": 62,
+            "throttled_usec": 627738,
+            "nr_bursts": 0,
+            "burst_usec": 0
+          },
+          "usageUsecPerRequestIncludingWarmup": 2035.056241568953,
+          "memoryBeforeBytes": 543657984,
+          "memoryAfterBytes": 544694272
+        }
+      }
+    },
+    {
+      "arm": "02-B",
+      "group": "B",
+      "case": "warm-list-1",
+      "requestCount": 16884,
+      "warmupRequests": 30,
+      "rps": 843.8881173064101,
+      "latencyMs": {
+        "p50Ms": 3.502799999999297,
+        "p95Ms": 7.495138999999995,
+        "p99Ms": 37.43917099999999
+      },
+      "elapsedMs": 20007.391564999998,
+      "clientCpuPercent": 19.272257392839208,
+      "clientEventLoopP99Ms": 11.091967,
+      "cpu": {
+        "api": {
+          "deltaIncludingRequestWarmup": {
+            "usage_usec": 37109076,
+            "user_usec": 29946772,
+            "system_usec": 7162303,
+            "nice_usec": 0,
+            "nr_periods": 227,
+            "nr_throttled": 145,
+            "throttled_usec": 18101580,
+            "nr_bursts": 0,
+            "burst_usec": 0
+          },
+          "usageUsecPerRequestIncludingWarmup": 2193.9858105711246,
+          "memoryBeforeBytes": 237965312,
+          "memoryAfterBytes": 284618752
+        },
+        "mysql": {
+          "deltaIncludingRequestWarmup": {
+            "usage_usec": 30108128,
+            "user_usec": 24603122,
+            "system_usec": 5505006,
+            "nice_usec": 0,
+            "nr_periods": 227,
+            "nr_throttled": 49,
+            "throttled_usec": 1009631,
+            "nr_bursts": 0,
+            "burst_usec": 0
+          },
+          "usageUsecPerRequestIncludingWarmup": 1780.07142012534,
+          "memoryBeforeBytes": 553713664,
+          "memoryAfterBytes": 555151360
+        }
+      }
+    },
+    {
+      "arm": "02-B",
+      "group": "B",
+      "case": "warm-detail",
+      "requestCount": 38174,
+      "warmupRequests": 300,
+      "rps": 1908.5659615079514,
+      "latencyMs": {
+        "p50Ms": 1.6979910000009113,
+        "p95Ms": 3.084351000001334,
+        "p99Ms": 5.137716999999611
+      },
+      "elapsedMs": 20001.404599,
+      "clientCpuPercent": 37.5627119726163,
+      "clientEventLoopP99Ms": 11.091967,
+      "cpu": {
+        "api": {
+          "deltaIncludingRequestWarmup": {
+            "usage_usec": 39035565,
+            "user_usec": 25166299,
+            "system_usec": 13869265,
+            "nice_usec": 0,
+            "nr_periods": 232,
+            "nr_throttled": 72,
+            "throttled_usec": 8092332,
+            "nr_bursts": 0,
+            "burst_usec": 0
+          },
+          "usageUsecPerRequestIncludingWarmup": 1014.5959609086656,
+          "memoryBeforeBytes": 284909568,
+          "memoryAfterBytes": 327155712
+        },
+        "mysql": {
+          "deltaIncludingRequestWarmup": {
+            "usage_usec": 20640070,
+            "user_usec": 12662529,
+            "system_usec": 7977540,
+            "nice_usec": 0,
+            "nr_periods": 238,
+            "nr_throttled": 0,
+            "throttled_usec": 0,
+            "nr_bursts": 0,
+            "burst_usec": 0
+          },
+          "usageUsecPerRequestIncludingWarmup": 536.4680043665852,
+          "memoryBeforeBytes": 555941888,
+          "memoryAfterBytes": 555974656
+        }
+      }
+    },
+    {
+      "arm": "02-B",
+      "group": "B",
+      "case": "warm-list-2",
+      "requestCount": 23906,
+      "warmupRequests": 30,
+      "rps": 1195.2054861979257,
+      "latencyMs": {
+        "p50Ms": 2.9608699999989767,
+        "p95Ms": 4.807415000000219,
+        "p99Ms": 10.096861999999419
+      },
+      "elapsedMs": 20001.581549,
+      "clientCpuPercent": 24.378412217326808,
+      "clientEventLoopP99Ms": 11.059199,
+      "cpu": {
+        "api": {
+          "deltaIncludingRequestWarmup": {
+            "usage_usec": 23775429,
+            "user_usec": 14830024,
+            "system_usec": 8945406,
+            "nice_usec": 0,
+            "nr_periods": 223,
+            "nr_throttled": 0,
+            "throttled_usec": 0,
+            "nr_bursts": 0,
+            "burst_usec": 0
+          },
+          "usageUsecPerRequestIncludingWarmup": 993.2916527406417,
+          "memoryBeforeBytes": 327053312,
+          "memoryAfterBytes": 330264576
+        },
+        "mysql": {
+          "deltaIncludingRequestWarmup": {
+            "usage_usec": 40152229,
+            "user_usec": 33294757,
+            "system_usec": 6857472,
+            "nice_usec": 0,
+            "nr_periods": 227,
+            "nr_throttled": 198,
+            "throttled_usec": 4628571,
+            "nr_bursts": 0,
+            "burst_usec": 0
+          },
+          "usageUsecPerRequestIncludingWarmup": 1677.48282921123,
+          "memoryBeforeBytes": 556503040,
+          "memoryAfterBytes": 556048384
+        }
+      }
+    },
+    {
+      "arm": "03-B",
+      "group": "B",
+      "case": "warm-list-1",
+      "requestCount": 16392,
+      "warmupRequests": 30,
+      "rps": 819.4998710882257,
+      "latencyMs": {
+        "p50Ms": 3.5008880000004865,
+        "p95Ms": 8.52139000000011,
+        "p99Ms": 39.12429300000031
+      },
+      "elapsedMs": 20002.443659,
+      "clientCpuPercent": 19.64462476179496,
+      "clientEventLoopP99Ms": 11.059199,
+      "cpu": {
+        "api": {
+          "deltaIncludingRequestWarmup": {
+            "usage_usec": 37016697,
+            "user_usec": 29776385,
+            "system_usec": 7240312,
+            "nice_usec": 0,
+            "nr_periods": 228,
+            "nr_throttled": 137,
+            "throttled_usec": 17797790,
+            "nr_bursts": 0,
+            "burst_usec": 0
+          },
+          "usageUsecPerRequestIncludingWarmup": 2254.091888929485,
+          "memoryBeforeBytes": 240463872,
+          "memoryAfterBytes": 307007488
+        },
+        "mysql": {
+          "deltaIncludingRequestWarmup": {
+            "usage_usec": 29993473,
+            "user_usec": 24683837,
+            "system_usec": 5309636,
+            "nice_usec": 0,
+            "nr_periods": 226,
+            "nr_throttled": 54,
+            "throttled_usec": 1162505,
+            "nr_bursts": 0,
+            "burst_usec": 0
+          },
+          "usageUsecPerRequestIncludingWarmup": 1826.4202289611496,
+          "memoryBeforeBytes": 564543488,
+          "memoryAfterBytes": 563978240
+        }
+      }
+    },
+    {
+      "arm": "03-B",
+      "group": "B",
+      "case": "warm-detail",
+      "requestCount": 39207,
+      "warmupRequests": 300,
+      "rps": 1960.1936510340058,
+      "latencyMs": {
+        "p50Ms": 1.7148969999998371,
+        "p95Ms": 3.0090410000000247,
+        "p99Ms": 4.5748249999996915
+      },
+      "elapsedMs": 20001.595240000002,
+      "clientCpuPercent": 39.531771866812356,
+      "clientEventLoopP99Ms": 11.059199,
+      "cpu": {
+        "api": {
+          "deltaIncludingRequestWarmup": {
+            "usage_usec": 38731693,
+            "user_usec": 24258196,
+            "system_usec": 14473498,
+            "nice_usec": 0,
+            "nr_periods": 233,
+            "nr_throttled": 70,
+            "throttled_usec": 4934432,
+            "nr_bursts": 0,
+            "burst_usec": 0
+          },
+          "usageUsecPerRequestIncludingWarmup": 980.3754524514643,
+          "memoryBeforeBytes": 302657536,
+          "memoryAfterBytes": 344117248
+        },
+        "mysql": {
+          "deltaIncludingRequestWarmup": {
+            "usage_usec": 21265290,
+            "user_usec": 13233462,
+            "system_usec": 8031827,
+            "nice_usec": 0,
+            "nr_periods": 237,
+            "nr_throttled": 0,
+            "throttled_usec": 0,
+            "nr_bursts": 0,
+            "burst_usec": 0
+          },
+          "usageUsecPerRequestIncludingWarmup": 538.2663831726023,
+          "memoryBeforeBytes": 564482048,
+          "memoryAfterBytes": 565166080
+        }
+      }
+    },
+    {
+      "arm": "03-B",
+      "group": "B",
+      "case": "warm-list-2",
+      "requestCount": 23751,
+      "warmupRequests": 30,
+      "rps": 1187.4745805207046,
+      "latencyMs": {
+        "p50Ms": 2.97333400000025,
+        "p95Ms": 4.864480999999955,
+        "p99Ms": 10.383115999999063
+      },
+      "elapsedMs": 20001.27025,
+      "clientCpuPercent": 24.41593428297385,
+      "clientEventLoopP99Ms": 11.075583,
+      "cpu": {
+        "api": {
+          "deltaIncludingRequestWarmup": {
+            "usage_usec": 23569944,
+            "user_usec": 14477349,
+            "system_usec": 9092594,
+            "nice_usec": 0,
+            "nr_periods": 221,
+            "nr_throttled": 0,
+            "throttled_usec": 0,
+            "nr_bursts": 0,
+            "burst_usec": 0
+          },
+          "usageUsecPerRequestIncludingWarmup": 991.1250157688911,
+          "memoryBeforeBytes": 343646208,
+          "memoryAfterBytes": 343240704
+        },
+        "mysql": {
+          "deltaIncludingRequestWarmup": {
+            "usage_usec": 40119363,
+            "user_usec": 32701036,
+            "system_usec": 7418327,
+            "nice_usec": 0,
+            "nr_periods": 229,
+            "nr_throttled": 195,
+            "throttled_usec": 4759522,
+            "nr_bursts": 0,
+            "burst_usec": 0
+          },
+          "usageUsecPerRequestIncludingWarmup": 1687.0343131071022,
+          "memoryBeforeBytes": 565051392,
+          "memoryAfterBytes": 563929088
+        }
+      }
+    },
+    {
+      "arm": "04-A",
+      "group": "A",
+      "case": "warm-list-1",
+      "requestCount": 14018,
+      "warmupRequests": 30,
+      "rps": 700.8495415312804,
+      "latencyMs": {
+        "p50Ms": 3.8745450000005803,
+        "p95Ms": 11.483613000000332,
+        "p99Ms": 48.07264499999974
+      },
+      "elapsedMs": 20001.439923,
+      "clientCpuPercent": 17.864698810464738,
+      "clientEventLoopP99Ms": 11.091967,
+      "cpu": {
+        "api": {
+          "deltaIncludingRequestWarmup": {
+            "usage_usec": 39500713,
+            "user_usec": 33077190,
+            "system_usec": 6423523,
+            "nice_usec": 0,
+            "nr_periods": 225,
+            "nr_throttled": 173,
+            "throttled_usec": 23609932,
+            "nr_bursts": 0,
+            "burst_usec": 0
+          },
+          "usageUsecPerRequestIncludingWarmup": 2811.838909453303,
+          "memoryBeforeBytes": 239218688,
+          "memoryAfterBytes": 326148096
+        },
+        "mysql": {
+          "deltaIncludingRequestWarmup": {
+            "usage_usec": 26974853,
+            "user_usec": 22239373,
+            "system_usec": 4735480,
+            "nice_usec": 0,
+            "nr_periods": 228,
+            "nr_throttled": 20,
+            "throttled_usec": 191733,
+            "nr_bursts": 0,
+            "burst_usec": 0
+          },
+          "usageUsecPerRequestIncludingWarmup": 1920.1916998861047,
+          "memoryBeforeBytes": 568623104,
+          "memoryAfterBytes": 568217600
+        }
+      }
+    },
+    {
+      "arm": "04-A",
+      "group": "A",
+      "case": "warm-detail",
+      "requestCount": 38078,
+      "warmupRequests": 300,
+      "rps": 1903.6796856270387,
+      "latencyMs": {
+        "p50Ms": 1.7363040000000183,
+        "p95Ms": 3.0737389999994775,
+        "p99Ms": 4.595357999998669
+      },
+      "elapsedMs": 20002.314616,
+      "clientCpuPercent": 37.936919529953265,
+      "clientEventLoopP99Ms": 11.010047,
+      "cpu": {
+        "api": {
+          "deltaIncludingRequestWarmup": {
+            "usage_usec": 39118107,
+            "user_usec": 25310541,
+            "system_usec": 13807566,
+            "nice_usec": 0,
+            "nr_periods": 238,
+            "nr_throttled": 73,
+            "throttled_usec": 7107639,
+            "nr_bursts": 0,
+            "burst_usec": 0
+          },
+          "usageUsecPerRequestIncludingWarmup": 1019.2846682995466,
+          "memoryBeforeBytes": 309620736,
+          "memoryAfterBytes": 344150016
+        },
+        "mysql": {
+          "deltaIncludingRequestWarmup": {
+            "usage_usec": 20839587,
+            "user_usec": 12687215,
+            "system_usec": 8152373,
+            "nice_usec": 0,
+            "nr_periods": 238,
+            "nr_throttled": 0,
+            "throttled_usec": 0,
+            "nr_bursts": 0,
+            "burst_usec": 0
+          },
+          "usageUsecPerRequestIncludingWarmup": 543.0086768461098,
+          "memoryBeforeBytes": 568266752,
+          "memoryAfterBytes": 569102336
+        }
+      }
+    },
+    {
+      "arm": "04-A",
+      "group": "A",
+      "case": "warm-list-2",
+      "requestCount": 23580,
+      "warmupRequests": 30,
+      "rps": 1178.8820077628868,
+      "latencyMs": {
+        "p50Ms": 3.0690430000013293,
+        "p95Ms": 4.8717930000002525,
+        "p99Ms": 7.498775000000023
+      },
+      "elapsedMs": 20002.001764999997,
+      "clientCpuPercent": 24.912646536805266,
+      "clientEventLoopP99Ms": 11.116543,
+      "cpu": {
+        "api": {
+          "deltaIncludingRequestWarmup": {
+            "usage_usec": 25435706,
+            "user_usec": 16737154,
+            "system_usec": 8698551,
+            "nice_usec": 0,
+            "nr_periods": 222,
+            "nr_throttled": 1,
+            "throttled_usec": 7446,
+            "nr_bursts": 0,
+            "burst_usec": 0
+          },
+          "usageUsecPerRequestIncludingWarmup": 1077.3276577721304,
+          "memoryBeforeBytes": 344879104,
+          "memoryAfterBytes": 346636288
+        },
+        "mysql": {
+          "deltaIncludingRequestWarmup": {
+            "usage_usec": 40088617,
+            "user_usec": 32684029,
+            "system_usec": 7404588,
+            "nice_usec": 0,
+            "nr_periods": 228,
+            "nr_throttled": 183,
+            "throttled_usec": 2447871,
+            "nr_bursts": 0,
+            "burst_usec": 0
+          },
+          "usageUsecPerRequestIncludingWarmup": 1697.9507412113512,
+          "memoryBeforeBytes": 569094144,
+          "memoryAfterBytes": 568664064
+        }
+      }
+    },
+    {
+      "arm": "05-A",
+      "group": "A",
+      "case": "warm-list-1",
+      "requestCount": 12186,
+      "warmupRequests": 30,
+      "rps": 609.1593146562802,
+      "latencyMs": {
+        "p50Ms": 3.7289439999985916,
+        "p95Ms": 20.6454369999999,
+        "p99Ms": 56.08332199999995
+      },
+      "elapsedMs": 20004.619,
+      "clientCpuPercent": 17.26336802515459,
+      "clientEventLoopP99Ms": 11.288575,
+      "cpu": {
+        "api": {
+          "deltaIncludingRequestWarmup": {
+            "usage_usec": 39895081,
+            "user_usec": 33697767,
+            "system_usec": 6197314,
+            "nice_usec": 0,
+            "nr_periods": 226,
+            "nr_throttled": 179,
+            "throttled_usec": 26223837,
+            "nr_bursts": 0,
+            "burst_usec": 0
+          },
+          "usageUsecPerRequestIncludingWarmup": 3265.8055828421743,
+          "memoryBeforeBytes": 242458624,
+          "memoryAfterBytes": 326602752
+        },
+        "mysql": {
+          "deltaIncludingRequestWarmup": {
+            "usage_usec": 25189961,
+            "user_usec": 20404216,
+            "system_usec": 4785746,
+            "nice_usec": 0,
+            "nr_periods": 231,
+            "nr_throttled": 12,
+            "throttled_usec": 59021,
+            "nr_bursts": 0,
+            "burst_usec": 0
+          },
+          "usageUsecPerRequestIncludingWarmup": 2062.0465782580222,
+          "memoryBeforeBytes": 572657664,
+          "memoryAfterBytes": 573206528
+        }
+      }
+    },
+    {
+      "arm": "05-A",
+      "group": "A",
+      "case": "warm-detail",
+      "requestCount": 39023,
+      "warmupRequests": 300,
+      "rps": 1951.0197532380073,
+      "latencyMs": {
+        "p50Ms": 1.6459080000004178,
+        "p95Ms": 3.115628999999899,
+        "p99Ms": 5.4255430000000615
+      },
+      "elapsedMs": 20001.335166,
+      "clientCpuPercent": 36.76612055629406,
+      "clientEventLoopP99Ms": 11.108351,
+      "cpu": {
+        "api": {
+          "deltaIncludingRequestWarmup": {
+            "usage_usec": 39242936,
+            "user_usec": 25383902,
+            "system_usec": 13859033,
+            "nice_usec": 0,
+            "nr_periods": 233,
+            "nr_throttled": 78,
+            "throttled_usec": 7565993,
+            "nr_bursts": 0,
+            "burst_usec": 0
+          },
+          "usageUsecPerRequestIncludingWarmup": 997.9639396790682,
+          "memoryBeforeBytes": 326541312,
+          "memoryAfterBytes": 359526400
+        },
+        "mysql": {
+          "deltaIncludingRequestWarmup": {
+            "usage_usec": 20589664,
+            "user_usec": 12685825,
+            "system_usec": 7903839,
+            "nice_usec": 0,
+            "nr_periods": 242,
+            "nr_throttled": 0,
+            "throttled_usec": 0,
+            "nr_bursts": 0,
+            "burst_usec": 0
+          },
+          "usageUsecPerRequestIncludingWarmup": 523.6035907738474,
+          "memoryBeforeBytes": 572637184,
+          "memoryAfterBytes": 573411328
+        }
+      }
+    },
+    {
+      "arm": "05-A",
+      "group": "A",
+      "case": "warm-list-2",
+      "requestCount": 24500,
+      "warmupRequests": 30,
+      "rps": 1224.8633205642163,
+      "latencyMs": {
+        "p50Ms": 2.8926309999988007,
+        "p95Ms": 4.753538999997545,
+        "p99Ms": 9.372816999999486
+      },
+      "elapsedMs": 20002.231750000003,
+      "clientCpuPercent": 24.221597172525506,
+      "clientEventLoopP99Ms": 11.034623,
+      "cpu": {
+        "api": {
+          "deltaIncludingRequestWarmup": {
+            "usage_usec": 24787086,
+            "user_usec": 15716715,
+            "system_usec": 9070372,
+            "nice_usec": 0,
+            "nr_periods": 221,
+            "nr_throttled": 0,
+            "throttled_usec": 0,
+            "nr_bursts": 0,
+            "burst_usec": 0
+          },
+          "usageUsecPerRequestIncludingWarmup": 1010.4804728903383,
+          "memoryBeforeBytes": 359419904,
+          "memoryAfterBytes": 359354368
+        },
+        "mysql": {
+          "deltaIncludingRequestWarmup": {
+            "usage_usec": 40094393,
+            "user_usec": 33218782,
+            "system_usec": 6875612,
+            "nice_usec": 0,
+            "nr_periods": 235,
+            "nr_throttled": 194,
+            "throttled_usec": 4246491,
+            "nr_bursts": 0,
+            "burst_usec": 0
+          },
+          "usageUsecPerRequestIncludingWarmup": 1634.5044027721158,
+          "memoryBeforeBytes": 572997632,
+          "memoryAfterBytes": 572616704
+        }
+      }
+    },
+    {
+      "arm": "06-B",
+      "group": "B",
+      "case": "warm-list-1",
+      "requestCount": 15992,
+      "warmupRequests": 30,
+      "rps": 799.529908810779,
+      "latencyMs": {
+        "p50Ms": 3.4518500000012864,
+        "p95Ms": 9.593972999999096,
+        "p99Ms": 40.72908600000028
+      },
+      "elapsedMs": 20001.75331,
+      "clientCpuPercent": 19.622094819246623,
+      "clientEventLoopP99Ms": 11.091967,
+      "cpu": {
+        "api": {
+          "deltaIncludingRequestWarmup": {
+            "usage_usec": 38116154,
+            "user_usec": 31077941,
+            "system_usec": 7038213,
+            "nice_usec": 0,
+            "nr_periods": 225,
+            "nr_throttled": 152,
+            "throttled_usec": 19199146,
+            "nr_bursts": 0,
+            "burst_usec": 0
+          },
+          "usageUsecPerRequestIncludingWarmup": 2378.9885157907875,
+          "memoryBeforeBytes": 236957696,
+          "memoryAfterBytes": 293638144
+        },
+        "mysql": {
+          "deltaIncludingRequestWarmup": {
+            "usage_usec": 29611474,
+            "user_usec": 24427387,
+            "system_usec": 5184086,
+            "nice_usec": 0,
+            "nr_periods": 227,
+            "nr_throttled": 43,
+            "throttled_usec": 666116,
+            "nr_bursts": 0,
+            "burst_usec": 0
+          },
+          "usageUsecPerRequestIncludingWarmup": 1848.1758831606542,
+          "memoryBeforeBytes": 577523712,
+          "memoryAfterBytes": 577937408
+        }
+      }
+    },
+    {
+      "arm": "06-B",
+      "group": "B",
+      "case": "warm-detail",
+      "requestCount": 39754,
+      "warmupRequests": 300,
+      "rps": 1987.598608520402,
+      "latencyMs": {
+        "p50Ms": 1.6580560000002151,
+        "p95Ms": 3.0998400000007678,
+        "p99Ms": 5.039700999999695
+      },
+      "elapsedMs": 20001.020241000002,
+      "clientCpuPercent": 39.16013236136997,
+      "clientEventLoopP99Ms": 11.182079,
+      "cpu": {
+        "api": {
+          "deltaIncludingRequestWarmup": {
+            "usage_usec": 38892341,
+            "user_usec": 24472673,
+            "system_usec": 14419667,
+            "nice_usec": 0,
+            "nr_periods": 235,
+            "nr_throttled": 67,
+            "throttled_usec": 6681449,
+            "nr_bursts": 0,
+            "burst_usec": 0
+          },
+          "usageUsecPerRequestIncludingWarmup": 970.9976781345184,
+          "memoryBeforeBytes": 294440960,
+          "memoryAfterBytes": 326299648
+        },
+        "mysql": {
+          "deltaIncludingRequestWarmup": {
+            "usage_usec": 21182263,
+            "user_usec": 12921838,
+            "system_usec": 8260426,
+            "nice_usec": 0,
+            "nr_periods": 238,
+            "nr_throttled": 0,
+            "throttled_usec": 0,
+            "nr_bursts": 0,
+            "burst_usec": 0
+          },
+          "usageUsecPerRequestIncludingWarmup": 528.8426374394568,
+          "memoryBeforeBytes": 577581056,
+          "memoryAfterBytes": 577482752
+        }
+      }
+    },
+    {
+      "arm": "06-B",
+      "group": "B",
+      "case": "warm-list-2",
+      "requestCount": 24656,
+      "warmupRequests": 30,
+      "rps": 1232.6733636440654,
+      "latencyMs": {
+        "p50Ms": 2.8282970000000205,
+        "p95Ms": 4.772947000001295,
+        "p99Ms": 10.872307000001456
+      },
+      "elapsedMs": 20002.054662,
+      "clientCpuPercent": 24.38444491038258,
+      "clientEventLoopP99Ms": 11.034623,
+      "cpu": {
+        "api": {
+          "deltaIncludingRequestWarmup": {
+            "usage_usec": 23527046,
+            "user_usec": 14667871,
+            "system_usec": 8859174,
+            "nice_usec": 0,
+            "nr_periods": 221,
+            "nr_throttled": 0,
+            "throttled_usec": 0,
+            "nr_bursts": 0,
+            "burst_usec": 0
+          },
+          "usageUsecPerRequestIncludingWarmup": 953.0521753220448,
+          "memoryBeforeBytes": 326459392,
+          "memoryAfterBytes": 327213056
+        },
+        "mysql": {
+          "deltaIncludingRequestWarmup": {
+            "usage_usec": 40113740,
+            "user_usec": 32976264,
+            "system_usec": 7137475,
+            "nice_usec": 0,
+            "nr_periods": 228,
+            "nr_throttled": 198,
+            "throttled_usec": 5337699,
+            "nr_bursts": 0,
+            "burst_usec": 0
+          },
+          "usageUsecPerRequestIncludingWarmup": 1624.9590861216884,
+          "memoryBeforeBytes": 577773568,
+          "memoryAfterBytes": 577765376
+        }
+      }
+    }
+  ],
+  "comparisons": [
+    {
+      "case": "list-c4",
+      "pairs": [
+        {
+          "pair": 1,
+          "order": "AB",
+          "A": {
+            "arm": "01-A",
+            "group": "A",
+            "case": "list-c4",
+            "requestCount": 19816,
+            "warmupRequests": 30,
+            "rps": 990.668031130237,
+            "latencyMs": {
+              "p50Ms": 3.7894420000002356,
+              "p95Ms": 5.489277000000584,
+              "p99Ms": 6.713796999996703
+            },
+            "elapsedMs": 20002.664240000002,
+            "clientCpuPercent": 25.005763932175064,
+            "clientEventLoopP99Ms": 11.091967,
+            "cpu": {
+              "api": {
+                "deltaIncludingRequestWarmup": {
+                  "usage_usec": 26087719,
+                  "user_usec": 16377619,
+                  "system_usec": 9710100,
+                  "nice_usec": 0,
+                  "nr_periods": 224,
+                  "nr_throttled": 0,
+                  "throttled_usec": 0,
+                  "nr_bursts": 0,
+                  "burst_usec": 0
+                },
+                "usageUsecPerRequestIncludingWarmup": 1314.5076589741007,
+                "memoryBeforeBytes": 327241728,
+                "memoryAfterBytes": 327991296
+              },
+              "mysql": {
+                "deltaIncludingRequestWarmup": {
+                  "usage_usec": 39890704,
+                  "user_usec": 32493689,
+                  "system_usec": 7397015,
+                  "nice_usec": 0,
+                  "nr_periods": 231,
+                  "nr_throttled": 124,
+                  "throttled_usec": 916701,
+                  "nr_bursts": 0,
+                  "burst_usec": 0
+                },
+                "usageUsecPerRequestIncludingWarmup": 2010.012294668951,
+                "memoryBeforeBytes": 544145408,
+                "memoryAfterBytes": 544358400
+              }
+            }
+          },
+          "B": {
+            "arm": "02-B",
+            "group": "B",
+            "case": "list-c4",
+            "requestCount": 24098,
+            "warmupRequests": 30,
+            "rps": 1204.8243319716898,
+            "latencyMs": {
+              "p50Ms": 2.937102999999297,
+              "p95Ms": 4.655632999998488,
+              "p99Ms": 10.336922000000413
+            },
+            "elapsedMs": 20001.256084,
+            "clientCpuPercent": 24.056149172796122,
+            "clientEventLoopP99Ms": 11.001855,
+            "cpu": {
+              "api": {
+                "deltaIncludingRequestWarmup": {
+                  "usage_usec": 23344142,
+                  "user_usec": 14430867,
+                  "system_usec": 8913276,
+                  "nice_usec": 0,
+                  "nr_periods": 220,
+                  "nr_throttled": 0,
+                  "throttled_usec": 0,
+                  "nr_bursts": 0,
+                  "burst_usec": 0
+                },
+                "usageUsecPerRequestIncludingWarmup": 967.5125165782493,
+                "memoryBeforeBytes": 330493952,
+                "memoryAfterBytes": 330358784
+              },
+              "mysql": {
+                "deltaIncludingRequestWarmup": {
+                  "usage_usec": 40159715,
+                  "user_usec": 32965266,
+                  "system_usec": 7194450,
+                  "nice_usec": 0,
+                  "nr_periods": 230,
+                  "nr_throttled": 196,
+                  "throttled_usec": 5136256,
+                  "nr_bursts": 0,
+                  "burst_usec": 0
+                },
+                "usageUsecPerRequestIncludingWarmup": 1664.444421419098,
+                "memoryBeforeBytes": 556982272,
+                "memoryAfterBytes": 556552192
+              }
+            }
+          },
+          "rpsChangePct": 21.617362639341998,
+          "p95ChangePct": -15.186772319961396,
+          "p99ChangePct": 53.965364159885844
+        },
+        {
+          "pair": 2,
+          "order": "BA",
+          "A": {
+            "arm": "04-A",
+            "group": "A",
+            "case": "list-c4",
+            "requestCount": 23378,
+            "warmupRequests": 30,
+            "rps": 1168.7525787506654,
+            "latencyMs": {
+              "p50Ms": 3.1064340000000072,
+              "p95Ms": 4.823769999999058,
+              "p99Ms": 8.041720999997779
+            },
+            "elapsedMs": 20002.522710999998,
+            "clientCpuPercent": 24.579924597691914,
+            "clientEventLoopP99Ms": 11.051007,
+            "cpu": {
+              "api": {
+                "deltaIncludingRequestWarmup": {
+                  "usage_usec": 24991400,
+                  "user_usec": 16249263,
+                  "system_usec": 8742137,
+                  "nice_usec": 0,
+                  "nr_periods": 223,
+                  "nr_throttled": 0,
+                  "throttled_usec": 0,
+                  "nr_bursts": 0,
+                  "burst_usec": 0
+                },
+                "usageUsecPerRequestIncludingWarmup": 1067.6435406698565,
+                "memoryBeforeBytes": 344489984,
+                "memoryAfterBytes": 345501696
+              },
+              "mysql": {
+                "deltaIncludingRequestWarmup": {
+                  "usage_usec": 40038792,
+                  "user_usec": 32594989,
+                  "system_usec": 7443803,
+                  "nice_usec": 0,
+                  "nr_periods": 226,
+                  "nr_throttled": 183,
+                  "throttled_usec": 2976812,
+                  "nr_bursts": 0,
+                  "burst_usec": 0
+                },
+                "usageUsecPerRequestIncludingWarmup": 1710.4747095010252,
+                "memoryBeforeBytes": 570331136,
+                "memoryAfterBytes": 569192448
+              }
+            }
+          },
+          "B": {
+            "arm": "03-B",
+            "group": "B",
+            "case": "list-c4",
+            "requestCount": 24184,
+            "warmupRequests": 30,
+            "rps": 1209.1837739024788,
+            "latencyMs": {
+              "p50Ms": 2.891178999998374,
+              "p95Ms": 4.772686000000249,
+              "p99Ms": 10.717335999999705
+            },
+            "elapsedMs": 20000.268380999998,
+            "clientCpuPercent": 24.38344279736193,
+            "clientEventLoopP99Ms": 11.010047,
+            "cpu": {
+              "api": {
+                "deltaIncludingRequestWarmup": {
+                  "usage_usec": 23281913,
+                  "user_usec": 14411677,
+                  "system_usec": 8870237,
+                  "nice_usec": 0,
+                  "nr_periods": 221,
+                  "nr_throttled": 0,
+                  "throttled_usec": 0,
+                  "nr_bursts": 0,
+                  "burst_usec": 0
+                },
+                "usageUsecPerRequestIncludingWarmup": 961.5062773602049,
+                "memoryBeforeBytes": 345051136,
+                "memoryAfterBytes": 344903680
+              },
+              "mysql": {
+                "deltaIncludingRequestWarmup": {
+                  "usage_usec": 40150154,
+                  "user_usec": 32742433,
+                  "system_usec": 7407720,
+                  "nice_usec": 0,
+                  "nr_periods": 230,
+                  "nr_throttled": 196,
+                  "throttled_usec": 5317785,
+                  "nr_bursts": 0,
+                  "burst_usec": 0
+                },
+                "usageUsecPerRequestIncludingWarmup": 1658.1380193276616,
+                "memoryBeforeBytes": 564678656,
+                "memoryAfterBytes": 563961856
+              }
+            }
+          },
+          "rpsChangePct": 3.4593459631149903,
+          "p95ChangePct": -1.0590057154221566,
+          "p99ChangePct": 33.27167157381692
+        },
+        {
+          "pair": 3,
+          "order": "AB",
+          "A": {
+            "arm": "05-A",
+            "group": "A",
+            "case": "list-c4",
+            "requestCount": 24345,
+            "warmupRequests": 30,
+            "rps": 1217.079851567357,
+            "latencyMs": {
+              "p50Ms": 2.9149209999995946,
+              "p95Ms": 4.835463999999774,
+              "p99Ms": 9.312673000000359
+            },
+            "elapsedMs": 20002.796011,
+            "clientCpuPercent": 24.34542649598588,
+            "clientEventLoopP99Ms": 11.051007,
+            "cpu": {
+              "api": {
+                "deltaIncludingRequestWarmup": {
+                  "usage_usec": 24643069,
+                  "user_usec": 15422289,
+                  "system_usec": 9220779,
+                  "nice_usec": 0,
+                  "nr_periods": 229,
+                  "nr_throttled": 0,
+                  "throttled_usec": 0,
+                  "nr_bursts": 0,
+                  "burst_usec": 0
+                },
+                "usageUsecPerRequestIncludingWarmup": 1010.9977025641026,
+                "memoryBeforeBytes": 359616512,
+                "memoryAfterBytes": 359538688
+              },
+              "mysql": {
+                "deltaIncludingRequestWarmup": {
+                  "usage_usec": 40094801,
+                  "user_usec": 33026906,
+                  "system_usec": 7067896,
+                  "nice_usec": 0,
+                  "nr_periods": 227,
+                  "nr_throttled": 191,
+                  "throttled_usec": 3966123,
+                  "nr_bursts": 0,
+                  "burst_usec": 0
+                },
+                "usageUsecPerRequestIncludingWarmup": 1644.9149128205129,
+                "memoryBeforeBytes": 572891136,
+                "memoryAfterBytes": 572768256
+              }
+            }
+          },
+          "B": {
+            "arm": "06-B",
+            "group": "B",
+            "case": "list-c4",
+            "requestCount": 24437,
+            "warmupRequests": 30,
+            "rps": 1221.7451501977334,
+            "latencyMs": {
+              "p50Ms": 2.8701829999990878,
+              "p95Ms": 4.834145999999691,
+              "p99Ms": 10.508380000000216
+            },
+            "elapsedMs": 20001.716394000003,
+            "clientCpuPercent": 23.994350812011614,
+            "clientEventLoopP99Ms": 11.059199,
+            "cpu": {
+              "api": {
+                "deltaIncludingRequestWarmup": {
+                  "usage_usec": 23374680,
+                  "user_usec": 14532903,
+                  "system_usec": 8841778,
+                  "nice_usec": 0,
+                  "nr_periods": 221,
+                  "nr_throttled": 0,
+                  "throttled_usec": 0,
+                  "nr_bursts": 0,
+                  "burst_usec": 0
+                },
+                "usageUsecPerRequestIncludingWarmup": 955.3553766297462,
+                "memoryBeforeBytes": 327561216,
+                "memoryAfterBytes": 327680000
+              },
+              "mysql": {
+                "deltaIncludingRequestWarmup": {
+                  "usage_usec": 40095647,
+                  "user_usec": 32833992,
+                  "system_usec": 7261655,
+                  "nice_usec": 0,
+                  "nr_periods": 228,
+                  "nr_throttled": 193,
+                  "throttled_usec": 4950100,
+                  "nr_bursts": 0,
+                  "burst_usec": 0
+                },
+                "usageUsecPerRequestIncludingWarmup": 1638.7643356357544,
+                "memoryBeforeBytes": 578330624,
+                "memoryAfterBytes": 578015232
+              }
+            }
+          },
+          "rpsChangePct": 0.3833190258115238,
+          "p95ChangePct": -0.027256949903531336,
+          "p99ChangePct": 12.83956818842249
+        }
+      ],
+      "pairedMedianRpsChangePct": 3.4593459631149903,
+      "pairedMedianP95ChangePct": -1.0590057154221566,
+      "AThroughputRange": [
+        990.668031130237,
+        1217.079851567357
+      ],
+      "BThroughputRange": [
+        1204.8243319716898,
+        1221.7451501977334
+      ],
+      "throughputRangesOverlap": true,
+      "allPairsThroughputUpAndP95Down": true,
+      "interpretation": "no_stable_joint_improvement_established"
+    },
+    {
+      "case": "list-c8",
+      "pairs": [
+        {
+          "pair": 1,
+          "order": "AB",
+          "A": {
+            "arm": "01-A",
+            "group": "A",
+            "case": "list-c8",
+            "requestCount": 17594,
+            "warmupRequests": 30,
+            "rps": 877.5923114253917,
+            "latencyMs": {
+              "p50Ms": 4.351749999999811,
+              "p95Ms": 53.529741000000286,
+              "p99Ms": 56.57318699999996
+            },
+            "elapsedMs": 20048.033433,
+            "clientCpuPercent": 22.463784365936615,
+            "clientEventLoopP99Ms": 11.108351,
+            "cpu": {
+              "api": {
+                "deltaIncludingRequestWarmup": {
+                  "usage_usec": 26159838,
+                  "user_usec": 16168055,
+                  "system_usec": 9991784,
+                  "nice_usec": 0,
+                  "nr_periods": 222,
+                  "nr_throttled": 2,
+                  "throttled_usec": 229547,
+                  "nr_bursts": 0,
+                  "burst_usec": 0
+                },
+                "usageUsecPerRequestIncludingWarmup": 1484.3303449841126,
+                "memoryBeforeBytes": 329068544,
+                "memoryAfterBytes": 330731520
+              },
+              "mysql": {
+                "deltaIncludingRequestWarmup": {
+                  "usage_usec": 40359246,
+                  "user_usec": 32325796,
+                  "system_usec": 8033450,
+                  "nice_usec": 0,
+                  "nr_periods": 232,
+                  "nr_throttled": 201,
+                  "throttled_usec": 77570455,
+                  "nr_bursts": 0,
+                  "burst_usec": 0
+                },
+                "usageUsecPerRequestIncludingWarmup": 2290.016227871085,
+                "memoryBeforeBytes": 545468416,
+                "memoryAfterBytes": 544862208
+              }
+            }
+          },
+          "B": {
+            "arm": "02-B",
+            "group": "B",
+            "case": "list-c8",
+            "requestCount": 16853,
+            "warmupRequests": 30,
+            "rps": 841.4135926634779,
+            "latencyMs": {
+              "p50Ms": 4.352284999999938,
+              "p95Ms": 54.49528800000189,
+              "p99Ms": 57.766373000002204
+            },
+            "elapsedMs": 20029.388812999998,
+            "clientCpuPercent": 22.36877041945514,
+            "clientEventLoopP99Ms": 11.124735,
+            "cpu": {
+              "api": {
+                "deltaIncludingRequestWarmup": {
+                  "usage_usec": 25419120,
+                  "user_usec": 15188271,
+                  "system_usec": 10230850,
+                  "nice_usec": 0,
+                  "nr_periods": 221,
+                  "nr_throttled": 3,
+                  "throttled_usec": 326261,
+                  "nr_bursts": 0,
+                  "burst_usec": 0
+                },
+                "usageUsecPerRequestIncludingWarmup": 1505.6044541846827,
+                "memoryBeforeBytes": 332328960,
+                "memoryAfterBytes": 334090240
+              },
+              "mysql": {
+                "deltaIncludingRequestWarmup": {
+                  "usage_usec": 40319508,
+                  "user_usec": 32489865,
+                  "system_usec": 7829642,
+                  "nice_usec": 0,
+                  "nr_periods": 229,
+                  "nr_throttled": 200,
+                  "throttled_usec": 78651542,
+                  "nr_bursts": 0,
+                  "burst_usec": 0
+                },
+                "usageUsecPerRequestIncludingWarmup": 2388.1720073446663,
+                "memoryBeforeBytes": 556154880,
+                "memoryAfterBytes": 556457984
+              }
+            }
+          },
+          "rpsChangePct": -4.12249723372714,
+          "p95ChangePct": 1.8037580267791675,
+          "p99ChangePct": 2.109101613812636
+        },
+        {
+          "pair": 2,
+          "order": "BA",
+          "A": {
+            "arm": "04-A",
+            "group": "A",
+            "case": "list-c8",
+            "requestCount": 14047,
+            "warmupRequests": 30,
+            "rps": 701.9210915381684,
+            "latencyMs": {
+              "p50Ms": 4.776525999999649,
+              "p95Ms": 55.55374900000061,
+              "p99Ms": 62.06602899999962
+            },
+            "elapsedMs": 20012.220987999997,
+            "clientCpuPercent": 22.344461430249726,
+            "clientEventLoopP99Ms": 11.436031,
+            "cpu": {
+              "api": {
+                "deltaIncludingRequestWarmup": {
+                  "usage_usec": 26523800,
+                  "user_usec": 16625142,
+                  "system_usec": 9898658,
+                  "nice_usec": 0,
+                  "nr_periods": 223,
+                  "nr_throttled": 0,
+                  "throttled_usec": 0,
+                  "nr_bursts": 0,
+                  "burst_usec": 0
+                },
+                "usageUsecPerRequestIncludingWarmup": 1884.1940754422108,
+                "memoryBeforeBytes": 346931200,
+                "memoryAfterBytes": 347631616
+              },
+              "mysql": {
+                "deltaIncludingRequestWarmup": {
+                  "usage_usec": 40186495,
+                  "user_usec": 32149276,
+                  "system_usec": 8037220,
+                  "nice_usec": 0,
+                  "nr_periods": 229,
+                  "nr_throttled": 200,
+                  "throttled_usec": 77420027,
+                  "nr_bursts": 0,
+                  "burst_usec": 0
+                },
+                "usageUsecPerRequestIncludingWarmup": 2854.7627335369752,
+                "memoryBeforeBytes": 569393152,
+                "memoryAfterBytes": 569757696
+              }
+            }
+          },
+          "B": {
+            "arm": "03-B",
+            "group": "B",
+            "case": "list-c8",
+            "requestCount": 12574,
+            "warmupRequests": 30,
+            "rps": 628.5824109312415,
+            "latencyMs": {
+              "p50Ms": 5.096682000000001,
+              "p95Ms": 58.67345299999943,
+              "p99Ms": 65.59684700000071
+            },
+            "elapsedMs": 20003.741405,
+            "clientCpuPercent": 22.144747376572074,
+            "clientEventLoopP99Ms": 11.444223,
+            "cpu": {
+              "api": {
+                "deltaIncludingRequestWarmup": {
+                  "usage_usec": 24708651,
+                  "user_usec": 15046106,
+                  "system_usec": 9662545,
+                  "nice_usec": 0,
+                  "nr_periods": 222,
+                  "nr_throttled": 2,
+                  "throttled_usec": 55006,
+                  "nr_bursts": 0,
+                  "burst_usec": 0
+                },
+                "usageUsecPerRequestIncludingWarmup": 1960.3817042208823,
+                "memoryBeforeBytes": 344109056,
+                "memoryAfterBytes": 345235456
+              },
+              "mysql": {
+                "deltaIncludingRequestWarmup": {
+                  "usage_usec": 40296265,
+                  "user_usec": 32646032,
+                  "system_usec": 7650234,
+                  "nice_usec": 0,
+                  "nr_periods": 232,
+                  "nr_throttled": 200,
+                  "throttled_usec": 79171159,
+                  "nr_bursts": 0,
+                  "burst_usec": 0
+                },
+                "usageUsecPerRequestIncludingWarmup": 3197.101317042209,
+                "memoryBeforeBytes": 563978240,
+                "memoryAfterBytes": 565981184
+              }
+            }
+          },
+          "rpsChangePct": -10.448279940728778,
+          "p95ChangePct": 5.615649809698331,
+          "p99ChangePct": 5.688809251839055
+        },
+        {
+          "pair": 3,
+          "order": "AB",
+          "A": {
+            "arm": "05-A",
+            "group": "A",
+            "case": "list-c8",
+            "requestCount": 18969,
+            "warmupRequests": 30,
+            "rps": 946.3933073863619,
+            "latencyMs": {
+              "p50Ms": 3.763448000000153,
+              "p95Ms": 54.07655100000011,
+              "p99Ms": 57.41003600000113
+            },
+            "elapsedMs": 20043.463803000002,
+            "clientCpuPercent": 22.059610272243518,
+            "clientEventLoopP99Ms": 11.141119,
+            "cpu": {
+              "api": {
+                "deltaIncludingRequestWarmup": {
+                  "usage_usec": 26091567,
+                  "user_usec": 16306669,
+                  "system_usec": 9784897,
+                  "nice_usec": 0,
+                  "nr_periods": 224,
+                  "nr_throttled": 4,
+                  "throttled_usec": 53194,
+                  "nr_bursts": 0,
+                  "burst_usec": 0
+                },
+                "usageUsecPerRequestIncludingWarmup": 1373.312648034107,
+                "memoryBeforeBytes": 366329856,
+                "memoryAfterBytes": 367316992
+              },
+              "mysql": {
+                "deltaIncludingRequestWarmup": {
+                  "usage_usec": 40298647,
+                  "user_usec": 32662293,
+                  "system_usec": 7636353,
+                  "nice_usec": 0,
+                  "nr_periods": 228,
+                  "nr_throttled": 200,
+                  "throttled_usec": 77996024,
+                  "nr_bursts": 0,
+                  "burst_usec": 0
+                },
+                "usageUsecPerRequestIncludingWarmup": 2121.0930575293437,
+                "memoryBeforeBytes": 572645376,
+                "memoryAfterBytes": 572833792
+              }
+            }
+          },
+          "B": {
+            "arm": "06-B",
+            "group": "B",
+            "case": "list-c8",
+            "requestCount": 12066,
+            "warmupRequests": 30,
+            "rps": 603.1543305691075,
+            "latencyMs": {
+              "p50Ms": 5.534377000000006,
+              "p95Ms": 59.14733899999919,
+              "p99Ms": 64.69861900000069
+            },
+            "elapsedMs": 20004.830254,
+            "clientCpuPercent": 22.394566427796693,
+            "clientEventLoopP99Ms": 11.575295,
+            "cpu": {
+              "api": {
+                "deltaIncludingRequestWarmup": {
+                  "usage_usec": 24895793,
+                  "user_usec": 14980363,
+                  "system_usec": 9915430,
+                  "nice_usec": 0,
+                  "nr_periods": 217,
+                  "nr_throttled": 2,
+                  "throttled_usec": 99480,
+                  "nr_bursts": 0,
+                  "burst_usec": 0
+                },
+                "usageUsecPerRequestIncludingWarmup": 2058.18394510582,
+                "memoryBeforeBytes": 329142272,
+                "memoryAfterBytes": 330268672
+              },
+              "mysql": {
+                "deltaIncludingRequestWarmup": {
+                  "usage_usec": 40251882,
+                  "user_usec": 32288833,
+                  "system_usec": 7963049,
+                  "nice_usec": 0,
+                  "nr_periods": 227,
+                  "nr_throttled": 200,
+                  "throttled_usec": 80008341,
+                  "nr_bursts": 0,
+                  "burst_usec": 0
+                },
+                "usageUsecPerRequestIncludingWarmup": 3327.7018849206347,
+                "memoryBeforeBytes": 577847296,
+                "memoryAfterBytes": 578154496
+              }
+            }
+          },
+          "rpsChangePct": -36.268111168830174,
+          "p95ChangePct": 9.377055130603784,
+          "p99ChangePct": 12.695660041041279
+        }
+      ],
+      "pairedMedianRpsChangePct": -10.448279940728778,
+      "pairedMedianP95ChangePct": 5.615649809698331,
+      "AThroughputRange": [
+        701.9210915381684,
+        946.3933073863619
+      ],
+      "BThroughputRange": [
+        603.1543305691075,
+        841.4135926634779
+      ],
+      "throughputRangesOverlap": true,
+      "allPairsThroughputUpAndP95Down": false,
+      "interpretation": "no_stable_joint_improvement_established"
+    },
+    {
+      "case": "detail-c4",
+      "pairs": [
+        {
+          "pair": 1,
+          "order": "AB",
+          "A": {
+            "arm": "01-A",
+            "group": "A",
+            "case": "detail-c4",
+            "requestCount": 37764,
+            "warmupRequests": 300,
+            "rps": 1888.0450218068324,
+            "latencyMs": {
+              "p50Ms": 1.9209559999999328,
+              "p95Ms": 3.1545249999999214,
+              "p99Ms": 4.074209999999766
+            },
+            "elapsedMs": 20001.641679,
+            "clientCpuPercent": 40.063551425447976,
+            "clientEventLoopP99Ms": 11.083775,
+            "cpu": {
+              "api": {
+                "deltaIncludingRequestWarmup": {
+                  "usage_usec": 34683921,
+                  "user_usec": 19186340,
+                  "system_usec": 15497581,
+                  "nice_usec": 0,
+                  "nr_periods": 229,
+                  "nr_throttled": 6,
+                  "throttled_usec": 425288,
+                  "nr_bursts": 0,
+                  "burst_usec": 0
+                },
+                "usageUsecPerRequestIncludingWarmup": 911.2001103404792,
+                "memoryBeforeBytes": 326971392,
+                "memoryAfterBytes": 328941568
+              },
+              "mysql": {
+                "deltaIncludingRequestWarmup": {
+                  "usage_usec": 22582445,
+                  "user_usec": 13612460,
+                  "system_usec": 8969986,
+                  "nice_usec": 0,
+                  "nr_periods": 234,
+                  "nr_throttled": 0,
+                  "throttled_usec": 0,
+                  "nr_bursts": 0,
+                  "burst_usec": 0
+                },
+                "usageUsecPerRequestIncludingWarmup": 593.2756672971836,
+                "memoryBeforeBytes": 544796672,
+                "memoryAfterBytes": 544808960
+              }
+            }
+          },
+          "B": {
+            "arm": "02-B",
+            "group": "B",
+            "case": "detail-c4",
+            "requestCount": 42524,
+            "warmupRequests": 300,
+            "rps": 2125.982198651302,
+            "latencyMs": {
+              "p50Ms": 1.6955399999999372,
+              "p95Ms": 2.8142159999988507,
+              "p99Ms": 3.690352999999959
+            },
+            "elapsedMs": 20002.048948,
+            "clientCpuPercent": 42.932016726509616,
+            "clientEventLoopP99Ms": 11.042815,
+            "cpu": {
+              "api": {
+                "deltaIncludingRequestWarmup": {
+                  "usage_usec": 35572807,
+                  "user_usec": 19991434,
+                  "system_usec": 15581373,
+                  "nice_usec": 0,
+                  "nr_periods": 232,
+                  "nr_throttled": 10,
+                  "throttled_usec": 529716,
+                  "nr_bursts": 0,
+                  "burst_usec": 0
+                },
+                "usageUsecPerRequestIncludingWarmup": 830.6745516532785,
+                "memoryBeforeBytes": 330358784,
+                "memoryAfterBytes": 332193792
+              },
+              "mysql": {
+                "deltaIncludingRequestWarmup": {
+                  "usage_usec": 22912741,
+                  "user_usec": 14204070,
+                  "system_usec": 8708670,
+                  "nice_usec": 0,
+                  "nr_periods": 233,
+                  "nr_throttled": 0,
+                  "throttled_usec": 0,
+                  "nr_bursts": 0,
+                  "burst_usec": 0
+                },
+                "usageUsecPerRequestIncludingWarmup": 535.0443909957033,
+                "memoryBeforeBytes": 556675072,
+                "memoryAfterBytes": 557199360
+              }
+            }
+          },
+          "rpsChangePct": 12.602304187469372,
+          "p95ChangePct": -10.787963322562955,
+          "p99ChangePct": -9.421630205606224
+        },
+        {
+          "pair": 2,
+          "order": "BA",
+          "A": {
+            "arm": "04-A",
+            "group": "A",
+            "case": "detail-c4",
+            "requestCount": 43405,
+            "warmupRequests": 300,
+            "rps": 2170.0261185138547,
+            "latencyMs": {
+              "p50Ms": 1.6540069999991829,
+              "p95Ms": 2.8234510000002047,
+              "p99Ms": 3.816835000001447
+            },
+            "elapsedMs": 20002.063399,
+            "clientCpuPercent": 41.19434998097218,
+            "clientEventLoopP99Ms": 11.116543,
+            "cpu": {
+              "api": {
+                "deltaIncludingRequestWarmup": {
+                  "usage_usec": 35487256,
+                  "user_usec": 20365842,
+                  "system_usec": 15121414,
+                  "nice_usec": 0,
+                  "nr_periods": 231,
+                  "nr_throttled": 6,
+                  "throttled_usec": 147012,
+                  "nr_bursts": 0,
+                  "burst_usec": 0
+                },
+                "usageUsecPerRequestIncludingWarmup": 811.9724516645692,
+                "memoryBeforeBytes": 345718784,
+                "memoryAfterBytes": 346316800
+              },
+              "mysql": {
+                "deltaIncludingRequestWarmup": {
+                  "usage_usec": 22917130,
+                  "user_usec": 14231191,
+                  "system_usec": 8685938,
+                  "nice_usec": 0,
+                  "nr_periods": 238,
+                  "nr_throttled": 0,
+                  "throttled_usec": 0,
+                  "nr_bursts": 0,
+                  "burst_usec": 0
+                },
+                "usageUsecPerRequestIncludingWarmup": 524.359455439881,
+                "memoryBeforeBytes": 569262080,
+                "memoryAfterBytes": 568442880
+              }
+            }
+          },
+          "B": {
+            "arm": "03-B",
+            "group": "B",
+            "case": "detail-c4",
+            "requestCount": 44054,
+            "warmupRequests": 300,
+            "rps": 2202.5458252061817,
+            "latencyMs": {
+              "p50Ms": 1.6535550000007788,
+              "p95Ms": 2.6037839999989956,
+              "p99Ms": 3.4584310000000187
+            },
+            "elapsedMs": 20001.399969,
+            "clientCpuPercent": 43.36009986021794,
+            "clientEventLoopP99Ms": 11.091967,
+            "cpu": {
+              "api": {
+                "deltaIncludingRequestWarmup": {
+                  "usage_usec": 35371946,
+                  "user_usec": 19699591,
+                  "system_usec": 15672355,
+                  "nice_usec": 0,
+                  "nr_periods": 227,
+                  "nr_throttled": 3,
+                  "throttled_usec": 56298,
+                  "nr_bursts": 0,
+                  "burst_usec": 0
+                },
+                "usageUsecPerRequestIncludingWarmup": 797.4916805699598,
+                "memoryBeforeBytes": 343810048,
+                "memoryAfterBytes": 344449024
+              },
+              "mysql": {
+                "deltaIncludingRequestWarmup": {
+                  "usage_usec": 23058760,
+                  "user_usec": 14298902,
+                  "system_usec": 8759858,
+                  "nice_usec": 0,
+                  "nr_periods": 231,
+                  "nr_throttled": 0,
+                  "throttled_usec": 0,
+                  "nr_bursts": 0,
+                  "burst_usec": 0
+                },
+                "usageUsecPerRequestIncludingWarmup": 519.8800559137845,
+                "memoryBeforeBytes": 564609024,
+                "memoryAfterBytes": 564195328
+              }
+            }
+          },
+          "rpsChangePct": 1.4985859577855365,
+          "p95ChangePct": -7.780088976263199,
+          "p99ChangePct": -9.39008366883275
+        },
+        {
+          "pair": 3,
+          "order": "AB",
+          "A": {
+            "arm": "05-A",
+            "group": "A",
+            "case": "detail-c4",
+            "requestCount": 43722,
+            "warmupRequests": 300,
+            "rps": 2186.026059089468,
+            "latencyMs": {
+              "p50Ms": 1.6325099999994563,
+              "p95Ms": 2.9001699999989796,
+              "p99Ms": 3.8781639999997424
+            },
+            "elapsedMs": 20000.676487,
+            "clientCpuPercent": 41.12014913768351,
+            "clientEventLoopP99Ms": 11.059199,
+            "cpu": {
+              "api": {
+                "deltaIncludingRequestWarmup": {
+                  "usage_usec": 35482135,
+                  "user_usec": 19528917,
+                  "system_usec": 15953219,
+                  "nice_usec": 0,
+                  "nr_periods": 227,
+                  "nr_throttled": 8,
+                  "throttled_usec": 483510,
+                  "nr_bursts": 0,
+                  "burst_usec": 0
+                },
+                "usageUsecPerRequestIncludingWarmup": 806.0091545136522,
+                "memoryBeforeBytes": 360263680,
+                "memoryAfterBytes": 365895680
+              },
+              "mysql": {
+                "deltaIncludingRequestWarmup": {
+                  "usage_usec": 22759710,
+                  "user_usec": 13763818,
+                  "system_usec": 8995892,
+                  "nice_usec": 0,
+                  "nr_periods": 234,
+                  "nr_throttled": 0,
+                  "throttled_usec": 0,
+                  "nr_bursts": 0,
+                  "burst_usec": 0
+                },
+                "usageUsecPerRequestIncludingWarmup": 517.0076325473627,
+                "memoryBeforeBytes": 573784064,
+                "memoryAfterBytes": 573112320
+              }
+            }
+          },
+          "B": {
+            "arm": "06-B",
+            "group": "B",
+            "case": "detail-c4",
+            "requestCount": 44791,
+            "warmupRequests": 300,
+            "rps": 2239.400477133632,
+            "latencyMs": {
+              "p50Ms": 1.6043680000000222,
+              "p95Ms": 2.730835999998817,
+              "p99Ms": 3.738083000000188
+            },
+            "elapsedMs": 20001.335383,
+            "clientCpuPercent": 41.99717088459763,
+            "clientEventLoopP99Ms": 11.067391,
+            "cpu": {
+              "api": {
+                "deltaIncludingRequestWarmup": {
+                  "usage_usec": 35222097,
+                  "user_usec": 19434297,
+                  "system_usec": 15787800,
+                  "nice_usec": 0,
+                  "nr_periods": 228,
+                  "nr_throttled": 7,
+                  "throttled_usec": 170827,
+                  "nr_bursts": 0,
+                  "burst_usec": 0
+                },
+                "usageUsecPerRequestIncludingWarmup": 781.1336408595951,
+                "memoryBeforeBytes": 327168000,
+                "memoryAfterBytes": 328609792
+              },
+              "mysql": {
+                "deltaIncludingRequestWarmup": {
+                  "usage_usec": 23013633,
+                  "user_usec": 14381471,
+                  "system_usec": 8632161,
+                  "nice_usec": 0,
+                  "nr_periods": 233,
+                  "nr_throttled": 0,
+                  "throttled_usec": 0,
+                  "nr_bursts": 0,
+                  "burst_usec": 0
+                },
+                "usageUsecPerRequestIncludingWarmup": 510.3819609234659,
+                "memoryBeforeBytes": 578056192,
+                "memoryAfterBytes": 578605056
+              }
+            }
+          },
+          "rpsChangePct": 2.4416185626989106,
+          "p95ChangePct": -5.838761176076646,
+          "p99ChangePct": -3.61204425598205
+        }
+      ],
+      "pairedMedianRpsChangePct": 2.4416185626989106,
+      "pairedMedianP95ChangePct": -7.780088976263199,
+      "AThroughputRange": [
+        1888.0450218068324,
+        2186.026059089468
+      ],
+      "BThroughputRange": [
+        2125.982198651302,
+        2239.400477133632
+      ],
+      "throughputRangesOverlap": true,
+      "allPairsThroughputUpAndP95Down": true,
+      "interpretation": "no_stable_joint_improvement_established"
+    },
+    {
+      "case": "detail-c8",
+      "pairs": [
+        {
+          "pair": 1,
+          "order": "AB",
+          "A": {
+            "arm": "01-A",
+            "group": "A",
+            "case": "detail-c8",
+            "requestCount": 28894,
+            "warmupRequests": 300,
+            "rps": 1444.4663873178588,
+            "latencyMs": {
+              "p50Ms": 2.7058130000004894,
+              "p95Ms": 37.167831000000035,
+              "p99Ms": 46.389797999999246
+            },
+            "elapsedMs": 20003.234588000003,
+            "clientCpuPercent": 43.50930326648828,
+            "clientEventLoopP99Ms": 11.558911,
+            "cpu": {
+              "api": {
+                "deltaIncludingRequestWarmup": {
+                  "usage_usec": 40636957,
+                  "user_usec": 21770057,
+                  "system_usec": 18866899,
+                  "nice_usec": 0,
+                  "nr_periods": 223,
+                  "nr_throttled": 202,
+                  "throttled_usec": 34723813,
+                  "nr_bursts": 0,
+                  "burst_usec": 0
+                },
+                "usageUsecPerRequestIncludingWarmup": 1391.962629307392,
+                "memoryBeforeBytes": 330240000,
+                "memoryAfterBytes": 331407360
+              },
+              "mysql": {
+                "deltaIncludingRequestWarmup": {
+                  "usage_usec": 26991332,
+                  "user_usec": 16036548,
+                  "system_usec": 10954784,
+                  "nice_usec": 0,
+                  "nr_periods": 232,
+                  "nr_throttled": 0,
+                  "throttled_usec": 0,
+                  "nr_bursts": 0,
+                  "burst_usec": 0
+                },
+                "usageUsecPerRequestIncludingWarmup": 924.5506610947455,
+                "memoryBeforeBytes": 544878592,
+                "memoryAfterBytes": 546283520
+              }
+            }
+          },
+          "B": {
+            "arm": "02-B",
+            "group": "B",
+            "case": "detail-c8",
+            "requestCount": 35445,
+            "warmupRequests": 300,
+            "rps": 1772.0619686309828,
+            "latencyMs": {
+              "p50Ms": 2.5724370000007184,
+              "p95Ms": 6.004563999998936,
+              "p99Ms": 43.58374999999978
+            },
+            "elapsedMs": 20002.122176,
+            "clientCpuPercent": 40.63038375873582,
+            "clientEventLoopP99Ms": 11.034623,
+            "cpu": {
+              "api": {
+                "deltaIncludingRequestWarmup": {
+                  "usage_usec": 40765717,
+                  "user_usec": 21803198,
+                  "system_usec": 18962520,
+                  "nice_usec": 0,
+                  "nr_periods": 231,
+                  "nr_throttled": 202,
+                  "throttled_usec": 37493729,
+                  "nr_bursts": 0,
+                  "burst_usec": 0
+                },
+                "usageUsecPerRequestIncludingWarmup": 1140.4592810183242,
+                "memoryBeforeBytes": 333459456,
+                "memoryAfterBytes": 338784256
+              },
+              "mysql": {
+                "deltaIncludingRequestWarmup": {
+                  "usage_usec": 26801802,
+                  "user_usec": 15842223,
+                  "system_usec": 10959579,
+                  "nice_usec": 0,
+                  "nr_periods": 230,
+                  "nr_throttled": 0,
+                  "throttled_usec": 0,
+                  "nr_bursts": 0,
+                  "burst_usec": 0
+                },
+                "usageUsecPerRequestIncludingWarmup": 749.8056231640788,
+                "memoryBeforeBytes": 557170688,
+                "memoryAfterBytes": 556363776
+              }
+            }
+          },
+          "rpsChangePct": 22.679349563918638,
+          "p95ChangePct": -83.84472852344025,
+          "p99ChangePct": -6.048847205584962
+        },
+        {
+          "pair": 2,
+          "order": "BA",
+          "A": {
+            "arm": "04-A",
+            "group": "A",
+            "case": "detail-c8",
+            "requestCount": 31636,
+            "warmupRequests": 300,
+            "rps": 1581.6660657828825,
+            "latencyMs": {
+              "p50Ms": 2.3821760000009817,
+              "p95Ms": 29.918851999999788,
+              "p99Ms": 45.40255900000011
+            },
+            "elapsedMs": 20001.693583999997,
+            "clientCpuPercent": 41.65635757296582,
+            "clientEventLoopP99Ms": 11.403263,
+            "cpu": {
+              "api": {
+                "deltaIncludingRequestWarmup": {
+                  "usage_usec": 40655584,
+                  "user_usec": 22129050,
+                  "system_usec": 18526534,
+                  "nice_usec": 0,
+                  "nr_periods": 223,
+                  "nr_throttled": 202,
+                  "throttled_usec": 33599713,
+                  "nr_bursts": 0,
+                  "burst_usec": 0
+                },
+                "usageUsecPerRequestIncludingWarmup": 1273.0330661322646,
+                "memoryBeforeBytes": 346898432,
+                "memoryAfterBytes": 349429760
+              },
+              "mysql": {
+                "deltaIncludingRequestWarmup": {
+                  "usage_usec": 26748216,
+                  "user_usec": 15738371,
+                  "system_usec": 11009846,
+                  "nice_usec": 0,
+                  "nr_periods": 231,
+                  "nr_throttled": 0,
+                  "throttled_usec": 0,
+                  "nr_bursts": 0,
+                  "burst_usec": 0
+                },
+                "usageUsecPerRequestIncludingWarmup": 837.5568637274549,
+                "memoryBeforeBytes": 569843712,
+                "memoryAfterBytes": 569450496
+              }
+            }
+          },
+          "B": {
+            "arm": "03-B",
+            "group": "B",
+            "case": "detail-c8",
+            "requestCount": 28624,
+            "warmupRequests": 300,
+            "rps": 1427.9218288987768,
+            "latencyMs": {
+              "p50Ms": 2.667714999999589,
+              "p95Ms": 36.1215200000006,
+              "p99Ms": 45.85233599999992
+            },
+            "elapsedMs": 20045.915274,
+            "clientCpuPercent": 42.90584831093006,
+            "clientEventLoopP99Ms": 11.501567,
+            "cpu": {
+              "api": {
+                "deltaIncludingRequestWarmup": {
+                  "usage_usec": 40833849,
+                  "user_usec": 21989526,
+                  "system_usec": 18844322,
+                  "nice_usec": 0,
+                  "nr_periods": 226,
+                  "nr_throttled": 203,
+                  "throttled_usec": 32857755,
+                  "nr_bursts": 0,
+                  "burst_usec": 0
+                },
+                "usageUsecPerRequestIncludingWarmup": 1411.7635527589546,
+                "memoryBeforeBytes": 345890816,
+                "memoryAfterBytes": 346710016
+              },
+              "mysql": {
+                "deltaIncludingRequestWarmup": {
+                  "usage_usec": 27139340,
+                  "user_usec": 15974714,
+                  "system_usec": 11164626,
+                  "nice_usec": 0,
+                  "nr_periods": 233,
+                  "nr_throttled": 0,
+                  "throttled_usec": 0,
+                  "nr_bursts": 0,
+                  "burst_usec": 0
+                },
+                "usageUsecPerRequestIncludingWarmup": 938.2982989904577,
+                "memoryBeforeBytes": 565649408,
+                "memoryAfterBytes": 566005760
+              }
+            }
+          },
+          "rpsChangePct": -9.720398016379416,
+          "p95ChangePct": 20.73163769786641,
+          "p99ChangePct": 0.9906423996933977
+        },
+        {
+          "pair": 3,
+          "order": "AB",
+          "A": {
+            "arm": "05-A",
+            "group": "A",
+            "case": "detail-c8",
+            "requestCount": 32209,
+            "warmupRequests": 300,
+            "rps": 1610.3492976118487,
+            "latencyMs": {
+              "p50Ms": 2.41962599999988,
+              "p95Ms": 16.418470000000525,
+              "p99Ms": 45.873225999999704
+            },
+            "elapsedMs": 20001.25069,
+            "clientCpuPercent": 41.11012919862563,
+            "clientEventLoopP99Ms": 11.411455,
+            "cpu": {
+              "api": {
+                "deltaIncludingRequestWarmup": {
+                  "usage_usec": 40637377,
+                  "user_usec": 21927098,
+                  "system_usec": 18710278,
+                  "nice_usec": 0,
+                  "nr_periods": 227,
+                  "nr_throttled": 202,
+                  "throttled_usec": 33550703,
+                  "nr_bursts": 0,
+                  "burst_usec": 0
+                },
+                "usageUsecPerRequestIncludingWarmup": 1250.0346673228953,
+                "memoryBeforeBytes": 367353856,
+                "memoryAfterBytes": 368422912
+              },
+              "mysql": {
+                "deltaIncludingRequestWarmup": {
+                  "usage_usec": 26696973,
+                  "user_usec": 15818307,
+                  "system_usec": 10878665,
+                  "nice_usec": 0,
+                  "nr_periods": 233,
+                  "nr_throttled": 1,
+                  "throttled_usec": 22705,
+                  "nr_bursts": 0,
+                  "burst_usec": 0
+                },
+                "usageUsecPerRequestIncludingWarmup": 821.2179088867698,
+                "memoryBeforeBytes": 573079552,
+                "memoryAfterBytes": 572739584
+              }
+            }
+          },
+          "B": {
+            "arm": "06-B",
+            "group": "B",
+            "case": "detail-c8",
+            "requestCount": 27647,
+            "warmupRequests": 300,
+            "rps": 1381.898855419083,
+            "latencyMs": {
+              "p50Ms": 2.7045360000001892,
+              "p95Ms": 37.46229400000084,
+              "p99Ms": 45.27509099999952
+            },
+            "elapsedMs": 20006.529343000002,
+            "clientCpuPercent": 41.50400030730607,
+            "clientEventLoopP99Ms": 11.616255,
+            "cpu": {
+              "api": {
+                "deltaIncludingRequestWarmup": {
+                  "usage_usec": 40839475,
+                  "user_usec": 21610734,
+                  "system_usec": 19228740,
+                  "nice_usec": 0,
+                  "nr_periods": 227,
+                  "nr_throttled": 203,
+                  "throttled_usec": 35190834,
+                  "nr_bursts": 0,
+                  "burst_usec": 0
+                },
+                "usageUsecPerRequestIncludingWarmup": 1461.3187461981609,
+                "memoryBeforeBytes": 330203136,
+                "memoryAfterBytes": 331341824
+              },
+              "mysql": {
+                "deltaIncludingRequestWarmup": {
+                  "usage_usec": 27208604,
+                  "user_usec": 15844341,
+                  "system_usec": 11364263,
+                  "nice_usec": 0,
+                  "nr_periods": 230,
+                  "nr_throttled": 0,
+                  "throttled_usec": 0,
+                  "nr_bursts": 0,
+                  "burst_usec": 0
+                },
+                "usageUsecPerRequestIncludingWarmup": 973.5787025441014,
+                "memoryBeforeBytes": 578613248,
+                "memoryAfterBytes": 577368064
+              }
+            }
+          },
+          "rpsChangePct": -14.186390650249493,
+          "p95ChangePct": 128.1716505861974,
+          "p99ChangePct": -1.3038869339605408
+        }
+      ],
+      "pairedMedianRpsChangePct": -9.720398016379416,
+      "pairedMedianP95ChangePct": 20.73163769786641,
+      "AThroughputRange": [
+        1444.4663873178588,
+        1610.3492976118487
+      ],
+      "BThroughputRange": [
+        1381.898855419083,
+        1772.0619686309828
+      ],
+      "throughputRangesOverlap": true,
+      "allPairsThroughputUpAndP95Down": false,
+      "interpretation": "no_stable_joint_improvement_established"
+    }
+  ],
+  "productionConfigurationChanged": false,
+  "driverProbeScope": "Separate connection with the actual API URL/driver/role; not an inspection of API pool internals",
+  "gcProfile": "No new JFR or GC pause capture; no claim to exclude GC or host interference",
+  "fullM5": "IN_PROGRESS",
+  "fullPerformancePlan": "IN_PROGRESS"
+}

@@ -1,0 +1,7 @@
+{
+  "status": "PASS",
+  "finished": 55,
+  "pollIntervalMs": 200,
+  "clientClock": "performance.now",
+  "tlsValidated": true
+}

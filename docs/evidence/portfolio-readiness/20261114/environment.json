@@ -1,0 +1,44 @@
+{
+  "at": "2026-11-14T11:37:37.954204+00:00",
+  "hostPlatform": "Windows-11-10.0.26300-SP0",
+  "hostProcessor": "Intel64 Family 6 Model 183 Stepping 1, GenuineIntel",
+  "engine": {
+    "ServerVersion": "29.9.2",
+    "OperatingSystem": "Docker Desktop",
+    "OSType": "linux",
+    "Architecture": "x86_64",
+    "KernelVersion": "6.18.33.2-microsoft-standard-WSL2",
+    "NCPU": 24,
+    "MemTotal": 8170164224,
+    "CgroupVersion": "2"
+  },
+  "services": [
+    {
+      "name": "/forgeoj-m5check-e78855240f7d-api-1",
+      "id": "7d09ddfddce3ef1111045082deb25507291162dcfeea044f13076bcbc81dcda1",
+      "image": "sha256:77ff39d9ed368e876760062713477a4f21da7e01eea515560de0ed6beb2e0027",
+      "nanoCpus": 2000000000,
+      "memoryBytes": 805306368,
+      "pidsLimit": 256
+    },
+    {
+      "name": "/forgeoj-m5check-e78855240f7d-worker-1",
+      "id": "035f17496a7f8f1a698cb4eb363472eba96ef6a3b26bbfb7b7b7791149139693",
+      "image": "sha256:980ae09d6470f142cc3391f27f17b8c11697405713d5232c261e4ce7a5498d5e",
+      "nanoCpus": 2000000000,
+      "memoryBytes": 805306368,
+      "pidsLimit": 256
+    },
+    {
+      "name": "/forgeoj-m5check-e78855240f7d-mysql-1",
+      "id": "37dc910c3960c0ed8a348940401224c0c49189c0c3eec20db503c313abc64ffb",
+      "image": "sha256:7dcc4add9183664de3a214daf85a50c3ba6cccfd7534f700b6561bf5b41885be",
+      "nanoCpus": 2000000000,
+      "memoryBytes": 1073741824,
+      "pidsLimit": 256
+    }
+  ],
+  "workerJarSha256": "d702045b92d8301d435c0f168d3e74f48437ff67df2fb5cfdfc3b3cb172828d1",
+  "transport": "same Docker bridge, HTTPS certificate validated, keep-alive",
+  "instrumentation": "Bash wrapper times real Docker CLI calls; includes CLI/daemon/clock-sampling overhead, not daemon-internal CPU time"
+}

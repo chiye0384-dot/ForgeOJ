@@ -1,0 +1,174 @@
+{
+  "status": "VERIFIED",
+  "checkedAt": "2026-11-14T11:41:24.890299+00:00",
+  "measured": 50,
+  "warmup": 5,
+  "actualAc": 55,
+  "stages": [
+    {
+      "name": "sequential",
+      "count": 20,
+      "concurrency": 1,
+      "startedAt": "2026-11-14T11:37:59.022Z",
+      "finishedAt": "2026-11-14T11:39:19.102Z",
+      "elapsedMs": 80083.879826,
+      "completedPerMinute": 14.98428900556849,
+      "dbEndToEnd": {
+        "n": 20,
+        "p50Ms": 3845.961,
+        "p95Ms": 4106.948,
+        "meanMs": 3852.8741999999997
+      },
+      "dbQueue": {
+        "n": 20,
+        "p50Ms": 493.644,
+        "p95Ms": 623.958,
+        "meanMs": 468.53100000000006
+      },
+      "dbProcessing": {
+        "n": 20,
+        "p50Ms": 3398.347,
+        "p95Ms": 3529.882,
+        "meanMs": 3383.2332
+      },
+      "clientVisible": {
+        "n": 20,
+        "p50Ms": 3967.886652000001,
+        "p95Ms": 4200.6638109999985,
+        "meanMs": 3999.1705968500014
+      }
+    },
+    {
+      "name": "backlog-1",
+      "count": 10,
+      "concurrency": 3,
+      "startedAt": "2026-11-14T11:39:19.106Z",
+      "finishedAt": "2026-11-14T11:39:53.520Z",
+      "elapsedMs": 34415.75432499999,
+      "completedPerMinute": 17.433876193268656,
+      "dbEndToEnd": {
+        "n": 10,
+        "p50Ms": 9981.01,
+        "p95Ms": 10553.361,
+        "meanMs": 9185.1757
+      },
+      "dbQueue": {
+        "n": 10,
+        "p50Ms": 6625.26,
+        "p95Ms": 7100.238,
+        "meanMs": 5820.136
+      },
+      "dbProcessing": {
+        "n": 10,
+        "p50Ms": 3358.692,
+        "p95Ms": 3501.814,
+        "meanMs": 3363.9649
+      },
+      "clientVisible": {
+        "n": 10,
+        "p50Ms": 10087.750020000007,
+        "p95Ms": 10763.164023999998,
+        "meanMs": 9333.8741233
+      }
+    },
+    {
+      "name": "backlog-2",
+      "count": 10,
+      "concurrency": 3,
+      "startedAt": "2026-11-14T11:39:53.523Z",
+      "finishedAt": "2026-11-14T11:40:27.447Z",
+      "elapsedMs": 33925.39187599998,
+      "completedPerMinute": 17.68586792432783,
+      "dbEndToEnd": {
+        "n": 10,
+        "p50Ms": 9864.426,
+        "p95Ms": 10288.459,
+        "meanMs": 9037.5565
+      },
+      "dbQueue": {
+        "n": 10,
+        "p50Ms": 6558.15,
+        "p95Ms": 7045.643,
+        "meanMs": 5694.4155
+      },
+      "dbProcessing": {
+        "n": 10,
+        "p50Ms": 3338.571,
+        "p95Ms": 3465.823,
+        "meanMs": 3342.1460999999995
+      },
+      "clientVisible": {
+        "n": 10,
+        "p50Ms": 10054.235801999981,
+        "p95Ms": 10532.734057000023,
+        "meanMs": 9210.777374499998
+      }
+    },
+    {
+      "name": "backlog-3",
+      "count": 10,
+      "concurrency": 3,
+      "startedAt": "2026-11-14T11:40:27.449Z",
+      "finishedAt": "2026-11-14T11:41:01.578Z",
+      "elapsedMs": 34129.995452,
+      "completedPerMinute": 17.579844124029623,
+      "dbEndToEnd": {
+        "n": 10,
+        "p50Ms": 9865.747,
+        "p95Ms": 10738.26,
+        "meanMs": 9116.7447
+      },
+      "dbQueue": {
+        "n": 10,
+        "p50Ms": 6486.449,
+        "p95Ms": 7372.441,
+        "meanMs": 5783.0332
+      },
+      "dbProcessing": {
+        "n": 10,
+        "p50Ms": 3293.84,
+        "p95Ms": 3438.15,
+        "meanMs": 3332.9449
+      },
+      "clientVisible": {
+        "n": 10,
+        "p50Ms": 10038.411798000016,
+        "p95Ms": 10910.406520999997,
+        "meanMs": 9262.0078751
+      }
+    }
+  ],
+  "cli": {
+    "create": {
+      "n": 50,
+      "p50Ms": 112.747142,
+      "p95Ms": 124.358891,
+      "meanMs": 113.56997989999999
+    },
+    "start": {
+      "n": 50,
+      "p50Ms": 168.764073,
+      "p95Ms": 190.146706,
+      "meanMs": 170.74090046
+    },
+    "compile": {
+      "n": 50,
+      "p50Ms": 604.104709,
+      "p95Ms": 665.92258,
+      "meanMs": 610.0962051600001
+    },
+    "run": {
+      "n": 50,
+      "p50Ms": 275.575556,
+      "p95Ms": 299.243368,
+      "meanMs": 276.83981362
+    },
+    "rm": {
+      "n": 50,
+      "p50Ms": 143.894434,
+      "p95Ms": 163.383828,
+      "meanMs": 143.78697964
+    }
+  },
+  "method": "nearest-rank; homogeneous A+B program/3 tests; 200ms polling excluded from DB latency; short closed-loop observations, not maximum or cloud capacity"
+}

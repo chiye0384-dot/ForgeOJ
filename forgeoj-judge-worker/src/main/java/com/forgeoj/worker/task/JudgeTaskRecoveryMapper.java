@@ -1,7 +1,6 @@
 package com.forgeoj.worker.task;
 
 import java.util.List;
-
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
 import org.apache.ibatis.annotations.Select;
@@ -9,8 +8,8 @@ import org.apache.ibatis.annotations.Select;
 @Mapper
 interface JudgeTaskRecoveryMapper {
 
-    @Select(
-            """
+  @Select(
+      """
             SELECT jt.id AS taskId,
                    jt.submission_id AS submissionId,
                    jt.task_type AS taskType,
@@ -35,5 +34,5 @@ interface JudgeTaskRecoveryMapper {
                      jt.id
             LIMIT #{limit}
             """)
-    List<JudgeTaskRecoveryCandidate> findDue(@Param("limit") int limit);
+  List<JudgeTaskRecoveryCandidate> findDue(@Param("limit") int limit);
 }

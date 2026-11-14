@@ -2,7 +2,6 @@ package com.forgeoj.worker.snapshot;
 
 import java.util.List;
 import java.util.Optional;
-
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
 import org.apache.ibatis.annotations.Select;
@@ -10,8 +9,8 @@ import org.apache.ibatis.annotations.Select;
 @Mapper
 interface JudgeTaskSnapshotMapper {
 
-    @Select(
-            """
+  @Select(
+      """
             SELECT jt.id AS taskId,
                    s.id AS submissionId,
                    s.judge_version_id AS judgeVersionId,
@@ -36,14 +35,14 @@ interface JudgeTaskSnapshotMapper {
               AND jt.task_status = 'RUNNING'
               AND s.processing_status = 'RUNNING'
             """)
-    Optional<JudgeTaskSnapshotRow> findRunningSnapshot(
-            @Param("taskId") String taskId,
-            @Param("submissionId") String submissionId,
-            @Param("taskType") String taskType,
-            @Param("contractVersion") int contractVersion);
+  Optional<JudgeTaskSnapshotRow> findRunningSnapshot(
+      @Param("taskId") String taskId,
+      @Param("submissionId") String submissionId,
+      @Param("taskType") String taskType,
+      @Param("contractVersion") int contractVersion);
 
-    @Select(
-            """
+  @Select(
+      """
             SELECT ordinal,
                    input_data_gzip AS inputDataGzip,
                    expected_output_gzip AS expectedOutputGzip,
@@ -55,5 +54,5 @@ interface JudgeTaskSnapshotMapper {
             WHERE judge_version_id = #{judgeVersionId}
             ORDER BY ordinal
             """)
-    List<HiddenTestCaseRow> findHiddenTestCases(@Param("judgeVersionId") long judgeVersionId);
+  List<HiddenTestCaseRow> findHiddenTestCases(@Param("judgeVersionId") long judgeVersionId);
 }

@@ -1,0 +1,8 @@
+{
+  "publicFixtureSha256": "4b2b43b57cbcd1e5b44bf71076fbe5bb5c619a8e18c8383a6fee5caa43af19ac",
+  "users": 1,
+  "problems": 1,
+  "testCases": 3,
+  "user": "disposable fixture learner, not the existing demo account",
+  "data": "eclipse-temurin:21.0.12_8-jdk-jammy@sha256:c7d5863b5dd8f26b90c64f1d80cc2b0e5a5e4642f8db9955a370d348edd8f438\t37881a92ca996970e09475fdb29435b9bc13ae1501fa118e5fd9afd47e561adf\t2000\t256\t1048576"
+}

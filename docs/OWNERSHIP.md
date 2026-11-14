@@ -1,3 +1,7 @@
+2026-11-14 展示整理与同类题判题基线本地范围 **VERIFIED**。见 [本轮验收](PORTFOLIO-READINESS-VALIDATION.md)、[性能导读](../PERFORMANCE.md) 与 [机器证据](evidence/portfolio-readiness/20261114/verification.json)。固定Linux API341/59、Worker139/26、前端159/30及完整检查通过，437编译输入匹配；55真实AC/50正式样本、2288命令原文件、51资源样本独立复核。首批共享日志并发追加丢记录的测量拒绝接受，原样保留并诊断，修正后新空库重测；两个专属测量项目容器/卷/网络/镜像标签清理0。原演示与学习Redis停止保留，保护文件SHA-only不暂存。对外交付使用受保护PR合main及v0.x预览tag，实际提交/标签以仓库Git为准，保留功能分支；不创建正式Release、不提升完整M5、不购买服务器/公网/真实邮件。旧全量失败、额度停点和服务器下一步为历史，不再重复已通过的验证。
+
+以下为历史阶段记录。
+
 # ForgeOJ 代码归属与复用边界
 
 > 更新日期：2026-10-02
@@ -87,3 +91,5 @@ M2 普通账号单元（`VERIFIED`）的自有部分是 V6 账号/会话/摘要�
 2026-10-28：tools/performance/内的准备器、原创合成题生成器、Node HTTPS客户端、采样编排、独立归纳器、证据打包器及报告为ForgeOJ原创Apache-2.0。数据复用项目原公开开发测试用例且只进新空库测试。没有导入k6、第三方脚本或运行时二进制；方法说明引用官方文档，不将Node/Java/Docker/MySQL能力称自研。
 
 2026-10-28只读诊断：diagnose-hotspots.py、diagnostic_queries.py、最小diagnostic.jfc、summarize-hotspots.py、build-diagnostic-evidence.py和DriverDefaults探针/合成观测归纳为ForgeOJ原创Apache-2.0。JFR/jcmd、数据库执行计划和驱动元数据由既有JDK/MySQL/Connector/J提供，不称为自研分析引擎。没有复制第三方栈分析器或其他OJ数据；失败工具版本保留，当前诊断不含优化实现。
+
+2026-11-13：StatementCacheProbe.java、run/summarize/build-statement-cache-ab工具、配对方法实现及报告为ForgeOJ原创Apache-2.0。驱动QueryInfo与属性API来自已批准Connector/J，实际行为由厂商驱动提供；不称自研SQL缓存。沿用原创合成数据、Node客户端与标准库，没有复制第三方压测器。

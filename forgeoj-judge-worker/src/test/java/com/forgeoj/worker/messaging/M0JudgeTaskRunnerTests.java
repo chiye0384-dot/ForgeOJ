@@ -15,121 +15,116 @@ import com.forgeoj.worker.snapshot.JudgeTaskSnapshot;
 import com.forgeoj.worker.snapshot.JudgeTaskSnapshotException;
 import com.forgeoj.worker.snapshot.JudgeTaskSnapshotLoader;
 import com.forgeoj.worker.snapshot.JudgeTestCase;
+import com.forgeoj.worker.task.ClaimedJudgeTask;
 import com.forgeoj.worker.task.JudgeTaskCompletionService;
 import com.forgeoj.worker.task.JudgeTaskHeartbeatCoordinator;
-import com.forgeoj.worker.task.ClaimedJudgeTask;
-
 import java.nio.charset.StandardCharsets;
 import java.util.List;
-
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 class M0JudgeTaskRunnerTests {
 
-    private static final JudgeTaskMessage MESSAGE =
-            new JudgeTaskMessage(
-                    "b844c173-9436-4d35-a45c-a6f5041f7d20",
-                    "a9987de8-880d-42af-b463-06ae4f7b9717",
-                    "JUDGE_SUBMISSION",
-                    1);
-    private static final ClaimedJudgeTask CLAIM =
-            new ClaimedJudgeTask(
-                    MESSAGE,
-                    "c5862430-ab78-436f-b78c-bcdeb728503a",
-                    1,
-                    "b806756b-18bf-482b-83eb-9536d59d57aa",
-                    "runner-test-worker");
+  private static final JudgeTaskMessage MESSAGE =
+      new JudgeTaskMessage(
+          "b844c173-9436-4d35-a45c-a6f5041f7d20",
+          "a9987de8-880d-42af-b463-06ae4f7b9717",
+          "JUDGE_SUBMISSION",
+          1);
+  private static final ClaimedJudgeTask CLAIM =
+      new ClaimedJudgeTask(
+          MESSAGE,
+          "c5862430-ab78-436f-b78c-bcdeb728503a",
+          1,
+          "b806756b-18bf-482b-83eb-9536d59d57aa",
+          "runner-test-worker");
 
-    private JudgeTaskSnapshotLoader loader;
-    private SandboxRuntime sandbox;
-    private JudgeTaskCompletionService completion;
-    private JudgeTaskHeartbeatCoordinator heartbeatCoordinator;
-    private JudgeTaskHeartbeatCoordinator.HeartbeatSession heartbeatSession;
-    private M0JudgeTaskRunner runner;
+  private JudgeTaskSnapshotLoader loader;
+  private SandboxRuntime sandbox;
+  private JudgeTaskCompletionService completion;
+  private JudgeTaskHeartbeatCoordinator heartbeatCoordinator;
+  private JudgeTaskHeartbeatCoordinator.HeartbeatSession heartbeatSession;
+  private M0JudgeTaskRunner runner;
 
-    @BeforeEach
-    void setUp() {
-        loader = mock(JudgeTaskSnapshotLoader.class);
-        sandbox = mock(SandboxRuntime.class);
-        completion = mock(JudgeTaskCompletionService.class);
-        heartbeatCoordinator = mock(JudgeTaskHeartbeatCoordinator.class);
-        heartbeatSession = mock(JudgeTaskHeartbeatCoordinator.HeartbeatSession.class);
-        when(heartbeatCoordinator.start(CLAIM)).thenReturn(heartbeatSession);
-        runner = new M0JudgeTaskRunner(loader, sandbox, completion, heartbeatCoordinator);
-    }
+  @BeforeEach
+  void setUp() {
+    loader = mock(JudgeTaskSnapshotLoader.class);
+    sandbox = mock(SandboxRuntime.class);
+    completion = mock(JudgeTaskCompletionService.class);
+    heartbeatCoordinator = mock(JudgeTaskHeartbeatCoordinator.class);
+    heartbeatSession = mock(JudgeTaskHeartbeatCoordinator.HeartbeatSession.class);
+    when(heartbeatCoordinator.start(CLAIM)).thenReturn(heartbeatSession);
+    runner = new M0JudgeTaskRunner(loader, sandbox, completion, heartbeatCoordinator);
+  }
 
-    @Test
-    void loadsExecutesAndCommitsTerminalResultInOrder() {
-        JudgeTaskSnapshot snapshot = snapshot();
-        SandboxExecutionResult result = SandboxExecutionResult.of(SandboxOutcome.ACCEPTED);
-        when(loader.load(MESSAGE)).thenReturn(snapshot);
-        when(sandbox.execute(snapshot, CLAIM.attemptId())).thenReturn(result);
+  @Test
+  void loadsExecutesAndCommitsTerminalResultInOrder() {
+    JudgeTaskSnapshot snapshot = snapshot();
+    SandboxExecutionResult result = SandboxExecutionResult.of(SandboxOutcome.ACCEPTED);
+    when(loader.load(MESSAGE)).thenReturn(snapshot);
+    when(sandbox.execute(snapshot, CLAIM.attemptId())).thenReturn(result);
 
-        runner.run(CLAIM);
+    runner.run(CLAIM);
 
-        var order = inOrder(loader, sandbox, completion);
-        order.verify(loader).load(MESSAGE);
-        order.verify(sandbox).execute(snapshot, CLAIM.attemptId());
-        order.verify(completion).finish(CLAIM, result);
-        verify(heartbeatCoordinator).start(CLAIM);
-        verify(heartbeatSession).close();
-    }
+    var order = inOrder(loader, sandbox, completion);
+    order.verify(loader).load(MESSAGE);
+    order.verify(sandbox).execute(snapshot, CLAIM.attemptId());
+    order.verify(completion).finish(CLAIM, result);
+    verify(heartbeatCoordinator).start(CLAIM);
+    verify(heartbeatSession).close();
+  }
 
-    @Test
-    void deadLettersAnInvalidSnapshotWithoutRetrying() {
-        when(loader.load(MESSAGE)).thenThrow(new JudgeTaskSnapshotException("tampered"));
+  @Test
+  void deadLettersAnInvalidSnapshotWithoutRetrying() {
+    when(loader.load(MESSAGE)).thenThrow(new JudgeTaskSnapshotException("tampered"));
 
-        runner.run(CLAIM);
+    runner.run(CLAIM);
 
-        verify(completion).recordUnrecoverablePlatformFailure(CLAIM);
-        verify(heartbeatSession).close();
-        verifyNoInteractions(sandbox);
-    }
+    verify(completion).recordUnrecoverablePlatformFailure(CLAIM);
+    verify(heartbeatSession).close();
+    verifyNoInteractions(sandbox);
+  }
 
-    @Test
-    void schedulesRetryWhenSandboxPlatformFails() {
-        JudgeTaskSnapshot snapshot = snapshot();
-        when(loader.load(MESSAGE)).thenReturn(snapshot);
-        when(sandbox.execute(snapshot, CLAIM.attemptId())).thenThrow(new IllegalStateException("docker unavailable"));
+  @Test
+  void schedulesRetryWhenSandboxPlatformFails() {
+    JudgeTaskSnapshot snapshot = snapshot();
+    when(loader.load(MESSAGE)).thenReturn(snapshot);
+    when(sandbox.execute(snapshot, CLAIM.attemptId()))
+        .thenThrow(new IllegalStateException("docker unavailable"));
 
-        runner.run(CLAIM);
+    runner.run(CLAIM);
 
-        verify(completion).recordPlatformFailure(CLAIM);
-        verify(heartbeatSession).close();
-    }
+    verify(completion).recordPlatformFailure(CLAIM);
+    verify(heartbeatSession).close();
+  }
 
-    @Test
-    void propagatesTerminalWriteFailureSoListenerCannotAck() {
-        JudgeTaskSnapshot snapshot = snapshot();
-        SandboxExecutionResult result = SandboxExecutionResult.of(SandboxOutcome.ACCEPTED);
-        IllegalStateException databaseFailure = new IllegalStateException("database failed");
-        when(loader.load(MESSAGE)).thenReturn(snapshot);
-        when(sandbox.execute(snapshot, CLAIM.attemptId())).thenReturn(result);
-        doThrow(databaseFailure).when(completion).finish(CLAIM, result);
+  @Test
+  void propagatesTerminalWriteFailureSoListenerCannotAck() {
+    JudgeTaskSnapshot snapshot = snapshot();
+    SandboxExecutionResult result = SandboxExecutionResult.of(SandboxOutcome.ACCEPTED);
+    IllegalStateException databaseFailure = new IllegalStateException("database failed");
+    when(loader.load(MESSAGE)).thenReturn(snapshot);
+    when(sandbox.execute(snapshot, CLAIM.attemptId())).thenReturn(result);
+    doThrow(databaseFailure).when(completion).finish(CLAIM, result);
 
-        assertThatThrownBy(() -> runner.run(CLAIM)).isSameAs(databaseFailure);
-    }
+    assertThatThrownBy(() -> runner.run(CLAIM)).isSameAs(databaseFailure);
+  }
 
-    private JudgeTaskSnapshot snapshot() {
-        return new JudgeTaskSnapshot(
-                MESSAGE.taskId(),
-                MESSAGE.submissionId(),
-                1L,
-                "JAVA_21",
-                "public class Main { public static void main(String[] args) {} }",
-                "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
-                1000,
-                192,
-                65536,
-                "trim-trailing-whitespace-v1",
-                "m0-v1",
-                "eclipse-temurin:21-jdk@sha256:bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb",
-                "cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc",
-                List.of(
-                        new JudgeTestCase(
-                                1,
-                                new byte[0],
-                                "ok\n".getBytes(StandardCharsets.UTF_8))));
-    }
+  private JudgeTaskSnapshot snapshot() {
+    return new JudgeTaskSnapshot(
+        MESSAGE.taskId(),
+        MESSAGE.submissionId(),
+        1L,
+        "JAVA_21",
+        "public class Main { public static void main(String[] args) {} }",
+        "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+        1000,
+        192,
+        65536,
+        "trim-trailing-whitespace-v1",
+        "m0-v1",
+        "eclipse-temurin:21-jdk@sha256:bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb",
+        "cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc",
+        List.of(new JudgeTestCase(1, new byte[0], "ok\n".getBytes(StandardCharsets.UTF_8))));
+  }
 }

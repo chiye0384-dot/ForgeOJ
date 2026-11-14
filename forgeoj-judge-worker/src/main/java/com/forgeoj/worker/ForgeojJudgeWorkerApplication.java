@@ -8,8 +8,7 @@ import org.springframework.scheduling.annotation.EnableScheduling;
 @EnableScheduling
 public class ForgeojJudgeWorkerApplication {
 
-	public static void main(String[] args) {
-		SpringApplication.run(ForgeojJudgeWorkerApplication.class, args);
-	}
-
+  public static void main(String[] args) {
+    SpringApplication.run(ForgeojJudgeWorkerApplication.class, args);
+  }
 }

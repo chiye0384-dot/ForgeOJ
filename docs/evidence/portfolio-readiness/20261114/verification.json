@@ -1,0 +1,73 @@
+{
+  "status": "VERIFIED",
+  "scope": "local portfolio readability and homogeneous judge benchmark, not production release",
+  "baseCommit": "6bb1c290ebe73fbb7407f091082a517f601d7712",
+  "build": "target\\forgeoj-linux-20261114-183240-6cbb9cfe",
+  "run": "target\\forgeoj-deployment-20261114-193544-7d03fe16",
+  "compiledInputs": 437,
+  "backend": {
+    "forgeoj-api": {
+      "tests": 341,
+      "failures": 0,
+      "errors": 0,
+      "skipped": 0,
+      "suites": 59,
+      "jarSha256": "a096b9783feae82b442ddac3e1cac0f5503f07d330c66f6772170dc7206f9f38"
+    },
+    "forgeoj-judge-worker": {
+      "tests": 139,
+      "failures": 0,
+      "errors": 0,
+      "skipped": 0,
+      "suites": 26,
+      "jarSha256": "d702045b92d8301d435c0f168d3e74f48437ff67df2fb5cfdfc3b3cb172828d1"
+    }
+  },
+  "frontend": {
+    "tests": 159,
+    "suites": 30,
+    "allGates": true,
+    "platform": "fixed Linux"
+  },
+  "judge": {
+    "measured": 50,
+    "warmup": 5,
+    "actualAc": 55,
+    "fullRawRecalculation": true,
+    "sameJarInstrumentationOnly": true
+  },
+  "cleanup": {
+    "project": "forgeoj-m5check-e78855240f7d",
+    "containers": 0,
+    "volumes": 0,
+    "networks": 0,
+    "ownedApplicationTagsRemoved": 3,
+    "unrelatedServices": "not targeted",
+    "verifiedAt": "2026-11-14T19:41:59.8415266+08:00"
+  },
+  "source": {
+    "pom.xml": "baa088ab9defb6c3e01af26146f49d5aee97077f682254ea771208049fefc667",
+    "README.md": "2f217ddf3b42366d34aa018084c27e472209c177e7a22f7bc5eff3471f7225ca",
+    "DESIGN.md": "3b4dae732792321a5d86bda35a378db1f03d9fedf88cda08b98dfbc15aa774fb",
+    "CONTRIBUTING.md": "be6684e3c9e11f87c66773a27c768d427ee82b6e3f713f551bb1848582c5ac84",
+    "PERFORMANCE.md": "9c67252bbbb1e330bae0540c377caf87919ffa50ab18461773ca5661f456273b",
+    ".gitattributes": "f84de970bdaaa240544e86040cd2408dd851ab50ac5a63b319033ebbee300f2e",
+    ".github/workflows/ci.yml": "7612a3703e546b4a14d3ae2b0b67d4aad42c1c0b19b9ecd377afb0944a85e97b"
+  },
+  "protectedShaOnly": true,
+  "originalDemoRestarted": false,
+  "publicDeployment": false,
+  "fullM5": "IN_PROGRESS",
+  "formalGitHubRelease": false,
+  "sourceGitBlobOids": {
+    "pom.xml": "6b6a2e159a8e8649104fbba76a3486650693bfd7",
+    "README.md": "3091df3aa13594343238a0ca063349d6f1b60dd1",
+    "DESIGN.md": "2b2307e9b62e31f715d17d194d2bf05191b0b393",
+    "CONTRIBUTING.md": "5ffcbcbb38683d8531bf296675abbc0b76eff5d0",
+    "PERFORMANCE.md": "997c8b3845fc5e45a58382732a3b94de278d9aa9",
+    ".gitattributes": "4183725eeb56a24f33d88796f5b496747911ceb1",
+    ".github/workflows/ci.yml": "eb1269feada6045ecf7646a652a205b59e9e4781"
+  },
+  "sourceMapping": "Raw SHA256 binds build snapshot bytes; gitBlobOid binds the Git-filtered source. Check both rather than treating Windows EOL conversion as a source change.",
+  "secretScan": "PASS: exact disposable random secret bytes and private PEM headers; no protected local reads"
+}

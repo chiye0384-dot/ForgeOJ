@@ -8,7 +8,8 @@ import org.apache.ibatis.annotations.Select;
 @Mapper
 public interface SandboxAttemptLookup {
 
-    @Select("""
+  @Select(
+      """
             SELECT EXISTS (
                 SELECT 1 FROM judge_task_attempt
                 WHERE id = #{attemptId} AND judge_task_id = #{taskId}
@@ -24,5 +25,5 @@ public interface SandboxAttemptLookup {
                   AND finished_at IS NOT NULL
             )
             """)
-    boolean isClosed(@Param("taskId") String taskId, @Param("attemptId") String attemptId);
+  boolean isClosed(@Param("taskId") String taskId, @Param("attemptId") String attemptId);
 }

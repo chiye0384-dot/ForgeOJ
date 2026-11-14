@@ -1,18 +1,17 @@
 package com.forgeoj.worker.task;
 
 import java.util.Optional;
-
+import org.apache.ibatis.annotations.Insert;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
-import org.apache.ibatis.annotations.Insert;
 import org.apache.ibatis.annotations.Select;
 import org.apache.ibatis.annotations.Update;
 
 @Mapper
 interface JudgeTaskMapper {
 
-    @Select(
-            """
+  @Select(
+      """
             SELECT jt.id AS taskId,
                    jt.submission_id AS submissionId,
                    s.user_id AS userId,
@@ -34,19 +33,19 @@ interface JudgeTaskMapper {
             WHERE jt.id = #{taskId}
             FOR UPDATE
             """)
-    Optional<JudgeTaskClaimRow> findForUpdate(@Param("taskId") String taskId);
+  Optional<JudgeTaskClaimRow> findForUpdate(@Param("taskId") String taskId);
 
-    @Select(
-            """
+  @Select(
+      """
             SELECT user_id
             FROM user_judge_quota_lock
             WHERE user_id = #{userId}
             FOR UPDATE
             """)
-    Optional<Long> lockUserQuota(@Param("userId") long userId);
+  Optional<Long> lockUserQuota(@Param("userId") long userId);
 
-    @Select(
-            """
+  @Select(
+      """
             SELECT (SELECT COUNT(*) FROM submission
             WHERE user_id = #{userId}
               AND processing_status = 'RUNNING'
@@ -55,20 +54,20 @@ interface JudgeTaskMapper {
                    AND processing_status IN ('RUNNING','WAITING_RETRY'))
               + (SELECT COUNT(*) FROM self_test_job WHERE owner_id=#{userId} AND processing_status IN ('RUNNING','WAITING_RETRY'))
             """)
-    int countOtherRunningSubmissions(
-            @Param("userId") long userId, @Param("submissionId") String submissionId);
+  int countOtherRunningSubmissions(
+      @Param("userId") long userId, @Param("submissionId") String submissionId);
 
-    @Select(
-            """
+  @Select(
+      """
             SELECT (SELECT COUNT(*) FROM submission
             WHERE user_id = #{userId} AND processing_status IN ('QUEUED', 'RETRYING'))
             + (SELECT COUNT(*) FROM content_validation_job WHERE owner_id=#{userId} AND processing_status='QUEUED')
             + (SELECT COUNT(*) FROM self_test_job WHERE owner_id=#{userId} AND processing_status='QUEUED')
             """)
-    int countQueuedOrRetrying(@Param("userId") long userId);
+  int countQueuedOrRetrying(@Param("userId") long userId);
 
-    @Update(
-            """
+  @Update(
+      """
             UPDATE judge_task
             SET next_attempt_at = TIMESTAMPADD(
                     SECOND, #{delaySeconds}, CURRENT_TIMESTAMP(6)
@@ -78,15 +77,15 @@ interface JudgeTaskMapper {
               AND task_status = #{expectedStatus}
               AND status_version = #{statusVersion}
             """)
-    int deferForUserQuota(
-            @Param("taskId") String taskId,
-            @Param("submissionId") String submissionId,
-            @Param("expectedStatus") String expectedStatus,
-            @Param("statusVersion") long statusVersion,
-            @Param("delaySeconds") long delaySeconds);
+  int deferForUserQuota(
+      @Param("taskId") String taskId,
+      @Param("submissionId") String submissionId,
+      @Param("expectedStatus") String expectedStatus,
+      @Param("statusVersion") long statusVersion,
+      @Param("delaySeconds") long delaySeconds);
 
-    @Update(
-            """
+  @Update(
+      """
             UPDATE judge_task
             SET task_status = 'RUNNING',
                 status_version = status_version + 1,
@@ -112,17 +111,17 @@ interface JudgeTaskMapper {
                       AND lease_expires_at <= CURRENT_TIMESTAMP(6))
               )
             """)
-    int markTaskRunning(
-            @Param("taskId") String taskId,
-            @Param("submissionId") String submissionId,
-            @Param("statusVersion") long statusVersion,
-            @Param("expectedStatus") String expectedStatus,
-            @Param("workerId") String workerId,
-            @Param("leaseToken") String leaseToken,
-            @Param("leaseDurationSeconds") long leaseDurationSeconds);
+  int markTaskRunning(
+      @Param("taskId") String taskId,
+      @Param("submissionId") String submissionId,
+      @Param("statusVersion") long statusVersion,
+      @Param("expectedStatus") String expectedStatus,
+      @Param("workerId") String workerId,
+      @Param("leaseToken") String leaseToken,
+      @Param("leaseDurationSeconds") long leaseDurationSeconds);
 
-    @Update(
-            """
+  @Update(
+      """
             UPDATE submission
             SET processing_status = 'RUNNING',
                 status_version = status_version + 1,
@@ -131,13 +130,13 @@ interface JudgeTaskMapper {
               AND processing_status = #{expectedStatus}
               AND status_version = #{statusVersion}
             """)
-    int markSubmissionRunning(
-            @Param("submissionId") String submissionId,
-            @Param("statusVersion") long statusVersion,
-            @Param("expectedStatus") String expectedStatus);
+  int markSubmissionRunning(
+      @Param("submissionId") String submissionId,
+      @Param("statusVersion") long statusVersion,
+      @Param("expectedStatus") String expectedStatus);
 
-    @Update(
-            """
+  @Update(
+      """
             UPDATE judge_task_attempt
             SET attempt_status = 'LEASE_EXPIRED',
                 finished_at = CURRENT_TIMESTAMP(6),
@@ -147,11 +146,11 @@ interface JudgeTaskMapper {
               AND lease_token = #{leaseToken}
               AND attempt_status = 'RUNNING'
             """)
-    int markAttemptLeaseExpired(
-            @Param("taskId") String taskId, @Param("leaseToken") String leaseToken);
+  int markAttemptLeaseExpired(
+      @Param("taskId") String taskId, @Param("leaseToken") String leaseToken);
 
-    @Update(
-            """
+  @Update(
+      """
             UPDATE judge_task_attempt
             SET attempt_status = 'DEAD_LETTERED',
                 heartbeat_at = CURRENT_TIMESTAMP(6),
@@ -162,11 +161,11 @@ interface JudgeTaskMapper {
               AND lease_token = #{leaseToken}
               AND attempt_status = 'RUNNING'
             """)
-    int markExpiredAttemptDeadLettered(
-            @Param("taskId") String taskId, @Param("leaseToken") String leaseToken);
+  int markExpiredAttemptDeadLettered(
+      @Param("taskId") String taskId, @Param("leaseToken") String leaseToken);
 
-    @Insert(
-            """
+  @Insert(
+      """
             INSERT INTO judge_task_attempt (
                 id, judge_task_id, attempt_no, lease_token, worker_id,
                 attempt_status, started_at, heartbeat_at, lease_expires_at
@@ -179,14 +178,14 @@ interface JudgeTaskMapper {
               AND task_status = 'RUNNING'
               AND lease_token = #{leaseToken}
             """)
-    int insertAttempt(
-            @Param("attemptId") String attemptId,
-            @Param("taskId") String taskId,
-            @Param("submissionId") String submissionId,
-            @Param("leaseToken") String leaseToken);
+  int insertAttempt(
+      @Param("attemptId") String attemptId,
+      @Param("taskId") String taskId,
+      @Param("submissionId") String submissionId,
+      @Param("leaseToken") String leaseToken);
 
-    @Update(
-            """
+  @Update(
+      """
             UPDATE judge_task
             SET task_status = #{retryStatus},
                 status_version = status_version + 1,
@@ -206,18 +205,18 @@ interface JudgeTaskMapper {
               AND lease_token = #{leaseToken}
               AND attempt_count < max_attempts
             """)
-    int markTaskRetrying(
-            @Param("taskId") String taskId,
-            @Param("submissionId") String submissionId,
-            @Param("statusVersion") long statusVersion,
-            @Param("leaseToken") String leaseToken,
-            @Param("delaySeconds") long delaySeconds,
-            @Param("retryStatus") String retryStatus,
-            @Param("failureCode") String failureCode,
-            @Param("failureMessage") String failureMessage);
+  int markTaskRetrying(
+      @Param("taskId") String taskId,
+      @Param("submissionId") String submissionId,
+      @Param("statusVersion") long statusVersion,
+      @Param("leaseToken") String leaseToken,
+      @Param("delaySeconds") long delaySeconds,
+      @Param("retryStatus") String retryStatus,
+      @Param("failureCode") String failureCode,
+      @Param("failureMessage") String failureMessage);
 
-    @Update(
-            """
+  @Update(
+      """
             UPDATE submission
             SET processing_status = #{retryStatus},
                 verdict = NULL,
@@ -228,13 +227,13 @@ interface JudgeTaskMapper {
               AND processing_status = 'RUNNING'
               AND status_version = #{statusVersion}
             """)
-    int markSubmissionRetrying(
-            @Param("submissionId") String submissionId,
-            @Param("statusVersion") long statusVersion,
-            @Param("retryStatus") String retryStatus);
+  int markSubmissionRetrying(
+      @Param("submissionId") String submissionId,
+      @Param("statusVersion") long statusVersion,
+      @Param("retryStatus") String retryStatus);
 
-    @Insert(
-            """
+  @Insert(
+      """
             INSERT INTO outbox_event (
                 id, aggregate_type, aggregate_id, event_type, contract_version,
                 sequence_no, payload, next_attempt_at
@@ -250,16 +249,16 @@ interface JudgeTaskMapper {
                 TIMESTAMPADD(SECOND, #{delaySeconds}, CURRENT_TIMESTAMP(6))
             )
             """)
-    int insertOutboxEvent(
-            @Param("eventId") String eventId,
-            @Param("taskId") String taskId,
-            @Param("submissionId") String submissionId,
-            @Param("eventType") String eventType,
-            @Param("sequenceNo") int sequenceNo,
-            @Param("delaySeconds") long delaySeconds);
+  int insertOutboxEvent(
+      @Param("eventId") String eventId,
+      @Param("taskId") String taskId,
+      @Param("submissionId") String submissionId,
+      @Param("eventType") String eventType,
+      @Param("sequenceNo") int sequenceNo,
+      @Param("delaySeconds") long delaySeconds);
 
-    @Update(
-            """
+  @Update(
+      """
             UPDATE judge_task
             SET task_status = 'DEAD_LETTER',
                 status_version = status_version + 1,
@@ -276,14 +275,14 @@ interface JudgeTaskMapper {
               AND status_version = #{statusVersion}
               AND attempt_count >= max_attempts
             """)
-    int markTaskExhausted(
-            @Param("taskId") String taskId,
-            @Param("submissionId") String submissionId,
-            @Param("expectedStatus") String expectedStatus,
-            @Param("statusVersion") long statusVersion);
+  int markTaskExhausted(
+      @Param("taskId") String taskId,
+      @Param("submissionId") String submissionId,
+      @Param("expectedStatus") String expectedStatus,
+      @Param("statusVersion") long statusVersion);
 
-    @Update(
-            """
+  @Update(
+      """
             UPDATE submission
             SET processing_status = 'SYSTEM_ERROR',
                 verdict = NULL,
@@ -294,13 +293,13 @@ interface JudgeTaskMapper {
               AND processing_status = #{expectedStatus}
               AND status_version = #{statusVersion}
             """)
-    int markSubmissionSystemError(
-            @Param("submissionId") String submissionId,
-            @Param("expectedStatus") String expectedStatus,
-            @Param("statusVersion") long statusVersion);
+  int markSubmissionSystemError(
+      @Param("submissionId") String submissionId,
+      @Param("expectedStatus") String expectedStatus,
+      @Param("statusVersion") long statusVersion);
 
-    @Update(
-            """
+  @Update(
+      """
             UPDATE judge_task
             SET task_status = #{terminalStatus},
                 status_version = status_version + 1,
@@ -315,15 +314,15 @@ interface JudgeTaskMapper {
               AND status_version = #{statusVersion}
               AND lease_token = #{leaseToken}
             """)
-    int markTaskTerminal(
-            @Param("taskId") String taskId,
-            @Param("submissionId") String submissionId,
-            @Param("statusVersion") long statusVersion,
-            @Param("leaseToken") String leaseToken,
-            @Param("terminalStatus") String terminalStatus);
+  int markTaskTerminal(
+      @Param("taskId") String taskId,
+      @Param("submissionId") String submissionId,
+      @Param("statusVersion") long statusVersion,
+      @Param("leaseToken") String leaseToken,
+      @Param("terminalStatus") String terminalStatus);
 
-    @Update(
-            """
+  @Update(
+      """
             UPDATE judge_task
             SET task_status = 'DEAD_LETTER',
                 status_version = status_version + 1,
@@ -340,16 +339,16 @@ interface JudgeTaskMapper {
               AND status_version = #{statusVersion}
               AND lease_token = #{leaseToken}
             """)
-    int markTaskDeadLetter(
-            @Param("taskId") String taskId,
-            @Param("submissionId") String submissionId,
-            @Param("statusVersion") long statusVersion,
-            @Param("leaseToken") String leaseToken,
-            @Param("failureCode") String failureCode,
-            @Param("failureMessage") String failureMessage);
+  int markTaskDeadLetter(
+      @Param("taskId") String taskId,
+      @Param("submissionId") String submissionId,
+      @Param("statusVersion") long statusVersion,
+      @Param("leaseToken") String leaseToken,
+      @Param("failureCode") String failureCode,
+      @Param("failureMessage") String failureMessage);
 
-    @Update(
-            """
+  @Update(
+      """
             UPDATE submission
             SET processing_status = #{terminalStatus},
                 verdict = #{verdict},
@@ -360,15 +359,15 @@ interface JudgeTaskMapper {
               AND processing_status = 'RUNNING'
               AND status_version = #{statusVersion}
             """)
-    int markSubmissionTerminal(
-            @Param("submissionId") String submissionId,
-            @Param("statusVersion") long statusVersion,
-            @Param("terminalStatus") String terminalStatus,
-            @Param("verdict") String verdict,
-            @Param("diagnosticMessage") String diagnosticMessage);
+  int markSubmissionTerminal(
+      @Param("submissionId") String submissionId,
+      @Param("statusVersion") long statusVersion,
+      @Param("terminalStatus") String terminalStatus,
+      @Param("verdict") String verdict,
+      @Param("diagnosticMessage") String diagnosticMessage);
 
-    @Update(
-            """
+  @Update(
+      """
             UPDATE judge_task_attempt
             SET attempt_status = #{attemptStatus},
                 heartbeat_at = CURRENT_TIMESTAMP(6),
@@ -380,16 +379,16 @@ interface JudgeTaskMapper {
               AND lease_token = #{leaseToken}
               AND attempt_status = 'RUNNING'
             """)
-    int markAttemptTerminal(
-            @Param("attemptId") String attemptId,
-            @Param("taskId") String taskId,
-            @Param("leaseToken") String leaseToken,
-            @Param("attemptStatus") String attemptStatus,
-            @Param("failureCode") String failureCode,
-            @Param("failureMessage") String failureMessage);
+  int markAttemptTerminal(
+      @Param("attemptId") String attemptId,
+      @Param("taskId") String taskId,
+      @Param("leaseToken") String leaseToken,
+      @Param("attemptStatus") String attemptStatus,
+      @Param("failureCode") String failureCode,
+      @Param("failureMessage") String failureMessage);
 
-    @Update(
-            """
+  @Update(
+      """
             UPDATE judge_task
             SET lease_expires_at = TIMESTAMPADD(
                     SECOND, #{leaseDurationSeconds}, CURRENT_TIMESTAMP(6)
@@ -400,14 +399,14 @@ interface JudgeTaskMapper {
               AND lease_token = #{leaseToken}
               AND lease_expires_at > CURRENT_TIMESTAMP(6)
             """)
-    int renewTaskLease(
-            @Param("taskId") String taskId,
-            @Param("submissionId") String submissionId,
-            @Param("leaseToken") String leaseToken,
-            @Param("leaseDurationSeconds") long leaseDurationSeconds);
+  int renewTaskLease(
+      @Param("taskId") String taskId,
+      @Param("submissionId") String submissionId,
+      @Param("leaseToken") String leaseToken,
+      @Param("leaseDurationSeconds") long leaseDurationSeconds);
 
-    @Update(
-            """
+  @Update(
+      """
             UPDATE judge_task_attempt a
             JOIN judge_task jt ON jt.id = a.judge_task_id
             SET a.heartbeat_at = CURRENT_TIMESTAMP(6),
@@ -419,8 +418,8 @@ interface JudgeTaskMapper {
               AND jt.task_status = 'RUNNING'
               AND jt.lease_token = #{leaseToken}
             """)
-    int renewAttemptLease(
-            @Param("attemptId") String attemptId,
-            @Param("taskId") String taskId,
-            @Param("leaseToken") String leaseToken);
+  int renewAttemptLease(
+      @Param("attemptId") String attemptId,
+      @Param("taskId") String taskId,
+      @Param("leaseToken") String leaseToken);
 }

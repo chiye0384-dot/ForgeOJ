@@ -1,0 +1,5 @@
+{"name":"warmup","count":5,"concurrency":1,"startedAt":"2026-11-14T11:37:38.873Z","finishedAt":"2026-11-14T11:37:59.005Z","elapsedMs":20131.367895}
+{"name":"sequential","count":20,"concurrency":1,"startedAt":"2026-11-14T11:37:59.022Z","finishedAt":"2026-11-14T11:39:19.102Z","elapsedMs":80083.879826}
+{"name":"backlog-1","count":10,"concurrency":3,"startedAt":"2026-11-14T11:39:19.106Z","finishedAt":"2026-11-14T11:39:53.520Z","elapsedMs":34415.75432499999}
+{"name":"backlog-2","count":10,"concurrency":3,"startedAt":"2026-11-14T11:39:53.523Z","finishedAt":"2026-11-14T11:40:27.447Z","elapsedMs":33925.39187599998}
+{"name":"backlog-3","count":10,"concurrency":3,"startedAt":"2026-11-14T11:40:27.449Z","finishedAt":"2026-11-14T11:41:01.578Z","elapsedMs":34129.995452}

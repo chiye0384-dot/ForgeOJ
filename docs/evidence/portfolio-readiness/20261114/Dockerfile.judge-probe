@@ -1,0 +1,7 @@
+# Copyright 2026 池也; SPDX-License-Identifier: Apache-2.0
+ARG FORGEOJ_PERF_WORKER_BASE
+FROM ${FORGEOJ_PERF_WORKER_BASE}
+USER 0:0
+COPY judge-lifecycle-docker.sh /app/judge-lifecycle-docker
+RUN chmod 0555 /app/judge-lifecycle-docker
+USER 10002:10002

@@ -1,0 +1,19 @@
+{
+  "concurrent": {
+    "expected": 300,
+    "valid": 100,
+    "unique": 100,
+    "invalidLines": 0
+  },
+  "serialized": {
+    "expected": 300,
+    "valid": 300,
+    "unique": 300,
+    "invalidLines": 0
+  },
+  "perInvocationFiles": {
+    "expected": 300,
+    "valid": 300,
+    "unique": 300
+  }
+}

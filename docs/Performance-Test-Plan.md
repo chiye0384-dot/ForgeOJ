@@ -1,3 +1,13 @@
+2026-11-14 展示整理与同类题判题基线本地范围 **VERIFIED**。见 [本轮验收](PORTFOLIO-READINESS-VALIDATION.md)、[性能导读](../PERFORMANCE.md) 与 [机器证据](evidence/portfolio-readiness/20261114/verification.json)。固定Linux API341/59、Worker139/26、前端159/30及完整检查通过，437编译输入匹配；55真实AC/50正式样本、2288命令原文件、51资源样本独立复核。首批共享日志并发追加丢记录的测量拒绝接受，原样保留并诊断，修正后新空库重测；两个专属测量项目容器/卷/网络/镜像标签清理0。原演示与学习Redis停止保留，保护文件SHA-only不暂存。对外交付使用受保护PR合main及v0.x预览tag，实际提交/标签以仓库Git为准，保留功能分支；不创建正式Release、不提升完整M5、不购买服务器/公网/真实邮件。旧全量失败、额度停点和服务器下一步为历史，不再重复已通过的验证。
+
+以下为历史阶段记录。
+
+2026-11-13当前：连接级语句解析缓存隔离A/B有限单元 **VERIFIED，候选未采纳**。见[报告](M5-STATEMENT-CACHE-AB-REPORT.md)、[设计](M5-STATEMENT-CACHE-AB-DESIGN.md)与[交付收据](evidence/m5-statement-cache-ab/20261113/verification.json)。当前437输入与接受JAR匹配，前端159项/30 suites及构建重新通过；AB/BA/AB六个新JVM、24个20秒正式阶段673076次请求错误0，原始行/分位数/HTTP计数独立复核。C4吞吐中位差列表+3.46%/详情+2.44%，但轮间区间重叠；C8分别-10.45%/-9.72%，未建立全场景稳定收益，因此保留生产默认关闭，不承诺优化比例或云容量。后端沿用按日期验收的构件，未重跑完整API/Worker测试；完整M5/性能计划/E-06/E-07/Release/RESUME_READY不提升。
+
+本轮还修复了部署准备的两处门禁：显式当前输入清单/空前端与复制校验、HTML应用/脚本门禁；首个竞态空资源包的旧HTTP200假阳性完整保留并标记拒绝，新增门禁真实拒绝后换新包，18项HTTPS和37实际资源摘要通过。两个本轮拥有者项目、42负载容器和相应镜像别名精确清理；原网站仍关闭、原卷保留，学习Redis仍停机且restart=no。独立证据Zip target/forgeoj-statement-cache-ab-20261113-113451-0f81910d/forgeoj-statement-cache-ab-20261113-113451-0f81910d.zip，17875800字节/460文件，SHA256 1f53232c55a081c53b118a03db37c1939ff4812815c80b3d6ffb3de2490d63e0，实际随机秘密扫描/CRC/逐文件摘要通过。业务源码和生产缓存配置不变，当前交付改动未提交推送。
+
+用户本次明确下一步是两个项目的服务器规格/购买与部署方案。此有限实验已结束，不继续无界缓存调优；真实Linux、域名HTTPS、SMTP、异地备份/密钥保管、版本回退与试用在后续主机阶段现场验收，不采购/公网发布/发邀请/PR/main/tag/Release。共享活动Docker数据目录D:\Java项目\DockerDesktop-data-20261108及target/docker-disk-recovery-20261108冷备份不是构建垃圾，不得清理或在宿主根目录盲目mvn clean。保护文件仍SHA-only，桌面连续性与只清理确切拥有者规则保持；下方旧下一步为历史。
+
 2026-10-28当前：SQL/API只读热点诊断有限单元 **VERIFIED**，见[报告](M5-PERFORMANCE-DIAGNOSTIC-REPORT.md)、[设计](M5-PERFORMANCE-DIAGNOSTIC-DESIGN.md)与[安全收据](evidence/m5-hotspot-diagnostic/20261028/verification.json)。四阶段94862次测量请求错误0、客户端/HTTP计数一致；原301题数据/权限与428编译输入不变，无新判题提交。列表三类业务SELECT及事务/状态交互、JDBC解析样本，详情缓存命中仍查epoch并解码JSON；实际Connector/J语句缓存默认关闭。SQL摘要计数差异未解释，长摘要截断、32帧缺项目帧、探针/JIT/GC/配额混杂明确保留，不能宣称唯一瓶颈、优化收益或云容量。
 
 诊断证据Zip：target/forgeoj-hotspot-diagnostic-20261028-164533-ad5de7da/forgeoj-hotspot-diagnostic-20261028-164533-ad5de7da.zip，7795432字节/131文件，SHA256 814881967ca9662952b3f9aeac8c2cf713e407e7bf81d3832ad90ca5cebdecc2；白名单/实际随机秘密/敏感JFR事件/CRC/逐文件摘要通过。拥有者forgeoj-m5check-147876a386fa容器/卷/网络/三镜像别名和负载容器已精确清理；旧LAN八容器退出保留、无关redis运行。原部署/备份/回滚/基线包均保留，HEAD058f36c771f15735a1e987a21c55074b80f511a9，未提交推送。没有实施优化；下一有限单元建议新隔离项目做仅连接级语句/查询元数据缓存受控A/B，先核整组额度，充分预热/交错重复、固定资源/数据与正确性，收益未证实前不改生产。完整性能计划/M5仍IN_PROGRESS，E-06/E-07/Release/RESUME_READY不提升；真实Linux/域名CA/SMTP、每日异地/密钥保管、跨业务版本回滚、长稳/开放负载/真实试用仍缺。不购买/公网发布/发邀请/PR/main/tag/Release；既有继续授权生效，下方旧下一步为历史，保护文件及桌面连续性规则保持。

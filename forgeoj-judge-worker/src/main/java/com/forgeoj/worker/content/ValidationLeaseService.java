@@ -8,75 +8,148 @@ import org.springframework.transaction.annotation.Transactional;
 
 @Service
 public class ValidationLeaseService {
-    public record Claim(String jobId,String snapshotId,String attemptId,String token,String worker) {}
-    private final ValidationMapper mapper;
-    private final String worker;
-    private final long seconds;
-    public ValidationLeaseService(ValidationMapper mapper,@Value("${forgeoj.worker.instance-id:${random.uuid}}") String worker,
-            @Value("${forgeoj.worker.lease-duration-seconds:30}") long seconds) {
-        if(seconds<1) throw new IllegalArgumentException("Invalid validation lease");this.mapper=mapper;this.worker=worker;this.seconds=seconds;
+  public record Claim(
+      String jobId, String snapshotId, String attemptId, String token, String worker) {}
+
+  private final ValidationMapper mapper;
+  private final String worker;
+  private final long seconds;
+
+  public ValidationLeaseService(
+      ValidationMapper mapper,
+      @Value("${forgeoj.worker.instance-id:${random.uuid}}") String worker,
+      @Value("${forgeoj.worker.lease-duration-seconds:30}") long seconds) {
+    if (seconds < 1) throw new IllegalArgumentException("Invalid validation lease");
+    this.mapper = mapper;
+    this.worker = worker;
+    this.seconds = seconds;
+  }
+
+  @Transactional
+  public Claim claim(String id, String snapshot) {
+    var row = mapper.lock(id).orElse(null);
+    if (row == null || !row.snapshotId().equals(snapshot))
+      throw new IllegalArgumentException("Unknown validation contract");
+    if (!java.util.Set.of("QUEUED", "WAITING_RETRY").contains(row.processingStatus()) || !row.due())
+      return null;
+    if (mapper.quota(row.ownerId()).isEmpty())
+      throw new IllegalStateException("Missing validation quota");
+    if (mapper.otherRunning(row.ownerId(), id) > 0) {
+      one(mapper.retry(id, row.statusVersion(), row.processingStatus(), 5, "QUOTA_DEFERRED"));
+      enqueue(id, false);
+      return null;
     }
-    @Transactional
-    public Claim claim(String id,String snapshot) {
-        var row=mapper.lock(id).orElse(null);
-        if(row==null || !row.snapshotId().equals(snapshot)) throw new IllegalArgumentException("Unknown validation contract");
-        if(!java.util.Set.of("QUEUED","WAITING_RETRY").contains(row.processingStatus()) || !row.due()) return null;
-        if(mapper.quota(row.ownerId()).isEmpty()) throw new IllegalStateException("Missing validation quota");
-        if(mapper.otherRunning(row.ownerId(),id)>0) {
-            one(mapper.retry(id,row.statusVersion(),row.processingStatus(),5,"QUOTA_DEFERRED"));
-            enqueue(id,false);return null;
+    if (row.attemptCount() >= row.maxAttempts()) {
+      one(mapper.retry(id, row.statusVersion(), "SYSTEM_ERROR", 0, "ATTEMPT_LIMIT_EXHAUSTED"));
+      enqueue(id, true);
+      return null;
+    }
+    String token = UUID.randomUUID().toString(), attempt = UUID.randomUUID().toString();
+    one(mapper.claim(id, row.statusVersion(), worker, token, seconds));
+    one(mapper.attempt(attempt, id, token));
+    return new Claim(id, snapshot, attempt, token, worker);
+  }
+
+  @Transactional
+  public void renew(Claim claim) {
+    one(mapper.heartbeat(claim.jobId(), claim.token(), claim.worker(), seconds));
+    one(mapper.attemptHeartbeat(claim.attemptId(), claim.jobId(), claim.token()));
+  }
+
+  @Transactional
+  public void finish(Claim claim, String reference, String solution) {
+    matching(claim);
+    one(mapper.finish(claim.jobId(), claim.token(), reference, solution));
+    one(mapper.closeAttempt(claim.jobId(), claim.token(), "SUCCEEDED", null));
+  }
+
+  @Transactional
+  public void finishPreview(Claim claim, com.forgeoj.worker.sandbox.SandboxOutputPreview preview) {
+    matching(claim);
+    if (!mapper.preview(claim.jobId())) throw new IllegalStateException("Invalid preview purpose");
+    if (preview.outcome() == com.forgeoj.worker.sandbox.SandboxOutcome.ACCEPTED) {
+      int expected = mapper.tests(claim.snapshotId()).size();
+      if (preview.outputs().size() != expected || expected < 1 || expected > 100)
+        throw new IllegalStateException("Incomplete generated output");
+      long total = mapper.tests(claim.snapshotId()).stream().mapToLong(t -> t.inputBytes()).sum();
+      for (int i = 0; i < expected; i++) {
+        byte[] data = preview.outputs().get(i).getBytes(java.nio.charset.StandardCharsets.UTF_8);
+        total += data.length;
+        if (data.length > 1048576 || total > 16L * 1024 * 1024)
+          throw new IllegalStateException("Generated output too large");
+        var compressed = new java.io.ByteArrayOutputStream();
+        try (var gzip = new java.util.zip.GZIPOutputStream(compressed)) {
+          gzip.write(data);
+        } catch (java.io.IOException e) {
+          throw new IllegalStateException("Output compression failed");
         }
-        if(row.attemptCount()>=row.maxAttempts()) {one(mapper.retry(id,row.statusVersion(),"SYSTEM_ERROR",0,"ATTEMPT_LIMIT_EXHAUSTED"));enqueue(id,true);return null;}
-        String token=UUID.randomUUID().toString(),attempt=UUID.randomUUID().toString();
-        one(mapper.claim(id,row.statusVersion(),worker,token,seconds));one(mapper.attempt(attempt,id,token));
-        return new Claim(id,snapshot,attempt,token,worker);
+        one(
+            mapper.output(
+                claim.jobId(),
+                claim.snapshotId(),
+                i + 1,
+                compressed.toByteArray(),
+                data.length,
+                ValidationSnapshotLoader.hash(preview.outputs().get(i))));
+      }
     }
-    @Transactional public void renew(Claim claim) {
-        one(mapper.heartbeat(claim.jobId(),claim.token(),claim.worker(),seconds));
-        one(mapper.attemptHeartbeat(claim.attemptId(),claim.jobId(),claim.token()));
-    }
-    @Transactional public void finish(Claim claim,String reference,String solution) {
-        matching(claim);one(mapper.finish(claim.jobId(),claim.token(),reference,solution));
-        one(mapper.closeAttempt(claim.jobId(),claim.token(),"SUCCEEDED",null));
-    }
-    @Transactional public void finishPreview(Claim claim,com.forgeoj.worker.sandbox.SandboxOutputPreview preview) {
-        matching(claim);if(!mapper.preview(claim.jobId())) throw new IllegalStateException("Invalid preview purpose");
-        if(preview.outcome()==com.forgeoj.worker.sandbox.SandboxOutcome.ACCEPTED) {
-            int expected=mapper.tests(claim.snapshotId()).size();
-            if(preview.outputs().size()!=expected || expected<1 || expected>100) throw new IllegalStateException("Incomplete generated output");
-            long total=mapper.tests(claim.snapshotId()).stream().mapToLong(t->t.inputBytes()).sum();
-            for(int i=0;i<expected;i++) {
-                byte[] data=preview.outputs().get(i).getBytes(java.nio.charset.StandardCharsets.UTF_8);
-                total+=data.length;if(data.length>1048576 || total>16L*1024*1024) throw new IllegalStateException("Generated output too large");
-                var compressed=new java.io.ByteArrayOutputStream();
-                try(var gzip=new java.util.zip.GZIPOutputStream(compressed)){gzip.write(data);}catch(java.io.IOException e){throw new IllegalStateException("Output compression failed");}
-                one(mapper.output(claim.jobId(),claim.snapshotId(),i+1,compressed.toByteArray(),data.length,ValidationSnapshotLoader.hash(preview.outputs().get(i))));
-            }
-        }
-        one(mapper.finishPreview(claim.jobId(),claim.token(),preview.outcome().name()));
-        one(mapper.closeAttempt(claim.jobId(),claim.token(),"SUCCEEDED",null));
-    }
-    @Transactional public void failure(Claim claim,boolean invalid) {
-        var row=matching(claim);retry(row,invalid,invalid?"SNAPSHOT_INVALID":"PLATFORM_FAILURE","RETRYABLE_FAILURE");
-    }
-    @Transactional public void recover(String id) {
-        var row=mapper.lock(id).orElse(null);
-        if(row==null || !row.processingStatus().equals("RUNNING") || row.leaseValid()) return;
-        retry(row,false,"LEASE_EXPIRED","LEASE_EXPIRED");
-    }
-    private ValidationMapper.Job matching(Claim claim) {
-        var row=mapper.lock(claim.jobId()).orElseThrow(()->new IllegalStateException("Missing validation"));
-        if(!row.processingStatus().equals("RUNNING") || !row.leaseValid() || !claim.token().equals(row.leaseToken())
-                || !claim.worker().equals(row.leaseOwner()) || !claim.snapshotId().equals(row.snapshotId())
-                || mapper.activeAttempt(claim.attemptId(),claim.jobId(),claim.token())!=1) throw new IllegalStateException("Validation lease lost");
-        return row;
-    }
-    private void retry(ValidationMapper.Job row,boolean invalid,String failure,String attemptStatus) {
-        boolean exhausted=invalid || row.attemptCount()>=row.maxAttempts();
-        one(mapper.closeAttempt(row.id(),row.leaseToken(),exhausted?"DEAD_LETTERED":attemptStatus,failure));
-        one(mapper.retry(row.id(),row.statusVersion(),exhausted?"SYSTEM_ERROR":"WAITING_RETRY",Math.min(60,1L<<Math.min(6,row.attemptCount())),failure));
-        enqueue(row.id(),exhausted);
-    }
-    private void enqueue(String id,boolean dead) {one(mapper.outbox(UUID.randomUUID().toString(),id,dead?"CONTENT_VALIDATION_DEAD_LETTERED":"CONTENT_VALIDATION_QUEUED"));}
-    private static void one(int count) {if(count!=1) throw new IllegalStateException("Validation fenced update failed");}
+    one(mapper.finishPreview(claim.jobId(), claim.token(), preview.outcome().name()));
+    one(mapper.closeAttempt(claim.jobId(), claim.token(), "SUCCEEDED", null));
+  }
+
+  @Transactional
+  public void failure(Claim claim, boolean invalid) {
+    var row = matching(claim);
+    retry(row, invalid, invalid ? "SNAPSHOT_INVALID" : "PLATFORM_FAILURE", "RETRYABLE_FAILURE");
+  }
+
+  @Transactional
+  public void recover(String id) {
+    var row = mapper.lock(id).orElse(null);
+    if (row == null || !row.processingStatus().equals("RUNNING") || row.leaseValid()) return;
+    retry(row, false, "LEASE_EXPIRED", "LEASE_EXPIRED");
+  }
+
+  private ValidationMapper.Job matching(Claim claim) {
+    var row =
+        mapper
+            .lock(claim.jobId())
+            .orElseThrow(() -> new IllegalStateException("Missing validation"));
+    if (!row.processingStatus().equals("RUNNING")
+        || !row.leaseValid()
+        || !claim.token().equals(row.leaseToken())
+        || !claim.worker().equals(row.leaseOwner())
+        || !claim.snapshotId().equals(row.snapshotId())
+        || mapper.activeAttempt(claim.attemptId(), claim.jobId(), claim.token()) != 1)
+      throw new IllegalStateException("Validation lease lost");
+    return row;
+  }
+
+  private void retry(
+      ValidationMapper.Job row, boolean invalid, String failure, String attemptStatus) {
+    boolean exhausted = invalid || row.attemptCount() >= row.maxAttempts();
+    one(
+        mapper.closeAttempt(
+            row.id(), row.leaseToken(), exhausted ? "DEAD_LETTERED" : attemptStatus, failure));
+    one(
+        mapper.retry(
+            row.id(),
+            row.statusVersion(),
+            exhausted ? "SYSTEM_ERROR" : "WAITING_RETRY",
+            Math.min(60, 1L << Math.min(6, row.attemptCount())),
+            failure));
+    enqueue(row.id(), exhausted);
+  }
+
+  private void enqueue(String id, boolean dead) {
+    one(
+        mapper.outbox(
+            UUID.randomUUID().toString(),
+            id,
+            dead ? "CONTENT_VALIDATION_DEAD_LETTERED" : "CONTENT_VALIDATION_QUEUED"));
+  }
+
+  private static void one(int count) {
+    if (count != 1) throw new IllegalStateException("Validation fenced update failed");
+  }
 }

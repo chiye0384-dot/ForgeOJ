@@ -7,23 +7,20 @@ import com.forgeoj.api.auth.ForgeOjPrincipal;
 import com.forgeoj.api.submission.SubmissionResult;
 import com.forgeoj.api.submission.SubmissionService;
 import com.jayway.jsonpath.JsonPath;
-
 import java.nio.charset.StandardCharsets;
 import java.util.List;
 import java.util.UUID;
-
 import javax.sql.DataSource;
-
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
-import org.springframework.boot.test.system.CapturedOutput;
-import org.springframework.boot.test.system.OutputCaptureExtension;
 import org.springframework.amqp.core.Message;
 import org.springframework.amqp.core.MessageDeliveryMode;
 import org.springframework.amqp.rabbit.core.RabbitAdmin;
 import org.springframework.amqp.rabbit.core.RabbitTemplate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.boot.test.system.CapturedOutput;
+import org.springframework.boot.test.system.OutputCaptureExtension;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.context.SecurityContextHolder;
@@ -39,33 +36,33 @@ import org.testcontainers.utility.MountableFile;
 @Testcontainers
 @ExtendWith(OutputCaptureExtension.class)
 @SpringBootTest(
-        properties = {
-            "spring.flyway.locations=classpath:db/migration,classpath:db/devdata",
-            "spring.rabbitmq.publisher-confirm-type=correlated",
-            "spring.rabbitmq.publisher-returns=true",
-            "spring.rabbitmq.template.mandatory=true",
-            "spring.rabbitmq.listener.simple.auto-startup=false",
-            "spring.rabbitmq.listener.direct.auto-startup=false",
-            "forgeoj.outbox.publisher.enabled=false",
-            "forgeoj.outbox.publisher.confirm-timeout-ms=5000",
-            "forgeoj.outbox.publisher.max-attempts=3",
-            "forgeoj.outbox.publisher.base-delay-seconds=1",
-            "forgeoj.outbox.publisher.max-delay-seconds=4"
-        })
+    properties = {
+      "spring.flyway.locations=classpath:db/migration,classpath:db/devdata",
+      "spring.rabbitmq.publisher-confirm-type=correlated",
+      "spring.rabbitmq.publisher-returns=true",
+      "spring.rabbitmq.template.mandatory=true",
+      "spring.rabbitmq.listener.simple.auto-startup=false",
+      "spring.rabbitmq.listener.direct.auto-startup=false",
+      "forgeoj.outbox.publisher.enabled=false",
+      "forgeoj.outbox.publisher.confirm-timeout-ms=5000",
+      "forgeoj.outbox.publisher.max-attempts=3",
+      "forgeoj.outbox.publisher.base-delay-seconds=1",
+      "forgeoj.outbox.publisher.max-delay-seconds=4"
+    })
 class OutboxPublisherIntegrationTests {
 
-    private static final String MYSQL_IMAGE =
-            "container-registry.oracle.com/mysql/community-server:8.4.12"
-                    + "@sha256:7dcc4add9183664de3a214daf85a50c3ba6cccfd7534f700b6561bf5b41885be";
-    private static final String RABBIT_IMAGE =
-            "rabbitmq:4.3.6-management"
-                    + "@sha256:cdf40d8cb363d145e377ed88d59696a42386ffe54b30125f10eb128b862eea95";
-    private static final String API_PASSWORD = "m0-api-test-secret";
-    private static final String MIGRATOR_PASSWORD = "m0-migrator-test-secret";
-    private static final String RABBIT_USER = "forgeoj";
-    private static final String RABBIT_PASSWORD = "m0-rabbit-test-secret";
-    private static final String SOURCE =
-            """
+  private static final String MYSQL_IMAGE =
+      "container-registry.oracle.com/mysql/community-server:8.4.12"
+          + "@sha256:7dcc4add9183664de3a214daf85a50c3ba6cccfd7534f700b6561bf5b41885be";
+  private static final String RABBIT_IMAGE =
+      "rabbitmq:4.3.6-management"
+          + "@sha256:cdf40d8cb363d145e377ed88d59696a42386ffe54b30125f10eb128b862eea95";
+  private static final String API_PASSWORD = "m0-api-test-secret";
+  private static final String MIGRATOR_PASSWORD = "m0-migrator-test-secret";
+  private static final String RABBIT_USER = "forgeoj";
+  private static final String RABBIT_PASSWORD = "m0-rabbit-test-secret";
+  private static final String SOURCE =
+      """
             public class Main {
                 public static void main(String[] args) {
                     System.out.println("OUTBOX_SOURCE_SENTINEL");
@@ -73,299 +70,322 @@ class OutboxPublisherIntegrationTests {
             }
             """;
 
-    @Container
-    static final MySQLContainer MYSQL =
-            new com.forgeoj.api.testinfra.DirectMySQLContainer(
-                            DockerImageName.parse(MYSQL_IMAGE)
-                                    .asCompatibleSubstituteFor("mysql"))
-                    .withDatabaseName("forgeoj")
-                    .withUsername("bootstrap")
-                    .withPassword("bootstrap-test-secret")
-                    .withCopyFileToContainer(
-                            MountableFile.forClasspathResource("mysql/init-test-users.sql"),
-                            "/docker-entrypoint-initdb.d/01-init-test-users.sql");
+  @Container
+  static final MySQLContainer MYSQL =
+      new com.forgeoj.api.testinfra.DirectMySQLContainer(
+              DockerImageName.parse(MYSQL_IMAGE).asCompatibleSubstituteFor("mysql"))
+          .withDatabaseName("forgeoj")
+          .withUsername("bootstrap")
+          .withPassword("bootstrap-test-secret")
+          .withCopyFileToContainer(
+              MountableFile.forClasspathResource("mysql/init-test-users.sql"),
+              "/docker-entrypoint-initdb.d/01-init-test-users.sql");
 
-    @Container
-    static final RabbitMQContainer RABBIT =
-            new RabbitMQContainer(
-                            DockerImageName.parse(RABBIT_IMAGE)
-                                    .asCompatibleSubstituteFor("rabbitmq"))
-                    .withAdminUser(RABBIT_USER)
-                    .withAdminPassword(RABBIT_PASSWORD)
-                    .withEnv("RABBITMQ_DEFAULT_VHOST", "/forgeoj");
+  @Container
+  static final RabbitMQContainer RABBIT =
+      new RabbitMQContainer(
+              DockerImageName.parse(RABBIT_IMAGE).asCompatibleSubstituteFor("rabbitmq"))
+          .withAdminUser(RABBIT_USER)
+          .withAdminPassword(RABBIT_PASSWORD)
+          .withEnv("RABBITMQ_DEFAULT_VHOST", "/forgeoj");
 
-    @DynamicPropertySource
-    static void runtimeProperties(DynamicPropertyRegistry registry) {
-        registry.add("spring.datasource.url", MYSQL::getJdbcUrl);
-        registry.add("spring.datasource.username", () -> "forgeoj_api");
-        registry.add("spring.datasource.password", () -> API_PASSWORD);
-        registry.add("spring.flyway.url", MYSQL::getJdbcUrl);
-        registry.add("spring.flyway.user", () -> "forgeoj_migrator");
-        registry.add("spring.flyway.password", () -> MIGRATOR_PASSWORD);
-        registry.add("spring.rabbitmq.host", RABBIT::getHost);
-        registry.add("spring.rabbitmq.port", RABBIT::getAmqpPort);
-        registry.add("spring.rabbitmq.username", () -> RABBIT_USER);
-        registry.add("spring.rabbitmq.password", () -> RABBIT_PASSWORD);
-        registry.add("spring.rabbitmq.virtual-host", () -> "/forgeoj");
+  @DynamicPropertySource
+  static void runtimeProperties(DynamicPropertyRegistry registry) {
+    registry.add("spring.datasource.url", MYSQL::getJdbcUrl);
+    registry.add("spring.datasource.username", () -> "forgeoj_api");
+    registry.add("spring.datasource.password", () -> API_PASSWORD);
+    registry.add("spring.flyway.url", MYSQL::getJdbcUrl);
+    registry.add("spring.flyway.user", () -> "forgeoj_migrator");
+    registry.add("spring.flyway.password", () -> MIGRATOR_PASSWORD);
+    registry.add("spring.rabbitmq.host", RABBIT::getHost);
+    registry.add("spring.rabbitmq.port", RABBIT::getAmqpPort);
+    registry.add("spring.rabbitmq.username", () -> RABBIT_USER);
+    registry.add("spring.rabbitmq.password", () -> RABBIT_PASSWORD);
+    registry.add("spring.rabbitmq.virtual-host", () -> "/forgeoj");
+  }
+
+  @Autowired private SubmissionService submissionService;
+
+  @Autowired private AccountService accounts;
+
+  @Autowired private OutboxPublisher outboxPublisher;
+
+  @Autowired private RabbitTemplate rabbitTemplate;
+
+  @Autowired private RabbitAdmin rabbitAdmin;
+
+  @Autowired private DataSource dataSource;
+
+  @Test
+  void marksPublishedOnlyAfterConfirmedAndRoutableDelivery(CapturedOutput output) {
+    JdbcTemplate jdbc = new JdbcTemplate(dataSource);
+    SubmissionResult delivered = createSubmission();
+
+    assertThat(rabbitAdmin.getQueueInfo(RabbitTopology.SELF_TEST_QUEUE)).isNotNull();
+    assertThat(rabbitAdmin.getQueueInfo(RabbitTopology.RETRY_QUEUE)).isNotNull();
+    assertThat(rabbitAdmin.getQueueInfo(RabbitTopology.DEAD_LETTER_QUEUE)).isNotNull();
+
+    assertThat(publishedAt(jdbc, delivered.submissionId())).isNull();
+    assertThat(outboxPublisher.publishPending()).isEqualTo(1);
+    assertThat(publishedAt(jdbc, delivered.submissionId())).isNotNull();
+
+    Message message = rabbitTemplate.receive(RabbitTopology.QUEUE, 5000);
+    assertThat(message).isNotNull();
+    assertThat(message.getMessageProperties().getReceivedDeliveryMode())
+        .isEqualTo(MessageDeliveryMode.PERSISTENT);
+    assertThat(message.getMessageProperties().getContentType()).isEqualTo("application/json");
+    String payload = new String(message.getBody(), StandardCharsets.UTF_8);
+    assertThat((String) JsonPath.read(payload, "$.submissionId"))
+        .isEqualTo(delivered.submissionId());
+    assertThat((String) JsonPath.read(payload, "$.taskType")).isEqualTo("JUDGE_SUBMISSION");
+    assertThat((Integer) JsonPath.read(payload, "$.contractVersion")).isEqualTo(1);
+    assertThat(((java.util.Map<?, ?>) JsonPath.parse(payload).read("$"))).hasSize(4);
+    assertThat(payload)
+        .doesNotContain("OUTBOX_SOURCE_SENTINEL")
+        .doesNotContain("37881a92ca996970e09475fdb29435b9bc13ae1501fa118e5fd9afd47e561adf");
+
+    String taskId = taskId(jdbc, delivered.submissionId());
+    insertOutbox(jdbc, taskId, delivered.submissionId(), "JUDGE_TASK_QUEUED", 1, 0);
+    assertThat(outboxPublisher.publishPending()).isEqualTo(1);
+    assertThat(rabbitTemplate.receive(RabbitTopology.QUEUE, 200)).isNull();
+    Message retry = rabbitTemplate.receive(RabbitTopology.RETRY_QUEUE, 5000);
+    assertThat(retry).isNotNull();
+    assertThat(new String(retry.getBody(), StandardCharsets.UTF_8))
+        .contains(delivered.submissionId());
+
+    insertOutbox(jdbc, taskId, delivered.submissionId(), "JUDGE_TASK_DEAD_LETTERED", 1, 0);
+
+    assertThat(outboxPublisher.publishPending()).isEqualTo(1);
+    assertThat(rabbitTemplate.receive(RabbitTopology.QUEUE, 200)).isNull();
+    Message deadLetter = rabbitTemplate.receive(RabbitTopology.DEAD_LETTER_QUEUE, 5000);
+    assertThat(deadLetter).isNotNull();
+    assertThat(new String(deadLetter.getBody(), StandardCharsets.UTF_8))
+        .contains(delivered.submissionId());
+
+    SubmissionResult unroutable = createSubmission();
+    assertThat(rabbitAdmin.deleteQueue(RabbitTopology.QUEUE)).isTrue();
+
+    assertThat(outboxPublisher.publishPending()).isZero();
+    assertThat(publishedAt(jdbc, unroutable.submissionId())).isNull();
+    java.util.Map<String, Object> firstFailure =
+        outboxFailureState(jdbc, unroutable.submissionId());
+    assertThat(firstFailure)
+        .containsEntry("publish_attempts", 1L)
+        .containsEntry("last_error_code", "UNROUTABLE");
+    assertThat(firstFailure.get("failed_at")).isNull();
+
+    assertThat(outboxPublisher.publishPending()).isZero();
+    assertThat(outboxFailureState(jdbc, unroutable.submissionId()))
+        .containsEntry("publish_attempts", 1L);
+
+    makeOutboxDue(jdbc, unroutable.submissionId());
+    assertThat(outboxPublisher.publishPending()).isZero();
+    makeOutboxDue(jdbc, unroutable.submissionId());
+    assertThat(outboxPublisher.publishPending()).isZero();
+
+    java.util.Map<String, Object> failed = outboxFailureState(jdbc, unroutable.submissionId());
+    assertThat(failed)
+        .containsEntry("publish_attempts", 3L)
+        .containsEntry("last_error_code", "UNROUTABLE");
+    assertThat(failed.get("failed_at")).isNotNull();
+    makeOutboxDue(jdbc, unroutable.submissionId());
+    assertThat(outboxPublisher.publishPending()).isZero();
+    assertThat(outboxFailureState(jdbc, unroutable.submissionId()))
+        .containsEntry("publish_attempts", 3L);
+    var publishedLogs =
+        output
+            .getAll()
+            .lines()
+            .filter(line -> line.startsWith("{"))
+            .map(line -> JsonPath.parse(line).<java.util.Map<String, Object>>read("$"))
+            .filter(log -> "outbox.published".equals(log.get("event")))
+            .toList();
+    assertThat(publishedLogs)
+        .hasSize(3)
+        .allSatisfy(
+            log ->
+                assertThat(log)
+                    .containsEntry("submissionId", delivered.submissionId())
+                    .containsEntry("judgeTaskId", taskId));
+    assertThat(output.getAll())
+        .contains("\"failureCode\":\"UNROUTABLE\"")
+        .doesNotContain("OUTBOX_SOURCE_SENTINEL", API_PASSWORD, MIGRATOR_PASSWORD, RABBIT_PASSWORD);
+  }
+
+  @Test
+  void recoversTheSameEventAfterRoutingReturnsBeforeExhaustion(CapturedOutput output) {
+    // Another method intentionally removes this queue; keep both test orders valid.
+    rabbitAdmin.initialize();
+    JdbcTemplate jdbc = new JdbcTemplate(dataSource);
+    SubmissionResult submission = createSubmission();
+    String taskId = taskId(jdbc, submission.submissionId());
+    String eventId =
+        jdbc.queryForObject(
+            "SELECT id FROM outbox_event WHERE aggregate_id = ? AND sequence_no = 0",
+            String.class,
+            taskId);
+    assertThat(rabbitAdmin.deleteQueue(RabbitTopology.QUEUE)).isTrue();
+    try {
+      assertThat(outboxPublisher.publishPending()).isZero();
+      assertThat(publishedAt(jdbc, submission.submissionId())).isNull();
+      assertThat(outboxFailureState(jdbc, submission.submissionId()))
+          .containsEntry("publish_attempts", 1L)
+          .containsEntry("last_error_code", "UNROUTABLE")
+          .containsEntry("failed_at", null);
+
+      // No busy retry before next_attempt_at, and no new Submission/Task/Event.
+      assertThat(outboxPublisher.publishPending()).isZero();
+      rabbitAdmin.initialize();
+      makeOutboxDue(jdbc, submission.submissionId());
+      assertThat(outboxPublisher.publishPending()).isEqualTo(1);
+      assertThat(publishedAt(jdbc, submission.submissionId())).isNotNull();
+      assertThat(outboxFailureState(jdbc, submission.submissionId()))
+          .containsEntry("publish_attempts", 2L)
+          .containsEntry("last_error_code", null)
+          .containsEntry("failed_at", null);
+      assertThat(
+              jdbc.queryForObject(
+                  "SELECT id FROM outbox_event WHERE aggregate_id = ? AND sequence_no = 0",
+                  String.class,
+                  taskId))
+          .isEqualTo(eventId);
+      assertThat(
+              jdbc.queryForObject(
+                  "SELECT COUNT(*) FROM outbox_event WHERE aggregate_id = ?", Long.class, taskId))
+          .isEqualTo(1L);
+      assertThat(
+              jdbc.queryForObject(
+                  "SELECT COUNT(*) FROM judge_task WHERE submission_id = ?",
+                  Long.class,
+                  submission.submissionId()))
+          .isEqualTo(1L);
+      Message recovered = rabbitTemplate.receive(RabbitTopology.QUEUE, 5000);
+      assertThat(recovered).isNotNull();
+      assertThat(recovered.getMessageProperties().getReceivedDeliveryMode())
+          .isEqualTo(MessageDeliveryMode.PERSISTENT);
+      String payload = new String(recovered.getBody(), StandardCharsets.UTF_8);
+      assertThat((String) JsonPath.read(payload, "$.taskId")).isEqualTo(taskId);
+      assertThat((String) JsonPath.read(payload, "$.submissionId"))
+          .isEqualTo(submission.submissionId());
+      assertThat(((java.util.Map<?, ?>) JsonPath.parse(payload).read("$"))).hasSize(4);
+      assertThat(outboxPublisher.publishPending()).isZero();
+      assertThat(rabbitTemplate.receive(RabbitTopology.QUEUE, 200)).isNull();
+      assertThat(output.getAll())
+          .doesNotContain(
+              "OUTBOX_SOURCE_SENTINEL", API_PASSWORD, MIGRATOR_PASSWORD, RABBIT_PASSWORD);
+    } finally {
+      rabbitAdmin.initialize();
     }
+  }
 
-    @Autowired
-    private SubmissionService submissionService;
-
-    @Autowired
-    private AccountService accounts;
-
-    @Autowired
-    private OutboxPublisher outboxPublisher;
-
-    @Autowired
-    private RabbitTemplate rabbitTemplate;
-
-    @Autowired
-    private RabbitAdmin rabbitAdmin;
-
-    @Autowired
-    private DataSource dataSource;
-
-    @Test
-    void marksPublishedOnlyAfterConfirmedAndRoutableDelivery(CapturedOutput output) {
-        JdbcTemplate jdbc = new JdbcTemplate(dataSource);
-        SubmissionResult delivered = createSubmission();
-
-        assertThat(rabbitAdmin.getQueueInfo(RabbitTopology.SELF_TEST_QUEUE)).isNotNull();
-        assertThat(rabbitAdmin.getQueueInfo(RabbitTopology.RETRY_QUEUE)).isNotNull();
-        assertThat(rabbitAdmin.getQueueInfo(RabbitTopology.DEAD_LETTER_QUEUE)).isNotNull();
-
-        assertThat(publishedAt(jdbc, delivered.submissionId())).isNull();
-        assertThat(outboxPublisher.publishPending()).isEqualTo(1);
-        assertThat(publishedAt(jdbc, delivered.submissionId())).isNotNull();
-
-        Message message = rabbitTemplate.receive(RabbitTopology.QUEUE, 5000);
-        assertThat(message).isNotNull();
-        assertThat(message.getMessageProperties().getReceivedDeliveryMode())
-                .isEqualTo(MessageDeliveryMode.PERSISTENT);
-        assertThat(message.getMessageProperties().getContentType()).isEqualTo("application/json");
-        String payload = new String(message.getBody(), StandardCharsets.UTF_8);
-        assertThat((String) JsonPath.read(payload, "$.submissionId"))
-                .isEqualTo(delivered.submissionId());
-        assertThat((String) JsonPath.read(payload, "$.taskType"))
-                .isEqualTo("JUDGE_SUBMISSION");
-        assertThat((Integer) JsonPath.read(payload, "$.contractVersion")).isEqualTo(1);
-        assertThat(((java.util.Map<?, ?>) JsonPath.parse(payload).read("$"))).hasSize(4);
-        assertThat(payload)
-                .doesNotContain("OUTBOX_SOURCE_SENTINEL")
-                .doesNotContain("37881a92ca996970e09475fdb29435b9bc13ae1501fa118e5fd9afd47e561adf");
-
-        String taskId = taskId(jdbc, delivered.submissionId());
-        insertOutbox(jdbc, taskId, delivered.submissionId(), "JUDGE_TASK_QUEUED", 1, 0);
-        assertThat(outboxPublisher.publishPending()).isEqualTo(1);
-        assertThat(rabbitTemplate.receive(RabbitTopology.QUEUE, 200)).isNull();
-        Message retry = rabbitTemplate.receive(RabbitTopology.RETRY_QUEUE, 5000);
-        assertThat(retry).isNotNull();
-        assertThat(new String(retry.getBody(), StandardCharsets.UTF_8))
-                .contains(delivered.submissionId());
-
-        insertOutbox(
-                jdbc,
-                taskId,
-                delivered.submissionId(),
-                "JUDGE_TASK_DEAD_LETTERED",
-                1,
-                0);
-
-        assertThat(outboxPublisher.publishPending()).isEqualTo(1);
-        assertThat(rabbitTemplate.receive(RabbitTopology.QUEUE, 200)).isNull();
-        Message deadLetter =
-                rabbitTemplate.receive(RabbitTopology.DEAD_LETTER_QUEUE, 5000);
-        assertThat(deadLetter).isNotNull();
-        assertThat(new String(deadLetter.getBody(), StandardCharsets.UTF_8))
-                .contains(delivered.submissionId());
-
-        SubmissionResult unroutable = createSubmission();
-        assertThat(rabbitAdmin.deleteQueue(RabbitTopology.QUEUE)).isTrue();
-
-        assertThat(outboxPublisher.publishPending()).isZero();
-        assertThat(publishedAt(jdbc, unroutable.submissionId())).isNull();
-        java.util.Map<String, Object> firstFailure =
-                outboxFailureState(jdbc, unroutable.submissionId());
-        assertThat(firstFailure)
-                .containsEntry("publish_attempts", 1L)
-                .containsEntry("last_error_code", "UNROUTABLE");
-        assertThat(firstFailure.get("failed_at")).isNull();
-
-        assertThat(outboxPublisher.publishPending()).isZero();
-        assertThat(outboxFailureState(jdbc, unroutable.submissionId()))
-                .containsEntry("publish_attempts", 1L);
-
-        makeOutboxDue(jdbc, unroutable.submissionId());
-        assertThat(outboxPublisher.publishPending()).isZero();
-        makeOutboxDue(jdbc, unroutable.submissionId());
-        assertThat(outboxPublisher.publishPending()).isZero();
-
-        java.util.Map<String, Object> failed =
-                outboxFailureState(jdbc, unroutable.submissionId());
-        assertThat(failed)
-                .containsEntry("publish_attempts", 3L)
-                .containsEntry("last_error_code", "UNROUTABLE");
-        assertThat(failed.get("failed_at")).isNotNull();
-        makeOutboxDue(jdbc, unroutable.submissionId());
-        assertThat(outboxPublisher.publishPending()).isZero();
-        assertThat(outboxFailureState(jdbc, unroutable.submissionId()))
-                .containsEntry("publish_attempts", 3L);
-        var publishedLogs = output.getAll().lines().filter(line -> line.startsWith("{"))
-                .map(line -> JsonPath.parse(line).<java.util.Map<String, Object>>read("$"))
-                .filter(log -> "outbox.published".equals(log.get("event"))).toList();
-        assertThat(publishedLogs).hasSize(3).allSatisfy(log -> assertThat(log)
-                .containsEntry("submissionId", delivered.submissionId())
-                .containsEntry("judgeTaskId", taskId));
-        assertThat(output.getAll()).contains("\"failureCode\":\"UNROUTABLE\"")
-                .doesNotContain("OUTBOX_SOURCE_SENTINEL", API_PASSWORD, MIGRATOR_PASSWORD, RABBIT_PASSWORD);
+  @Test
+  void confirmedContentEventsUseOnlyTheirOwnDurableQueues(CapturedOutput output) {
+    rabbitAdmin.initialize();
+    JdbcTemplate jdbc = new JdbcTemplate(dataSource);
+    String job = UUID.randomUUID().toString(), snapshot = UUID.randomUUID().toString();
+    for (String queue :
+        List.of("forgeoj.content.validation.v1", "forgeoj.content.validation.dead.v1")) {
+      assertThat(rabbitAdmin.getQueueInfo(queue)).isNotNull();
+      rabbitAdmin.purgeQueue(queue, true);
     }
-
-    @Test
-    void recoversTheSameEventAfterRoutingReturnsBeforeExhaustion(CapturedOutput output) {
-        // Another method intentionally removes this queue; keep both test orders valid.
-        rabbitAdmin.initialize();
-        JdbcTemplate jdbc = new JdbcTemplate(dataSource);
-        SubmissionResult submission = createSubmission();
-        String taskId = taskId(jdbc, submission.submissionId());
-        String eventId = jdbc.queryForObject(
-                "SELECT id FROM outbox_event WHERE aggregate_id = ? AND sequence_no = 0",
-                String.class,
-                taskId);
-        assertThat(rabbitAdmin.deleteQueue(RabbitTopology.QUEUE)).isTrue();
-        try {
-            assertThat(outboxPublisher.publishPending()).isZero();
-            assertThat(publishedAt(jdbc, submission.submissionId())).isNull();
-            assertThat(outboxFailureState(jdbc, submission.submissionId()))
-                    .containsEntry("publish_attempts", 1L)
-                    .containsEntry("last_error_code", "UNROUTABLE")
-                    .containsEntry("failed_at", null);
-
-            // No busy retry before next_attempt_at, and no new Submission/Task/Event.
-            assertThat(outboxPublisher.publishPending()).isZero();
-            rabbitAdmin.initialize();
-            makeOutboxDue(jdbc, submission.submissionId());
-            assertThat(outboxPublisher.publishPending()).isEqualTo(1);
-            assertThat(publishedAt(jdbc, submission.submissionId())).isNotNull();
-            assertThat(outboxFailureState(jdbc, submission.submissionId()))
-                    .containsEntry("publish_attempts", 2L)
-                    .containsEntry("last_error_code", null)
-                    .containsEntry("failed_at", null);
-            assertThat(jdbc.queryForObject(
-                    "SELECT id FROM outbox_event WHERE aggregate_id = ? AND sequence_no = 0",
-                    String.class,
-                    taskId)).isEqualTo(eventId);
-            assertThat(jdbc.queryForObject(
-                    "SELECT COUNT(*) FROM outbox_event WHERE aggregate_id = ?",
-                    Long.class,
-                    taskId)).isEqualTo(1L);
-            assertThat(jdbc.queryForObject(
-                    "SELECT COUNT(*) FROM judge_task WHERE submission_id = ?",
-                    Long.class,
-                    submission.submissionId())).isEqualTo(1L);
-            Message recovered = rabbitTemplate.receive(RabbitTopology.QUEUE, 5000);
-            assertThat(recovered).isNotNull();
-            assertThat(recovered.getMessageProperties().getReceivedDeliveryMode())
-                    .isEqualTo(MessageDeliveryMode.PERSISTENT);
-            String payload = new String(recovered.getBody(), StandardCharsets.UTF_8);
-            assertThat((String) JsonPath.read(payload, "$.taskId")).isEqualTo(taskId);
-            assertThat((String) JsonPath.read(payload, "$.submissionId"))
-                    .isEqualTo(submission.submissionId());
-            assertThat(((java.util.Map<?, ?>) JsonPath.parse(payload).read("$"))).hasSize(4);
-            assertThat(outboxPublisher.publishPending()).isZero();
-            assertThat(rabbitTemplate.receive(RabbitTopology.QUEUE, 200)).isNull();
-            assertThat(output.getAll()).doesNotContain(
-                    "OUTBOX_SOURCE_SENTINEL", API_PASSWORD, MIGRATOR_PASSWORD, RABBIT_PASSWORD);
-        } finally {
-            rabbitAdmin.initialize();
-        }
-    }
-
-    @Test
-    void confirmedContentEventsUseOnlyTheirOwnDurableQueues(CapturedOutput output) {
-        rabbitAdmin.initialize();
-        JdbcTemplate jdbc = new JdbcTemplate(dataSource);
-        String job = UUID.randomUUID().toString(), snapshot = UUID.randomUUID().toString();
-        for (String queue : List.of("forgeoj.content.validation.v1", "forgeoj.content.validation.dead.v1")) {
-            assertThat(rabbitAdmin.getQueueInfo(queue)).isNotNull();
-            rabbitAdmin.purgeQueue(queue, true);
-        }
-        for (String type : List.of("CONTENT_VALIDATION_QUEUED", "CONTENT_VALIDATION_DEAD_LETTERED")) {
-            String event = UUID.randomUUID().toString();
-            jdbc.update("""
+    for (String type : List.of("CONTENT_VALIDATION_QUEUED", "CONTENT_VALIDATION_DEAD_LETTERED")) {
+      String event = UUID.randomUUID().toString();
+      jdbc.update(
+          """
                 INSERT INTO outbox_event(id,aggregate_type,aggregate_id,event_type,contract_version,sequence_no,payload)
                 VALUES(?,'CONTENT_VALIDATION',?,?,1,?,JSON_OBJECT('taskId',?,'snapshotId',?,'taskType','CONTENT_VALIDATE','contractVersion',1))
-                """, event, job, type, type.endsWith("QUEUED") ? 0 : 1, job, snapshot);
-            assertThat(outboxPublisher.publishPending()).isEqualTo(1);
-            assertThat(jdbc.queryForObject("SELECT published_at FROM outbox_event WHERE id=?", Object.class, event)).isNotNull();
-            String queue = type.endsWith("QUEUED") ? "forgeoj.content.validation.v1" : "forgeoj.content.validation.dead.v1";
-            Message delivered = rabbitTemplate.receive(queue, 5000);
-            assertThat(delivered).isNotNull();
-            assertThat(delivered.getMessageProperties().getReceivedDeliveryMode()).isEqualTo(MessageDeliveryMode.PERSISTENT);
-            String payload = new String(delivered.getBody(), StandardCharsets.UTF_8);
-            assertThat((java.util.Map<String,Object>) JsonPath.parse(payload).read("$"))
-                .hasSize(4).containsEntry("taskId", job).containsEntry("snapshotId", snapshot)
-                .containsEntry("taskType", "CONTENT_VALIDATE").containsEntry("contractVersion", 1);
-            assertThat(rabbitTemplate.receive(RabbitTopology.QUEUE, 100)).isNull();
-            assertThat(rabbitTemplate.receive(RabbitTopology.RETRY_QUEUE, 100)).isNull();
-            assertThat(rabbitTemplate.receive(RabbitTopology.SELF_TEST_QUEUE, 100)).isNull();
-            assertThat(output.getAll().lines().filter(line -> line.startsWith("{"))
-                .map(line -> JsonPath.parse(line).<java.util.Map<String,Object>>read("$"))
-                .filter(log -> event.equals(log.get("outboxEventId"))).toList())
-                .anySatisfy(log -> assertThat(log).containsEntry("event", "outbox.published")
-                    .containsEntry("contentJobId", job).doesNotContainKey("judgeTaskId").containsEntry("submissionId", null));
-        }
-        assertThat(outboxPublisher.publishPending()).isZero();
+                """,
+          event,
+          job,
+          type,
+          type.endsWith("QUEUED") ? 0 : 1,
+          job,
+          snapshot);
+      assertThat(outboxPublisher.publishPending()).isEqualTo(1);
+      assertThat(
+              jdbc.queryForObject(
+                  "SELECT published_at FROM outbox_event WHERE id=?", Object.class, event))
+          .isNotNull();
+      String queue =
+          type.endsWith("QUEUED")
+              ? "forgeoj.content.validation.v1"
+              : "forgeoj.content.validation.dead.v1";
+      Message delivered = rabbitTemplate.receive(queue, 5000);
+      assertThat(delivered).isNotNull();
+      assertThat(delivered.getMessageProperties().getReceivedDeliveryMode())
+          .isEqualTo(MessageDeliveryMode.PERSISTENT);
+      String payload = new String(delivered.getBody(), StandardCharsets.UTF_8);
+      assertThat((java.util.Map<String, Object>) JsonPath.parse(payload).read("$"))
+          .hasSize(4)
+          .containsEntry("taskId", job)
+          .containsEntry("snapshotId", snapshot)
+          .containsEntry("taskType", "CONTENT_VALIDATE")
+          .containsEntry("contractVersion", 1);
+      assertThat(rabbitTemplate.receive(RabbitTopology.QUEUE, 100)).isNull();
+      assertThat(rabbitTemplate.receive(RabbitTopology.RETRY_QUEUE, 100)).isNull();
+      assertThat(rabbitTemplate.receive(RabbitTopology.SELF_TEST_QUEUE, 100)).isNull();
+      assertThat(
+              output
+                  .getAll()
+                  .lines()
+                  .filter(line -> line.startsWith("{"))
+                  .map(line -> JsonPath.parse(line).<java.util.Map<String, Object>>read("$"))
+                  .filter(log -> event.equals(log.get("outboxEventId")))
+                  .toList())
+          .anySatisfy(
+              log ->
+                  assertThat(log)
+                      .containsEntry("event", "outbox.published")
+                      .containsEntry("contentJobId", job)
+                      .doesNotContainKey("judgeTaskId")
+                      .containsEntry("submissionId", null));
     }
+    assertThat(outboxPublisher.publishPending()).isZero();
+  }
 
-    private SubmissionResult createSubmission() {
-        try {
-            var login = accounts.login("learner", "forgeoj-dev-only");
-            var context = SecurityContextHolder.createEmptyContext();
-            context.setAuthentication(new UsernamePasswordAuthenticationToken(
-                    new ForgeOjPrincipal(login.userId(), login.username(), "", true, login.sessionId()),
-                    null, List.of()));
-            SecurityContextHolder.setContext(context);
-            return submissionService.create(
-                    login.userId(),
-                    "sum-two-integers",
-                    UUID.randomUUID().toString(),
-                    "JAVA_21",
-                    SOURCE);
-        } finally {
-            SecurityContextHolder.clearContext();
-        }
+  private SubmissionResult createSubmission() {
+    try {
+      var login = accounts.login("learner", "forgeoj-dev-only");
+      var context = SecurityContextHolder.createEmptyContext();
+      context.setAuthentication(
+          new UsernamePasswordAuthenticationToken(
+              new ForgeOjPrincipal(login.userId(), login.username(), "", true, login.sessionId()),
+              null,
+              List.of()));
+      SecurityContextHolder.setContext(context);
+      return submissionService.create(
+          login.userId(), "sum-two-integers", UUID.randomUUID().toString(), "JAVA_21", SOURCE);
+    } finally {
+      SecurityContextHolder.clearContext();
     }
+  }
 
-    private Object publishedAt(JdbcTemplate jdbc, String submissionId) {
-        return jdbc.queryForObject(
-                """
+  private Object publishedAt(JdbcTemplate jdbc, String submissionId) {
+    return jdbc.queryForObject(
+        """
                 SELECT o.published_at
                 FROM outbox_event o
                 JOIN judge_task jt ON jt.id = o.aggregate_id
                 WHERE jt.submission_id = ?
                 """,
-                Object.class,
-                submissionId);
-    }
+        Object.class,
+        submissionId);
+  }
 
-    private String taskId(JdbcTemplate jdbc, String submissionId) {
-        return jdbc.queryForObject(
-                "SELECT id FROM judge_task WHERE submission_id = ?",
-                String.class,
-                submissionId);
-    }
+  private String taskId(JdbcTemplate jdbc, String submissionId) {
+    return jdbc.queryForObject(
+        "SELECT id FROM judge_task WHERE submission_id = ?", String.class, submissionId);
+  }
 
-    private void insertOutbox(
-            JdbcTemplate jdbc,
-            String taskId,
-            String submissionId,
-            String eventType,
-            int sequenceNo,
-            long delaySeconds) {
-        jdbc.update(
-                """
+  private void insertOutbox(
+      JdbcTemplate jdbc,
+      String taskId,
+      String submissionId,
+      String eventType,
+      int sequenceNo,
+      long delaySeconds) {
+    jdbc.update(
+        """
                 INSERT INTO outbox_event (
                     id, aggregate_type, aggregate_id, event_type, contract_version,
                     sequence_no, payload, next_attempt_at
@@ -376,37 +396,36 @@ class OutboxPublisherIntegrationTests {
                     'contractVersion', 1
                 ), TIMESTAMPADD(SECOND, ?, CURRENT_TIMESTAMP(6)))
                 """,
-                UUID.randomUUID().toString(),
-                taskId,
-                eventType,
-                sequenceNo,
-                taskId,
-                submissionId,
-                delaySeconds);
-    }
+        UUID.randomUUID().toString(),
+        taskId,
+        eventType,
+        sequenceNo,
+        taskId,
+        submissionId,
+        delaySeconds);
+  }
 
-    private java.util.Map<String, Object> outboxFailureState(
-            JdbcTemplate jdbc, String submissionId) {
-        return jdbc.queryForMap(
-                """
+  private java.util.Map<String, Object> outboxFailureState(JdbcTemplate jdbc, String submissionId) {
+    return jdbc.queryForMap(
+        """
                 SELECT o.publish_attempts, o.last_error_code, o.failed_at
                 FROM outbox_event o
                 JOIN judge_task jt ON jt.id = o.aggregate_id
                 WHERE jt.submission_id = ?
                   AND o.sequence_no = 0
                 """,
-                submissionId);
-    }
+        submissionId);
+  }
 
-    private void makeOutboxDue(JdbcTemplate jdbc, String submissionId) {
-        jdbc.update(
-                """
+  private void makeOutboxDue(JdbcTemplate jdbc, String submissionId) {
+    jdbc.update(
+        """
                 UPDATE outbox_event o
                 JOIN judge_task jt ON jt.id = o.aggregate_id
                 SET o.next_attempt_at = CURRENT_TIMESTAMP(6) - INTERVAL 1 SECOND
                 WHERE jt.submission_id = ?
                   AND o.failed_at IS NULL
                 """,
-                submissionId);
-    }
+        submissionId);
+  }
 }

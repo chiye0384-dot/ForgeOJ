@@ -4,15 +4,17 @@ import com.forgeoj.worker.snapshot.JudgeTaskSnapshot;
 
 public interface SandboxRuntime {
 
-    void verifyAvailable();
+  void verifyAvailable();
 
-    void cleanupManagedContainers();
+  void cleanupManagedContainers();
 
-    SandboxContainer prepare(JudgeTaskSnapshot snapshot, String attemptId);
+  SandboxContainer prepare(JudgeTaskSnapshot snapshot, String attemptId);
 
-    SandboxExecutionResult execute(JudgeTaskSnapshot snapshot, String attemptId);
+  SandboxExecutionResult execute(JudgeTaskSnapshot snapshot, String attemptId);
 
-    default SandboxOutputPreview generate(JudgeTaskSnapshot snapshot,String attemptId) {throw new SandboxException("Output generation unsupported");}
+  default SandboxOutputPreview generate(JudgeTaskSnapshot snapshot, String attemptId) {
+    throw new SandboxException("Output generation unsupported");
+  }
 
-    void cleanup(SandboxContainer container);
+  void cleanup(SandboxContainer container);
 }

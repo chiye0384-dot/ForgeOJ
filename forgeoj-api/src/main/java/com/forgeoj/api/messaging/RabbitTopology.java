@@ -13,82 +13,103 @@ import org.springframework.scheduling.annotation.EnableScheduling;
 @EnableScheduling
 public class RabbitTopology {
 
-    public static final String EXCHANGE = "forgeoj.judge";
-    public static final String QUEUE = "forgeoj.judge.submission.v1";
-    public static final String ROUTING_KEY = "judge.submission.v1";
-    public static final String SELF_TEST_QUEUE = "forgeoj.judge.self-test.v1";
-    public static final String SELF_TEST_ROUTING_KEY = "judge.self-test.v1";
-    public static final String SELF_TEST_DEAD_ROUTING_KEY = "judge.self-test.dead.v1";
-    @Bean Queue selfTestDeadQueue(){return QueueBuilder.durable("forgeoj.judge.self-test.dead.v1").build();}
-    @Bean Binding selfTestDeadBinding(DirectExchange judgeExchange,Queue selfTestDeadQueue){return BindingBuilder.bind(selfTestDeadQueue).to(judgeExchange).with(SELF_TEST_DEAD_ROUTING_KEY);}
-    public static final String RETRY_QUEUE = "forgeoj.judge.retry.v1";
-    public static final String RETRY_ROUTING_KEY = "judge.retry.v1";
-    public static final String DEAD_LETTER_QUEUE = "forgeoj.judge.submission.dead.v1";
-    public static final String DEAD_LETTER_ROUTING_KEY = "judge.submission.dead.v1";
+  public static final String EXCHANGE = "forgeoj.judge";
+  public static final String QUEUE = "forgeoj.judge.submission.v1";
+  public static final String ROUTING_KEY = "judge.submission.v1";
+  public static final String SELF_TEST_QUEUE = "forgeoj.judge.self-test.v1";
+  public static final String SELF_TEST_ROUTING_KEY = "judge.self-test.v1";
+  public static final String SELF_TEST_DEAD_ROUTING_KEY = "judge.self-test.dead.v1";
 
-    @Bean
-    DirectExchange judgeExchange() {
-        return new DirectExchange(EXCHANGE, true, false);
-    }
+  @Bean
+  Queue selfTestDeadQueue() {
+    return QueueBuilder.durable("forgeoj.judge.self-test.dead.v1").build();
+  }
 
-    @Bean
-    Queue judgeSubmissionQueue() {
-        return QueueBuilder.durable(QUEUE).build();
-    }
+  @Bean
+  Binding selfTestDeadBinding(DirectExchange judgeExchange, Queue selfTestDeadQueue) {
+    return BindingBuilder.bind(selfTestDeadQueue)
+        .to(judgeExchange)
+        .with(SELF_TEST_DEAD_ROUTING_KEY);
+  }
 
-    @Bean
-    Queue judgeSelfTestQueue() {
-        return QueueBuilder.durable(SELF_TEST_QUEUE).build();
-    }
+  public static final String RETRY_QUEUE = "forgeoj.judge.retry.v1";
+  public static final String RETRY_ROUTING_KEY = "judge.retry.v1";
+  public static final String DEAD_LETTER_QUEUE = "forgeoj.judge.submission.dead.v1";
+  public static final String DEAD_LETTER_ROUTING_KEY = "judge.submission.dead.v1";
 
-    @Bean
-    Queue judgeRetryQueue() {
-        return QueueBuilder.durable(RETRY_QUEUE).build();
-    }
+  @Bean
+  DirectExchange judgeExchange() {
+    return new DirectExchange(EXCHANGE, true, false);
+  }
 
-    @Bean
-    Queue judgeSubmissionDeadLetterQueue() {
-        return QueueBuilder.durable(DEAD_LETTER_QUEUE).build();
-    }
+  @Bean
+  Queue judgeSubmissionQueue() {
+    return QueueBuilder.durable(QUEUE).build();
+  }
 
-    @Bean
-    Binding judgeSubmissionBinding(DirectExchange judgeExchange, Queue judgeSubmissionQueue) {
-        return BindingBuilder.bind(judgeSubmissionQueue)
-                .to(judgeExchange)
-                .with(ROUTING_KEY);
-    }
+  @Bean
+  Queue judgeSelfTestQueue() {
+    return QueueBuilder.durable(SELF_TEST_QUEUE).build();
+  }
 
-    @Bean
-    Binding judgeSelfTestBinding(DirectExchange judgeExchange, Queue judgeSelfTestQueue) {
-        return BindingBuilder.bind(judgeSelfTestQueue)
-                .to(judgeExchange)
-                .with(SELF_TEST_ROUTING_KEY);
-    }
+  @Bean
+  Queue judgeRetryQueue() {
+    return QueueBuilder.durable(RETRY_QUEUE).build();
+  }
 
-    @Bean
-    Binding judgeRetryBinding(DirectExchange judgeExchange, Queue judgeRetryQueue) {
-        return BindingBuilder.bind(judgeRetryQueue)
-                .to(judgeExchange)
-                .with(RETRY_ROUTING_KEY);
-    }
+  @Bean
+  Queue judgeSubmissionDeadLetterQueue() {
+    return QueueBuilder.durable(DEAD_LETTER_QUEUE).build();
+  }
 
-    @Bean
-    Binding judgeSubmissionDeadLetterBinding(
-            DirectExchange judgeExchange, Queue judgeSubmissionDeadLetterQueue) {
-        return BindingBuilder.bind(judgeSubmissionDeadLetterQueue)
-                .to(judgeExchange)
-                .with(DEAD_LETTER_ROUTING_KEY);
-    }
-    @Bean Queue contentValidationQueue() {
-        return QueueBuilder.durable("forgeoj.content.validation.v1")
-                .withArgument("x-dead-letter-exchange",EXCHANGE)
-                .withArgument("x-dead-letter-routing-key","content.validation.dead.v1").build();
-    }
-    @Bean Queue contentValidationDeadQueue() {return QueueBuilder.durable("forgeoj.content.validation.dead.v1").build();}
-    @Bean Binding contentValidationBinding(DirectExchange judgeExchange,Queue contentValidationQueue) {
-        return BindingBuilder.bind(contentValidationQueue).to(judgeExchange).with("content.validation.v1");
-    }
-    @Bean Binding contentValidationDeadBinding(DirectExchange judgeExchange,Queue contentValidationDeadQueue) {
-        return BindingBuilder.bind(contentValidationDeadQueue).to(judgeExchange).with("content.validation.dead.v1");
-    }
+  @Bean
+  Binding judgeSubmissionBinding(DirectExchange judgeExchange, Queue judgeSubmissionQueue) {
+    return BindingBuilder.bind(judgeSubmissionQueue).to(judgeExchange).with(ROUTING_KEY);
+  }
+
+  @Bean
+  Binding judgeSelfTestBinding(DirectExchange judgeExchange, Queue judgeSelfTestQueue) {
+    return BindingBuilder.bind(judgeSelfTestQueue).to(judgeExchange).with(SELF_TEST_ROUTING_KEY);
+  }
+
+  @Bean
+  Binding judgeRetryBinding(DirectExchange judgeExchange, Queue judgeRetryQueue) {
+    return BindingBuilder.bind(judgeRetryQueue).to(judgeExchange).with(RETRY_ROUTING_KEY);
+  }
+
+  @Bean
+  Binding judgeSubmissionDeadLetterBinding(
+      DirectExchange judgeExchange, Queue judgeSubmissionDeadLetterQueue) {
+    return BindingBuilder.bind(judgeSubmissionDeadLetterQueue)
+        .to(judgeExchange)
+        .with(DEAD_LETTER_ROUTING_KEY);
+  }
+
+  @Bean
+  Queue contentValidationQueue() {
+    return QueueBuilder.durable("forgeoj.content.validation.v1")
+        .withArgument("x-dead-letter-exchange", EXCHANGE)
+        .withArgument("x-dead-letter-routing-key", "content.validation.dead.v1")
+        .build();
+  }
+
+  @Bean
+  Queue contentValidationDeadQueue() {
+    return QueueBuilder.durable("forgeoj.content.validation.dead.v1").build();
+  }
+
+  @Bean
+  Binding contentValidationBinding(DirectExchange judgeExchange, Queue contentValidationQueue) {
+    return BindingBuilder.bind(contentValidationQueue)
+        .to(judgeExchange)
+        .with("content.validation.v1");
+  }
+
+  @Bean
+  Binding contentValidationDeadBinding(
+      DirectExchange judgeExchange, Queue contentValidationDeadQueue) {
+    return BindingBuilder.bind(contentValidationDeadQueue)
+        .to(judgeExchange)
+        .with("content.validation.dead.v1");
+  }
 }

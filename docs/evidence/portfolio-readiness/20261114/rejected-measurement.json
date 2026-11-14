@@ -1,0 +1,52 @@
+{
+  "status": "REJECTED_LOG_INTEGRITY",
+  "realAcJobs": 55,
+  "acceptedAsPerformanceEvidence": false,
+  "reason": "Concurrent append on Windows shared mount lost journal records; independent reducer rejected original bytes",
+  "privateDatabaseSnapshotSha256": "681f7f53cf602728c26e99e60c1ec1d9ef804891a39f2b4b36572d03db65da90",
+  "rawFilesBeforeStop": [
+    {
+      "path": "jobs.ndjson",
+      "sha256": "e009d4f93a254dc96a68fa0c9fde93745b2ced77bc4a906ec6e328bbd07a63e2"
+    },
+    {
+      "path": "commands\\docker-commands.ndjson",
+      "sha256": "8130030ff1a6566799c2a3af1997811d7770343d6efa17a65ddbebc9f82036d9"
+    },
+    {
+      "path": "server-jobs.json",
+      "sha256": "eba082e596c0a250c5207bf31990cd2a2a99acb6601df94d4d5612c6f3d8cb0d"
+    },
+    {
+      "path": "stages.ndjson",
+      "sha256": "cf51c8f37283ea847ba8ec9ac788b1deccf3903e60a6d27db0885577d473bc48"
+    },
+    {
+      "path": "resources.ndjson",
+      "sha256": "06d7daa6967227e76a42b8fa0de741d1f492654b7c07a295ead44401d96b3788"
+    }
+  ],
+  "frozenRawFiles": [
+    {
+      "path": "jobs.ndjson",
+      "sha256": "e009d4f93a254dc96a68fa0c9fde93745b2ced77bc4a906ec6e328bbd07a63e2"
+    },
+    {
+      "path": "commands\\docker-commands.ndjson",
+      "sha256": "8130030ff1a6566799c2a3af1997811d7770343d6efa17a65ddbebc9f82036d9"
+    },
+    {
+      "path": "server-jobs.json",
+      "sha256": "eba082e596c0a250c5207bf31990cd2a2a99acb6601df94d4d5612c6f3d8cb0d"
+    },
+    {
+      "path": "stages.ndjson",
+      "sha256": "cf51c8f37283ea847ba8ec9ac788b1deccf3903e60a6d27db0885577d473bc48"
+    },
+    {
+      "path": "resources.ndjson",
+      "sha256": "06d7daa6967227e76a42b8fa0de741d1f492654b7c07a295ead44401d96b3788"
+    }
+  ],
+  "writersStopped": true
+}

@@ -8,7 +8,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 import com.jayway.jsonpath.JsonPath;
-
+import jakarta.servlet.http.Cookie;
 import java.nio.charset.StandardCharsets;
 import java.security.MessageDigest;
 import java.util.HashSet;
@@ -19,23 +19,20 @@ import java.util.concurrent.CountDownLatch;
 import java.util.concurrent.Executors;
 import java.util.concurrent.Future;
 import java.util.concurrent.atomic.AtomicInteger;
-
 import javax.sql.DataSource;
-
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
-import org.springframework.boot.test.system.CapturedOutput;
-import org.springframework.boot.test.system.OutputCaptureExtension;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.boot.test.system.CapturedOutput;
+import org.springframework.boot.test.system.OutputCaptureExtension;
 import org.springframework.boot.webmvc.test.autoconfigure.AutoConfigureMockMvc;
-import org.springframework.http.MediaType;
 import org.springframework.core.io.ClassPathResource;
+import org.springframework.http.MediaType;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.datasource.DriverManagerDataSource;
 import org.springframework.jdbc.datasource.init.ScriptUtils;
-import jakarta.servlet.http.Cookie;
 import org.springframework.test.context.DynamicPropertyRegistry;
 import org.springframework.test.context.DynamicPropertySource;
 import org.springframework.test.web.servlet.MockMvc;
@@ -50,21 +47,21 @@ import org.testcontainers.utility.MountableFile;
 @ExtendWith(OutputCaptureExtension.class)
 @AutoConfigureMockMvc(print = org.springframework.boot.webmvc.test.autoconfigure.MockMvcPrint.NONE)
 @SpringBootTest(
-        properties = {
-            "spring.flyway.locations=classpath:db/migration,classpath:db/devdata",
-            "spring.rabbitmq.listener.simple.auto-startup=false",
-            "spring.rabbitmq.listener.direct.auto-startup=false"
-        })
+    properties = {
+      "spring.flyway.locations=classpath:db/migration,classpath:db/devdata",
+      "spring.rabbitmq.listener.simple.auto-startup=false",
+      "spring.rabbitmq.listener.direct.auto-startup=false"
+    })
 class SubmissionCreationIntegrationTests {
-    @Autowired private com.forgeoj.api.auth.AccountJwt accountJwt;
+  @Autowired private com.forgeoj.api.auth.AccountJwt accountJwt;
 
-    private static final String MYSQL_IMAGE =
-            "container-registry.oracle.com/mysql/community-server:8.4.12"
-                    + "@sha256:7dcc4add9183664de3a214daf85a50c3ba6cccfd7534f700b6561bf5b41885be";
-    private static final String API_PASSWORD = "m0-api-test-secret";
-    private static final String MIGRATOR_PASSWORD = "m0-migrator-test-secret";
-    private static final String VALID_SOURCE =
-            """
+  private static final String MYSQL_IMAGE =
+      "container-registry.oracle.com/mysql/community-server:8.4.12"
+          + "@sha256:7dcc4add9183664de3a214daf85a50c3ba6cccfd7534f700b6561bf5b41885be";
+  private static final String API_PASSWORD = "m0-api-test-secret";
+  private static final String MIGRATOR_PASSWORD = "m0-migrator-test-secret";
+  private static final String VALID_SOURCE =
+      """
             import java.util.Scanner;
 
             public class Main {
@@ -76,243 +73,264 @@ class SubmissionCreationIntegrationTests {
             // SOURCE_SENTINEL_MUST_NOT_ENTER_OUTBOX
             """;
 
-    @Container
-    static final MySQLContainer MYSQL =
-            new com.forgeoj.api.testinfra.DirectMySQLContainer(
-                            DockerImageName.parse(MYSQL_IMAGE)
-                                    .asCompatibleSubstituteFor("mysql"))
-                    .withDatabaseName("forgeoj")
-                    .withUsername("bootstrap")
-                    .withPassword("bootstrap-test-secret")
-                    // Disposable failure injection only; production does not need this setting.
-                    .withCommand("--log-bin-trust-function-creators=1")
-                    .withCopyFileToContainer(
-                            MountableFile.forClasspathResource("mysql/init-test-users.sql"),
-                            "/docker-entrypoint-initdb.d/01-init-test-users.sql");
+  @Container
+  static final MySQLContainer MYSQL =
+      new com.forgeoj.api.testinfra.DirectMySQLContainer(
+              DockerImageName.parse(MYSQL_IMAGE).asCompatibleSubstituteFor("mysql"))
+          .withDatabaseName("forgeoj")
+          .withUsername("bootstrap")
+          .withPassword("bootstrap-test-secret")
+          // Disposable failure injection only; production does not need this setting.
+          .withCommand("--log-bin-trust-function-creators=1")
+          .withCopyFileToContainer(
+              MountableFile.forClasspathResource("mysql/init-test-users.sql"),
+              "/docker-entrypoint-initdb.d/01-init-test-users.sql");
 
-    @DynamicPropertySource
-    static void databaseProperties(DynamicPropertyRegistry registry) {
-        registry.add("spring.datasource.url", MYSQL::getJdbcUrl);
-        registry.add("spring.datasource.username", () -> "forgeoj_api");
-        registry.add("spring.datasource.password", () -> API_PASSWORD);
-        registry.add("spring.flyway.url", MYSQL::getJdbcUrl);
-        registry.add("spring.flyway.user", () -> "forgeoj_migrator");
-        registry.add("spring.flyway.password", () -> MIGRATOR_PASSWORD);
+  @DynamicPropertySource
+  static void databaseProperties(DynamicPropertyRegistry registry) {
+    registry.add("spring.datasource.url", MYSQL::getJdbcUrl);
+    registry.add("spring.datasource.username", () -> "forgeoj_api");
+    registry.add("spring.datasource.password", () -> API_PASSWORD);
+    registry.add("spring.flyway.url", MYSQL::getJdbcUrl);
+    registry.add("spring.flyway.user", () -> "forgeoj_migrator");
+    registry.add("spring.flyway.password", () -> MIGRATOR_PASSWORD);
+  }
+
+  @Autowired private MockMvc mockMvc;
+
+  @Autowired private DataSource apiDataSource;
+
+  @Autowired private SubmissionService submissionService;
+
+  @Autowired private SubmissionTransactionService transactionService;
+
+  @Autowired private org.springframework.transaction.PlatformTransactionManager transactionManager;
+
+  @BeforeEach
+  void resetSubmissionState() {
+    JdbcTemplate migrator = migratorJdbc();
+    migrator.update("DELETE FROM outbox_event");
+    migrator.update("DELETE FROM judge_task_attempt");
+    migrator.update("DELETE FROM judge_task");
+    migrator.update("DELETE FROM submission");
+  }
+
+  @Test
+  void createsExactlyOneRecordSetAndReplaysSequentially(CapturedOutput output) throws Exception {
+    AuthenticatedSession session = login();
+    UUID firstKey = UUID.randomUUID();
+
+    MvcResult first =
+        submit(session, firstKey, VALID_SOURCE).andExpect(status().isAccepted()).andReturn();
+    String firstSubmissionId =
+        JsonPath.read(first.getResponse().getContentAsString(), "$.submissionId");
+
+    MvcResult replay =
+        submit(session, firstKey, VALID_SOURCE).andExpect(status().isAccepted()).andReturn();
+    String replaySubmissionId =
+        JsonPath.read(replay.getResponse().getContentAsString(), "$.submissionId");
+
+    assertThat(replaySubmissionId).isEqualTo(firstSubmissionId);
+    assertSingleRecordSet(firstKey, firstSubmissionId);
+
+    UUID secondKey = UUID.randomUUID();
+    MvcResult second =
+        submit(session, secondKey, VALID_SOURCE).andExpect(status().isAccepted()).andReturn();
+    String secondSubmissionId =
+        JsonPath.read(second.getResponse().getContentAsString(), "$.submissionId");
+
+    assertThat(secondSubmissionId).isNotEqualTo(firstSubmissionId);
+    assertSingleRecordSet(secondKey, secondSubmissionId);
+    var created =
+        output
+            .getAll()
+            .lines()
+            .filter(line -> line.startsWith("{"))
+            .map(line -> JsonPath.parse(line).<Map<String, Object>>read("$"))
+            .filter(log -> "submission.created".equals(log.get("event")))
+            .toList();
+    assertThat(created)
+        .hasSize(2)
+        .allSatisfy(
+            log -> {
+              String submissionId = (String) log.get("submissionId");
+              String taskId =
+                  migratorJdbc()
+                      .queryForObject(
+                          "SELECT id FROM judge_task WHERE submission_id = ?",
+                          String.class,
+                          submissionId);
+              assertThat(log).containsEntry("judgeTaskId", taskId);
+              String internalRequestId = (String) log.get("requestId");
+              assertThat(UUID.fromString(internalRequestId).toString())
+                  .isEqualTo(internalRequestId);
+              assertThat(output.getAll()).contains("\"event\":\"request.completed\"");
+              assertThat(log.toString()).doesNotContain("SOURCE_SENTINEL", session.csrfToken());
+            });
+    assertThat(created.get(0).get("requestId")).isNotEqualTo(created.get(1).get("requestId"));
+  }
+
+  @Test
+  void concurrentReplayCreatesOneRecordSet() throws Exception {
+    var authenticated = authentication(login());
+    UUID requestId = UUID.randomUUID();
+    int callers = 8;
+    CountDownLatch ready = new CountDownLatch(callers);
+    CountDownLatch start = new CountDownLatch(1);
+
+    try (var executor = Executors.newFixedThreadPool(callers)) {
+      List<Future<SubmissionResult>> futures =
+          java.util.stream.IntStream.range(0, callers)
+              .mapToObj(
+                  ignored ->
+                      executor.submit(
+                          () -> {
+                            ready.countDown();
+                            start.await();
+                            org.springframework.security.core.context.SecurityContextHolder
+                                .getContext()
+                                .setAuthentication(authenticated);
+                            return submissionService.create(
+                                1L,
+                                "sum-two-integers",
+                                requestId.toString(),
+                                "JAVA_21",
+                                VALID_SOURCE);
+                          }))
+              .toList();
+
+      ready.await();
+      start.countDown();
+
+      HashSet<String> submissionIds = new HashSet<>();
+      for (Future<SubmissionResult> future : futures) {
+        submissionIds.add(future.get().submissionId());
+      }
+
+      assertThat(submissionIds).hasSize(1);
+      assertSingleRecordSet(requestId, submissionIds.iterator().next());
     }
+  }
 
-    @Autowired
-    private MockMvc mockMvc;
+  @Test
+  void outerRollbackSuppressesCreatedEvent(CapturedOutput output) throws Exception {
+    var identity = authentication(login());
+    org.springframework.security.core.context.SecurityContextHolder.getContext()
+        .setAuthentication(identity);
+    UUID key = UUID.randomUUID();
+    var transaction =
+        new org.springframework.transaction.support.TransactionTemplate(transactionManager);
+    assertThatThrownBy(
+            () ->
+                transaction.executeWithoutResult(
+                    status -> {
+                      submissionService.create(
+                          1L, "sum-two-integers", key.toString(), "JAVA_21", VALID_SOURCE);
+                      throw new IllegalStateException("Injected outer rollback");
+                    }))
+        .isInstanceOf(IllegalStateException.class);
+    assertThat(
+            migratorJdbc()
+                .queryForObject(
+                    "SELECT COUNT(*) FROM submission WHERE client_request_id = ?",
+                    Integer.class,
+                    key.toString()))
+        .isZero();
+    assertThat(output.getAll()).doesNotContain("\"event\":\"submission.created\"");
+  }
 
-    @Autowired
-    private DataSource apiDataSource;
+  @Test
+  void limitsQueuedAndRetryingSubmissionsToThreePerUser() throws Exception {
+    AuthenticatedSession session = login();
+    UUID firstKey = UUID.randomUUID();
 
-    @Autowired
-    private SubmissionService submissionService;
+    submit(session, firstKey, VALID_SOURCE).andExpect(status().isAccepted());
+    submit(session, UUID.randomUUID(), VALID_SOURCE).andExpect(status().isAccepted());
+    submit(session, UUID.randomUUID(), VALID_SOURCE).andExpect(status().isAccepted());
 
-    @Autowired
-    private SubmissionTransactionService transactionService;
+    submit(session, UUID.randomUUID(), VALID_SOURCE).andExpect(status().isTooManyRequests());
+    submit(session, firstKey, VALID_SOURCE).andExpect(status().isAccepted());
 
-    @Autowired
-    private org.springframework.transaction.PlatformTransactionManager transactionManager;
-
-    @BeforeEach
-    void resetSubmissionState() {
-        JdbcTemplate migrator = migratorJdbc();
-        migrator.update("DELETE FROM outbox_event");
-        migrator.update("DELETE FROM judge_task_attempt");
-        migrator.update("DELETE FROM judge_task");
-        migrator.update("DELETE FROM submission");
-    }
-
-    @Test
-    void createsExactlyOneRecordSetAndReplaysSequentially(CapturedOutput output) throws Exception {
-        AuthenticatedSession session = login();
-        UUID firstKey = UUID.randomUUID();
-
-        MvcResult first =
-                submit(session, firstKey, VALID_SOURCE).andExpect(status().isAccepted()).andReturn();
-        String firstSubmissionId =
-                JsonPath.read(first.getResponse().getContentAsString(), "$.submissionId");
-
-        MvcResult replay =
-                submit(session, firstKey, VALID_SOURCE).andExpect(status().isAccepted()).andReturn();
-        String replaySubmissionId =
-                JsonPath.read(replay.getResponse().getContentAsString(), "$.submissionId");
-
-        assertThat(replaySubmissionId).isEqualTo(firstSubmissionId);
-        assertSingleRecordSet(firstKey, firstSubmissionId);
-
-        UUID secondKey = UUID.randomUUID();
-        MvcResult second =
-                submit(session, secondKey, VALID_SOURCE).andExpect(status().isAccepted()).andReturn();
-        String secondSubmissionId =
-                JsonPath.read(second.getResponse().getContentAsString(), "$.submissionId");
-
-        assertThat(secondSubmissionId).isNotEqualTo(firstSubmissionId);
-        assertSingleRecordSet(secondKey, secondSubmissionId);
-        var created = output.getAll().lines().filter(line -> line.startsWith("{"))
-                .map(line -> JsonPath.parse(line).<Map<String, Object>>read("$"))
-                .filter(log -> "submission.created".equals(log.get("event"))).toList();
-        assertThat(created).hasSize(2).allSatisfy(log -> {
-            String submissionId = (String) log.get("submissionId");
-            String taskId = migratorJdbc().queryForObject(
-                    "SELECT id FROM judge_task WHERE submission_id = ?", String.class, submissionId);
-            assertThat(log).containsEntry("judgeTaskId", taskId);
-            String internalRequestId = (String) log.get("requestId");
-            assertThat(UUID.fromString(internalRequestId).toString()).isEqualTo(internalRequestId);
-            assertThat(output.getAll()).contains("\"event\":\"request.completed\"");
-            assertThat(log.toString()).doesNotContain("SOURCE_SENTINEL", session.csrfToken());
-        });
-        assertThat(created.get(0).get("requestId")).isNotEqualTo(created.get(1).get("requestId"));
-    }
-
-    @Test
-    void concurrentReplayCreatesOneRecordSet() throws Exception {
-        var authenticated = authentication(login());
-        UUID requestId = UUID.randomUUID();
-        int callers = 8;
-        CountDownLatch ready = new CountDownLatch(callers);
-        CountDownLatch start = new CountDownLatch(1);
-
-        try (var executor = Executors.newFixedThreadPool(callers)) {
-            List<Future<SubmissionResult>> futures =
-                    java.util.stream.IntStream.range(0, callers)
-                            .mapToObj(
-                                    ignored ->
-                                            executor.submit(
-                                                    () -> {
-                                                        ready.countDown();
-                                                        start.await();
-                                                        org.springframework.security.core.context.SecurityContextHolder.getContext().setAuthentication(authenticated);
-                                                        return submissionService.create(
-                                                                1L,
-                                                                "sum-two-integers",
-                                                                requestId.toString(),
-                                                                "JAVA_21",
-                                                                VALID_SOURCE);
-                                                    }))
-                            .toList();
-
-            ready.await();
-            start.countDown();
-
-            HashSet<String> submissionIds = new HashSet<>();
-            for (Future<SubmissionResult> future : futures) {
-                submissionIds.add(future.get().submissionId());
-            }
-
-            assertThat(submissionIds).hasSize(1);
-            assertSingleRecordSet(requestId, submissionIds.iterator().next());
-        }
-    }
-
-    @Test
-    void outerRollbackSuppressesCreatedEvent(CapturedOutput output) throws Exception {
-        var identity = authentication(login());
-        org.springframework.security.core.context.SecurityContextHolder.getContext().setAuthentication(identity);
-        UUID key = UUID.randomUUID();
-        var transaction = new org.springframework.transaction.support.TransactionTemplate(transactionManager);
-        assertThatThrownBy(() -> transaction.executeWithoutResult(status -> {
-            submissionService.create(1L, "sum-two-integers", key.toString(), "JAVA_21", VALID_SOURCE);
-            throw new IllegalStateException("Injected outer rollback");
-        })).isInstanceOf(IllegalStateException.class);
-        assertThat(migratorJdbc().queryForObject(
-                "SELECT COUNT(*) FROM submission WHERE client_request_id = ?", Integer.class, key.toString())).isZero();
-        assertThat(output.getAll()).doesNotContain("\"event\":\"submission.created\"");
-    }
-
-    @Test
-    void limitsQueuedAndRetryingSubmissionsToThreePerUser() throws Exception {
-        AuthenticatedSession session = login();
-        UUID firstKey = UUID.randomUUID();
-
-        submit(session, firstKey, VALID_SOURCE).andExpect(status().isAccepted());
-        submit(session, UUID.randomUUID(), VALID_SOURCE).andExpect(status().isAccepted());
-        submit(session, UUID.randomUUID(), VALID_SOURCE).andExpect(status().isAccepted());
-
-        submit(session, UUID.randomUUID(), VALID_SOURCE)
-                .andExpect(status().isTooManyRequests());
-        submit(session, firstKey, VALID_SOURCE).andExpect(status().isAccepted());
-
-        JdbcTemplate api = new JdbcTemplate(apiDataSource);
-        assertThat(
-                        api.queryForObject(
-                                """
+    JdbcTemplate api = new JdbcTemplate(apiDataSource);
+    assertThat(
+            api.queryForObject(
+                """
                                 SELECT COUNT(*)
                                 FROM submission
                                 WHERE user_id = 1
                                   AND processing_status IN ('QUEUED', 'RETRYING')
                                 """,
-                                Integer.class))
-                .isEqualTo(3);
+                Integer.class))
+        .isEqualTo(3);
+  }
+
+  @Test
+  void concurrentDistinctSubmissionsCannotExceedQueuedQuota() throws Exception {
+    var authenticated = authentication(login());
+    int callers = 8;
+    CountDownLatch ready = new CountDownLatch(callers);
+    CountDownLatch start = new CountDownLatch(1);
+    AtomicInteger accepted = new AtomicInteger();
+    AtomicInteger rejected = new AtomicInteger();
+
+    try (var executor = Executors.newFixedThreadPool(callers)) {
+      List<Future<Object>> futures =
+          java.util.stream.IntStream.range(0, callers)
+              .mapToObj(
+                  ignored ->
+                      executor.submit(
+                          () -> {
+                            ready.countDown();
+                            start.await();
+                            try {
+                              org.springframework.security.core.context.SecurityContextHolder
+                                  .getContext()
+                                  .setAuthentication(authenticated);
+                              submissionService.create(
+                                  1L,
+                                  "sum-two-integers",
+                                  UUID.randomUUID().toString(),
+                                  "JAVA_21",
+                                  VALID_SOURCE);
+                              accepted.incrementAndGet();
+                            } catch (org.springframework.web.server.ResponseStatusException quota) {
+                              assertThat(quota.getStatusCode().value()).isEqualTo(429);
+                              rejected.incrementAndGet();
+                            }
+                            return null;
+                          }))
+              .toList();
+
+      ready.await();
+      start.countDown();
+      for (Future<Object> future : futures) {
+        future.get();
+      }
     }
 
-    @Test
-    void concurrentDistinctSubmissionsCannotExceedQueuedQuota() throws Exception {
-        var authenticated = authentication(login());
-        int callers = 8;
-        CountDownLatch ready = new CountDownLatch(callers);
-        CountDownLatch start = new CountDownLatch(1);
-        AtomicInteger accepted = new AtomicInteger();
-        AtomicInteger rejected = new AtomicInteger();
-
-        try (var executor = Executors.newFixedThreadPool(callers)) {
-            List<Future<Object>> futures =
-                    java.util.stream.IntStream.range(0, callers)
-                            .mapToObj(
-                                    ignored ->
-                                            executor.submit(
-                                                    () -> {
-                                                        ready.countDown();
-                                                        start.await();
-                                                        try {
-                                                            org.springframework.security.core.context.SecurityContextHolder.getContext().setAuthentication(authenticated);
-                                                            submissionService.create(
-                                                                    1L,
-                                                                    "sum-two-integers",
-                                                                    UUID.randomUUID().toString(),
-                                                                    "JAVA_21",
-                                                                    VALID_SOURCE);
-                                                            accepted.incrementAndGet();
-                                                        } catch (org.springframework.web.server.ResponseStatusException quota) {
-                                                            assertThat(quota.getStatusCode().value())
-                                                                    .isEqualTo(429);
-                                                            rejected.incrementAndGet();
-                                                        }
-                                                        return null;
-                                                    }))
-                            .toList();
-
-            ready.await();
-            start.countDown();
-            for (Future<Object> future : futures) {
-                future.get();
-            }
-        }
-
-        assertThat(accepted).hasValue(3);
-        assertThat(rejected).hasValue(callers - 3);
-        assertThat(
-                        new JdbcTemplate(apiDataSource)
-                                .queryForObject(
-                                        """
+    assertThat(accepted).hasValue(3);
+    assertThat(rejected).hasValue(callers - 3);
+    assertThat(
+            new JdbcTemplate(apiDataSource)
+                .queryForObject(
+                    """
                                         SELECT COUNT(*)
                                         FROM submission
                                         WHERE user_id = 1
                                           AND processing_status IN ('QUEUED', 'RETRYING')
                                         """,
-                                        Integer.class))
-                .isEqualTo(3);
-    }
+                    Integer.class))
+        .isEqualTo(3);
+  }
 
-    @Test
-    void allowsThreeQueuedTasksAlongsideARunningTaskThatCanRetry() throws Exception {
-        AuthenticatedSession session = login();
-        String runningSubmission = createSubmission(session);
-        createSubmission(session);
-        migratorJdbc()
-                .update(
-                        """
+  @Test
+  void allowsThreeQueuedTasksAlongsideARunningTaskThatCanRetry() throws Exception {
+    AuthenticatedSession session = login();
+    String runningSubmission = createSubmission(session);
+    createSubmission(session);
+    migratorJdbc()
+        .update(
+            """
                         UPDATE judge_task jt
                         JOIN submission s ON s.id = jt.submission_id
                         SET jt.task_status = 'RUNNING', jt.status_version = 1,
@@ -320,236 +338,295 @@ class SubmissionCreationIntegrationTests {
                             s.processing_status = 'RUNNING', s.status_version = 1
                         WHERE s.id = ?
                         """,
-                        runningSubmission);
+            runningSubmission);
 
-        submit(session, UUID.randomUUID(), VALID_SOURCE).andExpect(status().isAccepted());
-        submit(session, UUID.randomUUID(), VALID_SOURCE).andExpect(status().isAccepted());
-        submit(session, UUID.randomUUID(), VALID_SOURCE)
-                .andExpect(status().isTooManyRequests());
+    submit(session, UUID.randomUUID(), VALID_SOURCE).andExpect(status().isAccepted());
+    submit(session, UUID.randomUUID(), VALID_SOURCE).andExpect(status().isAccepted());
+    submit(session, UUID.randomUUID(), VALID_SOURCE).andExpect(status().isTooManyRequests());
 
-        JdbcTemplate api = new JdbcTemplate(apiDataSource);
-        assertThat(
-                        api.queryForObject(
-                                """
+    JdbcTemplate api = new JdbcTemplate(apiDataSource);
+    assertThat(
+            api.queryForObject(
+                """
                                 SELECT COUNT(*) FROM submission
                                 WHERE user_id = 1 AND processing_status = 'RUNNING'
                                 """,
-                                Integer.class))
-                .isEqualTo(1);
-        assertThat(
-                        api.queryForObject(
-                                """
+                Integer.class))
+        .isEqualTo(1);
+    assertThat(
+            api.queryForObject(
+                """
                                 SELECT COUNT(*) FROM submission
                                 WHERE user_id = 1
                                   AND processing_status IN ('QUEUED', 'RETRYING')
                                 """,
-                                Integer.class))
-                .isEqualTo(3);
-    }
+                Integer.class))
+        .isEqualTo(3);
+  }
 
-    @Test
-    void concurrentReplayOfLastAvailableSlotSucceedsAfterQuotaLock() throws Exception {
-        AuthenticatedSession owner = login();
-        createSubmission(owner);
-        createSubmission(owner);
-        UUID key = UUID.randomUUID();
-        String sourceHash = sha256(VALID_SOURCE);
-        var claims = accountJwt.verify(java.util.Arrays.stream(owner.cookies())
-                .filter(cookie -> cookie.getName().equals("FORGEOJ_ACCESS")).findFirst().orElseThrow().getValue());
-        var authentication = new org.springframework.security.authentication.UsernamePasswordAuthenticationToken(
-                new com.forgeoj.api.auth.ForgeOjPrincipal(1L, "learner", "", true, claims.getClaimAsString("sid")), null, java.util.List.of());
-        CountDownLatch start = new CountDownLatch(1);
-        try (var executor = Executors.newFixedThreadPool(8)) {
-            List<Future<SubmissionResult>> results = java.util.stream.IntStream.range(0, 8)
-                    .mapToObj(ignored -> executor.submit(() -> {
-                        start.await();
-                        org.springframework.security.core.context.SecurityContextHolder.getContext().setAuthentication(authentication);
-                        try { return transactionService.createNew(1L, "sum-two-integers", key,
-                                "JAVA_21", VALID_SOURCE, sourceHash); }
-                        finally { org.springframework.security.core.context.SecurityContextHolder.clearContext(); }
-                    })).toList();
-            start.countDown();
-            HashSet<String> ids = new HashSet<>();
-            for (Future<SubmissionResult> result : results) {
-                ids.add(result.get(10, java.util.concurrent.TimeUnit.SECONDS).submissionId());
-            }
-            assertThat(ids).hasSize(1);
-            assertSingleRecordSet(key, ids.iterator().next());
-        }
+  @Test
+  void concurrentReplayOfLastAvailableSlotSucceedsAfterQuotaLock() throws Exception {
+    AuthenticatedSession owner = login();
+    createSubmission(owner);
+    createSubmission(owner);
+    UUID key = UUID.randomUUID();
+    String sourceHash = sha256(VALID_SOURCE);
+    var claims =
+        accountJwt.verify(
+            java.util.Arrays.stream(owner.cookies())
+                .filter(cookie -> cookie.getName().equals("FORGEOJ_ACCESS"))
+                .findFirst()
+                .orElseThrow()
+                .getValue());
+    var authentication =
+        new org.springframework.security.authentication.UsernamePasswordAuthenticationToken(
+            new com.forgeoj.api.auth.ForgeOjPrincipal(
+                1L, "learner", "", true, claims.getClaimAsString("sid")),
+            null,
+            java.util.List.of());
+    CountDownLatch start = new CountDownLatch(1);
+    try (var executor = Executors.newFixedThreadPool(8)) {
+      List<Future<SubmissionResult>> results =
+          java.util.stream.IntStream.range(0, 8)
+              .mapToObj(
+                  ignored ->
+                      executor.submit(
+                          () -> {
+                            start.await();
+                            org.springframework.security.core.context.SecurityContextHolder
+                                .getContext()
+                                .setAuthentication(authentication);
+                            try {
+                              return transactionService.createNew(
+                                  1L, "sum-two-integers", key, "JAVA_21", VALID_SOURCE, sourceHash);
+                            } finally {
+                              org.springframework.security.core.context.SecurityContextHolder
+                                  .clearContext();
+                            }
+                          }))
+              .toList();
+      start.countDown();
+      HashSet<String> ids = new HashSet<>();
+      for (Future<SubmissionResult> result : results) {
+        ids.add(result.get(10, java.util.concurrent.TimeUnit.SECONDS).submissionId());
+      }
+      assertThat(ids).hasSize(1);
+      assertSingleRecordSet(key, ids.iterator().next());
     }
+  }
 
-    @Test
-    void cancellationIsAtomicIdempotentAndReleasesQueuedQuota() throws Exception {
-        AuthenticatedSession owner = login();
-        String submissionId = createSubmission(owner);
-        createSubmission(owner);
-        createSubmission(owner);
-        MvcResult response = cancelSubmission(owner, submissionId)
-                .andExpect(status().isOk())
-                .andExpect(jsonPath("$.processingStatus").value("CANCELLED"))
-                .andExpect(jsonPath("$.statusVersion").value(1)).andReturn();
-        Map<String, Object> publicResponse = JsonPath.read(response.getResponse().getContentAsString(), "$");
-        assertThat(publicResponse.keySet())
-                .containsExactlyInAnyOrder("submissionId", "processingStatus", "statusVersion");
-        Map<String, Object> afterFirstCancellation = cancellationState(submissionId);
+  @Test
+  void cancellationIsAtomicIdempotentAndReleasesQueuedQuota() throws Exception {
+    AuthenticatedSession owner = login();
+    String submissionId = createSubmission(owner);
+    createSubmission(owner);
+    createSubmission(owner);
+    MvcResult response =
         cancelSubmission(owner, submissionId)
-                .andExpect(status().isOk())
-                .andExpect(jsonPath("$.statusVersion").value(1));
-        assertThat(cancellationState(submissionId)).isEqualTo(afterFirstCancellation);
-        Map<String, Object> cancelled = cancellationState(submissionId);
-        assertThat(cancelled)
-                .containsEntry("task_status", "CANCELLED")
-                .containsEntry("processing_status", "CANCELLED")
-                .containsEntry("attempt_count", 0L)
-                .containsEntry("verdict", null);
-        assertThat(((Number) cancelled.get("task_version")).longValue()).isEqualTo(1);
-        assertThat(((Number) cancelled.get("submission_version")).longValue()).isEqualTo(1);
-        assertThat(cancelled.get("task_finished_at")).isNotNull();
-        assertThat(cancelled.get("submission_finished_at")).isNotNull();
-        assertThat(migratorJdbc().queryForObject("SELECT COUNT(*) FROM outbox_event", Integer.class))
-                .isEqualTo(3);
-        assertThat(migratorJdbc().queryForObject("SELECT COUNT(*) FROM judge_task_attempt", Integer.class))
-                .isZero();
-        submit(owner, UUID.randomUUID(), VALID_SOURCE).andExpect(status().isAccepted());
-    }
+            .andExpect(status().isOk())
+            .andExpect(jsonPath("$.processingStatus").value("CANCELLED"))
+            .andExpect(jsonPath("$.statusVersion").value(1))
+            .andReturn();
+    Map<String, Object> publicResponse =
+        JsonPath.read(response.getResponse().getContentAsString(), "$");
+    assertThat(publicResponse.keySet())
+        .containsExactlyInAnyOrder("submissionId", "processingStatus", "statusVersion");
+    Map<String, Object> afterFirstCancellation = cancellationState(submissionId);
+    cancelSubmission(owner, submissionId)
+        .andExpect(status().isOk())
+        .andExpect(jsonPath("$.statusVersion").value(1));
+    assertThat(cancellationState(submissionId)).isEqualTo(afterFirstCancellation);
+    Map<String, Object> cancelled = cancellationState(submissionId);
+    assertThat(cancelled)
+        .containsEntry("task_status", "CANCELLED")
+        .containsEntry("processing_status", "CANCELLED")
+        .containsEntry("attempt_count", 0L)
+        .containsEntry("verdict", null);
+    assertThat(((Number) cancelled.get("task_version")).longValue()).isEqualTo(1);
+    assertThat(((Number) cancelled.get("submission_version")).longValue()).isEqualTo(1);
+    assertThat(cancelled.get("task_finished_at")).isNotNull();
+    assertThat(cancelled.get("submission_finished_at")).isNotNull();
+    assertThat(migratorJdbc().queryForObject("SELECT COUNT(*) FROM outbox_event", Integer.class))
+        .isEqualTo(3);
+    assertThat(
+            migratorJdbc().queryForObject("SELECT COUNT(*) FROM judge_task_attempt", Integer.class))
+        .isZero();
+    submit(owner, UUID.randomUUID(), VALID_SOURCE).andExpect(status().isAccepted());
+  }
 
-    @Test
-    void concurrentCancellationOnlyIncrementsVersionsOnce() throws Exception {
-        AuthenticatedSession owner = login();
-        String submissionId = createSubmission(owner);
-        CountDownLatch start = new CountDownLatch(1);
-        try (var executor = Executors.newFixedThreadPool(8)) {
-            List<Future<Integer>> results = java.util.stream.IntStream.range(0, 8)
-                    .mapToObj(ignored -> executor.submit(() -> {
-                        start.await();
-                        return cancelSubmission(owner, submissionId).andReturn().getResponse().getStatus();
-                    })).toList();
-            start.countDown();
-            for (Future<Integer> result : results) {
-                assertThat(result.get(10, java.util.concurrent.TimeUnit.SECONDS)).isEqualTo(200);
-            }
-        }
-        Map<String, Object> cancelled = cancellationState(submissionId);
-        assertThat(((Number) cancelled.get("task_version")).longValue()).isEqualTo(1);
-        assertThat(((Number) cancelled.get("submission_version")).longValue()).isEqualTo(1);
+  @Test
+  void concurrentCancellationOnlyIncrementsVersionsOnce() throws Exception {
+    AuthenticatedSession owner = login();
+    String submissionId = createSubmission(owner);
+    CountDownLatch start = new CountDownLatch(1);
+    try (var executor = Executors.newFixedThreadPool(8)) {
+      List<Future<Integer>> results =
+          java.util.stream.IntStream.range(0, 8)
+              .mapToObj(
+                  ignored ->
+                      executor.submit(
+                          () -> {
+                            start.await();
+                            return cancelSubmission(owner, submissionId)
+                                .andReturn()
+                                .getResponse()
+                                .getStatus();
+                          }))
+              .toList();
+      start.countDown();
+      for (Future<Integer> result : results) {
+        assertThat(result.get(10, java.util.concurrent.TimeUnit.SECONDS)).isEqualTo(200);
+      }
     }
+    Map<String, Object> cancelled = cancellationState(submissionId);
+    assertThat(((Number) cancelled.get("task_version")).longValue()).isEqualTo(1);
+    assertThat(((Number) cancelled.get("submission_version")).longValue()).isEqualTo(1);
+  }
 
-    @Test
-    void cancellationWaitsForConcurrentRunningTransitionAndThenRejects() throws Exception {
-        AuthenticatedSession owner = login();
-        String submissionId = createSubmission(owner);
-        String taskId = migratorJdbc().queryForObject(
+  @Test
+  void cancellationWaitsForConcurrentRunningTransitionAndThenRejects() throws Exception {
+    AuthenticatedSession owner = login();
+    String submissionId = createSubmission(owner);
+    String taskId =
+        migratorJdbc()
+            .queryForObject(
                 "SELECT id FROM judge_task WHERE submission_id = ?", String.class, submissionId);
-        try (var connection = java.sql.DriverManager.getConnection(
+    try (var connection =
+            java.sql.DriverManager.getConnection(
                 MYSQL.getJdbcUrl(), "forgeoj_worker", "m0-worker-test-secret");
-                var executor = Executors.newSingleThreadExecutor()) {
-            connection.setAutoCommit(false);
-            try (var lock = connection.prepareStatement("""
+        var executor = Executors.newSingleThreadExecutor()) {
+      connection.setAutoCommit(false);
+      try (var lock =
+          connection.prepareStatement(
+              """
                     SELECT jt.id FROM judge_task jt JOIN submission s ON s.id = jt.submission_id
                     WHERE jt.id = ? FOR UPDATE
                     """)) {
-                lock.setString(1, taskId);
-                try (var row = lock.executeQuery()) {
-                    assertThat(row.next()).isTrue();
-                }
-            }
-            CountDownLatch ready = new CountDownLatch(1);
-            Future<Integer> cancellation = executor.submit(() -> {
+        lock.setString(1, taskId);
+        try (var row = lock.executeQuery()) {
+          assertThat(row.next()).isTrue();
+        }
+      }
+      CountDownLatch ready = new CountDownLatch(1);
+      Future<Integer> cancellation =
+          executor.submit(
+              () -> {
                 ready.countDown();
                 return cancelSubmission(owner, submissionId).andReturn().getResponse().getStatus();
-            });
-            assertThat(ready.await(5, java.util.concurrent.TimeUnit.SECONDS)).isTrue();
-            try (var transition = connection.prepareStatement("""
+              });
+      assertThat(ready.await(5, java.util.concurrent.TimeUnit.SECONDS)).isTrue();
+      try (var transition =
+          connection.prepareStatement(
+              """
                     UPDATE judge_task jt JOIN submission s ON s.id = jt.submission_id
                     SET jt.task_status = 'RUNNING', jt.status_version = 1,
                         s.processing_status = 'RUNNING', s.status_version = 1
                     WHERE jt.id = ?
                     """)) {
-                transition.setString(1, taskId);
-                assertThat(transition.executeUpdate()).isEqualTo(2);
-            }
-            connection.commit();
-            assertThat(cancellation.get(10, java.util.concurrent.TimeUnit.SECONDS)).isEqualTo(409);
-        }
-        assertThat(cancellationState(submissionId))
-                .containsEntry("task_status", "RUNNING")
-                .containsEntry("processing_status", "RUNNING");
+        transition.setString(1, taskId);
+        assertThat(transition.executeUpdate()).isEqualTo(2);
+      }
+      connection.commit();
+      assertThat(cancellation.get(10, java.util.concurrent.TimeUnit.SECONDS)).isEqualTo(409);
     }
+    assertThat(cancellationState(submissionId))
+        .containsEntry("task_status", "RUNNING")
+        .containsEntry("processing_status", "RUNNING");
+  }
 
-    @Test
-    void queuedQuotaIsIndependentForDifferentUsersAndCountsRetrying() throws Exception {
-        AuthenticatedSession owner = login();
-        String retrying = createSubmission(owner);
-        migratorJdbc().update("""
+  @Test
+  void queuedQuotaIsIndependentForDifferentUsersAndCountsRetrying() throws Exception {
+    AuthenticatedSession owner = login();
+    String retrying = createSubmission(owner);
+    migratorJdbc()
+        .update(
+            """
                 UPDATE judge_task jt JOIN submission s ON s.id = jt.submission_id
                 SET jt.task_status = 'RETRYING', s.processing_status = 'RETRYING' WHERE s.id = ?
-                """, retrying);
-        createSubmission(owner);
-        createSubmission(owner);
-        submit(owner, UUID.randomUUID(), VALID_SOURCE).andExpect(status().isTooManyRequests());
-        createSecondUser();
-        AuthenticatedSession other = login("another-learner");
-        createSubmission(other);
-        createSubmission(other);
-        createSubmission(other);
-        submit(other, UUID.randomUUID(), VALID_SOURCE).andExpect(status().isTooManyRequests());
-    }
+                """,
+            retrying);
+    createSubmission(owner);
+    createSubmission(owner);
+    submit(owner, UUID.randomUUID(), VALID_SOURCE).andExpect(status().isTooManyRequests());
+    createSecondUser();
+    AuthenticatedSession other = login("another-learner");
+    createSubmission(other);
+    createSubmission(other);
+    createSubmission(other);
+    submit(other, UUID.randomUUID(), VALID_SOURCE).andExpect(status().isTooManyRequests());
+  }
 
-    @Test
-    void cancellationRejectsNonQueuedStatesWithoutChangingEitherTable() throws Exception {
-        AuthenticatedSession owner = login();
-        for (String state : List.of("RUNNING", "RETRYING", "FINISHED", "SYSTEM_ERROR")) {
-            String submissionId = createSubmission(owner);
-            migratorJdbc().update("""
+  @Test
+  void cancellationRejectsNonQueuedStatesWithoutChangingEitherTable() throws Exception {
+    AuthenticatedSession owner = login();
+    for (String state : List.of("RUNNING", "RETRYING", "FINISHED", "SYSTEM_ERROR")) {
+      String submissionId = createSubmission(owner);
+      migratorJdbc()
+          .update(
+              """
                     UPDATE judge_task jt JOIN submission s ON s.id = jt.submission_id
                     SET jt.task_status = ?, s.processing_status = ?,
                         s.verdict = CASE WHEN ? = 'FINISHED' THEN 'AC' ELSE NULL END
                     WHERE s.id = ?
-                    """, state, state, state, submissionId);
-            Map<String, Object> before = cancellationState(submissionId);
-            cancelSubmission(owner, submissionId).andExpect(status().isConflict());
-            assertThat(cancellationState(submissionId)).isEqualTo(before);
-            // Release the disposable fixture so each state starts with a fresh quota.
-            resetSubmissionState();
-        }
+                    """,
+              state,
+              state,
+              state,
+              submissionId);
+      Map<String, Object> before = cancellationState(submissionId);
+      cancelSubmission(owner, submissionId).andExpect(status().isConflict());
+      assertThat(cancellationState(submissionId)).isEqualTo(before);
+      // Release the disposable fixture so each state starts with a fresh quota.
+      resetSubmissionState();
     }
+  }
 
-    @Test
-    void cancellationHidesOtherOwnerMissingAndMalformedResourcesAndRequiresCsrf() throws Exception {
-        AuthenticatedSession owner = login();
-        String submissionId = createSubmission(owner);
-        createSecondUser();
-        AuthenticatedSession other = login("another-learner");
-        Map<String, Object> before = cancellationState(submissionId);
-        MvcResult otherOwner = cancelSubmission(other, submissionId)
-                .andExpect(status().isNotFound()).andReturn();
-        MvcResult missing = cancelSubmission(owner, UUID.randomUUID().toString())
-                .andExpect(status().isNotFound()).andReturn();
-        MvcResult malformed = cancelSubmission(owner, "not-a-uuid")
-                .andExpect(status().isNotFound()).andReturn();
-        assertThat(otherOwner.getResponse().getErrorMessage())
-                .isEqualTo(missing.getResponse().getErrorMessage())
-                .isEqualTo(malformed.getResponse().getErrorMessage());
-        assertThat(otherOwner.getResponse().getContentAsString())
-                .isEqualTo(missing.getResponse().getContentAsString())
-                .isEqualTo(malformed.getResponse().getContentAsString());
-        mockMvc.perform(post("/api/v1/submissions/{submissionId}/cancel", submissionId)
-                        .cookie(owner.cookies()).header("Origin","http://localhost")).andExpect(status().isForbidden());
-        AnonymousSession anonymous = openAnonymousSession();
-        mockMvc.perform(post("/api/v1/submissions/{submissionId}/cancel", submissionId)
-                        .cookie(anonymous.cookies()).header("Origin","http://localhost")
-                        .header(anonymous.csrfHeader(), anonymous.csrfToken()))
-                .andExpect(status().isUnauthorized());
-        assertThat(cancellationState(submissionId)).isEqualTo(before);
-    }
+  @Test
+  void cancellationHidesOtherOwnerMissingAndMalformedResourcesAndRequiresCsrf() throws Exception {
+    AuthenticatedSession owner = login();
+    String submissionId = createSubmission(owner);
+    createSecondUser();
+    AuthenticatedSession other = login("another-learner");
+    Map<String, Object> before = cancellationState(submissionId);
+    MvcResult otherOwner =
+        cancelSubmission(other, submissionId).andExpect(status().isNotFound()).andReturn();
+    MvcResult missing =
+        cancelSubmission(owner, UUID.randomUUID().toString())
+            .andExpect(status().isNotFound())
+            .andReturn();
+    MvcResult malformed =
+        cancelSubmission(owner, "not-a-uuid").andExpect(status().isNotFound()).andReturn();
+    assertThat(otherOwner.getResponse().getErrorMessage())
+        .isEqualTo(missing.getResponse().getErrorMessage())
+        .isEqualTo(malformed.getResponse().getErrorMessage());
+    assertThat(otherOwner.getResponse().getContentAsString())
+        .isEqualTo(missing.getResponse().getContentAsString())
+        .isEqualTo(malformed.getResponse().getContentAsString());
+    mockMvc
+        .perform(
+            post("/api/v1/submissions/{submissionId}/cancel", submissionId)
+                .cookie(owner.cookies())
+                .header("Origin", "http://localhost"))
+        .andExpect(status().isForbidden());
+    AnonymousSession anonymous = openAnonymousSession();
+    mockMvc
+        .perform(
+            post("/api/v1/submissions/{submissionId}/cancel", submissionId)
+                .cookie(anonymous.cookies())
+                .header("Origin", "http://localhost")
+                .header(anonymous.csrfHeader(), anonymous.csrfToken()))
+        .andExpect(status().isUnauthorized());
+    assertThat(cancellationState(submissionId)).isEqualTo(before);
+  }
 
-    @Test
-    void cancellationRollsBackTaskWhenSubmissionUpdateFails(CapturedOutput output) throws Exception {
-        AuthenticatedSession owner = login();
-        String submissionId = createSubmission(owner);
-        Map<String, Object> before = cancellationState(submissionId);
-        JdbcTemplate migrator = migratorJdbc();
-        migrator.execute("""
+  @Test
+  void cancellationRollsBackTaskWhenSubmissionUpdateFails(CapturedOutput output) throws Exception {
+    AuthenticatedSession owner = login();
+    String submissionId = createSubmission(owner);
+    Map<String, Object> before = cancellationState(submissionId);
+    JdbcTemplate migrator = migratorJdbc();
+    migrator.execute(
+        """
                 CREATE TRIGGER fail_cancellation BEFORE UPDATE ON submission FOR EACH ROW
                 BEGIN
                     IF NEW.processing_status = 'CANCELLED' THEN
@@ -557,286 +634,309 @@ class SubmissionCreationIntegrationTests {
                     END IF;
                 END
                 """);
-        try {
-            assertThatThrownBy(() -> cancelSubmission(owner, submissionId))
-                    .isInstanceOf(Exception.class);
-        } finally {
-            migrator.execute("DROP TRIGGER fail_cancellation");
-        }
-        assertThat(cancellationState(submissionId)).isEqualTo(before);
-        assertThat(output.getAll()).doesNotContain("\"event\":\"submission.cancelled\"");
+    try {
+      assertThatThrownBy(() -> cancelSubmission(owner, submissionId)).isInstanceOf(Exception.class);
+    } finally {
+      migrator.execute("DROP TRIGGER fail_cancellation");
     }
+    assertThat(cancellationState(submissionId)).isEqualTo(before);
+    assertThat(output.getAll()).doesNotContain("\"event\":\"submission.cancelled\"");
+  }
 
-    private org.springframework.test.web.servlet.ResultActions cancelSubmission(
-            AuthenticatedSession session, String submissionId) throws Exception {
-        return mockMvc.perform(post("/api/v1/submissions/{submissionId}/cancel", submissionId)
-                .cookie(session.cookies()).header("Origin","http://localhost").header(session.csrfHeader(), session.csrfToken()));
-    }
+  private org.springframework.test.web.servlet.ResultActions cancelSubmission(
+      AuthenticatedSession session, String submissionId) throws Exception {
+    return mockMvc.perform(
+        post("/api/v1/submissions/{submissionId}/cancel", submissionId)
+            .cookie(session.cookies())
+            .header("Origin", "http://localhost")
+            .header(session.csrfHeader(), session.csrfToken()));
+  }
 
-    private Map<String, Object> cancellationState(String submissionId) {
-        return migratorJdbc().queryForMap("""
+  private Map<String, Object> cancellationState(String submissionId) {
+    return migratorJdbc()
+        .queryForMap(
+            """
                 SELECT jt.task_status, s.processing_status,
                        jt.status_version AS task_version, s.status_version AS submission_version,
                        jt.attempt_count, s.verdict, jt.finished_at AS task_finished_at,
                        s.finished_at AS submission_finished_at
                 FROM judge_task jt JOIN submission s ON s.id = jt.submission_id
                 WHERE s.id = ?
-                """, submissionId);
+                """,
+            submissionId);
+  }
+
+  @Test
+  void rollsBackSubmissionAndTaskWhenOutboxInsertFails(CapturedOutput output) throws Exception {
+    var identity = authentication(login());
+    org.springframework.security.core.context.SecurityContextHolder.getContext()
+        .setAuthentication(identity);
+    JdbcTemplate api = new JdbcTemplate(apiDataSource);
+    JdbcTemplate migrator = migratorJdbc();
+    UUID requestId = UUID.randomUUID();
+    int submissionsBefore = count(api, "submission");
+    int tasksBefore = count(api, "judge_task");
+    int outboxBefore = count(api, "outbox_event");
+
+    migrator.execute("REVOKE INSERT ON forgeoj.outbox_event FROM 'forgeoj_api'@'%'");
+
+    try {
+      assertThatThrownBy(
+              () ->
+                  submissionService.create(
+                      1L, "sum-two-integers", requestId.toString(), "JAVA_21", VALID_SOURCE))
+          .isInstanceOf(RuntimeException.class);
+    } finally {
+      migrator.execute("GRANT INSERT ON forgeoj.outbox_event TO 'forgeoj_api'@'%'");
     }
 
-    @Test
-    void rollsBackSubmissionAndTaskWhenOutboxInsertFails(CapturedOutput output) throws Exception {
-        var identity = authentication(login());
-        org.springframework.security.core.context.SecurityContextHolder.getContext().setAuthentication(identity);
-        JdbcTemplate api = new JdbcTemplate(apiDataSource);
-        JdbcTemplate migrator = migratorJdbc();
-        UUID requestId = UUID.randomUUID();
-        int submissionsBefore = count(api, "submission");
-        int tasksBefore = count(api, "judge_task");
-        int outboxBefore = count(api, "outbox_event");
+    assertThat(count(api, "submission")).isEqualTo(submissionsBefore);
+    assertThat(count(api, "judge_task")).isEqualTo(tasksBefore);
+    assertThat(count(api, "outbox_event")).isEqualTo(outboxBefore);
+    assertThat(
+            api.queryForObject(
+                "SELECT COUNT(*) FROM submission WHERE client_request_id = ?",
+                Integer.class,
+                requestId.toString()))
+        .isZero();
+    assertThat(output.getAll()).doesNotContain("\"event\":\"submission.created\"");
+  }
 
-        migrator.execute(
-                "REVOKE INSERT ON forgeoj.outbox_event FROM 'forgeoj_api'@'%'");
+  @Test
+  void rejectsAnonymousAndInvalidSubmissionInput() throws Exception {
+    AnonymousSession anonymous = openAnonymousSession();
+    mockMvc
+        .perform(
+            post("/api/v1/problems/sum-two-integers/submissions")
+                .cookie(anonymous.cookies())
+                .header("Origin", "http://localhost")
+                .header(anonymous.csrfHeader(), anonymous.csrfToken())
+                .header("Idempotency-Key", UUID.randomUUID().toString())
+                .contentType(MediaType.APPLICATION_JSON)
+                .content(requestJson("JAVA_21", VALID_SOURCE)))
+        .andExpect(status().isUnauthorized());
 
-        try {
-            assertThatThrownBy(
-                            () ->
-                                    submissionService.create(
-                                            1L,
-                                            "sum-two-integers",
-                                            requestId.toString(),
-                                            "JAVA_21",
-                                            VALID_SOURCE))
-                    .isInstanceOf(RuntimeException.class);
-        } finally {
-            migrator.execute(
-                    "GRANT INSERT ON forgeoj.outbox_event TO 'forgeoj_api'@'%'");
-        }
+    AuthenticatedSession session = login();
+    submit(session, UUID.randomUUID(), "package copied.example; public class Main {}")
+        .andExpect(status().isBadRequest());
 
-        assertThat(count(api, "submission")).isEqualTo(submissionsBefore);
-        assertThat(count(api, "judge_task")).isEqualTo(tasksBefore);
-        assertThat(count(api, "outbox_event")).isEqualTo(outboxBefore);
-        assertThat(
-                        api.queryForObject(
-                                "SELECT COUNT(*) FROM submission WHERE client_request_id = ?",
-                                Integer.class,
-                                requestId.toString()))
-                .isZero();
-        assertThat(output.getAll()).doesNotContain("\"event\":\"submission.created\"");
-    }
+    mockMvc
+        .perform(
+            post("/api/v1/problems/sum-two-integers/submissions")
+                .cookie(session.cookies())
+                .header("Origin", "http://localhost")
+                .header(session.csrfHeader(), session.csrfToken())
+                .header("Idempotency-Key", "not-a-uuid")
+                .contentType(MediaType.APPLICATION_JSON)
+                .content(requestJson("JAVA_21", VALID_SOURCE)))
+        .andExpect(status().isBadRequest());
 
-    @Test
-    void rejectsAnonymousAndInvalidSubmissionInput() throws Exception {
-        AnonymousSession anonymous = openAnonymousSession();
-        mockMvc.perform(
-                        post("/api/v1/problems/sum-two-integers/submissions")
-                                .cookie(anonymous.cookies()).header("Origin","http://localhost")
-                                .header(anonymous.csrfHeader(), anonymous.csrfToken())
-                                .header("Idempotency-Key", UUID.randomUUID().toString())
-                                .contentType(MediaType.APPLICATION_JSON)
-                                .content(requestJson("JAVA_21", VALID_SOURCE)))
-                .andExpect(status().isUnauthorized());
+    mockMvc
+        .perform(
+            post("/api/v1/problems/sum-two-integers/submissions")
+                .cookie(session.cookies())
+                .header("Origin", "http://localhost")
+                .header(session.csrfHeader(), session.csrfToken())
+                .header("Idempotency-Key", UUID.randomUUID().toString())
+                .contentType(MediaType.APPLICATION_JSON)
+                .content(requestJson("PYTHON", VALID_SOURCE)))
+        .andExpect(status().isBadRequest());
 
-        AuthenticatedSession session = login();
-        submit(session, UUID.randomUUID(), "package copied.example; public class Main {}")
-                .andExpect(status().isBadRequest());
+    submit(session, UUID.randomUUID(), "// public class Main only appears in a comment")
+        .andExpect(status().isBadRequest());
 
-        mockMvc.perform(
-                        post("/api/v1/problems/sum-two-integers/submissions")
-                                .cookie(session.cookies()).header("Origin","http://localhost")
-                                .header(session.csrfHeader(), session.csrfToken())
-                                .header("Idempotency-Key", "not-a-uuid")
-                                .contentType(MediaType.APPLICATION_JSON)
-                                .content(requestJson("JAVA_21", VALID_SOURCE)))
-                .andExpect(status().isBadRequest());
+    submit(session, UUID.randomUUID(), "public class Main { /* " + "x".repeat(65536) + " */ }")
+        .andExpect(status().isBadRequest());
+  }
 
-        mockMvc.perform(
-                        post("/api/v1/problems/sum-two-integers/submissions")
-                                .cookie(session.cookies()).header("Origin","http://localhost")
-                                .header(session.csrfHeader(), session.csrfToken())
-                                .header("Idempotency-Key", UUID.randomUUID().toString())
-                                .contentType(MediaType.APPLICATION_JSON)
-                                .content(requestJson("PYTHON", VALID_SOURCE)))
-                .andExpect(status().isBadRequest());
+  @Test
+  void returnsOnlyWhitelistedSubmissionStatusFieldsToOwner() throws Exception {
+    AuthenticatedSession owner = login();
+    String submissionId = createSubmission(owner);
 
-        submit(session, UUID.randomUUID(), "// public class Main only appears in a comment")
-                .andExpect(status().isBadRequest());
+    MvcResult queued = getSubmission(owner, submissionId).andExpect(status().isOk()).andReturn();
+    Map<String, Object> queuedBody =
+        JsonPath.parse(queued.getResponse().getContentAsString()).read("$");
+    assertThat(queuedBody.keySet())
+        .containsExactlyInAnyOrder(
+            "submissionId", "processingStatus", "statusVersion", "verdict", "diagnosticMessage");
+    assertThat(queuedBody)
+        .containsEntry("submissionId", submissionId)
+        .containsEntry("processingStatus", "QUEUED")
+        .containsEntry("statusVersion", 0)
+        .containsEntry("verdict", null)
+        .containsEntry("diagnosticMessage", null);
 
-        submit(
-                        session,
-                        UUID.randomUUID(),
-                        "public class Main { /* " + "x".repeat(65536) + " */ }")
-                .andExpect(status().isBadRequest());
-    }
-
-    @Test
-    void returnsOnlyWhitelistedSubmissionStatusFieldsToOwner() throws Exception {
-        AuthenticatedSession owner = login();
-        String submissionId = createSubmission(owner);
-
-        MvcResult queued =
-                getSubmission(owner, submissionId).andExpect(status().isOk()).andReturn();
-        Map<String, Object> queuedBody =
-                JsonPath.parse(queued.getResponse().getContentAsString()).read("$");
-        assertThat(queuedBody.keySet())
-                .containsExactlyInAnyOrder(
-                        "submissionId",
-                        "processingStatus",
-                        "statusVersion",
-                        "verdict",
-                        "diagnosticMessage");
-        assertThat(queuedBody)
-                .containsEntry("submissionId", submissionId)
-                .containsEntry("processingStatus", "QUEUED")
-                .containsEntry("statusVersion", 0)
-                .containsEntry("verdict", null)
-                .containsEntry("diagnosticMessage", null);
-
-        migratorJdbc()
-                .update(
-                        """
+    migratorJdbc()
+        .update(
+            """
                         UPDATE submission
                         SET processing_status = 'FINISHED', verdict = 'OLE', status_version = 2,
                             diagnostic_message = 'HIDDEN_DIAGNOSTIC_SENTINEL',
                             finished_at = CURRENT_TIMESTAMP(6)
                         WHERE id = ?
                         """,
-                        submissionId);
+            submissionId);
 
-        MvcResult finished =
-                getSubmission(owner, submissionId).andExpect(status().isOk()).andReturn();
-        String finishedJson = finished.getResponse().getContentAsString();
-        Map<String, Object> finishedBody = JsonPath.parse(finishedJson).read("$");
-        assertThat(finishedBody)
-                .containsEntry("processingStatus", "FINISHED")
-                .containsEntry("statusVersion", 2)
-                .containsEntry("verdict", "OLE")
-                .containsEntry("diagnosticMessage", null);
-        assertThat(finishedJson)
-                .doesNotContain("HIDDEN_DIAGNOSTIC_SENTINEL")
-                .doesNotContain("SOURCE_SENTINEL_MUST_NOT_ENTER_OUTBOX")
-                .doesNotContain(
-                        "37881a92ca996970e09475fdb29435b9bc13ae1501fa118e5fd9afd47e561adf");
-    }
+    MvcResult finished = getSubmission(owner, submissionId).andExpect(status().isOk()).andReturn();
+    String finishedJson = finished.getResponse().getContentAsString();
+    Map<String, Object> finishedBody = JsonPath.parse(finishedJson).read("$");
+    assertThat(finishedBody)
+        .containsEntry("processingStatus", "FINISHED")
+        .containsEntry("statusVersion", 2)
+        .containsEntry("verdict", "OLE")
+        .containsEntry("diagnosticMessage", null);
+    assertThat(finishedJson)
+        .doesNotContain("HIDDEN_DIAGNOSTIC_SENTINEL")
+        .doesNotContain("SOURCE_SENTINEL_MUST_NOT_ENTER_OUTBOX")
+        .doesNotContain("37881a92ca996970e09475fdb29435b9bc13ae1501fa118e5fd9afd47e561adf");
+  }
 
-    @Test
-    void readsResourceVerdictsWithoutLeakingDiagnosticsOrHiddenFields() throws Exception {
-        AuthenticatedSession owner = login();
-        for (String verdict : List.of("MLE", "SECURITY_VIOLATION")) {
-            String submissionId = createSubmission(owner);
-            migratorJdbc().update("""
+  @Test
+  void readsResourceVerdictsWithoutLeakingDiagnosticsOrHiddenFields() throws Exception {
+    AuthenticatedSession owner = login();
+    for (String verdict : List.of("MLE", "SECURITY_VIOLATION")) {
+      String submissionId = createSubmission(owner);
+      migratorJdbc()
+          .update(
+              """
                     UPDATE submission SET processing_status = 'FINISHED', verdict = ?, status_version = 2,
                         diagnostic_message = 'PRIVATE_RESOURCE_DETAIL', finished_at = CURRENT_TIMESTAMP(6)
                     WHERE id = ?
-                    """, verdict, submissionId);
-            MvcResult result = getSubmission(owner, submissionId).andExpect(status().isOk()).andReturn();
-            String json = result.getResponse().getContentAsString();
-            Map<String, Object> body = JsonPath.parse(json).read("$");
-            assertThat(body).containsEntry("verdict", verdict).containsEntry("processingStatus", "FINISHED")
-                    .containsEntry("diagnosticMessage", null);
-            assertThat(body.keySet()).containsExactlyInAnyOrder("submissionId", "processingStatus", "statusVersion", "verdict", "diagnosticMessage");
-            assertThat(json).doesNotContain("PRIVATE_RESOURCE_DETAIL", "SOURCE_SENTINEL_MUST_NOT_ENTER_OUTBOX");
-        }
+                    """,
+              verdict,
+              submissionId);
+      MvcResult result = getSubmission(owner, submissionId).andExpect(status().isOk()).andReturn();
+      String json = result.getResponse().getContentAsString();
+      Map<String, Object> body = JsonPath.parse(json).read("$");
+      assertThat(body)
+          .containsEntry("verdict", verdict)
+          .containsEntry("processingStatus", "FINISHED")
+          .containsEntry("diagnosticMessage", null);
+      assertThat(body.keySet())
+          .containsExactlyInAnyOrder(
+              "submissionId", "processingStatus", "statusVersion", "verdict", "diagnosticMessage");
+      assertThat(json)
+          .doesNotContain("PRIVATE_RESOURCE_DETAIL", "SOURCE_SENTINEL_MUST_NOT_ENTER_OUTBOX");
     }
+  }
 
-    @Test
-    void verdictWidthUpgradePreservesExistingResultsAndEnablesSecurityVerdict() throws Exception {
-        AuthenticatedSession owner = login();
-        String submissionId = createSubmission(owner);
-        JdbcTemplate database = migratorJdbc();
-        database.update("""
+  @Test
+  void verdictWidthUpgradePreservesExistingResultsAndEnablesSecurityVerdict() throws Exception {
+    AuthenticatedSession owner = login();
+    String submissionId = createSubmission(owner);
+    JdbcTemplate database = migratorJdbc();
+    database.update(
+        """
                 UPDATE submission SET processing_status = 'FINISHED', verdict = 'AC', status_version = 2,
                     finished_at = CURRENT_TIMESTAMP(6) WHERE id = ?
-                """, submissionId);
-        Map<String, Object> before = database.queryForMap("SELECT verdict, status_version, finished_at FROM submission WHERE id = ?", submissionId);
-        try {
-            database.execute("ALTER TABLE submission MODIFY COLUMN verdict VARCHAR(16) NULL");
-            assertThatThrownBy(() -> database.update("UPDATE submission SET verdict = 'SECURITY_VIOLATION' WHERE id = ?", submissionId))
-                    .isInstanceOf(org.springframework.dao.DataAccessException.class);
-        } finally {
-            try (var connection = database.getDataSource().getConnection()) {
-                ScriptUtils.executeSqlScript(connection, new ClassPathResource("db/migration/V5__widen_submission_verdict.sql"));
-            }
-        }
-        assertThat(database.queryForMap("SELECT verdict, status_version, finished_at FROM submission WHERE id = ?", submissionId))
-                .isEqualTo(before);
-        database.update("UPDATE submission SET verdict = 'SECURITY_VIOLATION' WHERE id = ?", submissionId);
-        getSubmission(owner, submissionId).andExpect(status().isOk())
-                .andExpect(jsonPath("$.verdict").value("SECURITY_VIOLATION"));
+                """,
+        submissionId);
+    Map<String, Object> before =
+        database.queryForMap(
+            "SELECT verdict, status_version, finished_at FROM submission WHERE id = ?",
+            submissionId);
+    try {
+      database.execute("ALTER TABLE submission MODIFY COLUMN verdict VARCHAR(16) NULL");
+      assertThatThrownBy(
+              () ->
+                  database.update(
+                      "UPDATE submission SET verdict = 'SECURITY_VIOLATION' WHERE id = ?",
+                      submissionId))
+          .isInstanceOf(org.springframework.dao.DataAccessException.class);
+    } finally {
+      try (var connection = database.getDataSource().getConnection()) {
+        ScriptUtils.executeSqlScript(
+            connection, new ClassPathResource("db/migration/V5__widen_submission_verdict.sql"));
+      }
     }
+    assertThat(
+            database.queryForMap(
+                "SELECT verdict, status_version, finished_at FROM submission WHERE id = ?",
+                submissionId))
+        .isEqualTo(before);
+    database.update(
+        "UPDATE submission SET verdict = 'SECURITY_VIOLATION' WHERE id = ?", submissionId);
+    getSubmission(owner, submissionId)
+        .andExpect(status().isOk())
+        .andExpect(jsonPath("$.verdict").value("SECURITY_VIOLATION"));
+  }
 
-    @Test
-    void returnsSameNotFoundForAnotherOwnerMissingAndMalformedIds() throws Exception {
-        AuthenticatedSession owner = login();
-        String submissionId = createSubmission(owner);
-        createSecondUser();
-        AuthenticatedSession anotherUser = login("another-learner");
+  @Test
+  void returnsSameNotFoundForAnotherOwnerMissingAndMalformedIds() throws Exception {
+    AuthenticatedSession owner = login();
+    String submissionId = createSubmission(owner);
+    createSecondUser();
+    AuthenticatedSession anotherUser = login("another-learner");
 
-        getSubmission(anotherUser, submissionId).andExpect(status().isNotFound());
-        getSubmission(owner, UUID.randomUUID().toString()).andExpect(status().isNotFound());
-        getSubmission(owner, "not-a-uuid").andExpect(status().isNotFound());
-    }
+    getSubmission(anotherUser, submissionId).andExpect(status().isNotFound());
+    getSubmission(owner, UUID.randomUUID().toString()).andExpect(status().isNotFound());
+    getSubmission(owner, "not-a-uuid").andExpect(status().isNotFound());
+  }
 
-    @Test
-    void rejectsAnonymousSubmissionStatusReads() throws Exception {
-        AuthenticatedSession owner = login();
-        String submissionId = createSubmission(owner);
+  @Test
+  void rejectsAnonymousSubmissionStatusReads() throws Exception {
+    AuthenticatedSession owner = login();
+    String submissionId = createSubmission(owner);
 
-        mockMvc.perform(get("/api/v1/submissions/{submissionId}", submissionId))
-                .andExpect(status().isUnauthorized());
-    }
+    mockMvc
+        .perform(get("/api/v1/submissions/{submissionId}", submissionId))
+        .andExpect(status().isUnauthorized());
+  }
 
-    @Test
-    void exposesCompileDiagnosticsButNormalizesPlatformFailureDetails() throws Exception {
-        AuthenticatedSession owner = login();
-        String compileErrorId = createSubmission(owner);
-        String systemErrorId = createSubmission(owner);
-        JdbcTemplate migrator = migratorJdbc();
-        migrator.update(
-                """
+  @Test
+  void exposesCompileDiagnosticsButNormalizesPlatformFailureDetails() throws Exception {
+    AuthenticatedSession owner = login();
+    String compileErrorId = createSubmission(owner);
+    String systemErrorId = createSubmission(owner);
+    JdbcTemplate migrator = migratorJdbc();
+    migrator.update(
+        """
                 UPDATE submission
                 SET processing_status = 'FINISHED', verdict = 'CE', status_version = 2,
                     diagnostic_message = 'Main.java:3: missing semicolon',
                     finished_at = CURRENT_TIMESTAMP(6)
                 WHERE id = ?
                 """,
-                compileErrorId);
-        migrator.update(
-                """
+        compileErrorId);
+    migrator.update(
+        """
                 UPDATE submission
                 SET processing_status = 'SYSTEM_ERROR', verdict = NULL, status_version = 2,
                     diagnostic_message = 'jdbc:mysql://secret-host/forgeoj HIDDEN_SENTINEL',
                     finished_at = CURRENT_TIMESTAMP(6)
                 WHERE id = ?
                 """,
-                systemErrorId);
+        systemErrorId);
 
-        getSubmission(owner, compileErrorId)
-                .andExpect(status().isOk())
-                .andExpect(jsonPath("$.diagnosticMessage").value("Main.java:3: missing semicolon"));
-        MvcResult systemError =
-                getSubmission(owner, systemErrorId).andExpect(status().isOk()).andReturn();
-        String systemErrorJson = systemError.getResponse().getContentAsString();
-        assertThat(JsonPath.read(systemErrorJson, "$.diagnosticMessage").toString())
-                .isEqualTo("Judging infrastructure failed");
-        assertThat(systemErrorJson)
-                .doesNotContain("secret-host")
-                .doesNotContain("HIDDEN_SENTINEL");
-    }
+    getSubmission(owner, compileErrorId)
+        .andExpect(status().isOk())
+        .andExpect(jsonPath("$.diagnosticMessage").value("Main.java:3: missing semicolon"));
+    MvcResult systemError =
+        getSubmission(owner, systemErrorId).andExpect(status().isOk()).andReturn();
+    String systemErrorJson = systemError.getResponse().getContentAsString();
+    assertThat(JsonPath.read(systemErrorJson, "$.diagnosticMessage").toString())
+        .isEqualTo("Judging infrastructure failed");
+    assertThat(systemErrorJson).doesNotContain("secret-host").doesNotContain("HIDDEN_SENTINEL");
+  }
 
-    @Test
-    void advancingCurrentVersionPreservesOldSubmissionAndIdempotentReplay() throws Exception {
-        AuthenticatedSession session = login();
-        JdbcTemplate database = migratorJdbc();
-        UUID requestId = UUID.randomUUID();
-        MvcResult first = submit(session, requestId, VALID_SOURCE)
-                .andExpect(status().isAccepted()).andReturn();
-        String oldId = JsonPath.read(first.getResponse().getContentAsString(), "$.submissionId");
-        Map<String, Object> oldSubmission = database.queryForMap("SELECT * FROM submission WHERE id = ?", oldId);
-        Map<String, Object> oldTask = database.queryForMap("SELECT * FROM judge_task WHERE submission_id = ?", oldId);
-        Map<String, Object> oldVersion = database.queryForMap("SELECT * FROM problem_judge_version WHERE id = 1");
-        // Only this disposable fixture's current pointer changes; old evidence is immutable.
-        database.update("""
+  @Test
+  void advancingCurrentVersionPreservesOldSubmissionAndIdempotentReplay() throws Exception {
+    AuthenticatedSession session = login();
+    JdbcTemplate database = migratorJdbc();
+    UUID requestId = UUID.randomUUID();
+    MvcResult first =
+        submit(session, requestId, VALID_SOURCE).andExpect(status().isAccepted()).andReturn();
+    String oldId = JsonPath.read(first.getResponse().getContentAsString(), "$.submissionId");
+    Map<String, Object> oldSubmission =
+        database.queryForMap("SELECT * FROM submission WHERE id = ?", oldId);
+    Map<String, Object> oldTask =
+        database.queryForMap("SELECT * FROM judge_task WHERE submission_id = ?", oldId);
+    Map<String, Object> oldVersion =
+        database.queryForMap("SELECT * FROM problem_judge_version WHERE id = 1");
+    // Only this disposable fixture's current pointer changes; old evidence is immutable.
+    database.update(
+        """
                 INSERT INTO problem_judge_version
                     (problem_id, version_no, time_limit_ms, memory_limit_mb, output_limit_bytes,
                      comparison_rule_version, sandbox_policy_version, java_image_digest, test_dataset_sha256)
@@ -844,72 +944,86 @@ class SubmissionCreationIntegrationTests {
                        sandbox_policy_version, java_image_digest, test_dataset_sha256
                 FROM problem_judge_version WHERE id = 1
                 """);
-        long nextVersion = database.queryForObject(
-                "SELECT id FROM problem_judge_version WHERE problem_id = 1 AND version_no = 2", Long.class);
-        try {
-            database.update("UPDATE problem SET current_judge_version_id = ? WHERE id = 1", nextVersion);
-            MvcResult replay = submit(session, requestId, VALID_SOURCE)
-                    .andExpect(status().isAccepted()).andReturn();
-            assertThat((String) JsonPath.read(replay.getResponse().getContentAsString(), "$.submissionId"))
-                    .isEqualTo(oldId);
-            String newId = createSubmission(session);
-            Map<String, Object> newSubmission = database.queryForMap(
-                    "SELECT judge_version_id, time_limit_ms, memory_limit_mb, output_limit_bytes FROM submission WHERE id = ?", newId);
-            assertThat(((Number) newSubmission.get("judge_version_id")).longValue()).isEqualTo(nextVersion);
-            assertThat(((Number) newSubmission.get("time_limit_ms")).intValue()).isEqualTo(999);
-            assertThat(((Number) newSubmission.get("memory_limit_mb")).intValue()).isEqualTo(128);
-            assertThat(((Number) newSubmission.get("output_limit_bytes")).longValue()).isEqualTo(4096);
-            assertThat(database.queryForMap("SELECT * FROM submission WHERE id = ?", oldId)).isEqualTo(oldSubmission);
-            assertThat(database.queryForMap("SELECT * FROM judge_task WHERE submission_id = ?", oldId)).isEqualTo(oldTask);
-            assertThat(database.queryForMap("SELECT * FROM problem_judge_version WHERE id = 1")).isEqualTo(oldVersion);
-            assertThat(database.queryForObject("SELECT COUNT(*) FROM outbox_event", Integer.class)).isEqualTo(2);
-        } finally {
-            database.update("UPDATE problem SET current_judge_version_id = 1 WHERE id = 1");
-            database.update("DELETE FROM outbox_event");
-            database.update("DELETE FROM judge_task WHERE submission_id IN (SELECT id FROM submission WHERE judge_version_id = ?)", nextVersion);
-            database.update("DELETE FROM submission WHERE judge_version_id = ?", nextVersion);
-            database.update("DELETE FROM problem_judge_version WHERE id = ?", nextVersion);
-        }
+    long nextVersion =
+        database.queryForObject(
+            "SELECT id FROM problem_judge_version WHERE problem_id = 1 AND version_no = 2",
+            Long.class);
+    try {
+      database.update("UPDATE problem SET current_judge_version_id = ? WHERE id = 1", nextVersion);
+      MvcResult replay =
+          submit(session, requestId, VALID_SOURCE).andExpect(status().isAccepted()).andReturn();
+      assertThat(
+              (String) JsonPath.read(replay.getResponse().getContentAsString(), "$.submissionId"))
+          .isEqualTo(oldId);
+      String newId = createSubmission(session);
+      Map<String, Object> newSubmission =
+          database.queryForMap(
+              "SELECT judge_version_id, time_limit_ms, memory_limit_mb, output_limit_bytes FROM submission WHERE id = ?",
+              newId);
+      assertThat(((Number) newSubmission.get("judge_version_id")).longValue())
+          .isEqualTo(nextVersion);
+      assertThat(((Number) newSubmission.get("time_limit_ms")).intValue()).isEqualTo(999);
+      assertThat(((Number) newSubmission.get("memory_limit_mb")).intValue()).isEqualTo(128);
+      assertThat(((Number) newSubmission.get("output_limit_bytes")).longValue()).isEqualTo(4096);
+      assertThat(database.queryForMap("SELECT * FROM submission WHERE id = ?", oldId))
+          .isEqualTo(oldSubmission);
+      assertThat(database.queryForMap("SELECT * FROM judge_task WHERE submission_id = ?", oldId))
+          .isEqualTo(oldTask);
+      assertThat(database.queryForMap("SELECT * FROM problem_judge_version WHERE id = 1"))
+          .isEqualTo(oldVersion);
+      assertThat(database.queryForObject("SELECT COUNT(*) FROM outbox_event", Integer.class))
+          .isEqualTo(2);
+    } finally {
+      database.update("UPDATE problem SET current_judge_version_id = 1 WHERE id = 1");
+      database.update("DELETE FROM outbox_event");
+      database.update(
+          "DELETE FROM judge_task WHERE submission_id IN (SELECT id FROM submission WHERE judge_version_id = ?)",
+          nextVersion);
+      database.update("DELETE FROM submission WHERE judge_version_id = ?", nextVersion);
+      database.update("DELETE FROM problem_judge_version WHERE id = ?", nextVersion);
     }
+  }
 
-    private org.springframework.test.web.servlet.ResultActions submit(
-            AuthenticatedSession session, UUID requestId, String sourceCode) throws Exception {
-        return mockMvc.perform(
-                post("/api/v1/problems/sum-two-integers/submissions")
-                        .cookie(session.cookies()).header("Origin","http://localhost")
-                        .header(session.csrfHeader(), session.csrfToken())
-                        .header("Idempotency-Key", requestId.toString())
-                        .contentType(MediaType.APPLICATION_JSON)
-                        .content(requestJson("JAVA_21", sourceCode)));
-    }
+  private org.springframework.test.web.servlet.ResultActions submit(
+      AuthenticatedSession session, UUID requestId, String sourceCode) throws Exception {
+    return mockMvc.perform(
+        post("/api/v1/problems/sum-two-integers/submissions")
+            .cookie(session.cookies())
+            .header("Origin", "http://localhost")
+            .header(session.csrfHeader(), session.csrfToken())
+            .header("Idempotency-Key", requestId.toString())
+            .contentType(MediaType.APPLICATION_JSON)
+            .content(requestJson("JAVA_21", sourceCode)));
+  }
 
-    private org.springframework.test.web.servlet.ResultActions getSubmission(
-            AuthenticatedSession session, String submissionId) throws Exception {
-        return mockMvc.perform(
-                get("/api/v1/submissions/{submissionId}", submissionId)
-                        .cookie(session.cookies()).header("Origin","http://localhost"));
-    }
+  private org.springframework.test.web.servlet.ResultActions getSubmission(
+      AuthenticatedSession session, String submissionId) throws Exception {
+    return mockMvc.perform(
+        get("/api/v1/submissions/{submissionId}", submissionId)
+            .cookie(session.cookies())
+            .header("Origin", "http://localhost"));
+  }
 
-    private String createSubmission(AuthenticatedSession session) throws Exception {
-        MvcResult result =
-                submit(session, UUID.randomUUID(), VALID_SOURCE)
-                        .andExpect(status().isAccepted())
-                        .andReturn();
-        return JsonPath.read(result.getResponse().getContentAsString(), "$.submissionId");
-    }
+  private String createSubmission(AuthenticatedSession session) throws Exception {
+    MvcResult result =
+        submit(session, UUID.randomUUID(), VALID_SOURCE)
+            .andExpect(status().isAccepted())
+            .andReturn();
+    return JsonPath.read(result.getResponse().getContentAsString(), "$.submissionId");
+  }
 
-    private void assertSingleRecordSet(UUID requestId, String submissionId) throws Exception {
-        JdbcTemplate api = new JdbcTemplate(apiDataSource);
-        assertThat(
-                        api.queryForObject(
-                                "SELECT COUNT(*) FROM submission WHERE user_id = 1 AND client_request_id = ?",
-                                Integer.class,
-                                requestId.toString()))
-                .isEqualTo(1);
+  private void assertSingleRecordSet(UUID requestId, String submissionId) throws Exception {
+    JdbcTemplate api = new JdbcTemplate(apiDataSource);
+    assertThat(
+            api.queryForObject(
+                "SELECT COUNT(*) FROM submission WHERE user_id = 1 AND client_request_id = ?",
+                Integer.class,
+                requestId.toString()))
+        .isEqualTo(1);
 
-        var submission =
-                api.queryForMap(
-                        """
+    var submission =
+        api.queryForMap(
+            """
                         SELECT processing_status, status_version, source_sha256,
                                time_limit_ms, memory_limit_mb, output_limit_bytes,
                                comparison_rule_version, sandbox_policy_version,
@@ -917,37 +1031,36 @@ class SubmissionCreationIntegrationTests {
                         FROM submission
                         WHERE id = ?
                         """,
-                        submissionId);
-        assertThat(submission.get("processing_status")).isEqualTo("QUEUED");
-        assertThat(((Number) submission.get("status_version")).longValue()).isZero();
-        assertThat(submission.get("source_sha256")).isEqualTo(sha256(VALID_SOURCE));
-        assertThat(((Number) submission.get("time_limit_ms")).intValue()).isEqualTo(2000);
-        assertThat(((Number) submission.get("memory_limit_mb")).intValue()).isEqualTo(256);
-        assertThat(((Number) submission.get("output_limit_bytes")).longValue()).isEqualTo(1048576L);
-        assertThat(submission.get("comparison_rule_version"))
-                .isEqualTo("trim-trailing-whitespace-v1");
-        assertThat(submission.get("sandbox_policy_version")).isEqualTo("m0-v1");
-        assertThat(submission.get("java_image_digest"))
-                .isEqualTo(
-                        "eclipse-temurin:21.0.12_8-jdk-jammy@sha256:"
-                                + "c7d5863b5dd8f26b90c64f1d80cc2b0e5a5e4642f8db9955a370d348edd8f438");
-        assertThat(submission.get("test_dataset_sha256"))
-                .isEqualTo("37881a92ca996970e09475fdb29435b9bc13ae1501fa118e5fd9afd47e561adf");
+            submissionId);
+    assertThat(submission.get("processing_status")).isEqualTo("QUEUED");
+    assertThat(((Number) submission.get("status_version")).longValue()).isZero();
+    assertThat(submission.get("source_sha256")).isEqualTo(sha256(VALID_SOURCE));
+    assertThat(((Number) submission.get("time_limit_ms")).intValue()).isEqualTo(2000);
+    assertThat(((Number) submission.get("memory_limit_mb")).intValue()).isEqualTo(256);
+    assertThat(((Number) submission.get("output_limit_bytes")).longValue()).isEqualTo(1048576L);
+    assertThat(submission.get("comparison_rule_version")).isEqualTo("trim-trailing-whitespace-v1");
+    assertThat(submission.get("sandbox_policy_version")).isEqualTo("m0-v1");
+    assertThat(submission.get("java_image_digest"))
+        .isEqualTo(
+            "eclipse-temurin:21.0.12_8-jdk-jammy@sha256:"
+                + "c7d5863b5dd8f26b90c64f1d80cc2b0e5a5e4642f8db9955a370d348edd8f438");
+    assertThat(submission.get("test_dataset_sha256"))
+        .isEqualTo("37881a92ca996970e09475fdb29435b9bc13ae1501fa118e5fd9afd47e561adf");
 
-        String taskId =
-                api.queryForObject(
-                        "SELECT id FROM judge_task WHERE submission_id = ?", String.class, submissionId);
-        assertThat(taskId).isNotNull();
-        assertThat(
-                        api.queryForObject(
-                                "SELECT COUNT(*) FROM judge_task WHERE submission_id = ?",
-                                Integer.class,
-                                submissionId))
-                .isEqualTo(1);
+    String taskId =
+        api.queryForObject(
+            "SELECT id FROM judge_task WHERE submission_id = ?", String.class, submissionId);
+    assertThat(taskId).isNotNull();
+    assertThat(
+            api.queryForObject(
+                "SELECT COUNT(*) FROM judge_task WHERE submission_id = ?",
+                Integer.class,
+                submissionId))
+        .isEqualTo(1);
 
-        var event =
-                api.queryForMap(
-                        """
+    var event =
+        api.queryForMap(
+            """
                         SELECT aggregate_type, event_type, contract_version,
                                JSON_LENGTH(payload) AS payload_size,
                                JSON_UNQUOTE(JSON_EXTRACT(payload, '$.taskId')) AS payload_task_id,
@@ -958,57 +1071,69 @@ class SubmissionCreationIntegrationTests {
                         FROM outbox_event
                         WHERE aggregate_id = ?
                         """,
-                        taskId);
-        assertThat(event.get("aggregate_type")).isEqualTo("JUDGE_TASK");
-        assertThat(event.get("event_type")).isEqualTo("JUDGE_TASK_QUEUED");
-        assertThat(((Number) event.get("contract_version")).intValue()).isEqualTo(1);
-        assertThat(((Number) event.get("payload_size")).intValue()).isEqualTo(4);
-        assertThat(event.get("payload_task_id")).isEqualTo(taskId);
-        assertThat(event.get("payload_submission_id")).isEqualTo(submissionId);
-        assertThat(event.get("payload_task_type")).isEqualTo("JUDGE_SUBMISSION");
-        assertThat(event.get("payload_contract_version").toString()).isEqualTo("1");
-        assertThat(event.get("payload_text").toString())
-                .doesNotContain("SOURCE_SENTINEL_MUST_NOT_ENTER_OUTBOX")
-                .doesNotContain("37881a92ca996970e09475fdb29435b9bc13ae1501fa118e5fd9afd47e561adf");
-    }
+            taskId);
+    assertThat(event.get("aggregate_type")).isEqualTo("JUDGE_TASK");
+    assertThat(event.get("event_type")).isEqualTo("JUDGE_TASK_QUEUED");
+    assertThat(((Number) event.get("contract_version")).intValue()).isEqualTo(1);
+    assertThat(((Number) event.get("payload_size")).intValue()).isEqualTo(4);
+    assertThat(event.get("payload_task_id")).isEqualTo(taskId);
+    assertThat(event.get("payload_submission_id")).isEqualTo(submissionId);
+    assertThat(event.get("payload_task_type")).isEqualTo("JUDGE_SUBMISSION");
+    assertThat(event.get("payload_contract_version").toString()).isEqualTo("1");
+    assertThat(event.get("payload_text").toString())
+        .doesNotContain("SOURCE_SENTINEL_MUST_NOT_ENTER_OUTBOX")
+        .doesNotContain("37881a92ca996970e09475fdb29435b9bc13ae1501fa118e5fd9afd47e561adf");
+  }
 
-    private AuthenticatedSession login() throws Exception {
-        return login("learner");
-    }
+  private AuthenticatedSession login() throws Exception {
+    return login("learner");
+  }
 
-    private org.springframework.security.core.Authentication authentication(AuthenticatedSession session) {
-        var claims = accountJwt.verify(java.util.Arrays.stream(session.cookies()).filter(cookie -> cookie.getName().equals("FORGEOJ_ACCESS")).findFirst().orElseThrow().getValue());
-        return new org.springframework.security.authentication.UsernamePasswordAuthenticationToken(
-                new com.forgeoj.api.auth.ForgeOjPrincipal(1L, "learner", "", true, claims.getClaimAsString("sid")), null, java.util.List.of());
-    }
+  private org.springframework.security.core.Authentication authentication(
+      AuthenticatedSession session) {
+    var claims =
+        accountJwt.verify(
+            java.util.Arrays.stream(session.cookies())
+                .filter(cookie -> cookie.getName().equals("FORGEOJ_ACCESS"))
+                .findFirst()
+                .orElseThrow()
+                .getValue());
+    return new org.springframework.security.authentication.UsernamePasswordAuthenticationToken(
+        new com.forgeoj.api.auth.ForgeOjPrincipal(
+            1L, "learner", "", true, claims.getClaimAsString("sid")),
+        null,
+        java.util.List.of());
+  }
 
-    private AuthenticatedSession login(String username) throws Exception {
-        AnonymousSession anonymous = openAnonymousSession();
-        MvcResult login =
-                mockMvc.perform(
-                                post("/api/v1/auth/login")
-                                        .cookie(anonymous.cookies()).header("Origin","http://localhost")
-                                        .header(anonymous.csrfHeader(), anonymous.csrfToken())
-                                        .contentType(MediaType.APPLICATION_JSON)
-                                        .content(
-                                                """
+  private AuthenticatedSession login(String username) throws Exception {
+    AnonymousSession anonymous = openAnonymousSession();
+    MvcResult login =
+        mockMvc
+            .perform(
+                post("/api/v1/auth/login")
+                    .cookie(anonymous.cookies())
+                    .header("Origin", "http://localhost")
+                    .header(anonymous.csrfHeader(), anonymous.csrfToken())
+                    .contentType(MediaType.APPLICATION_JSON)
+                    .content(
+                        """
                                                 {"username":"%s","password":"forgeoj-dev-only"}
                                                 """
-                                                        .formatted(username)
-                                                        .strip()))
-                        .andExpect(status().isOk())
-                        .andExpect(jsonPath("$.authenticated").value(true))
-                        .andReturn();
-        return new AuthenticatedSession(
-                login.getResponse().getCookies(),
-                JsonPath.read(login.getResponse().getContentAsString(), "$.csrf.headerName"),
-                JsonPath.read(login.getResponse().getContentAsString(), "$.csrf.token"));
-    }
+                            .formatted(username)
+                            .strip()))
+            .andExpect(status().isOk())
+            .andExpect(jsonPath("$.authenticated").value(true))
+            .andReturn();
+    return new AuthenticatedSession(
+        login.getResponse().getCookies(),
+        JsonPath.read(login.getResponse().getContentAsString(), "$.csrf.headerName"),
+        JsonPath.read(login.getResponse().getContentAsString(), "$.csrf.token"));
+  }
 
-    private void createSecondUser() {
-        migratorJdbc()
-                .update(
-                        """
+  private void createSecondUser() {
+    migratorJdbc()
+        .update(
+            """
                         INSERT INTO user_account (id, username, password_hash, status)
                         VALUES (2, 'another-learner',
                             '$2a$10$slWnrjf2WJd.j/4Fnc1m..7QjwDgtyAlJ4OrLRzEjhAN0g7zkuyCi',
@@ -1017,56 +1142,51 @@ class SubmissionCreationIntegrationTests {
                             password_hash = new.password_hash,
                             status = new.status
                         """);
-        migratorJdbc().update("INSERT IGNORE INTO user_judge_quota_lock (user_id) VALUES (2)");
-    }
+    migratorJdbc().update("INSERT IGNORE INTO user_judge_quota_lock (user_id) VALUES (2)");
+  }
 
-    private AnonymousSession openAnonymousSession() throws Exception {
-        MvcResult result =
-                mockMvc.perform(get("/api/v1/auth/session"))
-                        .andExpect(status().isOk())
-                        .andReturn();
-        String body = result.getResponse().getContentAsString();
-        return new AnonymousSession(
-                result.getResponse().getCookies(),
-                JsonPath.read(body, "$.csrf.headerName"),
-                JsonPath.read(body, "$.csrf.token"));
-    }
+  private AnonymousSession openAnonymousSession() throws Exception {
+    MvcResult result =
+        mockMvc.perform(get("/api/v1/auth/session")).andExpect(status().isOk()).andReturn();
+    String body = result.getResponse().getContentAsString();
+    return new AnonymousSession(
+        result.getResponse().getCookies(),
+        JsonPath.read(body, "$.csrf.headerName"),
+        JsonPath.read(body, "$.csrf.token"));
+  }
 
-    private JdbcTemplate migratorJdbc() {
-        return new JdbcTemplate(
-                new DriverManagerDataSource(
-                        MYSQL.getJdbcUrl(), "forgeoj_migrator", MIGRATOR_PASSWORD));
-    }
+  private JdbcTemplate migratorJdbc() {
+    return new JdbcTemplate(
+        new DriverManagerDataSource(MYSQL.getJdbcUrl(), "forgeoj_migrator", MIGRATOR_PASSWORD));
+  }
 
-    private int count(JdbcTemplate jdbcTemplate, String table) {
-        return jdbcTemplate.queryForObject("SELECT COUNT(*) FROM " + table, Integer.class);
-    }
+  private int count(JdbcTemplate jdbcTemplate, String table) {
+    return jdbcTemplate.queryForObject("SELECT COUNT(*) FROM " + table, Integer.class);
+  }
 
-    private String requestJson(String language, String sourceCode) {
-        return """
+  private String requestJson(String language, String sourceCode) {
+    return """
                 {"language":"%s","sourceCode":"%s"}
                 """
-                .formatted(language, jsonEscape(sourceCode));
-    }
+        .formatted(language, jsonEscape(sourceCode));
+  }
 
-    private String jsonEscape(String value) {
-        return value.replace("\\", "\\\\")
-                .replace("\"", "\\\"")
-                .replace("\r", "\\r")
-                .replace("\n", "\\n")
-                .replace("\t", "\\t");
-    }
+  private String jsonEscape(String value) {
+    return value
+        .replace("\\", "\\\\")
+        .replace("\"", "\\\"")
+        .replace("\r", "\\r")
+        .replace("\n", "\\n")
+        .replace("\t", "\\t");
+  }
 
-    private String sha256(String value) throws Exception {
-        return java.util.HexFormat.of()
-                .formatHex(
-                        MessageDigest.getInstance("SHA-256")
-                                .digest(value.getBytes(StandardCharsets.UTF_8)));
-    }
+  private String sha256(String value) throws Exception {
+    return java.util.HexFormat.of()
+        .formatHex(
+            MessageDigest.getInstance("SHA-256").digest(value.getBytes(StandardCharsets.UTF_8)));
+  }
 
-    private record AnonymousSession(
-            Cookie[] cookies, String csrfHeader, String csrfToken) {}
+  private record AnonymousSession(Cookie[] cookies, String csrfHeader, String csrfToken) {}
 
-    private record AuthenticatedSession(
-            Cookie[] cookies, String csrfHeader, String csrfToken) {}
+  private record AuthenticatedSession(Cookie[] cookies, String csrfHeader, String csrfToken) {}
 }

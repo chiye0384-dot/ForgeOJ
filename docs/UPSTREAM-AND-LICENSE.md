@@ -325,3 +325,11 @@ Maven、npm、Docker 镜像和操作系统包都属于第三方组成。Release 
 2026-10-28性能基线未增加Python/Node/Maven依赖或镜像选择。复用已固定node:24.14.1-bookworm-slim@sha256:b506e7321f176aae77317f99d67a24b272c1f09f1d10f1761f2773447d8da26c，使用Node内置https/crypto/fs/perf_hooks与Python标准库；Java/数据库/监控保持既有固定镜像。k6仅为负载方法参考，未拉取/安装/复制其实现。证据Zip只含原创源码、报告、测试原始元数据和LICENSE/NOTICE，无上游二进制或私密配置。
 
 2026-10-28只读热点诊断未增加依赖、镜像或许可选择。复用既有Temurin JDK21 jcmd/JFR、Connector/J 9.7元数据、MySQL Performance Schema和原固定Node客户端；原创Python标准库归纳和最小JFC。证据包含自有测试记录api.jfr而无JDK/驱动/数据库运行时，LICENSE/NOTICE保留，未引入第三方profiler或云服务。
+
+2026-11-13语句缓存A/B未新增依赖、镜像或许可选择。复用既有Connector/J9.7.0、JDK21、固定Node和MySQL；测试Java源码只使用已有驱动公开属性/QueryInfo接口，Python/Node编排使用标准库。证据包仅含原创源码、报告、合成测量与LICENSE/NOTICE，不分发上游运行时或驱动二进制。
+
+### U-015：Java构建格式工具
+
+2026-11-13，按用户认可的Spotless+google-java-format方案，固定com.diffplug.spotless:spotless-maven-plugin:3.0.0和com.google.googlejavaformat:google-java-format:1.28.0。上游https://github.com/diffplug/spotless（tag maven/3.0.0）与https://github.com/google/google-java-format（tag v1.28.0），原LICENSE.txt/LICENSE已保存docs/licenses/java-format-tools/。两者Apache-2.0，仅开发/CI执行，不进入应用fat JAR；未复制业务代码、未导入差分Python脚本或Eclipse格式器。Maven3.9.14/JDK21首次apply/check已实际通过，固定Linux完整回归待本轮结果。原库、历史证据与声明保留。
+- google-java-format-1.28.0-LICENSE.txt SHA256 2c7e23c8000fe553b6f380b5e365dd72198439174f1b6821d5e3b190b54af0dc
+- spotless-3.0.0-LICENSE.txt SHA256 64f2b8814e926df6d976b3e0668dbb0bd543da29a49b3e944add377e4256551b

@@ -8,9 +8,34 @@ import org.springframework.transaction.support.TransactionTemplate;
 
 @Component
 public class SelfTestCleanup {
-    private final SelfTestMapper mapper;private final TransactionTemplate tx;private final boolean enabled;
-    public SelfTestCleanup(SelfTestMapper mapper,TransactionTemplate tx,@Value("${forgeoj.self-test.cleanup.enabled:true}") boolean enabled){this.mapper=mapper;this.tx=tx;this.enabled=enabled;}
-    @Scheduled(fixedDelayString="${forgeoj.self-test.cleanup.fixed-delay-ms:60000}")
-    public void scheduled(){if(enabled) purge();}
-    public int purge(){int count=0;for(String id:mapper.expired()) {tx.executeWithoutResult(ignored->{mapper.purgeOutput(id);mapper.purgePayload(id);});count++;}return count;}
+  private final SelfTestMapper mapper;
+  private final TransactionTemplate tx;
+  private final boolean enabled;
+
+  public SelfTestCleanup(
+      SelfTestMapper mapper,
+      TransactionTemplate tx,
+      @Value("${forgeoj.self-test.cleanup.enabled:true}") boolean enabled) {
+    this.mapper = mapper;
+    this.tx = tx;
+    this.enabled = enabled;
+  }
+
+  @Scheduled(fixedDelayString = "${forgeoj.self-test.cleanup.fixed-delay-ms:60000}")
+  public void scheduled() {
+    if (enabled) purge();
+  }
+
+  public int purge() {
+    int count = 0;
+    for (String id : mapper.expired()) {
+      tx.executeWithoutResult(
+          ignored -> {
+            mapper.purgeOutput(id);
+            mapper.purgePayload(id);
+          });
+      count++;
+    }
+    return count;
+  }
 }

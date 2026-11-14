@@ -7,15 +7,69 @@ import org.apache.ibatis.annotations.*;
 
 @Mapper
 interface TeacherRecordMapper {
-    record Participant(long userId,String username,String memberStatus,String role) {}
-    record GradeRow(long userId,int ordinal,String slug,String title,long judgeVersionId,int attempts,boolean precompleted,LocalDateTime acceptedAt,LocalDateTime firstAcAt,boolean dataInvalid) {}
-    record Attempt(String submissionId,long userId,int ordinal,String problemSlug,long judgeVersionId,String language,String processingStatus,String verdict,LocalDateTime acceptedAt,LocalDateTime finishedAt) {}
-    record Source(String submissionId,long userId,int ordinal,String problemSlug,long judgeVersionId,String language,String processingStatus,String verdict,LocalDateTime acceptedAt,LocalDateTime finishedAt,String sourceCode,String sourceSha256) {}
-    @Select("SELECT COUNT(*) FROM assignment_participant WHERE assignment_id=#{id}") long participantCount(String id);
-    @Select("SELECT p.user_id,u.username,m.status member_status,m.role FROM assignment_participant p JOIN user_account u ON u.id=p.user_id JOIN classroom_member m ON m.classroom_id=p.classroom_id AND m.user_id=p.user_id WHERE p.assignment_id=#{id} ORDER BY p.user_id LIMIT #{size} OFFSET #{offset}")
-    List<Participant> participants(@Param("id") String id,@Param("size") int size,@Param("offset") long offset);
-    // Filter before windowing. This query contains no source or private PRECOMPLETED submission ID.
-    @Select("""
+  record Participant(long userId, String username, String memberStatus, String role) {}
+
+  record GradeRow(
+      long userId,
+      int ordinal,
+      String slug,
+      String title,
+      long judgeVersionId,
+      int attempts,
+      boolean precompleted,
+      LocalDateTime acceptedAt,
+      LocalDateTime firstAcAt,
+      boolean dataInvalid) {}
+
+  record Attempt(
+      String submissionId,
+      long userId,
+      int ordinal,
+      String problemSlug,
+      long judgeVersionId,
+      String language,
+      String processingStatus,
+      String verdict,
+      LocalDateTime acceptedAt,
+      LocalDateTime finishedAt) {}
+
+  record Source(
+      String submissionId,
+      long userId,
+      int ordinal,
+      String problemSlug,
+      long judgeVersionId,
+      String language,
+      String processingStatus,
+      String verdict,
+      LocalDateTime acceptedAt,
+      LocalDateTime finishedAt,
+      String sourceCode,
+      String sourceSha256) {}
+
+  @Select("SELECT COUNT(*) FROM assignment_participant WHERE assignment_id=#{id}")
+  long participantCount(String id);
+
+  @Select(
+      """
+        SELECT p.user_id,
+            u.username,
+            m.status member_status,
+            m.role
+        FROM assignment_participant p
+        JOIN user_account u ON u.id=p.user_id
+        JOIN classroom_member m ON m.classroom_id=p.classroom_id
+        AND m.user_id=p.user_id
+        WHERE p.assignment_id=#{id}
+        ORDER BY p.user_id
+        LIMIT #{size} OFFSET #{offset}
+        """)
+  List<Participant> participants(
+      @Param("id") String id, @Param("size") int size, @Param("offset") long offset);
+
+  // Filter before windowing. This query contains no source or private PRECOMPLETED submission ID.
+  @Select(
+      """
         <script>
         WITH scoped AS (
           SELECT a.user_id,a.problem_id,a.submission_id,a.accepted_at,s.processing_status,s.verdict,s.finished_at
@@ -43,15 +97,48 @@ interface TeacherRecordMapper {
         ORDER BY m.user_id,p.ordinal
         </script>
         """)
-    List<GradeRow> grades(@Param("id") String id,@Param("users") List<Long> users);
-    @Select("SELECT EXISTS(SELECT 1 FROM assignment_participant m JOIN assignment_problem p ON p.assignment_id=m.assignment_id WHERE m.assignment_id=#{id} AND m.user_id=#{user} AND p.ordinal=#{ordinal})")
-    boolean scope(@Param("id") String id,@Param("user") long user,@Param("ordinal") int ordinal);
-    String JOINS=" FROM assignment_attempt a JOIN assignment_problem p ON p.assignment_id=a.assignment_id AND p.problem_id=a.problem_id AND p.judge_version_id=a.judge_version_id JOIN submission s ON s.id=a.submission_id AND s.user_id=a.user_id AND s.problem_id=a.problem_id AND s.judge_version_id=a.judge_version_id ";
-    String COLUMNS="s.id submission_id,s.user_id,p.ordinal,p.problem_slug,s.judge_version_id,s.language,s.processing_status,s.verdict,a.accepted_at,TIMESTAMPADD(SECOND,-TIMESTAMPDIFF(SECOND,UTC_TIMESTAMP(6),CURRENT_TIMESTAMP(6)),s.finished_at) finished_at";
-    @Select("SELECT COUNT(*)"+JOINS+"WHERE a.assignment_id=#{id} AND a.user_id=#{user} AND p.ordinal=#{ordinal}")
-    long attemptCount(@Param("id") String id,@Param("user") long user,@Param("ordinal") int ordinal);
-    @Select("SELECT "+COLUMNS+JOINS+"WHERE a.assignment_id=#{id} AND a.user_id=#{user} AND p.ordinal=#{ordinal} ORDER BY a.accepted_at DESC,a.submission_id DESC LIMIT #{size} OFFSET #{offset}")
-    List<Attempt> attempts(@Param("id") String id,@Param("user") long user,@Param("ordinal") int ordinal,@Param("size") int size,@Param("offset") long offset);
-    @Select("SELECT "+COLUMNS+",s.source_code,s.source_sha256"+JOINS+"WHERE a.assignment_id=#{id} AND a.submission_id=#{submission} LIMIT 1")
-    Optional<Source> source(@Param("id") String id,@Param("submission") String submission);
+  List<GradeRow> grades(@Param("id") String id, @Param("users") List<Long> users);
+
+  @Select(
+      """
+        SELECT EXISTS(SELECT 1
+        FROM assignment_participant m
+        JOIN assignment_problem p ON p.assignment_id=m.assignment_id
+        WHERE m.assignment_id=#{id}
+        AND m.user_id=#{user}
+        AND p.ordinal=#{ordinal})
+        """)
+  boolean scope(@Param("id") String id, @Param("user") long user, @Param("ordinal") int ordinal);
+
+  String JOINS =
+      " FROM assignment_attempt a JOIN assignment_problem p ON p.assignment_id=a.assignment_id AND p.problem_id=a.problem_id AND p.judge_version_id=a.judge_version_id JOIN submission s ON s.id=a.submission_id AND s.user_id=a.user_id AND s.problem_id=a.problem_id AND s.judge_version_id=a.judge_version_id ";
+  String COLUMNS =
+      "s.id submission_id,s.user_id,p.ordinal,p.problem_slug,s.judge_version_id,s.language,s.processing_status,s.verdict,a.accepted_at,TIMESTAMPADD(SECOND,-TIMESTAMPDIFF(SECOND,UTC_TIMESTAMP(6),CURRENT_TIMESTAMP(6)),s.finished_at) finished_at";
+
+  @Select(
+      "SELECT COUNT(*)"
+          + JOINS
+          + "WHERE a.assignment_id=#{id} AND a.user_id=#{user} AND p.ordinal=#{ordinal}")
+  long attemptCount(
+      @Param("id") String id, @Param("user") long user, @Param("ordinal") int ordinal);
+
+  @Select(
+      "SELECT "
+          + COLUMNS
+          + JOINS
+          + "WHERE a.assignment_id=#{id} AND a.user_id=#{user} AND p.ordinal=#{ordinal} ORDER BY a.accepted_at DESC,a.submission_id DESC LIMIT #{size} OFFSET #{offset}")
+  List<Attempt> attempts(
+      @Param("id") String id,
+      @Param("user") long user,
+      @Param("ordinal") int ordinal,
+      @Param("size") int size,
+      @Param("offset") long offset);
+
+  @Select(
+      "SELECT "
+          + COLUMNS
+          + ",s.source_code,s.source_sha256"
+          + JOINS
+          + "WHERE a.assignment_id=#{id} AND a.submission_id=#{submission} LIMIT 1")
+  Optional<Source> source(@Param("id") String id, @Param("submission") String submission);
 }

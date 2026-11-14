@@ -1,0 +1,2190 @@
+{
+  "hashMethod": "sha256 is raw build snapshot; gitBlobOid applies repository attributes and line-ending filters",
+  "inputs": [
+    {
+      "path": "contracts/examples/judge-task-v1.json",
+      "sha256": "74eeaa470d673780f8271198619cec28e6feb67ceaee6de926c3582cd714ee2a",
+      "gitBlobOid": "80c54a78ad817eebce7e4dafb11eedb4beb8865a"
+    },
+    {
+      "path": "contracts/judge-task-v1.schema.json",
+      "sha256": "49d876859b498d1a2c3a3429adf666b56e9e2ce90e5582319bd61ec575b473f4",
+      "gitBlobOid": "cee8d3ab181b8f3ac9775eae906f71b2c38ee835"
+    },
+    {
+      "path": "contracts/self-test-v1.schema.json",
+      "sha256": "5aec9c80fe3aae1ca1c3202b5b6a65dae8fd18fda3a00da20fb785bbf661d9bb",
+      "gitBlobOid": "18ab01e460bcc6d724bc6e7fa2a1b149b28e03ce"
+    },
+    {
+      "path": "forgeoj-api/pom.xml",
+      "sha256": "b4e361b143a468dc294dbec0552cc9e905195754f5d25009b79c3f6fb40733af",
+      "gitBlobOid": "feac52a9ef523a7bf138d396ef1cbefbe2fe1595"
+    },
+    {
+      "path": "forgeoj-api/src/main/java/com/forgeoj/api/ForgeojApiApplication.java",
+      "sha256": "0a9807b61e303e6afc9d61598d25ae6856c8cdc81bcbcafed1b2448dcf886c8d",
+      "gitBlobOid": "610533e545dee4697e0a036c809873574b8ec77d"
+    },
+    {
+      "path": "forgeoj-api/src/main/java/com/forgeoj/api/admin/AdminAudit.java",
+      "sha256": "3ad7cba23afd91736fd1abdc12b468fd300afe63f17d832d07fd49da527a88fe",
+      "gitBlobOid": "bc8b221b404db4625856838e7a2907e18202f2d8"
+    },
+    {
+      "path": "forgeoj-api/src/main/java/com/forgeoj/api/admin/AdminAuthenticationFilter.java",
+      "sha256": "0d678d7a45890d6f58dd842e77fa45d9b89f8441f3ffa1de215c652afdd1e5e4",
+      "gitBlobOid": "b233f73ba051dbd9119e1b1afdafd3c334c5d723"
+    },
+    {
+      "path": "forgeoj-api/src/main/java/com/forgeoj/api/admin/AdminCli.java",
+      "sha256": "8d10af917f32622333d77b45782b1d99a09edd06e7931d7d1d5b6d73047a51d1",
+      "gitBlobOid": "0c7ade234e739c787e84ff09359613e9c14c333a"
+    },
+    {
+      "path": "forgeoj-api/src/main/java/com/forgeoj/api/admin/AdminController.java",
+      "sha256": "497246f3761ab09198d31280c360f1769dc0c11324c2a900a255a7c820c51b4f",
+      "gitBlobOid": "ccfa4ff71dd9b0d4c3e9b302cf5b59981dccb9de"
+    },
+    {
+      "path": "forgeoj-api/src/main/java/com/forgeoj/api/admin/AdminCookies.java",
+      "sha256": "13107848ddded63213b6fb85c63082f752d1a4b0e1407b1bf5778552ccb1f8d0",
+      "gitBlobOid": "9c67d727960d4504acbdf17762a2f7cf39dce909"
+    },
+    {
+      "path": "forgeoj-api/src/main/java/com/forgeoj/api/admin/AdminCsrfRepository.java",
+      "sha256": "a67b72b9df60b81fa837154e3cc2cdd1c6146e882c5a5e6c4329c130c53ceeaa",
+      "gitBlobOid": "b4de9fafb375129f92993f357fee0700f842679d"
+    },
+    {
+      "path": "forgeoj-api/src/main/java/com/forgeoj/api/admin/AdminInput.java",
+      "sha256": "676861eb45d16fe2e0a4bd8d571e65b68e5fa207674a1d28319ebd2aa451e2c2",
+      "gitBlobOid": "5222c8cebd3722d19ea6165e9b71d58bdcab2dc3"
+    },
+    {
+      "path": "forgeoj-api/src/main/java/com/forgeoj/api/admin/AdminJwt.java",
+      "sha256": "a603262cb43cff24da164bab3c5aac61bc7da08af48135e53512366f3ef0d467",
+      "gitBlobOid": "deaccb155c318a92deb490fe138d1f4f7dd28f84"
+    },
+    {
+      "path": "forgeoj-api/src/main/java/com/forgeoj/api/admin/AdminMapper.java",
+      "sha256": "bafe9829d1277aa09dfee93957162d4899fd4060428bfa318fb6bdf21b1013ca",
+      "gitBlobOid": "0380d2ad3072c98cc1c961c48b92590be7c5a143"
+    },
+    {
+      "path": "forgeoj-api/src/main/java/com/forgeoj/api/admin/AdminOriginFilter.java",
+      "sha256": "3badbc507bc02946e20f12296b6fd28ae680a5d1c9db5de6df2691f7dabb2e80",
+      "gitBlobOid": "014fcbbcca68ddf6ad2ad41fbb7929d9abad3c59"
+    },
+    {
+      "path": "forgeoj-api/src/main/java/com/forgeoj/api/admin/AdminPrincipal.java",
+      "sha256": "c08315524d6ce0b70abb2b3afc43e18f4ea56a843d8fdff7c8d022867aeaeee2",
+      "gitBlobOid": "4e246e5d518dca95e681a2060226b4e91a53326b"
+    },
+    {
+      "path": "forgeoj-api/src/main/java/com/forgeoj/api/admin/AdminProvisioning.java",
+      "sha256": "dc85f842c143270ee0dbc5f4aefc86fb537aca4b3728ac2898a5bb2b86cc4637",
+      "gitBlobOid": "b0f0fc8141e8443f098f3256c784c40f01881289"
+    },
+    {
+      "path": "forgeoj-api/src/main/java/com/forgeoj/api/admin/AdminSecurityConfig.java",
+      "sha256": "af5602a80a552e962cfa16b1d6d9a980b8932d55cc6112868d0a59233dc43f41",
+      "gitBlobOid": "9138a214cdf8c6b0d896d162696aa9d3cbe63bd3"
+    },
+    {
+      "path": "forgeoj-api/src/main/java/com/forgeoj/api/admin/AdminService.java",
+      "sha256": "08a1daf6fe729caaa6f64317c360ce71b74fe7a361a9ec7f008fd7b6ca07973d",
+      "gitBlobOid": "e8f649ddaad11ab1cb432fe9a48683ece2f5c424"
+    },
+    {
+      "path": "forgeoj-api/src/main/java/com/forgeoj/api/admin/OperationsController.java",
+      "sha256": "580a13a54a8490dfcb5d152cfc13fd52cef85176c406be576656dad568e4ac4e",
+      "gitBlobOid": "8d5e75bce0f70992f5c9c55944d89a1341f943cd"
+    },
+    {
+      "path": "forgeoj-api/src/main/java/com/forgeoj/api/admin/OperationsMapper.java",
+      "sha256": "ffafb5014fd6d4cd92057ab3c6e66325b377e25a32b557d586d4e6ef1a7199d9",
+      "gitBlobOid": "e21b12db8af20cec4f66670896ec59ce3ab4ba7d"
+    },
+    {
+      "path": "forgeoj-api/src/main/java/com/forgeoj/api/admin/OperationsRecoveryMapper.java",
+      "sha256": "23e1c092bf940b3e02708b6588161bff7fe0b2f018521e963215176128d06ecd",
+      "gitBlobOid": "8a947cac8cf8485c9d9dd133ebbf8197a4bf2637"
+    },
+    {
+      "path": "forgeoj-api/src/main/java/com/forgeoj/api/admin/OperationsRecoveryService.java",
+      "sha256": "d9846e4bf960208d31c14b3c1038dc348f71bd1321a0f0de57732edcf340c4fb",
+      "gitBlobOid": "31b214f439c5fa1e009791cc86b51995d3cad489"
+    },
+    {
+      "path": "forgeoj-api/src/main/java/com/forgeoj/api/admin/OperationsService.java",
+      "sha256": "a5f1777c495b0440a705e87207132ea42308619457b4fc9433531a324ccee368",
+      "gitBlobOid": "93d7754698339bab9160a9d436cee92cc9efaefd"
+    },
+    {
+      "path": "forgeoj-api/src/main/java/com/forgeoj/api/admin/PublicContentInput.java",
+      "sha256": "4d1af845f18928b9b45d79ce5df0ed3c6e012acf1f031949782d30201932bf4c",
+      "gitBlobOid": "16b35d4cc94eed163ff557dbb7d4b613b1a0f967"
+    },
+    {
+      "path": "forgeoj-api/src/main/java/com/forgeoj/api/admin/PublicFeedbackAdminController.java",
+      "sha256": "2e55ec0d10535446dfa52d0b48bdd1c647aa93189369e5c9713d3c6689c15503",
+      "gitBlobOid": "9cd854ef6d084430e6294634170e6821354fc00d"
+    },
+    {
+      "path": "forgeoj-api/src/main/java/com/forgeoj/api/admin/PublicFeedbackMapper.java",
+      "sha256": "a36f93f41f8716943b97c190955f891073873ae59c1c4375c8b0403e1f97d876",
+      "gitBlobOid": "a2f3ceea2ca9f015d190d1e7c334ae74817efe7a"
+    },
+    {
+      "path": "forgeoj-api/src/main/java/com/forgeoj/api/admin/PublicFeedbackService.java",
+      "sha256": "290b8e71430f0efa45b86e8bf1d4ad3fef3574841adca6d5eff3ae3ce82824c7",
+      "gitBlobOid": "5d151915378b26c95e240a38b182d3ac3ec08f5d"
+    },
+    {
+      "path": "forgeoj-api/src/main/java/com/forgeoj/api/admin/PublicReviewController.java",
+      "sha256": "0d02dfbecd3d888ae7b88eaa98f2a73a709f66ef412b2f54efcfa44277c1c87a",
+      "gitBlobOid": "13f14e8d45ade5647fc1cf18fb147d137f379ee9"
+    },
+    {
+      "path": "forgeoj-api/src/main/java/com/forgeoj/api/admin/PublicReviewMapper.java",
+      "sha256": "f4ca6879f7ba36b8fc75636e479f2e4a33bb96d44f91fdd810ed0c70a6c36c0d",
+      "gitBlobOid": "784506b1ddffb540222d7320bb3309101ed21c13"
+    },
+    {
+      "path": "forgeoj-api/src/main/java/com/forgeoj/api/admin/PublicReviewService.java",
+      "sha256": "36d01564971b4bbd85eddd93b4eaa5f63fb84197d2b429c6f1c4572093c919c2",
+      "gitBlobOid": "c8afd5bead3f9f914186fc88ca61a7ff697a198d"
+    },
+    {
+      "path": "forgeoj-api/src/main/java/com/forgeoj/api/admin/SearchAdministrationController.java",
+      "sha256": "4db3331825ab7b52e6ccb1f9f05a766c0db59429a5fa4b9b2b97adbe2885136d",
+      "gitBlobOid": "08ae5dfbc1ab9c4bb7b03de785c199f671a8766f"
+    },
+    {
+      "path": "forgeoj-api/src/main/java/com/forgeoj/api/admin/SearchAdministrationService.java",
+      "sha256": "65826fd52b60da38939a1bfc0816462fcf7bff2fe2b3d021f5b86a354180bf0e",
+      "gitBlobOid": "aaa43fa18bcc571544d672a76df38764c20222ad"
+    },
+    {
+      "path": "forgeoj-api/src/main/java/com/forgeoj/api/admin/SearchRebuildAudit.java",
+      "sha256": "3bbc681c01329fad25386775598f9c5690f3d7302c9bbe8e397e8cc822b9acdd",
+      "gitBlobOid": "290268e17d15eed4b7d9ffba2f2459de48f5f18f"
+    },
+    {
+      "path": "forgeoj-api/src/main/java/com/forgeoj/api/auth/AccountAuthenticationFilter.java",
+      "sha256": "c54d4b3cdedf6dcb40258c8f96842577b0e80a7d77dbb3f8df2336e82afb7122",
+      "gitBlobOid": "36d6e63fcfabf1361ba2b58ec8eb5cab63a67d9d"
+    },
+    {
+      "path": "forgeoj-api/src/main/java/com/forgeoj/api/auth/AccountCookies.java",
+      "sha256": "2416183b6e004d0202683d964eb439c0d422b35479b0fd650fb22113a1c57261",
+      "gitBlobOid": "0a716c3104929c97151daaa71266ec8dbd386ec8"
+    },
+    {
+      "path": "forgeoj-api/src/main/java/com/forgeoj/api/auth/AccountCsrfRepository.java",
+      "sha256": "cef3fd69370446634715041a8bf1fc360a22e61d1bfd928426c68cd6d8b2275a",
+      "gitBlobOid": "46aa8410c45bd63cdfab59ba6d0e2ad1c956756d"
+    },
+    {
+      "path": "forgeoj-api/src/main/java/com/forgeoj/api/auth/AccountInput.java",
+      "sha256": "f09d9dedec1efa1d15d806adf4ee60b009cfc3ce0708db41eb35f521b994e90a",
+      "gitBlobOid": "e363e3cb6626a424ebe6133500dfee9a116512e8"
+    },
+    {
+      "path": "forgeoj-api/src/main/java/com/forgeoj/api/auth/AccountJwt.java",
+      "sha256": "2123c5105e243421d7d766f426456afe727d4959f7755750bd053054daa7df0d",
+      "gitBlobOid": "d1fdca83ebe95acdd031e073606ff2e9f42efa87"
+    },
+    {
+      "path": "forgeoj-api/src/main/java/com/forgeoj/api/auth/AccountMailContent.java",
+      "sha256": "da82bc50f3bf543d718561ffab0c35e54181cf13559e045aa5965f234fed4cb0",
+      "gitBlobOid": "4cd34e5bd4284f466fd7dcf0d93385017a9499b2"
+    },
+    {
+      "path": "forgeoj-api/src/main/java/com/forgeoj/api/auth/AccountMailDelivery.java",
+      "sha256": "a98c1aafda6c6ccb6c5bb5de421741ac313023ce3ca0d4ddb8ce8d6824de4945",
+      "gitBlobOid": "9c84d3f795c94bc3a2d5025e33e352b8d809f4ef"
+    },
+    {
+      "path": "forgeoj-api/src/main/java/com/forgeoj/api/auth/AccountMapper.java",
+      "sha256": "c4810528b9202ff40f8e138715f4dd71cfaadfd47fecb86b0a2cd562a86326d9",
+      "gitBlobOid": "2c14a6b4dcb4e7fc4d208e2ba728df211b5d4093"
+    },
+    {
+      "path": "forgeoj-api/src/main/java/com/forgeoj/api/auth/AccountRateLimiter.java",
+      "sha256": "d8468df13f44d48a3eb4e0cc4fa8a981ab20c080982a3ac153fcec209c95d99d",
+      "gitBlobOid": "54ca542cad2f61635d4808782977348b1aab2976"
+    },
+    {
+      "path": "forgeoj-api/src/main/java/com/forgeoj/api/auth/AccountSecrets.java",
+      "sha256": "e09d2f5b538d86a4b0ff4b56d0af48799340d5a97f24f6ac10c0260242eab8c0",
+      "gitBlobOid": "963c5f20131c3f5cf8665c3e8d32b8c4a602cf9f"
+    },
+    {
+      "path": "forgeoj-api/src/main/java/com/forgeoj/api/auth/AccountService.java",
+      "sha256": "e4471358e6601057d4b128fbe40a93e0ec79a9d9f0850a6800887903c3e93c68",
+      "gitBlobOid": "f20f68d1c884c3a7def0c64d67f4729b6d74052f"
+    },
+    {
+      "path": "forgeoj-api/src/main/java/com/forgeoj/api/auth/AccountSessionsRevoked.java",
+      "sha256": "37e81797e44db2a5185f5035644493297156c796185c282769f0e52c62d9b5e5",
+      "gitBlobOid": "64e01c82e7bb02748fcee87f2ccf197d5c86933f"
+    },
+    {
+      "path": "forgeoj-api/src/main/java/com/forgeoj/api/auth/AuthController.java",
+      "sha256": "68c61b1c3cce5a012f92a002f5f93b0d184ca5bddf7144b4b54c5735e0a54ece",
+      "gitBlobOid": "9306c5964c399e5b05eab167dd40be8f2da04e76"
+    },
+    {
+      "path": "forgeoj-api/src/main/java/com/forgeoj/api/auth/DatabaseUserDetailsService.java",
+      "sha256": "6ebab713f563bba7728b326b655c0f74c0fe4db3a54d82daf3b1a8c412926bd6",
+      "gitBlobOid": "7ed03ead782b2f32af6ddb6a68ce9cc75af2bedd"
+    },
+    {
+      "path": "forgeoj-api/src/main/java/com/forgeoj/api/auth/DisabledAccountMail.java",
+      "sha256": "2ed7b3b2067353e965e2d804769d0767eafc51ef5de48678ffe369c58b8e0538",
+      "gitBlobOid": "deb3d33f2c67c3fadb07b81fe935eda7f20f96e9"
+    },
+    {
+      "path": "forgeoj-api/src/main/java/com/forgeoj/api/auth/ForgeOjPrincipal.java",
+      "sha256": "3d31b88f51ebe2bcf70699003874f279acc60d46697099a659b1354c8a2419ee",
+      "gitBlobOid": "1e7c5a25448d825bc8ff960ff0d5a8e7a3c73a97"
+    },
+    {
+      "path": "forgeoj-api/src/main/java/com/forgeoj/api/auth/LocalAccountMail.java",
+      "sha256": "e1f3090a73cdab20e45b4f8c10e2ac360f9f6f852a8f9cdf0c3f851989c7c334",
+      "gitBlobOid": "9c44188cdcd3c15a6b37169840af4774ec509f4c"
+    },
+    {
+      "path": "forgeoj-api/src/main/java/com/forgeoj/api/auth/SameOriginFilter.java",
+      "sha256": "9c514acbfffe3fdb6009aecbf1246fe3b9d0e62cc81a6f7fb2cccc3167a43f09",
+      "gitBlobOid": "330e90f8dfedd5c0cd356217fe8882dd6f7bd97e"
+    },
+    {
+      "path": "forgeoj-api/src/main/java/com/forgeoj/api/auth/SmtpAccountMail.java",
+      "sha256": "d6b106079b9e2b78421759026669450c3ceb66b35478db2410ab03723e69ba01",
+      "gitBlobOid": "3bd19b138f751233c99650d1b26db5547befa970"
+    },
+    {
+      "path": "forgeoj-api/src/main/java/com/forgeoj/api/cache/CacheInvalidationProcessor.java",
+      "sha256": "b273fd1f1f57ffc5e721abf9ec144316d51a0136bb4baced6a9ecf58fff3227a",
+      "gitBlobOid": "98374543cceb4aa23146334dee4a5cad0df82cc9"
+    },
+    {
+      "path": "forgeoj-api/src/main/java/com/forgeoj/api/cache/CacheInvalidationPublisher.java",
+      "sha256": "b9e85a460dd3e7e98f0b25c152317ae407a3dbd4b9f04f7a5f0afb1a9e8a0e08",
+      "gitBlobOid": "c1332956f241817a34b6fe0ac97e8322cd3aba28"
+    },
+    {
+      "path": "forgeoj-api/src/main/java/com/forgeoj/api/cache/CacheInvalidations.java",
+      "sha256": "bd73dfd0dfd9c23b2050e8e46af6b8a86b767983d757ab0ce839486cf7fdfc96",
+      "gitBlobOid": "9b6f5885583a3d8bc7fe1a4e463cfd67dec00685"
+    },
+    {
+      "path": "forgeoj-api/src/main/java/com/forgeoj/api/cache/CacheMapper.java",
+      "sha256": "e4389593c377e67b296006def4b6e1bc831f61901a4eb99a4674257c35098024",
+      "gitBlobOid": "c30893b9059791dbe6f2417320c4f32152cd9440"
+    },
+    {
+      "path": "forgeoj-api/src/main/java/com/forgeoj/api/cache/PublicCache.java",
+      "sha256": "a648717b9d040184cfe1c5fbbf65f5690ebaf2a6a1165d010c2de96c1256e285",
+      "gitBlobOid": "0791a2fa50102728efb1ab339f35d029dd1285cc"
+    },
+    {
+      "path": "forgeoj-api/src/main/java/com/forgeoj/api/cache/RedisResourcesConfig.java",
+      "sha256": "7fec1f5977535f5cd6c185620b64a2b86cad77190028a8eedbeec578930593c7",
+      "gitBlobOid": "275d1ee4f95e170a26400cf6ec5891033779a386"
+    },
+    {
+      "path": "forgeoj-api/src/main/java/com/forgeoj/api/cache/RedisSupport.java",
+      "sha256": "1adcb50f68746da74ccb49eeb3965fe0f64b6b5211198a0c0c8143b3fd6fd37c",
+      "gitBlobOid": "86266e026da33a1cdbc235a4abd7b3dcaab4e6a9"
+    },
+    {
+      "path": "forgeoj-api/src/main/java/com/forgeoj/api/cache/RequestCoalescer.java",
+      "sha256": "3b34635f67f94797f85376e8d45073daab50ea6464b5e811115c3ced3fa646cf",
+      "gitBlobOid": "f930fdaa5ea95a7b1b9a12cc3dcc09445d89afd9"
+    },
+    {
+      "path": "forgeoj-api/src/main/java/com/forgeoj/api/cache/SessionCache.java",
+      "sha256": "c4921a2d9b3522d294df61594befb1f118d9086b889346c5563975e061c7253a",
+      "gitBlobOid": "427f659f96bb5fe8636351731fdb9af34229a622"
+    },
+    {
+      "path": "forgeoj-api/src/main/java/com/forgeoj/api/cache/SessionCacheMapper.java",
+      "sha256": "33b24b557925f322eec07e3a98e608f7c5e0069432197f81267aef93730be969",
+      "gitBlobOid": "8e8030177c1984522fbb5b51ba5b51ed871f1f72"
+    },
+    {
+      "path": "forgeoj-api/src/main/java/com/forgeoj/api/classroom/AssignmentController.java",
+      "sha256": "350c2a69cbaa165889f2e1ccaf5ae6723fbf44dd103f9ec38eb09e71222d0789",
+      "gitBlobOid": "ee4d22f558ebc39467f6dd4048437f7774a16b2d"
+    },
+    {
+      "path": "forgeoj-api/src/main/java/com/forgeoj/api/classroom/AssignmentLifecycle.java",
+      "sha256": "986290904aab3eb1212b13cec895fb17cac6491ba75ac98cc8353459ce581c22",
+      "gitBlobOid": "408f14330d63d07a88bb327982057475e9216816"
+    },
+    {
+      "path": "forgeoj-api/src/main/java/com/forgeoj/api/classroom/AssignmentMapper.java",
+      "sha256": "9c04aa19f8ca158d3907fc1455c75b95f94ac4873b9993b2a59a82a271c36353",
+      "gitBlobOid": "7be61712c0ecfdfc4ac1024af5c607fad4f67e98"
+    },
+    {
+      "path": "forgeoj-api/src/main/java/com/forgeoj/api/classroom/AssignmentScheduler.java",
+      "sha256": "ab8042b719599b8813230fb79f126281802a99228dead6c2b19dfc8e190a204b",
+      "gitBlobOid": "a8b9ec7f70f06a652bf716d089048aa3eaad7588"
+    },
+    {
+      "path": "forgeoj-api/src/main/java/com/forgeoj/api/classroom/AssignmentService.java",
+      "sha256": "29459b53adde6545eab7a1ff922b548b2998a6783acfd191d927cc1955c494b0",
+      "gitBlobOid": "f8e3ec2ea7e4b3b91417947196f1e111c9eeecad"
+    },
+    {
+      "path": "forgeoj-api/src/main/java/com/forgeoj/api/classroom/AssignmentSolutionGuard.java",
+      "sha256": "8963b742986ada5f98f224d94dcafb3b551c47d65e088d48d6ac62dfefa636e5",
+      "gitBlobOid": "7030b8c8b2002e1910289cb7981c85564081bfda"
+    },
+    {
+      "path": "forgeoj-api/src/main/java/com/forgeoj/api/classroom/ClassroomController.java",
+      "sha256": "4a75cd80645aed7eadab1ba1959f5bff8aefe42f20cf99398893997edd6b035c",
+      "gitBlobOid": "3b34e2bc1d05d79e8c0a4a65fbe94763e60aedf3"
+    },
+    {
+      "path": "forgeoj-api/src/main/java/com/forgeoj/api/classroom/ClassroomMapper.java",
+      "sha256": "22823b1a83f8abf47f823263ac32065183beb8a72a13f224a47b27a7754c0676",
+      "gitBlobOid": "f491610ee19f12838057bf32a72ddcd6c8f3355e"
+    },
+    {
+      "path": "forgeoj-api/src/main/java/com/forgeoj/api/classroom/ClassroomProblemController.java",
+      "sha256": "b7e5310342aa00a80af921f74b50a546f967dd2762e54e947169d9c75c90c83f",
+      "gitBlobOid": "f66a061b41b909e001a5b48f0e2330aa747c6bab"
+    },
+    {
+      "path": "forgeoj-api/src/main/java/com/forgeoj/api/classroom/ClassroomProblemMapper.java",
+      "sha256": "01ea1e1c7302a3ef2573e64481e545a20de2ca103108f30d6d1928261ab87f46",
+      "gitBlobOid": "14649ca55687fd8dc3a61ae4349a753ac53fa79a"
+    },
+    {
+      "path": "forgeoj-api/src/main/java/com/forgeoj/api/classroom/ClassroomProblemService.java",
+      "sha256": "a6ddace31d7c4e76342f4f99dce774a8a7b4e311386c5ecb19ecca4b4c4bfee3",
+      "gitBlobOid": "bd62fe3322e903170cc495ca4c612f1caac86d19"
+    },
+    {
+      "path": "forgeoj-api/src/main/java/com/forgeoj/api/classroom/ClassroomService.java",
+      "sha256": "2d21406864f3563c79a9bf9a71e98176254ca63bf243c490424762be21cddb30",
+      "gitBlobOid": "b6fbb631f85ccf5918eecbfbc78a98411cbfcec4"
+    },
+    {
+      "path": "forgeoj-api/src/main/java/com/forgeoj/api/classroom/TeacherRecordController.java",
+      "sha256": "3bb4134c04b0d79b0fe42c5b38dae7684e85f348fb71a06ff603f7e07a0a7dd1",
+      "gitBlobOid": "ea241e2868ad0b359be7a64f755a39b5905a9b29"
+    },
+    {
+      "path": "forgeoj-api/src/main/java/com/forgeoj/api/classroom/TeacherRecordMapper.java",
+      "sha256": "580a44d50abe8f5da68e7ad2701c5a360ab7546f41739badeae5b90625ac7640",
+      "gitBlobOid": "105a9fd83602eb08afb686d1faecdf05d38f2801"
+    },
+    {
+      "path": "forgeoj-api/src/main/java/com/forgeoj/api/classroom/TeacherRecordService.java",
+      "sha256": "d46f2e37696f2a08b6e490933f48678dd7c5f1e88a5d58649c86306dc199115b",
+      "gitBlobOid": "e700f323935ea5ccfb870608018ad786c029ce98"
+    },
+    {
+      "path": "forgeoj-api/src/main/java/com/forgeoj/api/config/ApiErrorHandler.java",
+      "sha256": "59fe2487ebf6b0e4e77ffe282b81ff844b18c7ab3f354d21697b8519f46d7e8c",
+      "gitBlobOid": "6f048f893bff1588c3e2e1b41e473fc05d5e33bc"
+    },
+    {
+      "path": "forgeoj-api/src/main/java/com/forgeoj/api/config/SecurityConfig.java",
+      "sha256": "2fa363ea44cadab6d4613e625c331b05e524bce4a088e999d73ec79f64c1836b",
+      "gitBlobOid": "961a44515a9ec63c4f6aac9679628cd3fd844ab4"
+    },
+    {
+      "path": "forgeoj-api/src/main/java/com/forgeoj/api/content/ContentController.java",
+      "sha256": "17d1047e243b6563c6c9da0616508606e43ee7d1a180dd9c002d5e0f09df4a52",
+      "gitBlobOid": "f7b62a99848d84edde71052918e989194d40df9f"
+    },
+    {
+      "path": "forgeoj-api/src/main/java/com/forgeoj/api/content/ContentMapper.java",
+      "sha256": "0ea52e5553b58ddddc534a5a91b5e8c89bec9b0970e4fbb433f9348f17a753f4",
+      "gitBlobOid": "1649ab987bdbf43a3417a8e70537db962a849f42"
+    },
+    {
+      "path": "forgeoj-api/src/main/java/com/forgeoj/api/content/ContentOutputController.java",
+      "sha256": "6c8cee9be31165f1c33bb73a794b5307ccf87db236e9f347c050ebed529d6a1f",
+      "gitBlobOid": "5252e357ada1e51e25f17f4b540967602472dbc0"
+    },
+    {
+      "path": "forgeoj-api/src/main/java/com/forgeoj/api/content/ContentOutputMapper.java",
+      "sha256": "6569595e03d93cff32d945b3d772d8694d7776764fdc7d4c974765669575f7e4",
+      "gitBlobOid": "cf0e90fd57ec7af77077cc3c39ceda4c8af1b658"
+    },
+    {
+      "path": "forgeoj-api/src/main/java/com/forgeoj/api/content/ContentOutputService.java",
+      "sha256": "25ac71fc55efa27e2274675a6aa28b8c78e911b14822efe67da16d26ae93681c",
+      "gitBlobOid": "75fd2610256c0cdaccfab7050ea68ec88b53cae9"
+    },
+    {
+      "path": "forgeoj-api/src/main/java/com/forgeoj/api/content/ContentRecords.java",
+      "sha256": "9da4aaed818db2e81e6fb0c83772ddfa0c8d52d315709729a28f186590e1a171",
+      "gitBlobOid": "6b775094d8dd8f958f7f2a5f73a03a4253c12611"
+    },
+    {
+      "path": "forgeoj-api/src/main/java/com/forgeoj/api/content/ContentRequestSizeFilter.java",
+      "sha256": "c1d17de8d785edf5a938763b81a1de0882e5dc04ab84249e9289c0f84d383e71",
+      "gitBlobOid": "56942bcc82544f33133359c85089f9178ecffa87"
+    },
+    {
+      "path": "forgeoj-api/src/main/java/com/forgeoj/api/content/ContentReviewController.java",
+      "sha256": "a197738fe765506174860d0075eff15a9739d8f3cd1ffc24f13d282d86015713",
+      "gitBlobOid": "15d2311a59e92f97d53e7ea651671e39762fc02d"
+    },
+    {
+      "path": "forgeoj-api/src/main/java/com/forgeoj/api/content/ContentReviewMapper.java",
+      "sha256": "cf22ab9672306f29b527633ba6d6690b3ec17e1903e8066e1d870873535e953f",
+      "gitBlobOid": "6d22298cbe08ee9e60c1cf44c037f9e8f214cc13"
+    },
+    {
+      "path": "forgeoj-api/src/main/java/com/forgeoj/api/content/ContentReviewService.java",
+      "sha256": "4fefb3bc332f84127b335c1f88d5674be73dd46d0eac81717af0bf5d6b7a008a",
+      "gitBlobOid": "cc42ce5df9e909c7b5fea787afc2ea02dc95b123"
+    },
+    {
+      "path": "forgeoj-api/src/main/java/com/forgeoj/api/content/ContentService.java",
+      "sha256": "5103a35fdaa6cb8d928a7d2d91eb0b721254698a15842c9651745aa3765cffea",
+      "gitBlobOid": "e24e07331f8b0a3764a7520b6e3778ca5f10012b"
+    },
+    {
+      "path": "forgeoj-api/src/main/java/com/forgeoj/api/content/ContentValidationController.java",
+      "sha256": "a6b21b875e8f4e65d1706a0e537c623f800c841903930e27d45c7b308e5c8b56",
+      "gitBlobOid": "a2bb86afa645b3bdfe2d57ff1b2511510558d009"
+    },
+    {
+      "path": "forgeoj-api/src/main/java/com/forgeoj/api/content/ContentValidationMapper.java",
+      "sha256": "15075109b05b364ab50f5ca9c2686b5b0564a5e95412ee57708e59595fec07ce",
+      "gitBlobOid": "80847ef4b80a41f966ed5f75f4aa9d74067d6575"
+    },
+    {
+      "path": "forgeoj-api/src/main/java/com/forgeoj/api/content/ContentValidationService.java",
+      "sha256": "ab18fa8bebd07bae1f3a3b249801d8bfe182b7fa1a02172989ed83b5a006c38e",
+      "gitBlobOid": "9834f53bc41204739a13a1f8f653b1108c868c1c"
+    },
+    {
+      "path": "forgeoj-api/src/main/java/com/forgeoj/api/content/PublicRevisionController.java",
+      "sha256": "145472a7659e22250857cfbc5bdb8af1280e3db3d0e3ba6e60407000c5c45fcb",
+      "gitBlobOid": "2cc3dce4097bad255beea189cbab95479a0c3f3f"
+    },
+    {
+      "path": "forgeoj-api/src/main/java/com/forgeoj/api/content/PublicRevisionService.java",
+      "sha256": "de05e02f026302234a4c7dea319e66559b466d5f335699ba465bc862a9cad448",
+      "gitBlobOid": "16fd33573d7da4c5f05a9a5b5e19e0cfb6e8b19e"
+    },
+    {
+      "path": "forgeoj-api/src/main/java/com/forgeoj/api/content/TestDatasetArchive.java",
+      "sha256": "26744893d10eaa34c55904c5e9be1c8943048d9bb57b177495399dec852104dd",
+      "gitBlobOid": "e9d883727fd7ad2844802b3f04dbcf5d53af8c46"
+    },
+    {
+      "path": "forgeoj-api/src/main/java/com/forgeoj/api/learning/LearningController.java",
+      "sha256": "19bc7767e32251640a2ccc0f9a92ea3a270a9182b8b304f1be66c42194ebb48a",
+      "gitBlobOid": "c6ef40af415657354dc6afdc2380f4c2d153ac0e"
+    },
+    {
+      "path": "forgeoj-api/src/main/java/com/forgeoj/api/learning/LearningMapper.java",
+      "sha256": "db208729776db4eb43a1bcb97bddf7d68b0fc7120acdf585a266d7d12d15645a",
+      "gitBlobOid": "bb0053b83e3cd1f523da6c61f79a1a80cd857f9b"
+    },
+    {
+      "path": "forgeoj-api/src/main/java/com/forgeoj/api/learning/LearningRecords.java",
+      "sha256": "089b2c03ae77894b07f4ccf9802804c9c547676b9d6b0f045102aff84a2b5a38",
+      "gitBlobOid": "ec7597f354da96c15f04e34f48388fff4e9c094d"
+    },
+    {
+      "path": "forgeoj-api/src/main/java/com/forgeoj/api/learning/LearningService.java",
+      "sha256": "16757219660165b5e1b18408047175ea50e37a09892e4ec7d42b8557f3cb1be0",
+      "gitBlobOid": "8acd5db93fbede664491a7f94b2edcf7a6961e38"
+    },
+    {
+      "path": "forgeoj-api/src/main/java/com/forgeoj/api/learning/PracticeController.java",
+      "sha256": "5348a77cffc996a4d3379f445b14a7c99d59682e24deca041e1b77d1157bdbd3",
+      "gitBlobOid": "9d42892dcd6be2c23ef5043e630a8251872c14b6"
+    },
+    {
+      "path": "forgeoj-api/src/main/java/com/forgeoj/api/learning/PracticeMapper.java",
+      "sha256": "087cbf03c2ec0b642854b9de7ddcb8c5152f22e1f2f68c5ac1a331e718d1c7c5",
+      "gitBlobOid": "71bb9b02c9d21575015d67c961ab44311644ace1"
+    },
+    {
+      "path": "forgeoj-api/src/main/java/com/forgeoj/api/learning/PracticeService.java",
+      "sha256": "8eef410bb40eb3b2d5edaba26a8516f81bcc94da72c0ec36a87fdf91e3ea6e21",
+      "gitBlobOid": "c446cb02572dd40c2075b1f499572930729a91a8"
+    },
+    {
+      "path": "forgeoj-api/src/main/java/com/forgeoj/api/messaging/OutboxEventRow.java",
+      "sha256": "9c119f8dc2f4a79e7de1844aef891995319944f0366df453d6f1af19fef3828a",
+      "gitBlobOid": "51811a03c3250d80d06d43cd31ef2f01fc7c5209"
+    },
+    {
+      "path": "forgeoj-api/src/main/java/com/forgeoj/api/messaging/OutboxMapper.java",
+      "sha256": "407e83a1599afe1998053139f2a4f7191b2e16438161efe4427a978422c89ea5",
+      "gitBlobOid": "c527b068e2098dea15bec8ad6a8ce1b711b66588"
+    },
+    {
+      "path": "forgeoj-api/src/main/java/com/forgeoj/api/messaging/OutboxPublisher.java",
+      "sha256": "afab2bece22464906addc3e25edda144960f2404cfc51ce03856ec99b52b1734",
+      "gitBlobOid": "01e54a9c1e976b91120356d9781b33d08fe0f64c"
+    },
+    {
+      "path": "forgeoj-api/src/main/java/com/forgeoj/api/messaging/RabbitTopology.java",
+      "sha256": "46512f4e5d259bea65fa2a68646fbb5dd509b87cf536d822deb6809457bd6a62",
+      "gitBlobOid": "622f3e205ea64026df44cbead1178be78eb11144"
+    },
+    {
+      "path": "forgeoj-api/src/main/java/com/forgeoj/api/observability/CommittedJudgingEvents.java",
+      "sha256": "92fc060109caa767e8914b42617ddecf8044a1cd0094e6d4b16bdc3c3dc3b81b",
+      "gitBlobOid": "cf8e58996a34028023780113649725bf1bef4c3d"
+    },
+    {
+      "path": "forgeoj-api/src/main/java/com/forgeoj/api/observability/MonitoringHttpServer.java",
+      "sha256": "05bc1ef3dc9df2db58bf40dda859874a42b89db1f1132d64afdb4526540c43aa",
+      "gitBlobOid": "f7d30ff8cc485c55cf1016c6ddfe6106542d1d84"
+    },
+    {
+      "path": "forgeoj-api/src/main/java/com/forgeoj/api/observability/MonitoringMapper.java",
+      "sha256": "cecda7d196315bc1f860460dcf307cc40a59c143354619ce168f0d4e5a4a4d7e",
+      "gitBlobOid": "f20846f3130aed22582e79c5c689cfdd79325f79"
+    },
+    {
+      "path": "forgeoj-api/src/main/java/com/forgeoj/api/observability/MonitoringMetrics.java",
+      "sha256": "84410d0046886ff929b4d4cd27f6d42074cc5ed562eca16bf10ac2705f771902",
+      "gitBlobOid": "5c06531a09d5230383431c92f12993843904ea1a"
+    },
+    {
+      "path": "forgeoj-api/src/main/java/com/forgeoj/api/observability/MonitoringRuntime.java",
+      "sha256": "6771a2fe21a86bc2a4174ce2f553601892b4d8b5a629f04757cebdc797cec94b",
+      "gitBlobOid": "c54f49c9276ec9799cf1875aea5eaf8406d134e1"
+    },
+    {
+      "path": "forgeoj-api/src/main/java/com/forgeoj/api/observability/MonitoringSnapshot.java",
+      "sha256": "ca677088e67343ed4dc72a53b59581a2d3ee3f6b457db2961740f4ab22bc7a79",
+      "gitBlobOid": "bcfe6bfe193392e6a8ed20066fa14483ee160fa1"
+    },
+    {
+      "path": "forgeoj-api/src/main/java/com/forgeoj/api/observability/RequestCorrelationFilter.java",
+      "sha256": "73d39079cf85b35d40abab6ca5dcf4b59d4a05e9185f888e5d1a9914af1b8d34",
+      "gitBlobOid": "ea9385d377c6f2c1ff093fc4f61ad22d4185de18"
+    },
+    {
+      "path": "forgeoj-api/src/main/java/com/forgeoj/api/problem/ProblemController.java",
+      "sha256": "abbb77a48c17ccfbd03747fcca7ab9a4dffde4aa22e76523c3e1a0272e90ba2c",
+      "gitBlobOid": "e5b70c844c91ebf888b649cfbf541b1920cd0bfc"
+    },
+    {
+      "path": "forgeoj-api/src/main/java/com/forgeoj/api/problem/ProblemDetailsRow.java",
+      "sha256": "29c5c99b81432c03407384bf18cf3d68564cd2bc641ac49fb6bf11daf2f58bb3",
+      "gitBlobOid": "481e37801809d1ac57351ce2b6d56e20dc008b52"
+    },
+    {
+      "path": "forgeoj-api/src/main/java/com/forgeoj/api/problem/ProblemFeedbackController.java",
+      "sha256": "d40742f30e5eaf4dfde727c6d3434e4eb750a3d6a4d228ada2236d34ed0ce6d5",
+      "gitBlobOid": "16c3a875aafe15b2b9d3fd48a9897c1848f9f880"
+    },
+    {
+      "path": "forgeoj-api/src/main/java/com/forgeoj/api/problem/ProblemLibraryController.java",
+      "sha256": "d1a01d46c7bd78104e2f2c644c8a7ad570a4020d66dd52b0315b0734ddafd59c",
+      "gitBlobOid": "8a5c31d11ce3d467b7bf57b05933137fc2a7cb7d"
+    },
+    {
+      "path": "forgeoj-api/src/main/java/com/forgeoj/api/problem/ProblemLibraryMapper.java",
+      "sha256": "61c9b9c13b3e68fa181fb788448a426f2cf7ae367aa03391954caa3eb4d17e14",
+      "gitBlobOid": "8fefb917ef2ea175bfb4531912080520bb5e7be0"
+    },
+    {
+      "path": "forgeoj-api/src/main/java/com/forgeoj/api/problem/ProblemLibraryService.java",
+      "sha256": "12c5dc1c4259ac577233417b96552762c6c6fff6d28fde3b35151e96c40ea5a1",
+      "gitBlobOid": "8061938daf296373603becd9b8f77b941d81d489"
+    },
+    {
+      "path": "forgeoj-api/src/main/java/com/forgeoj/api/problem/ProblemMapper.java",
+      "sha256": "0d77371b2bd9effdf49fa046662fe4bbdb1f7b8cab27f52fc39c8816bb6517ca",
+      "gitBlobOid": "67901e653cd3d28480330fb9bbeec2f75288f640"
+    },
+    {
+      "path": "forgeoj-api/src/main/java/com/forgeoj/api/search/ElasticSearchClient.java",
+      "sha256": "162b099d1cff1d4f0e6d183dcaebacad6136628ef3a33a2be7b8ba1d2d7ac3a7",
+      "gitBlobOid": "6fb03e243b8e3f61da566d00212c1f484d367d2e"
+    },
+    {
+      "path": "forgeoj-api/src/main/java/com/forgeoj/api/search/PublicSearchController.java",
+      "sha256": "a03f893d5c8fcaa05bc8e32de86375e8924008ffaaaabcc5dc1baf01a1885dad",
+      "gitBlobOid": "01b7d7147ac325ca1882bb4e6f9e72c23bb515fb"
+    },
+    {
+      "path": "forgeoj-api/src/main/java/com/forgeoj/api/search/PublicSearchService.java",
+      "sha256": "4db8ff1a9c6989c884bf9e551910ea7eefcb1c65d8678ef1ee9f3c6600ae5432",
+      "gitBlobOid": "c49b861a8914ff9f58ce6570c0558c531eabab9a"
+    },
+    {
+      "path": "forgeoj-api/src/main/java/com/forgeoj/api/search/SearchChanges.java",
+      "sha256": "443cd161b7e5b29384cff38ef5010ac7623c06df4ecf3dcf73e854728df2af10",
+      "gitBlobOid": "8a93db60480e4967b4b34797778900db4f0531aa"
+    },
+    {
+      "path": "forgeoj-api/src/main/java/com/forgeoj/api/search/SearchDeliveryMapper.java",
+      "sha256": "3effec292c64b30a8782ec4cda66db69fd59beb56a84cad82ee7bc7325a2d39b",
+      "gitBlobOid": "9f097161588134683e66f677958b077d11e88fc4"
+    },
+    {
+      "path": "forgeoj-api/src/main/java/com/forgeoj/api/search/SearchMapper.java",
+      "sha256": "c8766d861629be0e51b7a5beec35e3805def6922f2b62536a2e63f8a9609e32e",
+      "gitBlobOid": "10412b28a2d6257f4261690f728a31567b46e210"
+    },
+    {
+      "path": "forgeoj-api/src/main/java/com/forgeoj/api/search/SearchMessageListener.java",
+      "sha256": "183342b5c3a9caeade5f5acd4652dc9cb55f950e609c90caf89277de101ce67d",
+      "gitBlobOid": "7e0e3b6f35bd7e1574b32c311cff1004f63f0004"
+    },
+    {
+      "path": "forgeoj-api/src/main/java/com/forgeoj/api/search/SearchRabbitConfig.java",
+      "sha256": "3acaf51dd3c6a503dfc5bc406bdb7107273991a48e1d5fa941ea8bba529a6646",
+      "gitBlobOid": "88043eff047cf4342fef11337ea3183babb3bb30"
+    },
+    {
+      "path": "forgeoj-api/src/main/java/com/forgeoj/api/search/SearchRebuildMapper.java",
+      "sha256": "0eaeeea33aff737bba80e6b5c5105f219ca6cb7c173ebc6bd41c962ee2b8134d",
+      "gitBlobOid": "5c5ba3dd4d55483ac93ad0a6c14c2c83b4ccf4fc"
+    },
+    {
+      "path": "forgeoj-api/src/main/java/com/forgeoj/api/search/SearchRebuilder.java",
+      "sha256": "f998c790837cbfc967723035c949589fb23c4fddd215af9d030d938456c31219",
+      "gitBlobOid": "55496bd0c94e9f4ba462d92a4fcef214338a7497"
+    },
+    {
+      "path": "forgeoj-api/src/main/java/com/forgeoj/api/search/SearchSynchronizer.java",
+      "sha256": "7477684cd546bc624b8669e4992fe7ce961298ff57f6607dc24cf2dba133a450",
+      "gitBlobOid": "21a8d034db9ad82fed6f7d00d4595847048db3c7"
+    },
+    {
+      "path": "forgeoj-api/src/main/java/com/forgeoj/api/selftest/SelfTestCleanup.java",
+      "sha256": "5e393fa6e0b51c624e192f02e35f62c55e1da4bd5dcfd141f8325716d179987a",
+      "gitBlobOid": "fe3d7618fbca9a3ae9317d56d86baf7ed7652b95"
+    },
+    {
+      "path": "forgeoj-api/src/main/java/com/forgeoj/api/selftest/SelfTestController.java",
+      "sha256": "dc2c790b525094f471b6376ef4351126742f52b7f06072aa6e7ae0f76eb4a9ff",
+      "gitBlobOid": "874eb1b04baaa8629d397657da9f648d5b644ac8"
+    },
+    {
+      "path": "forgeoj-api/src/main/java/com/forgeoj/api/selftest/SelfTestMapper.java",
+      "sha256": "dc29b57e7a272ea7dae7e2f44e089bbdba24d9dc996820f74b11ac10d8c25dff",
+      "gitBlobOid": "539f38e40f54279bc8f6be56d0f460752a7cc69c"
+    },
+    {
+      "path": "forgeoj-api/src/main/java/com/forgeoj/api/selftest/SelfTestService.java",
+      "sha256": "77f16b131695af92c84d13ab986e73e9d4ec7bd91a96e40ccfeab7c3599fffe7",
+      "gitBlobOid": "8dfa304d02375502342a44f26c48531dbe06b39e"
+    },
+    {
+      "path": "forgeoj-api/src/main/java/com/forgeoj/api/solution/SolutionController.java",
+      "sha256": "4801db6afdb35c47b018fe77380852074fa06ba1cefec205ee9d1b4d8cfffd5f",
+      "gitBlobOid": "fd111940b4913d92b9dbb70d3c0f698ff8da4a56"
+    },
+    {
+      "path": "forgeoj-api/src/main/java/com/forgeoj/api/solution/SolutionMapper.java",
+      "sha256": "c1bff121196ba1b5c2a898787ee00a2f7ef681d8273663506ab987fb0700f9b3",
+      "gitBlobOid": "52eaa7d5f829ac91178c02443b454fbba0b547bf"
+    },
+    {
+      "path": "forgeoj-api/src/main/java/com/forgeoj/api/solution/SolutionService.java",
+      "sha256": "9c63a0989e498abf9161d1fba6135a43db5ccefc2c06d76b96ddced5211209b3",
+      "gitBlobOid": "da5bf3808e6bb86dc143a82d19cf391381c9fcbb"
+    },
+    {
+      "path": "forgeoj-api/src/main/java/com/forgeoj/api/submission/AssignmentSubmissionController.java",
+      "sha256": "5cfbbe18846d78496900d5fa58c25dd94b1d7398611c3e07a2ff9855f7dfb76c",
+      "gitBlobOid": "f942de5868079fb868d522926a59f4985755423f"
+    },
+    {
+      "path": "forgeoj-api/src/main/java/com/forgeoj/api/submission/AssignmentSubmissionService.java",
+      "sha256": "e141293adcd8140527bf7dc29210885da0471535e2a11be82ef9d79257b564f7",
+      "gitBlobOid": "12c97e153093837eb9d6fd55cdce32dfbd93704b"
+    },
+    {
+      "path": "forgeoj-api/src/main/java/com/forgeoj/api/submission/ClassroomSubmissionController.java",
+      "sha256": "319f8a9a9762cc0bd07c2dd337d224e5e6d79cd4c7b2c96826895e1ba03b64bb",
+      "gitBlobOid": "fcb207c152c4cae047da799c2b25347447ef2427"
+    },
+    {
+      "path": "forgeoj-api/src/main/java/com/forgeoj/api/submission/ClassroomSubmissionService.java",
+      "sha256": "a465c2f1fbb46ada57f9878805c187255db382506c2bad94218ae6b94de38e33",
+      "gitBlobOid": "38adfb96d9c9ab939ab200b951b6c3d900e20b64"
+    },
+    {
+      "path": "forgeoj-api/src/main/java/com/forgeoj/api/submission/JudgeVersionSnapshot.java",
+      "sha256": "76d47f68e99e0909618968ce96badda33d4edbcb0fa2597a11ebfd44cc3b9b2d",
+      "gitBlobOid": "63c37a3c1012e2ad519c7c337c08468ce9031fa8"
+    },
+    {
+      "path": "forgeoj-api/src/main/java/com/forgeoj/api/submission/NewSubmissionRow.java",
+      "sha256": "e7efdb32c3b9e3af11895db3a24de6ce1805f149adf84716538cb6fd7e21d795",
+      "gitBlobOid": "17565a2e0a516560d89c0507b5c6649ecc6dab89"
+    },
+    {
+      "path": "forgeoj-api/src/main/java/com/forgeoj/api/submission/SubmissionCancellationController.java",
+      "sha256": "450778c38b7798444b0cace508108b7f6d64ec13f83bf7a37dc2ed7f227c58a6",
+      "gitBlobOid": "28a7f3a94513cc2167160793102c50c623e99c19"
+    },
+    {
+      "path": "forgeoj-api/src/main/java/com/forgeoj/api/submission/SubmissionCancellationRow.java",
+      "sha256": "28c198ce15735e9705dd1c28304e54a65b52328a0f400d3fe3bd136226c7030f",
+      "gitBlobOid": "933f4e97c4001bd46cb5284a96367936b8012b4a"
+    },
+    {
+      "path": "forgeoj-api/src/main/java/com/forgeoj/api/submission/SubmissionCancellationService.java",
+      "sha256": "1124ac16a362def196e4be4cba001325a906332a462883f4779a03092639cf92",
+      "gitBlobOid": "ef6d0b9a3de954da858ac1e73900840f411ab747"
+    },
+    {
+      "path": "forgeoj-api/src/main/java/com/forgeoj/api/submission/SubmissionController.java",
+      "sha256": "d4e80e4aad08f7bc38caf6f6c15b62c0ced6735a35b688a0d60b7edf6ceee3fb",
+      "gitBlobOid": "835c13caee1967998025e1957d7f86a58ee80138"
+    },
+    {
+      "path": "forgeoj-api/src/main/java/com/forgeoj/api/submission/SubmissionHandshakeInterceptor.java",
+      "sha256": "e1bcc19396d073b539dd8b60dbf3e0df5e5a635109ce7ca6dcbbe699da2ac617",
+      "gitBlobOid": "dfabaec650da53364c4722e3383164fa309ec275"
+    },
+    {
+      "path": "forgeoj-api/src/main/java/com/forgeoj/api/submission/SubmissionMapper.java",
+      "sha256": "851ef82aac441de154e7c27f335a2a3eca589267504db43e27c41f2805b70339",
+      "gitBlobOid": "7f306c9eb2669466d9ffe26b13ed26f6f6b9a41d"
+    },
+    {
+      "path": "forgeoj-api/src/main/java/com/forgeoj/api/submission/SubmissionNotificationHandler.java",
+      "sha256": "d3fad773b425c2669ccc3bcdec36d58ec7d4fceb85a59245bca23ae8c1e28962",
+      "gitBlobOid": "c5a137d0f7a1b73cbf39fd21943786c535c05afc"
+    },
+    {
+      "path": "forgeoj-api/src/main/java/com/forgeoj/api/submission/SubmissionQueryController.java",
+      "sha256": "272f6de9d00850383bd31aaa877d8350ba1c14768a207ec9ede5407fe0d59f3a",
+      "gitBlobOid": "6de2d2e11454f863aaa11445d4fe665ff457aaca"
+    },
+    {
+      "path": "forgeoj-api/src/main/java/com/forgeoj/api/submission/SubmissionQueryService.java",
+      "sha256": "e10871ad8127a85c122e39aab32d226fd246018a5a0f392a850b86271d9a1bde",
+      "gitBlobOid": "1d2e29b26cb10cdb2b2c35e2461b0ced5612a927"
+    },
+    {
+      "path": "forgeoj-api/src/main/java/com/forgeoj/api/submission/SubmissionResult.java",
+      "sha256": "695b0fb446f8fc084ba8ad7b01f689debb12d95a9cfcec99522c59e75e06c793",
+      "gitBlobOid": "e17d707bd88030210db4714e1b081a7c8fc73417"
+    },
+    {
+      "path": "forgeoj-api/src/main/java/com/forgeoj/api/submission/SubmissionService.java",
+      "sha256": "efe522b8b17eb6b28ae6552a515d6d89c93ee3b1c653bdbceb5e6b0c9d66aefd",
+      "gitBlobOid": "8dd6b5759011bdcc07ae10076a434070dc60c1b4"
+    },
+    {
+      "path": "forgeoj-api/src/main/java/com/forgeoj/api/submission/SubmissionStatus.java",
+      "sha256": "ba39c3348f313e594f9eda31497604120badf43ae22b8c1d87f06aa05e9ad6bb",
+      "gitBlobOid": "3ec46c147a0aabd8ac73d9233dc34d9d647d6d2d"
+    },
+    {
+      "path": "forgeoj-api/src/main/java/com/forgeoj/api/submission/SubmissionTransactionService.java",
+      "sha256": "50216b956060feea999f3433713d75b80f0a789677e1b4ef78d5d55c85e3d310",
+      "gitBlobOid": "285d24f14dd996683e65758cc0da54ed8f5be6a6"
+    },
+    {
+      "path": "forgeoj-api/src/main/java/com/forgeoj/api/submission/SubmissionWatch.java",
+      "sha256": "4594c1af9669a7f464dadf58a54856531c260bb708138fdbce0c9d39f4c6f288",
+      "gitBlobOid": "5d5c9a51b3f27b4f31254b2b4217033489b6be5c"
+    },
+    {
+      "path": "forgeoj-api/src/main/java/com/forgeoj/api/submission/SubmissionWebSocketConfig.java",
+      "sha256": "aa443198582601aa2f2c755964814e67334f05b55cbbb6bbf6252d00dc9e4fe9",
+      "gitBlobOid": "f308679e3919317c79e5c8425c2e1c542e0f673a"
+    },
+    {
+      "path": "forgeoj-api/src/main/java/com/forgeoj/api/user/UserAccountCredentials.java",
+      "sha256": "1d8e97cd8106982e957146777d4b2e19b1ad091e20d3acc035a8e235e48a5f07",
+      "gitBlobOid": "b55d62759e1640a89aceeb968740611ac9542926"
+    },
+    {
+      "path": "forgeoj-api/src/main/java/com/forgeoj/api/user/UserAccountMapper.java",
+      "sha256": "285eaa9c6e6562a5f7595912f5fd0a7b2c4d710dbc8b03970ffce8545e64781e",
+      "gitBlobOid": "651342627d84105bcf2dd6b91a7948ce3209a04e"
+    },
+    {
+      "path": "forgeoj-api/src/main/resources/application-dev.properties",
+      "sha256": "dd9761b3dac0b859063527b7c5a054a9d10d64269bddfa6fe45f4d7b3076dce1",
+      "gitBlobOid": "3376d7adfb42187ec79c15bb3b0aa34f137affde"
+    },
+    {
+      "path": "forgeoj-api/src/main/resources/application.properties",
+      "sha256": "230459a7174a76487cbe9715e844841d7dab89f387c8b8e5e84acbcd7a7ca7a7",
+      "gitBlobOid": "9114d0124bb83a529660fea44f1903ee337b51d9"
+    },
+    {
+      "path": "forgeoj-api/src/main/resources/db/devdata/R__seed_m0_development_data.sql",
+      "sha256": "4b2b43b57cbcd1e5b44bf71076fbe5bb5c619a8e18c8383a6fee5caa43af19ac",
+      "gitBlobOid": "e46656a3cc8a0b06025e8218f97cfa5428291a31"
+    },
+    {
+      "path": "forgeoj-api/src/main/resources/db/devdata/R__seed_m2_library_metadata.sql",
+      "sha256": "f0d4f4c06dc58f2a5d39572817fc59d6778a14ca2b1df3f3cd67c10d2ff20caf",
+      "gitBlobOid": "cecfe9dab4470995c54b3dd70a89f133b68221e3"
+    },
+    {
+      "path": "forgeoj-api/src/main/resources/db/devdata/R__seed_m4_public_search.sql",
+      "sha256": "1d3d6120c70f5d51e091fe456b905ed3103a2fb921b659214ef8d17a61dc6be7",
+      "gitBlobOid": "245f07491e57a39a87251dc3e5843dd3bc56bf95"
+    },
+    {
+      "path": "forgeoj-api/src/main/resources/db/migration/V10__official_solution_access.sql",
+      "sha256": "5a7ac47cc4d71f9b01127d58327567e88346ad3ad10ec21d31328b3f1c7364db",
+      "gitBlobOid": "8f56c9671c2e778aee7d524112b9632dfcd621db"
+    },
+    {
+      "path": "forgeoj-api/src/main/resources/db/migration/V11__content_validation_jobs.sql",
+      "sha256": "1274f6206df3ace6356a2097de30559b732f77bc18ca69e974607b2a05fb9c2f",
+      "gitBlobOid": "d0c7b5a6c8270a85bbc5f73b0377a974ece15125"
+    },
+    {
+      "path": "forgeoj-api/src/main/resources/db/migration/V12__immutable_content_reviews.sql",
+      "sha256": "99cd01a92daf23463920320a19baf2665de60ba1a82fe843d82c5fd526b0d858",
+      "gitBlobOid": "a327ca5f4288c1cecc772db71490bc38df38de17"
+    },
+    {
+      "path": "forgeoj-api/src/main/resources/db/migration/V13__content_output_previews.sql",
+      "sha256": "610f8799f2659de6adaacffc3d79fe48a8a70d103a4092c321ee524bfb7a53d7",
+      "gitBlobOid": "1a8cdaccc55b827858465e455bb87388c88ac085"
+    },
+    {
+      "path": "forgeoj-api/src/main/resources/db/migration/V14__independent_self_test.sql",
+      "sha256": "32e32023c8f0a4747f638f05b26a216557b12260fc66be2f1a539f7f5e904861",
+      "gitBlobOid": "b6201165d3c55684b0afc772c68614c6935baefc"
+    },
+    {
+      "path": "forgeoj-api/src/main/resources/db/migration/V15__classrooms_and_members.sql",
+      "sha256": "1c848ba4cc872822caaf6388117215866f262b2f653357c628f0ca88c0d01814",
+      "gitBlobOid": "9b4052dae63183f53de7d796107c28712e9a0cbf"
+    },
+    {
+      "path": "forgeoj-api/src/main/resources/db/migration/V16__classroom_private_problems.sql",
+      "sha256": "1d1864ef3f06cb996c78c09219093a08afd327652b677d210a3d167bd5a19ce2",
+      "gitBlobOid": "c6f34b0141ce54a204a70912023485bf49c2575a"
+    },
+    {
+      "path": "forgeoj-api/src/main/resources/db/migration/V17__classroom_assignments.sql",
+      "sha256": "e02d349aa9f5654b9b7d598f7536fb347d5443c61e7ade1cafebbd06d8a111b0",
+      "gitBlobOid": "73679da6852931a74629f36eb64e727bdd7456bf"
+    },
+    {
+      "path": "forgeoj-api/src/main/resources/db/migration/V18__independent_admin_identity.sql",
+      "sha256": "860d371f47ade829d75c4eb6bf9b6d8e0a08968f780f901b098eeb0e2e30e8ef",
+      "gitBlobOid": "55d4a7f91af4c20d2a82bc07d4c134f42322990b"
+    },
+    {
+      "path": "forgeoj-api/src/main/resources/db/migration/V19__public_review_governance.sql",
+      "sha256": "2f1475980da9fa7598116892223e8a06fccb15b4086cfc0b83b53cfce6a62bfd",
+      "gitBlobOid": "026e889799849927d3fdd7a4ad00df9ae0eb1804"
+    },
+    {
+      "path": "forgeoj-api/src/main/resources/db/migration/V1__create_m0_core_schema.sql",
+      "sha256": "312e21a7fb1732f86a13a2f1bda65538376633b618959d11ea5d39b0479a7793",
+      "gitBlobOid": "4559dfe1dde1d3dce4dc631ff949c37da2cfe254"
+    },
+    {
+      "path": "forgeoj-api/src/main/resources/db/migration/V20__bounded_operations_recovery.sql",
+      "sha256": "ce98b8ab3bb25682ef2d698c0fe6ed21133e5ce21d24327b5e3411901350546c",
+      "gitBlobOid": "86e95afca5eb212928bc5088a8bf660578b388de"
+    },
+    {
+      "path": "forgeoj-api/src/main/resources/db/migration/V21__operations_recovery_receipts.sql",
+      "sha256": "52b2596c877b1940f9ae9f04a7ec691919286725c83e8ff0a3c6f2d43217c211",
+      "gitBlobOid": "17ccf1f7860eda0791b9591aaa1e3fadf83d9bab"
+    },
+    {
+      "path": "forgeoj-api/src/main/resources/db/migration/V22__restrict_operations_attempt_reads.sql",
+      "sha256": "d546a3554aee08c3e50cc522595b4fed418f9c0cfa303a511fbe6d22623f016e",
+      "gitBlobOid": "b5123bfeb2879ddb4f513ef54ed7269edb1df8c4"
+    },
+    {
+      "path": "forgeoj-api/src/main/resources/db/migration/V23__reliable_redis_invalidation.sql",
+      "sha256": "18930b04c02ba7b76522a267cf95d3b7a1eb6e1d527007a9cfd289dda856b139",
+      "gitBlobOid": "aec5ae1c500a773070d13aa527af05d3ca155bc8"
+    },
+    {
+      "path": "forgeoj-api/src/main/resources/db/migration/V24__public_search_projection.sql",
+      "sha256": "85d9af052e708a10e642aa3964631726f0b2f250effbc3c40cc2b90fc7a718fc",
+      "gitBlobOid": "a76b70153f3737b3e631ca9b4c906fda168695d6"
+    },
+    {
+      "path": "forgeoj-api/src/main/resources/db/migration/V2__allow_ole_verdict.sql",
+      "sha256": "4c1875a89399411bbb29b3d463caa74d929ed68065ecafc75e921c1d04243a5f",
+      "gitBlobOid": "226dbca5d8e7fc47494af159e012578313ddee2e"
+    },
+    {
+      "path": "forgeoj-api/src/main/resources/db/migration/V3__add_m1_attempt_lease_and_retry.sql",
+      "sha256": "ddc5c646fde04cc714f311bd349097a0cadd12f64e89f53740c3b63200151569",
+      "gitBlobOid": "769fa8227d84a47fd4cd202ce986fb19bcc8a71a"
+    },
+    {
+      "path": "forgeoj-api/src/main/resources/db/migration/V4__add_user_judge_quota_lock.sql",
+      "sha256": "2e32a34ba154f5096c64e3f5141c3460e3faf491f264d6148270177a4c45b44e",
+      "gitBlobOid": "dce1d3d3ab9cab1e0137219dbddb2507bca49c5a"
+    },
+    {
+      "path": "forgeoj-api/src/main/resources/db/migration/V5__widen_submission_verdict.sql",
+      "sha256": "312decbba0564cc467ff994dbba1cb1eb07e3d2768a665a359b8de34de14e01b",
+      "gitBlobOid": "79fc67c99ea08b6e2e1e6a9a23ab4b1200b1fbdf"
+    },
+    {
+      "path": "forgeoj-api/src/main/resources/db/migration/V6__ordinary_accounts.sql",
+      "sha256": "ab0c7bbd2f3e6adef6e319514397df581eeb2d9cb001bbedd613314ea9c7c80f",
+      "gitBlobOid": "f07b7becfe99ab78911c6f903934ec28b594798b"
+    },
+    {
+      "path": "forgeoj-api/src/main/resources/db/migration/V7__public_problem_library.sql",
+      "sha256": "b7d91d0b8252e5518ee397717a9f691647276180a0e6a73338ab60f94fcf2aae",
+      "gitBlobOid": "c895e4e7471836e1b1961d18593015700f15ea3a"
+    },
+    {
+      "path": "forgeoj-api/src/main/resources/db/migration/V8__personal_learning_records.sql",
+      "sha256": "4ce88b89de43ccf85beb9da06c9e9c48d8bab3aba0e442a03feadebd896a127c",
+      "gitBlobOid": "ac40ec6560f5e71e4413806415797785c8a7de7e"
+    },
+    {
+      "path": "forgeoj-api/src/main/resources/db/migration/V9__authored_problem_drafts.sql",
+      "sha256": "7e7fbab1c4588aec98ff4c17c6413eab6d0234bfdfa4bb60f175d79d0b2f5429",
+      "gitBlobOid": "168cdc6aadc79e4ce28bd297489fc69fae9b2ce8"
+    },
+    {
+      "path": "forgeoj-api/src/test/java/com/forgeoj/api/AccountMigrationIntegrationTests.java",
+      "sha256": "0b42b6582aa909c3c332e6f5471db3786bfd1bb3fff720525710662c3879e782",
+      "gitBlobOid": "b656a81157e2b83582523b99e9b62da1b8966a2f"
+    },
+    {
+      "path": "forgeoj-api/src/test/java/com/forgeoj/api/ForgeojApiApplicationTests.java",
+      "sha256": "7ef66f27cf6dad9f2108ac141a986af5b9dc550204898ea9ad7a0448803efa11",
+      "gitBlobOid": "be51e7a3b4c678f8dd86ea073621c604e039a259"
+    },
+    {
+      "path": "forgeoj-api/src/test/java/com/forgeoj/api/MySqlMigrationIntegrationTests.java",
+      "sha256": "db9c45bfdd99c755e20397012094e63f9b43e7a80889f98ebbc9b9abc55de7e7",
+      "gitBlobOid": "8f2c99cf0a24794b68e6ee5670df64c169612e4f"
+    },
+    {
+      "path": "forgeoj-api/src/test/java/com/forgeoj/api/QuotaMigrationUpgradeIntegrationTests.java",
+      "sha256": "657005a48b4549e60ef772e1926a335766fa5952ef30cf6ac8928dfe02b31c1d",
+      "gitBlobOid": "14cc99b36263bc2dfe36ee947eb58979b6a07945"
+    },
+    {
+      "path": "forgeoj-api/src/test/java/com/forgeoj/api/admin/AdminIdentityIntegrationTests.java",
+      "sha256": "da686fecdb5781a5fc0aebe34012c7194baec9015f1cb4f46b7c626a30c2f387",
+      "gitBlobOid": "be3b5dfdbd62f2140045e349f35e8d2695278856"
+    },
+    {
+      "path": "forgeoj-api/src/test/java/com/forgeoj/api/admin/AdminJwtTests.java",
+      "sha256": "c0600b6391b82effa82183ed716d71c9131f568b192b9c57d2a861b18b2e3566",
+      "gitBlobOid": "600efe4f7c0044e08004aa06ce2f86ce3f70c5bc"
+    },
+    {
+      "path": "forgeoj-api/src/test/java/com/forgeoj/api/admin/AdminMigrationIntegrationTests.java",
+      "sha256": "5df067c6b8c3f7577749de1a69dcd4c92caa6261543999965a41627d8ec3ac1f",
+      "gitBlobOid": "a3a3425ac2e97df0c99079f4df8dd968acc43fa2"
+    },
+    {
+      "path": "forgeoj-api/src/test/java/com/forgeoj/api/admin/OperationsIntegrationTests.java",
+      "sha256": "56cd1e605255d7c87ed58d0870ec56651e39dadde0f20a7baa5d37c99aeaef45",
+      "gitBlobOid": "fd975a07258bae9226415b46728e370fa646efcf"
+    },
+    {
+      "path": "forgeoj-api/src/test/java/com/forgeoj/api/admin/OperationsMigrationIntegrationTests.java",
+      "sha256": "13485d99400c8d62554395a135bcaa07ef59ca7b1fdd57a26853e68e30f9d423",
+      "gitBlobOid": "dc0cfdf9ba4244f76c9180e8d7b040452f823770"
+    },
+    {
+      "path": "forgeoj-api/src/test/java/com/forgeoj/api/admin/PublicReviewIntegrationTests.java",
+      "sha256": "72bf9e92c92d5481722d409b684f3424215a1dbda8d3abe61de2d4b81d002b26",
+      "gitBlobOid": "b332034f18d7f2798f051b90041d8695529f2866"
+    },
+    {
+      "path": "forgeoj-api/src/test/java/com/forgeoj/api/admin/PublicReviewMigrationIntegrationTests.java",
+      "sha256": "4575b66e3f7b2d0e0b77397b76bfdd2de73a43c22bfd34c0e404a03c4501b289",
+      "gitBlobOid": "7b24cad625f4c91a5122ec8de8a0ef6576152bbb"
+    },
+    {
+      "path": "forgeoj-api/src/test/java/com/forgeoj/api/auth/AccountFlowIntegrationTests.java",
+      "sha256": "e79c6c5109862b0a84680c0d1b64e0080557989c12352d479a11d1aaaba2faac",
+      "gitBlobOid": "2334f8b26f9ff3004bbfe3806e9fe1225a81f6a8"
+    },
+    {
+      "path": "forgeoj-api/src/test/java/com/forgeoj/api/auth/AccountHttpIntegrationTests.java",
+      "sha256": "066eb8b99b7a9d6e82fb87b1bc07ae6f8fd2bcedf6b094862110e000047e4e47",
+      "gitBlobOid": "6a4c570b6a796fb205481755e372adf8f11737a5"
+    },
+    {
+      "path": "forgeoj-api/src/test/java/com/forgeoj/api/auth/AccountJwtTests.java",
+      "sha256": "a02b9ca2e547f94b6c0d744d107c6b02f644656cedfbfa04ea92b229776fe2a8",
+      "gitBlobOid": "1b26333ef86d5d477f6f2b4741acd2a36c879032"
+    },
+    {
+      "path": "forgeoj-api/src/test/java/com/forgeoj/api/auth/AccountPolicyTests.java",
+      "sha256": "486576e02f6ff0ea97a2fc7d1abb4e3b4c5a0b352c2cf3361a233ab14ab53d16",
+      "gitBlobOid": "ef46ca18f4df9011f5d74c4b2c82d1b6388db8cb"
+    },
+    {
+      "path": "forgeoj-api/src/test/java/com/forgeoj/api/auth/AccountRegistrationIntegrationTests.java",
+      "sha256": "b120a5dbc2404db1025e961ff9b61ee08c92e8e49d0849bbae8c2e35fd095d06",
+      "gitBlobOid": "0cc784dbb2224a9e500298b685a1005aa001210a"
+    },
+    {
+      "path": "forgeoj-api/src/test/java/com/forgeoj/api/auth/AuthAndProblemIntegrationTests.java",
+      "sha256": "cd8029e8254175bfc08789fadc26d293c861a1abda47638da38f8e83318dec9c",
+      "gitBlobOid": "6f7268447c1691c25e601cd95d3e3e422f0565b1"
+    },
+    {
+      "path": "forgeoj-api/src/test/java/com/forgeoj/api/auth/SmtpAccountMailTests.java",
+      "sha256": "abc4ffd54938f43b349c5ce97b19bafb1ed0da224114e27f39eccc134ff60b20",
+      "gitBlobOid": "1c13b267632bd03ee487d9fec012bb671518a865"
+    },
+    {
+      "path": "forgeoj-api/src/test/java/com/forgeoj/api/cache/RedisIntegrationTests.java",
+      "sha256": "65b82604da6382872f040ec15234f8cc7c2912856155ff58409081c2d5743f6d",
+      "gitBlobOid": "444b9de27e7aa9ee18e4682154a91d09a975c724"
+    },
+    {
+      "path": "forgeoj-api/src/test/java/com/forgeoj/api/classroom/AssignmentIntegrationTests.java",
+      "sha256": "86e4ee0e2c0311d7127f9e058c912454214a766c34b84fb00d9274ab365b580e",
+      "gitBlobOid": "0de85fe9e8067d5a86565f0d3f8cecc3460ae7f6"
+    },
+    {
+      "path": "forgeoj-api/src/test/java/com/forgeoj/api/classroom/AssignmentMigrationIntegrationTests.java",
+      "sha256": "f3f5082f6b45e27437f65cbc011fa0690e3a0d7e33053b6b6c5f3dda42f96178",
+      "gitBlobOid": "6e9b9ebf6362f5cf07ba4635682058fc3cf06f0d"
+    },
+    {
+      "path": "forgeoj-api/src/test/java/com/forgeoj/api/classroom/ClassroomIntegrationTests.java",
+      "sha256": "00726589df2f7b06ded5e285a55778a1abf0a518c0777f3e247f5e98cf60d211",
+      "gitBlobOid": "21557abcbf407a7fed1e9198f47952adfe24bb87"
+    },
+    {
+      "path": "forgeoj-api/src/test/java/com/forgeoj/api/classroom/ClassroomMigrationIntegrationTests.java",
+      "sha256": "89ec1e8ac7425e6e7f788e32101d506cfb9b79a13c70d7ee15726b377a166103",
+      "gitBlobOid": "6ae6f815b55d74cfe905c6a8f8e5c35cd856a0f1"
+    },
+    {
+      "path": "forgeoj-api/src/test/java/com/forgeoj/api/classroom/ClassroomProblemIntegrationTests.java",
+      "sha256": "63670808f67fb17a9ff8ed8e631f43c1f5cdd4ef222e057d1ee9ffeab09fdccb",
+      "gitBlobOid": "466f2e4c7b9d343b93e521f41edc3e1195983ed2"
+    },
+    {
+      "path": "forgeoj-api/src/test/java/com/forgeoj/api/classroom/ClassroomProblemMigrationIntegrationTests.java",
+      "sha256": "0d23ee4a05714d7a3c0c88115e0453f6dd709f257a379fe4b6ae0cfc88e68590",
+      "gitBlobOid": "de9e815d12fbf67619c68e9403b0518bff5b6c38"
+    },
+    {
+      "path": "forgeoj-api/src/test/java/com/forgeoj/api/content/ContentIntegrationTests.java",
+      "sha256": "88ecf1039ef0a1058874720d032916591e2af53f46550d7145b3e0b0b515c6d4",
+      "gitBlobOid": "2f5dc4a671b5eb6a0cc65295dfda58ae69a07dba"
+    },
+    {
+      "path": "forgeoj-api/src/test/java/com/forgeoj/api/content/ContentMigrationIntegrationTests.java",
+      "sha256": "98b0134662e4a7598f6e86de6bcfe94f9d045687b1545670db5f3e207d2afc46",
+      "gitBlobOid": "56f5036af114ccbd00ed122c664f6844203f6939"
+    },
+    {
+      "path": "forgeoj-api/src/test/java/com/forgeoj/api/content/ContentOutputIntegrationTests.java",
+      "sha256": "97cbb6c394221340b8e03add7d38dd2f84bfd2d200d75ad106e40105b2f0b3bf",
+      "gitBlobOid": "695f1eced4165058048045b71dfa3d5501e739ac"
+    },
+    {
+      "path": "forgeoj-api/src/test/java/com/forgeoj/api/content/ContentOutputMigrationIntegrationTests.java",
+      "sha256": "8e07f893271385cbbc7af48f79196422b738e37f1f221fdf1cd185e0b0cd98d8",
+      "gitBlobOid": "cb54aeb43ade5fcc7ca215c413fff8439823023a"
+    },
+    {
+      "path": "forgeoj-api/src/test/java/com/forgeoj/api/content/ContentRequestSizeFilterTests.java",
+      "sha256": "c78abe16c9e35fb186af44accc94b0a43a6a815666f94ef190058fc8836749d0",
+      "gitBlobOid": "529df7aaf7312d9faedd279284fdb163f76f128f"
+    },
+    {
+      "path": "forgeoj-api/src/test/java/com/forgeoj/api/content/ContentReviewIntegrationTests.java",
+      "sha256": "033ca77ce62dd35c257c5f043de93ddc17b1ff066084440202ef4fb3d697eeba",
+      "gitBlobOid": "db74601f723bb2b540ab5e1094b957f936668264"
+    },
+    {
+      "path": "forgeoj-api/src/test/java/com/forgeoj/api/content/ContentReviewMigrationIntegrationTests.java",
+      "sha256": "29a994d7c1e87b2fdf7a48a87d9ebd529051a575fcfb1f42c8c057a6c0533f48",
+      "gitBlobOid": "441e5ef13083aacdc90ce4a49c6b2a66c66cddc5"
+    },
+    {
+      "path": "forgeoj-api/src/test/java/com/forgeoj/api/content/ContentValidationIntegrationTests.java",
+      "sha256": "c254c7e325e52a96f03dc81e005ae49959d700468bbe81a2743119429f06bd6b",
+      "gitBlobOid": "6ab6fc53f2d97f8c411d14c2b8b9d2cbaf228859"
+    },
+    {
+      "path": "forgeoj-api/src/test/java/com/forgeoj/api/content/ContentValidationMigrationIntegrationTests.java",
+      "sha256": "6845c506adb27267292daec4d23642cff35b20d34fe4fac3b9f25d4f6ffb3511",
+      "gitBlobOid": "b080779c28db415b2e51b76afe0f3e22265d3ea5"
+    },
+    {
+      "path": "forgeoj-api/src/test/java/com/forgeoj/api/content/TestDatasetArchiveTests.java",
+      "sha256": "714b6a99928d4e7ceeac66341996ec47d8e98c135133ab15cdc3fba824578dfc",
+      "gitBlobOid": "a99372673e5f4acb106e807b893fdd92d39c0e34"
+    },
+    {
+      "path": "forgeoj-api/src/test/java/com/forgeoj/api/learning/LearningIntegrationTests.java",
+      "sha256": "04472931ab806815d81a1a2662bcc0245e2364f0e5cb426c389072981d9ac742",
+      "gitBlobOid": "7bee3ceba3345cfad22c99b5d027ec68bce7df06"
+    },
+    {
+      "path": "forgeoj-api/src/test/java/com/forgeoj/api/learning/LearningMigrationIntegrationTests.java",
+      "sha256": "60343c41459df6ebc81dcb96e216b1811f18b5380b52cc07198b9595ee79e2ce",
+      "gitBlobOid": "0db0b6c6b3017312a9e7cf277d414db29f164b19"
+    },
+    {
+      "path": "forgeoj-api/src/test/java/com/forgeoj/api/messaging/OutboxPublisherIntegrationTests.java",
+      "sha256": "64b0efd645a8dc9ed51d27f43e188e7fd26a43bc4a431c3799aea5b228590c83",
+      "gitBlobOid": "25f9a6b5858ffaeba09e5167d033c292fa809401"
+    },
+    {
+      "path": "forgeoj-api/src/test/java/com/forgeoj/api/messaging/OutboxPublisherLoggingTests.java",
+      "sha256": "6d0d37685258f6dab2f12a5f045e7cbef0088f007facc8e560615ce9c93150ad",
+      "gitBlobOid": "54b5b616e4df6edd3711cc77dc4aad72b14bd312"
+    },
+    {
+      "path": "forgeoj-api/src/test/java/com/forgeoj/api/observability/CommittedJudgingEventsTests.java",
+      "sha256": "d33b14866402e57b817ad4e2f6a3503eead42bbfb5cccd09f8de7050b6c00cc3",
+      "gitBlobOid": "19a542d4531aa565049060498240d1e6c00cf56a"
+    },
+    {
+      "path": "forgeoj-api/src/test/java/com/forgeoj/api/observability/MonitoringHttpServerTests.java",
+      "sha256": "513351c9d53bab24117cba1ed277936cf628ca89438fa51c9ab4757365f49d4c",
+      "gitBlobOid": "6ecc49599f039f7f564470e16d8c060e5cca94dc"
+    },
+    {
+      "path": "forgeoj-api/src/test/java/com/forgeoj/api/observability/MonitoringMetricsTests.java",
+      "sha256": "f98108e044dcc76a7a11b2edd2862a7aab8e046ebe0cfcdb0e5c7dbc4f48e2b1",
+      "gitBlobOid": "0b0c78d0a50d95ba48f027c4c45ab7e5accbc9d6"
+    },
+    {
+      "path": "forgeoj-api/src/test/java/com/forgeoj/api/observability/MonitoringRuntimeTests.java",
+      "sha256": "21028435348b0cb38dfa5de1af64fd49c6e6810204c8779c79f1e24cc4795cdf",
+      "gitBlobOid": "ad33cc4d8671455fbb5fae96129378494df4186e"
+    },
+    {
+      "path": "forgeoj-api/src/test/java/com/forgeoj/api/observability/MonitoringSnapshotIntegrationTests.java",
+      "sha256": "4115a083af127cd607d5d019eb7077518637108a2767062ba0f5fd3297dc3426",
+      "gitBlobOid": "a4408738e2a00616b1cdc93c795066e936576248"
+    },
+    {
+      "path": "forgeoj-api/src/test/java/com/forgeoj/api/observability/MonitoringSnapshotTests.java",
+      "sha256": "bcbe9902545de1b27042fc22136a89bcf6ae7800eee3a399798304b0e5103e72",
+      "gitBlobOid": "c83b2cfee9799cf47a70f38acc76666531982a21"
+    },
+    {
+      "path": "forgeoj-api/src/test/java/com/forgeoj/api/observability/RequestCorrelationFilterTests.java",
+      "sha256": "33381755a05f4592f26142660bac08521aa6a7d14945b4a6e84e87eadf6d658c",
+      "gitBlobOid": "0e4b7202f02a10eeb6061d5631a90ae39d162ea7"
+    },
+    {
+      "path": "forgeoj-api/src/test/java/com/forgeoj/api/problem/ProblemLibraryIntegrationTests.java",
+      "sha256": "65cf3e40e268cec1efbf693bbac34edd4f7eafbfff4c103833ccb4424416b686",
+      "gitBlobOid": "2f6e30c2e4e9e0348f3094c68793392757cdae19"
+    },
+    {
+      "path": "forgeoj-api/src/test/java/com/forgeoj/api/problem/ProblemLibraryMigrationIntegrationTests.java",
+      "sha256": "8871f78dca27ec5cda254738f38d35f60cbd9c9b55ded458653139a93c52d72f",
+      "gitBlobOid": "0b035df3f9ae4f42364677acda9667504852a89f"
+    },
+    {
+      "path": "forgeoj-api/src/test/java/com/forgeoj/api/search/ElasticSearchClientTests.java",
+      "sha256": "f4343908885c9ce9566ee97e0230b7de020fc7aaa4b559e51c46b3fa209e0a41",
+      "gitBlobOid": "4e89bb1b9cf8e217622b4b988305f546035d327a"
+    },
+    {
+      "path": "forgeoj-api/src/test/java/com/forgeoj/api/search/ElasticSearchIntegrationTests.java",
+      "sha256": "76c0fb5d588a2ef1dba8fbefef2c2557eb4c996f25125b1b0903ad2ccb64e482",
+      "gitBlobOid": "f22b7dd74230e1e4a4852a5804e597acb0a6e546"
+    },
+    {
+      "path": "forgeoj-api/src/test/java/com/forgeoj/api/search/SearchMigrationIntegrationTests.java",
+      "sha256": "0bf2cc8159d2e53f28cbf74982661593a31d9810b41f94d3b747f249820f5161",
+      "gitBlobOid": "ba180cd02759801bc48725be934e4869ff264bb3"
+    },
+    {
+      "path": "forgeoj-api/src/test/java/com/forgeoj/api/search/SearchProjectionIntegrationTests.java",
+      "sha256": "34585a8ecabaab37687dea8ad27e644fdfb0e98b11bd27c4e84389a0329599a9",
+      "gitBlobOid": "feb49d49dbd2bee1eba28551a47aa1f5f2686cae"
+    },
+    {
+      "path": "forgeoj-api/src/test/java/com/forgeoj/api/selftest/SelfTestIntegrationTests.java",
+      "sha256": "d310f332af8a351ca8ace69b3a53a57152514a7b04431bcee79ced87af1a65d1",
+      "gitBlobOid": "649204f0cc51b4753e788f4fd08f1cd4bd8888b5"
+    },
+    {
+      "path": "forgeoj-api/src/test/java/com/forgeoj/api/selftest/SelfTestMigrationIntegrationTests.java",
+      "sha256": "974605fce70c15e6915dbc633e249631946405b0249257e45a3f5d85664153c8",
+      "gitBlobOid": "0f597a25a130234f3d8e71583c71fa93399d6f18"
+    },
+    {
+      "path": "forgeoj-api/src/test/java/com/forgeoj/api/solution/SolutionIntegrationTests.java",
+      "sha256": "f32bebe1cfcd0d9f25fd64b0c6c8071eb897d0418e9f9f21d43cac65fcd47353",
+      "gitBlobOid": "06c63ba040db934dec8b92624385fdccfe51cbfc"
+    },
+    {
+      "path": "forgeoj-api/src/test/java/com/forgeoj/api/solution/SolutionMigrationIntegrationTests.java",
+      "sha256": "5ce391e81ac18bf43f3dc0b6385030ed11710dd1efeab44e43a341b843c25fb3",
+      "gitBlobOid": "fd21d368e54f436dbdacc303ee16469e9eb4b75c"
+    },
+    {
+      "path": "forgeoj-api/src/test/java/com/forgeoj/api/submission/SubmissionCreationIntegrationTests.java",
+      "sha256": "0d0e7724c8f6c073930864966c59bac8675127149549436126630a38ccf5eeeb",
+      "gitBlobOid": "f7d9c4644dd120e1e31f64b99bb45cb7f94a1b0a"
+    },
+    {
+      "path": "forgeoj-api/src/test/java/com/forgeoj/api/submission/SubmissionNotificationHandlerTests.java",
+      "sha256": "b18eaa3f3a507f964dff632949d2c1116376326b6f28874ef0ffe27e758f85e1",
+      "gitBlobOid": "08854ec8a3616cf5099ab3f990274a9ec58df16c"
+    },
+    {
+      "path": "forgeoj-api/src/test/java/com/forgeoj/api/submission/SubmissionNotificationIntegrationTests.java",
+      "sha256": "a55af1c55144640e6e989c1c1c7dfd615c7bbe3013c527633a1117ec923bd38c",
+      "gitBlobOid": "838a5914180b3edf644c312390d3e27f3298e200"
+    },
+    {
+      "path": "forgeoj-api/src/test/java/com/forgeoj/api/testinfra/DirectMySQLContainer.java",
+      "sha256": "bff5cb57c77206d931c43aa7c343190aa5f11922ff3f100b6be1e09f9757b850",
+      "gitBlobOid": "1117d3674f3a15ef718ab2e714ab3b1de12cce1c"
+    },
+    {
+      "path": "forgeoj-api/src/test/resources/mysql/init-admin-maintenance-fixture.sql",
+      "sha256": "a7c84f75d536bdb79a447e1a66189a72fbc6cfbc98874e9c4fba99b3fcc82e1f",
+      "gitBlobOid": "e942d4aaac8fecef718ed911e0b99841153b911b"
+    },
+    {
+      "path": "forgeoj-api/src/test/resources/mysql/init-test-users.sql",
+      "sha256": "fa5b07f6e86e36066abeedaf1a4b04dc3f663327a7fd80c41e497e76b3a29ec7",
+      "gitBlobOid": "fd3efeafb1e8bdfdebc00617c9574c80552cbe40"
+    },
+    {
+      "path": "forgeoj-judge-worker/pom.xml",
+      "sha256": "667dcfb5d28c84bdb1d7bf0126c0a123b7cc36ffd6bd90f27d8978e8832fa7f0",
+      "gitBlobOid": "d61ef69ed5075543c8abc983578a211ff48e1b90"
+    },
+    {
+      "path": "forgeoj-judge-worker/src/main/java/com/forgeoj/worker/ForgeojJudgeWorkerApplication.java",
+      "sha256": "115942cfe7bd6e759821dc6e7162d719d0fd5d9cc73656a1ac71ca7272326161",
+      "gitBlobOid": "6a24969c8409de1023f3c7ce0cc1111b925e62a0"
+    },
+    {
+      "path": "forgeoj-judge-worker/src/main/java/com/forgeoj/worker/content/ValidationHeartbeat.java",
+      "sha256": "66cfd1aba05dbaa78f103e7b3bf2943f93d168d5e2740d8f0556be010fb89ef1",
+      "gitBlobOid": "7c5e334c4f544b0b31f7ef1a16505e6be4ea11c2"
+    },
+    {
+      "path": "forgeoj-judge-worker/src/main/java/com/forgeoj/worker/content/ValidationLeaseService.java",
+      "sha256": "426c79b683ee346001cdf94b8d37e72a5c109c9cfce262f77f59e8abbdf78107",
+      "gitBlobOid": "9a5884add6ff6d54167d9a69c426975e88aafef0"
+    },
+    {
+      "path": "forgeoj-judge-worker/src/main/java/com/forgeoj/worker/content/ValidationListener.java",
+      "sha256": "9f351e4d7d81826d81c86488c7f5af42ef0076a2173de0c1640ba43c2f1680ad",
+      "gitBlobOid": "e86c8ab56e8ae50857081126c307cf1d3693c212"
+    },
+    {
+      "path": "forgeoj-judge-worker/src/main/java/com/forgeoj/worker/content/ValidationMapper.java",
+      "sha256": "fdd4f7a8164e4bf18a9ebdcea1786c5041bf226653eed577fce346a9cd4b3faf",
+      "gitBlobOid": "cdf23040ea4f79382d20a2aa6287f61365dae969"
+    },
+    {
+      "path": "forgeoj-judge-worker/src/main/java/com/forgeoj/worker/content/ValidationRecovery.java",
+      "sha256": "f38880710bbb6b4dbc8ce9b65abb03f30218c7e3fec64f95d9b1820de09e4315",
+      "gitBlobOid": "f9a268809b3bcceea4e224153a9353a2748e000a"
+    },
+    {
+      "path": "forgeoj-judge-worker/src/main/java/com/forgeoj/worker/content/ValidationRunner.java",
+      "sha256": "78b953ce645dbb8ec95b58119fa96f33f14721b0d105d3329b22ca88f6269959",
+      "gitBlobOid": "c7c351b1fe0dd2a2a00d171051b34f26d0aa8d6a"
+    },
+    {
+      "path": "forgeoj-judge-worker/src/main/java/com/forgeoj/worker/content/ValidationSnapshotLoader.java",
+      "sha256": "a66f72fb703ac72c07a1f1b1daec77f612a64675fde27ce3b017a3c2fdc72af5",
+      "gitBlobOid": "666f165aac20c515e43f4b2cae5cf97794db9ac0"
+    },
+    {
+      "path": "forgeoj-judge-worker/src/main/java/com/forgeoj/worker/messaging/InvalidJudgeTaskMessageException.java",
+      "sha256": "172ea7f49d9bcd8fed2bf507c102dcde008d651e851f44db36382803052475bd",
+      "gitBlobOid": "f9cfeb471035e5dfbcdc3919b144402c6552b5e1"
+    },
+    {
+      "path": "forgeoj-judge-worker/src/main/java/com/forgeoj/worker/messaging/JudgeTaskListener.java",
+      "sha256": "2234057b58671e17f3fa27bbb7824e672bd2375beb30c091250e8ad339700f66",
+      "gitBlobOid": "a49c3bcefa8c9947cdde93622f0698e78b0c0caa"
+    },
+    {
+      "path": "forgeoj-judge-worker/src/main/java/com/forgeoj/worker/messaging/JudgeTaskMessage.java",
+      "sha256": "ea3ec0a4d368d27c0f3fb01e1fe5d636ad9974a9957e86b8a3f31682f1a53c6f",
+      "gitBlobOid": "5834a58e834044dd72c3520d8bfb0fa5db21bdb9"
+    },
+    {
+      "path": "forgeoj-judge-worker/src/main/java/com/forgeoj/worker/messaging/JudgeTaskMessageParser.java",
+      "sha256": "10ed5d25e5d5702ebe2be333d00142329a10fcb08db1a4ae6bb8df746e5efe94",
+      "gitBlobOid": "016c268dc16a8baf2ef505ee7941d76b42ad832e"
+    },
+    {
+      "path": "forgeoj-judge-worker/src/main/java/com/forgeoj/worker/messaging/JudgeTaskRunner.java",
+      "sha256": "f822c2268210d18c9293f9b561c6fec8650f1e01cf20fd0a94ad9ecd36ad6346",
+      "gitBlobOid": "d2c18f1b49019401b0de7541af385c04cfd9ca98"
+    },
+    {
+      "path": "forgeoj-judge-worker/src/main/java/com/forgeoj/worker/messaging/M0JudgeTaskRunner.java",
+      "sha256": "fb5102f3ce40946d7fae8a5730ad55b5e4dbc2c5a8a60121cf56d7dc601076fa",
+      "gitBlobOid": "9bd3321da0d084dab4fd707221c73d1bf6846953"
+    },
+    {
+      "path": "forgeoj-judge-worker/src/main/java/com/forgeoj/worker/messaging/RabbitTopology.java",
+      "sha256": "0c28297283a1606d876dde75b9efe3353f759c13c14f91b78e817d73cf871e53",
+      "gitBlobOid": "86eea0ba511f3a0bcf2ad9db19ac9d0afb9a97a3"
+    },
+    {
+      "path": "forgeoj-judge-worker/src/main/java/com/forgeoj/worker/observability/JudgingEvents.java",
+      "sha256": "2f8c0d826d41e390a8a2f787f2c43322fe77349d98d054859f7d214091c75d33",
+      "gitBlobOid": "8962e65bf125f81283f0022f24c2b5fcf8948c13"
+    },
+    {
+      "path": "forgeoj-judge-worker/src/main/java/com/forgeoj/worker/observability/MonitoringHttpServer.java",
+      "sha256": "e1243c00036ac75a884479dbcbcfa25ed23cfe274a0e27c168bd9c8e62030313",
+      "gitBlobOid": "a02e6cfe06d9a2bb9e1eb5bddae8b54b3334dd24"
+    },
+    {
+      "path": "forgeoj-judge-worker/src/main/java/com/forgeoj/worker/observability/MonitoringMetrics.java",
+      "sha256": "6e7fa36da8bc61569b777704ff45d707f457ab4c600b88800d91fc7a81754e64",
+      "gitBlobOid": "f3bcb27ee272594496fad0c1b8ce65563986e20d"
+    },
+    {
+      "path": "forgeoj-judge-worker/src/main/java/com/forgeoj/worker/observability/MonitoringRuntime.java",
+      "sha256": "d6c2c2b950d41e42a763b249c5c40af57520f5cdc660e30fa222815dc5374bd0",
+      "gitBlobOid": "3b80df542cb1c4710f723fd863a6e9162092ba4d"
+    },
+    {
+      "path": "forgeoj-judge-worker/src/main/java/com/forgeoj/worker/sandbox/DockerCliSandboxRuntime.java",
+      "sha256": "0b7f2af29201a6a2b324f468b8b4b347ef446c8140204ac455e6271fb70452ad",
+      "gitBlobOid": "e664f72518d6ef79c9c0a4cab734602004837657"
+    },
+    {
+      "path": "forgeoj-judge-worker/src/main/java/com/forgeoj/worker/sandbox/DockerCommandExecutor.java",
+      "sha256": "6db5471f33bc994780b188ebd5e5bc5230180420f12984955a866f9917614555",
+      "gitBlobOid": "76f397cf52a225d12f62d97a0fa22eeb45548d5b"
+    },
+    {
+      "path": "forgeoj-judge-worker/src/main/java/com/forgeoj/worker/sandbox/DockerCommandResult.java",
+      "sha256": "ca6768d3fc3c8f9cde763d8b7ae377ca9d61d5d15631050bb8fc653c579a68df",
+      "gitBlobOid": "a11147230e0886c0ba3dd7acad0fde138fa07eb9"
+    },
+    {
+      "path": "forgeoj-judge-worker/src/main/java/com/forgeoj/worker/sandbox/DockerSandboxConfiguration.java",
+      "sha256": "6e7de95838c7d804ba5e42168bfd73a034a772b0b57e895aeed2301c8c1f2a99",
+      "gitBlobOid": "6002555c15a655d22483c70154a0b2c41e0c7b6c"
+    },
+    {
+      "path": "forgeoj-judge-worker/src/main/java/com/forgeoj/worker/sandbox/ExecutionBudget.java",
+      "sha256": "f2d22308f51c288cc48de233aeea08738d0f7b6ec7c40e1bbeb0291597e92368",
+      "gitBlobOid": "32ef186de4430887e97e22d57c3f70cc02f633d2"
+    },
+    {
+      "path": "forgeoj-judge-worker/src/main/java/com/forgeoj/worker/sandbox/InvalidSandboxConfigurationException.java",
+      "sha256": "5bfd2d4f0ed3155001191a473697d067cbfbeeb74710b4d8016c2f25e8c7b8fc",
+      "gitBlobOid": "01870f8c16ee5022fcb8feb70379e3a4ecf8ab86"
+    },
+    {
+      "path": "forgeoj-judge-worker/src/main/java/com/forgeoj/worker/sandbox/M0OutputComparator.java",
+      "sha256": "33f414bf575c68736759d2bb1433e2174f820d82e2c6b8c68edaddce4b09a732",
+      "gitBlobOid": "275abb02bd34102e648f835d0d5dd823cb33c777"
+    },
+    {
+      "path": "forgeoj-judge-worker/src/main/java/com/forgeoj/worker/sandbox/ProcessBuilderDockerCommandExecutor.java",
+      "sha256": "0ae50a81c0a6e5fcb273ebb39bfd850deacfb87700b4a553443e4db5bff2f654",
+      "gitBlobOid": "3b1a7079ce654366cdef29e0901b213851fd56b7"
+    },
+    {
+      "path": "forgeoj-judge-worker/src/main/java/com/forgeoj/worker/sandbox/SandboxAttemptLookup.java",
+      "sha256": "cef27a6c5dd4939b84e8d112bc9ebcb0124152d3d6b7e9b59781e9d1d1c5bfcb",
+      "gitBlobOid": "c801d4edb6a972aae7d158fadbf8dfa16a7c56d1"
+    },
+    {
+      "path": "forgeoj-judge-worker/src/main/java/com/forgeoj/worker/sandbox/SandboxContainer.java",
+      "sha256": "657d2609378598ba2f91778005a1359b700b65863082777c1e35cd2c620f48e5",
+      "gitBlobOid": "35e4e14f8a3f406bdd0bec7eb540ab243d885114"
+    },
+    {
+      "path": "forgeoj-judge-worker/src/main/java/com/forgeoj/worker/sandbox/SandboxException.java",
+      "sha256": "d566b87cc471029b62490d130f7f8117b64e13bbdf493fd882723fc2992767c8",
+      "gitBlobOid": "e36a185d745d59fc0de18f40543c023d393b0770"
+    },
+    {
+      "path": "forgeoj-judge-worker/src/main/java/com/forgeoj/worker/sandbox/SandboxExecutionResult.java",
+      "sha256": "d1b82288505d73330f4ff9e6e63178cf303918f3da9cbc077d248671b9e90f81",
+      "gitBlobOid": "cde5a0b5c7ea979ca6df6f02b36e51a3da0b31f5"
+    },
+    {
+      "path": "forgeoj-judge-worker/src/main/java/com/forgeoj/worker/sandbox/SandboxOutcome.java",
+      "sha256": "54c476321a5cbe2549edf4a7965751f08844dd00b8a624a7c57ee74ab0f6c3a2",
+      "gitBlobOid": "042e53533c03deb67b7ae8a6f0d7a051efe9e0df"
+    },
+    {
+      "path": "forgeoj-judge-worker/src/main/java/com/forgeoj/worker/sandbox/SandboxOutputPreview.java",
+      "sha256": "92e22d3e13f1b2df2aba43dcf5f2e517108d87f1091ce507027b93fbfeeb9209",
+      "gitBlobOid": "0d594461ed2fc6cb4ba4a92b403ea4d53f4b9229"
+    },
+    {
+      "path": "forgeoj-judge-worker/src/main/java/com/forgeoj/worker/sandbox/SandboxRecoveryCleaner.java",
+      "sha256": "39638ead29180cb8b18b98618986d78cb0ba206d5313bd2b06aaf4f62ae6e490",
+      "gitBlobOid": "af5c346e16276d60f11339912bee9b8664458aae"
+    },
+    {
+      "path": "forgeoj-judge-worker/src/main/java/com/forgeoj/worker/sandbox/SandboxResourceEvents.java",
+      "sha256": "a0511d5b7ad6c008e6dd4e8276f5fdf977a80f4e20b9459daac6a4cb10758060",
+      "gitBlobOid": "db740442eb8cab7f02ddf7a21c35958dbb4fed26"
+    },
+    {
+      "path": "forgeoj-judge-worker/src/main/java/com/forgeoj/worker/sandbox/SandboxRuntime.java",
+      "sha256": "d0a44ef347cf7d996f27c775df957f0e859f97ca9a4ec426d6f7676ae7ae0a9d",
+      "gitBlobOid": "c741ffd9e5d5fe39087363414fcf972a74b53812"
+    },
+    {
+      "path": "forgeoj-judge-worker/src/main/java/com/forgeoj/worker/selftest/SelfTestHeartbeat.java",
+      "sha256": "677f69130e9a4f48e0e6ac356044b6d2c7e316ebdf1f1a1ca2fdb7e44fb6f0bc",
+      "gitBlobOid": "f68e7e274c18e002d62a21b24c8e8b40ecc186c9"
+    },
+    {
+      "path": "forgeoj-judge-worker/src/main/java/com/forgeoj/worker/selftest/SelfTestLeaseService.java",
+      "sha256": "896bb93bf47bdb8ad61f4bc859dbeadede478b34eb54b1e52a44703ad60b7a30",
+      "gitBlobOid": "566d250c9ed9b6dbdff45ac50db75f5009059190"
+    },
+    {
+      "path": "forgeoj-judge-worker/src/main/java/com/forgeoj/worker/selftest/SelfTestListener.java",
+      "sha256": "b551cfb4a55db81b10f13e01cc080a3799747301480fa2ddf1b27b470d122f18",
+      "gitBlobOid": "64c15494812cf2aa1c05bcf025769fbeacd49319"
+    },
+    {
+      "path": "forgeoj-judge-worker/src/main/java/com/forgeoj/worker/selftest/SelfTestMapper.java",
+      "sha256": "7bb719389b479a2406bc2552ec90abf218411eef6344a91dd61f429178f43dcf",
+      "gitBlobOid": "44f56384f9d11689bae72d337049b17b35e3cbcb"
+    },
+    {
+      "path": "forgeoj-judge-worker/src/main/java/com/forgeoj/worker/selftest/SelfTestRecovery.java",
+      "sha256": "690590797540ea5f49c640e07b4ca0f8016a01aab0fd024737a86a0dcf47af3f",
+      "gitBlobOid": "e7b6350c39b6a1e1ae3fee847086d37b7224a924"
+    },
+    {
+      "path": "forgeoj-judge-worker/src/main/java/com/forgeoj/worker/selftest/SelfTestRunner.java",
+      "sha256": "fb9a547ec76ba5bc05bfa452f61042486542a25e6694ece6319fc1cbc5150d7f",
+      "gitBlobOid": "ccb59987df28474d8403694e17acf24efbefcc8d"
+    },
+    {
+      "path": "forgeoj-judge-worker/src/main/java/com/forgeoj/worker/selftest/SelfTestSnapshotLoader.java",
+      "sha256": "a22d12d50250e1b72d16e54a0ea0d85e0597dc330be960fa22ef2bef7e59e21d",
+      "gitBlobOid": "63f5c5bc70d456160aab35487e5b96cb1ee2fcb8"
+    },
+    {
+      "path": "forgeoj-judge-worker/src/main/java/com/forgeoj/worker/snapshot/HiddenTestCaseRow.java",
+      "sha256": "bdc6f41debf040dc1781d12cbe15c7373b3bc030b2c0c85588a2a5d2721e9108",
+      "gitBlobOid": "8d58374ca42edebfca45e8aba40f7c915e3a5290"
+    },
+    {
+      "path": "forgeoj-judge-worker/src/main/java/com/forgeoj/worker/snapshot/JudgeTaskSnapshot.java",
+      "sha256": "8fc22311c0b86579dd1e5be3e0fb6aeff3612b9ae481bc8e85fd55ff2e081840",
+      "gitBlobOid": "ffcfd8471d382a6f77d772084c19698a414783bf"
+    },
+    {
+      "path": "forgeoj-judge-worker/src/main/java/com/forgeoj/worker/snapshot/JudgeTaskSnapshotException.java",
+      "sha256": "f6a7241b27a52b45f74ad7d605ecc443cfa0335894e4d15696e92de4e192144b",
+      "gitBlobOid": "93cee1f7b5061b5e2bf9f13789d6442f2692a170"
+    },
+    {
+      "path": "forgeoj-judge-worker/src/main/java/com/forgeoj/worker/snapshot/JudgeTaskSnapshotLoader.java",
+      "sha256": "01d75ba3a7791bfaa5431f1d3cf38db40a353e666a9162ac38755f6170daae3e",
+      "gitBlobOid": "df60ab43cf250c870584aa31cef71bf324d64d63"
+    },
+    {
+      "path": "forgeoj-judge-worker/src/main/java/com/forgeoj/worker/snapshot/JudgeTaskSnapshotMapper.java",
+      "sha256": "a473e1ec39f95573a6143f3405a006bee1938262a70340357618230847fd36a7",
+      "gitBlobOid": "4d223669e67c39b9992328eb9b12272fbd06d22e"
+    },
+    {
+      "path": "forgeoj-judge-worker/src/main/java/com/forgeoj/worker/snapshot/JudgeTaskSnapshotRow.java",
+      "sha256": "5dc58316cac816169f446d9f3b43c2840f3876a0325b2e6e7640b04809383ce5",
+      "gitBlobOid": "03ab13912b5e1c3d4c205dd5d7b4cf872d187fc9"
+    },
+    {
+      "path": "forgeoj-judge-worker/src/main/java/com/forgeoj/worker/snapshot/JudgeTestCase.java",
+      "sha256": "278fac79fe10bbaad04a9cef2ab5a7d6e0f9b8cf984601cb56dfe2ae37cd7115",
+      "gitBlobOid": "e915d12a883c231b17df5f1d39a77e22f61a8eca"
+    },
+    {
+      "path": "forgeoj-judge-worker/src/main/java/com/forgeoj/worker/task/ClaimedJudgeTask.java",
+      "sha256": "d0b8e01dd82afa19a9f31d5a49d46299cba4263fa8af34f87777f7c004bfba1f",
+      "gitBlobOid": "b228e9b4254780f454c86784d536ad15b4aa5095"
+    },
+    {
+      "path": "forgeoj-judge-worker/src/main/java/com/forgeoj/worker/task/JudgeTaskClaimRow.java",
+      "sha256": "d390ca6b6dc700f9d1cc221502814b7221bfd360a58e41b845ff46a68a3e5ca2",
+      "gitBlobOid": "fb273358e149e1bf20b27b394a292a7cbb4099ce"
+    },
+    {
+      "path": "forgeoj-judge-worker/src/main/java/com/forgeoj/worker/task/JudgeTaskClaimService.java",
+      "sha256": "21737dff8d7c97a89fde1bd3cf3345619770449a956dea105902513d018ce512",
+      "gitBlobOid": "abe3f57e8feae6f026072dc4bea44347e69753c4"
+    },
+    {
+      "path": "forgeoj-judge-worker/src/main/java/com/forgeoj/worker/task/JudgeTaskCompletionService.java",
+      "sha256": "72c23fe087a2a823b04438b23591890e050ff3ce77e0baf4f264b56c23fa37c8",
+      "gitBlobOid": "a3e360c52155a2903465c79129c7921ef38e1eee"
+    },
+    {
+      "path": "forgeoj-judge-worker/src/main/java/com/forgeoj/worker/task/JudgeTaskHeartbeatCoordinator.java",
+      "sha256": "c3e616081f9e776674c038479c720cea3c584d782f750b3d7ca00b8d60d80af8",
+      "gitBlobOid": "c509ec999a13e99f30e43b26d84039b445ee5d59"
+    },
+    {
+      "path": "forgeoj-judge-worker/src/main/java/com/forgeoj/worker/task/JudgeTaskLeaseService.java",
+      "sha256": "ae04f5e9f6204856720bab9e7ea9d1686b672da7261b5f83dc019fc088b278da",
+      "gitBlobOid": "1060b07cf77867efeefae6fe034c8dd557c6d77f"
+    },
+    {
+      "path": "forgeoj-judge-worker/src/main/java/com/forgeoj/worker/task/JudgeTaskMapper.java",
+      "sha256": "a46ebf34b96102644b9f25f99f2c931777eaa99ed9ebde0f054271fce0a6bc31",
+      "gitBlobOid": "3fd37a390b4ae8e80c6ef7af006efb0515cf6063"
+    },
+    {
+      "path": "forgeoj-judge-worker/src/main/java/com/forgeoj/worker/task/JudgeTaskRecoveryCandidate.java",
+      "sha256": "74300dae5f3a4b35963f8cf7179301eb27e6ebc1727a8255a3882532d0f9e60b",
+      "gitBlobOid": "46eb07022cef4c84d782a64e2e5568f5822f7e63"
+    },
+    {
+      "path": "forgeoj-judge-worker/src/main/java/com/forgeoj/worker/task/JudgeTaskRecoveryMapper.java",
+      "sha256": "4ed6bd6dd1af3c845b4d930bdaefcfeea2ea103e21e6a04cdaffda85da42b4f6",
+      "gitBlobOid": "7749707917285fb92971de37949921015705b523"
+    },
+    {
+      "path": "forgeoj-judge-worker/src/main/java/com/forgeoj/worker/task/JudgeTaskRecoveryScanner.java",
+      "sha256": "4412ea245964986da66f08a9ffb3248bc19401fbce1be4bcd9256a1c1b9d8211",
+      "gitBlobOid": "21d439730581d1602297629e5da8e7f4eb6d164d"
+    },
+    {
+      "path": "forgeoj-judge-worker/src/main/java/com/forgeoj/worker/task/LeaseOwnershipLostException.java",
+      "sha256": "1edc7c74cb2d15bb111dc85e7cc87db80dfbb108a633d465a4b4d51e942c336d",
+      "gitBlobOid": "f611df96732b19f40c25d6fa1aeca1c1261361bb"
+    },
+    {
+      "path": "forgeoj-judge-worker/src/main/java/com/forgeoj/worker/task/RetryBackoffPolicy.java",
+      "sha256": "0a5e14006f38da8ba22fc21034cec24689a97fe0f2c2fa622b833d7e9c0d3d1f",
+      "gitBlobOid": "668fb1931c630ffdf06471c2ccb9ddacf6c2a3f1"
+    },
+    {
+      "path": "forgeoj-judge-worker/src/main/java/com/forgeoj/worker/task/TaskClaimOutcome.java",
+      "sha256": "ddb163ad3dd6e0dffb9c6f912fe7575cf2f3ebd3ff2ef33d18243396906917eb",
+      "gitBlobOid": "59cfa32629a119d482509ceadcef648274ca7150"
+    },
+    {
+      "path": "forgeoj-judge-worker/src/main/java/com/forgeoj/worker/task/TaskClaimResult.java",
+      "sha256": "b50e1a3ab33d0edc2a8d2199f133dc98e3bfce9f0c49a1c56070b519b2a4253f",
+      "gitBlobOid": "4b859b6929c51bcaac69acd0b74d134a45f6b296"
+    },
+    {
+      "path": "forgeoj-judge-worker/src/main/resources/application.properties",
+      "sha256": "f98b75eb19d4f38dcfdf03831735cd5958e9e1e0b8014de248485bdf000a3859",
+      "gitBlobOid": "81c08331e86ebfef52b73ea39a1ad8dadcc39439"
+    },
+    {
+      "path": "forgeoj-judge-worker/src/test/java/com/forgeoj/worker/ForgeojJudgeWorkerApplicationTests.java",
+      "sha256": "319b710cba5f7c9c927d183f1cd055c0cdcf132b3358c296c441acfdf681d165",
+      "gitBlobOid": "249242df6391fd155f790d17964076d6845cd6c9"
+    },
+    {
+      "path": "forgeoj-judge-worker/src/test/java/com/forgeoj/worker/content/ValidationExecutionIntegrationTests.java",
+      "sha256": "1495531fcc6895ab8fbde35eb1bec0ef48d80090a5877ed555c8518612db7311",
+      "gitBlobOid": "a8b7dadb3b8fa112d620b7eac3cf3544e47ab217"
+    },
+    {
+      "path": "forgeoj-judge-worker/src/test/java/com/forgeoj/worker/messaging/FaultWorkerProcess.java",
+      "sha256": "d0325fca66f7fe26b436edd47c30adc4514ef55f954ce98d7ca3a239c6627819",
+      "gitBlobOid": "21188879c230c139886824aba923633228b14559"
+    },
+    {
+      "path": "forgeoj-judge-worker/src/test/java/com/forgeoj/worker/messaging/JudgeTaskExecutionIntegrationTests.java",
+      "sha256": "b7b07975feac5ccae023a4bc2f879619cd80d30e7d7431cc7d658d378854f4c2",
+      "gitBlobOid": "eacfca9b230de69085365efca30a9e188f19f046"
+    },
+    {
+      "path": "forgeoj-judge-worker/src/test/java/com/forgeoj/worker/messaging/JudgeTaskListenerLoggingTests.java",
+      "sha256": "7082df024f6aeb390cbf96b3566438360e5c704e340ec9029cdb3254144f961c",
+      "gitBlobOid": "0ecdcc7cf10ea22e9aac03275fef71ab1f3f0336"
+    },
+    {
+      "path": "forgeoj-judge-worker/src/test/java/com/forgeoj/worker/messaging/JudgeTaskMessageParserTests.java",
+      "sha256": "8843985b43370fb3d3b3c31a9a90ebae3d920acd48b36332b73dc83be555b3f0",
+      "gitBlobOid": "d2fd86e816004f92c2c264776d7884271e2fcc71"
+    },
+    {
+      "path": "forgeoj-judge-worker/src/test/java/com/forgeoj/worker/messaging/M0JudgeTaskRunnerTests.java",
+      "sha256": "4bd2caa1f271a3d18efb285eb3ebdb18bd5bf84c0927354f99411bafbcf3bb7f",
+      "gitBlobOid": "15c98db91f90952304e3f749d35a41a2dab589ca"
+    },
+    {
+      "path": "forgeoj-judge-worker/src/test/java/com/forgeoj/worker/messaging/WorkerProcessFaultIntegrationTests.java",
+      "sha256": "20a35a1d40bb53641abdee8eebac8fc23a503eaeea338da579a2233a3a3807f3",
+      "gitBlobOid": "bfdec6ffd96e9a1b74fcbcabee49eb59ce526a4c"
+    },
+    {
+      "path": "forgeoj-judge-worker/src/test/java/com/forgeoj/worker/observability/JudgingEventsTests.java",
+      "sha256": "be52d6c5d8a74ce3bd0e4f41e9abb248e1998d5c45e42a21dd92c585f9bd39d7",
+      "gitBlobOid": "a3ce0ccf214bcecbd9a24933aa12e80b5835112e"
+    },
+    {
+      "path": "forgeoj-judge-worker/src/test/java/com/forgeoj/worker/observability/MonitoringHttpServerTests.java",
+      "sha256": "f8f8bc9b1765871a1e338bddd3df420d76df6f8285ef00a46f15a4493a59a261",
+      "gitBlobOid": "d0e6738e5a48260440839cb53ae513470e857808"
+    },
+    {
+      "path": "forgeoj-judge-worker/src/test/java/com/forgeoj/worker/observability/MonitoringMetricsTests.java",
+      "sha256": "33c478bd1ddf1a5e163ec7bcba1fc3d8f8a3b5b03849c5383ba6ff33678e2c2f",
+      "gitBlobOid": "139ea29d4feb0c542e6e76fe7666f53c3ddb52f3"
+    },
+    {
+      "path": "forgeoj-judge-worker/src/test/java/com/forgeoj/worker/observability/MonitoringRuntimeTests.java",
+      "sha256": "21302031b9e89bf1f0bf7c4c8901a15948f7687cb851b736f85fc04a544efa8b",
+      "gitBlobOid": "8dd938edbd4fbf22294636efaadcda63ab25f18b"
+    },
+    {
+      "path": "forgeoj-judge-worker/src/test/java/com/forgeoj/worker/sandbox/DockerCliSandboxRuntimeIntegrationTests.java",
+      "sha256": "369d1eb2dfcc6ff173665b59725fca63cc367cccc5b8b5bfca2e203179e56a09",
+      "gitBlobOid": "660f31d42e633628d6496494037fc4039ac322af"
+    },
+    {
+      "path": "forgeoj-judge-worker/src/test/java/com/forgeoj/worker/sandbox/DockerCliSandboxRuntimeTests.java",
+      "sha256": "86dfab78e8dd2574978bca19b13f6d3f5ecef115608d56af2a39b981bd115872",
+      "gitBlobOid": "e47e0094bc0efcd618c44efd7b6fbefe428405c3"
+    },
+    {
+      "path": "forgeoj-judge-worker/src/test/java/com/forgeoj/worker/sandbox/DockerSandboxExecutionIntegrationTests.java",
+      "sha256": "65a57579671b829d53732e213b57d39414a7473a926a5747a234434d296458d7",
+      "gitBlobOid": "060c807c99cb0a0cc1abff761f57b60176cbf55c"
+    },
+    {
+      "path": "forgeoj-judge-worker/src/test/java/com/forgeoj/worker/sandbox/DockerSandboxSecurityIntegrationTests.java",
+      "sha256": "f9209d39f801014f3b1168360130ac3732fdc287ba2e0e98a12aa3f6fd145636",
+      "gitBlobOid": "67cbed49a48d3ae2a04cbf692151fd7cd6147eb7"
+    },
+    {
+      "path": "forgeoj-judge-worker/src/test/java/com/forgeoj/worker/sandbox/ExecutionBudgetTests.java",
+      "sha256": "cc453c69f2999f65950fe52f022db3971feb03eaf123099bb443f7e6ad2b0de8",
+      "gitBlobOid": "3d5cb30bfe76d029fda20b0a1bdf872d6d273d5b"
+    },
+    {
+      "path": "forgeoj-judge-worker/src/test/java/com/forgeoj/worker/sandbox/M0OutputComparatorTests.java",
+      "sha256": "aa594c06d28b9e917d34dd9f8be50721ecabb19ed696e13c74a0037f725147c1",
+      "gitBlobOid": "7f3b5d34c86cb86277b4ca99509353546739659b"
+    },
+    {
+      "path": "forgeoj-judge-worker/src/test/java/com/forgeoj/worker/sandbox/SandboxRecoveryCleanerTests.java",
+      "sha256": "df777e00d7b85dd83f68731a8b12bf142c6564271dee6d9e78314b7a89951eb1",
+      "gitBlobOid": "13e919c9bd4d5ef78922250400615a79cf07c4ea"
+    },
+    {
+      "path": "forgeoj-judge-worker/src/test/java/com/forgeoj/worker/sandbox/SandboxResourceEventsTests.java",
+      "sha256": "335c11079aaee8868cd2d9fe00510f3bc7c0e06cddd129aa751ef31ae21a469b",
+      "gitBlobOid": "a9a9b87d26635ee76762456a79e7c410933ae333"
+    },
+    {
+      "path": "forgeoj-judge-worker/src/test/java/com/forgeoj/worker/selftest/SelfTestExecutionIntegrationTests.java",
+      "sha256": "489012377ccd58c867e8944f2851cf4eeac6082b406b52cd260ef3e85c6997a0",
+      "gitBlobOid": "579e9ede76b098e55a7a23ac45868862d38826da"
+    },
+    {
+      "path": "forgeoj-judge-worker/src/test/java/com/forgeoj/worker/snapshot/JudgeTaskSnapshotLoaderIntegrationTests.java",
+      "sha256": "6cd85bf93491d84ec50ee0ea0a5db8b379b6de884c5c9342b53fef9493281579",
+      "gitBlobOid": "0d3581fc216f37a41f5cf1ca78630a7375989a45"
+    },
+    {
+      "path": "forgeoj-judge-worker/src/test/java/com/forgeoj/worker/task/JudgeTaskClaimIntegrationTests.java",
+      "sha256": "1a11dbf5f29f94908e95b70933971a354e67de856851f98d28cccb8d244d2306",
+      "gitBlobOid": "a8e2a7548c84d6ba9175879eead9c38ca60b2279"
+    },
+    {
+      "path": "forgeoj-judge-worker/src/test/java/com/forgeoj/worker/task/JudgeTaskCompletionIntegrationTests.java",
+      "sha256": "f9cbb18cc438f7a07866267b7e1ab968826971b9995e2bb2487fa0c916926738",
+      "gitBlobOid": "a7cfe8dd8fd8edba8627dc592ad5ae088dd8e61c"
+    },
+    {
+      "path": "forgeoj-judge-worker/src/test/java/com/forgeoj/worker/task/JudgeTaskHeartbeatCoordinatorTests.java",
+      "sha256": "e6c17a63ffeca111ef774aa82284fa27034e0cc61f170cafcbb436554e0bd058",
+      "gitBlobOid": "18fdee737e2d29e02616fb17b6145e1f57ccf4e6"
+    },
+    {
+      "path": "forgeoj-judge-worker/src/test/java/com/forgeoj/worker/task/JudgeTaskRecoveryScannerTests.java",
+      "sha256": "71dd7986478c12912d5f76f1d31aae55d6ea0be47f9f7a1c691ffaded25793c5",
+      "gitBlobOid": "a137f0b905d5ddd38a568a459871da197fca9a91"
+    },
+    {
+      "path": "forgeoj-judge-worker/src/test/java/com/forgeoj/worker/task/RetryBackoffPolicyTests.java",
+      "sha256": "a33650a75d08a8dc822b30e24fe1b94da593cfb0ae6a4e7ac3a888d884b54327",
+      "gitBlobOid": "9186d8e7b5643286b2805f95fad2a7db46fd1f34"
+    },
+    {
+      "path": "forgeoj-judge-worker/src/test/java/com/forgeoj/worker/testinfra/ContentTestSchema.java",
+      "sha256": "f324c012acf7c0f7cf21b209d24985f0c6b549a504cd55e5a6d97fb4dd33a69a",
+      "gitBlobOid": "86cdd9af7447c996356f0b73ce73513292fd5afe"
+    },
+    {
+      "path": "forgeoj-judge-worker/src/test/java/com/forgeoj/worker/testinfra/DirectMySQLContainer.java",
+      "sha256": "f88c5c2e278dcf9753249e2e596ecd3cba9bee8aa5941254fad2a9a38fe7ca06",
+      "gitBlobOid": "e162eb35f72f23522e9d0a60edc2fd555fdb9a8c"
+    },
+    {
+      "path": "frontend/.editorconfig",
+      "sha256": "140a3af47b162217409f8e635fc70d0b01caf0ee81612d8904412366e83a1063",
+      "gitBlobOid": "3b510aa687ba5d3dbaec1b9c6989327f84261a21"
+    },
+    {
+      "path": "frontend/eslint.config.ts",
+      "sha256": "b213544ea9438fcaf37a851052296496d591eb69c6956772feaf656c3c6d307e",
+      "gitBlobOid": "4e90ef7083050121bd05a1fcad391c44931f1e89"
+    },
+    {
+      "path": "frontend/package-lock.json",
+      "sha256": "51c5b2dd9e163837e123e0ebf89282aa7488de8a971e800b99243a84700f6351",
+      "gitBlobOid": "d950e0dae963f1530f32ab60997ca322c606d93c"
+    },
+    {
+      "path": "frontend/package.json",
+      "sha256": "0ad3d89f99474af92ba51765e1ad41637ee0897c6a53bc97db49fb979e6713b6",
+      "gitBlobOid": "f7105b7acf8dc8f02c4da31a18991658e08743b4"
+    },
+    {
+      "path": "frontend/src/App.vue",
+      "sha256": "997ef9fd7b7266a96fa5cafe8e4c5418125a5ef8eb1cf1648ec4b3c0d6a97ce8",
+      "gitBlobOid": "199820dbc3bd796a47242291d50bd9a11ecdf360"
+    },
+    {
+      "path": "frontend/src/__tests__/AccountNavigation.spec.ts",
+      "sha256": "629cd9b63a6211df71b690c5574db57be0c310d80c31964a6ab3abf8558a4572",
+      "gitBlobOid": "bc18d2c962b8f9cb3fb99881271b9171f226e966"
+    },
+    {
+      "path": "frontend/src/__tests__/AccountRefresh.spec.ts",
+      "sha256": "20fd8a8a9d835f1d9b6e2937b99c84e9eda757fa9e33a5e6fa7ca22255998ec5",
+      "gitBlobOid": "2e03c12b627e40c4b0f5fe3f36a0660200f96b65"
+    },
+    {
+      "path": "frontend/src/__tests__/AccountView.spec.ts",
+      "sha256": "a2038136b6b6aee4c0de1e95223ca9a499fe5aa779b0bd7c90afacf77aaa73fa",
+      "gitBlobOid": "22ea3c3b7955d470373bc678e6c9d249821c7aa5"
+    },
+    {
+      "path": "frontend/src/__tests__/AdminContentView.spec.ts",
+      "sha256": "08ba13c6792fd3045d1323dee5058bb035d0d9ed9756eda3d27873fd9b4c9e15",
+      "gitBlobOid": "9ba0c6224275618b5d3d053e227e1fed4988095a"
+    },
+    {
+      "path": "frontend/src/__tests__/AdminOperationsView.spec.ts",
+      "sha256": "912a305ebab2daf304e4929c8797bd52ac6218cc89d6eef73a07882617d33c7c",
+      "gitBlobOid": "76e689493b91187d3edebb11da994a5dd63db279"
+    },
+    {
+      "path": "frontend/src/__tests__/AdminRefresh.spec.ts",
+      "sha256": "11a0bbd40cb76cb4f296d6d73b081e214ad12fc0b9d5212242ffe7585bb53439",
+      "gitBlobOid": "c2a0be0bbf3f2cf6f3406347174e9facf6f96302"
+    },
+    {
+      "path": "frontend/src/__tests__/AdminSearchView.spec.ts",
+      "sha256": "f6a155cd8dba3b969d25e0cc151e80bc10c6304d8d44e81b36522ed6a25bcd8b",
+      "gitBlobOid": "6280a3f8785ab76f683a1e5bfec628dbbc12fddc"
+    },
+    {
+      "path": "frontend/src/__tests__/AdminView.spec.ts",
+      "sha256": "5cd593ded5dbabbe4305f02f0bf90313e49388c2766272a89fa5f5770b12501a",
+      "gitBlobOid": "b05f8ef5c9476730742a5c2d59dae7aa39380906"
+    },
+    {
+      "path": "frontend/src/__tests__/App.spec.ts",
+      "sha256": "08bb2f5e3c4ec3a75bd8e70ac7a1c51fed56dbac9f7e6903bf0bf15681eeec34",
+      "gitBlobOid": "9d8a7e2335f4945ad198d4abfcda6cf6bae99720"
+    },
+    {
+      "path": "frontend/src/__tests__/AssignmentsView.spec.ts",
+      "sha256": "713851499155b387dd4269959b7d0338f5f58ac4fd88b5ca52f477b137d56c33",
+      "gitBlobOid": "9c4236beb8cf097e500ce43bacf9a2c8081ca392"
+    },
+    {
+      "path": "frontend/src/__tests__/AuthoringView.spec.ts",
+      "sha256": "4de48105d96fe9fd80c364ec9c7c386804e0ad5b9b2ac9a5c46a885ea03ecad0",
+      "gitBlobOid": "7be2e4fbe8ec9331cfd9bdb37d3cd9473c055e14"
+    },
+    {
+      "path": "frontend/src/__tests__/ClassroomProblemsView.spec.ts",
+      "sha256": "0bdad97f6ea71fe79f11e60b1ffd46d23c83b4ef6d52b5c239b52ab0646a25a4",
+      "gitBlobOid": "b9e3d3dabd67896072b6457f4c56e823708a1a04"
+    },
+    {
+      "path": "frontend/src/__tests__/ClassroomView.spec.ts",
+      "sha256": "8ea438b0dd54684ded54903e8151311bd2fa3b0deee9f32e26aad0e731f25b3b",
+      "gitBlobOid": "91781e80c62388115315d6498d3df7de7d88f869"
+    },
+    {
+      "path": "frontend/src/__tests__/CodeDraft.spec.ts",
+      "sha256": "e4026b061df5a7d5aca082c5898d7be7b7100d6ae9fff1579cfe094b9ed0f193",
+      "gitBlobOid": "21a89b5d3aabe2b29131bc8343d326a5c1aa4a4b"
+    },
+    {
+      "path": "frontend/src/__tests__/CodeEditor.spec.ts",
+      "sha256": "52bb7118f6f57b6d2a781bd4de0c9e13624fe14649b1a68a22b19e4ce18a8d98",
+      "gitBlobOid": "c9f375493ca6402e24b20f22f14b65225c7d5120"
+    },
+    {
+      "path": "frontend/src/__tests__/ContentOutput.spec.ts",
+      "sha256": "1989bc2524816e4cc4608aaf47d70523cd3a1527d6c73b08dda740af99fe7274",
+      "gitBlobOid": "a96bbd8c2c0a691dee37a0ca97e751804c1708db"
+    },
+    {
+      "path": "frontend/src/__tests__/ContentReview.spec.ts",
+      "sha256": "44c8987f2063771392d96b021e5ecbc29b28ea2e84f4bb830fa490cb0023dfea",
+      "gitBlobOid": "d3e32d2fdea82ab8f1b6ef1a14591aa19febcc54"
+    },
+    {
+      "path": "frontend/src/__tests__/ContentValidation.spec.ts",
+      "sha256": "962b7927da5529ec5eaaea6d1a31983e3b08abbfa0ba10fe8f56bc0d930b24aa",
+      "gitBlobOid": "e0fa7fe3c40a827ff0421acd00632e4cb230c971"
+    },
+    {
+      "path": "frontend/src/__tests__/DraftNavigation.spec.ts",
+      "sha256": "cc68ab00fa5ec1158e00d94d380fcc7bd1ba64d650b156448726118893e9d258",
+      "gitBlobOid": "c511802ba090e91ce193d5c2d1ae9f121b6a4ba5"
+    },
+    {
+      "path": "frontend/src/__tests__/LearningView.spec.ts",
+      "sha256": "c58e33202ea462b7c22c016a3b4e60b8bbc956a6bd7d92ef9f1cac32ca386591",
+      "gitBlobOid": "d46cb6498ccf304dba86a428c71addced1312bcd"
+    },
+    {
+      "path": "frontend/src/__tests__/OfficialSolution.spec.ts",
+      "sha256": "4e70065c6c8a00feae4c5a71bb4495419ede2ecc53c7d4f568c5c47567fb2368",
+      "gitBlobOid": "778584b8a146162efe99730f397660c399c92e95"
+    },
+    {
+      "path": "frontend/src/__tests__/PracticeContinuity.spec.ts",
+      "sha256": "b7ad0ef194045e9aaad98827284b5e0ba4a2595db2a2d87714dc9c9339bfcc61",
+      "gitBlobOid": "367cdf17ef4687ee952287cc67e2aa6222aa7e5b"
+    },
+    {
+      "path": "frontend/src/__tests__/ProblemFeedback.spec.ts",
+      "sha256": "451ef4bf49b6e1317b1c147f904a029d08b602ad770e34c48ecb9748a8d5473c",
+      "gitBlobOid": "6b625a74f12ec2cf31b581bdd46056f0c3f1933c"
+    },
+    {
+      "path": "frontend/src/__tests__/ProblemLibrary.spec.ts",
+      "sha256": "be52e7dbb1301770e0d34603e8ff2988af6dfb98f8279d909c8a18f90ebc3c02",
+      "gitBlobOid": "a0271cecf0b0ed310646705a4380e0bc6ff6c211"
+    },
+    {
+      "path": "frontend/src/__tests__/ProblemWorkspace.spec.ts",
+      "sha256": "9d3874f35d175d5b4937c5ead1620d68cf0f18416920cf8a63a2d76c08b81f0a",
+      "gitBlobOid": "67fd4b86b807a47cd0e3696eea1e2c119b2aa4a8"
+    },
+    {
+      "path": "frontend/src/__tests__/PublicRevisionList.spec.ts",
+      "sha256": "8f81463fee403ba4b740571625b9471e78351604fdb3570b04524b5d69e952f0",
+      "gitBlobOid": "8b4a265fe7d392142f12c9061c816412f8b454bc"
+    },
+    {
+      "path": "frontend/src/__tests__/SelfTest.spec.ts",
+      "sha256": "cddeede1ea551014ff43c85ea025839696e8926075e59d9c0e2ad2f626574509",
+      "gitBlobOid": "73bc3639fd2984abd57b1b54538a249909b65bbe"
+    },
+    {
+      "path": "frontend/src/__tests__/TeacherRecordsView.spec.ts",
+      "sha256": "11fe9a4d89f392b20cdc115c8625780f54b024d68a16dc0713d0f07761945b76",
+      "gitBlobOid": "18faf26cc5bd9c6729b2e65cd4993bd5110b9a7c"
+    },
+    {
+      "path": "frontend/src/__tests__/WorkspaceSplit.spec.ts",
+      "sha256": "847111686fa166a41d254ad42d02879e03d8238893b3c0245df520ca06323ab7",
+      "gitBlobOid": "07690179182f3c3311c2e757a118b86b7be8408b"
+    },
+    {
+      "path": "frontend/src/__tests__/submissionMonitor.spec.ts",
+      "sha256": "cced411cdcfdfb0c7975ea8a2fc704f5be4f87e477805b1379d83989f0bdc83e",
+      "gitBlobOid": "1b4a7abdce3913917b2f55e80a7176ab2750197a"
+    },
+    {
+      "path": "frontend/src/components/CodeEditor.vue",
+      "sha256": "1f01637d1f7bbd6a70caf2c1099da552c7a62cf9f2283d8e212ccda505a15aa3",
+      "gitBlobOid": "c6792b5cac2dc3fc09410ed8574e3693bbb46e0d"
+    },
+    {
+      "path": "frontend/src/components/ContentOutput.vue",
+      "sha256": "497a1858fc10b6a2477f3bb7feeecfbee5bde1b23951ada5a804e38a97ec9daf",
+      "gitBlobOid": "143d0a87c535bd49e43552a405271bdb48a3fff1"
+    },
+    {
+      "path": "frontend/src/components/ContentReview.vue",
+      "sha256": "7dbf96130ae5cc9762e20e6421856b922b23257affa9077968f208f134cbffb5",
+      "gitBlobOid": "a8cf37fc875627aea7ecdb2fad5c7471926b4051"
+    },
+    {
+      "path": "frontend/src/components/ContentValidation.vue",
+      "sha256": "7637f626a0c34b85faca066752b6f432cea2ad2fa97c60ad0454ccd4922f53b7",
+      "gitBlobOid": "d60b74cbf1f4e953d7b8708c25ed6d2c8124f2ed"
+    },
+    {
+      "path": "frontend/src/components/OfficialSolution.vue",
+      "sha256": "2413bd42f0201363b95614d2aff162f4f8e6c5e27d6f3861ea3bac7a9275a42d",
+      "gitBlobOid": "54305eb27b389efb74d6b04966f4fe1ba3fb1025"
+    },
+    {
+      "path": "frontend/src/components/ProblemFeedback.vue",
+      "sha256": "f6b87627c77ca9ed08f1932863b1c2aa9c38178cd39f37643ff14b43004d2d9b",
+      "gitBlobOid": "f3f624b48ba72dc31c6a46b9e1b1be0a0b0c8cde"
+    },
+    {
+      "path": "frontend/src/components/PublicRevisionList.vue",
+      "sha256": "87ab9b96ebbbe6b84ee17a67d4612a0fbcd1faec6986935f956f90834015f699",
+      "gitBlobOid": "1ed6fbdd97bff302445b2a6c6c41b7a9564f30cf"
+    },
+    {
+      "path": "frontend/src/components/SelfTest.vue",
+      "sha256": "5ee5e1af78a7393687f63d30e935f03abd7885bd54a21efdbda4616f04f72d84",
+      "gitBlobOid": "cfaad985eb58f6b3bda94dc7ea22c5856eb38fa2"
+    },
+    {
+      "path": "frontend/src/components/SubmissionHistory.vue",
+      "sha256": "af70c88f772999ab10802990f35a091f6ef384ad003015b35802f13a19281910",
+      "gitBlobOid": "bda96df3c4f94792880c0a04bd1164d110321079"
+    },
+    {
+      "path": "frontend/src/components/WorkspaceSplit.vue",
+      "sha256": "fa286880c53b78db52283146d1d5e304341514032e523cda623830eef4bb257b",
+      "gitBlobOid": "7ead7abf56c738a93a4924862b3dd1a1dccc0e72"
+    },
+    {
+      "path": "frontend/src/composables/useCodeDraft.ts",
+      "sha256": "8e3e23bc6dc577efce7e9a383b983a5ccf9e71d92d90b76b8f3ef420e023f71f",
+      "gitBlobOid": "d7e9deb15027a13442a71bc03ed8d1617b85663b"
+    },
+    {
+      "path": "frontend/src/composables/useDraftLeaveGuard.ts",
+      "sha256": "a0a2ca62105f9743a9065e75c38458382151ba14feb0a5522b5bef2a22a63ace",
+      "gitBlobOid": "2a79bbd97e13d3dfaaebb92ddcf82e2350a24ac7"
+    },
+    {
+      "path": "frontend/src/main.ts",
+      "sha256": "b82185c691e414cde9108c4d233b713155adf103e06978de606a9895d5ddcae6",
+      "gitBlobOid": "c8e37b03b9c2289ea08f80feeca1880e2abc3a86"
+    },
+    {
+      "path": "frontend/src/router/accountNavigation.ts",
+      "sha256": "731e1cf22989f32a283221876c178f7fcc5f1817e5eaf75985471d11ebd9f743",
+      "gitBlobOid": "1ddd95b19c69bbfd8e923fd020e893d5c87f06de"
+    },
+    {
+      "path": "frontend/src/router/index.ts",
+      "sha256": "a47e6ac75e0a90251bfcfb451d00cc4ad4b9b3d64e691655800fd4448358bac9",
+      "gitBlobOid": "e980a3144fc1005991116310d4c67334fbea4e67"
+    },
+    {
+      "path": "frontend/src/services/adminApi.ts",
+      "sha256": "4fc7c292102255e60d82826b426e0d9762e0ec90fc1ad485d87e712f47b1d0e7",
+      "gitBlobOid": "098e34236dc53082e1786b072ddfeeb6ce81e257"
+    },
+    {
+      "path": "frontend/src/services/assignmentApi.ts",
+      "sha256": "aa71edd9b3287bb3ce7ddc36c195625877518ec67d4466bcf59152bd9e71a0ba",
+      "gitBlobOid": "3bcc04d78e400651fbd8ead90dcd6a7bc982133e"
+    },
+    {
+      "path": "frontend/src/services/classroomApi.ts",
+      "sha256": "2fecac15c4420fba0cff13aabcb5756c8324d5b21a1d0ff0e1d5c462449107c7",
+      "gitBlobOid": "7c64a7c9b6a33a819b7144dc7b14c0f9687d3485"
+    },
+    {
+      "path": "frontend/src/services/classroomProblemApi.ts",
+      "sha256": "d522f06501cedd7109655a6076f7548be85128872e45f662dc749270253eb114",
+      "gitBlobOid": "fc6646470d3fa172109d41bdb9f55d946eda5147"
+    },
+    {
+      "path": "frontend/src/services/contentApi.ts",
+      "sha256": "370e9a7f0586c17b669492d6ea55d345d1df51dd4d510a066b1fe4d518a57ecf",
+      "gitBlobOid": "e32ef5e949158c2e3efc182156d38088f05b9f48"
+    },
+    {
+      "path": "frontend/src/services/editorPreferences.ts",
+      "sha256": "cd3897ef06b4cb566eb5feef16801906ca1d8f2e48faa20a20fc7ddbb1addf50",
+      "gitBlobOid": "c54a4a20f8f241bab9bc027f932c928c2173c0fa"
+    },
+    {
+      "path": "frontend/src/services/forgeojApi.ts",
+      "sha256": "b8750ae4f15ae835d2c4a7d92dd2bfa787e9cd7a51f449060c0f7284e1f3084f",
+      "gitBlobOid": "8e25e1e3234686c0799582d66d880df02bc1cfab"
+    },
+    {
+      "path": "frontend/src/services/judgePresentation.ts",
+      "sha256": "31114e60b33fdcf600994729ed1a7d6e45a731427e9cce93132aea54095e9604",
+      "gitBlobOid": "9bf219dbdfc469e1d620f4a172f6f3dace3db07d"
+    },
+    {
+      "path": "frontend/src/services/learningApi.ts",
+      "sha256": "e3949e58b5c4494db434492a92e88a74fa76c6177d103998e55964a5cb5180e4",
+      "gitBlobOid": "11b14b3588b6678679cab858485e9dcb94821400"
+    },
+    {
+      "path": "frontend/src/services/operationsApi.ts",
+      "sha256": "cc1e9d56093b5b8c1b60f0dd99dae1c0431d6c9a74098209c0d6327b16b6a319",
+      "gitBlobOid": "562661f2c189f9da643e974081f82a6827536d59"
+    },
+    {
+      "path": "frontend/src/services/outputApi.ts",
+      "sha256": "c1627dd8f44eaaeb5d728f6fe3f77ac266961ad5896816b073bb995b5cdeccf2",
+      "gitBlobOid": "39bd32703b4677f505b84073c76e41836ddabac4"
+    },
+    {
+      "path": "frontend/src/services/publicRevisionApi.ts",
+      "sha256": "64639397792cf20b93e2e8e3e0a2e377d8a015903ab7b02e74fd616b3cfbca4e",
+      "gitBlobOid": "644b8c498999cc279dc50a257edea0c6e0d086ba"
+    },
+    {
+      "path": "frontend/src/services/reviewApi.ts",
+      "sha256": "5424a3a54636c367acc082942f379414228c679225630660718fde3f9d1b1f6a",
+      "gitBlobOid": "b1ded1c423ed14c6aec4691775528c5735b27c54"
+    },
+    {
+      "path": "frontend/src/services/selfTestApi.ts",
+      "sha256": "4acbaf031f0b54100692862218ab04d1799e2a2d4ea280242fae7056eee97744",
+      "gitBlobOid": "325e1a5ac1cafe6c6ac9f3696e0834334497a2ff"
+    },
+    {
+      "path": "frontend/src/services/solutionApi.ts",
+      "sha256": "b72df53f1f51b9ce1fdcd7c197c04f35e0476da5155c897e76715139e5b53a31",
+      "gitBlobOid": "cbb2fd33248aa4fa2b97574c656fb61ac142d71b"
+    },
+    {
+      "path": "frontend/src/services/submissionMonitor.ts",
+      "sha256": "427863d4a8163388316c8cb22450a9c581705ba98a5e1469c706824c7db78daa",
+      "gitBlobOid": "0ca839d245b3908b8150302ceea685b6a527dada"
+    },
+    {
+      "path": "frontend/src/services/teacherRecordApi.ts",
+      "sha256": "8c10830f524a81f3eb65875278af3d4616e8130439d1a54ef4b583e3c92dd5ba",
+      "gitBlobOid": "4c152c3bc7492411788dafae395b5e4f87b1d841"
+    },
+    {
+      "path": "frontend/src/services/validationApi.ts",
+      "sha256": "54c0d7264ef52f2a08dffd5d92e236959f91f97379a0ee5525a1209a684b5fa7",
+      "gitBlobOid": "de23bb24da0359c020385effb4fce8a424d8b46b"
+    },
+    {
+      "path": "frontend/src/views/AccountView.vue",
+      "sha256": "46cbd71eba4ce2b263ebe61fa23fde5c3de8ef5bd38a39696e94b41ace878dd6",
+      "gitBlobOid": "baead10ba141f257b8d18d593295215d0c656eb8"
+    },
+    {
+      "path": "frontend/src/views/AdminContentView.vue",
+      "sha256": "f99c628ca3790f94a2fed397cc78361b8c77296b62bd7a56db3e9406479bbf23",
+      "gitBlobOid": "7b9953447badbcaa84491d591a8eb4abd94329c3"
+    },
+    {
+      "path": "frontend/src/views/AdminOperationsView.vue",
+      "sha256": "9c1f3b2ac77105fdc22fc9e4d2dd21021ac394c07b59a7c4a5095c13553204cb",
+      "gitBlobOid": "5333268e032c436f229db7cf9b63c135a0ddaafd"
+    },
+    {
+      "path": "frontend/src/views/AdminSearchView.vue",
+      "sha256": "2914737d1a54fadab2c5103f7863af3367215db36591d892b9539a1631445e8f",
+      "gitBlobOid": "41838464c599974f4dc29008feebc63d3b985b69"
+    },
+    {
+      "path": "frontend/src/views/AdminView.vue",
+      "sha256": "cd5f1540e60083fac9c3258a23ee7d718e0ab05fe9a8cd01a5dc77b0fcb9531a",
+      "gitBlobOid": "c8ca204bbf86361879e8f09fc796852d53d4f079"
+    },
+    {
+      "path": "frontend/src/views/AssignmentsView.vue",
+      "sha256": "231a775a1e39cf417977bab5fe869f2f2dae77243381a5adb3d332ca194e55a1",
+      "gitBlobOid": "6a41f3352dcb3d78d1f3d2a693187a41ec02163d"
+    },
+    {
+      "path": "frontend/src/views/AuthoringView.vue",
+      "sha256": "eaf7029d1c5fda642837c65da02880c8236818c24048fd6067115dd72427c220",
+      "gitBlobOid": "acaa5a5a782e52ef9e7caf792dec3b76e702c705"
+    },
+    {
+      "path": "frontend/src/views/ClassroomProblemsView.vue",
+      "sha256": "8b39bb9fb9914b5c793453d5a5ecb7b2c35e813b02f73a491bf9b62989fa865d",
+      "gitBlobOid": "38c9e7316934d177303dbb2c944f6ec82de08375"
+    },
+    {
+      "path": "frontend/src/views/ClassroomView.vue",
+      "sha256": "3910c3b85eba8eefa3f2930228ab001488d8d8bfe7e3e6617f4f885f9148d873",
+      "gitBlobOid": "29a5854fd07d6ef4d0de94bf55be172ae7061253"
+    },
+    {
+      "path": "frontend/src/views/JudgeWorkspaceView.vue",
+      "sha256": "66ebb60ad040aba45c13d1a41deadf3f27a96bf39094dc7b956752cb320c3876",
+      "gitBlobOid": "7366c6a34ef8502373707338cb864ff17c26ae55"
+    },
+    {
+      "path": "frontend/src/views/LearningView.vue",
+      "sha256": "fdc95b370a1d3df3a7b25886a5a5f477973ca91396b01344f8305508bc23b400",
+      "gitBlobOid": "8c8b067942dd1a26c29f86973ba78b9c890a35d5"
+    },
+    {
+      "path": "frontend/src/views/ProblemLibraryView.vue",
+      "sha256": "a0fd93d0eca376beb073e92f1172dadb3ac7243af701e90d129196519c0fea1d",
+      "gitBlobOid": "a78c8d1dca82c384d35ee2bfa187aeb43d77a2d2"
+    },
+    {
+      "path": "frontend/src/views/TeacherRecordsView.vue",
+      "sha256": "b47548658ade0c1b01e5324133676c65ecc675a2a33d36d30f4d5e9a3a0e724a",
+      "gitBlobOid": "d6293d61cf134f9cb91b661aba848f4316b20dce"
+    },
+    {
+      "path": "frontend/tsconfig.app.json",
+      "sha256": "92496d0db20bb707be8b697a9dc316c7ded1011f8a9998a472c89f3e612822f2",
+      "gitBlobOid": "c0f2d86707ed70f0480f90c09cf057468efabd1a"
+    },
+    {
+      "path": "frontend/tsconfig.json",
+      "sha256": "9c4d36d79809ab9835a9e674b60dd208f3c15958eb9f2dea1afb218f6d0e483b",
+      "gitBlobOid": "100cf6a8f2b8b43c3fba052e5241951ecdd7a384"
+    },
+    {
+      "path": "frontend/tsconfig.node.json",
+      "sha256": "f3d48b85104c3b01aa68ee8758762eb6e90cb09677251f6b7b4b53360e37bde1",
+      "gitBlobOid": "7274bd4c40c201f0ff252abad960e08a3a51e2ed"
+    },
+    {
+      "path": "frontend/tsconfig.vitest.json",
+      "sha256": "6aed91cc02f169d58a4757b98c7a69c4c80ba55c5692f62eba97335de0059302",
+      "gitBlobOid": "ff1d8c9d0c7c65e663a2021d59609572fea75d30"
+    },
+    {
+      "path": "frontend/vite.config.ts",
+      "sha256": "c10c3ba1ecf0b990771c4dc2a86fcb9c13a29e54a146e5359fa9036a9d0a6974",
+      "gitBlobOid": "d2b4e14bd06fe22bdfcef9e1156c8ae0baa000cc"
+    },
+    {
+      "path": "frontend/vitest.config.ts",
+      "sha256": "d7364f879e1e5fff342aff834176bbe550279c880c10b1e6468d08fe1d479fdc",
+      "gitBlobOid": "af90313234526190e6522224e6b50614fd46cf27"
+    },
+    {
+      "path": "pom.xml",
+      "sha256": "baa088ab9defb6c3e01af26146f49d5aee97077f682254ea771208049fefc667",
+      "gitBlobOid": "6b6a2e159a8e8649104fbba76a3486650693bfd7"
+    }
+  ]
+}

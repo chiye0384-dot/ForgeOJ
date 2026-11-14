@@ -1,0 +1,11 @@
+{
+  "tag": "forgeoj-m5check-e78855240f7d-judge-probe",
+  "id": "sha256:980ae09d6470f142cc3391f27f17b8c11697405713d5232c261e4ce7a5498d5e",
+  "base": {
+    "component": "worker",
+    "id": "sha256:cd109b423a60df79806d9b9ecfa5c52354de223147f0feaee19df1d4dcd15d76",
+    "tag": "forgeoj-m5check-e78855240f7d-worker"
+  },
+  "sameApplicationJar": true,
+  "scope": "instrumentation image for this benchmark only"
+}

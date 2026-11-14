@@ -6,5 +6,10 @@
 /docs/licenses/prometheus-3.15.0/*.txt -text
 /docs/licenses/grafana-13.2.3/** -text
 /docs/licenses/nginx-1.30.5/** -text
+/docs/licenses/java-format-tools/*.txt -text -whitespace
+*.java text eol=lf
 *.cmd text eol=crlf
 *.sh text eol=lf
+# Evidence hashes describe original bytes; Git must not rewrite exported measurements.
+/docs/evidence/portfolio-readiness/** -text whitespace=blank-at-eol,blank-at-eof,space-before-tab,cr-at-eol
+/docs/evidence/m5-statement-cache-ab/20261113/** -text whitespace=blank-at-eol,blank-at-eof,space-before-tab,cr-at-eol

@@ -1,0 +1,22 @@
+[
+  {
+    "path": "judge-load.mjs",
+    "sha256": "74ef6897a564e9790aa61119aaa17c7f9929438de33dfb752dd1377f0c5331f3"
+  },
+  {
+    "path": "judge-lifecycle-docker.sh",
+    "sha256": "5a6eb20bc3dd1c0906a5f576cac6b9a654d9281124047b08295a6bd7375bd6ba"
+  },
+  {
+    "path": "Dockerfile.judge-probe",
+    "sha256": "e23a0da20274911101189825b726057fb6a7eb208a620031acdda8d7163e4331"
+  },
+  {
+    "path": "run-judge-baseline.py",
+    "sha256": "f21972426e46f2617b34a0fa178677d2d699476fae16cbe8cffd2c8f44fa9dd9"
+  },
+  {
+    "path": "summarize-judge-baseline.py",
+    "sha256": "23dce8f74440124aba3e4eafa1803effa62eb6a712d297fde01dc186ee09d11f"
+  }
+]

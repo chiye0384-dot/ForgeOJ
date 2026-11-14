@@ -3,7 +3,8 @@
 param(
   [Parameter(Mandatory)][string]$BuildDirectory,
   [Parameter(Mandatory)][ValidatePattern('^[a-f0-9]{64}$')][string]$ApiSha256,
-  [Parameter(Mandatory)][ValidatePattern('^[a-f0-9]{64}$')][string]$WorkerSha256
+  [Parameter(Mandatory)][ValidatePattern('^[a-f0-9]{64}$')][string]$WorkerSha256,
+  [string]$CompiledInputManifest='docs/evidence/m4-monitoring/linux-source-inputs.json'
 )
 $ErrorActionPreference='Stop'
 $repo=(Resolve-Path (Join-Path $PSScriptRoot '../..')).Path
@@ -12,9 +13,20 @@ if(-not $build.StartsWith((Join-Path $repo 'target')+[IO.Path]::DirectorySeparat
 $api=Join-Path $build 'forgeoj-api/forgeoj-api-0.0.1-SNAPSHOT.jar'
 $worker=Join-Path $build 'forgeoj-judge-worker/forgeoj-judge-worker-0.0.1-SNAPSHOT.jar'
 if((Get-FileHash $api).Hash.ToLower() -ne $ApiSha256 -or (Get-FileHash $worker).Hash.ToLower() -ne $WorkerSha256){throw 'Accepted artifact mismatch'}
-$inputs=(Get-Content -LiteralPath (Join-Path $repo 'docs/evidence/m4-monitoring/linux-source-inputs.json') -Raw | ConvertFrom-Json).inputs
+$frontendBuild=Join-Path $build 'frontend-dist'
+if(-not (Test-Path -LiteralPath (Join-Path $frontendBuild 'index.html') -PathType Leaf)){throw 'Complete checked frontend build required'}
+$frontendFiles=@(Get-ChildItem -LiteralPath $frontendBuild -Recurse -File)
+if($frontendFiles.Count -lt 2){throw 'Frontend asset build is incomplete'}
+$inputManifestPath=(Resolve-Path -LiteralPath (Join-Path $repo $CompiledInputManifest)).Path
+if(-not $inputManifestPath.StartsWith($repo+[IO.Path]::DirectorySeparatorChar,[StringComparison]::OrdinalIgnoreCase)){throw 'Input manifest must be inside this repository'}
+$inputs=(Get-Content -LiteralPath $inputManifestPath -Raw | ConvertFrom-Json).inputs
+if(-not $inputs -or $inputs.Count -lt 1){throw 'Compiled input list is empty'}
+$seenInputs=@{}
 foreach($input in $inputs){
-  if($input.path -notmatch '^(pom.xml$|forgeoj-(api|judge-worker)/|frontend/|contracts/)'){throw 'Unexpected compiled input path'}
+  if($input.path -notmatch '^(pom.xml$|forgeoj-(api|judge-worker)/|frontend/|contracts/)' -or
+     $input.path.Split('/') -contains '..' -or $input.path.Contains('\') -or
+     $input.sha256 -notmatch '^[a-f0-9]{64}$' -or $seenInputs.ContainsKey($input.path)){throw 'Unexpected or duplicate compiled input'}
+  $seenInputs[$input.path]=$true
   if((Get-FileHash -LiteralPath (Join-Path $repo $input.path)).Hash.ToLower() -ne $input.sha256){throw "Compiled input changed: $($input.path); build again before packaging"}
 }
 $name='forgeoj-deployment-'+(Get-Date -Format 'yyyyMMdd-HHmmss')+'-'+[guid]::NewGuid().ToString('N').Substring(0,8)
@@ -26,6 +38,11 @@ New-Item -ItemType Directory -Path (Join-Path $package 'artifacts/frontend'),(Jo
 Copy-Item -LiteralPath $api -Destination (Join-Path $package 'artifacts/api.jar')
 Copy-Item -LiteralPath $worker -Destination (Join-Path $package 'artifacts/worker.jar')
 Get-ChildItem -LiteralPath (Join-Path $build 'frontend-dist') | Copy-Item -Destination (Join-Path $package 'artifacts/frontend') -Recurse
+foreach($frontendFile in $frontendFiles){
+  $relative=[IO.Path]::GetRelativePath($frontendBuild,$frontendFile.FullName)
+  $copied=Join-Path $package ('artifacts/frontend/'+$relative)
+  if(-not (Test-Path -LiteralPath $copied -PathType Leaf) -or (Get-FileHash -LiteralPath $copied).Hash -ne (Get-FileHash -LiteralPath $frontendFile.FullName).Hash){throw 'Frontend copy mismatch'}
+}
 Copy-Item -LiteralPath (Join-Path $repo 'deploy/mysql/init/01-create-users.sh') -Destination (Join-Path $package 'scripts/create-users.sh')
 foreach($file in @('datasources.yml','dashboards.yml','forgeoj.json')){Copy-Item -LiteralPath (Join-Path $repo ('deploy/monitoring/'+$file)) -Destination (Join-Path $package ('monitoring/'+$file))}
 foreach($file in @('LICENSE','NOTICE','THIRD_PARTY_NOTICES.md')){Copy-Item -LiteralPath (Join-Path $repo $file) -Destination (Join-Path $package ('notices/'+$file))}
@@ -37,6 +54,8 @@ Get-ChildItem -LiteralPath $package -Filter '*.sh' -Recurse | ForEach-Object {
   [IO.File]::WriteAllText($_.FullName,$body,[Text.UTF8Encoding]::new($false))
 }
 $manifest=[ordered]@{deploymentRevision=2;createdAt=(Get-Date -Format o);sourceCommit=(git -C $repo rev-parse HEAD);compiledInputs=$inputs.Count;apiInputSha256=$ApiSha256;workerInputSha256=$WorkerSha256;mode='private deployment preparation; not a Release';files=@()}
+$manifest.compiledInputManifest=[IO.Path]::GetRelativePath($repo,$inputManifestPath).Replace('\','/')
+$manifest.compiledInputManifestSha256=(Get-FileHash -LiteralPath $inputManifestPath).Hash.ToLower()
 $manifest.files=@(Get-ChildItem -LiteralPath $package -Recurse -File | Sort-Object FullName | ForEach-Object {[ordered]@{path=[IO.Path]::GetRelativePath($package,$_.FullName).Replace('\','/');sha256=(Get-FileHash -LiteralPath $_.FullName).Hash.ToLower()}})
 $manifest | ConvertTo-Json -Depth 5 | Set-Content -LiteralPath (Join-Path $package 'package-manifest.json') -Encoding utf8
 Write-Output $package

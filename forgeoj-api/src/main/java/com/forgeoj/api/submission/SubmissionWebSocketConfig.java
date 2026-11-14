@@ -8,16 +8,17 @@ import org.springframework.web.socket.config.annotation.WebSocketHandlerRegistry
 @Configuration
 @EnableWebSocket
 class SubmissionWebSocketConfig implements WebSocketConfigurer {
-    private final SubmissionNotificationHandler handler;
-    private final SubmissionHandshakeInterceptor interceptor;
+  private final SubmissionNotificationHandler handler;
+  private final SubmissionHandshakeInterceptor interceptor;
 
-    SubmissionWebSocketConfig(SubmissionNotificationHandler handler, SubmissionHandshakeInterceptor interceptor) {
-        this.handler = handler;
-        this.interceptor = interceptor;
-    }
+  SubmissionWebSocketConfig(
+      SubmissionNotificationHandler handler, SubmissionHandshakeInterceptor interceptor) {
+    this.handler = handler;
+    this.interceptor = interceptor;
+  }
 
-    @Override
-    public void registerWebSocketHandlers(WebSocketHandlerRegistry registry) {
-        registry.addHandler(handler, "/api/v1/submissions/*/events").addInterceptors(interceptor);
-    }
+  @Override
+  public void registerWebSocketHandlers(WebSocketHandlerRegistry registry) {
+    registry.addHandler(handler, "/api/v1/submissions/*/events").addInterceptors(interceptor);
+  }
 }

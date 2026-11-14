@@ -1,7 +1,6 @@
 package com.forgeoj.api.problem;
 
 import java.util.Optional;
-
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
 import org.apache.ibatis.annotations.Select;
@@ -9,8 +8,8 @@ import org.apache.ibatis.annotations.Select;
 @Mapper
 public interface ProblemMapper {
 
-    @Select(
-            """
+  @Select(
+      """
             SELECT p.slug,
                    p.title,
                    p.statement_text AS statementText,
@@ -38,5 +37,5 @@ public interface ProblemMapper {
               AND p.status = 'ACTIVE' AND p.scope = 'PUBLIC'
             LIMIT 1
             """)
-    Optional<ProblemDetailsRow> findActiveBySlug(@Param("slug") String slug);
+  Optional<ProblemDetailsRow> findActiveBySlug(@Param("slug") String slug);
 }

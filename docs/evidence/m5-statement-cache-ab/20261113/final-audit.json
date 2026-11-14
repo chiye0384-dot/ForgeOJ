@@ -1,0 +1,11 @@
+{
+  "status": "PASS",
+  "compiledInputsMatch": 437,
+  "zipExactAllowlistCrcAndHashes": true,
+  "archivedToolBytesMatchCurrent": true,
+  "existingArchivesUnchanged": 5,
+  "relativeLinksExist": 8,
+  "businessSourceChanged": false,
+  "originalWebsiteAndLearningRedis": "remain stopped; owned original volumes retained",
+  "protectedFiles": "Get-FileHash only; both unchanged"
+}

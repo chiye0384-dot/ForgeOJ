@@ -1,7 +1,6 @@
 package com.forgeoj.api.messaging;
 
 import java.util.List;
-
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
 import org.apache.ibatis.annotations.Select;
@@ -10,8 +9,8 @@ import org.apache.ibatis.annotations.Update;
 @Mapper
 interface OutboxMapper {
 
-    @Select(
-            """
+  @Select(
+      """
             SELECT o.id,
                    o.event_type AS eventType,
                    o.sequence_no AS sequenceNo,
@@ -33,10 +32,10 @@ interface OutboxMapper {
             ORDER BY o.next_attempt_at, o.created_at, o.id
             LIMIT #{limit}
             """)
-    List<OutboxEventRow> findPending(@Param("limit") int limit);
+  List<OutboxEventRow> findPending(@Param("limit") int limit);
 
-    @Update(
-            """
+  @Update(
+      """
             UPDATE outbox_event
             SET publish_attempts = publish_attempts + 1,
                 last_attempt_at = CURRENT_TIMESTAMP(6),
@@ -47,12 +46,11 @@ interface OutboxMapper {
               AND failed_at IS NULL
               AND publish_attempts = #{expectedAttempts}
             """)
-    int markPublished(
-            @Param("eventId") String eventId,
-            @Param("expectedAttempts") int expectedAttempts);
+  int markPublished(
+      @Param("eventId") String eventId, @Param("expectedAttempts") int expectedAttempts);
 
-    @Update(
-            """
+  @Update(
+      """
             UPDATE outbox_event
             SET failed_at = CASE
                     WHEN publish_attempts + 1 >= #{maximumAttempts}
@@ -70,10 +68,10 @@ interface OutboxMapper {
               AND failed_at IS NULL
               AND publish_attempts = #{expectedAttempts}
             """)
-    int recordPublishFailure(
-            @Param("eventId") String eventId,
-            @Param("expectedAttempts") int expectedAttempts,
-            @Param("maximumAttempts") int maximumAttempts,
-            @Param("delaySeconds") long delaySeconds,
-            @Param("errorCode") String errorCode);
+  int recordPublishFailure(
+      @Param("eventId") String eventId,
+      @Param("expectedAttempts") int expectedAttempts,
+      @Param("maximumAttempts") int maximumAttempts,
+      @Param("delaySeconds") long delaySeconds,
+      @Param("errorCode") String errorCode);
 }

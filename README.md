@@ -2,7 +2,24 @@
 
 面向 Java 学习者和小型教学班级的在线判题平台。支持 Java 21、单文件 Main.java、标准输入输出题；API 与判题 Worker 独立运行。
 
-最新功能代码位于 [feat/m2-accounts 分支](https://github.com/chiye0384-dot/ForgeOJ/tree/feat/m2-accounts)。本次源码与证据同步记录见 [2026-11-07 核验记录](docs/GITHUB-SYNC-20261107.md)。
+本仓库以 `main` 作为对外展示分支，保留 [feat/m2-accounts 分支](https://github.com/chiye0384-dot/ForgeOJ/tree/feat/m2-accounts)和历史提交。版本以仓库预览标签为准；预览标签不代表已上线服务。
+
+从[五分钟设计导读](DESIGN.md)了解架构、判题状态机和故障处理；从[性能导读](PERFORMANCE.md)区分已测数据与尚未证明的容量；格式与检查命令见[开发约定](CONTRIBUTING.md)。
+
+```mermaid
+flowchart LR
+    UI[Vue 页面] --> API[Spring Boot API]
+    API -->|提交、任务、事件同事务| DB[(MySQL / Outbox)]
+    DB --> Publisher[Outbox 发布器]
+    Publisher --> MQ[RabbitMQ]
+    MQ --> Worker[判题 Worker]
+    Worker -->|租约与结果持久化| DB
+    Worker --> Docker[受限 Docker 沙箱]
+    API --> Redis[(Redis)]
+    API -->|REST 全文检索| ES[(Elasticsearch)]
+```
+
+Elasticsearch通过JDK HttpClient调用REST API，因此pom没有额外ES客户端依赖；MySQL负责权限/当前版本复核，ES不可用时退回标题搜索。公网演示暂未部署，本机入口与部署准备模板见下文。
 
 ## 打开本地网站
 
@@ -20,9 +37,9 @@
 
 ## 当前状态
 
-2026-10-30：本地使用改进已 VERIFIED，现有21题（新增20道经验证/审核发布的原创题）、官方入门题单、草稿离开保护和改进后的编辑区；保留数据的停启及重启后真实判题通过。M0～M4 已有技术验收，完整M5仍 IN_PROGRESS，尚未正式 Release。最新边界见[当前状态](docs/CURRENT-STATUS.md)、[验收报告](docs/PRODUCT-IMPROVEMENTS-VALIDATION.md)和[具体实施计划](docs/PRODUCT-IMPROVEMENT-PLAN.md)。
+2026-11-14：完整固定Linux回归通过API 341项、Worker 139项、前端159项测试及全部构建检查。单Worker在固定A+B/3用例负载下，三轮约17.43～17.69份/分钟；完整环境、原始数据和限制见[性能导读](PERFORMANCE.md)。这是本机短时测量，公网与真实主机验收尚未完成。
 
-随后完成的本地体验包括[登录与注册流程](docs/ACCOUNT-UX-VALIDATION.md)、[可调整分栏的做题工作台](docs/WORKSPACE-UX-VALIDATION.md)、[提交历史与原源码查看、原请求重试、个人进度和继续草稿](docs/PRACTICE-CONTINUITY-VALIDATION.md)。2026-11-07 同步前重新通过前端完整检查：159 项测试／30 suites、类型、lint、格式和正式构建；后端输入与对应固定 Linux 验收快照逐文件匹配。
+既有本地演示包含21道题、官方题解与入门题单，以及[登录与注册流程](docs/ACCOUNT-UX-VALIDATION.md)、[可调整分栏的做题工作台](docs/WORKSPACE-UX-VALIDATION.md)、[提交历史与原源码查看、原请求重试、个人进度和继续草稿](docs/PRACTICE-CONTINUITY-VALIDATION.md)。本轮整理与验证见[报告](docs/PORTFOLIO-READINESS-VALIDATION.md)，详细边界见[当前状态](docs/CURRENT-STATUS.md)。
 
 网站包含账号、公共题库、学习记录、题单、草稿、自测、官方题解、作者出题与审核发布、班级作业、独立管理后台、搜索和监控。判题链路使用 MySQL 事实源、事务 Outbox、RabbitMQ、幂等领取、租约/心跳、受限 Docker 执行与结果持久化后 ACK。
 

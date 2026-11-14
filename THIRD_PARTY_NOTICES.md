@@ -138,6 +138,16 @@ use boundaries are recorded in `docs/M1-FIXED-LINUX-VALIDATION.md` and
 bridge use the same recorded Node 24.14.1 image and only built-in Node modules.
 Any release redistribution requires review of the actual image contents.
 
+## Java formatting tools (development only)
+
+Java formatting uses `com.diffplug.spotless:spotless-maven-plugin:3.0.0`
+and `com.google.googlejavaformat:google-java-format:1.28.0`, under Apache-2.0.
+They run during development/CI and are not application dependencies or copied
+business code. Original pinned upstream license texts are retained in
+`docs/licenses/java-format-tools/`. We do not import `google-java-format-diff.py`
+or any Eclipse formatter implementation. Versions and upstream URLs are recorded
+in `docs/UPSTREAM-AND-LICENSE.md`.
+
 ## Explicitly not imported
 
 No source code, UI, assets, problem content, or business modules were copied

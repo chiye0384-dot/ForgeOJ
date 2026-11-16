@@ -8,7 +8,7 @@ $RunDirectory=(Resolve-Path -LiteralPath $RunDirectory).Path
 if(-not $RunDirectory.StartsWith((Join-Path $repository 'target')+[IO.Path]::DirectorySeparatorChar,[StringComparison]::OrdinalIgnoreCase)){throw 'Owned target required'}
 $state=Get-Content (Join-Path $RunDirectory 'state.json') -Raw | ConvertFrom-Json
 if(-not $state.ProductDemo -or $state.Project -ne (Split-Path -Leaf $RunDirectory)){throw 'Product demo required'}
-$evidence=Join-Path $repository 'docs/evidence/practice-continuity/20261030'
+$evidence=Join-Path $repository 'docs/archive/evidence/practice-continuity/20261030'
 New-Item -ItemType Directory -Path $evidence -Force | Out-Null
 $files=@('practice-continuity-http.json','teaching-revision-validation.json','teaching-revision-maintenance.json')
 foreach($file in $files){

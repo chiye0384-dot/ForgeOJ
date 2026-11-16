@@ -19,8 +19,8 @@ out = repo / 'target' / name
 package = out / 'package'
 package.mkdir(parents=True)
 shutil.copyfile(repo / 'deploy/production/scripts/backup.py', package / 'backup.py')
-readme = (repo / 'docs/M5-BACKUP-RESTORE.md').read_text(encoding='utf-8')
-readme = readme.replace('[M5备份验收](M5-BACKUP-VALIDATION.md)', '仓库文档 docs/M5-BACKUP-VALIDATION.md（验收记录不随工具包分发）')
+readme = (repo / 'docs/archive/M5-BACKUP-RESTORE.md').read_text(encoding='utf-8')
+readme = readme.replace('[M5备份验收](M5-BACKUP-VALIDATION.md)', '仓库文档 docs/archive/M5-BACKUP-VALIDATION.md（验收记录不随工具包分发）')
 (package / 'README.md').write_text(readme, encoding='utf-8')
 shutil.copyfile(repo / 'LICENSE', package / 'LICENSE')
 (package / 'NOTICE').write_text(

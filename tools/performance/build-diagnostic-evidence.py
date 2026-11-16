@@ -24,7 +24,7 @@ assert summary['status'] == capture['status'] == 'PASS'
 assert cleanup['project'] == capture['project']
 assert cleanup['containers'] == cleanup['volumes'] == cleanup['networks'] == 0
 assert capture['businessFactsAndGrantsUnchanged'] and capture['submissionsCreated'] == 0
-inputs = read(repo / 'docs/evidence/m4-monitoring/linux-source-inputs.json')['inputs']
+inputs = read(repo / 'docs/archive/evidence/m4-monitoring/linux-source-inputs.json')['inputs']
 assert len(inputs) == 428
 for item in inputs + capture['toolHashes']:
     assert sha(repo / item['path']) == item['sha256'], item['path']
@@ -114,7 +114,7 @@ report += '''
 
 方法与范围见 [诊断设计](M5-PERFORMANCE-DIAGNOSTIC-DESIGN.md)、[原基线](M5-PERFORMANCE-BASELINE-REPORT.md)。真实 Linux/公网 HTTPS/SMTP、每日异地备份与密钥保管、跨业务版本回滚、长稳/开放到达负载、真实试用仍独立待验收。
 '''
-(repo / 'docs/M5-PERFORMANCE-DIAGNOSTIC-REPORT.md').write_text(report, encoding='utf-8')
+(repo / 'docs/archive/M5-PERFORMANCE-DIAGNOSTIC-REPORT.md').write_text(report, encoding='utf-8')
 
 stamp = dt.datetime.now(dt.timezone(dt.timedelta(hours=8))).strftime('%Y%m%d-%H%M%S')
 name = 'forgeoj-hotspot-diagnostic-' + stamp + '-' + uuid.uuid4().hex[:8]
@@ -145,11 +145,11 @@ for filename in ['diagnose-hotspots.py','capture-cp-version.py','capture-full-js
 for filename in ['cleanup-result.json','jfr-start-help.txt','jfr-print-help.txt']:
     add(run / filename, 'run/' + filename)
 for filename in ['M5-PERFORMANCE-DIAGNOSTIC-DESIGN.md','M5-PERFORMANCE-DIAGNOSTIC-REPORT.md']:
-    add(repo / 'docs' / filename, 'docs/' + filename)
+    add(repo / 'docs/archive' / filename, 'docs/archive/' + filename)
 for filename in ['LICENSE','NOTICE']:
     add(repo / filename, filename)
 readme = output / 'README.md'
-readme.write_text('ForgeOJ 只读热点诊断证据包。先读 docs/M5-PERFORMANCE-DIAGNOSTIC-REPORT.md，逐文件摘要见 delivery.json。\n'
+readme.write_text('ForgeOJ 只读热点诊断证据包。先读 docs/archive/M5-PERFORMANCE-DIAGNOSTIC-REPORT.md，逐文件摘要见 delivery.json。\n'
                   '这是原始观测与原创工具的审阅包，不是部署安装器；脚本复现需要完整 ForgeOJ 仓库、既有固定构件与新建拥有者测试包。\n'
                   '报告中仓库证据/旧基线链接需在完整仓库查看；本包 diagnostics/summary.json 与 verification.json 是本轮原件。\n'
                   '不包含私密配置、证书/密钥、数据库 dump 或上游运行时，未实施性能优化，SQL 摘要计数差异未解释。\n', encoding='utf-8')
@@ -200,7 +200,7 @@ with zipfile.ZipFile(archive) as z:
 receipt['archive'] = {'path':str(archive.relative_to(repo)).replace('\\','/'),'sha256':sha(archive),'bytes':archive.stat().st_size,'fileCount':len(manifest)+1,'crcAndFileHashes':'PASS'}
 write(output / 'delivery-receipt.json', receipt)
 (output / (archive.name + '.sha256')).write_text(receipt['archive']['sha256'] + '  ' + archive.name + '\n', encoding='ascii')
-evidence = repo / 'docs/evidence/m5-hotspot-diagnostic/20261028'
+evidence = repo / 'docs/archive/evidence/m5-hotspot-diagnostic/20261028'
 evidence.mkdir(parents=True, exist_ok=True)
 write(evidence / 'verification.json', receipt)
 shutil.copyfile(source / 'summary.json', evidence / 'summary.json')

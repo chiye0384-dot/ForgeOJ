@@ -15,7 +15,7 @@ repo=pathlib.Path(__file__).resolve().parents[2]
 build=(repo/sys.argv[1]).resolve()
 run=(repo/sys.argv[2]).resolve()
 assert build.is_relative_to(repo/'target') and run.is_relative_to(repo/'target')
-out=repo/'docs/evidence/portfolio-readiness/20261114'
+out=repo/'docs/archive/evidence/portfolio-readiness/20261114'
 assert not out.exists(), 'Preserve existing evidence; do not overwrite a prior collection'
 out.mkdir(parents=True)
 sha=lambda p:hashlib.sha256(p.read_bytes()).hexdigest()

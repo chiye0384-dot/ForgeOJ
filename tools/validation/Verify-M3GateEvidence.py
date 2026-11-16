@@ -1,7 +1,8 @@
 # Copyright 2026 池也; SPDX-License-Identifier: Apache-2.0
 """Read-only M3 gate audit: saved real builds, runtime and redacted evidence.
 
-Requires Python 3 standard library only. Never sends requests or loads credentials.
+Requires Python 3 and PowerShell 7 for SHA-only protected-file inspection.
+Never sends requests or loads credentials.
 """
 import argparse
 import hashlib
@@ -14,7 +15,7 @@ from datetime import datetime, timezone
 from pathlib import Path
 
 ROOT = Path(__file__).resolve().parents[2]
-EVIDENCE = ROOT / 'docs/evidence'
+EVIDENCE = ROOT / 'docs/archive/evidence'
 
 
 def require(condition, message):
@@ -24,6 +25,13 @@ def require(condition, message):
 
 def digest(path):
     return hashlib.sha256(path.read_bytes()).hexdigest()
+
+
+def preserved_handoff_digest():
+    literal = "'" + str(ROOT / 'docs/M2-NEXT-CHAT-HANDOFF.md').replace("'", "''") + "'"
+    return subprocess.check_output(
+        ['pwsh', '-NoProfile', '-Command', '(Get-FileHash -LiteralPath ' + literal + ' -Algorithm SHA256).Hash'],
+        text=True).strip().lower()
 
 
 def load(path):
@@ -180,7 +188,7 @@ def main():
     def saved(suffix):
         path = EVIDENCE / suffix
         value = load(path)
-        evidence_rows.append(dict(path='docs/evidence/' + suffix, sha256=digest(path)))
+        evidence_rows.append(dict(path='docs/archive/evidence/' + suffix, sha256=digest(path)))
         return value
     classroom = saved('m3-classroom/classroom-audit.json')
     private = saved('m3-private-problems/private-problems-audit.json')
@@ -234,7 +242,7 @@ def main():
     require(all(v == 0 for v in cleanup['counts'].values()), 'Test resources remain')
     require((datetime.now(timezone.utc) - datetime.fromisoformat(cleanup['checkedAt'])).total_seconds() < 600,
             'Live cleanup snapshot older than ten minutes')
-    require(digest(ROOT / 'docs/M2-NEXT-CHAT-HANDOFF.md') == 'e08acd3d26a8cd27aca394bdac91828e13b9455a86f62133c5bafc038b18c054',
+    require(preserved_handoff_digest() == 'e08acd3d26a8cd27aca394bdac91828e13b9455a86f62133c5bafc038b18c054',
             'Preserved handoff changed')
     baseline = subprocess.check_output(['git', 'rev-parse', 'HEAD'], cwd=ROOT, text=True).strip()
     changed = [p for p in backend_paths if runtime_manifest.get(p) != new_manifest.get(p)]

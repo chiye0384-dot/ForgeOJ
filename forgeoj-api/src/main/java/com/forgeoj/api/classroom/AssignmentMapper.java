@@ -2,8 +2,14 @@
 package com.forgeoj.api.classroom;
 
 import java.time.LocalDateTime;
-import java.util.*;
-import org.apache.ibatis.annotations.*;
+import java.util.List;
+import java.util.Optional;
+import org.apache.ibatis.annotations.Delete;
+import org.apache.ibatis.annotations.Insert;
+import org.apache.ibatis.annotations.Mapper;
+import org.apache.ibatis.annotations.Param;
+import org.apache.ibatis.annotations.Select;
+import org.apache.ibatis.annotations.Update;
 
 @Mapper
 public interface AssignmentMapper {

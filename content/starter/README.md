@@ -2,7 +2,7 @@
 
 2026-10-30教学修订：`teaching-revision.mjs`基于原版catalog生成更完整的步骤、过程示例、正确性、易错点与复杂度，并仅调整原程序排版。原catalog与已发布审核快照保留为第一版，不改写历史摘要。
 
-对已有明确归属的本机ProductDemo，先运行`verify-teaching-revision.mjs`逐题取得20条真实AC，再用`Apply-TeachingRevision.ps1`事务核对旧题解/发布回执/当前版本及新AC后更新展示。新演示也需执行该修订流程；不能只复制旧回执或直接运行维护SQL。维护另存收据，生产内容更新仍需正式审核流程。验证见`docs/PRACTICE-CONTINUITY-VALIDATION.md`。
+对已有明确归属的本机ProductDemo，先运行`verify-teaching-revision.mjs`逐题取得20条真实AC，再用`Apply-TeachingRevision.ps1`事务核对旧题解/发布回执/当前版本及新AC后更新展示。新演示也需执行该修订流程；不能只复制旧回执或直接运行维护SQL。维护另存收据，生产内容更新仍需正式审核流程。验证见`docs/archive/PRACTICE-CONTINUITY-VALIDATION.md`。
 
 20 道题按输入输出、分支、循环、数组、字符串、排序、二分、栈和前缀和组织。catalog.mjs 是内容源，包含题面、约束、两个公开样例、每题至少六组测试、参考程序、另一份 Java 21 实现及复杂度说明。数组长度、数值范围、空数组和长字符串另有边界数据。
 

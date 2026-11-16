@@ -1,6 +1,6 @@
-2026-10-30 最新：做题与复盘闭环本地范围 VERIFIED，见[验收](PRACTICE-CONTINUITY-VALIDATION.md)。左侧第五项提交历史/本人历史源码与确认载入、原键原源码异常重试、题库个人进度筛选/继续草稿/官方题单、中文判题建议和编辑偏好、A+B说明及20份教学题解修订已验证。固定Linux受影响API58项/4 suites、完整Windows前端159项/30 suites、20份新代码真实AC及真实HTTP/桌面/窄屏通过；本轮未重跑API全量或Worker套件。原MySQL容器/挂载与历史保留，保护文件仅核SHA未变；未新增外部依赖或许可。原审核快照不改，教学修订另有本地维护收据，人工教学评价未完成。M5/Release/公网状态不提升，新源码部署前需重打包。网站保持运行，工作树未提交推送；下方旧日期段落是历史。
+2026-10-30 最新：做题与复盘闭环本地范围 VERIFIED，见[验收](archive/PRACTICE-CONTINUITY-VALIDATION.md)。左侧第五项提交历史/本人历史源码与确认载入、原键原源码异常重试、题库个人进度筛选/继续草稿/官方题单、中文判题建议和编辑偏好、A+B说明及20份教学题解修订已验证。固定Linux受影响API58项/4 suites、完整Windows前端159项/30 suites、20份新代码真实AC及真实HTTP/桌面/窄屏通过；本轮未重跑API全量或Worker套件。原MySQL容器/挂载与历史保留，保护文件仅核SHA未变；未新增外部依赖或许可。原审核快照不改，教学修订另有本地维护收据，人工教学评价未完成。M5/Release/公网状态不提升，新源码部署前需重打包。网站保持运行，工作树未提交推送；下方旧日期段落是历史。
 
-2026-10-11当前验收：M4第7步及完整M4 **VERIFIED**，五项总门禁全部PASS。独立Grafana OSS许可已批准；固定Linux API335/59 suites、Worker139/26 suites、前端129/25零失败/错误/跳过，428业务/测试/前端输入、84实际提供前端与准确JAR一致。同JAR新回放覆盖Redis/ES/RabbitMQ中断恢复、真实AC、原事件受审计重送、整个索引删除重建、实际promtool及Grafana14面板/23表达式/只读浏览器登录退出。6个唯一原死信事件对应6份实测消息，每一份均匹配原事件ID和四字段契约；诊断前后数量不变，没有清空死信。本轮拥有者资源与沙箱清理全0。详见[M4总门禁](M4-GATE-AUDIT.md)、[监控验收](M4-MONITORING-VALIDATION.md)及[最终机器证据](evidence/m4-monitoring/verification.json)。M5仍PLANNED，未PR/main/tag/Release/RESUME_READY；按授权交付feat/m2-accounts后停止。
+2026-10-11当前验收：M4第7步及完整M4 **VERIFIED**，五项总门禁全部PASS。独立Grafana OSS许可已批准；固定Linux API335/59 suites、Worker139/26 suites、前端129/25零失败/错误/跳过，428业务/测试/前端输入、84实际提供前端与准确JAR一致。同JAR新回放覆盖Redis/ES/RabbitMQ中断恢复、真实AC、原事件受审计重送、整个索引删除重建、实际promtool及Grafana14面板/23表达式/只读浏览器登录退出。6个唯一原死信事件对应6份实测消息，每一份均匹配原事件ID和四字段契约；诊断前后数量不变，没有清空死信。本轮拥有者资源与沙箱清理全0。详见[M4总门禁](archive/M4-GATE-AUDIT.md)、[监控验收](archive/M4-MONITORING-VALIDATION.md)及[最终机器证据](archive/evidence/m4-monitoring/verification.json)。M5仍PLANNED，未PR/main/tag/Release/RESUME_READY；按授权交付feat/m2-accounts后停止。
 
 > 以下旧日期的阶段、额度、待许可、未完成和“下一步”文字为历史快照；实时状态以上方当前验收与对应最终证据为准。
 
@@ -14,7 +14,7 @@
 
 2026-10-08 教学记录单元：新增API查询、前端只读页面、测试与验收脚本均为ForgeOJ自有实现，延续池也/Apache-2.0；没有新增第三方依赖、迁移或复制外部程序/题目。验收中的班级题和Java程序为原创一次性fixture，公开证据只含fixture页面、资源ID、摘要与状态，无真实凭据或用户数据。完整M2 VERIFIED、M3单元进度见当前交接，以下状态段落为历史。
 
-> 当前状态：M-1、M0 与 M1 均为 `VERIFIED`，M1 15 项门禁证据见 `M1-GATE-AUDIT.md`；M1 最终测试补齐与范围校正未增加依赖或复制外部代码。M2 普通账号单元现为 [VERIFIED](M2-ACCOUNTS-VALIDATION.md)，完整 M2 保持 `IN_PROGRESS`，增量 JOSE/Nimbus 构件见 U-009。M0 直接依赖、消息契约与 Docker 客户端边界已登记。ForgeOJ 自有代码采用 Apache-2.0，版权人为池也；尚无正式发布。
+> 当前状态：M-1、M0 与 M1 均为 `VERIFIED`，M1 15 项门禁证据见 `M1-GATE-AUDIT.md`；M1 最终测试补齐与范围校正未增加依赖或复制外部代码。M2 普通账号单元现为 [VERIFIED](archive/M2-ACCOUNTS-VALIDATION.md)，完整 M2 保持 `IN_PROGRESS`，增量 JOSE/Nimbus 构件见 U-009。M0 直接依赖、消息契约与 Docker 客户端边界已登记。ForgeOJ 自有代码采用 Apache-2.0，版权人为池也；尚无正式发布。
 > 本文定义代码进入仓库之前必须完成的检查，不能被理解为已经获得某个项目的授权。
 
 ## 1. 核心原则
@@ -180,30 +180,30 @@
 
 ### U-009：M2 普通账号 JWT 编解码依赖
 
-- 采用日期：2026-10-02，D-041 用户已确认的普通账号设计内；账号单元为 `VERIFIED`，完整 M2 仍为 `IN_PROGRESS`，最终命令、哈希和范围见 [账号验收](M2-ACCOUNTS-VALIDATION.md)。
+- 采用日期：2026-10-02，D-041 用户已确认的普通账号设计内；账号单元为 `VERIFIED`，完整 M2 仍为 `IN_PROGRESS`，最终命令、哈希和范围见 [账号验收](archive/M2-ACCOUNTS-VALIDATION.md)。
 - API POM 新增直接项 `org.springframework.security:spring-security-oauth2-jose`，版本由既有 Spring Boot 4.1.1 BOM 管理，实际构件为 7.1.1。沿用上表既有 Spring Security `7.1.1` release/commit，没有升级整个框架、引入 OAuth 登录服务或复制源码。
 - 该固定 POM 传递声明 `spring-security-oauth2-core:7.1.1`、`spring-security-core:7.1.1`、`spring-core:7.0.9` 和 `com.nimbusds:nimbus-jose-jwt:10.9.1`。Nimbus 的官方 SCM/tag 由实际 POM 记录为 Bitbucket `connect2id/nimbus-jose-jwt` / `10.9.1`；未把未核实的 commit 写作已核验。
 - 许可证核验：本机 Maven Central 缓存的 JOSE 与 Nimbus POM 均声明 Apache License 2.0；固定来源为 [JOSE 7.1.1 POM](https://repo.maven.apache.org/maven2/org/springframework/security/spring-security-oauth2-jose/7.1.1/spring-security-oauth2-jose-7.1.1.pom)与 [Nimbus 10.9.1 POM](https://repo.maven.apache.org/maven2/com/nimbusds/nimbus-jose-jwt/10.9.1/nimbus-jose-jwt-10.9.1.pom)。Nimbus POM 的 shade 配置仍须在首次 Release 审计实际内嵌依赖和告知材料；本次库级核验不关闭完整发布物门禁。
 - 构件 SHA-256（2026-10-02 本机实际文件）：JOSE POM `6157142BB4720EE555A41075F9DDFBEB9B5C12607FFCBDA53944DE59F1EC9E4E`，JOSE JAR `E07D47CAC04DE4F01BE6A6C3F8BE249472444B24FD4FAD8FF030B45BFE6C5B9C`；Nimbus POM `D729B6D5D9EFCB6BF54E77A9513C54DEB2F1A2D9E9AAB5FF3DDFFBC1CBF716AA`，Nimbus JAR `33152EA83EC50D22706FDAF3B07ACBCD716F9A68EDCABDD7C4D02843CBDCDCF6`。
 - 复用范围：通过库 API 使用 HS256 JWT encoder/decoder 和固定 issuer/audience/期限验证；BCrypt、Spring Security 过滤链、数据库事务和 JDK 随机/摘要能力继续属于现有第三方或平台能力。未复制上游实现、页面、题目或模板，未给 Worker 新增 JOSE 依赖，根许可证未变。
 - ForgeOJ 自有相邻模块：账号/会话/摘要模型与 V6、权限 SQL、激活/找回/补邮箱状态转换、refresh 轮换和重用撤销、Cookie/CSRF/Origin 规则、HTTP 与通知会话复核、账号页和本地邮件投递接口及相应测试。不能表述为自行实现密码学或 JWT 协议库。
-- 验证证据：固定 Linux 后端 211 / 前端 13 项、相同产物的真实账号链路与权限/日志/队列审计和精确清理已闭环，见 [验收记录](M2-ACCOUNTS-VALIDATION.md)和[脱敏事实](evidence/m2-accounts/README.md)。验收执行于基线 HEAD `d38e2c9` 的工作树快照，交付身份见 `feat/m2-accounts` 最新提交；不预写未知提交或 push 状态。
+- 验证证据：固定 Linux 后端 211 / 前端 13 项、相同产物的真实账号链路与权限/日志/队列审计和精确清理已闭环，见 [验收记录](archive/M2-ACCOUNTS-VALIDATION.md)和[脱敏事实](archive/evidence/m2-accounts/README.md)。验收执行于基线 HEAD `d38e2c9` 的工作树快照，交付身份见 `feat/m2-accounts` 最新提交；不预写未知提交或 push 状态。
 - 剩余条件：完整传递/内嵌依赖、漏洞与发布物许可证审计留在首次 Release 门禁。依赖装配或构件哈希不单独证明账号安全或生产部署通过，账号本地闭环也不证明 SMTP 上线投递。
 
 ### U-010：M2 SMTP 库适配
 
 - 采用日期：2026-10-03，用户要求继续剩余 M2（含真实 SMTP）并开始实施；本轮先验证适配和本地 TLS 协议，真实服务商投递仍待配置。
 - 直接新增 `org.springframework.boot:spring-boot-starter-mail:4.1.1`，由现有 Boot BOM 管理；仅 API 使用，Worker 不获得邮件依赖或凭据。实际树为 Boot Mail 4.1.1、Spring Context Support 7.0.9、Jakarta Mail API 2.1.5 / Activation API 2.1.4、Angus Mail 2.0.5 / Activation 2.0.3。
-- 官方固定来源：[Boot v4.1.1](https://github.com/spring-projects/spring-boot/tree/v4.1.1)、[Framework v7.0.9](https://github.com/spring-projects/spring-framework/tree/v7.0.9)、[Angus Mail 2.0.5 LICENSE](https://raw.githubusercontent.com/eclipse-ee4j/angus-mail/2.0.5/LICENSE.md)、[Mail API 2.1.5 LICENSE](https://raw.githubusercontent.com/jakartaee/mail-api/2.1.5/LICENSE.md)、[Angus Activation 2.0.3 LICENSE](https://raw.githubusercontent.com/eclipse-ee4j/angus-activation/2.0.3/LICENSE.md)、[Activation API 2.1.4 LICENSE](https://raw.githubusercontent.com/jakartaee/jaf-api/2.1.4/LICENSE.md)。全部固定 POM/JAR SHA-256 与 JAR 内 LICENSE/NOTICE 位置见 [构件事实](evidence/m2-library/smtp-dependencies.md)。
+- 官方固定来源：[Boot v4.1.1](https://github.com/spring-projects/spring-boot/tree/v4.1.1)、[Framework v7.0.9](https://github.com/spring-projects/spring-framework/tree/v7.0.9)、[Angus Mail 2.0.5 LICENSE](https://raw.githubusercontent.com/eclipse-ee4j/angus-mail/2.0.5/LICENSE.md)、[Mail API 2.1.5 LICENSE](https://raw.githubusercontent.com/jakartaee/mail-api/2.1.5/LICENSE.md)、[Angus Activation 2.0.3 LICENSE](https://raw.githubusercontent.com/eclipse-ee4j/angus-activation/2.0.3/LICENSE.md)、[Activation API 2.1.4 LICENSE](https://raw.githubusercontent.com/jakartaee/jaf-api/2.1.4/LICENSE.md)。全部固定 POM/JAR SHA-256 与 JAR 内 LICENSE/NOTICE 位置见 [构件事实](archive/evidence/m2-library/smtp-dependencies.md)。
 - 许可证：Spring 项为 Apache-2.0；Mail API/Angus Mail 的 POM SPDX 为 EPL-2.0 OR GPL-2.0 WITH Classpath-exception-2.0；Activation 两项为 EDL-1.0/BSD-style。上游各自许可证不由根 Apache-2.0 覆盖，实际分发组合、告知和对应源码条件继续由首次 Release 完整审计核实。
 - 复用 MIME、SMTP/TLS 客户端及 Spring 配置能力，不复制上游源码。ForgeOJ 自有部分为模式选择、地址/链接/TLS/超时配置约束、提交后邮件接入以及 loopback 协议测试；不称为自建邮件协议栈。
-- 验证与边界：Windows 与固定 Linux 各 11 项实际 SMTP/TLS 测试通过，证书/私钥在 JUnit 临时目录动态生成，不提交、不修改全局信任。统一 229/24 和 JAR/输入证据见 [题库/SMTP 验收](M2-LIBRARY-SMTP-VALIDATION.md)；无真实邮件服务、Inbox 送达或可靠持久重试证据，见 `M2-SMTP-DESIGN.md` 和 L-033。
+- 验证与边界：Windows 与固定 Linux 各 11 项实际 SMTP/TLS 测试通过，证书/私钥在 JUnit 临时目录动态生成，不提交、不修改全局信任。统一 229/24 和 JAR/输入证据见 [题库/SMTP 验收](archive/M2-LIBRARY-SMTP-VALIDATION.md)；无真实邮件服务、Inbox 送达或可靠持久重试证据，见 `M2-SMTP-DESIGN.md` 和 L-033。
 
 ## 5. 引入记录模板
 
 ### U-011：M4 Redis 客户端与可销毁服务端
 
-2026-10-09；M4第5步 IN_PROGRESS，依赖核验不等于业务验收。API 新增 Boot 管理的 spring-boot-starter-data-redis:4.1.1；实际 Spring Data Redis/KeyValue/Commons 为4.1.1、Lettuce为7.5.2.RELEASE、Redis Authx为0.1.1-beta2、Reactor为3.8.7、Netty为4.2.17.Final。未向Worker引入Redis客户端或凭据，不复制外部源码。固定POM/JAR/原始告知资源摘要见[23项构件事实](evidence/m4-redis/redis-dependencies.json)及[可读表](evidence/m4-redis/redis-dependencies.md)。
+2026-10-09；M4第5步 IN_PROGRESS，依赖核验不等于业务验收。API 新增 Boot 管理的 spring-boot-starter-data-redis:4.1.1；实际 Spring Data Redis/KeyValue/Commons 为4.1.1、Lettuce为7.5.2.RELEASE、Redis Authx为0.1.1-beta2、Reactor为3.8.7、Netty为4.2.17.Final。未向Worker引入Redis客户端或凭据，不复制外部源码。固定POM/JAR/原始告知资源摘要见[23项构件事实](archive/evidence/m4-redis/redis-dependencies.json)及[可读表](archive/evidence/m4-redis/redis-dependencies.md)。
 
 本版本实际POM：Spring/Reactor/Netty为Apache-2.0；Lettuce和Redis Authx为MIT；Reactive Streams为MIT-0。保留JAR内原始LICENSE/NOTICE，根Apache-2.0不重新许可依赖。官方服务端固定[Redis7.2.16归档](https://download.redis.io/releases/)，依据[官方许可](https://redis.io/legal/licenses/)7.2系列为BSD-3-Clause；镜像为redis:7.2.16-alpine@sha256:29e8589c3f9ba699b5f7aa4b3c7733c58852a3626439e619aa0ee78de08c6ca0，实际redis-server --version为7.2.16。它是开发/可销毁验证服务，不内嵌API JAR，没有云服务、费用或生产部署。
 
@@ -245,7 +245,7 @@
 - 上游原许可证文件；
 - 许可证要求的版权头和 NOTICE；
 - 根目录 `THIRD_PARTY_NOTICES.md`；
-- `docs/OWNERSHIP.md`，说明原样复用、修改和自行实现的模块；
+- `docs/archive/OWNERSHIP.md`，说明原样复用、修改和自行实现的模块；
 - 依赖锁定信息和自动生成的依赖清单；
 - 本文的上游登记表；
 - 对应引入 commit，避免来源无法追踪。
@@ -273,7 +273,7 @@
 
 Maven、npm、Docker 镜像和操作系统包都属于第三方组成。Release 前至少完成：
 
-当前直接 Maven/npm 项（含 M0 已声明依赖）的实际解析版本、许可证和条件判断见 `docs/DIRECT-DEPENDENCY-LICENSES.md`。Apache-2.0 已满足 MySQL Connector/J Universal FOSS Exception 的根许可证类别前提，但 Connector/J 仍保持 GPL-2.0 + UFE；首次发布前必须按 fat JAR、镜像或安装包的实际组合复核完整源码可获得性、许可证和告知义务。
+当前直接 Maven/npm 项（含 M0 已声明依赖）的实际解析版本、许可证和条件判断见 `docs/archive/DIRECT-DEPENDENCY-LICENSES.md`。Apache-2.0 已满足 MySQL Connector/J Universal FOSS Exception 的根许可证类别前提，但 Connector/J 仍保持 GPL-2.0 + UFE；首次发布前必须按 fat JAR、镜像或安装包的实际组合复核完整源码可获得性、许可证和告知义务。
 
 - 固定直接依赖版本；
 - 生成依赖与许可证清单；
@@ -297,23 +297,23 @@ Maven、npm、Docker 镜像和操作系统包都属于第三方组成。Release 
 
 > 基于经许可证核验的通用工程骨架，保留基础页面与通用设施；自行设计并实现 ForgeOJ 的判题任务、Outbox、Judge Worker、沙箱、班级权限和故障恢复链路。
 
-最终表述必须以实际采用记录为准。M-1 阶段只证明官方最小生成骨架；当前 M0/M1 及普通账号单元的自有业务实现与验证入口见 `OWNERSHIP.md`、`M0-E2E-VALIDATION.md`、`M1-GATE-AUDIT.md` 和 [账号验收](M2-ACCOUNTS-VALIDATION.md)，不能把框架/内核能力、其余 M2～M5 计划或未发布能力写成本人已完成的发布成果。
+最终表述必须以实际采用记录为准。M-1 阶段只证明官方最小生成骨架；当前 M0/M1 及普通账号单元的自有业务实现与验证入口见 `OWNERSHIP.md`、`M0-E2E-VALIDATION.md`、`M1-GATE-AUDIT.md` 和 [账号验收](archive/M2-ACCOUNTS-VALIDATION.md)，不能把框架/内核能力、其余 M2～M5 计划或未发布能力写成本人已完成的发布成果。
 
 ### U-012：Elasticsearch第6步接入已VERIFIED
 
-2026-10-10，用户已批准D-047。官方9.5.3镜像已按多平台摘要sha256:f456578fc2a620a8a4f4c21d070fff1f6070345adb2be5e5626b65be72aea350拉取，原始[LICENSE](licenses/elasticsearch-9.5.3/LICENSE.txt)与[NOTICE](licenses/elasticsearch-9.5.3/NOTICE.txt)直接从/usr/share/elasticsearch提取、未修改，SHA256分别48255018b41fc0e965b1115af7e6779bc218bb8a6747d561da800d5022622aa2和e991cad8358b62fbba6443f08853a72d55d6cb7a49e5a3e36d3da31d13f0af76。镜像标签版本9.5.3、ELv2、源码revision367ec317ec5f668dd864d41be06052a567102fec；专用未启动提取容器已按所有者标签核验后移除。同准确JAR真实HTTPS重放已验证服务9.5.3、免费Basic、无插件、未认证401、运行账号无关索引403以及故障降级/重建；见[M4搜索验收](M4-SEARCH-VALIDATION.md)和[运行证据](evidence/m4-search/search-runtime.json)。技术单元VERIFIED，完整M4和首次正式分发审计未完成。
+2026-10-10，用户已批准D-047。官方9.5.3镜像已按多平台摘要sha256:f456578fc2a620a8a4f4c21d070fff1f6070345adb2be5e5626b65be72aea350拉取，原始[LICENSE](licenses/elasticsearch-9.5.3/LICENSE.txt)与[NOTICE](licenses/elasticsearch-9.5.3/NOTICE.txt)直接从/usr/share/elasticsearch提取、未修改，SHA256分别48255018b41fc0e965b1115af7e6779bc218bb8a6747d561da800d5022622aa2和e991cad8358b62fbba6443f08853a72d55d6cb7a49e5a3e36d3da31d13f0af76。镜像标签版本9.5.3、ELv2、源码revision367ec317ec5f668dd864d41be06052a567102fec；专用未启动提取容器已按所有者标签核验后移除。同准确JAR真实HTTPS重放已验证服务9.5.3、免费Basic、无插件、未认证401、运行账号无关索引403以及故障降级/重建；见[M4搜索验收](archive/M4-SEARCH-VALIDATION.md)和[运行证据](archive/evidence/m4-search/search-runtime.json)。技术单元VERIFIED，完整M4和首次正式分发审计未完成。
 
-只接入镜像服务及现有JDK21 HttpClient/Jackson3协议适配，无ES源码复制、ES客户端Maven依赖、Kibana、付费功能或Release。许可证及摘要来源与原创边界见[M4-SEARCH-DESIGN](M4-SEARCH-DESIGN.md)。ForgeOJ自有源码保持Apache-2.0。内置CJK、索引external版本、alias为Elastic能力；事务、白名单投影、复核、降级、重建、回执及测试为ForgeOJ实现。不新增云费用，不扩展为ES托管服务；首次分发仍需完整审计。
+只接入镜像服务及现有JDK21 HttpClient/Jackson3协议适配，无ES源码复制、ES客户端Maven依赖、Kibana、付费功能或Release。许可证及摘要来源与原创边界见[M4-SEARCH-DESIGN](archive/M4-SEARCH-DESIGN.md)。ForgeOJ自有源码保持Apache-2.0。内置CJK、索引external版本、alias为Elastic能力；事务、白名单投影、复核、降级、重建、回执及测试为ForgeOJ实现。不新增云费用，不扩展为ES托管服务；首次分发仍需完整审计。
 
 ### U-013：独立监控服务（Grafana许可已批准）
 
-实际引入2026-10-11：`prom/prometheus:v3.15.0@sha256:efd719c99d83b060d9daefdcf00360461adf279f45ef5391f8d111892118753e`及`grafana/grafana:13.2.3@sha256:b28bae15e219c998fb0e0424ed724930cc61b1f61fb404d47c862f9a23f9e572`（linux/amd64），无latest或镜像修改。Prometheus实际`--version`报告revision `5241a27fe3c6983549fccc32f6e65917408c63cd`；Grafana `--version`报告13.2.3，实际health commit `90ffed056f0884267356c12a0eeb72a022af53f1`，对应源码[commit](https://github.com/grafana/grafana/tree/90ffed056f0884267356c12a0eeb72a022af53f1)及[tag](https://github.com/grafana/grafana/tree/v13.2.3)。原镜像`/LICENSE`、`/NOTICE`和`/usr/share/grafana/LICENSE`字节分别保留在`docs/licenses/prometheus-3.15.0/`及`docs/licenses/grafana-13.2.3/`；Grafana全部129个镜像内license/notice匹配文件原路径和逐文件SHA保留，原文件集合为`third-party-notices.tar`。此清单不冒充基础OS完整SBOM，未移除镜像内任何原告知。准确摘要/来源见[镜像记录](evidence/m4-monitoring/upstream-images.json)。保留[Prometheus对应源码](https://github.com/prometheus/prometheus/tree/5241a27fe3c6983549fccc32f6e65917408c63cd)与Grafana源码链接；不重新许可上游。ForgeOJ自有`deploy/monitoring/`和验证脚本属Apache-2.0；上游原生Prometheus/Grafana能力不称自研，外部插件/Cloud/收费/源代码合并均未采用。
+实际引入2026-10-11：`prom/prometheus:v3.15.0@sha256:efd719c99d83b060d9daefdcf00360461adf279f45ef5391f8d111892118753e`及`grafana/grafana:13.2.3@sha256:b28bae15e219c998fb0e0424ed724930cc61b1f61fb404d47c862f9a23f9e572`（linux/amd64），无latest或镜像修改。Prometheus实际`--version`报告revision `5241a27fe3c6983549fccc32f6e65917408c63cd`；Grafana `--version`报告13.2.3，实际health commit `90ffed056f0884267356c12a0eeb72a022af53f1`，对应源码[commit](https://github.com/grafana/grafana/tree/90ffed056f0884267356c12a0eeb72a022af53f1)及[tag](https://github.com/grafana/grafana/tree/v13.2.3)。原镜像`/LICENSE`、`/NOTICE`和`/usr/share/grafana/LICENSE`字节分别保留在`docs/licenses/prometheus-3.15.0/`及`docs/licenses/grafana-13.2.3/`；Grafana全部129个镜像内license/notice匹配文件原路径和逐文件SHA保留，原文件集合为`third-party-notices.tar`。此清单不冒充基础OS完整SBOM，未移除镜像内任何原告知。准确摘要/来源见[镜像记录](archive/evidence/m4-monitoring/upstream-images.json)。保留[Prometheus对应源码](https://github.com/prometheus/prometheus/tree/5241a27fe3c6983549fccc32f6e65917408c63cd)与Grafana源码链接；不重新许可上游。ForgeOJ自有`deploy/monitoring/`和验证脚本属Apache-2.0；上游原生Prometheus/Grafana能力不称自研，外部插件/Cloud/收费/源代码合并均未采用。
 
 2026-10-11：用户明确批准“按推荐，采用独立Grafana OSS”，D-048许可已接受。采用官方Prometheus3.15.0/Apache-2.0与Grafana OSS13.2.3/AGPLv3，独立未修改本地免费服务、保留告知/对应源代码链接；ForgeOJ只通过标准HTTP连接，自有指标与面板代码仍Apache-2.0。以下版本评估和未引入记录是2026-10-10历史；实际镜像固定摘要和原告知清单已见前段及镜像记录，禁止浮动latest或杜撰来源。
 
 2026-10-10已从官方发布与固定tag原LICENSE核对：[Prometheus3.15.0](https://github.com/prometheus/prometheus/releases/tag/v3.15.0)为[Apache-2.0](https://raw.githubusercontent.com/prometheus/prometheus/v3.15.0/LICENSE)；[Grafana OSS13.2.3](https://github.com/grafana/grafana/releases/tag/v13.2.3)为[AGPLv3](https://raw.githubusercontent.com/grafana/grafana/v13.2.3/LICENSE)，并对照[官方许可说明](https://grafana.com/licensing/)。这是研究事实，不是已接入/批准/验收。此前ES ELv2批准不自动涵盖新AGPL义务，当前实际用户答复仍待到达。
 
-推荐独立未修改的免费服务，仅标准HTTP聚合指标/面板、自有代码Apache-2.0、保留原许可和对应源码出处；没有企业付费/Cloud/插件或服务端源码复制。确认后才取得不可变镜像digest、revision、原LICENSE/NOTICE/第三方告知及运行证据，不能先填假摘要或标VERIFIED。当前自有JDK21指标/抓取实现没有新Maven依赖；两服务尚未拉取/运行，见[监控设计](M4-MONITORING-DESIGN.md)。
+推荐独立未修改的免费服务，仅标准HTTP聚合指标/面板、自有代码Apache-2.0、保留原许可和对应源码出处；没有企业付费/Cloud/插件或服务端源码复制。确认后才取得不可变镜像digest、revision、原LICENSE/NOTICE/第三方告知及运行证据，不能先填假摘要或标VERIFIED。当前自有JDK21指标/抓取实现没有新Maven依赖；两服务尚未拉取/运行，见[监控设计](archive/M4-MONITORING-DESIGN.md)。
 
 ### U-014：M5独立Nginx部署入口
 

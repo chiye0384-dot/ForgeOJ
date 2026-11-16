@@ -3,9 +3,12 @@ package com.forgeoj.api.cache;
 
 import com.forgeoj.api.observability.MonitoringMetrics;
 import java.nio.charset.StandardCharsets;
-import java.security.*;
+import java.security.MessageDigest;
+import java.security.NoSuchAlgorithmException;
 import java.time.Duration;
-import java.util.*;
+import java.util.HexFormat;
+import java.util.List;
+import java.util.UUID;
 import java.util.concurrent.atomic.AtomicLong;
 import java.util.function.Supplier;
 import org.springframework.beans.factory.annotation.Value;

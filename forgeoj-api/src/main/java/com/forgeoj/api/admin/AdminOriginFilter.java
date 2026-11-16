@@ -2,8 +2,10 @@
 package com.forgeoj.api.admin;
 
 import com.forgeoj.api.auth.SameOriginFilter;
-import jakarta.servlet.*;
-import jakarta.servlet.http.*;
+import jakarta.servlet.FilterChain;
+import jakarta.servlet.ServletException;
+import jakarta.servlet.http.HttpServletRequest;
+import jakarta.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.util.Collections;
 import org.springframework.web.filter.OncePerRequestFilter;

@@ -1,12 +1,29 @@
 /* Copyright 2026 池也; SPDX-License-Identifier: Apache-2.0 */
 package com.forgeoj.api.learning;
 
-import static com.forgeoj.api.learning.LearningRecords.*;
+import static com.forgeoj.api.learning.LearningRecords.AddBody;
+import static com.forgeoj.api.learning.LearningRecords.Draft;
+import static com.forgeoj.api.learning.LearningRecords.DraftBody;
+import static com.forgeoj.api.learning.LearningRecords.Entry;
+import static com.forgeoj.api.learning.LearningRecords.History;
+import static com.forgeoj.api.learning.LearningRecords.HistoryProblem;
+import static com.forgeoj.api.learning.LearningRecords.ListDetail;
+import static com.forgeoj.api.learning.LearningRecords.ListSummary;
+import static com.forgeoj.api.learning.LearningRecords.OrderBody;
+import static com.forgeoj.api.learning.LearningRecords.Page;
+import static com.forgeoj.api.learning.LearningRecords.PublicProblem;
+import static com.forgeoj.api.learning.LearningRecords.TitleBody;
 
 import com.forgeoj.api.auth.AccountService;
 import com.forgeoj.api.problem.ProblemLibraryMapper;
 import java.nio.charset.StandardCharsets;
-import java.util.*;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.HashSet;
+import java.util.List;
+import java.util.Map;
+import java.util.Objects;
+import java.util.UUID;
 import org.springframework.dao.DuplicateKeyException;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;

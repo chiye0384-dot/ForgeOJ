@@ -20,8 +20,8 @@ package = out / 'package'
 package.mkdir(parents=True)
 for filename in ['rollback.py', 'backup.py']:
     shutil.copyfile(repo / 'deploy/production/scripts' / filename, package / filename)
-readme = (repo / 'docs/M5-IMAGE-ROLLBACK.md').read_text(encoding='utf-8')
-readme = readme.replace('[验收记录](M5-IMAGE-ROLLBACK-VALIDATION.md)', '仓库文档 docs/M5-IMAGE-ROLLBACK-VALIDATION.md（不随工具包分发）')
+readme = (repo / 'docs/archive/M5-IMAGE-ROLLBACK.md').read_text(encoding='utf-8')
+readme = readme.replace('[验收记录](M5-IMAGE-ROLLBACK-VALIDATION.md)', '仓库文档 docs/archive/M5-IMAGE-ROLLBACK-VALIDATION.md（不随工具包分发）')
 readme = readme.replace('scripts/rollback.py', 'rollback.py')
 (package / 'README.md').write_text(readme, encoding='utf-8')
 shutil.copyfile(repo / 'LICENSE', package / 'LICENSE')

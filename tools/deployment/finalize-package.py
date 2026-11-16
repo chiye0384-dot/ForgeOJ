@@ -42,7 +42,7 @@ evidence={'status':'IMPLEMENTED','isolatedPackageChecks':'VERIFIED','deploymentR
           'archive':str(archive),'archiveSha256':digest,'files':len(expected),'bytes':archive.stat().st_size,
           'cleanup':cleanup,'lifecycle':lifecycle,
           'notVerified':['fresh Linux host','real domain/DNS/CA/SMTP','old-version schema upgrade','external encrypted backup/restore','compatible version rollback','fixed-host performance','controlled real-user trial','Linux host file permissions','full release dependency and image audit']}
-folder=repo/'docs/evidence/m5-deployment'/run.name
+folder=repo/'docs/archive/evidence/m5-deployment'/run.name
 folder.mkdir(parents=True,exist_ok=True)
 assert not (folder/'verification.json').exists()
 (folder/'verification.json').write_text(json.dumps(evidence,indent=2,ensure_ascii=False),encoding='utf-8')

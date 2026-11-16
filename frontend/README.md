@@ -33,4 +33,4 @@ The Vite development server proxies `/api` to `http://localhost:8080`. Start the
 ForgeOJ API separately with the `dev` profile when exercising the real flow.
 The automated frontend flow uses mocked API responses. A real browser-to-AC
 development-stack check passed on Windows + Docker Desktop on 2026-09-29; see
-`../docs/M0-E2E-VALIDATION.md`. Fixed-Linux reproduction is still required.
+`../docs/archive/M0-E2E-VALIDATION.md`. Fixed-Linux reproduction is still required.

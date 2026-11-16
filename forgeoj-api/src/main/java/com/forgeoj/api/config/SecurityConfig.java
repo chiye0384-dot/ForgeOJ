@@ -1,6 +1,9 @@
 package com.forgeoj.api.config;
 
-import com.forgeoj.api.auth.*;
+import com.forgeoj.api.auth.AccountAuthenticationFilter;
+import com.forgeoj.api.auth.AccountCsrfRepository;
+import com.forgeoj.api.auth.AccountJwt;
+import com.forgeoj.api.auth.SameOriginFilter;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.http.HttpMethod;

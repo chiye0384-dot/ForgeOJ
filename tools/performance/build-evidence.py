@@ -92,7 +92,7 @@ lines += ['', '## 正确性、证据和未完成范围', '',
           '- 仍缺独立 Linux/云主机、真实用户/大历史/班级数据、开放到达率/长稳/故障负载、通知/单查询/编译清理细分，以及同条件优化前后回归。完整 M5、E-06/E-07、Release/RESUME_READY 不提升。',
           '- 下一有限单元建议只读定位列表 SQL/API 热点和配额节流，再确定是否需要单一优化；保留本轮所有退化和波动，不先改代码追求漂亮数字。', '']
 report = '\n'.join(lines)
-(repo/'docs/M5-PERFORMANCE-BASELINE-REPORT.md').write_text(report, encoding='utf-8')
+(repo/'docs/archive/M5-PERFORMANCE-BASELINE-REPORT.md').write_text(report, encoding='utf-8')
 (package/'report.md').write_text(report.replace('(evidence/m5-performance/20261028/verification.json)', '(delivery-verification.json)'), encoding='utf-8')
 copied = []
 def copy(source, destination):
@@ -114,7 +114,7 @@ for filename in ['load.mjs','run-baseline.py']:
     copy(run/'performance/first-tool-inputs'/filename,'raw/initial/tools/'+filename)
 copy(host_path,'host.json')
 copy(run/'cleanup-result.json','cleanup.json')
-copy(repo/'docs/M5-PERFORMANCE-BASELINE-DESIGN.md','docs/M5-PERFORMANCE-BASELINE-DESIGN.md')
+copy(repo/'docs/archive/M5-PERFORMANCE-BASELINE-DESIGN.md','docs/archive/M5-PERFORMANCE-BASELINE-DESIGN.md')
 for filename in ['prepare-baseline.py','dataset.py','load.mjs','run-baseline.py','summarize-baseline.py','build-evidence.py','README.md']:
     copy(repo/'tools/performance'/filename,'tools/performance/'+filename)
 copy(repo/'LICENSE','LICENSE')
@@ -148,7 +148,7 @@ receipt={'archive':str(archive),'sha256':digest(archive),'bytes':archive.stat().
 (output/'archive-receipt.json').write_text(json.dumps(receipt,indent=2)+'\n')
 (output/(archive.name+'.sha256')).write_text(receipt['sha256']+'  '+archive.name+'\n')
 delivery['archive']=receipt
-dest=repo/'docs/evidence/m5-performance/20261028';dest.mkdir(parents=True,exist_ok=True)
+dest=repo/'docs/archive/evidence/m5-performance/20261028';dest.mkdir(parents=True,exist_ok=True)
 assert not (dest/'verification.json').exists()
 (dest/'verification.json').write_text(json.dumps(delivery,ensure_ascii=False,indent=2)+'\n',encoding='utf-8')
 (dest/'summary.json').write_text(json.dumps(summary,indent=2)+'\n')

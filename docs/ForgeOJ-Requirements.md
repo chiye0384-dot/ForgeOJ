@@ -1,32 +1,32 @@
-2026-10-11当前验收：M4第7步及完整M4 **VERIFIED**，五项总门禁全部PASS。独立Grafana OSS许可已批准；固定Linux API335/59 suites、Worker139/26 suites、前端129/25零失败/错误/跳过，428业务/测试/前端输入、84实际提供前端与准确JAR一致。同JAR新回放覆盖Redis/ES/RabbitMQ中断恢复、真实AC、原事件受审计重送、整个索引删除重建、实际promtool及Grafana14面板/23表达式/只读浏览器登录退出。6个唯一原死信事件对应6份实测消息，每一份均匹配原事件ID和四字段契约；诊断前后数量不变，没有清空死信。本轮拥有者资源与沙箱清理全0。详见[M4总门禁](M4-GATE-AUDIT.md)、[监控验收](M4-MONITORING-VALIDATION.md)及[最终机器证据](evidence/m4-monitoring/verification.json)。M5仍PLANNED，未PR/main/tag/Release/RESUME_READY；按授权交付feat/m2-accounts后停止。
+2026-10-11当前验收：M4第7步及完整M4 **VERIFIED**，五项总门禁全部PASS。独立Grafana OSS许可已批准；固定Linux API335/59 suites、Worker139/26 suites、前端129/25零失败/错误/跳过，428业务/测试/前端输入、84实际提供前端与准确JAR一致。同JAR新回放覆盖Redis/ES/RabbitMQ中断恢复、真实AC、原事件受审计重送、整个索引删除重建、实际promtool及Grafana14面板/23表达式/只读浏览器登录退出。6个唯一原死信事件对应6份实测消息，每一份均匹配原事件ID和四字段契约；诊断前后数量不变，没有清空死信。本轮拥有者资源与沙箱清理全0。详见[M4总门禁](archive/M4-GATE-AUDIT.md)、[监控验收](archive/M4-MONITORING-VALIDATION.md)及[最终机器证据](archive/evidence/m4-monitoring/verification.json)。M5仍PLANNED，未PR/main/tag/Release/RESUME_READY；按授权交付feat/m2-accounts后停止。
 
 > 以下旧日期的阶段、额度、待许可、未完成和“下一步”文字为历史快照；实时状态以上方当前验收与对应最终证据为准。
 
 # ForgeOJ 需求基线
 
-2026-10-11 09:30当前：第7步及完整M4仍 **IN_PROGRESS**。Grafana OSS许可已明确批准，固定独立镜像/告知与14面板已落地；第一轮固定Linux335 API/139 Worker/129前端通过，真实Redis/ES故障恢复、整索引删除重建和Grafana只读登录/退出已验证，但Rabbit故障发现unsigned attempt_count=0聚合下溢。已以CASE先判断修复重试数及水位差，真实MySQL回归通过，正在以当前修复源码重新执行固定Linux全量；第一轮JAR/截图是[被替代的失败运行记录](evidence/m4-monitoring/failed-20261011-085452/checkpoint.json)，不可当最终通过。首轮全部拥有者资源清理0，未提交/推送。当前恢复入口为[M4监控验证](M4-MONITORING-VALIDATION.md)；下方旧日期/待许可/额度文字均为历史。按既有授权完成现有功能分支后停止，M5/PR/main/tag/Release/RESUME_READY不启动。
+2026-10-11 09:30当前：第7步及完整M4仍 **IN_PROGRESS**。Grafana OSS许可已明确批准，固定独立镜像/告知与14面板已落地；第一轮固定Linux335 API/139 Worker/129前端通过，真实Redis/ES故障恢复、整索引删除重建和Grafana只读登录/退出已验证，但Rabbit故障发现unsigned attempt_count=0聚合下溢。已以CASE先判断修复重试数及水位差，真实MySQL回归通过，正在以当前修复源码重新执行固定Linux全量；第一轮JAR/截图是[被替代的失败运行记录](archive/evidence/m4-monitoring/failed-20261011-085452/checkpoint.json)，不可当最终通过。首轮全部拥有者资源清理0，未提交/推送。当前恢复入口为[M4监控验证](archive/M4-MONITORING-VALIDATION.md)；下方旧日期/待许可/额度文字均为历史。按既有授权完成现有功能分支后停止，M5/PR/main/tag/Release/RESUME_READY不启动。
 
-2026-10-10 22:26最新检查点：用户继续后第7步监控已 **IN_PROGRESS**。自有聚合指标、只读快照/陈旧状态、默认关闭的私有抓取及Worker接线已加入；API45项真实Redis/ES/SQL回归、最终格式7项和Worker17项通过，合并64唯一用例，428最终输入冻结、84前端未变。见[监控检查点](M4-MONITORING-VALIDATION.md)和[本机机器记录](evidence/m4-monitoring/native-checkpoint.json)。这是Windows/JDK21专项，不是当前固定Linux/JAR/Prometheus/Grafana/浏览器/三故障/M4总门禁。Grafana OSS13.2.3新AGPL许可待实际用户答复，未引入镜像；当前额度78%已用，不足下一组长验收，按用户规则停。工作树未暂存/提交/推送，HEAD为已交付搜索cd2be91；完整M4/E-04仍IN_PROGRESS，第6步历史VERIFIED保持，M5/PR/main/tag/Release未开始。下方旧日期中的“第7步未开始/不启动”仅为历史，不能覆盖本次继续授权。
+2026-10-10 22:26最新检查点：用户继续后第7步监控已 **IN_PROGRESS**。自有聚合指标、只读快照/陈旧状态、默认关闭的私有抓取及Worker接线已加入；API45项真实Redis/ES/SQL回归、最终格式7项和Worker17项通过，合并64唯一用例，428最终输入冻结、84前端未变。见[监控检查点](archive/M4-MONITORING-VALIDATION.md)和[本机机器记录](archive/evidence/m4-monitoring/native-checkpoint.json)。这是Windows/JDK21专项，不是当前固定Linux/JAR/Prometheus/Grafana/浏览器/三故障/M4总门禁。Grafana OSS13.2.3新AGPL许可待实际用户答复，未引入镜像；当前额度78%已用，不足下一组长验收，按用户规则停。工作树未暂存/提交/推送，HEAD为已交付搜索cd2be91；完整M4/E-04仍IN_PROGRESS，第6步历史VERIFIED保持，M5/PR/main/tag/Release未开始。下方旧日期中的“第7步未开始/不启动”仅为历史，不能覆盖本次继续授权。
 
-2026-10-09：M4第3/4步公共审核及运维恢复子范围均已VERIFIED，当前运维规则按D-045与4.2落实，见[运维验收](M4-OPERATIONS-VALIDATION.md)。固定Linux278+133/124、真实故障恢复、浏览器/权限撤销、持久事实与清理有当前完整证据。完整M4仍IN_PROGRESS，第5～7步尚未开始；以下日期文字只描述当时阶段。
+2026-10-09：M4第3/4步公共审核及运维恢复子范围均已VERIFIED，当前运维规则按D-045与4.2落实，见[运维验收](archive/M4-OPERATIONS-VALIDATION.md)。固定Linux278+133/124、真实故障恢复、浏览器/权限撤销、持久事实与清理有当前完整证据。完整M4仍IN_PROGRESS，第5～7步尚未开始；以下日期文字只描述当时阶段。
 
-2026-10-08：M4第2步独立管理身份单元 [VERIFIED](M4-ADMIN-IDENTITY-VALIDATION.md)，V18、独立认证、首次改密/撤销、单角色账号维护与持久审计、初始化/恢复CLI及最小页面已实现。Linux API245/Worker133、前端107及真实HTTP/三角色页面/CLI/SQL隔离/原流程回归和清理有当前关联证据。完整M4仍IN_PROGRESS，审核发布、运维闭环、Redis/ES与监控留后续；M-1至M3保持VERIFIED，M5仍PLANNED。以下日期段落保留原阶段事实。
+2026-10-08：M4第2步独立管理身份单元 [VERIFIED](archive/M4-ADMIN-IDENTITY-VALIDATION.md)，V18、独立认证、首次改密/撤销、单角色账号维护与持久审计、初始化/恢复CLI及最小页面已实现。Linux API245/Worker133、前端107及真实HTTP/三角色页面/CLI/SQL隔离/原流程回归和清理有当前关联证据。完整M4仍IN_PROGRESS，审核发布、运维闭环、Redis/ES与监控留后续；M-1至M3保持VERIFIED，M5仍PLANNED。以下日期段落保留原阶段事实。
 
-2026-10-08 最终门禁：完整M3 **VERIFIED，4/4 PASS**，见 [总审计](M3-GATE-AUDIT.md)。9.1/9.2/9.3及私有题作用域已由真实运行证据和41项当前M3集成检查关联；本轮仅增加测试和只读审计，没有改变已确认产品规则。API223、未改Worker133/前端97及全部输入/运行条目关联通过。M4/M5仍PLANNED；验证不等于Release或RESUME_READY。以下日期段落是各单元执行时事实。
+2026-10-08 最终门禁：完整M3 **VERIFIED，4/4 PASS**，见 [总审计](archive/M3-GATE-AUDIT.md)。9.1/9.2/9.3及私有题作用域已由真实运行证据和41项当前M3集成检查关联；本轮仅增加测试和只读审计，没有改变已确认产品规则。API223、未改Worker133/前端97及全部输入/运行条目关联通过。M4/M5仍PLANNED；验证不等于Release或RESUME_READY。以下日期段落是各单元执行时事实。
 
-2026-10-08 最新实现：9.3教学记录单元 [VERIFIED](M3-TEACHER-RECORDS-VALIDATION.md)。本班当前有效OWNER/ASSISTANT只读全员成绩、正式尝试及严格作业关联源码；PRECOMPLETED原私人AC、自测及无关练习拒绝，当前降级立即失权，永久参与者含离班历史。9.1/9.2相关单元也已验收；完整M3仍IN_PROGRESS，四项总门禁汇总尚未进行。下方带日期段落为历史。
+2026-10-08 最新实现：9.3教学记录单元 [VERIFIED](archive/M3-TEACHER-RECORDS-VALIDATION.md)。本班当前有效OWNER/ASSISTANT只读全员成绩、正式尝试及严格作业关联源码；PRECOMPLETED原私人AC、自测及无关练习拒绝，当前降级立即失权，永久参与者含离班历史。9.1/9.2相关单元也已验收；完整M3仍IN_PROGRESS，四项总门禁汇总尚未进行。下方带日期段落为历史。
 
-2026-10-08 当前实现：9.2作业单元 [VERIFIED](M3-ASSIGNMENTS-VALIDATION.md)，班级成员/私有题也已验收。截止前服务器接受且最终真实AC算按时，完成后再次提交不撤销成绩；LEFT/REMOVED保留本人历史摘要、次数及结果，私有内容和新执行仍禁止。自由练习提前确认不能绕过正在约束该题的作业策略。9.3教师关联查询和完整M3总门禁仍待后续，不把作业验收等同完整M3完成。下方日期段落保留历史。
+2026-10-08 当前实现：9.2作业单元 [VERIFIED](archive/M3-ASSIGNMENTS-VALIDATION.md)，班级成员/私有题也已验收。截止前服务器接受且最终真实AC算按时，完成后再次提交不撤销成绩；LEFT/REMOVED保留本人历史摘要、次数及结果，私有内容和新执行仍禁止。自由练习提前确认不能绕过正在约束该题的作业策略。9.3教师关联查询和完整M3总门禁仍待后续，不把作业验收等同完整M3完成。下方日期段落保留历史。
 
-2026-10-06 当前实现：M3班级成员首单元 [VERIFIED](M3-CLASSROOM-VALIDATION.md)，班级私有题单元也 [VERIFIED](M3-PRIVATE-PROBLEMS-VALIDATION.md)，完整M3 IN_PROGRESS；作业与教师关联尚未实现。自由练习默认AC后开放，未AC可提醒后再次确认，仅本人提前解锁；作业策略后续单独实现。私有题修订目前重新验证发布独立新题，不代表完整关联纠错/自动作废旧题已交付。需求正文仍为约束，未将未完成范围视作已完成。完整M2 VERIFIED保持，以下日期段落为历史。
+2026-10-06 当前实现：M3班级成员首单元 [VERIFIED](archive/M3-CLASSROOM-VALIDATION.md)，班级私有题单元也 [VERIFIED](archive/M3-PRIVATE-PROBLEMS-VALIDATION.md)，完整M3 IN_PROGRESS；作业与教师关联尚未实现。自由练习默认AC后开放，未AC可提醒后再次确认，仅本人提前解锁；作业策略后续单独实现。私有题修订目前重新验证发布独立新题，不代表完整关联纠错/自动作废旧题已交付。需求正文仍为约束，未将未完成范围视作已完成。完整M2 VERIFIED保持，以下日期段落为历史。
 
-2026-10-05 最终门禁：完整 M2 已 VERIFIED，5/5 门禁通过，见 [最终审计](M2-GATE-AUDIT.md)。本轮补齐历史版本两项直接回归，固定 Linux API182+Worker133=315 零失败/错误/跳过；原前端69及其全部输入保持一致，已接受运行时的全部生产源码与 JAR 重新核对一致。真实浏览器/Worker故障/QQ邮件沿用各自原验收记录，本轮未重新回放或发送邮件。受控审核发布和 Redis/ES 仍属 M4；下一步 M3 班级与作业，尚未正式发布或新增 RESUME_READY。下方单元段落保留历史，当前完整状态以本段为准。
+2026-10-05 最终门禁：完整 M2 已 VERIFIED，5/5 门禁通过，见 [最终审计](archive/M2-GATE-AUDIT.md)。本轮补齐历史版本两项直接回归，固定 Linux API182+Worker133=315 零失败/错误/跳过；原前端69及其全部输入保持一致，已接受运行时的全部生产源码与 JAR 重新核对一致。真实浏览器/Worker故障/QQ邮件沿用各自原验收记录，本轮未重新回放或发送邮件。受控审核发布和 Redis/ES 仍属 M4；下一步 M3 班级与作业，尚未正式发布或新增 RESUME_READY。下方单元段落保留历史，当前完整状态以本段为准。
 
-2026-10-05 最新：独立自测与 QQ SMTP 实际接收/激活单元已 VERIFIED。固定 Linux API181+Worker132=313、最终前端69及全部门禁、真实冻结编辑/取消/历史/Worker SIGKILL自然租约恢复、零AC副作用、七空队列/29实际权限拒绝与精确清理通过，见 [验收](M2-SELF-TEST-VALIDATION.md)。完整 M2 仍 IN_PROGRESS，下一步最终门禁汇总；受控审核发布仍 M4，不新增发布或 RESUME_READY 结论。以下日期段落保留各自历史事实。
+2026-10-05 最新：独立自测与 QQ SMTP 实际接收/激活单元已 VERIFIED。固定 Linux API181+Worker132=313、最终前端69及全部门禁、真实冻结编辑/取消/历史/Worker SIGKILL自然租约恢复、零AC副作用、七空队列/29实际权限拒绝与精确清理通过，见 [验收](archive/M2-SELF-TEST-VALIDATION.md)。完整 M2 仍 IN_PROGRESS，下一步最终门禁汇总；受控审核发布仍 M4，不新增发布或 RESUME_READY 结论。以下日期段落保留各自历史事实。
 
-2026-10-05 整理：参考输出预览/明确确认单元已 VERIFIED（实际验收2026-10-04）。V13 不可变用途隔离、仅运行参考、整组压缩输出、owner/CAS/幂等确认与版本递增完成；不会自动覆盖答案，不产生双通过或正式成绩。全新固定 Linux 后端 **298**（API174/Worker124）、前端 **61** 及全部检查通过，280 个冻结输入匹配；相同 JAR 真实页面失败→生成→显式确认/保留本地编辑→过期/待审/归档历史，以及新 Worker SIGKILL 自然租约恢复通过。HTTP/输出摘要/Outbox/提交后ACK审计、正常与回退AC、六空队列、45项实际权限拒绝和精确清理均通过；本轮有真实页面截图。见 [验收](M2-OUTPUT-PREVIEW-VALIDATION.md)。完整内容与 M2 保持 IN_PROGRESS；下一单元独立自测，真实 SMTP 仍需服务商和授权收件箱，受控审核与发布仍为 M4。以下旧阶段记录按各自日期保留。
+2026-10-05 整理：参考输出预览/明确确认单元已 VERIFIED（实际验收2026-10-04）。V13 不可变用途隔离、仅运行参考、整组压缩输出、owner/CAS/幂等确认与版本递增完成；不会自动覆盖答案，不产生双通过或正式成绩。全新固定 Linux 后端 **298**（API174/Worker124）、前端 **61** 及全部检查通过，280 个冻结输入匹配；相同 JAR 真实页面失败→生成→显式确认/保留本地编辑→过期/待审/归档历史，以及新 Worker SIGKILL 自然租约恢复通过。HTTP/输出摘要/Outbox/提交后ACK审计、正常与回退AC、六空队列、45项实际权限拒绝和精确清理均通过；本轮有真实页面截图。见 [验收](archive/M2-OUTPUT-PREVIEW-VALIDATION.md)。完整内容与 M2 保持 IN_PROGRESS；下一单元独立自测，真实 SMTP 仍需服务商和授权收件箱，受控审核与发布仍为 M4。以下旧阶段记录按各自日期保留。
 
-2026-10-04 不可变送审/撤回单元已 VERIFIED：V12 精确绑定本人当前双 PASSED 的不可变快照，唯一待审、owner/CAS/幂等、待审禁改、撤回后修改与历史保留完成。全新固定 Linux API169 + Worker120 = **289**、前端 **56** 及全部检查通过；相同构件真实页面两轮送审/撤回/归档、HTTP 六类待审写409、旧撤回不影响新待审、冻结题面不变、正常与轮询回退 AC、六空队列、30 项实际数据库权限拒绝及精确清理通过。见 [验收](M2-CONTENT-REVIEW-VALIDATION.md)。本轮未重复 Worker SIGKILL，117 个运行文件逐字节等同上轮真实故障验收；截图接口不可用，保存真实 DOM 观察，不提供合成截图。完整内容与 M2 仍 IN_PROGRESS；下一步为输出生成预览、独立自测，外部 SMTP 仍需服务商和授权收件箱配置；受控审核身份/批准发布保持 M4。
+2026-10-04 不可变送审/撤回单元已 VERIFIED：V12 精确绑定本人当前双 PASSED 的不可变快照，唯一待审、owner/CAS/幂等、待审禁改、撤回后修改与历史保留完成。全新固定 Linux API169 + Worker120 = **289**、前端 **56** 及全部检查通过；相同构件真实页面两轮送审/撤回/归档、HTTP 六类待审写409、旧撤回不影响新待审、冻结题面不变、正常与轮询回退 AC、六空队列、30 项实际数据库权限拒绝及精确清理通过。见 [验收](archive/M2-CONTENT-REVIEW-VALIDATION.md)。本轮未重复 Worker SIGKILL，117 个运行文件逐字节等同上轮真实故障验收；截图接口不可用，保存真实 DOM 观察，不提供合成截图。完整内容与 M2 仍 IN_PROGRESS；下一步为输出生成预览、独立自测，外部 SMTP 仍需服务商和授权收件箱配置；受控审核身份/批准发布保持 M4。
 
 ## 1. 文档状态
 
@@ -35,7 +35,7 @@
 | 文档版本 | 1.0（需求基线） |
 | 基线日期 | 2026-09-24 |
 | 需求状态 | 已确认 |
-| 实现状态 | M-1、M0、M1、M2、M3、M4均为`VERIFIED`；最终门禁见[M2审计](M2-GATE-AUDIT.md)、[M3审计](M3-GATE-AUDIT.md)、[M4审计](M4-GATE-AUDIT.md)。M4第7步监控/三故障/原事件与消息副本关联已完成，M5仍PLANNED；尚未正式发布 |
+| 实现状态 | M-1、M0、M1、M2、M3、M4均为`VERIFIED`；最终门禁见[M2审计](archive/M2-GATE-AUDIT.md)、[M3审计](archive/M3-GATE-AUDIT.md)、[M4审计](archive/M4-GATE-AUDIT.md)。M4第7步监控/三故障/原事件与消息副本关联已完成，M5仍PLANNED；尚未正式发布 |
 | 目标版本 | M0、V1.0、V1.1；V2.0 仅保留路线 |
 
 本文使用“必须、应当、可以”表达约束。本文描述的是目标需求，不代表功能已经实现。实际完成状态以 Git release、自动化测试和证据矩阵为准。
@@ -107,9 +107,9 @@ V1.0 不包含：
 
 首个 SUPER_ADMIN 必须通过一次性初始化命令创建，不允许在代码中保留默认密码。
 
-2026-10-09补充确认（D-045）：OPS_ADMIN/SUPER_ADMIN只能恢复耗尽自动预算的临时平台故障，每个原任务终身最多人工追加一次执行，最大执行次数10；必须保留原Submission/源码/版本/测试/接受时间、旧attempt和失败记录。自然作业截止后可恢复原提交，真实AC按原accepted_at计成绩，同时复核当前账号、题目、班级/成员/原参与者及作业资格；过期或已清理自测payload拒绝。内容限当前同版本DRAFT或当前PENDING案件最新VALIDATE，历史已结束案件任务拒绝；预览仍须作者明确确认。请求须理由、状态版本和幂等键，恢复、唯一凭证、Outbox与审计原子提交；同键重放不重复执行。消息发布耗尽另按同事件终身一次恢复，不重置投递计数，不修改payload。范围与当前验收状态见 [运维设计](M4-OPERATIONS-DESIGN.md)。
+2026-10-09补充确认（D-045）：OPS_ADMIN/SUPER_ADMIN只能恢复耗尽自动预算的临时平台故障，每个原任务终身最多人工追加一次执行，最大执行次数10；必须保留原Submission/源码/版本/测试/接受时间、旧attempt和失败记录。自然作业截止后可恢复原提交，真实AC按原accepted_at计成绩，同时复核当前账号、题目、班级/成员/原参与者及作业资格；过期或已清理自测payload拒绝。内容限当前同版本DRAFT或当前PENDING案件最新VALIDATE，历史已结束案件任务拒绝；预览仍须作者明确确认。请求须理由、状态版本和幂等键，恢复、唯一凭证、Outbox与审计原子提交；同键重放不重复执行。消息发布耗尽另按同事件终身一次恢复，不重置投递计数，不修改payload。范围与当前验收状态见 [运维设计](archive/M4-OPERATIONS-DESIGN.md)。
 
-2026-10-08补充确认（D-043）：一个管理账号只分配上述一种角色；同一人兼任内容审核和运维时分配两个账号，SUPER_ADMIN仍拥有全部后台能力。管理员新建、一次性bootstrap或密码重置后必须首次改密；SUPER_ADMIN可重置其他管理员，全部SUPER无法登录时由操作者通过服务器本机显式恢复指定既有SUPER并保留持久审计。不开放管理员普通注册或普通用户邮件找回入口。具体会话、并发保护、初始化/恢复与验收合约见 [首单元设计](M4-ADMIN-IDENTITY-DESIGN.md)，本身份单元已实现并[验收](M4-ADMIN-IDENTITY-VALIDATION.md)，不代表其余后台业务权限已交付。
+2026-10-08补充确认（D-043）：一个管理账号只分配上述一种角色；同一人兼任内容审核和运维时分配两个账号，SUPER_ADMIN仍拥有全部后台能力。管理员新建、一次性bootstrap或密码重置后必须首次改密；SUPER_ADMIN可重置其他管理员，全部SUPER无法登录时由操作者通过服务器本机显式恢复指定既有SUPER并保留持久审计。不开放管理员普通注册或普通用户邮件找回入口。具体会话、并发保护、初始化/恢复与验收合约见 [首单元设计](archive/M4-ADMIN-IDENTITY-DESIGN.md)，本身份单元已实现并[验收](archive/M4-ADMIN-IDENTITY-VALIDATION.md)，不代表其余后台业务权限已交付。
 
 ## 5. 普通账号与认证
 
@@ -142,7 +142,7 @@ V1.0 不包含：
 
 ### 5.4 M2 账号实施合约
 
-2026-10-02 用户已确认 D-041 的全部推荐方案，详细参数和接口见 [普通账号设计](M2-ACCOUNTS-DESIGN.md)。首个实施单元包括注册、邮箱激活、短 JWT 与独立 MySQL 会话、refresh 轮换/重用撤销、当前/全部退出、改密、邮箱找回以及旧账号补邮箱；现为 `VERIFIED`。固定 Linux 后端 211 / 前端 13 项、真实注册到 AC、独立权限/日志/队列审计和精确清理见 [账号验收记录](M2-ACCOUNTS-VALIDATION.md)。完整 M2 仍为 `IN_PROGRESS`，不表示全部 M2 门禁或生产 SMTP 通过。
+2026-10-02 用户已确认 D-041 的全部推荐方案，详细参数和接口见 [普通账号设计](archive/M2-ACCOUNTS-DESIGN.md)。首个实施单元包括注册、邮箱激活、短 JWT 与独立 MySQL 会话、refresh 轮换/重用撤销、当前/全部退出、改密、邮箱找回以及旧账号补邮箱；现为 `VERIFIED`。固定 Linux 后端 211 / 前端 13 项、真实注册到 AC、独立权限/日志/队列审计和精确清理见 [账号验收记录](archive/M2-ACCOUNTS-VALIDATION.md)。完整 M2 仍为 `IN_PROGRESS`，不表示全部 M2 门禁或生产 SMTP 通过。
 
 - 新账号为 `PENDING_VERIFICATION`，激活后为 `ACTIVE`，停用为 `DISABLED`；用户、quota lock 与激活令牌摘要同事务建立。
 - 新用户名为 3–32 个 ASCII 字母、数字或下划线，唯一性不区分大小写；邮箱支持常见 ASCII 地址，trim/lowercase，不合并供应商别名。昵称可以重复；新密码至少 12 字符、最多 72 UTF-8 字节，不 trim。
@@ -153,7 +153,7 @@ V1.0 不包含：
 
 ## 6. 题库与题单
 
-2026-10-03 题库单元按既有 6.1 增加公开列表/标题字面搜索/难度标签/分页/实际选题，SMTP 适配按 5.1 实施；两者单元已 VERIFIED，见 [验收](M2-LIBRARY-SMTP-VALIDATION.md)。顺序与剩余边界见 [实施计划](M2-REMAINING-IMPLEMENTATION.md)，下一单元为个人学习记录。整体产品需求不变，尚未完成全部 M2 或真实服务商投递。
+2026-10-03 题库单元按既有 6.1 增加公开列表/标题字面搜索/难度标签/分页/实际选题，SMTP 适配按 5.1 实施；两者单元已 VERIFIED，见 [验收](archive/M2-LIBRARY-SMTP-VALIDATION.md)。顺序与剩余边界见 [实施计划](archive/M2-REMAINING-IMPLEMENTATION.md)，下一单元为个人学习记录。整体产品需求不变，尚未完成全部 M2 或真实服务商投递。
 
 ### 6.1 公共题库
 
@@ -167,7 +167,7 @@ V1.0 不包含：
 
 ### 6.2 个人题单
 
-2026-10-03 本项及 8.2 的作答草稿/本人历史学习记录单元已 VERIFIED：V8、所有者校验、当前版本 AC、CAS/排序事务和前端完成；固定 Linux 后端 241 / 前端 35、真实两页草稿冲突、当前 AC 进度、本人历史及独立审计清理通过。合约见 [设计](M2-LEARNING-RECORDS-DESIGN.md)，结果见 [验收](M2-LEARNING-RECORDS-VALIDATION.md)；不改变公共审核、M4 管理身份或完整 M2 状态。
+2026-10-03 本项及 8.2 的作答草稿/本人历史学习记录单元已 VERIFIED：V8、所有者校验、当前版本 AC、CAS/排序事务和前端完成；固定 Linux 后端 241 / 前端 35、真实两页草稿冲突、当前 AC 进度、本人历史及独立审计清理通过。合约见 [设计](archive/M2-LEARNING-RECORDS-DESIGN.md)，结果见 [验收](archive/M2-LEARNING-RECORDS-VALIDATION.md)；不改变公共审核、M4 管理身份或完整 M2 状态。
 
 - V1.0 与 V1.1 的个人题单默认且只能本人可见，不提供公开入口。
 - 支持创建、改名、删除题单，以及添加、移除和调整题目顺序。
@@ -179,9 +179,9 @@ V1.0 不包含：
 
 ### 6.3 题目归属
 
-2026-10-03 作者草稿阶段已按 6.3–6.6/7.1 实施 V9 独立私有表和 `/authoring`，owner/CAS、逐条与 ZIP、独立参考/题解代码和草稿归档均 VERIFIED；固定 Linux 261/39、真实页面/导入/冲突/审计清理见 [记录](M2-CONTENT-VALIDATION.md)。该历史阶段只证明保存与导入。
+2026-10-03 作者草稿阶段已按 6.3–6.6/7.1 实施 V9 独立私有表和 `/authoring`，owner/CAS、逐条与 ZIP、独立参考/题解代码和草稿归档均 VERIFIED；固定 Linux 261/39、真实页面/导入/冲突/审计清理见 [记录](archive/M2-CONTENT-VALIDATION.md)。该历史阶段只证明保存与导入。
 
-2026-10-04 已按 7.2/7.3 验收 V11 独立不可变内容验证：参考程序与独立题解均实际 ACCEPTED 才通过，私有 owner/CAS/幂等、版本绑定、共享额度、自然租约恢复与归档历史均 VERIFIED；固定 Linux 283/50、真实浏览器/Worker 中断/审计清理见 [记录](M2-CONTENT-VALIDATION-JOBS-VALIDATION.md)。验证不会创建正式 Submission/AC、公共题或官方题解；送审/撤回、输出生成预览与受控审核发布仍未完成，完整内容与 M2 保持 IN_PROGRESS。
+2026-10-04 已按 7.2/7.3 验收 V11 独立不可变内容验证：参考程序与独立题解均实际 ACCEPTED 才通过，私有 owner/CAS/幂等、版本绑定、共享额度、自然租约恢复与归档历史均 VERIFIED；固定 Linux 283/50、真实浏览器/Worker 中断/审计清理见 [记录](archive/M2-CONTENT-VALIDATION-JOBS-VALIDATION.md)。验证不会创建正式 Submission/AC、公共题或官方题解；送审/撤回、输出生成预览与受控审核发布仍未完成，完整内容与 M2 保持 IN_PROGRESS。
 
 - 未发布个人草稿归创建者。
 - 发布为班级私有题后归班级，保留 created_by 供审计；助教退出不会删除题目。
@@ -235,7 +235,7 @@ V1.0 不包含：
 
 ### 7.3 官方题解
 
-2026-10-03 学习侧访问单元 VERIFIED：本人当前版本 FINISHED/AC 或明确确认才返回独立快照；取消不留记录、用户/版本隔离、真实 AC 自动解锁已验收，最终固定 Linux 269/45 和独立浏览器/审计清理见 [记录](M2-SOLUTION-ACCESS-VALIDATION.md)。迁移无种子/普通发布路由，正式代码验证/审核发布仍未完成；合成验收快照不代表本节完整交付。
+2026-10-03 学习侧访问单元 VERIFIED：本人当前版本 FINISHED/AC 或明确确认才返回独立快照；取消不留记录、用户/版本隔离、真实 AC 自动解锁已验收，最终固定 Linux 269/45 和独立浏览器/审计清理见 [记录](archive/M2-SOLUTION-ACCESS-VALIDATION.md)。迁移无种子/普通发布路由，正式代码验证/审核发布仍未完成；合成验收快照不代表本节完整交付。
 
 官方题解与私有参考程序是两个独立对象。
 

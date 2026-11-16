@@ -64,7 +64,7 @@ rows+=['','## 当前构件与部署准备修正','',
        '完整逐请求记录、参数探针、配对归纳和失败包元数据以白名单打包；私密env、密码、证书、数据库dump与上游二进制不进入证据包。实际随机秘密/完整私钥PEM/JWT扫描、ZIP CRC和逐文件摘要应由交付收据确认。','',
        '本轮不是整机2核2G容量或两个项目共存试验；没有长稳、开放到达模型、大历史、多用户写负载或故障负载结论。真实主机、HTTPS域名、SMTP、异地备份/密钥保管、版本回滚与用户试用仍需后续完成。先前部署ZIP保持绑定原构件，不以本次性能工具作为正式Release。','',
        '设计见 [M5-STATEMENT-CACHE-AB-DESIGN.md](M5-STATEMENT-CACHE-AB-DESIGN.md)，独立归纳和交付收据见 [summary.json](evidence/m5-statement-cache-ab/20261113/summary.json)、[verification.json](evidence/m5-statement-cache-ab/20261113/verification.json)。']
-report=repo/'docs/M5-STATEMENT-CACHE-AB-REPORT.md';report.write_text('\n'.join(rows)+'\n',encoding='utf-8')
+report=repo/'docs/archive/M5-STATEMENT-CACHE-AB-REPORT.md';report.write_text('\n'.join(rows)+'\n',encoding='utf-8')
 
 stamp=dt.datetime.now(dt.timezone(dt.timedelta(hours=8))).strftime('%Y%m%d-%H%M%S')
 name='forgeoj-statement-cache-ab-'+stamp+'-'+uuid.uuid4().hex[:8];delivery=repo/'target'/name;package=delivery/'package';package.mkdir(parents=True)
@@ -84,7 +84,7 @@ for arm in sorted(out.glob('[0-9][0-9]-[AB]')):
 for p in (out/'frozen-tools').iterdir():add(p,'tools/frozen/'+p.name)
 for n in ['run-statement-cache-ab.py','StatementCacheProbe.java','summarize-statement-cache-ab.py','build-statement-cache-evidence.py','README.md']:add(repo/'tools/performance'/n,'tools/performance/'+n)
 for n in ['Build-ProductionPackage.ps1','smoke-https.mjs']:add(repo/'tools/deployment'/n,'tools/deployment/'+n)
-for n in ['M5-STATEMENT-CACHE-AB-DESIGN.md','M5-STATEMENT-CACHE-AB-REPORT.md']:add(repo/'docs'/n,'docs/'+n)
+for n in ['M5-STATEMENT-CACHE-AB-DESIGN.md','M5-STATEMENT-CACHE-AB-REPORT.md']:add(repo/'docs/archive'/n,'docs/archive/'+n)
 for n in ['cleanup-result.json','https-smoke.json','static-assets-smoke.json']:add(run/n,'run/'+n)
 for n in ['not-accepted.json','cleanup-result.json','package/package-manifest.json']:
     add(repo/'target/forgeoj-deployment-20261113-110113-a3df0e34'/n,'failed-empty-frontend/'+n)
@@ -92,7 +92,7 @@ for n in ['statement-cache-ab-20261113-builder-negatives.json','statement-cache-
     add(repo/'target'/n,'checks/'+n)
 for n in ['LICENSE','NOTICE']:add(repo/n,n)
 readme=delivery/'README.md'
-readme.write_text('ForgeOJ 语句解析缓存有限A/B证据。先读 docs/M5-STATEMENT-CACHE-AB-REPORT.md，raw/ 保存原始请求与独立归纳，delivery.json 保存逐文件摘要。\n这是审阅包，复现需完整ForgeOJ源码、固定构件与新建测试环境；报告中的历史报告/仓库证据链接需在完整仓库查看。\n不包含私密配置、证书、数据库dump或上游运行时，不是生产安装器或收益承诺。\n',encoding='utf-8')
+readme.write_text('ForgeOJ 语句解析缓存有限A/B证据。先读 docs/archive/M5-STATEMENT-CACHE-AB-REPORT.md，raw/ 保存原始请求与独立归纳，delivery.json 保存逐文件摘要。\n这是审阅包，复现需完整ForgeOJ源码、固定构件与新建测试环境；报告中的历史报告/仓库证据链接需在完整仓库查看。\n不包含私密配置、证书、数据库dump或上游运行时，不是生产安装器或收益承诺。\n',encoding='utf-8')
 add(readme,'README.md')
 secrets=[p.read_bytes().strip() for p in (run/'private/secrets').iterdir() if p.is_file() and p.stat().st_size]
 assert len(secrets)==13
@@ -114,6 +114,6 @@ with zipfile.ZipFile(archive) as z:
     for item in manifest:assert hashlib.sha256(z.read(item['path'])).hexdigest()==item['sha256']
 receipt['archive']={'path':archive.relative_to(repo).as_posix(),'bytes':archive.stat().st_size,'sha256':sha(archive),'files':len(manifest)+1,'crcAndHashes':'PASS'}
 write(delivery/'archive-receipt.json',receipt);(delivery/(archive.name+'.sha256')).write_text(receipt['archive']['sha256']+'  '+archive.name+'\n')
-evidence=repo/'docs/evidence/m5-statement-cache-ab/20261113';evidence.mkdir(parents=True,exist_ok=False)
+evidence=repo/'docs/archive/evidence/m5-statement-cache-ab/20261113';evidence.mkdir(parents=True,exist_ok=False)
 write(evidence/'verification.json',receipt);shutil.copyfile(out/'summary.json',evidence/'summary.json');shutil.copyfile(out/'source-inputs.json',evidence/'source-inputs.json')
 print(json.dumps(receipt['archive']))

@@ -1,7 +1,9 @@
 /* Copyright 2026 池也; SPDX-License-Identifier: Apache-2.0 */
 package com.forgeoj.worker.selftest;
 
-import com.forgeoj.worker.sandbox.*;
+import com.forgeoj.worker.sandbox.InvalidSandboxConfigurationException;
+import com.forgeoj.worker.sandbox.SandboxOutputPreview;
+import com.forgeoj.worker.sandbox.SandboxRuntime;
 import com.forgeoj.worker.snapshot.JudgeTaskSnapshotException;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
 import org.springframework.stereotype.Component;

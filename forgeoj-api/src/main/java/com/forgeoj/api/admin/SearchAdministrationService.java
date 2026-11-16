@@ -1,11 +1,20 @@
 /* Copyright 2026 池也; SPDX-License-Identifier: Apache-2.0 */
 package com.forgeoj.api.admin;
 
-import static com.forgeoj.api.admin.AdminInput.*;
+import static com.forgeoj.api.admin.AdminInput.MAX_VERSION;
+import static com.forgeoj.api.admin.AdminInput.digest;
+import static com.forgeoj.api.admin.AdminInput.error;
+import static com.forgeoj.api.admin.AdminInput.page;
+import static com.forgeoj.api.admin.AdminInput.reason;
+import static com.forgeoj.api.admin.AdminInput.uuid;
+import static com.forgeoj.api.admin.AdminInput.version;
 
 import com.forgeoj.api.cache.CacheMapper;
-import com.forgeoj.api.search.*;
-import java.util.*;
+import com.forgeoj.api.search.ElasticSearchClient;
+import com.forgeoj.api.search.SearchDeliveryMapper;
+import com.forgeoj.api.search.SearchMapper;
+import com.forgeoj.api.search.SearchRebuildMapper;
+import java.util.UUID;
 import org.springframework.stereotype.Service;
 
 @Service

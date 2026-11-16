@@ -1,12 +1,17 @@
 /* Copyright 2026 池也; SPDX-License-Identifier: Apache-2.0 */
 package com.forgeoj.worker.selftest;
 
-import com.forgeoj.worker.snapshot.*;
+import com.forgeoj.worker.snapshot.JudgeTaskSnapshot;
+import com.forgeoj.worker.snapshot.JudgeTaskSnapshotException;
+import com.forgeoj.worker.snapshot.JudgeTestCase;
 import java.nio.charset.StandardCharsets;
-import java.security.*;
-import java.util.*;
+import java.security.MessageDigest;
+import java.security.NoSuchAlgorithmException;
+import java.util.HexFormat;
+import java.util.List;
 import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.*;
+import org.springframework.transaction.annotation.Isolation;
+import org.springframework.transaction.annotation.Transactional;
 
 @Service
 public class SelfTestSnapshotLoader {

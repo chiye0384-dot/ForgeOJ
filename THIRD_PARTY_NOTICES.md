@@ -17,7 +17,7 @@ Apache-2.0. Jakarta Mail API 2.1.5 and Angus Mail 2.0.5 declare
 and Angus Activation 2.0.3 include EDL-1.0/BSD-style LICENSE text. Each library
 retains its own license and embedded LICENSE/NOTICE, without relicensing by
 ForgeOJ. No upstream source was copied. Exact artifact hashes and official
-fixed license links are recorded in `docs/evidence/m2-library/smtp-dependencies.md`
+fixed license links are recorded in `docs/archive/evidence/m2-library/smtp-dependencies.md`
 and U-010. Distribution obligations remain part of the complete release audit.
 
 ## Generated scaffold and retained files
@@ -98,7 +98,7 @@ and U-010. Distribution obligations remain part of the complete release audit.
 - Spring Boot 4.1.1 direct framework/build artifacts — Apache License 2.0
 - Frontend runtime dependencies are Vue 3.5.43 and Vue Router 5.3.1 (MIT).
   Exact direct development-tool versions and licenses are listed in
-  `docs/DIRECT-DEPENDENCY-LICENSES.md`.
+  `docs/archive/DIRECT-DEPENDENCY-LICENSES.md`.
 - Maven dependencies are resolved from `pom.xml`; npm dependencies are locked
   by `frontend/package-lock.json`. Their capabilities remain third-party
   capabilities and must not be described as ForgeOJ-authored implementation.
@@ -133,7 +133,7 @@ and digest when available.
 These images are fetched for development or tests and are not redistributed
 as image archives. Original disposable validation Dockerfiles combine the
 recorded Maven/Temurin runtime with the official Docker CLI; exact inputs and
-use boundaries are recorded in `docs/M1-FIXED-LINUX-VALIDATION.md` and
+use boundaries are recorded in `docs/archive/M1-FIXED-LINUX-VALIDATION.md` and
 `docs/UPSTREAM-AND-LICENSE.md`. The replay frontend and development mailbox
 bridge use the same recorded Node 24.14.1 image and only built-in Node modules.
 Any release redistribution requires review of the actual image contents.

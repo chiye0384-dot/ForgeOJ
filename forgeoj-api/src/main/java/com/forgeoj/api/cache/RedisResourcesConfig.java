@@ -1,8 +1,10 @@
 /* Copyright 2026 池也; SPDX-License-Identifier: Apache-2.0 */
 package com.forgeoj.api.cache;
 
-import io.lettuce.core.resource.*;
-import org.springframework.context.annotation.*;
+import io.lettuce.core.resource.ClientResources;
+import io.lettuce.core.resource.DefaultClientResources;
+import org.springframework.context.annotation.Bean;
+import org.springframework.context.annotation.Configuration;
 
 @Configuration
 public class RedisResourcesConfig {

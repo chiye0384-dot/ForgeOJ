@@ -66,4 +66,4 @@ stateDiagram-v2
 
 核心代码入口：[提交事务](forgeoj-api/src/main/java/com/forgeoj/api/submission/SubmissionTransactionService.java)、[任务领取](forgeoj-judge-worker/src/main/java/com/forgeoj/worker/task/JudgeTaskClaimService.java)、[完成与退避](forgeoj-judge-worker/src/main/java/com/forgeoj/worker/task/JudgeTaskCompletionService.java)、[沙箱生命周期](forgeoj-judge-worker/src/main/java/com/forgeoj/worker/sandbox/DockerCliSandboxRuntime.java)、[搜索复核与降级](forgeoj-api/src/main/java/com/forgeoj/api/search/PublicSearchService.java)。
 
-复现命令与本机性能数据见[性能导读](PERFORMANCE.md)；验收边界见[当前状态](docs/CURRENT-STATUS.md)。公网演示尚未部署，原本地环境的启停方法见[README](README.md)。
+复现命令与本机性能数据见[性能导读](PERFORMANCE.md)；验收边界见[当前状态](docs/archive/CURRENT-STATUS.md)。公网演示尚未部署，原本地环境的启停方法见[README](README.md)。

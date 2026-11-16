@@ -1,8 +1,11 @@
 /* Copyright 2026 池也; SPDX-License-Identifier: Apache-2.0 */
 package com.forgeoj.api.admin;
 
-import jakarta.servlet.http.*;
-import org.springframework.security.web.csrf.*;
+import jakarta.servlet.http.HttpServletRequest;
+import jakarta.servlet.http.HttpServletResponse;
+import org.springframework.security.web.csrf.CsrfToken;
+import org.springframework.security.web.csrf.CsrfTokenRepository;
+import org.springframework.security.web.csrf.DefaultCsrfToken;
 import org.springframework.stereotype.Component;
 
 @Component

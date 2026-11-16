@@ -11,5 +11,5 @@
 *.cmd text eol=crlf
 *.sh text eol=lf
 # Evidence hashes describe original bytes; Git must not rewrite exported measurements.
-/docs/evidence/portfolio-readiness/** -text whitespace=blank-at-eol,blank-at-eof,space-before-tab,cr-at-eol
-/docs/evidence/m5-statement-cache-ab/20261113/** -text whitespace=blank-at-eol,blank-at-eof,space-before-tab,cr-at-eol
+/docs/archive/evidence/portfolio-readiness/** -text whitespace=blank-at-eol,blank-at-eof,space-before-tab,cr-at-eol
+/docs/archive/evidence/m5-statement-cache-ab/20261113/** -text whitespace=blank-at-eol,blank-at-eof,space-before-tab,cr-at-eol

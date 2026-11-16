@@ -2,7 +2,8 @@
 package com.forgeoj.api.search;
 
 import com.rabbitmq.client.Channel;
-import java.util.*;
+import java.util.Set;
+import java.util.UUID;
 import java.util.concurrent.TimeUnit;
 import org.springframework.amqp.core.Message;
 import org.springframework.amqp.rabbit.annotation.RabbitListener;

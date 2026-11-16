@@ -1,12 +1,22 @@
 /* Copyright 2026 池也; SPDX-License-Identifier: Apache-2.0 */
 package com.forgeoj.api.admin;
 
-import static com.forgeoj.api.admin.PublicContentInput.*;
+import static com.forgeoj.api.admin.PublicContentInput.integer;
+import static com.forgeoj.api.admin.PublicContentInput.keys;
+import static com.forgeoj.api.admin.PublicContentInput.string;
 
 import java.util.Map;
 import org.springframework.dao.DataAccessException;
-import org.springframework.http.*;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.http.CacheControl;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.ExceptionHandler;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.server.ResponseStatusException;
 
 @RestController

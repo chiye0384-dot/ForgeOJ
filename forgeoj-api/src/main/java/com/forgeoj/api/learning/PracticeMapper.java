@@ -2,8 +2,11 @@
 package com.forgeoj.api.learning;
 
 import com.forgeoj.api.problem.ProblemLibraryMapper;
-import java.util.*;
-import org.apache.ibatis.annotations.*;
+import java.util.List;
+import java.util.Optional;
+import org.apache.ibatis.annotations.Mapper;
+import org.apache.ibatis.annotations.Param;
+import org.apache.ibatis.annotations.Select;
 
 @Mapper
 public interface PracticeMapper {

@@ -4,7 +4,7 @@ param(
   [Parameter(Mandatory)][string]$BuildDirectory,
   [Parameter(Mandatory)][ValidatePattern('^[a-f0-9]{64}$')][string]$ApiSha256,
   [Parameter(Mandatory)][ValidatePattern('^[a-f0-9]{64}$')][string]$WorkerSha256,
-  [string]$CompiledInputManifest='docs/evidence/m4-monitoring/linux-source-inputs.json'
+  [string]$CompiledInputManifest='docs/archive/evidence/m4-monitoring/linux-source-inputs.json'
 )
 $ErrorActionPreference='Stop'
 $repo=(Resolve-Path (Join-Path $PSScriptRoot '../..')).Path
@@ -46,7 +46,7 @@ foreach($frontendFile in $frontendFiles){
 Copy-Item -LiteralPath (Join-Path $repo 'deploy/mysql/init/01-create-users.sh') -Destination (Join-Path $package 'scripts/create-users.sh')
 foreach($file in @('datasources.yml','dashboards.yml','forgeoj.json')){Copy-Item -LiteralPath (Join-Path $repo ('deploy/monitoring/'+$file)) -Destination (Join-Path $package ('monitoring/'+$file))}
 foreach($file in @('LICENSE','NOTICE','THIRD_PARTY_NOTICES.md')){Copy-Item -LiteralPath (Join-Path $repo $file) -Destination (Join-Path $package ('notices/'+$file))}
-foreach($file in @('DIRECT-DEPENDENCY-LICENSES.md','UPSTREAM-AND-LICENSE.md','M5-DEPLOYMENT-DESIGN.md')){Copy-Item -LiteralPath (Join-Path $repo ('docs/'+$file)) -Destination (Join-Path $package ('notices/'+$file))}
+foreach($file in @('docs/archive/DIRECT-DEPENDENCY-LICENSES.md','docs/UPSTREAM-AND-LICENSE.md','docs/archive/M5-DEPLOYMENT-DESIGN.md')){Copy-Item -LiteralPath (Join-Path $repo $file) -Destination (Join-Path $package ('notices/'+(Split-Path $file -Leaf)))}
 Copy-Item -LiteralPath (Join-Path $repo 'docs/licenses') -Destination (Join-Path $package 'notices/upstream') -Recurse
 # Windows checkout line endings must not break Linux deployment scripts.
 Get-ChildItem -LiteralPath $package -Filter '*.sh' -Recurse | ForEach-Object {

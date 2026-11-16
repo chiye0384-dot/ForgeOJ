@@ -1,7 +1,10 @@
 package com.forgeoj.api.auth;
 
-import jakarta.servlet.http.*;
-import org.springframework.security.web.csrf.*;
+import jakarta.servlet.http.HttpServletRequest;
+import jakarta.servlet.http.HttpServletResponse;
+import org.springframework.security.web.csrf.CsrfToken;
+import org.springframework.security.web.csrf.CsrfTokenRepository;
+import org.springframework.security.web.csrf.DefaultCsrfToken;
 import org.springframework.stereotype.Component;
 
 /** Host-only HttpOnly cookie plus required request header; no process session authority. */

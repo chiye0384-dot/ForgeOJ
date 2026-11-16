@@ -1,8 +1,9 @@
 /* Copyright 2026 池也; SPDX-License-Identifier: Apache-2.0 */
 package com.forgeoj.api.observability;
 
-import static org.junit.jupiter.api.Assertions.*;
-import static org.mockito.Mockito.*;
+import static org.junit.jupiter.api.Assertions.assertThrows;
+import static org.junit.jupiter.api.Assertions.assertTrue;
+import static org.mockito.Mockito.mock;
 
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.availability.ApplicationAvailability;

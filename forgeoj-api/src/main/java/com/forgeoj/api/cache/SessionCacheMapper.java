@@ -2,7 +2,8 @@
 package com.forgeoj.api.cache;
 
 import java.util.Optional;
-import org.apache.ibatis.annotations.*;
+import org.apache.ibatis.annotations.Mapper;
+import org.apache.ibatis.annotations.Select;
 
 @Mapper
 public interface SessionCacheMapper {

@@ -66,7 +66,7 @@ Grafana单独连接maintenance桥接网络，让Docker实际提供127.0.0.1端�
 
 ## 隔离验证
 
-`preflight.py --isolated` 只接受127.0.0.1、`.test`域名和disabled邮件，禁止借此公网发布。测试证书为单独临时私密目录，绝不装入浏览器/OS信任库。独立随机项目/卷；验证完只清理准确项目和自有应用镜像，保留用户LAN演示与共享基础镜像。完整验收及失败记录在仓库 `docs/M5-DEPLOYMENT-VALIDATION.md`，不把Docker Desktop运行当全新Linux主机上线。
+`preflight.py --isolated` 只接受127.0.0.1、`.test`域名和disabled邮件，禁止借此公网发布。测试证书为单独临时私密目录，绝不装入浏览器/OS信任库。独立随机项目/卷；验证完只清理准确项目和自有应用镜像，保留用户LAN演示与共享基础镜像。完整验收及失败记录在仓库 `docs/archive/M5-DEPLOYMENT-VALIDATION.md`，不把Docker Desktop运行当全新Linux主机上线。
 
 2026-10-27更新：scripts/backup.py已提供手动维护窗加密/独立空库恢复/只读保留计划，单独工具Zip随附完整操作说明。此前“本单元未提供恢复脚本”是首版范围历史；每日调度、异地副本、生产切流与回滚仍未验收。
 

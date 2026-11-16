@@ -4,7 +4,8 @@ package com.forgeoj.api.search;
 import com.forgeoj.api.cache.CacheMapper;
 import java.util.UUID;
 import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.*;
+import org.springframework.transaction.annotation.Propagation;
+import org.springframework.transaction.annotation.Transactional;
 
 @Service
 public class SearchChanges {

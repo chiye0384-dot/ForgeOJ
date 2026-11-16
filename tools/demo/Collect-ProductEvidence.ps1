@@ -17,7 +17,7 @@ foreach($path in @($RunDirectory,$FrontendBuildDirectory)){
 $state=Get-Content (Join-Path $RunDirectory 'state.json') -Raw | ConvertFrom-Json
 if($state.ProductDemo -ne $true -or $state.Project -ne (Split-Path -Leaf $RunDirectory)){throw 'Dedicated demo required'}
 $backend=$state.BuildDirectory
-$evidence=Join-Path $repository 'docs/evidence/product-improvements/20261029'
+$evidence=Join-Path $repository 'docs/archive/evidence/product-improvements/20261029'
 New-Item -ItemType Directory -Path $evidence -Force | Out-Null
 function Verified([string]$Path) {
     $data=Get-Content -LiteralPath $Path -Raw | ConvertFrom-Json

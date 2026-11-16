@@ -1,8 +1,12 @@
 /* Copyright 2026 池也; SPDX-License-Identifier: Apache-2.0 */
 package com.forgeoj.api.content;
 
-import java.util.*;
-import org.apache.ibatis.annotations.*;
+import java.util.List;
+import java.util.Optional;
+import org.apache.ibatis.annotations.Insert;
+import org.apache.ibatis.annotations.Mapper;
+import org.apache.ibatis.annotations.Param;
+import org.apache.ibatis.annotations.Select;
 
 @Mapper
 public interface ContentOutputMapper {

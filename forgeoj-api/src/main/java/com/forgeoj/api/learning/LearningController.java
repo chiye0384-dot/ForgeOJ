@@ -1,14 +1,35 @@
 /* Copyright 2026 池也; SPDX-License-Identifier: Apache-2.0 */
 package com.forgeoj.api.learning;
 
-import static com.forgeoj.api.learning.LearningRecords.*;
+import static com.forgeoj.api.learning.LearningRecords.AddBody;
+import static com.forgeoj.api.learning.LearningRecords.Draft;
+import static com.forgeoj.api.learning.LearningRecords.DraftBody;
+import static com.forgeoj.api.learning.LearningRecords.History;
+import static com.forgeoj.api.learning.LearningRecords.ListDetail;
+import static com.forgeoj.api.learning.LearningRecords.ListSummary;
+import static com.forgeoj.api.learning.LearningRecords.OrderBody;
+import static com.forgeoj.api.learning.LearningRecords.Page;
+import static com.forgeoj.api.learning.LearningRecords.TitleBody;
 
 import com.forgeoj.api.auth.ForgeOjPrincipal;
-import java.util.*;
+import java.util.List;
+import java.util.Map;
+import java.util.Set;
 import org.springframework.dao.DataAccessException;
-import org.springframework.http.*;
+import org.springframework.http.CacheControl;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.DeleteMapping;
+import org.springframework.web.bind.annotation.ExceptionHandler;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PatchMapping;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.server.ResponseStatusException;
 
 @RestController

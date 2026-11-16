@@ -25,7 +25,7 @@ Windows共享目录上的并发append实测会丢记录。客户端日志串行�
 
 只用于本仓库新建空库、可信 `validation-state.json` 与配套 `instance.env` 的拥有者项目；不能传入真实服务器或旧 LAN 演示目录。不会修改生产源码、schema/grants、限流、宿主设置或云资源。测试只访问固定 `web` / `oj.test` 的 Nginx HTTPS。
 
-按 [设计](../../docs/M5-PERFORMANCE-BASELINE-DESIGN.md) 先生成独立包（固定原 API/Worker JAR 摘要），然后：
+按 [设计](../../docs/archive/M5-PERFORMANCE-BASELINE-DESIGN.md) 先生成独立包（固定原 API/Worker JAR 摘要），然后：
 
 ```text
 python tools/performance/prepare-baseline.py target/新的拥有者部署目录/package
@@ -52,7 +52,7 @@ python tools/performance/summarize-baseline.py target/拥有者部署目录 targ
 
 ## 只读热点诊断
 
-见[诊断设计](../../docs/M5-PERFORMANCE-DIAGNOSTIC-DESIGN.md)和[实际报告](../../docs/M5-PERFORMANCE-DIAGNOSTIC-REPORT.md)。需要另建同配置空库测试包、通过部署验证并生成可信拥有者状态；不能针对真实库或已清理目录执行。
+见[诊断设计](../../docs/archive/M5-PERFORMANCE-DIAGNOSTIC-DESIGN.md)和[实际报告](../../docs/archive/M5-PERFORMANCE-DIAGNOSTIC-REPORT.md)。需要另建同配置空库测试包、通过部署验证并生成可信拥有者状态；不能针对真实库或已清理目录执行。
 
 ```text
 python tools/performance/diagnose-hotspots.py target/新的拥有者部署目录 docker完整路径
@@ -65,7 +65,7 @@ python tools/performance/summarize-hotspots.py target/新的拥有者部署目�
 
 ## 语句解析缓存 A/B
 
-按[设计](../../docs/M5-STATEMENT-CACHE-AB-DESIGN.md)使用另一份通过空库部署验证的新拥有者项目。当前业务已更新，构建器可显式传 `-CompiledInputManifest` 指定当前已验收输入清单；默认仍绑定历史M4清单，不能略过摘要不匹配。必须先完成前端构建，再组装并核对实际文件；空目录和Nginx自带欢迎页都不能算项目就绪。
+按[设计](../../docs/archive/M5-STATEMENT-CACHE-AB-DESIGN.md)使用另一份通过空库部署验证的新拥有者项目。当前业务已更新，构建器可显式传 `-CompiledInputManifest` 指定当前已验收输入清单；默认仍绑定历史M4清单，不能略过摘要不匹配。必须先完成前端构建，再组装并核对实际文件；空目录和Nginx自带欢迎页都不能算项目就绪。
 
 ```text
 python tools/performance/run-statement-cache-ab.py target/新的拥有者部署目录 docker完整路径

@@ -1,7 +1,9 @@
 /* Copyright 2026 池也; SPDX-License-Identifier: Apache-2.0 */
 package com.forgeoj.api.admin;
 
-import java.sql.*;
+import java.sql.Connection;
+import java.sql.SQLException;
+import java.sql.Statement;
 import java.util.UUID;
 import org.springframework.security.crypto.password.PasswordEncoder;
 

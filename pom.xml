@@ -63,11 +63,13 @@
                         <includes>
                             <include>src/main/java/**/*.java</include>
                             <include>src/test/java/**/*.java</include>
+                            <include>tools/**/*.java</include>
                         </includes>
                         <googleJavaFormat>
                             <version>${google-java-format.version}</version>
                         </googleJavaFormat>
                         <removeUnusedImports />
+                        <forbidWildcardImports />
                     </java>
                 </configuration>
                 <executions>

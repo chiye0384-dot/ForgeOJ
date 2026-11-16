@@ -1,43 +1,43 @@
-2026-11-13当前：连接级语句解析缓存隔离A/B有限单元 **VERIFIED，候选未采纳**。见[报告](M5-STATEMENT-CACHE-AB-REPORT.md)、[设计](M5-STATEMENT-CACHE-AB-DESIGN.md)与[交付收据](evidence/m5-statement-cache-ab/20261113/verification.json)。当前437输入与接受JAR匹配，前端159项/30 suites及构建重新通过；AB/BA/AB六个新JVM、24个20秒正式阶段673076次请求错误0，原始行/分位数/HTTP计数独立复核。C4吞吐中位差列表+3.46%/详情+2.44%，但轮间区间重叠；C8分别-10.45%/-9.72%，未建立全场景稳定收益，因此保留生产默认关闭，不承诺优化比例或云容量。后端沿用按日期验收的构件，未重跑完整API/Worker测试；完整M5/性能计划/E-06/E-07/Release/RESUME_READY不提升。
+2026-11-13当前：连接级语句解析缓存隔离A/B有限单元 **VERIFIED，候选未采纳**。见[报告](archive/M5-STATEMENT-CACHE-AB-REPORT.md)、[设计](archive/M5-STATEMENT-CACHE-AB-DESIGN.md)与[交付收据](archive/evidence/m5-statement-cache-ab/20261113/verification.json)。当前437输入与接受JAR匹配，前端159项/30 suites及构建重新通过；AB/BA/AB六个新JVM、24个20秒正式阶段673076次请求错误0，原始行/分位数/HTTP计数独立复核。C4吞吐中位差列表+3.46%/详情+2.44%，但轮间区间重叠；C8分别-10.45%/-9.72%，未建立全场景稳定收益，因此保留生产默认关闭，不承诺优化比例或云容量。后端沿用按日期验收的构件，未重跑完整API/Worker测试；完整M5/性能计划/E-06/E-07/Release/RESUME_READY不提升。
 
 本轮还修复了部署准备的两处门禁：显式当前输入清单/空前端与复制校验、HTML应用/脚本门禁；首个竞态空资源包的旧HTTP200假阳性完整保留并标记拒绝，新增门禁真实拒绝后换新包，18项HTTPS和37实际资源摘要通过。两个本轮拥有者项目、42负载容器和相应镜像别名精确清理；原网站仍关闭、原卷保留，学习Redis仍停机且restart=no。独立证据Zip target/forgeoj-statement-cache-ab-20261113-113451-0f81910d/forgeoj-statement-cache-ab-20261113-113451-0f81910d.zip，17875800字节/460文件，SHA256 1f53232c55a081c53b118a03db37c1939ff4812815c80b3d6ffb3de2490d63e0，实际随机秘密扫描/CRC/逐文件摘要通过。业务源码和生产缓存配置不变，当前交付改动未提交推送。
 
 用户本次明确下一步是两个项目的服务器规格/购买与部署方案。此有限实验已结束，不继续无界缓存调优；真实Linux、域名HTTPS、SMTP、异地备份/密钥保管、版本回退与试用在后续主机阶段现场验收，不采购/公网发布/发邀请/PR/main/tag/Release。共享活动Docker数据目录D:\Java项目\DockerDesktop-data-20261108及target/docker-disk-recovery-20261108冷备份不是构建垃圾，不得清理或在宿主根目录盲目mvn clean。保护文件仍SHA-only，桌面连续性与只清理确切拥有者规则保持；下方旧下一步为历史。
 
-2026-10-30 最新：做题与复盘闭环本地范围 VERIFIED，见[验收](PRACTICE-CONTINUITY-VALIDATION.md)。左侧第五项提交历史/本人历史源码与确认载入、原键原源码异常重试、题库个人进度筛选/继续草稿/官方题单、中文判题建议和编辑偏好、A+B说明及20份教学题解修订已验证。固定Linux受影响API58项/4 suites、完整Windows前端159项/30 suites、20份新代码真实AC及真实HTTP/桌面/窄屏通过；本轮未重跑API全量或Worker套件。原MySQL容器/挂载与历史保留，保护文件仅核SHA未变；未新增外部依赖或许可。原审核快照不改，教学修订另有本地维护收据，人工教学评价未完成。M5/Release/公网状态不提升，新源码部署前需重打包。网站保持运行，工作树未提交推送；下方旧日期段落是历史。
+2026-10-30 最新：做题与复盘闭环本地范围 VERIFIED，见[验收](archive/PRACTICE-CONTINUITY-VALIDATION.md)。左侧第五项提交历史/本人历史源码与确认载入、原键原源码异常重试、题库个人进度筛选/继续草稿/官方题单、中文判题建议和编辑偏好、A+B说明及20份教学题解修订已验证。固定Linux受影响API58项/4 suites、完整Windows前端159项/30 suites、20份新代码真实AC及真实HTTP/桌面/窄屏通过；本轮未重跑API全量或Worker套件。原MySQL容器/挂载与历史保留，保护文件仅核SHA未变；未新增外部依赖或许可。原审核快照不改，教学修订另有本地维护收据，人工教学评价未完成。M5/Release/公网状态不提升，新源码部署前需重打包。网站保持运行，工作树未提交推送；下方旧日期段落是历史。
 
-2026-10-30：做题工作台本地范围 VERIFIED，见 [工作台验收](WORKSPACE-UX-VALIDATION.md)。可调分栏、展开、默认换行、四标签和21份官方题解已验证；前端154项/29 suites与真实页面/自测/AC通过。本轮API/Worker未改、未重跑完整套件。完整M5、Release和公网验收仍未完成，下方旧阶段记录保留。
+2026-10-30：做题工作台本地范围 VERIFIED，见 [工作台验收](archive/WORKSPACE-UX-VALIDATION.md)。可调分栏、展开、默认换行、四标签和21份官方题解已验证；前端154项/29 suites与真实页面/自测/AC通过。本轮API/Worker未改、未重跑完整套件。完整M5、Release和公网验收仍未完成，下方旧阶段记录保留。
 
-2026-10-30 当前：本地使用改进范围已 VERIFIED，固定入口 http://127.0.0.1:8088/problems。21题（20新题真实双验证/审核发布）、草稿保护、编辑器、批量标签和启动工具完成；API336/Worker139、Windows与Linux前端140通过，84条持久事实及数据挂载停启一致，重启后真实AC。当前入口为 docs/CURRENT-STATUS.md、docs/PRODUCT-IMPROVEMENTS-VALIDATION.md 及 docs/evidence/product-improvements/20261029/verification.json（docs内链接按相对位置解释）。本地单元已结束，不重复长验证或旧诊断下一步；完整M5/Release/RESUME_READY未提升，新源码上线需重打部署包。旧LAN数据/原包/失败记录/保护文件及桌面连续性规则保持；新演示保持运行供用户使用，不能按旧“精确清理”说明删除。变更未提交推送。
+2026-10-30 当前：本地使用改进范围已 VERIFIED，固定入口 http://127.0.0.1:8088/problems。21题（20新题真实双验证/审核发布）、草稿保护、编辑器、批量标签和启动工具完成；API336/Worker139、Windows与Linux前端140通过，84条持久事实及数据挂载停启一致，重启后真实AC。当前入口为 docs/archive/CURRENT-STATUS.md、docs/archive/PRODUCT-IMPROVEMENTS-VALIDATION.md 及 docs/archive/evidence/product-improvements/20261029/verification.json（docs内链接按相对位置解释）。本地单元已结束，不重复长验证或旧诊断下一步；完整M5/Release/RESUME_READY未提升，新源码上线需重打部署包。旧LAN数据/原包/失败记录/保护文件及桌面连续性规则保持；新演示保持运行供用户使用，不能按旧“精确清理”说明删除。变更未提交推送。
 
-2026-10-28当前：SQL/API只读热点诊断有限单元 **VERIFIED**，见[报告](M5-PERFORMANCE-DIAGNOSTIC-REPORT.md)、[设计](M5-PERFORMANCE-DIAGNOSTIC-DESIGN.md)与[安全收据](evidence/m5-hotspot-diagnostic/20261028/verification.json)。四阶段94862次测量请求错误0、客户端/HTTP计数一致；原301题数据/权限与428编译输入不变，无新判题提交。列表三类业务SELECT及事务/状态交互、JDBC解析样本，详情缓存命中仍查epoch并解码JSON；实际Connector/J语句缓存默认关闭。SQL摘要计数差异未解释，长摘要截断、32帧缺项目帧、探针/JIT/GC/配额混杂明确保留，不能宣称唯一瓶颈、优化收益或云容量。
+2026-10-28当前：SQL/API只读热点诊断有限单元 **VERIFIED**，见[报告](archive/M5-PERFORMANCE-DIAGNOSTIC-REPORT.md)、[设计](archive/M5-PERFORMANCE-DIAGNOSTIC-DESIGN.md)与[安全收据](archive/evidence/m5-hotspot-diagnostic/20261028/verification.json)。四阶段94862次测量请求错误0、客户端/HTTP计数一致；原301题数据/权限与428编译输入不变，无新判题提交。列表三类业务SELECT及事务/状态交互、JDBC解析样本，详情缓存命中仍查epoch并解码JSON；实际Connector/J语句缓存默认关闭。SQL摘要计数差异未解释，长摘要截断、32帧缺项目帧、探针/JIT/GC/配额混杂明确保留，不能宣称唯一瓶颈、优化收益或云容量。
 
 诊断证据Zip：target/forgeoj-hotspot-diagnostic-20261028-164533-ad5de7da/forgeoj-hotspot-diagnostic-20261028-164533-ad5de7da.zip，7795432字节/131文件，SHA256 814881967ca9662952b3f9aeac8c2cf713e407e7bf81d3832ad90ca5cebdecc2；白名单/实际随机秘密/敏感JFR事件/CRC/逐文件摘要通过。拥有者forgeoj-m5check-147876a386fa容器/卷/网络/三镜像别名和负载容器已精确清理；旧LAN八容器退出保留、无关redis运行。原部署/备份/回滚/基线包均保留，HEAD058f36c771f15735a1e987a21c55074b80f511a9，未提交推送。没有实施优化；下一有限单元建议新隔离项目做仅连接级语句/查询元数据缓存受控A/B，先核整组额度，充分预热/交错重复、固定资源/数据与正确性，收益未证实前不改生产。完整性能计划/M5仍IN_PROGRESS，E-06/E-07/Release/RESUME_READY不提升；真实Linux/域名CA/SMTP、每日异地/密钥保管、跨业务版本回滚、长稳/开放负载/真实试用仍缺。不购买/公网发布/发邀请/PR/main/tag/Release；既有继续授权生效，下方旧下一步为历史，保护文件及桌面连续性规则保持。
 
-2026-10-28当前：本机隔离性能有限基线 **VERIFIED**，见[完整报告](M5-PERFORMANCE-BASELINE-REPORT.md)、[设计](M5-PERFORMANCE-BASELINE-DESIGN.md)与[安全证据](evidence/m5-performance/20261028/verification.json)。最终277633次测量请求状态/网络/超时/内容错误0，13个读阶段由原始NDJSON独立重算并匹配服务端计数；11次真实判题、唯一task/attempt/Outbox，九队列空、无丢失/重复副作用/沙箱残留。并发8吞吐下降、尾延迟升高，API/列表MySQL接近各自2CPU配额，保留两轮波动与首轮工具封顶失败；没有优化比例或云容量结论。完整性能计划/M5保持IN_PROGRESS，E-06/E-07/Release/RESUME_READY不提升。
+2026-10-28当前：本机隔离性能有限基线 **VERIFIED**，见[完整报告](archive/M5-PERFORMANCE-BASELINE-REPORT.md)、[设计](archive/M5-PERFORMANCE-BASELINE-DESIGN.md)与[安全证据](archive/evidence/m5-performance/20261028/verification.json)。最终277633次测量请求状态/网络/超时/内容错误0，13个读阶段由原始NDJSON独立重算并匹配服务端计数；11次真实判题、唯一task/attempt/Outbox，九队列空、无丢失/重复副作用/沙箱残留。并发8吞吐下降、尾延迟升高，API/列表MySQL接近各自2CPU配额，保留两轮波动与首轮工具封顶失败；没有优化比例或云容量结论。完整性能计划/M5保持IN_PROGRESS，E-06/E-07/Release/RESUME_READY不提升。
 
-2026-10-27当前：同文件系统、仅ENTRYPOINT变化的镜像配置故障/回退有限单元 **VERIFIED**，见[回滚验收](M5-IMAGE-ROLLBACK-VALIDATION.md)及[手册](M5-IMAGE-ROLLBACK.md)。两个不同镜像ID的真实启动故障、失败保持停止、新计划回到原镜像、11类拒绝、71表结构/数据/授权匹配、五条新旧真实AC与源码保留、回退后HTTPS判题通过。JAR与文件层相同，跨业务版本/跨schema回滚仍未验证；完整M5 IN_PROGRESS，E-06/E-07/Release/RESUME_READY不提升。
+2026-10-27当前：同文件系统、仅ENTRYPOINT变化的镜像配置故障/回退有限单元 **VERIFIED**，见[回滚验收](archive/M5-IMAGE-ROLLBACK-VALIDATION.md)及[手册](archive/M5-IMAGE-ROLLBACK.md)。两个不同镜像ID的真实启动故障、失败保持停止、新计划回到原镜像、11类拒绝、71表结构/数据/授权匹配、五条新旧真实AC与源码保留、回退后HTTPS判题通过。JAR与文件层相同，跨业务版本/跨schema回滚仍未验证；完整M5 IN_PROGRESS，E-06/E-07/Release/RESUME_READY不提升。
 
-2026-10-27：手动维护窗加密备份与独立空库恢复有限单元 **VERIFIED**；实际演练为2026-10-24，本日完成独立工具包与清理核验。71表数据/权限匹配、8类拒绝、Flyway校验及Linux引擎UID1000加解密通过。见[M5备份验收](M5-BACKUP-VALIDATION.md)与[操作手册](M5-BACKUP-RESTORE.md)。完整M5保持IN_PROGRESS；每日调度、异地副本、真实Linux主机、生产密钥保管/消息协调、回滚、性能和真实试用未验收。E-06/E-07/Release/RESUME_READY不提升。
+2026-10-27：手动维护窗加密备份与独立空库恢复有限单元 **VERIFIED**；实际演练为2026-10-24，本日完成独立工具包与清理核验。71表数据/权限匹配、8类拒绝、Flyway校验及Linux引擎UID1000加解密通过。见[M5备份验收](archive/M5-BACKUP-VALIDATION.md)与[操作手册](archive/M5-BACKUP-RESTORE.md)。完整M5保持IN_PROGRESS；每日调度、异地副本、真实Linux主机、生产密钥保管/消息协调、回滚、性能和真实试用未验收。E-06/E-07/Release/RESUME_READY不提升。
 
-2026-10-24：第二版独立部署包的就绪/引擎权限/数据库故障恢复/监控重建持久性有限单元VERIFIED，见[M5第二版验收](M5-DEPLOYMENT-HARDENING-VALIDATION.md)。M5整体IN_PROGRESS，E-06/E-07/Release/RESUME_READY仍未通过；首版记录保持历史。
+2026-10-24：第二版独立部署包的就绪/引擎权限/数据库故障恢复/监控重建持久性有限单元VERIFIED，见[M5第二版验收](archive/M5-DEPLOYMENT-HARDENING-VALIDATION.md)。M5整体IN_PROGRESS，E-06/E-07/Release/RESUME_READY仍未通过；首版记录保持历史。
 
-2026-10-11：M5设计与首版独立部署包IMPLEMENTED，隔离配置/镜像/空库/HTTPS检查VERIFIED；完整M5 IN_PROGRESS，真实主机/异地恢复/兼容回滚/性能/试用门禁未完成。见[M5设计](M5-DEPLOYMENT-DESIGN.md)、[验证](M5-DEPLOYMENT-VALIDATION.md)与[安全机器证据](evidence/m5-deployment/verification.json)。E-06/E-07和Release/RESUME_READY不提升；下方M5 PLANNED等带日期段落保留历史。
+2026-10-11：M5设计与首版独立部署包IMPLEMENTED，隔离配置/镜像/空库/HTTPS检查VERIFIED；完整M5 IN_PROGRESS，真实主机/异地恢复/兼容回滚/性能/试用门禁未完成。见[M5设计](archive/M5-DEPLOYMENT-DESIGN.md)、[验证](archive/M5-DEPLOYMENT-VALIDATION.md)与[安全机器证据](archive/evidence/m5-deployment/verification.json)。E-06/E-07和Release/RESUME_READY不提升；下方M5 PLANNED等带日期段落保留历史。
 
-2026-10-11当前验收：M4第7步及完整M4 **VERIFIED**，五项总门禁全部PASS。独立Grafana OSS许可已批准；固定Linux API335/59 suites、Worker139/26 suites、前端129/25零失败/错误/跳过，428业务/测试/前端输入、84实际提供前端与准确JAR一致。同JAR新回放覆盖Redis/ES/RabbitMQ中断恢复、真实AC、原事件受审计重送、整个索引删除重建、实际promtool及Grafana14面板/23表达式/只读浏览器登录退出。6个唯一原死信事件对应6份实测消息，每一份均匹配原事件ID和四字段契约；诊断前后数量不变，没有清空死信。本轮拥有者资源与沙箱清理全0。详见[M4总门禁](M4-GATE-AUDIT.md)、[监控验收](M4-MONITORING-VALIDATION.md)及[最终机器证据](evidence/m4-monitoring/verification.json)。M5仍PLANNED，未PR/main/tag/Release/RESUME_READY；按授权交付feat/m2-accounts后停止。
+2026-10-11当前验收：M4第7步及完整M4 **VERIFIED**，五项总门禁全部PASS。独立Grafana OSS许可已批准；固定Linux API335/59 suites、Worker139/26 suites、前端129/25零失败/错误/跳过，428业务/测试/前端输入、84实际提供前端与准确JAR一致。同JAR新回放覆盖Redis/ES/RabbitMQ中断恢复、真实AC、原事件受审计重送、整个索引删除重建、实际promtool及Grafana14面板/23表达式/只读浏览器登录退出。6个唯一原死信事件对应6份实测消息，每一份均匹配原事件ID和四字段契约；诊断前后数量不变，没有清空死信。本轮拥有者资源与沙箱清理全0。详见[M4总门禁](archive/M4-GATE-AUDIT.md)、[监控验收](archive/M4-MONITORING-VALIDATION.md)及[最终机器证据](archive/evidence/m4-monitoring/verification.json)。M5仍PLANNED，未PR/main/tag/Release/RESUME_READY；按授权交付feat/m2-accounts后停止。
 
 > 以下旧日期的阶段、额度、待许可、未完成和“下一步”文字为历史快照；实时状态以上方当前验收与对应最终证据为准。
 
 # ForgeOJ 已知限制
 
-2026-10-08 完整M3已 [VERIFIED，4/4 PASS](M3-GATE-AUDIT.md)，已接受边界继续保留。教师身份不核验、单机和策略fence、人数/题数/分页、实际启动快照、固定历史数据库时区、手动刷新、无法追回已显示内容及独立新题修订不因验收通过消失。本轮没有性能、分布式、高可用、生产HTTPS、外部邮件或新故障恢复验收。M4/M5仍待实施；以下日期段落为各单元当时事实。
+2026-10-08 完整M3已 [VERIFIED，4/4 PASS](archive/M3-GATE-AUDIT.md)，已接受边界继续保留。教师身份不核验、单机和策略fence、人数/题数/分页、实际启动快照、固定历史数据库时区、手动刷新、无法追回已显示内容及独立新题修订不因验收通过消失。本轮没有性能、分布式、高可用、生产HTTPS、外部邮件或新故障恢复验收。M4/M5仍待实施；以下日期段落为各单元当时事实。
 
-2026-10-08 最新：教学记录单元已 [VERIFIED](M3-TEACHER-RECORDS-VALIDATION.md)。L-016以严格正式作业关联落实，当前角色每次读取复核；成员50人/页、每人20题、尝试50条/页，集合查询无逐人逐题N+1；未做容量性能压测。页面手动刷新或下一次请求发现撤权并清空，不能撤回已显示/复制的数据；不提供批量源码、导出、排名或成绩编辑。完整M3总门禁仍未审计，下一步另行推进。下方日期段落为历史。
+2026-10-08 最新：教学记录单元已 [VERIFIED](archive/M3-TEACHER-RECORDS-VALIDATION.md)。L-016以严格正式作业关联落实，当前角色每次读取复核；成员50人/页、每人20题、尝试50条/页，集合查询无逐人逐题N+1；未做容量性能压测。页面手动刷新或下一次请求发现撤权并清空，不能撤回已显示/复制的数据；不提供批量源码、导出、排名或成绩编辑。完整M3总门禁仍未审计，下一步另行推进。下方日期段落为历史。
 
-2026-10-08：作业单元已 [VERIFIED](M3-ASSIGNMENTS-VALIDATION.md)，完整M3及教师全员成绩/源码查询仍未完成。当前每班最多1000作业、每作业20题/1000参与者，以全局策略fence序列化策略相关事务；调度2秒、每批50项，以实际启动时成员冻结，停机跨截止不假造历史启动。历史Submission时间按固定数据库偏移解释，迁移没有改写原字节；题解锁限制平台入口，无法追回学生曾经看到的内容。详见 [作业设计](M3-ASSIGNMENTS-DESIGN.md) 的范围与边界。
+2026-10-08：作业单元已 [VERIFIED](archive/M3-ASSIGNMENTS-VALIDATION.md)，完整M3及教师全员成绩/源码查询仍未完成。当前每班最多1000作业、每作业20题/1000参与者，以全局策略fence序列化策略相关事务；调度2秒、每批50项，以实际启动时成员冻结，停机跨截止不假造历史启动。历史Submission时间按固定数据库偏移解释，迁移没有改写原字节；题解锁限制平台入口，无法追回学生曾经看到的内容。详见 [作业设计](archive/M3-ASSIGNMENTS-DESIGN.md) 的范围与边界。
 
 > 本文记录真实、可解释的范围限制，不记录故意制造的 Bug。  
-> M0 已通过 20 项门禁；M1 于 2026-10-02 通过 [15 项最终门禁审计](M1-GATE-AUDIT.md)，均为 `VERIFIED`。M2 普通账号单元现为 [VERIFIED](M2-ACCOUNTS-VALIDATION.md)，完整 M2 已于 2026-10-05 通过 [5 项最终门禁](M2-GATE-AUDIT.md)，为 `VERIFIED`；L-026、L-028 已关闭并保留历史，L-027、L-029～L-035 等有效边界继续保留。M4 运维与 M5 生产主机验收仍未完成。下列内容是已接受的设计边界，开发中发现的新限制必须继续追加。
+> M0 已通过 20 项门禁；M1 于 2026-10-02 通过 [15 项最终门禁审计](archive/M1-GATE-AUDIT.md)，均为 `VERIFIED`。M2 普通账号单元现为 [VERIFIED](archive/M2-ACCOUNTS-VALIDATION.md)，完整 M2 已于 2026-10-05 通过 [5 项最终门禁](archive/M2-GATE-AUDIT.md)，为 `VERIFIED`；L-026、L-028 已关闭并保留历史，L-027、L-029～L-035 等有效边界继续保留。M4 运维与 M5 生产主机验收仍未完成。下列内容是已接受的设计边界，开发中发现的新限制必须继续追加。
 
 ## 1. 为什么保留这份文档
 
@@ -74,8 +74,8 @@
 | L-025 | MySQL Connector/J 发布物的 Universal FOSS Exception 履约尚未按最终组合审计 | 发布 fat JAR、镜像或安装包时可能遗漏源码可获得性、许可证或告知义务 | Apache-2.0 已满足许可证类别前提，但不替代具体发布审计 | 固定 Connector/J 9.7.0，保留 GPL-2.0 + UFE 记录，不宣称它被 Apache-2.0 重新许可 | 首次 Release 前生成完整依赖许可证报告并复核发布组合；无法满足时更换或另行许可驱动 |
 | L-026（已关闭：2026-10-02） | M0 曾没有 lease/attempt 恢复 | 关闭前 Worker 崩溃可能留下悬挂 RUNNING | 完整恢复安排在 M1，不伪装成 M0 已有能力 | M1 租约/attempt/有限恢复、真实 Linux 子 JVM 崩溃和无 ACK 重投、Outbox 路由恢复、八 verdict 独立链路及 15 项最终审计均通过，见 M1-GATE-AUDIT；后端 160/前端 8 项全过 | 保留关闭记录；不是任意故障不丢失保证。清理依赖和其他有效边界见 L-027、L-029～L-032；L-028 后续由账号单元关闭 |
 | L-027 | 满队列重试占用原运行槽位 | 对外 `RUNNING` 可能处于退避等待；同用户后续任务暂不能执行 | 用户确认运行时仍允许三个排队，不预留名额，亦不能形成第四个排队任务 | 内部 `WAITING_RETRY` 清除执行 lease，有限 attempt/退避、Outbox 与恢复扫描保证继续；运行 M1 必须启用恢复扫描 | 经公平性测试后另行评估调度设计，见 D-038 |
-| L-028（已关闭，2026-10-02） | 原问题：新账号需同时建立用户 quota lock | 缺失 lock 行时提交/领取 fail closed | M1 只有预置账号，账号创建闭环属于 M2；不通过懒插入升级共享锁引入并发死锁 | 保留 V4 回填历史，M2 V6/注册事务现原子写入用户、quota row 与激活摘要；API 仅增加必要账号列权限，Worker 仍无账号/认证表权限。真实 MySQL 失败完整回滚/唯一竞争、V5→V6 保留旧 quota、第四轮固定 Linux 211 项及真实新账号 AC 均通过 | 该账号创建缺口已解决，证据见 [账号验收](M2-ACCOUNTS-VALIDATION.md)及 D-041；保留此原问题与关闭记录，不声称关闭其余 M2 或调度限制 |
-| L-029 | 通知为有界活动订阅采样；M2 sid/MySQL 认证迁移已验证 | 中间状态可能合并，数据库/网络失败会断开；多节点通知分发、历史回放和推送容量尚无证据 | 通知不是事实源，先完成受控小规模安全恢复，不新增分布式订阅基础设施 | 默认全局 20/每用户 2 连接、仅所有者三字段、单调版本、有限重连和 GET 轮询兜底。M2 sid/MySQL 复核、撤销提交后关闭与扫描兜底已通过固定 Linux/真实 HTTP/WS；新 Replay owner/Origin/退出、正常通知和阻断 WS 的轮询均实际通过，见 D-039、D-041 与 [账号验收](M2-ACCOUNTS-VALIDATION.md) | 仅补齐认证迁移；继续按实际规模评估通知分发与容量。持久会话不等于分布式通知，本轮不关闭该限制 |
+| L-028（已关闭，2026-10-02） | 原问题：新账号需同时建立用户 quota lock | 缺失 lock 行时提交/领取 fail closed | M1 只有预置账号，账号创建闭环属于 M2；不通过懒插入升级共享锁引入并发死锁 | 保留 V4 回填历史，M2 V6/注册事务现原子写入用户、quota row 与激活摘要；API 仅增加必要账号列权限，Worker 仍无账号/认证表权限。真实 MySQL 失败完整回滚/唯一竞争、V5→V6 保留旧 quota、第四轮固定 Linux 211 项及真实新账号 AC 均通过 | 该账号创建缺口已解决，证据见 [账号验收](archive/M2-ACCOUNTS-VALIDATION.md)及 D-041；保留此原问题与关闭记录，不声称关闭其余 M2 或调度限制 |
+| L-029 | 通知为有界活动订阅采样；M2 sid/MySQL 认证迁移已验证 | 中间状态可能合并，数据库/网络失败会断开；多节点通知分发、历史回放和推送容量尚无证据 | 通知不是事实源，先完成受控小规模安全恢复，不新增分布式订阅基础设施 | 默认全局 20/每用户 2 连接、仅所有者三字段、单调版本、有限重连和 GET 轮询兜底。M2 sid/MySQL 复核、撤销提交后关闭与扫描兜底已通过固定 Linux/真实 HTTP/WS；新 Replay owner/Origin/退出、正常通知和阻断 WS 的轮询均实际通过，见 D-039、D-041 与 [账号验收](archive/M2-ACCOUNTS-VALIDATION.md) | 仅补齐认证迁移；继续按实际规模评估通知分发与容量。持久会话不等于分布式通知，本轮不关闭该限制 |
 | L-030 | 关联日志为进程内尽力输出，不是持久审计或全链路 tracing | 提交后至输出前的崩溃可能留下已提交状态而无对应日志；尚无集中采集、保留期、告警或完整第三方日志脱敏保证 | 本轮按 M1 已确认要求实现业务字段白名单与关联，不扩大日志基础设施范围 | MySQL 保持事实源；afterCommit 防止回滚误报，固定错误码与请求上下文清理；不启用请求/SQL 参数/协议 DEBUG，日志仅供受控运维读取，见可观测性验证记录 | 后续按运维需求确认采集、保留和审计方案；不能仅凭日志声称可靠投递或安全验收完成 |
 
 ### L-031：孤儿沙箱清理保守且依赖已提交的 attempt 关闭事实
@@ -95,15 +95,15 @@
 
 ### L-033：真实 SMTP 的受限验收与生产可靠投递边界
 
-- 首次发现版本：M2 普通账号单元开发阶段（当时 `IN_PROGRESS`，2026-10-02）。账号单元现已验证本地闭环，本条生产投递限制仍有效，见 [账号验收](M2-ACCOUNTS-VALIDATION.md)。
+- 首次发现版本：M2 普通账号单元开发阶段（当时 `IN_PROGRESS`，2026-10-02）。账号单元现已验证本地闭环，本条生产投递限制仍有效，见 [账号验收](archive/M2-ACCOUNTS-VALIDATION.md)。
 - 影响：默认 `forgeoj.auth.mail.mode=disabled` 不投递激活/重置/补邮箱邮件；本轮不证明真实邮箱可达、SMTP 配置、退信、可靠重试或生产注册可用。发送失败时账号/摘要仍已提交，公开响应不能透露发送状态。
 - 选择原因：先使用隔离开发数据验证完整账号规则，避免连接真实邮箱或引入外部凭据和费用；不让业务事务依赖外部邮件服务。
 - 当前缓解：`LocalAccountMail` 仅 dev/test、`127.0.0.1` 独立端口、最多 100 条内存消息；进程退出清空，不向普通业务 API、日志或持久文件泄露邮件令牌。`AccountMailDelivery` 为投递扩展接口；disabled/投递异常仅记固定 `account.mail_delivery_failed`，可在冷却后重发未过期流程。
 - 未来方案：上线注册/找回前提供生产 `AccountMailDelivery`（如自有 `@Primary` SMTP adapter），确认密钥注入、超时、失败处理和端到端投递；需要可靠邮件时另行设计持久 Outbox/重试。开发模拟器不能以改监听地址的方式公开给远程用户。
 
-2026-10-03 增量：已实现按模式选择的 `SmtpAccountMail`，默认 disabled、显式启用、必需 STARTTLS/implicit TLS、正常信任链/主机校验及有界 socket 超时，Windows 11 项真实 loopback SMTP/TLS 测试通过。该增量没有真实服务商配置或邮箱送达证据，生产投递限制继续有效，不能以本地协议测试关闭本条。现有发信仍在提交后直接调用，无持久邮件 Outbox；见 [SMTP 设计](M2-SMTP-DESIGN.md)、U-010 与后续统一验收记录。上述首次发现/未来方案保留当时事实。
+2026-10-03 增量：已实现按模式选择的 `SmtpAccountMail`，默认 disabled、显式启用、必需 STARTTLS/implicit TLS、正常信任链/主机校验及有界 socket 超时，Windows 11 项真实 loopback SMTP/TLS 测试通过。该增量没有真实服务商配置或邮箱送达证据，生产投递限制继续有效，不能以本地协议测试关闭本条。现有发信仍在提交后直接调用，无持久邮件 Outbox；见 [SMTP 设计](archive/M2-SMTP-DESIGN.md)、U-010 与后续统一验收记录。上述首次发现/未来方案保留当时事实。
 
-2026-10-05 增量：QQ SMTP 激活邮件的真实授权收件箱接收、用户点击及 DB ACTIVE/emailVerified 已 VERIFIED，见 [实际投递证据](evidence/m2-self-test/smtp-delivery.json) 和 [M2 最终审计](M2-GATE-AUDIT.md)。旧标题“真实服务商投递尚未验收”及上述日期段落描述当时状态，本条不再表示完全没有真实投递证据。默认 disabled、无持久邮件 Outbox、生产域名/HTTPS、多收件人可达、找回/补邮箱真实邮件与可靠投递 SLA 仍未验收；保留这些限制，不将一次激活验收提升为生产邮件上线完成。
+2026-10-05 增量：QQ SMTP 激活邮件的真实授权收件箱接收、用户点击及 DB ACTIVE/emailVerified 已 VERIFIED，见 [实际投递证据](archive/evidence/m2-self-test/smtp-delivery.json) 和 [M2 最终审计](archive/M2-GATE-AUDIT.md)。旧标题“真实服务商投递尚未验收”及上述日期段落描述当时状态，本条不再表示完全没有真实投递证据。默认 disabled、无持久邮件 Outbox、生产域名/HTTPS、多收件人可达、找回/补邮箱真实邮件与可靠投递 SLA 仍未验收；保留这些限制，不将一次激活验收提升为生产邮件上线完成。
 
 ### L-034：账号限流有界但进程部分不跨重启或节点共享
 
@@ -126,8 +126,8 @@
 
 - 影响：`/authoring` 已完成 V11 双程序正式验证，V12 已完成不可变送审/撤回，V13 已完成参考输出预览/明确确认，受控审核发布仍缺失；不能把保存成功当作验证通过，也不能把 PASSED 当作公共题发布。
 - 当前边界：V9 草稿与公共 problem 分表，Worker 无可变草稿读取权限；页面已有显式验证与私有结果历史，已有作者送审/撤回入口，没有普通用户审核/发布入口。验证不会创建 Submission、AC 或公开题。无业务引用的 DRAFT 可删除；有验证或送审引用禁止物理删除，归档保留冻结快照/任务/结果，修改或归档使旧结果失效。
-- 后续工作：V13 预览引用已由原不可变 snapshot 删除规则覆盖；继续 M2 独立自测，V12 已扩展权威送审引用删除规则，受控审核身份保持 M4 边界。现有 M0 原创示例是兼容演示，不充当新正式内容发布流程的证明。本限制仅部分解决，不关闭。V13 验收见 [参考输出预览](M2-OUTPUT-PREVIEW-VALIDATION.md)，固定 Linux 298/61、明确确认/保留本地编辑/真实自然故障恢复与清理通过。V12 验收见 [送审与撤回](M2-CONTENT-REVIEW-VALIDATION.md)，固定 Linux 289/56、两轮真实送审/撤回/归档、审计与精确清理通过。
-- 证据：[作者草稿阶段验收](M2-CONTENT-VALIDATION.md)保留原历史；2026-10-04 [双程序验证验收](M2-CONTENT-VALIDATION-JOBS-VALIDATION.md)固定 Linux 283/50、真实页面与 Worker SIGKILL 后自然恢复、审计清理通过，完整内容与 M2 仍 IN_PROGRESS。
+- 后续工作：V13 预览引用已由原不可变 snapshot 删除规则覆盖；继续 M2 独立自测，V12 已扩展权威送审引用删除规则，受控审核身份保持 M4 边界。现有 M0 原创示例是兼容演示，不充当新正式内容发布流程的证明。本限制仅部分解决，不关闭。V13 验收见 [参考输出预览](archive/M2-OUTPUT-PREVIEW-VALIDATION.md)，固定 Linux 298/61、明确确认/保留本地编辑/真实自然故障恢复与清理通过。V12 验收见 [送审与撤回](archive/M2-CONTENT-REVIEW-VALIDATION.md)，固定 Linux 289/56、两轮真实送审/撤回/归档、审计与精确清理通过。
+- 证据：[作者草稿阶段验收](archive/M2-CONTENT-VALIDATION.md)保留原历史；2026-10-04 [双程序验证验收](archive/M2-CONTENT-VALIDATION-JOBS-VALIDATION.md)固定 Linux 283/50、真实页面与 Worker SIGKILL 后自然恢复、审计清理通过，完整内容与 M2 仍 IN_PROGRESS。
 
 ~~~markdown
 ### L-XXX：限制名称
@@ -150,20 +150,20 @@
 
 - 本机 Docker Desktop 映射端口的 JDBC 路线多次在 fixture 首次连接超时；HTTP 探针或重启不能替代全量 JDBC 证据。仅测试源码 opt-in 使用 inspect 本人的 MySQL bridge IPv4，默认本机仍原路线，固定 Linux 全量 269/45 与实际重放通过。
 - 固定验证脚本目前要求 builder/Testcontainers 共享默认 bridge；其他 Docker 网络配置须重新证明路线，禁止猜网关、放宽生产权限或测试自动重试。两个实际生产 JAR 均无测试适配。
-- 见 [题解访问验收中的失败诊断](M2-SOLUTION-ACCESS-VALIDATION.md)。不是生产高可用/安全/性能结论。
+- 见 [题解访问验收中的失败诊断](archive/M2-SOLUTION-ACCESS-VALIDATION.md)。不是生产高可用/安全/性能结论。
 
 ### L-038：自测保留最少生命周期与关闭 attempt 元数据
 
 - V14 自测代码、输入和输出在终态24小时后隐藏并由有界批次物理清理；queued/running/retrying 不清理。最少的 snapshot ID/hash/resource metadata、job幂等绑定和关闭 attempt 永久保留，保证旧请求不能重复执行及沙箱孤儿清理拥有权威关闭证明。这部分元数据仍会累积，不是自测代码或输出永久保存。
 - 后续归档必须同时保留不可重放的幂等事实和可信关闭证明，重新验收 orphan fail-closed，不能只加 TTL 删除。正式 Submission 不受影响。
-- 验证范围与外部 SMTP 范围见 [自测验收](M2-SELF-TEST-VALIDATION.md)，不是生产存储或性能结论。
+- 验证范围与外部 SMTP 范围见 [自测验收](archive/M2-SELF-TEST-VALIDATION.md)，不是生产存储或性能结论。
 
 ### L-039：班级首单元的有界关系与幂等历史
 
 - 班级成员首单元已VERIFIED（2026-10-06），完整M3仍IN_PROGRESS。初始每人最多拥有100班、每班最多1000成员关系（包含LEFT/REMOVED），分页最多50；这是事务和响应边界，不是容量或吞吐验收。加入失败限流复用单进程设施，没有分布式限流保证。
 - 成员关系、转让终态和创建请求凭证保留；即使空班物理删除，创建请求仍不能重放复活资源。元数据会累积，未提供自动TTL；未来清理不能破坏永久业务引用、幂等或角色审计边界。
 - 班级行串行化成员/角色/转让状态；提出转让先按账号ID升序锁双方，避免外键隐式锁倒置。没有跨节点角色缓存或高吞吐承诺。
-- 班级私有题单元现已VERIFIED（2026-10-06），见 [设计](M3-PRIVATE-PROBLEMS-DESIGN.md)、[验收](M3-PRIVATE-PROBLEMS-VALIDATION.md)。V16真实引用/FK及删除保护、冻结发布、班级归属、隔离学习/维护、个人提醒确认、正式执行与独立自测已验收。每班最多1000条永久发布记录（含归档）；修订为独立新题、需重新验证，不覆盖旧判题依据。尚无关联纠错通知/自动作废旧题或历史AC，严重错误需归档旧题再发布新题。私有题结果当前手动刷新，作业与教师代码入口尚未实现，不能声称完整M3四门禁通过。
+- 班级私有题单元现已VERIFIED（2026-10-06），见 [设计](archive/M3-PRIVATE-PROBLEMS-DESIGN.md)、[验收](archive/M3-PRIVATE-PROBLEMS-VALIDATION.md)。V16真实引用/FK及删除保护、冻结发布、班级归属、隔离学习/维护、个人提醒确认、正式执行与独立自测已验收。每班最多1000条永久发布记录（含归档）；修订为独立新题、需重新验证，不覆盖旧判题依据。尚无关联纠错通知/自动作废旧题或历史AC，严重错误需归档旧题再发布新题。私有题结果当前手动刷新，作业与教师代码入口尚未实现，不能声称完整M3四门禁通过。
 
 ### L-040：M4管理身份首版的串行化与维护边界
 
@@ -174,31 +174,31 @@
 
 ### L-041：公共题治理的原作者、冻结版本与有界历史
 
-- M4第3步已VERIFIED，全量Linux、相同JAR真实Worker及多角色浏览器门禁通过；2026-10-11完整M4也已VERIFIED，见[M4总门禁](M4-GATE-AUDIT.md)，未提供生产容量结论。见 [治理设计](M4-PUBLIC-REVIEW-DESIGN.md) 与 [当前验收](M4-PUBLIC-REVIEW-VALIDATION.md)。L-040末段的“本单元”指已验收的管理身份子单元；完整M3的最终状态以M3-GATE-AUDIT为准，L-039保留各子单元当时的历史边界。
+- M4第3步已VERIFIED，全量Linux、相同JAR真实Worker及多角色浏览器门禁通过；2026-10-11完整M4也已VERIFIED，见[M4总门禁](archive/M4-GATE-AUDIT.md)，未提供生产容量结论。见 [治理设计](archive/M4-PUBLIC-REVIEW-DESIGN.md) 与 [当前验收](archive/M4-PUBLIC-REVIEW-VALIDATION.md)。L-040末段的“本单元”指已验收的管理身份子单元；完整M3的最终状态以M3-GATE-AUDIT为准，L-039保留各子单元当时的历史边界。
 - 仅有已审核原作者归属的公共题可由本人复制修订；旧示例题不自动认领，其他用户提反馈。复制遵守原有每人100个永久作者草稿限制；已被修订关系引用的草稿只能归档。新草稿不继承PASSED或旧AC；原题治理版本变化会阻止过期审批，作者需撤回并重新复制/送审。
 - 非判题文字修订整体重新审核且严格保持输入/输出规则及所有判题依据；判题依据修订发布关联新题并暂停旧题，不迁移旧完成事实。严重错误的旧依据不能通过恢复复活。教师通过补充作业安排重做；本单元不提供自动改作业、批量替换、纠错通知或全量历史结果重判。
 - 每案最多100次重验，公共题每题最多1000个反馈案件、每案1000个报告且每人一次；列表分页最多50。管理员处置复用管理fence，反馈同题写串行化；这些是安全和事务边界，不是吞吐或生产容量结论。审核/反馈/修订与幂等事实保留，尚无历史清理或归档任务。Redis/ES、运维人工重试及监控现已分别完成，原治理范围限制仍有效。
 
 ### L-042：人工恢复的终身额度与死信保留
 
-- 运维单元及完整M4已VERIFIED，证据及最终边界见[M4运维验收](M4-OPERATIONS-VALIDATION.md)及[M4总门禁](M4-GATE-AUDIT.md)。D-045只允许耗尽自动次数的临时平台失败在原任务上人工追加一次，最大执行预算10；重复修复不能重置额度。一次人工恢复后仍失败，需要排查原因，不能循环追加或把历史任务改成新提交来绕过规则。
+- 运维单元及完整M4已VERIFIED，证据及最终边界见[M4运维验收](archive/M4-OPERATIONS-VALIDATION.md)及[M4总门禁](archive/M4-GATE-AUDIT.md)。D-045只允许耗尽自动次数的临时平台失败在原任务上人工追加一次，最大执行预算10；重复修复不能重置额度。一次人工恢复后仍失败，需要排查原因，不能循环追加或把历史任务改成新提交来绕过规则。
 - 原正式提交、内容快照、自测冻结依据、旧attempt、恢复凭证和审计保留。自测实际payload过期后不能恢复；内容当前版本/待审最新任务及账号/班级/作业/题目当前资格须有效。自然作业截止后恢复已接受提交仍按原接受时间判成绩；这是当前业务规则，不等同允许新迟交。
 - 同一个失败未发布Outbox事件最多人工恢复投递一次，发布次数保留；不修改payload或创建替代事件。旧死信队列没有自动消费者，恢复不会删除已发布旧死信消息；本单元无死信自动归档、清理或任意消费接口。运行验收检查活动队列、unacked和保留死信与旧失败事件的一致性。
 - 元数据分页默认20、最多50；管理限流每账号单进程120次/300秒，沿用管理fence串行化和持久审计。后续Redis健康时共享预算，故障时保留本机预算；没有集群容量、管理员吞吐或生产容量结论。Redis/ES/监控和完整M4技术门禁已完成，M5生产部署仍待后续。
 
 ### L-043：Redis辅助缓存、故障限流与有界失效历史
 
-- 第5步于2026-10-10 VERIFIED，实际证据见[M4-REDIS-VALIDATION](M4-REDIS-VALIDATION.md)。Redis默认关闭，单节点、开发128MB/noeviction且不持久化；不是Redis集群、性能、容量或生产部署证据。
+- 第5步于2026-10-10 VERIFIED，实际证据见[M4-REDIS-VALIDATION](archive/M4-REDIS-VALIDATION.md)。Redis默认关闭，单节点、开发128MB/noeviction且不持久化；不是Redis集群、性能、容量或生产部署证据。
 - 公共缓存每次查询MySQL代数，身份缓存每次查询MySQL当前有效会话；管理员角色/版本仍来自数据库。Redis故障增加DB读取，DB权限查询失败503；不会凭缓存授权。缓存仅匿名公开题/官方题单和username，排除个人进度、私有内容、源码及凭据。
 - 登录/管理共享限流同时保留有界本机计数。Redis健康时有共同预算；断连/清空时保留各实例预算，故障期间无全局额度保证，本机进程重启会丢失本机预算。代理来源可信配置、风控及多节点性能未验收；原数据库邮件冷却与判题配额仍独立有效。
 - 公共代数写串行化；官方题单和公开元数据没有写API，维护DML必须按设计同连接事务修改并追加失效。任意SQL绕过该规约不会自动失效。活动代数索引最多4096键、固定256锁stripe、单次失效100键/每轮20事件；这些是内存/事务边界，没有吞吐承诺。
 - 失效Outbox元数据永久保留；Redis默认关闭期间继续记录但暂不消费，启用后有界重放。未来清理/归档需保留旧代数屏障和重放安全，不删除历史来制造通过。判题RabbitMQ Outbox、旧死信及永久幂等事实不受影响。短连点租约只作提示，不是接受凭证。
-- ES、监控和完整M4门禁现已VERIFIED；M5/Release/RESUME_READY仍待后续。Redis来源、当前规则和真实失败记录见[M4 Redis设计](M4-REDIS-DESIGN.md)及[验收记录](M4-REDIS-VALIDATION.md)。
+- ES、监控和完整M4门禁现已VERIFIED；M5/Release/RESUME_READY仍待后续。Redis来源、当前规则和真实失败记录见[M4 Redis设计](archive/M4-REDIS-DESIGN.md)及[验收记录](archive/M4-REDIS-VALIDATION.md)。
 2026-10-10增量：L-034/L-040/L-042中当时的单进程限流及“Redis后续”属于历史。第5步已验证健康时双API共享预算，故障/清空后保留各实例本机预算；生产代理信任、多节点容量、ES及监控仍未验收。原人工重试终身额度、永久幂等、旧死信和管理审计边界不变。
 
 ### L-044：有界公共全文候选与重建历史
 
-- 第6步技术单元已VERIFIED，完整Linux、同JAR HTTPS/故障/真实浏览器及整个索引删除后重建通过，见[M4搜索验收](M4-SEARCH-VALIDATION.md)。本条覆盖较早限制条目中ES尚未验收的历史状态；完整M4于2026-10-11通过[总门禁](M4-GATE-AUDIT.md)。
+- 第6步技术单元已VERIFIED，完整Linux、同JAR HTTPS/故障/真实浏览器及整个索引删除后重建通过，见[M4搜索验收](archive/M4-SEARCH-VALIDATION.md)。本条覆盖较早限制条目中ES尚未验收的历史状态；完整M4于2026-10-11通过[总门禁](archive/M4-GATE-AUDIT.md)。
 - 官方Elasticsearch9.5.3免费Basic/ELv2只作内部公共题搜索，原告知保留；没有ES源码/客户端依赖、付费功能或托管搜索服务。V1内置CJK，不提供额外分词插件。
 - 全部候选最多1000，ES响应最多256KiB，标签实际拼写最多100种；超限、滞后、内容/数量/UUID不匹配或故障整体回退MySQL标题搜索，固定提示正文暂不可用。复核最多1000题，分批50个ID；标签读取有界但尚未做容量性能验收。
 - 高亮来自当前MySQL公开文本，仅标出与输入关键词字面相同的片段，不输出ES HTML或声称涵盖所有分词命中位置。
@@ -207,7 +207,7 @@
 
 ### L-045：监控完成有限本地验收，生产部署限制仍存在
 
-2026-10-11第7步/完整M4VERIFIED，准确构件、实际面板、三依赖故障与消息副本关联见[M4监控验收](M4-MONITORING-VALIDATION.md)。旧本机64项仅历史；Grafana OSS许可已批准并保留原告知。
+2026-10-11第7步/完整M4VERIFIED，准确构件、实际面板、三依赖故障与消息副本关联见[M4监控验收](archive/M4-MONITORING-VALIDATION.md)。旧本机64项仅历史；Grafana OSS许可已批准并保留原告知。
 
 - 指标仅含固定分类与聚合，进程counter重启归零；数据库库存/保留历史为gauge，双API全局库存取max。固定桶P95为估计，没有容量、吞吐、性能提升或生产SLA结论。
 - 私有JDK抓取默认关闭/loopback/专用凭据，私网bind显式opt-in；两线程/8队列/256KiB过载可连接失败。临时私网HTTP、loopback Grafana及内存TSDB/数据库不代替M5网络/TLS/持久化验收。

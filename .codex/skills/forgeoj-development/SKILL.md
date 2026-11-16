@@ -16,7 +16,7 @@ Locate the ForgeOJ repository root, then read `AGENTS.md`. Read only the documen
 - Current milestone and deferred work: `docs/ForgeOJ-Roadmap.md`.
 - Known boundaries: `docs/KNOWN_LIMITATIONS.md`.
 - Upstream code or dependencies: `docs/UPSTREAM-AND-LICENSE.md`.
-- Completion or resume claims: `docs/Resume-Evidence-Matrix.md` and, for performance work, `docs/Performance-Test-Plan.md`.
+- Completion or resume claims: `docs/archive/Resume-Evidence-Matrix.md` and, for performance work, `docs/archive/Performance-Test-Plan.md`.
 
 Do not copy these documents into the skill. They remain the evolving sources of truth.
 

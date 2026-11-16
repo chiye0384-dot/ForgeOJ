@@ -3,7 +3,8 @@ package com.forgeoj.api.admin;
 
 import com.forgeoj.api.search.SearchRebuildMapper;
 import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.*;
+import org.springframework.transaction.annotation.Propagation;
+import org.springframework.transaction.annotation.Transactional;
 
 @Service
 public class SearchRebuildAudit {

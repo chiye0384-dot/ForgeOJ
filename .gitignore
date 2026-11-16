@@ -42,3 +42,6 @@ build/
 
 ### VS Code ###
 .vscode/
+
+# Private historical handoff: retain locally, never stage or archive its contents.
+/docs/M2-NEXT-CHAT-HANDOFF.md

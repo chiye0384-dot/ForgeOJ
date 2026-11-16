@@ -1,14 +1,19 @@
 /* Copyright 2026 池也; SPDX-License-Identifier: Apache-2.0 */
 package com.forgeoj.api.content;
 
-import static com.forgeoj.api.content.ContentRecords.*;
+import static com.forgeoj.api.content.ContentRecords.Content;
+import static com.forgeoj.api.content.ContentRecords.Detail;
+import static com.forgeoj.api.content.ContentRecords.Metadata;
 
 import com.forgeoj.api.admin.PublicReviewMapper;
 import com.forgeoj.api.auth.AccountService;
 import com.forgeoj.api.classroom.AssignmentSolutionGuard;
-import java.util.*;
+import java.util.List;
+import java.util.Set;
+import java.util.UUID;
 import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.*;
+import org.springframework.transaction.annotation.Isolation;
+import org.springframework.transaction.annotation.Transactional;
 import tools.jackson.databind.ObjectMapper;
 
 /** Copy only the original author's currently published immutable version. */

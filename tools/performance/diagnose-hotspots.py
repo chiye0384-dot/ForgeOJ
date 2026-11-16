@@ -76,7 +76,7 @@ def unlink_fixture_keys(keys):
     return int(call(compose + ['exec', '-T', 'redis', 'sh', '-c', shell]))
 
 
-baseline = json.loads((repo / 'docs/evidence/m5-performance/20261028/verification.json').read_text(encoding='utf-8'))
+baseline = json.loads((repo / 'docs/archive/evidence/m5-performance/20261028/verification.json').read_text(encoding='utf-8'))
 for item in baseline['verification']['toolHashes']:
     assert sha(repo / item['path']) == item['sha256']
 infos = json.loads(call([docker, 'inspect'] + [state['project']+'-'+s+'-1' for s in ['api','worker','mysql','redis','web']]))
@@ -244,7 +244,7 @@ for concurrency in [4,8]:
     for mode in ['list','detail']:case(mode,concurrency)
 assert instance.snapshot()==before
 assert instance.sql('SELECT COUNT(*) FROM submission;').strip()=='0'
-all_inputs=json.loads((repo/'docs/evidence/m4-monitoring/linux-source-inputs.json').read_text())['inputs']
+all_inputs=json.loads((repo/'docs/archive/evidence/m4-monitoring/linux-source-inputs.json').read_text())['inputs']
 assert len(all_inputs)==428
 for item in all_inputs:assert sha(repo/item['path'])==item['sha256']
 paths=['tools/performance/'+name for name in ['diagnose-hotspots.py','diagnostic_queries.py','diagnostic.jfc','dataset.py','load.mjs']]

@@ -1,16 +1,30 @@
 /* Copyright 2026 池也; SPDX-License-Identifier: Apache-2.0 */
 package com.forgeoj.api.admin;
 
-import static com.forgeoj.api.admin.AdminInput.*;
+import static com.forgeoj.api.admin.AdminInput.MAX_VERSION;
+import static com.forgeoj.api.admin.AdminInput.digest;
+import static com.forgeoj.api.admin.AdminInput.error;
+import static com.forgeoj.api.admin.AdminInput.page;
+import static com.forgeoj.api.admin.AdminInput.password;
+import static com.forgeoj.api.admin.AdminInput.reason;
+import static com.forgeoj.api.admin.AdminInput.role;
+import static com.forgeoj.api.admin.AdminInput.token;
+import static com.forgeoj.api.admin.AdminInput.username;
+import static com.forgeoj.api.admin.AdminInput.uuid;
+import static com.forgeoj.api.admin.AdminInput.version;
 
 import com.forgeoj.api.auth.AccountRateLimiter;
-import java.time.*;
-import java.util.*;
+import java.time.LocalDateTime;
+import java.util.List;
+import java.util.Locale;
+import java.util.Set;
+import java.util.UUID;
 import java.util.function.Supplier;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
-import org.springframework.transaction.*;
+import org.springframework.transaction.PlatformTransactionManager;
+import org.springframework.transaction.TransactionDefinition;
 import org.springframework.transaction.support.TransactionTemplate;
 import org.springframework.web.server.ResponseStatusException;
 

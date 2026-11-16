@@ -60,16 +60,16 @@ not survive the M2 authentication upgrade. The judging HTTP slice remains:
 The M2 account unit is `VERIFIED`; the complete M2 milestone remains
 `IN_PROGRESS`. Its browser entry is `http://localhost:5173/account`. Registration,
 email activation, refresh, current/all-session logout, password change/reset and
-legacy email binding are described in [the account design](../docs/M2-ACCOUNTS-DESIGN.md)
-and D-041. [Final acceptance](../docs/M2-ACCOUNTS-VALIDATION.md) records the fixed
+legacy email binding are described in [the account design](../docs/archive/M2-ACCOUNTS-DESIGN.md)
+and D-041. [Final acceptance](../docs/archive/M2-ACCOUNTS-VALIDATION.md) records the fixed
 Linux 211 backend / 13 frontend checks, actual browser registration-to-AC, runtime
-audit and exact cleanup; [sanitized facts](../docs/evidence/m2-accounts/README.md)
+audit and exact cleanup; [sanitized facts](../docs/archive/evidence/m2-accounts/README.md)
 are retained with the source. This verifies local email flows, not production SMTP.
 Use disposable account/email values rather than real personal data while testing.
 
 JWT signing/parsing remains third-party Spring Security JOSE / Nimbus capability;
-versions and Apache-2.0 notices are recorded in [the dependency inventory](../docs/DIRECT-DEPENDENCY-LICENSES.md),
-with ForgeOJ account-flow ownership in [OWNERSHIP](../docs/OWNERSHIP.md).
+versions and Apache-2.0 notices are recorded in [the dependency inventory](../docs/archive/DIRECT-DEPENDENCY-LICENSES.md),
+with ForgeOJ account-flow ownership in [OWNERSHIP](../docs/archive/OWNERSHIP.md).
 
 Start the frontend separately with `npm run dev` inside `frontend`. For the
 default dev mailbox, use the same browser hostname and frontend port consistently:
@@ -118,7 +118,7 @@ The explicit `smtp` adapter is implemented; local TLS protocol tests verify the
 wire behavior, without contacting a provider. Before enabling public registration
 or recovery, configure the verified provider and authorized recipient and verify
 actual delivery, credentials, timeouts and failure handling. See
-`docs/M2-SMTP-DESIGN.md` and `.env.example`. Default
+`docs/archive/M2-SMTP-DESIGN.md` and `.env.example`. Default
 disabled mode or delivery failure is caught after the account transaction commits
 and logs only `account.mail_delivery_failed`; the generic 202 response does not
 promise that mail arrived. The user can request another eligible token after the
@@ -149,7 +149,7 @@ it seeds no lists, drafts or progress. `/learning` exposes own lists/history and
 official public metadata. Draft writes require the current session, Origin, CSRF
 and expectedVersion; 409 needs an explicit conflict choice. Progress counts only
 the current judge_version's own FINISHED/AC. This unit passed fixed Linux and
-real-browser acceptance; see `docs/M2-LEARNING-RECORDS-VALIDATION.md`. Full M2 and
+real-browser acceptance; see `docs/archive/M2-LEARNING-RECORDS-VALIDATION.md`. Full M2 and
 external SMTP delivery remain unfinished.
 
 V9 adds author-only content drafts and compressed tests, with no public content or
@@ -158,14 +158,14 @@ code and manual/ZIP tests. Writes require the current session, Origin/CSRF and
 expectedVersion; archived drafts stay read-only. Worker has no mutable-authoring
 table access. This draft phase is VERIFIED; formal content sandbox validation,
 review/withdrawal remain pending. See
-`docs/M2-CONTENT-VALIDATION.md`.
+`docs/archive/M2-CONTENT-VALIDATION.md`.
 
 V10 adds immutable official-solution snapshots and private, version-bound first
 early-view records. API only reads official content; it cannot publish author
 drafts or modify solution snapshots. Worker receives no solution/learning grants.
 Migrations seed no solution, and controlled publication after formal validation
 and review is still pending. The workspace shows unavailable when no snapshot
-exists; see `docs/M2-SOLUTION-ACCESS-DESIGN.md` for the access contract.
+exists; see `docs/archive/M2-SOLUTION-ACCESS-DESIGN.md` for the access contract.
 
 With the `dev` profile, the API polls unpublished M0 Outbox rows in small
 batches, publishes persistent JSON to the durable RabbitMQ topology, and only
@@ -193,7 +193,7 @@ ACKs. Keep both switches disabled when the Worker must not control Docker.
 
 Start the frontend separately with `npm run dev` inside `frontend`; Vite proxies
 `/api` to the API at `127.0.0.1:8080`. The recorded disposable full-flow check is
-in `../docs/M0-E2E-VALIDATION.md`.
+in `../docs/archive/M0-E2E-VALIDATION.md`.
 
 ## Stop and reset
 
@@ -208,7 +208,7 @@ The images are pinned to exact patch tags and immutable digests for
 `linux/amd64`. Updating a digest is an explicit dependency change that requires
 license, migration, and integration-test review.
 
-V10 solution access is VERIFIED; see `docs/M2-SOLUTION-ACCESS-VALIDATION.md`.
+V10 solution access is VERIFIED; see `docs/archive/M2-SOLUTION-ACCESS-VALIDATION.md`.
 Snapshots have no seed or ordinary-user publication route. Own current-version AC
 or explicit versioned early-view confirmation unlocks a separate snapshot;
 private references are never copied or disclosed. Formal validated/reviewed
@@ -216,10 +216,10 @@ publication, self-test and external SMTP are still unfinished. Fixed Linux tests
 opt into sibling MySQL routing only in test sources; production JARs contain no
 adapter. Other Docker networks need fresh route validation.
 
-生产部署准备见 [独立包模板](production/README.md) 与 [M5设计](../docs/M5-DEPLOYMENT-DESIGN.md)。开发配置不代替它。
+生产部署准备见 [独立包模板](production/README.md) 与 [M5设计](../docs/archive/M5-DEPLOYMENT-DESIGN.md)。开发配置不代替它。
 
-手动维护窗加密备份与新空库恢复工具见[操作手册](../docs/M5-BACKUP-RESTORE.md)与[有限验收](../docs/M5-BACKUP-VALIDATION.md)。每日异地运营能力仍未验收。
+手动维护窗加密备份与新空库恢复工具见[操作手册](../docs/archive/M5-BACKUP-RESTORE.md)与[有限验收](../docs/archive/M5-BACKUP-VALIDATION.md)。每日异地运营能力仍未验收。
 
-镜像启动配置的保守回退工具见[手册](../docs/M5-IMAGE-ROLLBACK.md)与[有限验收](../docs/M5-IMAGE-ROLLBACK-VALIDATION.md)。只支持同文件层/同业务构件的ENTRYPOINT变化，跨业务版本与schema回滚仍不支持。
+镜像启动配置的保守回退工具见[手册](../docs/archive/M5-IMAGE-ROLLBACK.md)与[有限验收](../docs/archive/M5-IMAGE-ROLLBACK-VALIDATION.md)。只支持同文件层/同业务构件的ENTRYPOINT变化，跨业务版本与schema回滚仍不支持。
 
-本机隔离性能基线见[报告](../docs/M5-PERFORMANCE-BASELINE-REPORT.md)与[工具](../tools/performance/README.md)；CPU上限仅在新测试包，未改生产模板。该短测不提供云主机容量或优化提升承诺。
+本机隔离性能基线见[报告](../docs/archive/M5-PERFORMANCE-BASELINE-REPORT.md)与[工具](../tools/performance/README.md)；CPU上限仅在新测试包，未改生产模板。该短测不提供云主机容量或优化提升承诺。

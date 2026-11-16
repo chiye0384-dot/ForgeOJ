@@ -1,9 +1,11 @@
 /* Copyright 2026 池也; SPDX-License-Identifier: Apache-2.0 */
 package com.forgeoj.api.admin;
 
-import static com.forgeoj.api.admin.AdminInput.*;
+import static com.forgeoj.api.admin.AdminInput.error;
+import static com.forgeoj.api.admin.AdminInput.page;
+import static com.forgeoj.api.admin.AdminInput.uuid;
 
-import java.util.*;
+import java.util.Set;
 import org.springframework.stereotype.Service;
 
 @Service

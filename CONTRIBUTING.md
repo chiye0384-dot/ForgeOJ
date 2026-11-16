@@ -1,6 +1,6 @@
 # 本地开发与格式约定
 
-Java 21、Maven Wrapper和Docker是后端检查的前提；前端使用package-lock锁定的Node/npm依赖。业务Java与测试统一采用Spotless 3.0.0、google-java-format 1.28.0，UTF-8/LF，不依赖个人IDE配置。
+Java 21、Maven Wrapper和Docker是后端检查的前提；前端使用package-lock锁定的Node/npm依赖。生产、测试与tools中的Java统一采用Spotless 3.0.0、google-java-format 1.28.0，UTF-8/LF；使用显式导入，普通导入与静态导入均禁止`*`。Maven和现有CI都会检查。
 
 Windows的验证、打包和部署脚本使用PowerShell 7（`pwsh`）；在已打开的PowerShell 7中可直接调用`.ps1`脚本。
 
